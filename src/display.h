@@ -1,24 +1,24 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef SCREENDISPLAY_H
+#define SCREENDISPLAY_H
 
 #include <QtGui/QWidget>
 
 namespace Ui {
-    class Display;
+    class ScreenDisplay;
 }
 
-class Display : public QWidget {
+class ScreenDisplay : public QWidget {
     Q_OBJECT
-    Q_DISABLE_COPY(Display)
+    Q_DISABLE_COPY(ScreenDisplay)
 public:
-    explicit Display(QWidget *parent = 0);
-    virtual ~Display();
+    explicit ScreenDisplay(QWidget *parent = 0);
+    virtual ~ScreenDisplay();
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 private:
-    Ui::Display *ui;
+    Ui::ScreenDisplay *ui;
 };
 
 #endif // DISPLAY_H
