@@ -25,4 +25,5 @@ FORMS += softprojector.ui \
     display.ui \
     songwidget.ui \
     biblewidget.ui \
-    editwidget.ui
+    editwidget.ui \
+    settingsdialog.ui
