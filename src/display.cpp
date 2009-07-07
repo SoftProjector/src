@@ -1,19 +1,19 @@
 #include "display.h"
 #include "ui_display.h"
 
-ScreenDisplay::ScreenDisplay(QWidget *parent) :
+Display::Display(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ScreenDisplay)
+    ui(new Ui::Display)
 {
     ui->setupUi(this);
 }
 
-ScreenDisplay::~ScreenDisplay()
+Display::~Display()
 {
     delete ui;
 }
 
-void ScreenDisplay::changeEvent(QEvent *e)
+void Display::changeEvent(QEvent *e)
 {
     switch (e->type()) {
     case QEvent::LanguageChange:
