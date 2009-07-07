@@ -10,7 +10,7 @@ bool connect()
     if (!db.open()){
         QMessageBox mb;
         mb.setText("spData Error"
-                   "Could not connec to the database spData.db!\n\n"
+                   "Could not connect to the database spData.db!\n\n"
                    "Following Errors:\n"
                    + db.lastError().databaseText() + "\n"
                    + db.lastError().driverText() +"\n"
