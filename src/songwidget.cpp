@@ -182,3 +182,8 @@ void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
         emit sendSong(songPreview.songList,ui->listTitles->currentItem()->text(),index.row());
 //    else emit sendSong(songPreview.songList,songPreview.title,index.row());
 }
+
+Song SongWidget::sendToEdit()
+{
+    return songPreview;
+}

@@ -16,6 +16,9 @@ public:
     explicit SongWidget(QWidget *parent = 0);
     virtual ~SongWidget();
 
+public slots:
+    Song sendToEdit();
+
 protected:
     virtual void changeEvent(QEvent *e);
 

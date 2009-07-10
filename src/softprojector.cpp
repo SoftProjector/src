@@ -177,6 +177,25 @@ void SoftProjector::on_btnBlack_clicked()
 
 void SoftProjector::on_actionEditSong_triggered()
 {
+    if (ui->tabWidget->currentIndex()==1){
+        editWidget->setEdit(songWidget->sendToEdit());
+        editWidget->show();
+        editWidget->activateWindow();
+    }
+}
+
+void SoftProjector::on_actionNewSong_triggered()
+{
+    if (ui->tabWidget->currentIndex()==1){
+        editWidget->setNew();
+        editWidget->show();
+        editWidget->activateWindow();
+
+    }
+}
+
+void SoftProjector::on_actionEditDialog_triggered()
+{
     editWidget->show();
     editWidget->activateWindow();
 }

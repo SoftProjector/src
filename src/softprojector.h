@@ -40,6 +40,8 @@ private:
     int cRow;
 
 private slots:
+    void on_actionEditDialog_triggered();
+    void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
     void on_btnBlack_clicked();
     void on_actionEnglish_Kjv_2_triggered();
