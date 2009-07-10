@@ -335,3 +335,29 @@ int Song::lastUser()
     }
     return last;
 }
+
+bool Song::isUserOnly(int sId)
+{
+    int i(0);
+    QSqlQuery sq;
+    sq.exec("SELECT pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, uaPsalm, uaEpisni FROM songs WHERE id = '" + QString::number(sId) + "'");
+    while (sq.next()){
+        i += sq.value(0).toInt();
+        i += sq.value(1).toInt();
+        i += sq.value(2).toInt();
+        i += sq.value(3).toInt();
+        i += sq.value(4).toInt();
+        i += sq.value(5).toInt();
+        i += sq.value(6).toInt();
+        i += sq.value(7).toInt();
+        i += sq.value(8).toInt();
+    }
+    if(i==0) return true;
+    else return false;
+}
+
+void Song::deleteSong(int sId)
+{
+    QSqlQuery sq;
+    sq.exec("DELETE FROM songs WHERE id = '" + QString::number(sId) + "'");
+}

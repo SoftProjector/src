@@ -9,9 +9,11 @@ public:
     Song();
 //    void setSong(QString gtitle);
 //    void setSong(QStringList setSbornik, QString setTitle, int setCat, QStringList setBy, QString setText);
-    bool hasTitle (QString title);
+    bool hasTitle(QString title);
+    bool isUserOnly(int songId);
     void saveUpdate();
     void saveNew();
+    void deleteSong(int songId);
     QString clean(QString str);
     QString getSong(QString title);
     QString getSong(int number, QString sbornik);

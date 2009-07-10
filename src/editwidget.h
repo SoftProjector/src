@@ -15,6 +15,10 @@ public:
     explicit EditWidget(QWidget *parent = 0);
     virtual ~EditWidget();
 
+public slots:
+    void setEdit(Song sEdit);
+    void setNew();
+
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -22,9 +26,12 @@ private:
     Ui::EditWidget *ui;
     Song editSong, newSong;
     QString sbornik, format;
+    QStringList allTitles;
     int titleType;
 
 private slots:
+    void on_txtSearch_textChanged(QString );
+    void on_bntDelete_clicked();
     void on_listTitles_currentTextChanged(QString currentText);
     void on_comboBoxSbornik_currentIndexChanged(int index);
     void on_spinBoxSongNum_valueChanged(int );
@@ -36,6 +43,9 @@ private slots:
     void on_btnEdit_clicked();
     void resetUiItems();
     void setUiItems();
+    void setSave();
+    void disablePV();
+    QString resetLyric(QString lyric);
     QString setSongText(QString text);
     void loadTitles(QString tSbornik);
 };
