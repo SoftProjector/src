@@ -135,7 +135,7 @@
     </property>
     <addaction name="actionClose"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Edit</string>
     </property>
@@ -143,6 +143,9 @@
     <addaction name="actionEditSong"/>
     <addaction name="actionNewSong"/>
     <addaction name="actionEditDialog"/>
+    <addaction name="separator"/>
+    <addaction name="actionImportSongs"/>
+    <addaction name="actionExportSongs"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -184,7 +187,7 @@
     <addaction name="menuSecondary_Bible"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuTools"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuBible"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -315,28 +318,6 @@
     <string>Set English Bible (King James Version) as secondary Bible language</string>
    </property>
   </action>
-  <action name="actionShowBible">
-   <property name="text">
-    <string>Show</string>
-   </property>
-   <property name="statusTip">
-    <string>Show Bible Tab Below</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+B</string>
-   </property>
-  </action>
-  <action name="actionShowSong">
-   <property name="text">
-    <string>Show</string>
-   </property>
-   <property name="statusTip">
-    <string>Show Song Tab Below</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
-   </property>
-  </action>
   <action name="actionEditSong">
    <property name="text">
     <string>Edit Current Song...</string>
@@ -356,6 +337,28 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionImportSongs">
+   <property name="text">
+    <string>Import Songs...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import songs into user sbornik</string>
+   </property>
+   <property name="statusTip">
+    <string>Import songs into user sbornik</string>
+   </property>
+  </action>
+  <action name="actionExportSongs">
+   <property name="text">
+    <string>Export Songs...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export songs from user sbornik</string>
+   </property>
+   <property name="statusTip">
+    <string>Export songs from user sbornik</string>
    </property>
   </action>
  </widget>

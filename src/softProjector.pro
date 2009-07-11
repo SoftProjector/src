@@ -12,7 +12,9 @@ SOURCES += main.cpp \
     editwidget.cpp \
     song.cpp \
     display1.cpp \
-    bible.cpp
+    bible.cpp \
+    importdialog.cpp \
+    exportdialog.cpp
 HEADERS += softprojector.h \
     display.h \
     songwidget.h \
@@ -20,10 +22,14 @@ HEADERS += softprojector.h \
     editwidget.h \
     song.h \
     display1.h \
-    bible.h
+    bible.h \
+    importdialog.h \
+    exportdialog.h
 FORMS += softprojector.ui \
     display.ui \
     songwidget.ui \
     biblewidget.ui \
     editwidget.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    importdialog.ui \
+    exportdialog.ui

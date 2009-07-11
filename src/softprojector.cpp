@@ -34,6 +34,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     bibleWidget = new BibleWidget;
     songWidget = new SongWidget;
     editWidget = new EditWidget;
+    importSongs = new ImportDialog;
+    exportSongs = new ExportDialog;
 
     ui->tabWidget->clear();
     bibleWidget->setPrimary(0);
@@ -77,16 +79,6 @@ void SoftProjector::closeEvent(QCloseEvent *event)
 void SoftProjector::on_actionClose_triggered()
 {
     close();
-}
-
-void SoftProjector::on_actionShowBible_triggered()
-{
-    ui->tabWidget->setCurrentIndex(0);
-}
-
-void SoftProjector::on_actionShowSong_triggered()
-{
-    ui->tabWidget->setCurrentIndex(1);
 }
 
 void SoftProjector::setSongList(QStringList showList, QString caption, int row)
@@ -198,4 +190,14 @@ void SoftProjector::on_actionEditDialog_triggered()
 {
     editWidget->show();
     editWidget->activateWindow();
+}
+
+void SoftProjector::on_actionExportSongs_triggered()
+{
+    exportSongs->exec();
+}
+
+void SoftProjector::on_actionImportSongs_triggered()
+{
+    importSongs->exec();
 }
