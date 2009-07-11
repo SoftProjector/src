@@ -327,12 +327,14 @@ QStringList Song::getTitle2(QString sbornik)
 
 int Song::lastUser()
 {
-    int last(1);
+    int last;
+    QList <int> lastInt;
     QSqlQuery sq;
     sq.exec("SELECT pvUser FROM songs WHERE pvUser > 0");
-    while (sq.next()){
-        last++;
-    }
+    while (sq.next()) lastInt << sq.value(0).toInt();
+    qSort(lastInt);
+    if (lastInt.isEmpty()) last=1;
+    else last = lastInt.takeLast() + 1;
     return last;
 }
 
