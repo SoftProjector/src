@@ -37,17 +37,23 @@ void BibleWidget::loadBible()
 
 void BibleWidget::setPrimary(int i)
 {
-    if (i==0) biblePrimary = "bibleRu";
-    else if (i==1) biblePrimary = "bibleUa";
-    else if (i==2) biblePrimary = "bibleKjv";
+    if (i==0) 
+	biblePrimary = "bibleRu";
+    else if (i==1) 
+	biblePrimary = "bibleUa";
+    else if (i==2) 
+	biblePrimary = "bibleKjv";
     loadBible();
 }
 
 void BibleWidget::setSecondary(int i)
 {
-    if (i==0) bibleSecondary = "bibleRu";
-    else if (i==1) bibleSecondary = "bibleUa";
-    else if (i==2) bibleSecondary = "bibleKjv";
+    if (i==0) 
+	bibleSecondary = "bibleRu";
+    else if (i==1)
+       	bibleSecondary = "bibleUa";
+    else if (i==2)
+       	bibleSecondary = "bibleKjv";
 }
 
 //void BibleWidget::on_comboBoxBible_currentIndexChanged(int index)
@@ -62,7 +68,7 @@ void BibleWidget::setSecondary(int i)
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
     int s = ui->listBook->currentRow();
-    if(!(s==-1))
+    if( s != -1 )
     {
         int maxVerse = bible.maxChapters(currentText, biblePrimary);
         ui->listChapterNum->clear();
@@ -75,7 +81,7 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
 {
     int s = ui->listChapterNum->currentRow();
-    if(!(s==-1))
+    if( s != -1 )
     {
         ui->listChapter->clear();
         ui->listChapter->addItems(bible.getChapter(biblePrimary, ui->listBook->currentItem()->text(), currentText.toInt()));
@@ -111,7 +117,8 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
     if (search.count()>=1)
     {
         bool emt = ui->listBook->findItems(search[0],Qt::MatchStartsWith).isEmpty();
-        if (!emt) ui->listBook->setCurrentItem(ui->listBook->findItems(search[0],Qt::MatchStartsWith).takeFirst());
+        if (!emt) 
+	    ui->listBook->setCurrentItem(ui->listBook->findItems(search[0],Qt::MatchStartsWith).takeFirst());
     }
     if (search.count()>=2)
     {
@@ -132,3 +139,5 @@ void BibleWidget::on_btnLive_clicked()
 {
     emit goLive(bible, bibleSecondary, ui->spinVerse->value() - 1);
 }
+
+
