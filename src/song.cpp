@@ -224,7 +224,7 @@ QStringList Song::formatSongList(QString song)
 
     songlist = song.split("@$");//songText.split("@$");
 
-    while (i <songlist.size())
+    while(i < songlist.size() )
     {
         text = songlist[i];
         //text.chop(1);
@@ -238,15 +238,18 @@ QStringList Song::formatSongList(QString song)
         {// Fill Verse
             while (j<k)
             {
-                if (j==k-1) text += split[j];
-                else text += split[j] + "\n";
-                ++j;
+                if (j==k-1) 
+		    text += split[j];
+                else 
+		    text += split[j] + "\n";
+                j++;
             }
             formatedSong += text.trimmed();
             if (has_chorus){
                 formatedSong += chorus;
             }
-        } else if (text2.startsWith(codec.fromUtf8("Припев")))
+        } 
+	else if (text2.startsWith(codec.fromUtf8("Припев")))
         { // Fill Chorus
             while (j<k)
             {
@@ -257,8 +260,10 @@ QStringList Song::formatSongList(QString song)
             chorus = text.trimmed();
             if (chorus.size()>3)
             {
-                has_chorus=1; ++chor;
-                if (chor ==1) formatedSong += chorus;
+                has_chorus=1; 
+		chor++;
+                if (chor ==1) 
+		    formatedSong += chorus;
                 else if (chor ==2)
                 {
                     formatedSong[formatedSong.size()-1] = chorus;
