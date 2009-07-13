@@ -19,6 +19,8 @@ private:
     Ui::SettingsDialog *ui;
 
 private slots:
+    void on_change_background_button_clicked();
+    void on_change_font_button_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
