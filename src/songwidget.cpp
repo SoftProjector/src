@@ -37,7 +37,8 @@ void SongWidget::loadTitles(QString tSbornik)
 {
     Song t;
     ui->listTitles->clear();
-    if (tSbornik == "ALL") ui->listTitles->addItems(t.getTitle());
+    if (tSbornik == "ALL")
+        ui->listTitles->addItems(t.getTitle());
     else ui->listTitles->addItems(t.getTitle(tSbornik));
 }
 
@@ -45,18 +46,24 @@ void SongWidget::showPreview(QString title)
 {
     QStringList list = title.split(" - ");
     ui->listPreview->clear();
-    if (list.size()==1)ui->listPreview->addItems(songPreview.getSongList(title));
-    else ui->listPreview->addItems(songPreview.getSongList(list[1]));
+    if (list.size()==1)
+        ui->listPreview->addItems(songPreview.getSongList(title));
+    else
+        ui->listPreview->addItems(songPreview.getSongList(list[1]));
     ui->listPreview->setCurrentRow(0);
 
 }
 
 void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
 {
-    if (index == 0) sbornik = "pv3300";
-    else if (index==1) sbornik = "pv2001";
-    else if (index==2) sbornik = "uaEpisni";
-    else if (index==3) sbornik = "pvUser";
+    if (index == 0)
+        sbornik = "pv3300";
+    else if (index==1)
+        sbornik = "pv2001";
+    else if (index==2)
+        sbornik = "uaEpisni";
+    else if (index==3)
+        sbornik = "pvUser";
 
     titleType=1;
     Song t;
@@ -74,7 +81,8 @@ void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
         ui->listTitles->addItems(t.getTitle2(sbornik));
     }
     bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
-    if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
+    if (!empty)
+        ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
     ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtCenter);
     //    selector=1;
 //    setSong(value,1);
@@ -170,7 +178,8 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
             ui->listTitles->addItems(allTitles);
         }
         bool empty = ui->listTitles->findItems(text,Qt::MatchStartsWith).isEmpty();
-        if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
+        if (!empty)
+            ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
         ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtTop);
     }
 }
