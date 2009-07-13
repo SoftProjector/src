@@ -10,13 +10,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     QDesktopWidget *desktop;
     desktop = new QDesktopWidget();
     display = new Display1(desktop->screen(3));
-    display->setGeometry(10,10,800,600);
+    display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 //    display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
-    if (desktop->numScreens()>1)
+    if( desktop->numScreens() > 1 )
     {
-
         if (desktop->isVirtualDesktop())
         {
             display->setGeometry(desktop->screen(0)->width()-100,200,100,100);
@@ -36,6 +35,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget = new EditWidget;
     importSongs = new ImportDialog;
     exportSongs = new ExportDialog;
+    settingsDialog = new SettingsDialog;
 
     ui->tabWidget->clear();
     bibleWidget->setPrimary(0);
@@ -60,7 +60,7 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setSongList(QStringList, QString, int)));
     connect(bibleWidget, SIGNAL(goLive(Bible,QString,int)),
             this, SLOT(setBibleList(Bible,QString,int)));
-    connect(this,SIGNAL(sendDisplay(QString,QString)),
+    connect(this, SIGNAL(sendDisplay(QString,QString)),
             display, SLOT(SetAllText(QString,QString)));
 
 }
@@ -98,7 +98,8 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 {
     type = "bible";
     bible = bib; bible2 = bib2; cRow = row;
-    if(!(bible.primary==bible2))bible.setSecondary(bible2);
+    if( !(bible.primary == bible2) )
+        bible.setSecondary(bible2);
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
     ui->labelShow->setText(templ[0]);
@@ -114,21 +115,23 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
 //    qDebug() << currentRow;
-    if (!(currentRow == -1))
+    if( currentRow == -1 )
+        return;
+    
+    if(type=="song")
+        emit sendDisplay(ui->listShow->currentItem()->text(),"");
+    else if(type=="bible")
     {
-        if(type=="song")emit sendDisplay(ui->listShow->currentItem()->text(),"");
-        else if(type=="bible")
-        {
-            if(bible.primary==bible2)emit sendDisplay(bible.verseList1[currentRow],bible.captionList1[currentRow]);
-            else
-            {
-                QString verse = bible.verseList1[currentRow] + "\n";
-                verse += bible.verseList2[currentRow];
-                QString caption = bible.captionList1[currentRow] + "    ";
-                caption += bible.captionList2[currentRow];
-                emit sendDisplay(verse,caption);
-            }
-        }
+	if( bible.primary==bible2 )
+	    emit sendDisplay(bible.verseList1[currentRow],bible.captionList1[currentRow]);
+	else
+	{
+	    QString verse = bible.verseList1[currentRow] + "\n";
+	    verse += bible.verseList2[currentRow];
+	    QString caption = bible.captionList1[currentRow] + "    ";
+	    caption += bible.captionList2[currentRow];
+	    emit sendDisplay(verse,caption);
+	}
     }
 }
 
@@ -200,4 +203,9 @@ void SoftProjector::on_actionExportSongs_triggered()
 void SoftProjector::on_actionImportSongs_triggered()
 {
     importSongs->exec();
+}
+
+void SoftProjector::on_actionSettings_triggered()
+{
+    settingsDialog->exec();
 }
