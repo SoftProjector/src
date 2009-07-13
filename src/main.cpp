@@ -33,7 +33,8 @@ int main(int argc, char *argv[])
     bool fileExist = QFile::exists("spData.db");
     if (fileExist)
     {
-        if (!connect())return 1;
+        if( !connect() )
+            return 1;
     }
     else
     {
