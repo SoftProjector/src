@@ -55,7 +55,7 @@ void SettingsDialog::on_buttonBox_accepted()
 {
 
     int primaryIndex = ui->primary_bible_menu->currentIndex();
-    int secondaryIndex = ui->primary_bible_menu->currentIndex();
+    int secondaryIndex = ui->secondary_bible_menu->currentIndex();
 
     softProjector->bibleWidget->setPrimary(primaryIndex);
     softProjector->bibleWidget->setSecondary(secondaryIndex);
