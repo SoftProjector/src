@@ -1,5 +1,9 @@
+#ifndef SETTINGSDIALOG_H
+#define SETTINGSDIALOG_H
+
 
 #include <QtGui/QDialog>
+#include "softprojector.h"
 
 namespace Ui {
     class SettingsDialog;
@@ -17,6 +21,7 @@ protected:
 
 private:
     Ui::SettingsDialog *ui;
+    SoftProjector *softProjector;
 
 private slots:
     void on_change_background_button_clicked();
@@ -26,3 +31,4 @@ private slots:
 
 };
 
+#endif // SETTINGSDIALOG_H

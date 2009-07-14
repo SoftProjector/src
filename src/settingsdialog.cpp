@@ -2,15 +2,29 @@
 #include <QMessageBox>
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
+#include "softprojector.h"
+
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
+    QStringList bibles;
+    
     ui->setupUi(this);
+    softProjector = (SoftProjector*)parent;
+    
+    bibles.append("Russian");
+    bibles.append("Ukrainian");
+    bibles.append("English (KJV)");
 
-    // ui->primary_bible_menu
-    // ui->secondary_bible_menu
+    for (int i = 0; i < bibles.size(); i++) {
+	ui->primary_bible_menu->addItem( bibles.at(i) );
+        ui->secondary_bible_menu->addItem( bibles.at(i) );
+    }
+    ui->primary_bible_menu->setCurrentIndex(softProjector->bibleWidget->getPrimary());
+    ui->secondary_bible_menu->setCurrentIndex(softProjector->bibleWidget->getSecondary());
+
     // ui->use_fading_effects_box
 
 }
@@ -40,28 +54,13 @@ void SettingsDialog::on_buttonBox_rejected()
 void SettingsDialog::on_buttonBox_accepted()
 {
 
-    // ui->primary_bible_menu
-    // ui->secondary_bible_menu
+    int primaryIndex = ui->primary_bible_menu->currentIndex();
+    int secondaryIndex = ui->primary_bible_menu->currentIndex();
+
+    softProjector->bibleWidget->setPrimary(primaryIndex);
+    softProjector->bibleWidget->setSecondary(secondaryIndex);
+
     // ui->use_fading_effects_box
-
-    /*
-    PRIMARY
-
-    if( RUSSIAN )
-        bibleWidget->setPrimary(0);
-    elif( UKRAINIAN )
-        bibleWidget->setPrimary(1);
-    elif( ENGLISH )
-        bibleWidget->setPrimary(2);
-
-    SECONDARY
-    if( RUSSIAN )
-        bibleWidget->setSecondary(0);
-    elif( UKRAINIAN )
-        bibleWidget->setSecondary(1);
-    elif( ENGLISH )
-        bibleWidget->setSecondary(2);
-    */
 
     close();
 }
