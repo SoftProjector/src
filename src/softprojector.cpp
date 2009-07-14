@@ -1,6 +1,7 @@
 #include <QDesktopWidget>
 #include "softprojector.h"
 #include "ui_softprojector.h"
+#include "settingsdialog.h"
 
 
 SoftProjector::SoftProjector(QWidget *parent)
@@ -35,7 +36,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget = new EditWidget;
     importSongs = new ImportDialog;
     exportSongs = new ExportDialog;
-    settingsDialog = new SettingsDialog;
 
     ui->tabWidget->clear();
     bibleWidget->setPrimary(0);
@@ -244,6 +244,8 @@ void SoftProjector::on_actionImportSongs_triggered()
 
 void SoftProjector::on_actionSettings_triggered()
 {
+    SettingsDialog *settingsDialog;
+    settingsDialog = new SettingsDialog(this);
     settingsDialog->exec();
 }
 
