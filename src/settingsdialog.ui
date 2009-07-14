@@ -97,7 +97,7 @@
    <item>
     <widget class="QCheckBox" name="display_on_to_box">
      <property name="text">
-      <string>Display screen alway on top (requires program restart)</string>
+      <string>Display screen always on top (requires program restart)</string>
      </property>
     </widget>
    </item>
