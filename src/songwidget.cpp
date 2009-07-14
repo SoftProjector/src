@@ -126,12 +126,7 @@ void SongWidget::on_btnLive_clicked()
     }
 }
 
-void SongWidget::on_btnSort_clicked()
-{
-    titleType=0;
-    ui->listTitles->clear();
-    ui->listTitles->addItems(allTitles);
-}
+
 
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
@@ -147,9 +142,12 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
-    if (ui->checkBoxAny->isChecked())
+    //const QChar *tmp = text.unicode();
+    //printf("New search text: '%s'", tmp);
+
+    if (ui->match_beginning_box->isChecked())
     {
-        titleType =0;
+        titleType = 0;
         ui->listTitles->clear();
         QStringList tlist = text.split(" ");
         QStringList tlist2;
@@ -182,6 +180,13 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
             ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
         ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtTop);
     }
+
+    if( ui->sort_box->isChecked() )
+    {
+        titleType=0;
+        ui->listTitles->clear();
+        ui->listTitles->addItems(allTitles);
+    }
 }
 
 
@@ -193,4 +198,16 @@ void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 Song SongWidget::sendToEdit()
 {
     return songPreview;
+}
+
+void SongWidget::on_match_beginning_box_toggled(bool checked)
+{
+    QString new_text = ui->lineEditSearch->text();
+    SongWidget::on_lineEditSearch_textEdited(new_text);
+}
+
+void SongWidget::on_sort_box_toggled(bool checked)
+{
+    QString new_text = ui->lineEditSearch->text();
+    SongWidget::on_lineEditSearch_textEdited(new_text);
 }

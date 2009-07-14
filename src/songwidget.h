@@ -26,6 +26,8 @@ signals:
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
+    void on_sort_box_toggled(bool checked);
+    void on_match_beginning_box_toggled(bool checked);
     void on_listPreview_doubleClicked(QModelIndex index);
     void on_btnSort_clicked();
     void on_lineEditSearch_textEdited(QString Text);
