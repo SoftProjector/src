@@ -96,7 +96,8 @@ void EditWidget::on_btnSave_clicked()
         }
         else {
             setSave();
-            if (!(ui->btnNew->isEnabled())) newSong.saveNew();
+            if (!(ui->btnNew->isEnabled()))
+                newSong.saveNew();
             else newSong.saveUpdate();
             resetUiItems();
             loadTitles(sbornik);
@@ -169,8 +170,10 @@ QString EditWidget::setSongText(QString song)
         j=0;
         text2=split[0];
         while (j<k){
-            if (j==k-1) text += split[j];
-            else text += split[j] + "\n";
+            if (j==k-1)
+                text += split[j];
+            else
+                text += split[j] + "\n";
             ++j;
         }
         verselist += text.trimmed() + "\n\n";
