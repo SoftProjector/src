@@ -35,6 +35,29 @@ void BibleWidget::loadBible()
     ui->listBook->setCurrentRow(0);
 }
 
+int BibleWidget::getPrimary()
+{
+    if( biblePrimary == "bibleRu" )
+        return 0;
+    else if( biblePrimary == "bibleUa" )
+        return 1;
+    else if( biblePrimary == "bibleKjv" )
+        return 2;
+    throw biblePrimary;
+}
+
+int BibleWidget::getSecondary()
+{
+    if( bibleSecondary == "bibleRu" )
+        return 0;
+    else if( bibleSecondary == "bibleUa" )
+        return 1;
+    else if( bibleSecondary == "bibleKjv" )
+        return 2;
+    throw bibleSecondary;
+}
+
+
 void BibleWidget::setPrimary(int i)
 {
     if (i==0) 
@@ -72,7 +95,8 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
     {
         int maxVerse = bible.maxChapters(currentText, biblePrimary);
         ui->listChapterNum->clear();
-        for(int i=0; i<maxVerse; ++i) ui->listChapterNum->addItem(QString::number(i+1));
+        for(int i=0; i<maxVerse; ++i)
+            ui->listChapterNum->addItem(QString::number(i+1));
         ui->spinChapter->setMaximum(maxVerse);
         ui->listChapterNum->setCurrentRow(0);
     }
