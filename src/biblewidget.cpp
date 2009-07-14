@@ -132,6 +132,7 @@ void BibleWidget::on_spinVerse_valueChanged(int value)
 
 void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 {
+    // Called when a chapter or verse is double clicked
     emit goLive(bible, bibleSecondary, index.row());
 }
 
