@@ -9,7 +9,6 @@
 #include "bible.h"
 #include "importdialog.h"
 #include "exportdialog.h"
-#include "settingsdialog.h"
 
 
 class QActionGroup;
@@ -31,7 +30,6 @@ public:
     EditWidget *editWidget;
     ImportDialog *importSongs;
     ExportDialog *exportSongs;
-    SettingsDialog *settingsDialog;
     ~SoftProjector();
 
 signals:
