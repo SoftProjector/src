@@ -36,6 +36,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget = new EditWidget;
     importSongs = new ImportDialog;
     exportSongs = new ExportDialog;
+    showing = false;
+    ui->show_button->setEnabled(true);
+    ui->clear_button->setEnabled(false);
 
     ui->tabWidget->clear();
     bibleWidget->setPrimary(0);
@@ -84,9 +87,6 @@ void SoftProjector::on_actionClose_triggered()
 void SoftProjector::setSongList(QStringList showList, QString caption, int row)
 {
     type = "song";
-    ui->checkBoxLive->setChecked(true);
-    ui->btnShow->setText("CLEAR");
-    ui->btnShow->setChecked(true);
     ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
@@ -94,15 +94,15 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->listShow->addItems(showList);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
+    this->on_show_button_clicked();
 
 }
 
 void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 {
+    // Called to show a bible verse
+
     type = "bible";
-    ui->checkBoxLive->setChecked(true);
-    ui->btnShow->setText("CLEAR");
-    ui->btnShow->setChecked(true);
     bible = bib; bible2 = bib2; cRow = row;
     if( !(bible.primary == bible2) )
         bible.setSecondary(bible2);
@@ -115,17 +115,20 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
     ui->listShow->addItems(bible.verseList);
     ui->listShow->setCurrentRow(cRow);
     ui->listShow->setFocus();
+    this->on_show_button_clicked();
 
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
+    // Called when the user selects a different row in the preview table.
 //    qDebug() << currentRow;
     if( currentRow == -1 )
         return;
-    else if(!ui->checkBoxLive->isChecked())
+
+    if( showing == false )
         return;
-    
+
     if(type=="song")
         emit sendDisplay(ui->listShow->currentItem()->text(),"");
     else if(type=="bible")
@@ -173,39 +176,22 @@ void SoftProjector::on_actionEnglish_Kjv_2_triggered()
     bibleWidget->setSecondary(2);
 }
 
-void SoftProjector::on_btnBlack_clicked()
+void SoftProjector::on_clear_button_clicked()
 {
+    showing = false;
     emit sendDisplay(" "," ");
-    ui->btnShow->setText("SHOW");
-    ui->btnShow->setChecked(false);
-    ui->checkBoxLive->setChecked(false);
+    ui->show_button->setEnabled(true);
+    ui->clear_button->setEnabled(false);
 }
 
-void SoftProjector::on_checkBoxLive_clicked()
+void SoftProjector::on_show_button_clicked()
 {
-    if(ui->checkBoxLive->isChecked()){
-        ui->btnShow->setText("CLEAR");
-        ui->btnShow->setChecked(true);
-        on_listShow_currentRowChanged(ui->listShow->currentRow());
-    }
+    showing = true;
+    on_listShow_currentRowChanged(ui->listShow->currentRow());
+    ui->show_button->setEnabled(false);
+    ui->clear_button->setEnabled(true);
 }
 
-void SoftProjector::on_btnShow_clicked()
-{
-    if(ui->btnShow->text() == "CLEAR"){
-        ui->checkBoxLive->setChecked(false);
-        ui->btnShow->setText("SHOW");
-        ui->btnShow->setChecked(false);
-        emit sendDisplay("        "," ");
-    }
-    else
-    {
-        ui->checkBoxLive->setChecked(true);
-        ui->btnShow->setText("CLEAR");
-        ui->btnShow->setChecked(true);
-        on_listShow_currentRowChanged(ui->listShow->currentRow());
-    }
-}
 
 void SoftProjector::on_actionEditSong_triggered()
 {
@@ -250,3 +236,8 @@ void SoftProjector::on_actionSettings_triggered()
 }
 
 
+void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
+{
+    // Called when the user double clicks on a row in the preview table.
+    this->on_show_button_clicked();
+}
