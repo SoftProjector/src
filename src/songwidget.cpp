@@ -12,7 +12,8 @@ SongWidget::SongWidget(QWidget *parent) :
     loadTitles("ALL");
     sbornik = "pv3300";
     titleType=0;
-    ui->listPreview->addItems(songPreview.getSongList(1, sbornik));
+    ui->listTitles->setCurrentRow(0);
+//    ui->listPreview->addItems(songPreview.getSongList(1, sbornik));
 //    toShow = new SoftProjector();
 }
 
@@ -93,11 +94,13 @@ void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
 
 void SongWidget::on_listTitles_currentTextChanged(QString currentText)
 {
+    isPlaylistTitle = false;
     showPreview(currentText);
 }
 
 void SongWidget::on_listPlaylist_currentTextChanged(QString currentText)
 {
+    isPlaylistTitle = true;
     showPreview(currentText);
 }
 
@@ -110,20 +113,17 @@ void SongWidget::on_listTitles_itemDoubleClicked(QListWidgetItem* item)
 
 void SongWidget::on_listPlaylist_itemDoubleClicked(QListWidgetItem* item)
 {
-
-}
-
-void SongWidget::on_listPreview_itemDoubleClicked(QListWidgetItem* item)
-{
-
+    emit sendSong(songPreview.songList,item->text(),0);
 }
 
 void SongWidget::on_btnLive_clicked()
 {
-//    emit sendSong(songPreview.songList,songPreview.title,0);
-//    if (!(ui->listTitles->selectedItems().count()==0))
+    if(isPlaylistTitle){
+        emit sendSong(songPreview.songList,ui->listPlaylist->currentItem()->text(),ui->listPreview->currentRow());;
+    }
+    else{
         emit sendSong(songPreview.songList,ui->listTitles->currentItem()->text(),ui->listPreview->currentRow());
-//    else emit sendSong(songPreview.songList,songPreview.title,ui->listPreview->currentRow());
+    }
 }
 
 void SongWidget::on_btnSort_clicked()
@@ -187,9 +187,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 {
-//    if (!(ui->listTitles->selectedItems().count()==0))
         emit sendSong(songPreview.songList,ui->listTitles->currentItem()->text(),index.row());
-//    else emit sendSong(songPreview.songList,songPreview.title,index.row());
 }
 
 Song SongWidget::sendToEdit()

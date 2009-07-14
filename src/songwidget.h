@@ -32,7 +32,6 @@ private slots:
     void on_btnRemoveFromPlaylist_clicked();
     void on_btnAddToPlaylist_clicked();
     void on_btnLive_clicked();
-    void on_listPreview_itemDoubleClicked(QListWidgetItem* item);
     void on_listPlaylist_itemDoubleClicked(QListWidgetItem* item);
     void on_listTitles_itemDoubleClicked(QListWidgetItem* item);
     void on_listPlaylist_currentTextChanged(QString currentText);
@@ -50,6 +49,7 @@ private:
     QStringList allTitles;
     int titleType;
     Song songPreview;
+    bool isPlaylistTitle;
 //    SoftProjector *toShow;
 };
 
