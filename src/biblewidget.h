@@ -16,6 +16,8 @@ public:
     virtual ~BibleWidget();
 
 public slots:
+    int getPrimary();
+    int getSecondary();
     void setPrimary(int i);
     void setSecondary(int i);
 
