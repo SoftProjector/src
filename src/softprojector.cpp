@@ -84,6 +84,9 @@ void SoftProjector::on_actionClose_triggered()
 void SoftProjector::setSongList(QStringList showList, QString caption, int row)
 {
     type = "song";
+    ui->checkBoxLive->setChecked(true);
+    ui->btnShow->setText("CLEAR");
+    ui->btnShow->setChecked(true);
     ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
@@ -97,6 +100,9 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
 void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 {
     type = "bible";
+    ui->checkBoxLive->setChecked(true);
+    ui->btnShow->setText("CLEAR");
+    ui->btnShow->setChecked(true);
     bible = bib; bible2 = bib2; cRow = row;
     if( !(bible.primary == bible2) )
         bible.setSecondary(bible2);
@@ -116,6 +122,8 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
 //    qDebug() << currentRow;
     if( currentRow == -1 )
+        return;
+    else if(!ui->checkBoxLive->isChecked())
         return;
     
     if(type=="song")
@@ -168,6 +176,35 @@ void SoftProjector::on_actionEnglish_Kjv_2_triggered()
 void SoftProjector::on_btnBlack_clicked()
 {
     emit sendDisplay(" "," ");
+    ui->btnShow->setText("SHOW");
+    ui->btnShow->setChecked(false);
+    ui->checkBoxLive->setChecked(false);
+}
+
+void SoftProjector::on_checkBoxLive_clicked()
+{
+    if(ui->checkBoxLive->isChecked()){
+        ui->btnShow->setText("CLEAR");
+        ui->btnShow->setChecked(true);
+        on_listShow_currentRowChanged(ui->listShow->currentRow());
+    }
+}
+
+void SoftProjector::on_btnShow_clicked()
+{
+    if(ui->btnShow->text() == "CLEAR"){
+        ui->checkBoxLive->setChecked(false);
+        ui->btnShow->setText("SHOW");
+        ui->btnShow->setChecked(false);
+        emit sendDisplay("        "," ");
+    }
+    else
+    {
+        ui->checkBoxLive->setChecked(true);
+        ui->btnShow->setText("CLEAR");
+        ui->btnShow->setChecked(true);
+        on_listShow_currentRowChanged(ui->listShow->currentRow());
+    }
 }
 
 void SoftProjector::on_actionEditSong_triggered()
@@ -209,3 +246,5 @@ void SoftProjector::on_actionSettings_triggered()
 {
     settingsDialog->exec();
 }
+
+

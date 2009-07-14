@@ -46,6 +46,8 @@ private:
     int cRow;
 
 private slots:
+    void on_checkBoxLive_clicked();
+    void on_btnShow_clicked();
     void on_actionSettings_triggered();
     void on_actionImportSongs_triggered();
     void on_actionExportSongs_triggered();

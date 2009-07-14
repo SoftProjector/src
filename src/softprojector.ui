@@ -78,12 +78,21 @@
           <property name="text">
            <string>Show</string>
           </property>
+          <property name="shortcut">
+           <string>F4</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="0" column="2">
          <widget class="QCheckBox" name="checkBoxLive">
           <property name="text">
            <string>Live</string>
+          </property>
+          <property name="shortcut">
+           <string>F3</string>
           </property>
          </widget>
         </item>
