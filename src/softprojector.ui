@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
+    <width>700</width>
     <height>550</height>
    </size>
   </property>
@@ -47,8 +47,8 @@
       <widget class="QTabWidget" name="tabWidget">
        <property name="minimumSize">
         <size>
-         <width>600</width>
-         <height>400</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
        <property name="currentIndex">
