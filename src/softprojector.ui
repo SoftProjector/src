@@ -55,9 +55,9 @@
       <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QPushButton" name="btnBlack">
+         <widget class="QPushButton" name="clear_button">
           <property name="text">
-           <string>Black</string>
+           <string>Clear</string>
           </property>
           <property name="shortcut">
            <string>Esc</string>
@@ -65,7 +65,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="btnShow">
+         <widget class="QPushButton" name="show_button">
           <property name="text">
            <string>Show</string>
           </property>
@@ -73,21 +73,11 @@
            <string>F4</string>
           </property>
           <property name="checkable">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QCheckBox" name="checkBoxLive">
-          <property name="text">
-           <string>Live</string>
-          </property>
-          <property name="shortcut">
-           <string>F3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -100,17 +90,17 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="4">
+        <item row="1" column="0" colspan="3">
          <widget class="QLabel" name="labelShow">
           <property name="text">
            <string>TextLabel</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="4">
+        <item row="2" column="0" colspan="3">
          <widget class="QListWidget" name="listShow">
           <property name="alternatingRowColors">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>

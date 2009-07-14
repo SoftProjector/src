@@ -42,17 +42,18 @@ private:
     QString type, bible2;
     Bible bible;
     int cRow;
+    bool showing; // whether we are currently showing to the projector
 
 private slots:
-    void on_checkBoxLive_clicked();
-    void on_btnShow_clicked();
+    void on_listShow_doubleClicked(QModelIndex index);
+    void on_show_button_clicked();
     void on_actionSettings_triggered();
     void on_actionImportSongs_triggered();
     void on_actionExportSongs_triggered();
     void on_actionEditDialog_triggered();
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
-    void on_btnBlack_clicked();
+    void on_clear_button_clicked();
     void on_actionEnglish_Kjv_2_triggered();
     void on_actionUkranian_2_triggered();
     void on_actionRussian_2_triggered();
