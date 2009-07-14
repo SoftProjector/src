@@ -35,7 +35,6 @@ private slots:
     void on_spinChapter_valueChanged(int value);
     void on_listChapter_currentRowChanged(int currentRow);
     void on_listChapterNum_currentTextChanged(QString currentText);
-//    void on_comboBoxBible_currentIndexChanged(int index);
     void on_listBook_currentTextChanged(QString currentText);
     void loadBible();
 
