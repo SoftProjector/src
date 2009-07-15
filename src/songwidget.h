@@ -12,8 +12,8 @@ namespace Ui {
 class SongWidget : public QWidget {
     Q_OBJECT
     Q_DISABLE_COPY(SongWidget)
-public:
-    explicit SongWidget(QWidget *parent = 0);
+        public:
+            explicit SongWidget(QWidget *parent = 0);
     virtual ~SongWidget();
 
 public slots:
@@ -40,8 +40,8 @@ private slots:
     void on_spinBoxPvNumber_valueChanged(int value);
     void on_comboBoxPvNumber_currentIndexChanged(int index);
     void showPreview(QString title);
-//    void loadSong();
-//    void loadPreview();
+    //    void loadSong();
+    //    void loadPreview();
     void loadTitles(QString tSbornik);
 
 private:
@@ -51,7 +51,8 @@ private:
     int titleType;
     Song songPreview;
     bool isPlaylistTitle;
-//    SoftProjector *toShow;
+    bool allSongs;
+    //    SoftProjector *toShow;
 };
 
 #endif // SONGWIDGET_H

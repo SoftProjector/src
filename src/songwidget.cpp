@@ -6,9 +6,9 @@ SongWidget::SongWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongWidget)
 {
-    Song t;
+//    Song t;
     ui->setupUi(this);
-    allTitles = t.getTitle();
+//    allTitles = t.getTitle();
     //loadTitles("ALL");
 //    sbornik = "pv3300";
     on_comboBoxPvNumber_currentIndexChanged(0);
@@ -63,7 +63,8 @@ void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
     ui->listTitles->clear();
     // LOAD All songs alphabetically
     if (index == 0){
-        ui->listTitles->addItems(t.getTitle());
+        allTitles=t.getTitle();
+        ui->listTitles->addItems(allTitles);
         ui->spinBoxPvNumber->setEnabled(false);
         ui->listTitles->setCurrentRow(0);
     }
@@ -172,36 +173,33 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
-    //const QChar *tmp = text.unicode();
-    //printf("New search text: '%s'", tmp);
-
-    if (ui->match_beginning_box->isChecked())
+    if (ui->comboBoxPvNumber->currentIndex()>0)
+        ui->comboBoxPvNumber->setCurrentIndex(0);
+    if (!ui->match_beginning_box->isChecked())
     {
-        titleType = 0;
+        allSongs=false;
         ui->listTitles->clear();
         QStringList tlist = text.split(" ");
         QStringList tlist2;
         if(tlist.count()==1){
             QString tx = tlist[0];
-//            qDebug() << "tx1 = " + tx;
             tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
             ui->listTitles->addItems(tlist2);
         }
         if(tlist.count()==2)
         {
             QString tx = tlist[0];
-//            qDebug() << "tx1 = " + tx;
             tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
             tx = tlist[1];
-//            qDebug() << "tx2 = " + tx;
             ui->listTitles->addItems(tlist2.filter(tx,Qt::CaseInsensitive));
         }
+
     }
     else
     {
-        if (!titleType==0)
+        if (!allSongs)
         {
-            titleType =0;
+            allSongs=true;
             ui->listTitles->clear();
             ui->listTitles->addItems(allTitles);
         }
@@ -209,13 +207,6 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         if (!empty)
             ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
         ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtTop);
-    }
-
-    if( ui->sort_box->isChecked() )
-    {
-        titleType=0;
-        ui->listTitles->clear();
-        ui->listTitles->addItems(allTitles);
     }
 }
 
@@ -233,7 +224,7 @@ Song SongWidget::sendToEdit()
 void SongWidget::on_match_beginning_box_toggled(bool checked)
 {
     QString new_text = ui->lineEditSearch->text();
-    SongWidget::on_lineEditSearch_textEdited(new_text);
+    on_lineEditSearch_textEdited(new_text);
 }
 
 void SongWidget::on_sort_box_toggled(bool checked)
