@@ -239,9 +239,9 @@ QStringList Song::formatSongList(QString song)
             while (j<k)
             {
                 if (j==k-1) 
-		    text += split[j];
+                    text += split[j];
                 else 
-		    text += split[j] + "\n";
+                    text += split[j] + "\n";
                 j++;
             }
             formatedSong += text.trimmed();
@@ -249,7 +249,7 @@ QStringList Song::formatSongList(QString song)
                 formatedSong += chorus;
             }
         } 
-	else if (text2.startsWith(codec.fromUtf8("Припев")))
+        else if (text2.startsWith(codec.fromUtf8("Припев")))
         { // Fill Chorus
             while (j<k)
             {
@@ -261,9 +261,9 @@ QStringList Song::formatSongList(QString song)
             if (chorus.size()>3)
             {
                 has_chorus=1; 
-		chor++;
+                chor++;
                 if (chor ==1) 
-		    formatedSong += chorus;
+                    formatedSong += chorus;
                 else if (chor ==2)
                 {
                     formatedSong[formatedSong.size()-1] = chorus;
@@ -281,6 +281,7 @@ QStringList Song::formatSongList(QString song)
 
 QStringList Song::getTitle()
 {
+    // Loads all titels in database
     QStringList titles;
     QSqlQuery sq;
     sq.exec("SELECT title FROM songs");
@@ -291,42 +292,46 @@ QStringList Song::getTitle()
 
 QStringList Song::getTitle(QString sbornik)
 {
+    // Loads titles from one sbornik and are sotred alphaberically
     QStringList titles;
+    QMap<QString, int> tMap;
     QSqlQuery sq;
-    sq.exec("SELECT title FROM songs WHERE "+sbornik+">0");
-    while (sq.next()) titles << sq.value(0).toString();
-    titles.sort();
+    sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
+    while (sq.next()) tMap[sq.value(0).toString()] = sq.value(1).toInt();
+    QList<int> list1;
+    list1 = tMap.values();
+    QStringList list2;
+    list2 = tMap.keys();
+    int mapLenght(tMap.size());
+    int i(0);
+    while (i<mapLenght)
+    {
+        titles << QString::number(list1[i]) + " - " + list2[i];
+        ++i;
+    }
     return titles;
 }
 
 QStringList Song::getTitle2(QString sbornik)
 {
+    // Load titles from one sbornik and are sorted numerically
     QStringList titles;
-//    titles << "a";
     QMap<int, QString> tMap;
     QSqlQuery sq;
     sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
-//    while (sq.next()) titles << sq.value(1).toString()
-//        + " - " + sq.value(0).toString();
+
     while(sq.next()) tMap[sq.value(1).toInt()] = sq.value(0).toString();
-//    qDebug() << "Map Set";
-//    qSort(tMap.values().begin(),tMap.values().end());
     QList<int> list1;
     list1 = tMap.keys();
     QStringList list2;
     list2 = tMap.values();
     int mapLenght(tMap.size());
     int i(0);
-    QString aa;
     while (i<mapLenght)
     {
         titles << QString::number(list1[i]) + " - " + list2[i];
-        aa = title[i];
-//        qDebug() << aa;
         ++i;
     }
-//    foreach(QString str, tMap) qDebug()<< str;
-//    titles.sort();
     return titles;
 }
 

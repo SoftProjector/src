@@ -9,10 +9,11 @@ SongWidget::SongWidget(QWidget *parent) :
     Song t;
     ui->setupUi(this);
     allTitles = t.getTitle();
-    loadTitles("ALL");
-    sbornik = "pv3300";
-    titleType=0;
-    ui->listTitles->setCurrentRow(0);
+    //loadTitles("ALL");
+//    sbornik = "pv3300";
+    on_comboBoxPvNumber_currentIndexChanged(0);
+//    titleType=0;
+
 //    ui->listPreview->addItems(songPreview.getSongList(1, sbornik));
 //    toShow = new SoftProjector();
 }
@@ -57,29 +58,58 @@ void SongWidget::showPreview(QString title)
 
 void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
 {
-    if (index == 0)
-        sbornik = "pv3300";
-    else if (index==1)
-        sbornik = "pv2001";
-    else if (index==2)
-        sbornik = "uaEpisni";
-    else if (index==3)
-        sbornik = "pvUser";
-
     titleType=1;
     Song t;
     ui->listTitles->clear();
-    ui->listTitles->addItems(t.getTitle2(sbornik));
+    // LOAD All songs alphabetically
+    if (index == 0){
+        ui->listTitles->addItems(t.getTitle());
+        ui->spinBoxPvNumber->setEnabled(false);
+        ui->listTitles->setCurrentRow(0);
+    }
+    // LOAD Песнь Возорждения 2800
+    else if (index==1){
+        ui->spinBoxPvNumber->setEnabled(true);
+        if(ui->sort_box->isChecked())
+            ui->listTitles->addItems(t.getTitle("pv3300"));
+        else
+            ui->listTitles->addItems(t.getTitle2("pv3300"));
+        ui->listTitles->setCurrentRow(0);
+    }
+    // LOAD  Песнь Возорждения 2100
+    else if (index==2){
+        ui->spinBoxPvNumber->setEnabled(true);
+        if(ui->sort_box->isChecked())
+            ui->listTitles->addItems(t.getTitle("pv2001"));
+        else
+            ui->listTitles->addItems(t.getTitle2("pv2001"));
+        ui->listTitles->setCurrentRow(0);
+    }
+    // LOAD Євангелські Пісні
+    else if (index==3){
+        ui->spinBoxPvNumber->setEnabled(true);
+        if(ui->sort_box->isChecked())
+            ui->listTitles->addItems(t.getTitle("uaEpisni"));
+        else
+            ui->listTitles->addItems(t.getTitle2("uaEpisni"));
+        ui->listTitles->setCurrentRow(0);
+    }
+    // LOAD user sbornik
+    else if (index==4){
+        ui->spinBoxPvNumber->setEnabled(true);
+        if(ui->sort_box->isChecked())
+            ui->listTitles->addItems(t.getTitle("pvUser"));
+        else
+            ui->listTitles->addItems(t.getTitle2("pvUser"));
+        ui->listTitles->setCurrentRow(0);
+    }
 
 }
 
 void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
 {
-    if (!titleType==1){
-        titleType=1;
-        Song t;
-        ui->listTitles->clear();
-        ui->listTitles->addItems(t.getTitle2(sbornik));
+    if (ui->sort_box->isChecked()){
+    ui->sort_box->setChecked(false);
     }
     bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
     if (!empty)
@@ -208,6 +238,7 @@ void SongWidget::on_match_beginning_box_toggled(bool checked)
 
 void SongWidget::on_sort_box_toggled(bool checked)
 {
-    QString new_text = ui->lineEditSearch->text();
-    SongWidget::on_lineEditSearch_textEdited(new_text);
+//    QString new_text = ui->lineEditSearch->text();
+//    SongWidget::on_lineEditSearch_textEdited(new_text);
+    on_comboBoxPvNumber_currentIndexChanged(ui->comboBoxPvNumber->currentIndex());
 }

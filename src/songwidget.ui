@@ -43,6 +43,11 @@
          </property>
          <item>
           <property name="text">
+           <string> All Song</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Песнь Возорждения 2800</string>
           </property>
          </item>
@@ -144,7 +149,10 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>If checked, only songs that start with the search text are displayed; otherwise all songs which contain the search text in the title are displayed</string>
+          <string>If checked, sort current sbornik alphabetically</string>
+         </property>
+         <property name="statusTip">
+          <string>If checked, sort current sbornik alphabetically</string>
          </property>
          <property name="text">
           <string>Sort alphabetically</string>
