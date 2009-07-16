@@ -9,7 +9,8 @@ QStringList Bible::getBooks(QString bible)
     QStringList books;
     QSqlQuery sq;
     sq.exec("SELECT " + bible + " FROM books");
-    while (sq.next()) books << sq.value(0).toString();
+    while (sq.next())
+        books << sq.value(0).toString();
     return books;
 }
 
@@ -45,7 +46,7 @@ void Bible::setSecondary(QString bible)
     QSqlQuery sq;
     verseList2.clear();
     captionList2.clear();
-    for (int i(0);i<idCount;++i)
+    for (int i(0); i<idCount; ++i)
     {
         id = idList[i];
         bool hasVerse = sq.exec("SELECT bookName, chapter, verse, verseText FROM " +
@@ -79,8 +80,11 @@ int Bible::maxChapters(QString book, QString bible)
 {
     int chapters(0);
     QSqlQuery sq;
-    if(bible=="bibleRu")sq.exec("SELECT chapters FROM books WHERE bibleRue = '"+book+"'");
-    else sq.exec("SELECT chapters FROM books WHERE " +bible+ " = '"+book+"'");
-    while(sq.next()) chapters = sq.value(0).toInt();
+    if(bible=="bibleRu")
+        sq.exec("SELECT chapters FROM books WHERE bibleRue = '"+book+"'");
+    else
+        sq.exec("SELECT chapters FROM books WHERE " +bible+ " = '"+book+"'");
+    while(sq.next())
+        chapters = sq.value(0).toInt();
     return chapters;
 }
