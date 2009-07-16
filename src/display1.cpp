@@ -92,15 +92,23 @@ void Display1::SetMainText(QString text)
     QString textemp = list1[0];
     textemp.remove(6,10);
     if (textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")))list1[0] ="";
-    if (list1[0]=="") list1.removeFirst();
+    if (list1[0]=="")
+        list1.removeFirst();
     int listlen = list1.size()-1;
     if (list1[listlen]=="* * *"){
         hasCaption=1;
         CaptionText="*\t*\t*";
         list1[listlen]="";
     }
-    if (list1[listlen]=="") list1.removeLast(); // removes last line if nothing is there
-    if (text.length()<3){DisplayList.clear();list1.clear(); update();return;}
+    if (list1[listlen]=="")
+        list1.removeLast(); // removes last line if nothing is there
+    if ( text.length() < 3 )
+    {
+        DisplayList.clear();
+        list1.clear();
+        update();
+        return;
+    }
     int width_of_space;
     do
     {
@@ -136,7 +144,8 @@ void Display1::SetMainText(QString text)
                         else if (MainText=="  ");
                         else DisplayList << MainText;
                         text_width = fm.width(MainText,-1);
-                        if (text_width>max_width) max_width=text_width+width_of_space+width_of_space;
+                        if (text_width>max_width)
+                            max_width=text_width+width_of_space+width_of_space;
                         tempText=list2[i] + " ";
                         MainText=tempText;
 
@@ -154,13 +163,15 @@ void Display1::SetMainText(QString text)
         }
 
         text_width=fm.width(MainText,-1);
-        if (text_width>max_width)max_width=text_width;
+        if (text_width>max_width)
+            max_width=text_width;
 
 
         //DisplayList<<MainText;
         //DisplayList<<text;
         FontSize-=4;
-    }while ((DisplayList.size() * fm.height())>(height()-2*MARGIN-(fm.height()*hasCaption))) ;
+    }
+    while ((DisplayList.size() * fm.height())>(height()-2*MARGIN-(fm.height()*hasCaption))) ;
     //CaptionText.clear();
     max_width=max_width-width_of_space;
     //update();
