@@ -35,6 +35,7 @@ public:
 signals:
     void sendDisplay(QString verse, QString caption);
 
+
 private:
     Ui::SoftProjectorClass *ui;
     QActionGroup *primaryGroup;
@@ -65,6 +66,8 @@ private slots:
     void on_actionClose_triggered();
     void setSongList(QStringList showList, QString caption, int row);
     void setBibleList(Bible bible, QString bibleSecondary, int row);
+
+public:
 
 protected:
     void closeEvent(QCloseEvent *event);

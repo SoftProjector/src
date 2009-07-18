@@ -17,7 +17,6 @@
 class Display1 : public QWidget
 {
     Q_OBJECT
-    QFont MainFont;
     QStringList DisplayList;
     int hasCaption;
 public:
@@ -30,8 +29,10 @@ public slots:
     void SetAllText(QString text,QString caption);
     void RenderText();
     void CrossFade();
-    void NewFont(QFont newFont);
-    void NewWallpaper(QString path);
+    QFont getFont();
+    void setNewFont(QFont newFont);
+    QString getWallpaper();
+    void setNewWallpaper(QString path);
     void quit_kill();
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
@@ -44,6 +45,8 @@ private:
     QString MainText;
     QString CaptionText;
     QString root_path;
+    QFont MainFont;
+    QString wallpaperPath;
     QImage wallpaper;
     //	QPixmap FaderPixmap;
     QPixmap sharp0;
@@ -53,7 +56,6 @@ private:
     int acounter[2];
     QImage m_blurred;
     QTimer *timer;
-    QString wallpaperPath;
 };
 
 #endif // DISPLAY1_H

@@ -16,12 +16,14 @@
 Display1::Display1(QWidget *parent)
         : QWidget(parent)
 {
-        QFile cfgFile("font.cfg");
+    // Read the font from the font configuration file:
+    QFile cfgFile("font.cfg");
     cfgFile.open(QIODevice::Text | QIODevice::ReadOnly);
     MainFont.fromString(cfgFile.readLine());
     cfgFile.close();
 //    qDebug() << MainFont.toString();
 
+    // Read the path of the wallpaper from the configuration file:
     QFile cfgFile2("wallpaper.cfg");
     cfgFile2.open(QIODevice::Text | QIODevice::ReadOnly);
     wallpaperPath=cfgFile2.readLine();
@@ -30,9 +32,6 @@ Display1::Display1(QWidget *parent)
     codec = QTextCodec::codecForName("UTF8");
 
 
-        //MainFont=font();
-//    MainFont.setWeight(99);
-   // MainFont.setFamily("Charcoal CY");
     setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
     root_path="./";
 #ifdef Q_WS_MAC
@@ -46,8 +45,6 @@ Display1::Display1(QWidget *parent)
 
     root_path=pathPtr;
 #endif
-    //wallpaper.load(root_path.append("/background"));
-    //wallpaper = wallpaper.scaled(width(),height());
     timer = new QTimer(this);
 
 
@@ -152,13 +149,20 @@ void Display1::SetMainText(QString text)
                     }
 
                 }
-                if (MainText=="");// Next 3 statements check that empty lines do not print on the screen
-                else if (MainText==" ");
-                else if (MainText=="  ");
-                else DisplayList<<MainText;
+                if (MainText=="")
+                    ;// Next 3 statements check that empty lines do not print on the screen
+                else if (MainText==" ")
+                    ;
+                else if (MainText=="  ")
+                    ;
+                else DisplayList<<MainText
+                    ;
 
 
-            } else{  DisplayList<<text2;}
+            } else
+            {
+                DisplayList<<text2;
+            }
 
         }
 
@@ -222,28 +226,14 @@ void Display1::RenderText()
     if (!DisplayList.isEmpty()){
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
-        {//path.append(root_path);
-           // path.append("png/background.png");//+QString::number(rand()%33)+".png");
+        {
            wallpaper.load(wallpaperPath);
            wallpaper=wallpaper.scaled(width(),height());
-           //wallpaper = QImage((wallpaperPath)).scaled(width(),height());
-//            wallpaper2 = QImage((path)).scaled(width(),height());
-        }
+           }
         painter3.drawImage(0,0,wallpaper);
 
-    }/*else{
+    }
 
-                path.append(root_path);
-                path.append("png/background.png");//+QString::number(rand()%33)+".png");
-                wallpaper = QImage((path)).scaled(width(),height());
-                //fastbluralpha(wallpaper,2);
-            }//
-            if(wallpaper.width()!=width())
-            {path.append(root_path);
-            path.append("png/background.png");//+QString::number(rand()%33)+".png");
-            wallpaper = QImage((path)).scaled(width(),height());
-            painter3.drawImage(0,0,wallpaper);
-        }*/
     QFontMetrics fm(font());
     int start_y;//=MARGIN;//(height()-(fm.height()*(DisplayList.size()+hasCaption)))/2;
     painter2.setPen(QColor(TEXT_COLOR));
@@ -271,18 +261,29 @@ void Display1::RenderText()
 
 }
 
-
-void Display1::NewFont(QFont newFont)
+QFont Display1::getFont()
 {
-    MainFont=newFont;
+    return MainFont;
 }
 
-void Display1::NewWallpaper(QString path)
+void Display1::setNewFont(QFont new_font)
+{
+    MainFont = new_font;
+}
+
+QString Display1::getWallpaper()
+{
+    return wallpaperPath;
+}
+
+void Display1::setNewWallpaper(QString path)
 {
     wallpaperPath=path;
         wallpaper.load(wallpaperPath);
     wallpaper = wallpaper.scaled(width(),height());
 }
+
+
 
 void Display1::paintEvent(QPaintEvent * /* event */)
 {

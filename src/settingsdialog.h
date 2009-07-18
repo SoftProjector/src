@@ -22,6 +22,8 @@ protected:
 private:
     Ui::SettingsDialog *ui;
     SoftProjector *softProjector;
+    QFont new_font;
+    QString new_wallpaper_path;
 
 private slots:
     void on_change_background_button_clicked();

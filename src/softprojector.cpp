@@ -119,6 +119,7 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 
 }
 
+
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the preview table.
