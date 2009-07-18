@@ -11,6 +11,10 @@ SoftProjector::SoftProjector(QWidget *parent)
     QDesktopWidget *desktop;
     desktop = new QDesktopWidget();
     display = new Display1(desktop->screen(3));
+
+    // Will modify's display's font and wallpaper:
+    readConfigurationFile();
+
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 //    display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
@@ -72,6 +76,43 @@ SoftProjector::~SoftProjector()
 {
     delete ui;
 }
+
+
+
+void SoftProjector::readConfigurationFile()
+{
+    // Read the font from the font configuration file:
+    QFile cfgFile("settings.cfg");
+    cfgFile.open(QIODevice::Text | QIODevice::ReadOnly);
+
+    QFont font;
+    font.fromString(cfgFile.readLine());
+    display->setNewFont(font);
+
+    //    qDebug() << MainFont.toString();
+
+    // Read the path of the wallpaper from the configuration file:
+    display->setNewWallpaper(cfgFile.readLine());
+
+    cfgFile.close();
+}
+
+
+void SoftProjector::writeConfigurationFile()
+{
+    QFile cfgFile("settings.cfg");
+    QString fontString = display->getFont().toString();
+    QString wallpaperPath = display->getWallpaper();
+    cfgFile.open(QIODevice::Text | QIODevice::WriteOnly);
+
+    cfgFile.write(qPrintable(fontString));
+    cfgFile.write("\n");
+    cfgFile.write(qPrintable(wallpaperPath));
+    cfgFile.close();
+}
+
+
+
 
 void SoftProjector::closeEvent(QCloseEvent *event)
 {

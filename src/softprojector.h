@@ -24,13 +24,16 @@ class SoftProjector : public QMainWindow
 
 public:
     SoftProjector(QWidget *parent = 0);
+    ~SoftProjector();
     SongWidget *songWidget;
     BibleWidget *bibleWidget;
     Display1 *display;
     EditWidget *editWidget;
     ImportDialog *importSongs;
     ExportDialog *exportSongs;
-    ~SoftProjector();
+
+    void readConfigurationFile();
+    void writeConfigurationFile();
 
 signals:
     void sendDisplay(QString verse, QString caption);

@@ -16,18 +16,9 @@
 Display1::Display1(QWidget *parent)
         : QWidget(parent)
 {
-    // Read the font from the font configuration file:
-    QFile cfgFile("font.cfg");
-    cfgFile.open(QIODevice::Text | QIODevice::ReadOnly);
-    MainFont.fromString(cfgFile.readLine());
-    cfgFile.close();
-//    qDebug() << MainFont.toString();
 
-    // Read the path of the wallpaper from the configuration file:
-    QFile cfgFile2("wallpaper.cfg");
-    cfgFile2.open(QIODevice::Text | QIODevice::ReadOnly);
-    wallpaperPath=cfgFile2.readLine();
-    cfgFile2.close();
+
+
 
     codec = QTextCodec::codecForName("UTF8");
 
@@ -61,6 +52,8 @@ Display1::Display1(QWidget *parent)
 
 
 }
+
+
 
 void Display1::CrossFade()
 {

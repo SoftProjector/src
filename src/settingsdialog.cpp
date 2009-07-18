@@ -71,6 +71,8 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
 
+    softProjector->writeConfigurationFile();
+
     close();
 }
 

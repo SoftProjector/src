@@ -23,6 +23,7 @@ public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
 
+
 public slots:
     void SetMainText(QString text);
     void SetCaptionText(QString text);
