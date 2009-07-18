@@ -79,13 +79,23 @@ void SettingsDialog::on_buttonBox_accepted()
 void SettingsDialog::on_change_font_button_clicked()
 {
     // Change the font
-    // NOTE: This change should take place ONLY if the user pressed OK
-    //new_font = ...;
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, new_font, this);
+    if (ok)
+        new_font = font;
 }
 
 void SettingsDialog::on_change_background_button_clicked()
 {
     // Change background
-    // NOTE: This change should take place ONLY if the user pressed OK
-    // new_wallpaper = ...;
+    QString filename = QFileDialog::getOpenFileName(this,
+                         "Select a picture for the wallpaper",
+                         ".",
+                         "Images (*.png *.jpg *.jpeg)");
+
+    if( !filename.isNull() )
+        new_wallpaper_path = filename;
 }
+
+
+

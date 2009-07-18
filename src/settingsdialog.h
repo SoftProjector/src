@@ -3,6 +3,7 @@
 
 
 #include <QtGui/QDialog>
+#include <QtGui/QFileDialog>
 #include "softprojector.h"
 
 namespace Ui {
