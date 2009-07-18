@@ -35,7 +35,8 @@ void ExportDialog::on_buttonBox_rejected()
 
 void ExportDialog::on_buttonBox_accepted()
 {
-    if (!(ui->lblUserNum->text()=="0"))exportUser();
+    if (!(ui->lblUserNum->text()=="0"))
+        exportUser();
     close();
 }
 
