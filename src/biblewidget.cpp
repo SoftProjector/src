@@ -6,9 +6,6 @@ BibleWidget::BibleWidget(QWidget *parent) :
     ui(new Ui::BibleWidget)
 {
     ui->setupUi(this);
-//    biblePrimary = "bibleRu";
-//    bibleSecondary = "bibleKjv";
-//    loadBible();
 }
 
 BibleWidget::~BibleWidget()
@@ -35,58 +32,29 @@ void BibleWidget::loadBible()
     ui->listBook->setCurrentRow(0);
 }
 
-int BibleWidget::getPrimary()
+QString BibleWidget::getPrimary()
 {
-    if( biblePrimary == "bibleRu" )
-        return 0;
-    else if( biblePrimary == "bibleUa" )
-        return 1;
-    else if( biblePrimary == "bibleKjv" )
-        return 2;
-    throw biblePrimary;
+    return biblePrimary;
 }
 
-int BibleWidget::getSecondary()
+QString BibleWidget::getSecondary()
 {
-    if( bibleSecondary == "bibleRu" )
-        return 0;
-    else if( bibleSecondary == "bibleUa" )
-        return 1;
-    else if( bibleSecondary == "bibleKjv" )
-        return 2;
-    throw bibleSecondary;
+    return bibleSecondary;
 }
 
 
-void BibleWidget::setPrimary(int i)
+void BibleWidget::setPrimary(QString bibleName)
 {
-    if (i==0) 
-	biblePrimary = "bibleRu";
-    else if (i==1) 
-	biblePrimary = "bibleUa";
-    else if (i==2) 
-	biblePrimary = "bibleKjv";
+    biblePrimary = bibleName;
     loadBible();
 }
 
-void BibleWidget::setSecondary(int i)
+void BibleWidget::setSecondary(QString bibleName)
 {
-    if (i==0) 
-	bibleSecondary = "bibleRu";
-    else if (i==1)
-       	bibleSecondary = "bibleUa";
-    else if (i==2)
-       	bibleSecondary = "bibleKjv";
+    bibleSecondary = bibleName;
+    loadBible();
 }
 
-//void BibleWidget::on_comboBoxBible_currentIndexChanged(int index)
-//{
-//    if (index==0) biblePrimary = "bibleRu";
-//    else if (index==1) biblePrimary = "bibleKjv";
-//    else if (index==2) biblePrimary = "bibleKjv";
-//    qDebug() << biblePrimary;
-//    loadBible();
-//}
 
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
@@ -164,5 +132,3 @@ void BibleWidget::on_btnLive_clicked()
 {
     emit goLive(bible, bibleSecondary, ui->spinVerse->value() - 1);
 }
-
-

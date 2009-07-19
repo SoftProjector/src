@@ -4,17 +4,19 @@ Bible::Bible()
 {
 }
 
-QStringList Bible::getBooks(QString bible)
+QStringList Bible::getBooks(QString bibleName)
 {
     QStringList books;
     QSqlQuery sq;
-    sq.exec("SELECT " + bible + " FROM books");
+    QString bibleDbName = getDbBibleName(bibleName);
+
+    sq.exec("SELECT " + bibleDbName + " FROM books");
     while (sq.next())
         books << sq.value(0).toString();
     return books;
 }
 
-QStringList Bible::getChapter(QString bible, QString book, int chapter)
+QStringList Bible::getChapter(QString bibleName, QString book, int chapter)
 {
     QSqlQuery sq;
     QString verse, verseText, id;
@@ -22,8 +24,10 @@ QStringList Bible::getChapter(QString bible, QString book, int chapter)
     verseList.clear();
     verseList1.clear();
     captionList1.clear();
-    primary = bible;
-    sq.exec("SELECT id,verse,verseText FROM " + bible
+    primary = bibleName;
+    QString bibleDbName = getDbBibleName(bibleName);
+
+    sq.exec("SELECT id,verse,verseText FROM " + bibleDbName
             + " WHERE bookName = '" + book + "' AND chapter = '" + QString::number(chapter) + "'");
     while (sq.next())
     {
@@ -39,9 +43,11 @@ QStringList Bible::getChapter(QString bible, QString book, int chapter)
     return verseList;
 }
 
-void Bible::setSecondary(QString bible)
+void Bible::setSecondary(QString bibleName)
 {
     QString id, book, chapter, verse, verseText;
+    QString bibleDbName = getDbBibleName(bibleName);
+
     int idCount = idList.count();
     QSqlQuery sq;
     verseList2.clear();
@@ -50,7 +56,7 @@ void Bible::setSecondary(QString bible)
     {
         id = idList[i];
         bool hasVerse = sq.exec("SELECT bookName, chapter, verse, verseText FROM " +
-                                bible + " WHERE id = '" + id + "'" );
+                                bibleDbName + " WHERE id = '" + id + "'" );
         verseText.clear();
         while(sq.next())
         {
@@ -72,18 +78,34 @@ void Bible::setSecondary(QString bible)
     }
 }
 
-QStringList Bible::getVerse(QString id, QString bible)
+QStringList Bible::getVerse(QString id, QString bibleName)
 {
 }
 
-int Bible::maxChapters(QString book, QString bible)
+QString Bible::getDbBibleName(QString bibleName)
+{
+    QString bibleDbName;
+    if( bibleName == "Russian" )
+        bibleDbName = "bibleRu";
+    else if( bibleName == "Ukrainian" )
+        bibleDbName = "bibleUa";
+    else if( bibleName == "English (KJV)" )
+        bibleDbName = "bibleKjv";
+    return bibleDbName;
+}
+
+int Bible::maxChapters(QString book, QString bibleName)
 {
     int chapters(0);
     QSqlQuery sq;
-    if(bible=="bibleRu")
+
+    QString bibleDbName = getDbBibleName(bibleName);
+
+    if(bibleDbName == "bibleRu")
+        // FIXME Why "bibleRu" instead of "bibleRu"??
         sq.exec("SELECT chapters FROM books WHERE bibleRue = '"+book+"'");
     else
-        sq.exec("SELECT chapters FROM books WHERE " +bible+ " = '"+book+"'");
+        sq.exec("SELECT chapters FROM books WHERE " + bibleDbName + " = '"+book+"'");
     while(sq.next())
         chapters = sq.value(0).toInt();
     return chapters;

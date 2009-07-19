@@ -7,11 +7,12 @@ class Bible
 {
 public:
     Bible();
-    QStringList getBooks(QString bible);
-    QStringList getChapter(QString bible, QString book, int chapter);
-    QStringList getVerse(QString id, QString bible);
-    int maxChapters(QString book, QString bible);
-    void setSecondary(QString bible);
+    QStringList getBooks(QString bibleName);
+    QStringList getChapter(QString bibleName, QString book, int chapter);
+    QStringList getVerse(QString id, QString bibleName);
+    int maxChapters(QString book, QString bibleName);
+    QString getDbBibleName(QString bibleName);
+    void setSecondary(QString bibleName);
 
     QStringList verseList;
     QStringList idList;

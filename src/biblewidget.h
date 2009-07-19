@@ -16,10 +16,10 @@ public:
     virtual ~BibleWidget();
 
 public slots:
-    int getPrimary();
-    int getSecondary();
-    void setPrimary(int i);
-    void setSecondary(int i);
+    QString getPrimary();
+    QString getSecondary();
+    void setPrimary(QString bibleName);
+    void setSecondary(QString bibleName);
 
 protected:
     virtual void changeEvent(QEvent *e);

@@ -12,8 +12,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     desktop = new QDesktopWidget();
     display = new Display1(desktop->screen(3));
 
-    // Will modify's display's font and wallpaper:
-    readConfigurationFile();
 
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
@@ -40,28 +38,19 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget = new EditWidget;
     importSongs = new ImportDialog;
     exportSongs = new ExportDialog;
+
     showing = false;
-    ui->show_button->setEnabled(true);
-    ui->clear_button->setEnabled(false);
+
+    // Will modify's display's font and wallpaper:
+    readConfigurationFile();
+
+
 
     ui->tabWidget->clear();
-    bibleWidget->setPrimary(0);
-    bibleWidget->setSecondary(2);
     ui->tabWidget->addTab(bibleWidget, "Bible");
     ui->tabWidget->addTab(songWidget,"Songs");
 
     editWidget->setWindowTitle("Edit and/or Add New songs");
-
-    primaryGroup = new QActionGroup(this);
-    primaryGroup->addAction(ui->actionRussian);
-    primaryGroup->addAction(ui->actionEnglish_Kjv);
-    primaryGroup->addAction(ui->actionUkranian);
-    ui->actionRussian->setChecked(true);
-    secondaryGroup = new QActionGroup(this);
-    secondaryGroup->addAction(ui->actionRussian_2);
-    secondaryGroup->addAction(ui->actionEnglish_Kjv_2);
-    secondaryGroup->addAction(ui->actionUkranian_2);
-    ui->actionEnglish_Kjv_2->setChecked(true);
 
     connect(songWidget, SIGNAL(sendSong(QStringList, QString, int)),
             this, SLOT(setSongList(QStringList, QString, int)));
@@ -94,6 +83,15 @@ void SoftProjector::readConfigurationFile()
     // Read the path of the wallpaper from the configuration file:
     display->setNewWallpaper(cfgFile.readLine());
 
+
+    // FIXME
+    ui->show_button->setEnabled(true);
+    ui->clear_button->setEnabled(false);
+
+    // FIXME
+    bibleWidget->setPrimary("Russian");
+    bibleWidget->setSecondary("English (KJV)");
+
     cfgFile.close();
 }
 
@@ -109,6 +107,9 @@ void SoftProjector::writeConfigurationFile()
     cfgFile.write("\n");
     cfgFile.write(qPrintable(wallpaperPath));
     cfgFile.close();
+
+
+    // FIXME also save black, verse, primarybible, secondarybible
 }
 
 
@@ -145,7 +146,7 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 
     type = "bible";
     bible = bib; bible2 = bib2; cRow = row;
-    if( !(bible.primary == bible2) )
+    if( bible.primary != bible2 )
         bible.setSecondary(bible2);
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
@@ -186,36 +187,6 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 	    emit sendDisplay(verse,caption);
 	}
     }
-}
-
-void SoftProjector::on_actionRussian_triggered()
-{
-    bibleWidget->setPrimary(0);
-}
-
-void SoftProjector::on_actionUkranian_triggered()
-{
-    bibleWidget->setPrimary(1);
-}
-
-void SoftProjector::on_actionEnglish_Kjv_triggered()
-{
-    bibleWidget->setPrimary(2);
-}
-
-void SoftProjector::on_actionRussian_2_triggered()
-{
-    bibleWidget->setSecondary(0);
-}
-
-void SoftProjector::on_actionUkranian_2_triggered()
-{
-    bibleWidget->setSecondary(1);
-}
-
-void SoftProjector::on_actionEnglish_Kjv_2_triggered()
-{
-    bibleWidget->setSecondary(2);
 }
 
 void SoftProjector::on_clear_button_clicked()

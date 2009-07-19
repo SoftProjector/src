@@ -41,8 +41,6 @@ signals:
 
 private:
     Ui::SoftProjectorClass *ui;
-    QActionGroup *primaryGroup;
-    QActionGroup *secondaryGroup;
     QString type, bible2;
     Bible bible;
     int cRow;

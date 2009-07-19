@@ -22,8 +22,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	ui->primary_bible_menu->addItem( bibles.at(i) );
         ui->secondary_bible_menu->addItem( bibles.at(i) );
     }
-    ui->primary_bible_menu->setCurrentIndex(softProjector->bibleWidget->getPrimary());
-    ui->secondary_bible_menu->setCurrentIndex(softProjector->bibleWidget->getSecondary());
+    int primary_index = ui->primary_bible_menu->findText(softProjector->bibleWidget->getPrimary());
+    ui->primary_bible_menu->setCurrentIndex(primary_index);
+
+    int secondary_index = ui->secondary_bible_menu->findText(softProjector->bibleWidget->getSecondary());
+    ui->secondary_bible_menu->setCurrentIndex(secondary_index);
 
     // ui->use_fading_effects_box
 
@@ -57,19 +60,21 @@ void SettingsDialog::on_buttonBox_rejected()
 void SettingsDialog::on_buttonBox_accepted()
 {
     bool show_black = ui->blank_screen_rbutton->isChecked();
-    bool vers = ui->verse_rbutton->isChecked();
+    bool verse = ui->verse_rbutton->isChecked();
 
-    int primaryIndex = ui->primary_bible_menu->currentIndex();
-    int secondaryIndex = ui->secondary_bible_menu->currentIndex();
+    QString primaryBible = ui->primary_bible_menu->currentText();
+    QString secondaryBible = ui->secondary_bible_menu->currentText();
 
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
 
-    softProjector->bibleWidget->setPrimary(primaryIndex);
-    softProjector->bibleWidget->setSecondary(secondaryIndex);
+    softProjector->bibleWidget->setPrimary(primaryBible);
+    softProjector->bibleWidget->setSecondary(secondaryBible);
 
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
+    //softProjector->display->setShowBlack(show_black);
+    //softProjector->setVerse(verse);
 
     softProjector->writeConfigurationFile();
 
