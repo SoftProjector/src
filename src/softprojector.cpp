@@ -71,6 +71,20 @@ void SoftProjector::readConfigurationFile()
 {
     // Read the font from the font configuration file:
     QFile fh("settings.cfg");
+
+    if( ! fh.exists() )
+    {
+        // Set default settings:
+
+        // display->setNewFont(...
+        display->setNewWallpaper(QString());
+        display->setShowBlack(true);
+        bibleWidget->setPrimary(QString("Russian"));
+        bibleWidget->setSecondary(QString("English (KJV)"));
+        return;
+    }
+    // Read the settings file:
+
     fh.open(QIODevice::Text | QIODevice::ReadOnly);
 
     QFont font;
@@ -78,19 +92,19 @@ void SoftProjector::readConfigurationFile()
     display->setNewFont(font);
 
     // Read the path of the wallpaper from the configuration file:
-    QString new_wallpaper_path =fh.readLine();
+    QString new_wallpaper_path = fh.readLine();
     new_wallpaper_path.chop(1); // Remove the trailing return character
     display->setNewWallpaper(new_wallpaper_path);
 
     display->setShowBlack( fh.readLine() == "Show black: true" );
 
-    // FIXME
-    ui->show_button->setEnabled(true);
-    ui->clear_button->setEnabled(false);
+    QString primary_bible = fh.readLine();
+    primary_bible.chop(1);
+    QString secondary_bible = fh.readLine();
+    secondary_bible.chop(1);
 
-    // FIXME
-    bibleWidget->setPrimary("Russian");
-    bibleWidget->setSecondary("English (KJV)");
+    bibleWidget->setPrimary(primary_bible);
+    bibleWidget->setSecondary(secondary_bible);
 
     fh.close();
 }
@@ -113,7 +127,14 @@ void SoftProjector::writeConfigurationFile()
         fh.write("Show black: true\n");
     else
         fh.write("Show black: false\n");
+
+    fh.write(qPrintable(bibleWidget->getPrimary()));
+    fh.write("\n");
+    fh.write(qPrintable(bibleWidget->getSecondary()));
+    fh.write("\n");
+
     fh.close();
+
 
     // FIXME also save black, verse, primarybible, secondarybible
 }
