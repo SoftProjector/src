@@ -35,8 +35,6 @@ public:
     void readConfigurationFile();
     void writeConfigurationFile();
 
-signals:
-    void sendDisplay(QString verse, QString caption);
 
 
 private:
