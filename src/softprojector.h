@@ -56,12 +56,6 @@ private slots:
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
     void on_clear_button_clicked();
-    void on_actionEnglish_Kjv_2_triggered();
-    void on_actionUkranian_2_triggered();
-    void on_actionRussian_2_triggered();
-    void on_actionEnglish_Kjv_triggered();
-    void on_actionUkranian_triggered();
-    void on_actionRussian_triggered();
     void on_listShow_currentRowChanged(int currentRow);
 //    void on_listShow_currentTextChanged(QString currentText);
     void on_actionClose_triggered();
