@@ -6,7 +6,6 @@ TARGET = softProjector
 TEMPLATE = app
 SOURCES += main.cpp \
     softprojector.cpp \
-    display.cpp \
     songwidget.cpp \
     biblewidget.cpp \
     editwidget.cpp \
@@ -17,7 +16,6 @@ SOURCES += main.cpp \
     exportdialog.cpp \
     settingsdialog.cpp
 HEADERS += softprojector.h \
-    display.h \
     songwidget.h \
     biblewidget.h \
     editwidget.h \
@@ -28,7 +26,6 @@ HEADERS += softprojector.h \
     exportdialog.h \
     settingsdialog.h
 FORMS += softprojector.ui \
-    display.ui \
     songwidget.ui \
     biblewidget.ui \
     editwidget.ui \
