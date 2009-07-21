@@ -28,7 +28,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     int secondary_index = ui->secondary_bible_menu->findText(softProjector->bibleWidget->getSecondary());
     ui->secondary_bible_menu->setCurrentIndex(secondary_index);
 
-    // ui->use_fading_effects_box
+    // ui->use_fading_effects_box->setChecked(
+
+    ui->blank_screen_rbutton->setChecked(softProjector->display->getShowBlack());
 
     QFont new_font = softProjector->display->getFont();
     QString new_wallpaper = softProjector->display->getWallpaper();
@@ -73,7 +75,7 @@ void SettingsDialog::on_buttonBox_accepted()
 
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
-    //softProjector->display->setShowBlack(show_black);
+    softProjector->display->setShowBlack(show_black);
     //softProjector->setVerse(verse);
 
     softProjector->writeConfigurationFile();
