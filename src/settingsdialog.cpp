@@ -22,6 +22,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 	ui->primary_bible_menu->addItem( bibles.at(i) );
         ui->secondary_bible_menu->addItem( bibles.at(i) );
     }
+    ui->secondary_bible_menu->addItem("None");
+
     int primary_index = ui->primary_bible_menu->findText(softProjector->bibleWidget->getPrimary());
     ui->primary_bible_menu->setCurrentIndex(primary_index);
 
