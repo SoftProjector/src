@@ -17,9 +17,6 @@ Display1::Display1(QWidget *parent)
         : QWidget(parent)
 {
 
-
-
-
     codec = QTextCodec::codecForName("UTF8");
 
 
@@ -46,10 +43,9 @@ Display1::Display1(QWidget *parent)
     //acounter[1]=255;
     //FaderPixmap=QPixmap::QPixmap(width(),height());
 
-    RenderText();
+
     //timer->start(1000/15);
     //setUpdatesEnabled(0);
-
 
 }
 
@@ -208,6 +204,7 @@ void Display1::SetAllText(QString text,QString caption)
 
 void Display1::RenderText()
 {
+    // Render the text set via SetMainText() and  SetCaptionText()
     QImage temp1;
     temp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
     sharp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
@@ -216,13 +213,19 @@ void Display1::RenderText()
     //painter2.setRenderHint( QPainter::Antialiasing);
     QPainter painter3(&sharp1);
     QString path;
-    if (!DisplayList.isEmpty()){
+
+    if( !show_black || !DisplayList.isEmpty() )
+    {
+        // Draw the background picture if there is text to display
+        // If show_black is False, always draw the wallpaper
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
-           wallpaper.load(wallpaper_path);
-           wallpaper=wallpaper.scaled(width(),height());
-           }
+            qDebug("Loading wallpaper from:");
+            qDebug(qPrintable(wallpaper_path));
+            wallpaper.load(wallpaper_path);
+            wallpaper=wallpaper.scaled(width(),height());
+        }
         painter3.drawImage(0,0,wallpaper);
 
     }
@@ -272,8 +275,10 @@ QString Display1::getWallpaper()
 void Display1::setNewWallpaper(QString path)
 {
     wallpaper_path=path;
-        wallpaper.load(wallpaper_path);
+    wallpaper.load(wallpaper_path);
     wallpaper = wallpaper.scaled(width(),height());
+    qDebug("setNewWallpaper():");
+    qDebug(qPrintable(wallpaper_path));
 }
 
 bool Display1::getShowBlack()
