@@ -30,10 +30,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // ui->use_fading_effects_box->setChecked(
 
-    ui->blank_screen_rbutton->setChecked(softProjector->display->getShowBlack());
+    if( softProjector->display->getShowBlack() )
+        ui->black_screen_rbutton->setChecked(true);
+    else
+        ui->wallpaper_rbutton->setChecked(true);
 
-    QFont new_font = softProjector->display->getFont();
-    QString new_wallpaper = softProjector->display->getWallpaper();
+    new_font = softProjector->display->getFont();
+    new_wallpaper_path = softProjector->display->getWallpaper();
 
 }
 
@@ -61,7 +64,7 @@ void SettingsDialog::on_buttonBox_rejected()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
-    bool show_black = ui->blank_screen_rbutton->isChecked();
+    bool show_black = ui->black_screen_rbutton->isChecked();
     bool verse = ui->verse_rbutton->isChecked();
 
     QString primaryBible = ui->primary_bible_menu->currentText();
@@ -79,6 +82,9 @@ void SettingsDialog::on_buttonBox_accepted()
     //softProjector->setVerse(verse);
 
     softProjector->writeConfigurationFile();
+
+    // Redraw the screen:
+    softProjector->display->RenderText();
 
     close();
 }
