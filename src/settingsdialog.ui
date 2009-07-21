@@ -101,7 +101,7 @@
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
-       <widget class="QRadioButton" name="blank_screen_rbutton">
+       <widget class="QRadioButton" name="black_screen_rbutton">
         <property name="text">
          <string>Black screen</string>
         </property>
@@ -111,7 +111,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QRadioButton" name="background_picture_rbutton">
+       <widget class="QRadioButton" name="wallpaper_rbutton">
         <property name="text">
          <string>Background picture</string>
         </property>
@@ -163,7 +163,7 @@
      <item>
       <widget class="QPushButton" name="change_background_button">
        <property name="text">
-        <string>Change Background...</string>
+        <string>Change Wallpaper...</string>
        </property>
       </widget>
      </item>
