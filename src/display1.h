@@ -34,6 +34,8 @@ public slots:
     void setNewFont(QFont newFont);
     QString getWallpaper();
     void setNewWallpaper(QString path);
+    bool getShowBlack();
+    void setShowBlack(bool show_black);
     void quit_kill();
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
@@ -46,9 +48,10 @@ private:
     QString MainText;
     QString CaptionText;
     QString root_path;
-    QFont MainFont;
-    QString wallpaperPath;
-    QImage wallpaper;
+    QFont main_font;
+    QString wallpaper_path; // Wallpaper image file path
+    QImage wallpaper; // Wallpaper image
+    bool show_black; // Whether to show black instead of wallpaper on clear
     //	QPixmap FaderPixmap;
     QPixmap sharp0;
     QImage sharp1;

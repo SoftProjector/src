@@ -74,10 +74,10 @@ void Display1::SetMainText(QString text)
 
     //if(!(4&&windowState()))showFullScreen();
     int FontSize=45,text_width=0;
-//    FontSize = MainFont.pointSize();
+//    FontSize = main_font.pointSize();
     int width_of_screen=width();
     max_width=0;
-    QFontMetrics fm(MainFont);
+    QFontMetrics fm(main_font);
     QStringList list1 = text.split("\n");
     QString textemp = list1[0];
     textemp.remove(6,10);
@@ -102,10 +102,10 @@ void Display1::SetMainText(QString text)
     int width_of_space;
     do
     {
-        MainFont.setPointSize(FontSize);
-        setFont(MainFont);
+        main_font.setPointSize(FontSize);
+        setFont(main_font);
         fm=QFontMetrics(font());
-        //qDebug() << MainFont;
+        //qDebug() << main_font;
         width_of_space=fm.width(" ",-1);
         MainText.clear();
         DisplayList.clear();
@@ -220,7 +220,7 @@ void Display1::RenderText()
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
-           wallpaper.load(wallpaperPath);
+           wallpaper.load(wallpaper_path);
            wallpaper=wallpaper.scaled(width(),height());
            }
         painter3.drawImage(0,0,wallpaper);
@@ -232,16 +232,16 @@ void Display1::RenderText()
     painter2.setPen(QColor(TEXT_COLOR));
     start_y=(height()-(fm.height()*(DisplayList.size()+1+hasCaption)))/2;
     int start_x=MARGIN;
-    painter2.setFont(MainFont);
+    painter2.setFont(main_font);
     for (int i = 0; i < DisplayList.size(); ++i)
     {
         painter2.drawText(fm.width(" ",-1)+start_x, start_y+(i+1)*fm.height(), DisplayList.at(i));
     }
     if (!CaptionText.isEmpty())
     {
-        MainFont.setPointSize(20);
-        painter2.setFont(MainFont);
-        fm = QFontMetrics (MainFont);
+        main_font.setPointSize(20);
+        painter2.setFont(main_font);
+        fm = QFontMetrics (main_font);
         start_x=(width()-fm.width(CaptionText))/2;
         start_y=height()-20;//fm.height();
         painter2.drawText(start_x,start_y,CaptionText);
@@ -256,24 +256,36 @@ void Display1::RenderText()
 
 QFont Display1::getFont()
 {
-    return MainFont;
+    return main_font;
 }
 
 void Display1::setNewFont(QFont new_font)
 {
-    MainFont = new_font;
+    main_font = new_font;
 }
 
 QString Display1::getWallpaper()
 {
-    return wallpaperPath;
+    return wallpaper_path;
 }
 
 void Display1::setNewWallpaper(QString path)
 {
-    wallpaperPath=path;
-        wallpaper.load(wallpaperPath);
+    wallpaper_path=path;
+        wallpaper.load(wallpaper_path);
     wallpaper = wallpaper.scaled(width(),height());
+}
+
+bool Display1::getShowBlack()
+{
+    return show_black;
+}
+
+void Display1::setShowBlack(bool new_show_black)
+{
+    // Whether to show black instead of the wallpaper when not
+    // displaying anything to the screen
+    show_black = new_show_black;
 }
 
 
