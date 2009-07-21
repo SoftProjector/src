@@ -13,6 +13,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     display = new Display1(desktop->screen(3));
 
 
+
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 //    display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
@@ -30,10 +31,15 @@ SoftProjector::SoftProjector(QWidget *parent)
         display->show();
     }
 
+
     ui->setupUi(this);
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
 
     bibleWidget = new BibleWidget;
+    // Will modify display's font and wallpaper:
+    readConfigurationFile();
+    display->RenderText();
+
     songWidget = new SongWidget;
     editWidget = new EditWidget;
     importSongs = new ImportDialog;
@@ -41,14 +47,9 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     showing = false;
 
-    // Will modify's display's font and wallpaper:
-    readConfigurationFile();
-
-
-
     ui->tabWidget->clear();
     ui->tabWidget->addTab(bibleWidget, "Bible");
-    ui->tabWidget->addTab(songWidget,"Songs");
+    ui->tabWidget->addTab(songWidget, "Songs");
 
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
@@ -56,8 +57,6 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setSongList(QStringList, QString, int)));
     connect(bibleWidget, SIGNAL(goLive(Bible,QString,int)),
             this, SLOT(setBibleList(Bible,QString,int)));
-    connect(this, SIGNAL(sendDisplay(QString,QString)),
-            display, SLOT(SetAllText(QString,QString)));
 
 }
 
@@ -79,7 +78,9 @@ void SoftProjector::readConfigurationFile()
     display->setNewFont(font);
 
     // Read the path of the wallpaper from the configuration file:
-    display->setNewWallpaper(fh.readLine());
+    QString new_wallpaper_path =fh.readLine();
+    new_wallpaper_path.chop(1); // Remove the trailing return character
+    display->setNewWallpaper(new_wallpaper_path);
 
     display->setShowBlack( fh.readLine() == "Show black: true" );
 
@@ -105,6 +106,8 @@ void SoftProjector::writeConfigurationFile()
     fh.write(qPrintable(fontString));
     fh.write("\n");
     fh.write(qPrintable(wallpaper_path));
+    qDebug("Writing wallpaper to file:");
+    qDebug(qPrintable(wallpaper_path));
     fh.write("\n");
     if( display->getShowBlack() )
         fh.write("Show black: true\n");
@@ -176,18 +179,19 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         return;
 
     if(type=="song")
-        emit sendDisplay(ui->listShow->currentItem()->text(),"");
+        display->SetAllText(ui->listShow->currentItem()->text(),"");
+        //emit sendDisplay(ui->listShow->currentItem()->text(),"");
     else if(type=="bible")
     {
 	if( bible.primary==bible2 )
-	    emit sendDisplay(bible.verseList1[currentRow],bible.captionList1[currentRow]);
-	else
+            display->SetAllText(bible.verseList1[currentRow],bible.captionList1[currentRow]);
+        else
 	{
 	    QString verse = bible.verseList1[currentRow] + "\n";
 	    verse += bible.verseList2[currentRow];
 	    QString caption = bible.captionList1[currentRow] + "    ";
 	    caption += bible.captionList2[currentRow];
-	    emit sendDisplay(verse,caption);
+            display->SetAllText(verse, caption);
 	}
     }
 }
@@ -195,7 +199,10 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 void SoftProjector::on_clear_button_clicked()
 {
     showing = false;
-    emit sendDisplay(" "," ");
+
+    // Do not display any text:
+    display->SetAllText(" ", " ");
+
     ui->show_button->setEnabled(true);
     ui->clear_button->setEnabled(false);
 }
