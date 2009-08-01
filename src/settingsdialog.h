@@ -27,7 +27,8 @@ private:
     QString new_wallpaper_path;
 
 private slots:
-    void on_change_background_button_clicked();
+    void on_remove_wallpaper_button_clicked();
+    void on_set_wallpaper_button_clicked();
     void on_change_font_button_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();

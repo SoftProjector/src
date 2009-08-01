@@ -275,10 +275,20 @@ QString Display1::getWallpaper()
 void Display1::setNewWallpaper(QString path)
 {
     wallpaper_path=path;
-    wallpaper.load(wallpaper_path);
-    wallpaper = wallpaper.scaled(width(),height());
-    qDebug("setNewWallpaper():");
-    qDebug(qPrintable(wallpaper_path));
+    if( path.isEmpty() ) {
+        qDebug("setNewWallpaper(): path is empty");
+        QImage null_wallpaper;
+        wallpaper = null_wallpaper;
+        qDebug("setNewWallpaper(): None");
+    }
+    else {
+        qDebug("setNewWallpaper(): path is NOT empty");
+        wallpaper.load(wallpaper_path);
+        wallpaper = wallpaper.scaled(width(),height());
+        qDebug("setNewWallpaper():");
+        qDebug(qPrintable(wallpaper_path));
+    }
+
 }
 
 bool Display1::getShowBlack()

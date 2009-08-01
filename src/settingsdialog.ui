@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>328</width>
-    <height>355</height>
+    <height>393</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,32 +95,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>When not displaying text, show:</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout_2">
-      <item row="0" column="0">
-       <widget class="QRadioButton" name="black_screen_rbutton">
-        <property name="text">
-         <string>Black screen</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="wallpaper_rbutton">
-        <property name="text">
-         <string>Background picture</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QCheckBox" name="display_on_top_box">
      <property name="text">
       <string>Display screen always on top (requires program restart)</string>
@@ -159,11 +133,25 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="wallpaper_label">
+     <property name="text">
+      <string>Wallpaper: None</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPushButton" name="change_background_button">
+      <widget class="QPushButton" name="set_wallpaper_button">
        <property name="text">
-        <string>Change Wallpaper...</string>
+        <string>Set Wallpaper...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="remove_wallpaper_button">
+       <property name="text">
+        <string>Remove Wallpaper</string>
        </property>
       </widget>
      </item>
@@ -181,6 +169,32 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="black_or_wallpaper_group">
+     <property name="title">
+      <string>When not displaying text, show:</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="black_screen_rbutton">
+        <property name="text">
+         <string>Black screen</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="wallpaper_rbutton">
+        <property name="text">
+         <string>Wallpaper picture</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">

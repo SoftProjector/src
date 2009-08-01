@@ -39,6 +39,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     new_font = softProjector->display->getFont();
     new_wallpaper_path = softProjector->display->getWallpaper();
+    if(new_wallpaper_path == "") {
+        ui->wallpaper_label->setText("Wallpaper: None");
+        ui->remove_wallpaper_button->setEnabled(false);
+        ui->black_or_wallpaper_group->setEnabled(false);
+    }
+    else
+        ui->wallpaper_label->setText("Wallpaper: " + new_wallpaper_path);
 
 }
 
@@ -102,7 +109,7 @@ void SettingsDialog::on_change_font_button_clicked()
         new_font = font;
 }
 
-void SettingsDialog::on_change_background_button_clicked()
+void SettingsDialog::on_set_wallpaper_button_clicked()
 {
     // Change background
     QString filename = QFileDialog::getOpenFileName(this,
@@ -110,9 +117,19 @@ void SettingsDialog::on_change_background_button_clicked()
                          ".",
                          "Images (*.png *.jpg *.jpeg)");
 
-    if( !filename.isNull() )
+    if( !filename.isNull() ) {
         new_wallpaper_path = filename;
+        ui->wallpaper_label->setText("Wallpaper: " + filename);
+        ui->remove_wallpaper_button->setEnabled(true);
+        ui->black_or_wallpaper_group->setEnabled(true);
+    }
 }
 
 
-
+void SettingsDialog::on_remove_wallpaper_button_clicked()
+{
+    new_wallpaper_path = "";
+    ui->wallpaper_label->setText("Wallpaper: None");
+    ui->remove_wallpaper_button->setEnabled(false);
+    ui->black_or_wallpaper_group->setEnabled(false);
+}
