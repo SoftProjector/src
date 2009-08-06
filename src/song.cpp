@@ -1,11 +1,79 @@
 #include "song.h"
 #include <QDebug>
 
-Song::Song()
+
+Song::Song(int song_num, QString song_title, QString song_sbornik)
+{
+    num = song_num;
+    title = song_title;
+    sbornik = song_sbornik;
+}
+
+SongsModel::SongsModel()
 {
 }
 
-bool Song::hasTitle(QString title)
+int SongsModel::getNum(int row)
+{
+    return num_list.at(row);
+}
+
+
+QString SongsModel::getTitle(int row)
+{
+    return song_list.at(row);
+}
+
+void SongsModel::setTitles(QStringList songs)
+{
+    num_list.clear();
+    song_list.clear();
+    sbornik_list.clear();
+    for (int i = 0; i < songs.size(); i++) {
+        song_list.append(songs.at(i));
+        num_list.append(0);
+        sbornik_list.append("");
+    }
+}
+
+int SongsModel::rowCount(const QModelIndex &parent) const
+{
+    return song_list.count();
+}
+
+int SongsModel::columnCount(const QModelIndex &parent) const
+{
+    return 2;
+}
+
+QVariant SongsModel::data(const QModelIndex &index, int role) const
+ {
+     if (!index.isValid() || role != Qt::DisplayRole)
+         return QVariant();
+
+     int num = num_list.at(index.row());
+     QString title = song_list.at(index.row());
+     if( index.column() == 0 )
+         return QVariant(num);
+     else
+         return QVariant(title);
+ }
+
+QVariant SongsModel::headerData(int /* section */,
+                                 Qt::Orientation /* orientation */,
+                                 int role) const
+ {
+     //if (role == Qt::SizeHintRole)
+     //   return QSize(1, 1);
+     return QVariant();
+ }
+
+
+Sbornik::Sbornik()
+{
+}
+
+bool Sbornik::hasTitle(QString title)
 {
     QSqlQuery sq;
     bool ys=false;
@@ -16,7 +84,7 @@ bool Song::hasTitle(QString title)
     return ys;
 }
 
-void Song::saveUpdate()
+void Sbornik::saveUpdate()
 {
     QSqlTableModel sq;
     QSqlRecord sr;
@@ -45,7 +113,7 @@ void Song::saveUpdate()
     sq.submitAll();
 }
 
-void Song::saveNew()
+void Sbornik::saveNew()
 {
     QSqlTableModel sq;
     sq.setTable("songs");
@@ -69,7 +137,7 @@ void Song::saveNew()
     sq.submitAll();
 }
 
-QString Song::clean(QString str)
+QString Sbornik::clean(QString str)
 {
     str.remove("\"");
     str.remove("\\");
@@ -107,7 +175,7 @@ QString Song::clean(QString str)
     return str;
 }
 
-QString Song::getSong(QString gtitle)
+QString Sbornik::getSong(QString gtitle)
 {
     QSqlQuery sq;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, category, tune, words, music, songText FROM songs WHERE title = '" + gtitle + "'");
@@ -133,7 +201,7 @@ QString Song::getSong(QString gtitle)
     return songText;
 }
 
-QString Song::getSong(int number, QString sbornik)
+QString Sbornik::getSong(int number, QString sbornik)
 {
     QSqlQuery sq;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, title, category, tune, words, music, songText FROM songs WHERE " + sbornik +" = '" + QString::number(number) + "'");
@@ -159,7 +227,7 @@ QString Song::getSong(int number, QString sbornik)
     return songText;
 }
 
-QStringList Song::getSongList(QString gtitle)
+QStringList Sbornik::getSongList(QString gtitle)
 {
     QSqlQuery sq;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, category, tune, words, music, songText FROM songs WHERE title = '" + gtitle + "'");
@@ -186,7 +254,7 @@ QStringList Song::getSongList(QString gtitle)
     return songList;
 }
 
-QStringList Song::getSongList(int number, QString sbornik)
+QStringList Sbornik::getSongList(int number, QString sbornik)
 {
     QSqlQuery sq;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, title, category, tune, words, music, songText FROM songs WHERE " + sbornik +" = '" + QString::number(number) + "'");
@@ -213,7 +281,7 @@ QStringList Song::getSongList(int number, QString sbornik)
     return songList;
 }
 
-QStringList Song::formatSongList(QString song)
+QStringList Sbornik::formatSongList(QString song)
 {
     QStringList formatedSong;
     QString text, text2, codec;
@@ -279,7 +347,7 @@ QStringList Song::formatSongList(QString song)
     return formatedSong; // Fill verse_list widget
 }
 
-QStringList Song::getTitle()
+QStringList Sbornik::getTitle()
 {
     // Loads all titels in database
     QStringList titles;
@@ -290,8 +358,10 @@ QStringList Song::getTitle()
     return titles;
 }
 
-QStringList Song::getTitle(QString sbornik)
+QStringList Sbornik::getTitle(QString sbornik, bool sorted)
 {
+  if(sorted)
+  {
     // Loads titles from one sbornik and are sotred alphaberically
     QStringList titles;
     QMap<QString, int> tMap;
@@ -310,10 +380,9 @@ QStringList Song::getTitle(QString sbornik)
         ++i;
     }
     return titles;
-}
-
-QStringList Song::getTitle2(QString sbornik)
-{
+  }
+  else
+  {
     // Load titles from one sbornik and are sorted numerically
     QStringList titles;
     QMap<int, QString> tMap;
@@ -333,9 +402,10 @@ QStringList Song::getTitle2(QString sbornik)
         ++i;
     }
     return titles;
+  }
 }
 
-int Song::lastUser()
+int Sbornik::lastUser()
 {
     int last;
     QList <int> lastInt;
@@ -348,7 +418,7 @@ int Song::lastUser()
     return last;
 }
 
-bool Song::isUserOnly(int sId)
+bool Sbornik::isUserOnly(int sId)
 {
     int i(0);
     QSqlQuery sq;
@@ -368,7 +438,7 @@ bool Song::isUserOnly(int sId)
     else return false;
 }
 
-void Song::deleteSong(int sId)
+void Sbornik::deleteSong(int sId)
 {
     QSqlQuery sq;
     sq.exec("DELETE FROM songs WHERE id = '" + QString::number(sId) + "'");

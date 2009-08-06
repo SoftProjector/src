@@ -6,8 +6,13 @@ SongWidget::SongWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongWidget)
 {
-//    Song t;
+//    Sbornik t;
     ui->setupUi(this);
+    songs_model = new SongsModel;
+    ui->songs_view->setModel(songs_model);
+    // Decrease the row height:
+    ui->songs_view->resizeRowsToContents();
+
 //    allTitles = t.getTitle();
     //loadTitles("ALL");
 //    sbornik = "pv3300";
@@ -21,6 +26,7 @@ SongWidget::SongWidget(QWidget *parent) :
 SongWidget::~SongWidget()
 {
     delete ui;
+    delete songs_model;
 }
 
 void SongWidget::changeEvent(QEvent *e)
@@ -37,11 +43,44 @@ void SongWidget::changeEvent(QEvent *e)
 
 void SongWidget::loadTitles(QString tSbornik)
 {
-    Song t;
-    ui->listTitles->clear();
+    Sbornik t;
     if (tSbornik == "ALL")
-        ui->listTitles->addItems(t.getTitle());
-    else ui->listTitles->addItems(t.getTitle(tSbornik));
+        songs_model->setTitles(t.getTitle());
+    else
+        songs_model->setTitles(t.getTitle(tSbornik, false));
+}
+
+QString SongWidget::currentTitle()
+{
+    // Returns the title of the selected song
+    QModelIndex current_index = ui->songs_view->currentIndex();
+    int current_row = current_index.row();
+    QString title = songs_model->getTitle(current_row);
+    return title;
+}
+
+void SongWidget::selectMatchingSong(QString text)
+{
+    bool startonly = ui->match_beginning_box->isChecked();
+    // Look for a song matching <text>. Select it and scroll to show it.
+    for (int i = 0; i < songs_model->song_list.size(); i++)
+    {
+        QString s = songs_model->song_list.at(i);
+        bool matches;
+        if( startonly )
+            matches = s.startsWith(text);
+        else
+            matches = s.contains(text);
+
+        if( matches )
+        {
+            // Select the row <i>:
+            ui->songs_view->selectRow(i);
+            // Scroll the songs table to the row <i>:
+            ui->songs_view->scrollTo( songs_model->index(i, 0) );
+            return;
+        }
+    }
 }
 
 void SongWidget::showPreview(QString title)
@@ -58,64 +97,52 @@ void SongWidget::showPreview(QString title)
 
 void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
 {
-    titleType=1;
-    Song t;
-    ui->listTitles->clear();
-    // LOAD All songs alphabetically
-    if (index == 0){
-        allTitles=t.getTitle();
-        ui->listTitles->addItems(allTitles);
-        ui->spinBoxPvNumber->setEnabled(false);
-        ui->listTitles->setCurrentRow(0);
-    }
-    // LOAD Песнь Возорждения 2800
-    else if (index==1){
-        ui->spinBoxPvNumber->setEnabled(true);
-        if(ui->sort_box->isChecked())
-            ui->listTitles->addItems(t.getTitle("pv3300"));
-        else
-            ui->listTitles->addItems(t.getTitle2("pv3300"));
-        ui->listTitles->setCurrentRow(0);
-    }
-    // LOAD  Песнь Возорждения 2100
-    else if (index==2){
-        ui->spinBoxPvNumber->setEnabled(true);
-        if(ui->sort_box->isChecked())
-            ui->listTitles->addItems(t.getTitle("pv2001"));
-        else
-            ui->listTitles->addItems(t.getTitle2("pv2001"));
-        ui->listTitles->setCurrentRow(0);
-    }
-    // LOAD Євангелські Пісні
-    else if (index==3){
-        ui->spinBoxPvNumber->setEnabled(true);
-        if(ui->sort_box->isChecked())
-            ui->listTitles->addItems(t.getTitle("uaEpisni"));
-        else
-            ui->listTitles->addItems(t.getTitle2("uaEpisni"));
-        ui->listTitles->setCurrentRow(0);
-    }
-    // LOAD user sbornik
-    else if (index==4){
-        ui->spinBoxPvNumber->setEnabled(true);
-        if(ui->sort_box->isChecked())
-            ui->listTitles->addItems(t.getTitle("pvUser"));
-        else
-            ui->listTitles->addItems(t.getTitle2("pvUser"));
-        ui->listTitles->setCurrentRow(0);
-    }
+    // Called when a different sbornik is selected from the pull-down menu
 
+    titleType=1;
+    Sbornik t;
+    bool sort = ui->sort_box->isChecked();
+
+    if (index == 0){
+        // LOAD All songs alphabetically
+        allTitles=t.getTitle();
+        songs_model->setTitles(allTitles);
+        ui->spinBoxPvNumber->setEnabled(false);
+        ui->songs_view->selectRow(0);
+    }
+    else if (index==1){
+        // LOAD Песнь Возорждения 2800
+        ui->spinBoxPvNumber->setEnabled(true);
+        songs_model->setTitles(t.getTitle("pv3300", sort));
+        ui->songs_view->selectRow(0);
+    }
+    else if (index==2){
+        // LOAD  Песнь Возорждения 2100
+        ui->spinBoxPvNumber->setEnabled(true);
+        songs_model->setTitles(t.getTitle("pv2001", sort));
+        ui->songs_view->selectRow(0);
+    }
+    else if (index==3){
+    	// LOAD Євангелські Пісні
+        ui->spinBoxPvNumber->setEnabled(true);
+        songs_model->setTitles(t.getTitle("uaEpisni", sort));
+        ui->songs_view->selectRow(0);
+    }
+    else if (index==4){
+	// LOAD user sbornik
+        ui->spinBoxPvNumber->setEnabled(true);
+        songs_model->setTitles(t.getTitle("pvUser", sort));
+        ui->songs_view->selectRow(0);
+    }
+    ui->songs_view->update();
 }
 
 void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
 {
     if (ui->sort_box->isChecked()){
-    ui->sort_box->setChecked(false);
+        ui->sort_box->setChecked(false);
     }
-    bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
-    if (!empty)
-        ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
-    ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtCenter);
+    selectMatchingSong(QString::number(value));
     //    selector=1;
 //    setSong(value,1);
 //    ui->listPreview->clear();
@@ -123,11 +150,7 @@ void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
 }
 
 
-void SongWidget::on_listTitles_currentTextChanged(QString currentText)
-{
-    isPlaylistTitle = false;
-    showPreview(currentText);
-}
+
 
 void SongWidget::on_listPlaylist_currentTextChanged(QString currentText)
 {
@@ -135,12 +158,7 @@ void SongWidget::on_listPlaylist_currentTextChanged(QString currentText)
     showPreview(currentText);
 }
 
-void SongWidget::on_listTitles_itemDoubleClicked(QListWidgetItem* item)
-{
-    ui->listPlaylist->addItem(item->text());
-    ui->listPlaylist->setCurrentRow(ui->listPlaylist->count()-1);
-    ui->listPlaylist->setFocus();
-}
+
 
 void SongWidget::on_listPlaylist_itemDoubleClicked(QListWidgetItem* item)
 {
@@ -153,7 +171,7 @@ void SongWidget::on_btnLive_clicked()
         emit sendSong(songPreview.songList,ui->listPlaylist->currentItem()->text(),ui->listPreview->currentRow());;
     }
     else{
-        emit sendSong(songPreview.songList,ui->listTitles->currentItem()->text(),ui->listPreview->currentRow());
+        emit sendSong(songPreview.songList, currentTitle(), ui->listPreview->currentRow());
     }
 }
 
@@ -161,7 +179,7 @@ void SongWidget::on_btnLive_clicked()
 
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
-    ui->listPlaylist->addItem(ui->listTitles->currentItem()->text());
+    ui->listPlaylist->addItem(currentTitle());
     ui->listPlaylist->setCurrentRow(ui->listPlaylist->count()-1);
     ui->listPlaylist->setFocus();
 }
@@ -178,20 +196,19 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     if (!ui->match_beginning_box->isChecked())
     {
         allSongs=false;
-        ui->listTitles->clear();
         QStringList tlist = text.split(" ");
         QStringList tlist2;
         if(tlist.count()==1){
             QString tx = tlist[0];
             tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
-            ui->listTitles->addItems(tlist2);
+            songs_model->setTitles(tlist2);
         }
         if(tlist.count()==2)
         {
             QString tx = tlist[0];
             tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
             tx = tlist[1];
-            ui->listTitles->addItems(tlist2.filter(tx,Qt::CaseInsensitive));
+            songs_model->setTitles(tlist2.filter(tx,Qt::CaseInsensitive));
         }
 
     }
@@ -200,23 +217,20 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         if (!allSongs)
         {
             allSongs=true;
-            ui->listTitles->clear();
-            ui->listTitles->addItems(allTitles);
+            songs_model->setTitles(allTitles);
         }
-        bool empty = ui->listTitles->findItems(text,Qt::MatchStartsWith).isEmpty();
-        if (!empty)
-            ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
-        ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtTop);
+        selectMatchingSong(text);
     }
 }
 
 
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 {
-        emit sendSong(songPreview.songList,ui->listTitles->currentItem()->text(),index.row());
+    QString title = currentTitle();
+    emit sendSong(songPreview.songList, title, index.row());
 }
 
-Song SongWidget::sendToEdit()
+Sbornik SongWidget::sendToEdit()
 {
     return songPreview;
 }
@@ -232,4 +246,21 @@ void SongWidget::on_sort_box_toggled(bool checked)
 //    QString new_text = ui->lineEditSearch->text();
 //    SongWidget::on_lineEditSearch_textEdited(new_text);
     on_comboBoxPvNumber_currentIndexChanged(ui->comboBoxPvNumber->currentIndex());
+}
+
+
+void SongWidget::on_songs_view_activated(QModelIndex index)
+{
+    // Called when a new song is selected
+    isPlaylistTitle = false;
+    showPreview(currentTitle());
+}
+
+void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
+{
+    // Caled when a song is double-clicked
+
+    ui->listPlaylist->addItem(currentTitle());
+    ui->listPlaylist->setCurrentRow(ui->listPlaylist->count()-1);
+    ui->listPlaylist->setFocus();
 }

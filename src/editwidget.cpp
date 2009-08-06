@@ -137,6 +137,7 @@ void EditWidget::on_btnSortTitles_clicked()
 
 void EditWidget::on_spinBoxSongNum_valueChanged(int value)
 {
+
     bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
     if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
     ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtCenter);
@@ -144,13 +145,14 @@ void EditWidget::on_spinBoxSongNum_valueChanged(int value)
 
 void EditWidget::loadTitles(QString tSbornik)
 {
-    Song t;
+    Sbornik t;
     ui->listTitles->clear();
     if (tSbornik == "ALL"){
         allTitles = t.getTitle();
         ui->listTitles->addItems(allTitles);
     }
-    else ui->listTitles->addItems(t.getTitle2(tSbornik));
+    else
+        ui->listTitles->addItems(t.getTitle(tSbornik, true));
 }
 
 QString EditWidget::setSongText(QString song)
@@ -198,9 +200,9 @@ void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
         else if (index==9) sbornik = "pvUser";
 
         titleType=1;
-        Song t;
+        Sbornik t;
         ui->listTitles->clear();
-        ui->listTitles->addItems(t.getTitle2(sbornik));
+        ui->listTitles->addItems(t.getTitle(sbornik, true));
     }
 }
 
@@ -339,7 +341,7 @@ void EditWidget::on_txtSearch_textChanged(QString text)
     }
 }
 
-void EditWidget::setEdit(Song sEdit)
+void EditWidget::setEdit(Sbornik sEdit)
 {
     editSong = sEdit;
     setUiItems();
