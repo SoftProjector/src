@@ -56,12 +56,6 @@ SongsModel::SongsModel()
 {
 }
 
-int SongsModel::getNum(int row)
-{
-    Song song = song_list.at(row);
-    return song.num;
-}
-
 
 Song SongsModel::getSong(int row)
 {
@@ -75,6 +69,13 @@ void SongsModel::setSongs(QList<Song> songs)
         Song song = songs.at(i);
         song_list.append(song);
     }
+}
+
+void SongsModel::addSong(Song song)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    song_list.append(song);
+    endInsertRows();
 }
 
 int SongsModel::rowCount(const QModelIndex &parent) const
@@ -182,9 +183,9 @@ void Song::saveNew()
 Song SongDatabase::getSong(QString gtitle)
 {
     QSqlQuery sq;
+    Song song;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, category, tune, words, music, songText FROM songs WHERE title = '" + gtitle + "'");
     while (sq.next()){
-        Song song;
         song.songID = sq.value(0).toInt();
         song.pv3300 = sq.value(1).toInt();
         song.pv2500 = sq.value(2).toInt();
@@ -202,16 +203,18 @@ Song SongDatabase::getSong(QString gtitle)
         song.wordsBy = sq.value(13).toString();
         song.musicBy = sq.value(14).toString();
         song.songText = sq.value(15).toString();
-        return song;
+        break;
+
     }
+    return song;
 }
 
 Song SongDatabase::getSong(int number, QString sbornik)
 {
     QSqlQuery sq;
+    Song song;
     sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, title, category, tune, words, music, songText FROM songs WHERE " + sbornik +" = '" + QString::number(number) + "'");
     while (sq.next()){
-        Song song;
         song.songID = sq.value(0).toInt();
         song.pv3300 = sq.value(1).toInt();
         song.pv2500 = sq.value(2).toInt();
@@ -229,8 +232,9 @@ Song SongDatabase::getSong(int number, QString sbornik)
         song.wordsBy = sq.value(14).toString();
         song.musicBy = sq.value(15).toString();
         song.songText = sq.value(16).toString();
-        return song;
+        break;
     }
+    return song;
 }
 
 QStringList SongDatabase::getSongList(QString gtitle)
@@ -324,7 +328,7 @@ QStringList SongDatabase::formatSongList(QString song)
 }
 
 
-QList<Song> SongDatabase::getSongs(QString sbornik, bool sorted)
+QList<Song> SongDatabase::getSongs(QString sbornik)
 {
     QList<Song> songs;
     QStringList titles;
@@ -343,64 +347,30 @@ QList<Song> SongDatabase::getSongs(QString sbornik, bool sorted)
             songs.append(song);
         }
     }
-
-
     else
     {
+        QMap<int, QString> tMap;
+        QSqlQuery sq;
+        sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
 
-  if(sorted)
-  {
-    // Loads titles from one sbornik and are sotred alphaberically
-
-    QMap<QString, int> tMap;
-    QSqlQuery sq;
-    sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
-    while (sq.next()) tMap[sq.value(0).toString()] = sq.value(1).toInt();
-    QList<int> list1;
-    list1 = tMap.values();
-    QStringList list2;
-    list2 = tMap.keys();
-    int mapLenght(tMap.size());
-    int i(0);
-    while (i<mapLenght)
-    {
-        int num = list1[i];
-        QString title = list2[i];
-        Song song = Song(num, title, sbornik);
-        songs.append(song);
-        i++;
-    }
-
-  }
-  else
-  {
-    // Load titles from one sbornik and are sorted numerically
-
-    QMap<int, QString> tMap;
-    QSqlQuery sq;
-    sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
-
-    while(sq.next()) tMap[sq.value(1).toInt()] = sq.value(0).toString();
-    QList<int> list1;
-    list1 = tMap.keys();
-    QStringList list2;
-    list2 = tMap.values();
-    int mapLenght(tMap.size());
-    int i(0);
-    while (i<mapLenght)
-    {
-        int num = list1[i];
-        QString title = list2[i];
-        Song song = Song(num, title, sbornik);
-        songs.append(song);
-        i++;
-    }
-
-  } // end of not sorted
-} // end of not all sborniks
-
-  return songs;
-
+        while(sq.next())
+            tMap[sq.value(1).toInt()] = sq.value(0).toString();
+        QList<int> list1;
+        list1 = tMap.keys();
+        QStringList list2;
+        list2 = tMap.values();
+        int mapLenght(tMap.size());
+        int i(0);
+        while (i<mapLenght)
+        {
+            int num = list1[i];
+            QString title = list2[i];
+            Song song = Song(num, title, sbornik);
+            songs.append(song);
+            i++;
+        }
+    } // end of not all sborniks
+    return songs;
 }
 
 int SongDatabase::lastUser()

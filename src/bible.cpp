@@ -102,7 +102,6 @@ int Bible::maxChapters(QString book, QString bibleName)
     QString bibleDbName = getDbBibleName(bibleName);
 
     if(bibleDbName == "bibleRu")
-        // FIXME Why "bibleRue" instead of "bibleRu"??
         sq.exec("SELECT chapters FROM books WHERE bibleRue = '"+book+"'");
     else
         sq.exec("SELECT chapters FROM books WHERE " + bibleDbName + " = '"+book+"'");

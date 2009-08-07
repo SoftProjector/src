@@ -31,7 +31,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,0">
        <item>
-        <widget class="QComboBox" name="comboBoxPvNumber">
+        <widget class="QComboBox" name="sbornik_menu">
          <property name="statusTip">
           <string>Select Sbornik to use</string>
          </property>
@@ -69,7 +69,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBoxPvNumber">
+        <widget class="QSpinBox" name="song_num_spinbox">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -135,31 +135,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="sort_box">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>1000</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>If checked, sort current sbornik alphabetically</string>
-         </property>
-         <property name="statusTip">
-          <string>If checked, sort current sbornik alphabetically</string>
-         </property>
-         <property name="text">
-          <string>Sort alphabetically</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -193,15 +168,6 @@
        </attribute>
        <attribute name="verticalHeaderDefaultSectionSize">
         <number>20</number>
-       </attribute>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderDefaultSectionSize">
-        <number>20</number>
-       </attribute>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
        </attribute>
       </widget>
      </item>
@@ -273,25 +239,25 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="listPlaylist">
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+      <widget class="QTableView" name="playlist_view">
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
        </property>
-       <property name="alternatingRowColors">
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="sortingEnabled">
         <bool>true</bool>
        </property>
-       <property name="movement">
-        <enum>QListView::Static</enum>
-       </property>
-       <property name="isWrapping" stdset="0">
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
         <bool>false</bool>
-       </property>
-       <property name="uniformItemSizes">
-        <bool>true</bool>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
       </widget>
      </item>
     </layout>

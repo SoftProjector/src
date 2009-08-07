@@ -135,7 +135,6 @@ void SoftProjector::writeConfigurationFile()
 
     fh.close();
 
-
     // FIXME also save black, verse, primarybible, secondarybible
 }
 

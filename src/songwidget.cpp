@@ -8,10 +8,13 @@ SongWidget::SongWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     songs_model = new SongsModel;
+    playlist_model = new SongsModel;
     ui->songs_view->setModel(songs_model);
+    ui->playlist_view->setModel(playlist_model);
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
-    on_comboBoxPvNumber_currentIndexChanged(0);
+    ui->playlist_view->resizeRowsToContents();
+    on_sbornik_menu_currentIndexChanged(0);
 }
 
 SongWidget::~SongWidget()
@@ -35,16 +38,23 @@ void SongWidget::changeEvent(QEvent *e)
 void SongWidget::loadTitles(QString tSbornik)
 {
     SongDatabase t;
-    songs_model->setSongs(t.getSongs("ALL", false));
+    songs_model->setSongs(t.getSongs("ALL"));
 }
 
-QString SongWidget::currentTitle()
+Song SongWidget::currentSong()
 {
-    // Returns the title of the selected song
+    // Returns the selected song
     QModelIndex current_index = ui->songs_view->currentIndex();
     int current_row = current_index.row();
-    QString title = songs_model->getSong(current_row).title;
-    return title;
+    return songs_model->getSong(current_row);
+}
+
+Song SongWidget::currentPlaylistSong()
+{
+    // Returns the selected song of the playlist
+    QModelIndex current_index = ui->playlist_view->currentIndex();
+    int current_row = current_index.row();
+    return playlist_model->getSong(current_row);
 }
 
 void SongWidget::selectMatchingSong(QString text)
@@ -80,16 +90,14 @@ void SongWidget::showPreview(QString title)
     else
         ui->listPreview->addItems(playlist.getSongList(list[1]));
     ui->listPreview->setCurrentRow(0);
-
 }
 
-void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
+void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 {
     // Called when a different sbornik is selected from the pull-down menu
 
     titleType=1;
     SongDatabase t;
-    bool sort = ui->sort_box->isChecked();
 
     QString sbornik;
 
@@ -110,20 +118,17 @@ void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
             sbornik = QString("pvUser");
     }
 
-    ui->spinBoxPvNumber->setEnabled(sbornik == QString("ALL"));
+    ui->song_num_spinbox->setEnabled(sbornik == QString("ALL"));
 
-    songs_model->setSongs(t.getSongs(sbornik, sort));
+    songs_model->setSongs(t.getSongs(sbornik));
 
     ui->songs_view->selectRow(0);
     // Re-draw the songs table:
     ui->songs_view->viewport()->repaint();
 }
 
-void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
+void SongWidget::on_song_num_spinbox_valueChanged(int value)
 {
-    if (ui->sort_box->isChecked()){
-        ui->sort_box->setChecked(false);
-    }
     selectMatchingSong(QString::number(value));
     //    selector=1;
 //    setSong(value,1);
@@ -134,26 +139,16 @@ void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
 
 
 
-void SongWidget::on_listPlaylist_currentTextChanged(QString currentText)
-{
-    isPlaylistTitle = true;
-    showPreview(currentText);
-}
 
-
-
-void SongWidget::on_listPlaylist_itemDoubleClicked(QListWidgetItem* item)
-{
-    emit sendSong(playlist.songList,item->text(),0);
-}
 
 void SongWidget::on_btnLive_clicked()
 {
     if(isPlaylistTitle){
-        emit sendSong(playlist.songList,ui->listPlaylist->currentItem()->text(),ui->listPreview->currentRow());;
+        Song song = currentPlaylistSong();
+        emit sendSong(playlist.songList,song.title,ui->listPreview->currentRow());;
     }
     else{
-        emit sendSong(playlist.songList, currentTitle(), ui->listPreview->currentRow());
+        emit sendSong(playlist.songList, currentSong().title, ui->listPreview->currentRow());
     }
 }
 
@@ -161,21 +156,25 @@ void SongWidget::on_btnLive_clicked()
 
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
-    ui->listPlaylist->addItem(currentTitle());
-    ui->listPlaylist->setCurrentRow(ui->listPlaylist->count()-1);
-    ui->listPlaylist->setFocus();
+    playlist_model->addSong(currentSong());
+    qDebug("ADDED A SONG TO PLAYLIST");
+
+    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
+    ui->playlist_view->setFocus();
+    ui->playlist_view->viewport()->repaint();
 }
 
 void SongWidget::on_btnRemoveFromPlaylist_clicked()
 {
-    ui->listPlaylist->takeItem(ui->listPlaylist->currentRow());
+    int row = ui->playlist_view->currentIndex().row();
+    playlist_model->removeRow(row);
 }
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
     /* FIXME!!!!
-    if (ui->comboBoxPvNumber->currentIndex()>0)
-        ui->comboBoxPvNumber->setCurrentIndex(0);
+    if (ui->sbornik_menu->currentIndex()>0)
+        ui->sbornik_menu->setCurrentIndex(0);
 
     if (!ui->match_beginning_box->isChecked())
     {
@@ -209,18 +208,11 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 }
 
 
-void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
-{
-    QString title = currentTitle();
-    emit sendSong(playlist.songList, title, index.row());
-}
-
 Song SongWidget::getSongToEdit()
 {
-    // FIXME
-    Song song(0, "", "");
+    // FIXME use the song from the playlist if selected there
+    Song song = currentSong();
     return song;
-    //return playlist;
 }
 
 void SongWidget::on_match_beginning_box_toggled(bool checked)
@@ -229,26 +221,32 @@ void SongWidget::on_match_beginning_box_toggled(bool checked)
     on_lineEditSearch_textEdited(new_text);
 }
 
-void SongWidget::on_sort_box_toggled(bool checked)
-{
-//    QString new_text = ui->lineEditSearch->text();
-//    SongWidget::on_lineEditSearch_textEdited(new_text);
-    on_comboBoxPvNumber_currentIndexChanged(ui->comboBoxPvNumber->currentIndex());
-}
 
 
 void SongWidget::on_songs_view_activated(QModelIndex index)
 {
     // Called when a new song is selected
     isPlaylistTitle = false;
-    showPreview(currentTitle());
+    showPreview(currentSong().title);
 }
 
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 {
     // Caled when a song is double-clicked
-
-    ui->listPlaylist->addItem(currentTitle());
-    ui->listPlaylist->setCurrentRow(ui->listPlaylist->count()-1);
-    ui->listPlaylist->setFocus();
+    on_btnAddToPlaylist_clicked();
 }
+
+void SongWidget::on_playlist_view_activated(QModelIndex index)
+{
+    Song song = currentPlaylistSong();
+    isPlaylistTitle = true;
+    showPreview(song.title);
+    //emit sendSong(playlist.songList, song.title, index.row());
+}
+
+void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
+{
+    Song song = currentPlaylistSong();
+    emit sendSong(playlist.songList,song.title,0);
+}
+

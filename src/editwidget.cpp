@@ -149,7 +149,7 @@ void EditWidget::loadTitles(QString tSbornik)
     QList<Song> songs;
 
     t = SongDatabase();
-    songs = t.getSongs(tSbornik, true);
+    songs = t.getSongs(tSbornik);
 
     QStringList titles;
     for (int i = 0; i < songs.size(); i++) {
@@ -209,7 +209,7 @@ void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
 
         titleType=1;
 
-        QList<Song> songs = t.getSongs(sbornik, false);
+        QList<Song> songs = t.getSongs(sbornik);
         QStringList titles;
         for (int i = 0; i < songs.size(); i++) {
             Song song = songs.at(i);

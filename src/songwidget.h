@@ -26,25 +26,24 @@ signals:
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
+    void on_playlist_view_doubleClicked(QModelIndex index);
+    void on_playlist_view_activated(QModelIndex index);
     void on_songs_view_doubleClicked(QModelIndex index);
     void on_songs_view_activated(QModelIndex index);
-    void on_sort_box_toggled(bool checked);
     void on_match_beginning_box_toggled(bool checked);
-    void on_listPreview_doubleClicked(QModelIndex index);
     void on_lineEditSearch_textEdited(QString Text);
     void on_btnRemoveFromPlaylist_clicked();
     void on_btnAddToPlaylist_clicked();
     void on_btnLive_clicked();
-    void on_listPlaylist_itemDoubleClicked(QListWidgetItem* item);
-    void on_listPlaylist_currentTextChanged(QString currentText);
-    void on_spinBoxPvNumber_valueChanged(int value);
-    void on_comboBoxPvNumber_currentIndexChanged(int index);
+    void on_song_num_spinbox_valueChanged(int value);
+    void on_sbornik_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
     void showPreview(QString title);
     //    void loadSong();
     //    void loadPreview();
     void loadTitles(QString tSbornik);
-    QString currentTitle();
+    Song currentSong();
+    Song currentPlaylistSong();
 
 private:
     Ui::SongWidget *ui;
@@ -53,6 +52,7 @@ private:
     int titleType;
     SongDatabase playlist;
     SongsModel *songs_model;
+    SongsModel *playlist_model;
     bool isPlaylistTitle;
     bool allSongs;
     //    SoftProjector *toShow;

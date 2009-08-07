@@ -47,9 +47,9 @@ class SongsModel : public QAbstractTableModel
     Q_DISABLE_COPY(SongsModel)
 public:
     SongsModel();
-    QString currentTitle();
+    Song currentSong();
     void setSongs(QList<Song> songs);
-    int getNum(int row);
+    void addSong(Song song);
     Song getSong(int row);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -78,7 +78,7 @@ public:
     QStringList getSongList(QString title);
     QStringList getSongList(int number, QString sbornik);
     QStringList formatSongList(QString song);
-    QList<Song> getSongs(QString sbornik, bool sorted);
+    QList<Song> getSongs(QString sbornik);
     int lastUser();
 //private:
 
