@@ -3,6 +3,15 @@
 #include <QtGui>
 #include <QtSql>
 
+class Song
+// Class for stroring song information: number, name, sbornik
+{
+ public:
+    Song(int song_num, QString song_title, QString song_sbornik);
+    int num;
+    QString title;
+    QString sbornik;
+};
 
 class SongsModel : public QAbstractTableModel
 // Class for storing the data for the song table
@@ -14,27 +23,18 @@ public:
     QString currentTitle();
     void setTitles(QStringList titles);
     int getNum(int row);
-    QString getTitle(int row);
+    Song getSong(int row);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    QList<int> num_list;
-    QStringList song_list;
-    QStringList sbornik_list;
+    QList<Song> song_list;
 };
 
 
-class Song
-// Class for stroring song information: number, name, sbornik
-{
-    Song(int song_num, QString song_title, QString song_sbornik);
-    int num;
-    QString title;
-    QString sbornik;
-};
+
 
 class Sbornik
 {

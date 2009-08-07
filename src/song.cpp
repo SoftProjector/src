@@ -15,24 +15,22 @@ SongsModel::SongsModel()
 
 int SongsModel::getNum(int row)
 {
-    return num_list.at(row);
+    Song song = song_list.at(row);
+    return song.num;
 }
 
 
-QString SongsModel::getTitle(int row)
+Song SongsModel::getSong(int row)
 {
     return song_list.at(row);
 }
 
 void SongsModel::setTitles(QStringList songs)
 {
-    num_list.clear();
     song_list.clear();
-    sbornik_list.clear();
     for (int i = 0; i < songs.size(); i++) {
-        song_list.append(songs.at(i));
-        num_list.append(0);
-        sbornik_list.append("");
+        Song song = Song(0, songs.at(i), QString());
+        song_list.append(song);
     }
 }
 
@@ -51,8 +49,9 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
      if (!index.isValid() || role != Qt::DisplayRole)
          return QVariant();
 
-     int num = num_list.at(index.row());
-     QString title = song_list.at(index.row());
+     Song song = song_list.at(index.row());
+     int num = song.num;
+     QString title = song.title;
      if( index.column() == 0 )
          return QVariant(num);
      else

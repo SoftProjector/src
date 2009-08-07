@@ -55,7 +55,7 @@ QString SongWidget::currentTitle()
     // Returns the title of the selected song
     QModelIndex current_index = ui->songs_view->currentIndex();
     int current_row = current_index.row();
-    QString title = songs_model->getTitle(current_row);
+    QString title = songs_model->getSong(current_row).title;
     return title;
 }
 
@@ -65,7 +65,7 @@ void SongWidget::selectMatchingSong(QString text)
     // Look for a song matching <text>. Select it and scroll to show it.
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
-        QString s = songs_model->song_list.at(i);
+        QString s = songs_model->song_list.at(i).title;
         bool matches;
         if( startonly )
             matches = s.startsWith(text);
@@ -134,7 +134,8 @@ void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
         songs_model->setTitles(t.getTitle("pvUser", sort));
         ui->songs_view->selectRow(0);
     }
-    ui->songs_view->update();
+    // Re-draw the songs table:
+    ui->songs_view->viewport()->repaint();
 }
 
 void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
