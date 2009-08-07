@@ -118,7 +118,7 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
             sbornik = QString("pvUser");
     }
 
-    ui->song_num_spinbox->setEnabled(sbornik == QString("ALL"));
+    ui->song_num_spinbox->setEnabled(!(sbornik == QString("ALL")));
 
     songs_model->setSongs(t.getSongs(sbornik));
 
