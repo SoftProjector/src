@@ -5,11 +5,12 @@ EditWidget::EditWidget(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::EditWidget)
 {
+    t = SongDatabase();
     ui->setupUi(this);
-    sbornik="ALL";
-    loadTitles("ALL");
+    sbornik=QString("ALL");
+    loadTitles(sbornik);
     ui->comboBoxSbornik->setCurrentIndex(-1);
-    ui->spinBoxSongNum->setEnabled(false);
+    //ui->spinBoxSongNum->setEnabled(false);
     ui->checkBoxAny->hide();
     ui->lblEditProg->hide();
     ui->label_19->hide();
@@ -63,7 +64,7 @@ void EditWidget::on_btnNew_clicked()
         resetUiItems();
         ui->lblEditProg->setText("ADDING A SONG");
         ui->lblEditProg->show();
-        ui->spinBoxlpvUser->setValue(newSong.lastUser());
+        ui->spinBoxlpvUser->setValue(t.lastUser());
         ui->textEditSong->setPlainText(QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь"));
     }
 }
@@ -71,8 +72,8 @@ void EditWidget::on_btnNew_clicked()
 void EditWidget::on_bntDelete_clicked()
 {
     QMessageBox ms;
-    if(newSong.isUserOnly(editSong.songID)) {
-        newSong.deleteSong(editSong.songID);
+    if(t.isUserOnly(editSong.songID)) {
+        t.deleteSong(editSong.songID);
         loadTitles(sbornik);
         resetUiItems();
     }
@@ -88,7 +89,7 @@ void EditWidget::on_btnSave_clicked()
 {
     if (!ui->btnEdit->isEnabled()){
         QMessageBox ms;
-        if ((newSong.hasTitle(ui->lineEditTitle->text())) && (!(ui->btnNew->isEnabled()))){
+        if ((t.hasTitle(ui->lineEditTitle->text())) && (!(ui->btnNew->isEnabled()))){
             ms.setText("A song with this exact title already exist.\nPlease modify the title.\nAll non Alphanumeric characters will be removes");
             ms.setWindowTitle("Title Duplicate");
             ms.setIcon(QMessageBox::Critical);
@@ -145,14 +146,19 @@ void EditWidget::on_spinBoxSongNum_valueChanged(int value)
 
 void EditWidget::loadTitles(QString tSbornik)
 {
-    Sbornik t;
-    ui->listTitles->clear();
-    if (tSbornik == "ALL"){
-        allTitles = t.getTitle();
-        ui->listTitles->addItems(allTitles);
+    QList<Song> songs;
+
+    t = SongDatabase();
+    songs = t.getSongs(tSbornik, true);
+
+    QStringList titles;
+    for (int i = 0; i < songs.size(); i++) {
+        Song song = songs.at(i);
+        titles.append(song.title);
     }
-    else
-        ui->listTitles->addItems(t.getTitle(tSbornik, true));
+
+    ui->listTitles->clear();
+    ui->listTitles->addItems(titles);
 }
 
 QString EditWidget::setSongText(QString song)
@@ -184,6 +190,8 @@ QString EditWidget::setSongText(QString song)
     return verselist;
 }
 
+
+
 void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
 {
     if (index>=0){
@@ -200,9 +208,16 @@ void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
         else if (index==9) sbornik = "pvUser";
 
         titleType=1;
-        Sbornik t;
+
+        QList<Song> songs = t.getSongs(sbornik, false);
+        QStringList titles;
+        for (int i = 0; i < songs.size(); i++) {
+            Song song = songs.at(i);
+            titles.append(song.title);
+        }
+
         ui->listTitles->clear();
-        ui->listTitles->addItems(t.getTitle(sbornik, true));
+        ui->listTitles->addItems(titles);
     }
 }
 
@@ -226,7 +241,6 @@ void EditWidget::resetUiItems()
     ui->spinBoxuaPsalm->setValue(0);
     ui->textEditSong->clear();
     ui->lblID->setText("");
-//    loadTitles("ALL");
 }
 
 void EditWidget::setUiItems()
@@ -296,8 +310,10 @@ QString EditWidget::resetLyric(QString lyric)
 void EditWidget::on_listTitles_currentTextChanged(QString currentText)
 {
     QStringList list = currentText.split(" - ");
-    if (list.size()==1) editSong.getSong(currentText);
-    else editSong.getSong(list[1]);
+    if (list.size()==1)
+        editSong = t.getSong(currentText);
+    else
+        editSong = t.getSong(list[1]);
     if (ui->btnEdit->isEnabled())setUiItems();
 }
 
@@ -341,7 +357,7 @@ void EditWidget::on_txtSearch_textChanged(QString text)
     }
 }
 
-void EditWidget::setEdit(Sbornik sEdit)
+void EditWidget::setEdit(Song sEdit)
 {
     editSong = sEdit;
     setUiItems();

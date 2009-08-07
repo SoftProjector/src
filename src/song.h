@@ -3,15 +3,42 @@
 #include <QtGui>
 #include <QtSql>
 
+QString clean(QString str);
+
 class Song
 // Class for stroring song information: number, name, sbornik
 {
  public:
     Song(int song_num, QString song_title, QString song_sbornik);
+    Song();
     int num;
     QString title;
     QString sbornik;
+
+    void saveUpdate();
+    void saveNew();
+
+//private:
+    int songID; // Database ID of this song
+    int pv3300;
+    int pv2500;
+    int pv2001;
+    int pv2000a;
+    int pv2000b;
+    int pv1730;
+    int pvCt;
+    int pvUser;
+    int uaPsalm;
+    int uaEpisni;
+    int category;
+    int language;
+    int favorite;
+    QString tune;
+    QString wordsBy;
+    QString musicBy;
+    QString songText;
 };
+
 
 class SongsModel : public QAbstractTableModel
 // Class for storing the data for the song table
@@ -21,7 +48,7 @@ class SongsModel : public QAbstractTableModel
 public:
     SongsModel();
     QString currentTitle();
-    void setTitles(QStringList titles);
+    void setSongs(QList<Song> songs);
     int getNum(int row);
     Song getSong(int row);
 
@@ -35,11 +62,10 @@ public:
 
 
 
-
-class Sbornik
+class SongDatabase
 {
 public:
-    Sbornik();
+    SongDatabase();
 //    void setSong(QString gtitle);
 //    void setSong(QStringList setSbornik, QString setTitle, int setCat, QStringList setBy, QString setText);
     bool hasTitle(QString title);
@@ -47,37 +73,16 @@ public:
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
-    QString clean(QString str);
-    QString getSong(QString title);
-    QString getSong(int number, QString sbornik);
+    Song getSong(QString title);
+    Song getSong(int number, QString sbornik);
     QStringList getSongList(QString title);
     QStringList getSongList(int number, QString sbornik);
     QStringList formatSongList(QString song);
-    QStringList getTitle();
-    QStringList getTitle(QString sbornik, bool sorted);
+    QList<Song> getSongs(QString sbornik, bool sorted);
     int lastUser();
 //private:
-    int songID;
-    int pv3300;
-    int pv2500;
-    int pv2001;
-    int pv2000a;
-    int pv2000b;
-    int pv1730;
-    int pvCt;
-    int pvUser;
-    int uaPsalm;
-    int uaEpisni;
-    QString title;
-    int category;
-    int language;
-    int favorite;
-    QString tune;
-    QString wordsBy;
-    QString musicBy;
-    QString songText;
-    QStringList songList;
 
+    QStringList songList;
 };
 
 #endif // SONG_H

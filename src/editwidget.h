@@ -16,7 +16,7 @@ public:
     virtual ~EditWidget();
 
 public slots:
-    void setEdit(Sbornik sEdit);
+    void setEdit(Song sEdit);
     void setNew();
 
 protected:
@@ -24,7 +24,8 @@ protected:
 
 private:
     Ui::EditWidget *ui;
-    Sbornik editSong, newSong;
+    Song editSong, newSong;
+    SongDatabase t;
     QString sbornik, format;
     QStringList allTitles;
     int titleType;

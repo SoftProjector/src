@@ -6,21 +6,12 @@ SongWidget::SongWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SongWidget)
 {
-//    Sbornik t;
     ui->setupUi(this);
     songs_model = new SongsModel;
     ui->songs_view->setModel(songs_model);
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
-
-//    allTitles = t.getTitle();
-    //loadTitles("ALL");
-//    sbornik = "pv3300";
     on_comboBoxPvNumber_currentIndexChanged(0);
-//    titleType=0;
-
-//    ui->listPreview->addItems(songPreview.getSongList(1, sbornik));
-//    toShow = new SoftProjector();
 }
 
 SongWidget::~SongWidget()
@@ -43,11 +34,8 @@ void SongWidget::changeEvent(QEvent *e)
 
 void SongWidget::loadTitles(QString tSbornik)
 {
-    Sbornik t;
-    if (tSbornik == "ALL")
-        songs_model->setTitles(t.getTitle());
-    else
-        songs_model->setTitles(t.getTitle(tSbornik, false));
+    SongDatabase t;
+    songs_model->setSongs(t.getSongs("ALL", false));
 }
 
 QString SongWidget::currentTitle()
@@ -88,9 +76,9 @@ void SongWidget::showPreview(QString title)
     QStringList list = title.split(" - ");
     ui->listPreview->clear();
     if (list.size()==1)
-        ui->listPreview->addItems(songPreview.getSongList(title));
+        ui->listPreview->addItems(playlist.getSongList(title));
     else
-        ui->listPreview->addItems(songPreview.getSongList(list[1]));
+        ui->listPreview->addItems(playlist.getSongList(list[1]));
     ui->listPreview->setCurrentRow(0);
 
 }
@@ -100,40 +88,33 @@ void SongWidget::on_comboBoxPvNumber_currentIndexChanged(int index)
     // Called when a different sbornik is selected from the pull-down menu
 
     titleType=1;
-    Sbornik t;
+    SongDatabase t;
     bool sort = ui->sort_box->isChecked();
 
-    if (index == 0){
-        // LOAD All songs alphabetically
-        allTitles=t.getTitle();
-        songs_model->setTitles(allTitles);
-        ui->spinBoxPvNumber->setEnabled(false);
-        ui->songs_view->selectRow(0);
+    QString sbornik;
+
+    switch( index ) {
+        case 0:
+            sbornik = QString("ALL");
+            break;
+        case 1:
+            sbornik = QString("pv3300");
+            break;
+        case 2:
+            sbornik = QString("pv2001");
+            break;
+        case 3:
+            sbornik = QString("uaEpisni");
+            break;
+        case 4:
+            sbornik = QString("pvUser");
     }
-    else if (index==1){
-        // LOAD Песнь Возорждения 2800
-        ui->spinBoxPvNumber->setEnabled(true);
-        songs_model->setTitles(t.getTitle("pv3300", sort));
-        ui->songs_view->selectRow(0);
-    }
-    else if (index==2){
-        // LOAD  Песнь Возорждения 2100
-        ui->spinBoxPvNumber->setEnabled(true);
-        songs_model->setTitles(t.getTitle("pv2001", sort));
-        ui->songs_view->selectRow(0);
-    }
-    else if (index==3){
-    	// LOAD Євангелські Пісні
-        ui->spinBoxPvNumber->setEnabled(true);
-        songs_model->setTitles(t.getTitle("uaEpisni", sort));
-        ui->songs_view->selectRow(0);
-    }
-    else if (index==4){
-	// LOAD user sbornik
-        ui->spinBoxPvNumber->setEnabled(true);
-        songs_model->setTitles(t.getTitle("pvUser", sort));
-        ui->songs_view->selectRow(0);
-    }
+
+    ui->spinBoxPvNumber->setEnabled(sbornik == QString("ALL"));
+
+    songs_model->setSongs(t.getSongs(sbornik, sort));
+
+    ui->songs_view->selectRow(0);
     // Re-draw the songs table:
     ui->songs_view->viewport()->repaint();
 }
@@ -147,7 +128,7 @@ void SongWidget::on_spinBoxPvNumber_valueChanged(int value)
     //    selector=1;
 //    setSong(value,1);
 //    ui->listPreview->clear();
-//    ui->listPreview->addItems(songPreview.getSongList(value, sbornik));
+//    ui->listPreview->addItems(playlist.getSongList(value, sbornik));
 }
 
 
@@ -163,16 +144,16 @@ void SongWidget::on_listPlaylist_currentTextChanged(QString currentText)
 
 void SongWidget::on_listPlaylist_itemDoubleClicked(QListWidgetItem* item)
 {
-    emit sendSong(songPreview.songList,item->text(),0);
+    emit sendSong(playlist.songList,item->text(),0);
 }
 
 void SongWidget::on_btnLive_clicked()
 {
     if(isPlaylistTitle){
-        emit sendSong(songPreview.songList,ui->listPlaylist->currentItem()->text(),ui->listPreview->currentRow());;
+        emit sendSong(playlist.songList,ui->listPlaylist->currentItem()->text(),ui->listPreview->currentRow());;
     }
     else{
-        emit sendSong(songPreview.songList, currentTitle(), ui->listPreview->currentRow());
+        emit sendSong(playlist.songList, currentTitle(), ui->listPreview->currentRow());
     }
 }
 
@@ -192,8 +173,10 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
+    /* FIXME!!!!
     if (ui->comboBoxPvNumber->currentIndex()>0)
         ui->comboBoxPvNumber->setCurrentIndex(0);
+
     if (!ui->match_beginning_box->isChecked())
     {
         allSongs=false;
@@ -201,15 +184,15 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         QStringList tlist2;
         if(tlist.count()==1){
             QString tx = tlist[0];
-            tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
-            songs_model->setTitles(tlist2);
+            tlist2 = allTitles.filter(tx.trimmed(), Qt::CaseInsensitive);
+            songs_model->setSongs(tlist2);
         }
         if(tlist.count()==2)
         {
             QString tx = tlist[0];
-            tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
+            tlist2 = allTitles.filter(tx.trimmed(), Qt::CaseInsensitive);
             tx = tlist[1];
-            songs_model->setTitles(tlist2.filter(tx,Qt::CaseInsensitive));
+            songs_model->setSongs(tlist2.filter(tx, Qt::CaseInsensitive));
         }
 
     }
@@ -222,18 +205,22 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         }
         selectMatchingSong(text);
     }
+    */
 }
 
 
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 {
     QString title = currentTitle();
-    emit sendSong(songPreview.songList, title, index.row());
+    emit sendSong(playlist.songList, title, index.row());
 }
 
-Sbornik SongWidget::sendToEdit()
+Song SongWidget::getSongToEdit()
 {
-    return songPreview;
+    // FIXME
+    Song song(0, "", "");
+    return song;
+    //return playlist;
 }
 
 void SongWidget::on_match_beginning_box_toggled(bool checked)

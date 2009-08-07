@@ -240,7 +240,7 @@ void SoftProjector::on_show_button_clicked()
 void SoftProjector::on_actionEditSong_triggered()
 {
     if (ui->tabWidget->currentIndex()==1){
-        editWidget->setEdit(songWidget->sendToEdit());
+        editWidget->setEdit(songWidget->getSongToEdit());
         editWidget->show();
         editWidget->activateWindow();
     }

@@ -17,7 +17,7 @@ public:
     virtual ~SongWidget();
 
 public slots:
-    Sbornik sendToEdit();
+    Song getSongToEdit();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -51,7 +51,7 @@ private:
     QString sbornik;
     QStringList allTitles;
     int titleType;
-    Sbornik songPreview;
+    SongDatabase playlist;
     SongsModel *songs_model;
     bool isPlaylistTitle;
     bool allSongs;
