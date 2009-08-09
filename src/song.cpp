@@ -228,7 +228,7 @@ QStringList SongDatabase::getSongList(QString gtitle)
     songList = formatSongList(song.songText);
     return songList;
 }
-
+// FIXME combine these 2 functions into 1, that operates only on song_id.
 QStringList SongDatabase::getSongList(int number, QString sbornik)
 {    
     Song song = getSong(number,sbornik);
@@ -345,9 +345,9 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
         list1 = tMap.keys();
         QStringList list2;
         list2 = tMap.values();
-        int mapLenght(tMap.size());
+        int mapLength(tMap.size());
         int i(0);
-        while (i<mapLenght)
+        while (i<mapLength)
         {
             int num = list1[i];
             QString title = list2[i];
@@ -365,10 +365,13 @@ int SongDatabase::lastUser()
     QList <int> lastInt;
     QSqlQuery sq;
     sq.exec("SELECT pvUser FROM songs WHERE pvUser > 0");
-    while (sq.next()) lastInt << sq.value(0).toInt();
+    while (sq.next())
+        lastInt << sq.value(0).toInt();
     qSort(lastInt);
-    if (lastInt.isEmpty()) last=1;
-    else last = lastInt.takeLast() + 1;
+    if (lastInt.isEmpty())
+        last=1;
+    else
+        last = lastInt.takeLast() + 1;
     return last;
 }
 
@@ -388,8 +391,10 @@ bool SongDatabase::isUserOnly(int sId)
         i += sq.value(7).toInt();
         i += sq.value(8).toInt();
     }
-    if(i==0) return true;
-    else return false;
+    if(i==0)
+        return true;
+    else
+        return false;
 }
 
 void SongDatabase::deleteSong(int sId)
