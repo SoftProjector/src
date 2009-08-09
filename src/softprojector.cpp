@@ -154,6 +154,7 @@ void SoftProjector::on_actionClose_triggered()
 
 void SoftProjector::setSongList(QStringList showList, QString caption, int row)
 {
+    // Display the specified song text in the right-most column of softProjector
     type = "song";
     ui->labelShow->setText(caption);
     ui->listShow->clear();

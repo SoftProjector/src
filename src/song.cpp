@@ -222,18 +222,11 @@ Song SongDatabase::getSong(int number, QString sbornik)
     return song;
 }
 
-QStringList SongDatabase::getSongList(QString gtitle)
-{
-    Song song = getSong(gtitle);
-    songList = formatSongList(song.songText);
-    return songList;
-}
-// FIXME combine these 2 functions into 1, that operates only on song_id.
-QStringList SongDatabase::getSongList(int number, QString sbornik)
+QStringList SongDatabase::getSongList(Song orig_song)
 {    
-    Song song = getSong(number,sbornik);
-    songList = formatSongList(song.songText);
-    return songList;
+    Song song = getSong(orig_song.title);
+    QStringList song_list = formatSongList(song.songText);
+    return song_list;
 }
 
 QStringList SongDatabase::formatSongList(QString song)

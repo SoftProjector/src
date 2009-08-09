@@ -99,7 +99,8 @@ void SongWidget::selectMatchingSong(QString text)
 void SongWidget::showPreview(Song song)
 {
     ui->listPreview->clear();
-    ui->listPreview->addItems(song_database.getSongList(song.title));
+    QStringList song_list = song_database.getSongList(song);
+    ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
 }
 
@@ -165,8 +166,8 @@ void SongWidget::on_btnLive_clicked()
     else
         song = currentSong();
 
-    QStringList songList = song_database.formatSongList(song.songText);
-    emit sendSong(songList, song.title, ui->listPreview->currentRow());
+    QStringList song_list = song_database.getSongList(song);
+    emit sendSong(song_list, song.title, ui->listPreview->currentRow());
 }
 
 
@@ -264,8 +265,7 @@ void SongWidget::on_playlist_view_activated(QModelIndex index)
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
     Song song = currentPlaylistSong();
-    //QStringList songList = song_database.getSongList(song.num, song.sbornik);
-    //emit sendSong(songList, song.title, 0);
-    emit sendSong(song_database.songList, song.title, 0);
+    QStringList song_list = song_database.getSongList(song);
+    emit sendSong(song_list, song.title, 0);
 }
 

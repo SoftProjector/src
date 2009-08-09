@@ -23,6 +23,7 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
+    // Display the specified song text in the right-most column of softProjector:
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
@@ -38,7 +39,7 @@ private slots:
     void on_song_num_spinbox_valueChanged(int value);
     void on_sbornik_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
-    void showPreview(QString title);
+    void showPreview(Song song);
     //    void loadSong();
     //    void loadPreview();
     void loadTitles(QString tSbornik);
@@ -52,7 +53,7 @@ private:
     QStringList allTitles;
     QStringList sbornikList;
     int titleType;
-    SongDatabase playlist;
+    SongDatabase song_database;
     SongsModel *songs_model;
     SongsModel *playlist_model;
     bool isPlaylistTitle;

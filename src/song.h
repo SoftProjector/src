@@ -80,14 +80,13 @@ public:
     Song getSong(int id);
     Song getSong(QString title);
     Song getSong(int number, QString sbornik);
-    QStringList getSongList(QString title);
-    QStringList getSongList(int number, QString sbornik);
+    QStringList getSongList(Song song);
     QStringList formatSongList(QString song);
     QList<Song> getSongs(QString sbornik);
     int lastUser();
 //private:
 
-    QStringList songList;
+    //QStringList songList;
 };
 
 #endif // SONG_H
