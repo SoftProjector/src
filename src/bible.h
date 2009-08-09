@@ -9,7 +9,8 @@ public:
     Bible();
     QStringList getBooks(QString bibleName);
     QStringList getChapter(QString bibleName, QString book, int chapter);
-    QStringList getVerse(QString id, QString bibleName);
+    QString getSecondaryVerse(QString id, QString bibleName);
+    QString getSecondaryCaption(QString id, QString bibleName);
     int maxChapters(QString book, QString bibleName);
     QString getDbBibleName(QString bibleName);
     void setSecondary(QString bibleName);
@@ -29,5 +30,7 @@ private slots:
 
 
 };
+
+
 
 #endif // BIBLE_H

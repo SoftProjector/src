@@ -14,22 +14,23 @@ class Song
     int num;
     QString title;
     QString sbornik;
+    QString sbornik_info;
 
     void saveUpdate();
     void saveNew();
 
 //private:
     int songID; // Database ID of this song
-    int pv3300;
-    int pv2500;
-    int pv2001;
-    int pv2000a;
-    int pv2000b;
-    int pv1730;
-    int pvCt;
-    int pvUser;
-    int uaPsalm;
-    int uaEpisni;
+//    int pv3300;
+//    int pv2500;
+//    int pv2001;
+//    int pv2000a;
+//    int pv2000b;
+//    int pv1730;
+//    int pvCt;
+//    int pvUser;
+//    int uaPsalm;
+//    int uaEpisni;
     int category;
     int language;
     int favorite;
@@ -37,6 +38,9 @@ class Song
     QString wordsBy;
     QString musicBy;
     QString songText;
+    QString font;
+    QString alingment;
+    QString background;
 };
 
 
@@ -73,6 +77,7 @@ public:
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
+    Song getSong(int id);
     Song getSong(QString title);
     Song getSong(int number, QString sbornik);
     QStringList getSongList(QString title);

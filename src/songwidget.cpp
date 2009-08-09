@@ -7,6 +7,7 @@ SongWidget::SongWidget(QWidget *parent) :
     ui(new Ui::SongWidget)
 {
     ui->setupUi(this);
+    loadSborniks();
     songs_model = new SongsModel;
     playlist_model = new SongsModel;
     ui->songs_view->setModel(songs_model);
@@ -33,6 +34,20 @@ void SongWidget::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void SongWidget::loadSborniks()
+{
+    QSqlQuery sq;
+    QStringList sbor;
+    sq.exec("SELECT id, name FROM Sborniks");
+    while (sq.next())
+    {
+        sbornikList << sq.value(0).toString();
+        sbor << sq.value(1).toString();
+    }
+
+    ui->sbornik_menu->addItems(sbor);
 }
 
 void SongWidget::loadTitles(QString tSbornik)
@@ -101,24 +116,29 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 
     QString sbornik;
 
-    switch( index ) {
-        case 0:
-            sbornik = QString("ALL");
-            break;
-        case 1:
-            sbornik = QString("pv3300");
-            break;
-        case 2:
-            sbornik = QString("pv2001");
-            break;
-        case 3:
-            sbornik = QString("uaEpisni");
-            break;
-        case 4:
-            sbornik = QString("pvUser");
-    }
+    if (index==0)
+        sbornik = "ALL";
+    else
+        sbornik = sbornikList[index-1];
 
-    ui->song_num_spinbox->setEnabled(!(sbornik == QString("ALL")));
+//    switch( index ) {
+//        case 0:
+//            sbornik = QString("ALL");
+//            break;
+//        case 1:
+//            sbornik = QString("pv3300");
+//            break;
+//        case 2:
+//            sbornik = QString("pv2001");
+//            break;
+//        case 3:
+//            sbornik = QString("uaEpisni");
+//            break;
+//        case 4:
+//            sbornik = QString("pvUser");
+//    }
+
+    ui->song_num_spinbox->setEnabled(!(sbornik == "ALL"));
 
     songs_model->setSongs(t.getSongs(sbornik));
 

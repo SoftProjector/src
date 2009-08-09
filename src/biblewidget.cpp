@@ -43,15 +43,15 @@ QString BibleWidget::getSecondary()
 }
 
 
-void BibleWidget::setPrimary(QString bibleName)
+void BibleWidget::setPrimary(QString bibleId)
 {
-    biblePrimary = bibleName;
+    biblePrimary = bibleId;
     loadBible();
 }
 
-void BibleWidget::setSecondary(QString bibleName)
+void BibleWidget::setSecondary(QString bibleId)
 {
-    bibleSecondary = bibleName;
+    bibleSecondary = bibleId;
     loadBible();
 }
 

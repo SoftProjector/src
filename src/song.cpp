@@ -120,7 +120,7 @@ bool SongDatabase::hasTitle(QString title)
 {
     QSqlQuery sq;
     bool ys=false;
-    sq.exec("SELECT id FROM songs WHERE title = '" + clean(title) +"'");
+    sq.exec("SELECT id FROM Songs WHERE title = '" + clean(title) +"'");
     while (sq.next()){
         ys = true;
     }
@@ -131,27 +131,20 @@ void Song::saveUpdate()
 {
     QSqlTableModel sq;
     QSqlRecord sr;
-    sq.setTable("songs");
+    sq.setTable("Songs");
     sq.setFilter("id = " + QString::number(songID));
     sq.select();
 
     sr = sq.record(0);
-    sr.setValue(1,pv3300);
-    sr.setValue(2,pv2500);
-    sr.setValue(3,pv2001);
-    sr.setValue(4,pv2000a);
-    sr.setValue(5,pv2000b);
-    sr.setValue(6,pv1730);
-    sr.setValue(7,pvCt);
-    sr.setValue(8,pvUser);
-    sr.setValue(9,uaPsalm);
-    sr.setValue(10,uaEpisni);
-    sr.setValue(11,clean(title));
-    sr.setValue(12,category);
-    sr.setValue(13,tune);
-    sr.setValue(14,wordsBy);
-    sr.setValue(15,musicBy);
-    sr.setValue(16,songText);
+    sr.setValue(1,clean(title));
+    sr.setValue(2,category);
+    sr.setValue(3,tune);
+    sr.setValue(4,wordsBy);
+    sr.setValue(5,musicBy);
+    sr.setValue(6,songText);
+    sr.setValue(7,font);
+    sr.setValue(8,alingment);
+    sr.setValue(9,background);
     sq.setRecord(0,sr);
     sq.submitAll();
 }
@@ -159,52 +152,58 @@ void Song::saveUpdate()
 void Song::saveNew()
 {
     QSqlTableModel sq;
-    sq.setTable("songs");
+    sq.setTable("Songs");
     sq.insertRows(0,1);
-    sq.setData(sq.index(0,1),pv3300);
-    sq.setData(sq.index(0,2),pv2500);
-    sq.setData(sq.index(0,3),pv2001);
-    sq.setData(sq.index(0,4),pv2000a);
-    sq.setData(sq.index(0,5),pv2000b);
-    sq.setData(sq.index(0,6),pv1730);
-    sq.setData(sq.index(0,7),pvCt);
-    sq.setData(sq.index(0,8),pvUser);
-    sq.setData(sq.index(0,9),uaPsalm);
-    sq.setData(sq.index(0,10),uaEpisni);
-    sq.setData(sq.index(0,11),clean(title));
-    sq.setData(sq.index(0,12),category);
-    sq.setData(sq.index(0,13),tune);
-    sq.setData(sq.index(0,14),wordsBy);
-    sq.setData(sq.index(0,15),musicBy);
-    sq.setData(sq.index(0,16),songText);
+    sq.setData(sq.index(0,1),clean(title));
+    sq.setData(sq.index(0,2),category);
+    sq.setData(sq.index(0,3),tune);
+    sq.setData(sq.index(0,4),wordsBy);
+    sq.setData(sq.index(0,5),musicBy);
+    sq.setData(sq.index(0,6),songText);
+    sq.setData(sq.index(0,7),font);
+    sq.setData(sq.index(0,8),alingment);
+    sq.setData(sq.index(0,9),background);
     sq.submitAll();
+}
+
+Song SongDatabase::getSong(int id)
+{
+    QSqlQuery sq;
+    Song song;
+    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE id = " + QString::number(id));
+    while (sq.next()){
+        song.songID = id;
+        song.title = sq.value(0).toString();
+        song.category = sq.value(1).toInt();
+        song.tune = sq.value(2).toString();
+        song.wordsBy = sq.value(3).toString();
+        song.musicBy = sq.value(4).toString();
+        song.songText = sq.value(5).toString();
+        song.font = sq.value(6).toString();
+        song.alingment = sq.value(7).toString();
+        song.background = sq.value(8).toString();
+        break;
+    }
+    return song;
 }
 
 Song SongDatabase::getSong(QString gtitle)
 {
     QSqlQuery sq;
     Song song;
-    sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, category, tune, words, music, songText FROM songs WHERE title = '" + gtitle + "'");
+    sq.exec("SELECT id, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE title like '" + gtitle + "'");
     while (sq.next()){
         song.songID = sq.value(0).toInt();
-        song.pv3300 = sq.value(1).toInt();
-        song.pv2500 = sq.value(2).toInt();
-        song.pv2001 = sq.value(3).toInt();
-        song.pv2000a = sq.value(4).toInt();
-        song.pv2000b = sq.value(5).toInt();
-        song.pv1730 = sq.value(6).toInt();
-        song.pvCt = sq.value(7).toInt();
-        song.pvUser = sq.value(8).toInt();
-        song.uaPsalm = sq.value(9).toInt();
-        song.uaEpisni = sq.value(10).toInt();
         song.title = gtitle;
-        song.category = sq.value(11).toInt();
-        song.tune = sq.value(12).toString();
-        song.wordsBy = sq.value(13).toString();
-        song.musicBy = sq.value(14).toString();
-        song.songText = sq.value(15).toString();
+        song.category = sq.value(1).toInt();
+        song.tune = sq.value(2).toString();
+        song.wordsBy = sq.value(3).toString();
+        song.musicBy = sq.value(4).toString();
+        song.songText = sq.value(5).toString();
+        song.font = sq.value(6).toString();
+        song.alingment = sq.value(7).toString();
+        song.background = sq.value(8).toString();
         break;
-
     }
     return song;
 }
@@ -213,51 +212,27 @@ Song SongDatabase::getSong(int number, QString sbornik)
 {
     QSqlQuery sq;
     Song song;
-    sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, title, category, tune, words, music, songText FROM songs WHERE " + sbornik +" = '" + QString::number(number) + "'");
+    int s_id;
+    sq.exec("SELECT song_id FROM SongLink WHERE sbornik_id like '" + sbornik +"' AND song_number = " + QString::number(number));
     while (sq.next()){
-        song.songID = sq.value(0).toInt();
-        song.pv3300 = sq.value(1).toInt();
-        song.pv2500 = sq.value(2).toInt();
-        song.pv2001 = sq.value(3).toInt();
-        song.pv2000a = sq.value(4).toInt();
-        song.pv2000b = sq.value(5).toInt();
-        song.pv1730 = sq.value(6).toInt();
-        song.pvCt = sq.value(7).toInt();
-        song.pvUser = sq.value(8).toInt();
-        song.uaPsalm = sq.value(9).toInt();
-        song.uaEpisni = sq.value(10).toInt();
-        song.title = sq.value(11).toString();
-        song.category = sq.value(12).toInt();
-        song.tune = sq.value(13).toString();
-        song.wordsBy = sq.value(14).toString();
-        song.musicBy = sq.value(15).toString();
-        song.songText = sq.value(16).toString();
+        s_id = sq.value(0).toInt();
         break;
     }
+    song = getSong(s_id);
     return song;
 }
 
 QStringList SongDatabase::getSongList(QString gtitle)
 {
-    QSqlQuery sq;
-    QString songText;
-    sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, category, tune, words, music, songText FROM songs WHERE title = '" + gtitle + "'");
-    while (sq.next()){
-        songText = sq.value(15).toString();
-    }
-    songList = formatSongList(songText);
+    Song song = getSong(gtitle);
+    songList = formatSongList(song.songText);
     return songList;
 }
 
 QStringList SongDatabase::getSongList(int number, QString sbornik)
-{
-    QString songText;
-    QSqlQuery sq;
-    sq.exec("SELECT id, pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, pvUser, uaPsalm, uaEpisni, title, category, tune, words, music, songText FROM songs WHERE " + sbornik +" = '" + QString::number(number) + "'");
-    while (sq.next()){
-        songText = sq.value(16).toString();
-    }
-    songList = formatSongList(songText);
+{    
+    Song song = getSong(number,sbornik);
+    songList = formatSongList(song.songText);
     return songList;
 }
 
@@ -337,8 +312,9 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
         // Loads all titles in database
         // FIXME include song number and sbornik name
         QSqlQuery sq;
-        sq.exec("SELECT title FROM songs");
-        while (sq.next()) titles << sq.value(0).toString();
+        sq.exec("SELECT title FROM Songs");
+        while (sq.next())
+            titles << sq.value(0).toString();
         titles.sort();
 
         for (int i = 0; i < titles.size(); i++) {
@@ -350,11 +326,21 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
     else
     {
         QMap<int, QString> tMap;
-        QSqlQuery sq;
-        sq.exec("SELECT title, "+sbornik+" FROM songs WHERE "+sbornik+">0");
+        QSqlQuery sq, sq1;
 
+        sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '"+sbornik+"'");
         while(sq.next())
-            tMap[sq.value(1).toInt()] = sq.value(0).toString();
+        {
+            QString sid= sq.value(0).toString();
+            QString stitle;
+            int snum(sq.value(1).toInt());
+            sq1.exec("SELECT title FROM Songs WHERE id = " + sid);
+            sq1.first();
+            stitle = sq1.value(0).toString();
+
+            tMap[snum] = stitle;
+        }
+
         QList<int> list1;
         list1 = tMap.keys();
         QStringList list2;
@@ -409,5 +395,5 @@ bool SongDatabase::isUserOnly(int sId)
 void SongDatabase::deleteSong(int sId)
 {
     QSqlQuery sq;
-    sq.exec("DELETE FROM songs WHERE id = '" + QString::number(sId) + "'");
+    sq.exec("DELETE FROM Songs WHERE id = " + QString::number(sId) );
 }

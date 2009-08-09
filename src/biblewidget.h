@@ -18,8 +18,8 @@ public:
 public slots:
     QString getPrimary();
     QString getSecondary();
-    void setPrimary(QString bibleName);
-    void setSecondary(QString bibleName);
+    void setPrimary(QString bibleId);
+    void setSecondary(QString bibleId);
 
 protected:
     virtual void changeEvent(QEvent *e);

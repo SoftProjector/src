@@ -25,6 +25,7 @@ private:
     SoftProjector *softProjector;
     QFont new_font;
     QString new_wallpaper_path;
+    QStringList bible_id_list;
 
 private slots:
     void on_remove_wallpaper_button_clicked();

@@ -42,6 +42,7 @@ private slots:
     //    void loadSong();
     //    void loadPreview();
     void loadTitles(QString tSbornik);
+    void loadSborniks();
     Song currentSong();
     Song currentPlaylistSong();
 
@@ -49,6 +50,7 @@ private:
     Ui::SongWidget *ui;
     QString sbornik;
     QStringList allTitles;
+    QStringList sbornikList;
     int titleType;
     SongDatabase playlist;
     SongsModel *songs_model;

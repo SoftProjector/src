@@ -46,26 +46,6 @@
            <string>Все Зборники</string>
           </property>
          </item>
-         <item>
-          <property name="text">
-           <string>Песнь Возорждения 2800</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Песнь Возорждения 2001</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Євангелські Пісні </string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>User</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item>

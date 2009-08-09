@@ -6,11 +6,11 @@
 bool connect()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("spData.db");
+    db.setDatabaseName("spData.sqlite");
     if (!db.open()){
         QMessageBox mb;
         mb.setText("spData Error"
-                   "Could not connect to the database spData.db!\n\n"
+                   "Could not connect to the database spData.sqlite!\n\n"
                    "Following Errors:\n"
                    + db.lastError().databaseText() + "\n"
                    + db.lastError().driverText() +"\n"
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::setStyle("Plastique");
 
-    bool fileExist = QFile::exists("spData.db");
+    bool fileExist = QFile::exists("spData.sqlite");
     if (fileExist)
     {
         if( !connect() )
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     else
     {
         QMessageBox mb;
-        mb.setText("Database file 'spData.db' cannot be found.\nThe program will Terminate!");
+        mb.setText("Database file 'spData.sqlite' cannot be found.\nThe program will Terminate!");
         mb.setWindowTitle("Database File Error");
         mb.setIcon(QMessageBox::Critical);
         mb.exec();

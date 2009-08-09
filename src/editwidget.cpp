@@ -253,30 +253,30 @@ void EditWidget::setUiItems()
     //
     ui->lblID->setText(QString::number(editSong.songID));
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
-    ui->spinBoxpv3300->setValue(editSong.pv3300);
-    ui->spinBoxpv2500->setValue(editSong.pv2500);
-    ui->spinBoxpv2001->setValue(editSong.pv2001);
-    ui->spinBoxpv2000a->setValue(editSong.pv2000a);
-    ui->spinBoxpv2000b->setValue(editSong.pv2000b);
-    ui->spinBoxpv1730->setValue(editSong.pv1730);
-    ui->spinBoxpvCt->setValue(editSong.pvCt);
-    ui->spinBoxuaPsalm->setValue(editSong.uaPsalm);
-    ui->spinBoxuaEpisni->setValue(editSong.uaEpisni);
-    ui->spinBoxlpvUser->setValue(editSong.pvUser);
+//    ui->spinBoxpv3300->setValue(editSong.pv3300);
+//    ui->spinBoxpv2500->setValue(editSong.pv2500);
+//    ui->spinBoxpv2001->setValue(editSong.pv2001);
+//    ui->spinBoxpv2000a->setValue(editSong.pv2000a);
+//    ui->spinBoxpv2000b->setValue(editSong.pv2000b);
+//    ui->spinBoxpv1730->setValue(editSong.pv1730);
+//    ui->spinBoxpvCt->setValue(editSong.pvCt);
+//    ui->spinBoxuaPsalm->setValue(editSong.uaPsalm);
+//    ui->spinBoxuaEpisni->setValue(editSong.uaEpisni);
+//    ui->spinBoxlpvUser->setValue(editSong.pvUser);
 }
 
 void EditWidget::setSave(){
     newSong.songID = ui->lblID->text().toInt();
-    newSong.pv3300 = ui->spinBoxpv3300->value();
-    newSong.pv2500 = ui->spinBoxpv2500->value();
-    newSong.pv2001 = ui->spinBoxpv2001->value();
-    newSong.pv2000a = ui->spinBoxpv2000a->value();
-    newSong.pv2000b = ui->spinBoxpv2000b->value();
-    newSong.pv1730 = ui->spinBoxpv1730->value();
-    newSong.pvCt = ui->spinBoxpvCt->value();
-    newSong.pvUser = ui->spinBoxlpvUser->value();
-    newSong.uaPsalm = ui->spinBoxuaPsalm->value();
-    newSong.uaEpisni = ui->spinBoxuaEpisni->value();
+//    newSong.pv3300 = ui->spinBoxpv3300->value();
+//    newSong.pv2500 = ui->spinBoxpv2500->value();
+//    newSong.pv2001 = ui->spinBoxpv2001->value();
+//    newSong.pv2000a = ui->spinBoxpv2000a->value();
+//    newSong.pv2000b = ui->spinBoxpv2000b->value();
+//    newSong.pv1730 = ui->spinBoxpv1730->value();
+//    newSong.pvCt = ui->spinBoxpvCt->value();
+//    newSong.pvUser = ui->spinBoxlpvUser->value();
+//    newSong.uaPsalm = ui->spinBoxuaPsalm->value();
+//    newSong.uaEpisni = ui->spinBoxuaEpisni->value();
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
     newSong.language = ui->comboBoxLanguage->currentIndex();

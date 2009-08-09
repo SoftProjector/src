@@ -79,8 +79,8 @@ void SoftProjector::readConfigurationFile()
         // display->setNewFont(...
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
-        bibleWidget->setPrimary(QString("Russian"));
-        bibleWidget->setSecondary(QString("English (KJV)"));
+        bibleWidget->setPrimary(QString("bible_ru"));
+        bibleWidget->setSecondary(QString("none"));
         return;
     }
     // Read the settings file:
@@ -203,14 +203,16 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         //emit sendDisplay(ui->listShow->currentItem()->text(),"");
     else if(type=="bible")
     {
-	if( bible.primary==bible2 )
+        if( (bible.primary==bible2) || (bible2=="none") )
             display->SetAllText(bible.verseList1[currentRow],bible.captionList1[currentRow]);
         else
 	{
 	    QString verse = bible.verseList1[currentRow] + "\n";
-	    verse += bible.verseList2[currentRow];
+//            verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible2);
+            verse += bible.verseList2[currentRow];
 	    QString caption = bible.captionList1[currentRow] + "    ";
-	    caption += bible.captionList2[currentRow];
+//            caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible2);
+            caption += bible.captionList2[currentRow];
             display->SetAllText(verse, caption);
 	}
     }
