@@ -21,16 +21,6 @@ class Song
 
 //private:
     int songID; // Database ID of this song
-//    int pv3300;
-//    int pv2500;
-//    int pv2001;
-//    int pv2000a;
-//    int pv2000b;
-//    int pv1730;
-//    int pvCt;
-//    int pvUser;
-//    int uaPsalm;
-//    int uaEpisni;
     int category;
     int language;
     int favorite;
@@ -70,8 +60,6 @@ class SongDatabase
 {
 public:
     SongDatabase();
-//    void setSong(QString gtitle);
-//    void setSong(QStringList setSbornik, QString setTitle, int setCat, QStringList setBy, QString setText);
     bool hasTitle(QString title);
     bool isUserOnly(int songId);
     void saveUpdate();
@@ -79,14 +67,11 @@ public:
     void deleteSong(int songId);
     Song getSong(int id);
     Song getSong(QString title);
-    Song getSong(int number, QString sbornik);
     QStringList getSongList(Song song);
     QStringList formatSongList(QString song);
     QList<Song> getSongs(QString sbornik);
     int lastUser();
 //private:
-
-    //QStringList songList;
 };
 
 #endif // SONG_H

@@ -208,20 +208,6 @@ Song SongDatabase::getSong(QString gtitle)
     return song;
 }
 
-Song SongDatabase::getSong(int number, QString sbornik)
-{
-    QSqlQuery sq;
-    Song song;
-    int s_id;
-    sq.exec("SELECT song_id FROM SongLink WHERE sbornik_id like '" + sbornik +"' AND song_number = " + QString::number(number));
-    while (sq.next()){
-        s_id = sq.value(0).toInt();
-        break;
-    }
-    song = getSong(s_id);
-    return song;
-}
-
 QStringList SongDatabase::getSongList(Song orig_song)
 {    
     Song song = getSong(orig_song.title);

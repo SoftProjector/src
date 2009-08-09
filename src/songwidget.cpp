@@ -52,8 +52,7 @@ void SongWidget::loadSborniks()
 
 void SongWidget::loadTitles(QString tSbornik)
 {
-    SongDatabase t;
-    songs_model->setSongs(t.getSongs("ALL"));
+   songs_model->setSongs(song_database.getSongs("ALL"));
 }
 
 Song SongWidget::currentSong()
@@ -109,7 +108,7 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
     // Called when a different sbornik is selected from the pull-down menu
 
     titleType=1;
-    SongDatabase t;
+    //SongDatabase t;
 
     QString sbornik;
 
@@ -118,26 +117,9 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
     else
         sbornik = sbornikList[index-1];
 
-//    switch( index ) {
-//        case 0:
-//            sbornik = QString("ALL");
-//            break;
-//        case 1:
-//            sbornik = QString("pv3300");
-//            break;
-//        case 2:
-//            sbornik = QString("pv2001");
-//            break;
-//        case 3:
-//            sbornik = QString("uaEpisni");
-//            break;
-//        case 4:
-//            sbornik = QString("pvUser");
-//    }
-
     ui->song_num_spinbox->setEnabled(!(sbornik == "ALL"));
 
-    songs_model->setSongs(t.getSongs(sbornik));
+    songs_model->setSongs(song_database.getSongs(sbornik));
 
     ui->songs_view->selectRow(0);
     // Re-draw the songs table:
@@ -152,7 +134,6 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
 //    ui->listPreview->clear();
 //    ui->listPreview->addItems(song_database.getSongList(value, sbornik));
 }
-
 
 
 
@@ -250,7 +231,7 @@ void SongWidget::on_songs_view_activated(QModelIndex index)
 
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 {
-    // Caled when a song is double-clicked
+    // Called when a song is double-clicked
     on_btnAddToPlaylist_clicked();
 }
 

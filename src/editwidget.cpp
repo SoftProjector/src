@@ -5,7 +5,7 @@ EditWidget::EditWidget(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::EditWidget)
 {
-    t = SongDatabase();
+    song_database = SongDatabase();
     ui->setupUi(this);
     sbornik=QString("ALL");
     loadTitles(sbornik);
@@ -64,7 +64,7 @@ void EditWidget::on_btnNew_clicked()
         resetUiItems();
         ui->lblEditProg->setText("ADDING A SONG");
         ui->lblEditProg->show();
-        ui->spinBoxlpvUser->setValue(t.lastUser());
+        ui->spinBoxlpvUser->setValue(song_database.lastUser());
         ui->textEditSong->setPlainText(QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь"));
     }
 }
@@ -72,8 +72,8 @@ void EditWidget::on_btnNew_clicked()
 void EditWidget::on_bntDelete_clicked()
 {
     QMessageBox ms;
-    if(t.isUserOnly(editSong.songID)) {
-        t.deleteSong(editSong.songID);
+    if(song_database.isUserOnly(editSong.songID)) {
+        song_database.deleteSong(editSong.songID);
         loadTitles(sbornik);
         resetUiItems();
     }
@@ -89,7 +89,7 @@ void EditWidget::on_btnSave_clicked()
 {
     if (!ui->btnEdit->isEnabled()){
         QMessageBox ms;
-        if ((t.hasTitle(ui->lineEditTitle->text())) && (!(ui->btnNew->isEnabled()))){
+        if ((song_database.hasTitle(ui->lineEditTitle->text())) && (!(ui->btnNew->isEnabled()))){
             ms.setText("A song with this exact title already exist.\nPlease modify the title.\nAll non Alphanumeric characters will be removes");
             ms.setWindowTitle("Title Duplicate");
             ms.setIcon(QMessageBox::Critical);
@@ -148,8 +148,8 @@ void EditWidget::loadTitles(QString tSbornik)
 {
     QList<Song> songs;
 
-    t = SongDatabase();
-    songs = t.getSongs(tSbornik);
+    //song_database = SongDatabase();
+    songs = song_database.getSongs(tSbornik);
 
     QStringList titles;
     for (int i = 0; i < songs.size(); i++) {
@@ -209,7 +209,7 @@ void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
 
         titleType=1;
 
-        QList<Song> songs = t.getSongs(sbornik);
+        QList<Song> songs = song_database.getSongs(sbornik);
         QStringList titles;
         for (int i = 0; i < songs.size(); i++) {
             Song song = songs.at(i);
@@ -311,9 +311,9 @@ void EditWidget::on_listTitles_currentTextChanged(QString currentText)
 {
     QStringList list = currentText.split(" - ");
     if (list.size()==1)
-        editSong = t.getSong(currentText);
+        editSong = song_database.getSong(currentText);
     else
-        editSong = t.getSong(list[1]);
+        editSong = song_database.getSong(list[1]);
     if (ui->btnEdit->isEnabled())setUiItems();
 }
 

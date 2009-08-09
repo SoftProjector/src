@@ -25,7 +25,7 @@ protected:
 private:
     Ui::EditWidget *ui;
     Song editSong, newSong;
-    SongDatabase t;
+    SongDatabase song_database;
     QString sbornik, format;
     QStringList allTitles;
     int titleType;
