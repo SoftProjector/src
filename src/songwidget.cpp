@@ -96,14 +96,10 @@ void SongWidget::selectMatchingSong(QString text)
     }
 }
 
-void SongWidget::showPreview(QString title)
+void SongWidget::showPreview(Song song)
 {
-    QStringList list = title.split(" - ");
     ui->listPreview->clear();
-    if (list.size()==1)
-        ui->listPreview->addItems(playlist.getSongList(title));
-    else
-        ui->listPreview->addItems(playlist.getSongList(list[1]));
+    ui->listPreview->addItems(song_database.getSongList(song.title));
     ui->listPreview->setCurrentRow(0);
 }
 
@@ -153,7 +149,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     //    selector=1;
 //    setSong(value,1);
 //    ui->listPreview->clear();
-//    ui->listPreview->addItems(playlist.getSongList(value, sbornik));
+//    ui->listPreview->addItems(song_database.getSongList(value, sbornik));
 }
 
 
@@ -163,13 +159,14 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
 
 void SongWidget::on_btnLive_clicked()
 {
-    if(isPlaylistTitle){
-        Song song = currentPlaylistSong();
-        emit sendSong(playlist.songList,song.title,ui->listPreview->currentRow());;
-    }
-    else{
-        emit sendSong(playlist.songList, currentSong().title, ui->listPreview->currentRow());
-    }
+    Song song;
+    if(isPlaylistTitle)
+        song = currentPlaylistSong();
+    else
+        song = currentSong();
+
+    QStringList songList = song_database.formatSongList(song.songText);
+    emit sendSong(songList, song.title, ui->listPreview->currentRow());
 }
 
 
@@ -247,7 +244,7 @@ void SongWidget::on_songs_view_activated(QModelIndex index)
 {
     // Called when a new song is selected
     isPlaylistTitle = false;
-    showPreview(currentSong().title);
+    showPreview(currentSong());
 }
 
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
@@ -260,13 +257,15 @@ void SongWidget::on_playlist_view_activated(QModelIndex index)
 {
     Song song = currentPlaylistSong();
     isPlaylistTitle = true;
-    showPreview(song.title);
-    //emit sendSong(playlist.songList, song.title, index.row());
+    showPreview(song);
+    //emit sendSong(song_database.songList, song.title, index.row());
 }
 
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
     Song song = currentPlaylistSong();
-    emit sendSong(playlist.songList,song.title,0);
+    //QStringList songList = song_database.getSongList(song.num, song.sbornik);
+    //emit sendSong(songList, song.title, 0);
+    emit sendSong(song_database.songList, song.title, 0);
 }
 
