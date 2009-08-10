@@ -42,8 +42,9 @@ QString clean(QString str)
 }
 
 
-Song::Song(int song_num, QString song_title, QString song_sbornik)
+Song::Song(int song_id, int song_num, QString song_title, QString song_sbornik)
 {
+    songID = song_id;
     num = song_num;
     title = song_title;
     sbornik = song_sbornik;
@@ -211,6 +212,7 @@ Song SongDatabase::getSong(QString gtitle)
 QStringList SongDatabase::getSongList(Song orig_song)
 {    
     Song song = getSong(orig_song.title);
+    // For some reason we need to re-get the song for songText to be set correctly
     QStringList song_list = formatSongList(song.songText);
     return song_list;
 }
@@ -255,8 +257,10 @@ QStringList SongDatabase::formatSongList(QString song)
         { // Fill Chorus
             while (j<k)
             {
-                if (j==k-1) text += split[j];
-                else text += split[j] + "\n";
+                if (j==k-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
                 ++j;
             }
             chorus = text.trimmed();
@@ -285,54 +289,40 @@ QStringList SongDatabase::formatSongList(QString song)
 QList<Song> SongDatabase::getSongs(QString sbornik)
 {
     QList<Song> songs;
-    QStringList titles;
 
     if( sbornik == QString("ALL") ) {
         // Loads all titles in database
-        // FIXME include song number and sbornik name
-        QSqlQuery sq;
-        sq.exec("SELECT title FROM Songs");
-        while (sq.next())
-            titles << sq.value(0).toString();
-        titles.sort();
+        QSqlQuery sq, sq2;
 
-        for (int i = 0; i < titles.size(); i++) {
-            QString title = titles.at(i);
-            Song song = Song(0, title, "");
+        sq.exec("SELECT song_id, song_number, sbornik_id FROM SongLink");
+        while(sq.next())
+        {
+            QString song_id = sq.value(0).toString();
+            int song_num(sq.value(1).toInt());
+            QString sbornik = sq.value(2).toString();
+            QString song_title;
+            sq2.exec("SELECT title FROM Songs WHERE id = " + song_id);
+            sq2.first();
+            song_title = sq2.value(0).toString();
+            Song song = Song(song_id.toInt(), song_num, song_title, sbornik);
             songs.append(song);
         }
     }
     else
     {
-        QMap<int, QString> tMap;
         QSqlQuery sq, sq1;
 
         sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '"+sbornik+"'");
         while(sq.next())
         {
-            QString sid= sq.value(0).toString();
-            QString stitle;
-            int snum(sq.value(1).toInt());
-            sq1.exec("SELECT title FROM Songs WHERE id = " + sid);
+            QString song_id = sq.value(0).toString();
+            QString song_title;
+            int song_num(sq.value(1).toInt());
+            sq1.exec("SELECT title FROM Songs WHERE id = " + song_id);
             sq1.first();
-            stitle = sq1.value(0).toString();
-
-            tMap[snum] = stitle;
-        }
-
-        QList<int> list1;
-        list1 = tMap.keys();
-        QStringList list2;
-        list2 = tMap.values();
-        int mapLength(tMap.size());
-        int i(0);
-        while (i<mapLength)
-        {
-            int num = list1[i];
-            QString title = list2[i];
-            Song song = Song(num, title, sbornik);
+            song_title = sq1.value(0).toString();
+            Song song = Song(song_id.toInt(), song_num, song_title, sbornik);
             songs.append(song);
-            i++;
         }
     } // end of not all sborniks
     return songs;

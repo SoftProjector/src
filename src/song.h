@@ -6,15 +6,15 @@
 QString clean(QString str);
 
 class Song
-// Class for stroring song information: number, name, sbornik
+// Class for storing song information: number, name, sbornik
+// The instance of this class is specific to a song & sbornik.
 {
  public:
-    Song(int song_num, QString song_title, QString song_sbornik);
     Song();
-    int num;
+    Song(int song_id, int song_num, QString song_title, QString song_sbornik);
+    int num; // Number of the song in the specified sbornik
     QString title;
     QString sbornik;
-    QString sbornik_info;
 
     void saveUpdate();
     void saveNew();
