@@ -12,6 +12,12 @@ SongWidget::SongWidget(QWidget *parent) :
     playlist_model = new SongsModel;
     ui->songs_view->setModel(songs_model);
     ui->playlist_view->setModel(playlist_model);
+
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(songs_model);
+    proxyModel->setDynamicSortFilter(true);
+
+
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
     ui->playlist_view->resizeRowsToContents();
@@ -156,17 +162,21 @@ void SongWidget::on_btnLive_clicked()
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
     playlist_model->addSong(currentSong());
-    qDebug("ADDED A SONG TO PLAYLIST");
 
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     ui->playlist_view->setFocus();
     ui->playlist_view->viewport()->repaint();
+    if( playlist_model->rowCount() > 0 )
+        ui->btnRemoveFromPlaylist->setEnabled(true);
 }
 
 void SongWidget::on_btnRemoveFromPlaylist_clicked()
 {
     int row = ui->playlist_view->currentIndex().row();
     playlist_model->removeRow(row);
+
+    if( playlist_model->rowCount() == 0 )
+        ui->btnRemoveFromPlaylist->setEnabled(false);
 }
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)

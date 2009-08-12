@@ -79,6 +79,16 @@ void SongsModel::addSong(Song song)
     endInsertRows();
 }
 
+bool SongsModel::removeRows( int row, int count, const QModelIndex & parent)
+{
+    beginRemoveRows(QModelIndex(), row, row+count-1);
+    // Need to remove starting from the end:
+    for(int i=row+count-1; i>=row; i--)
+        song_list.removeAt(i);
+    endRemoveRows();
+    return true;
+}
+
 int SongsModel::rowCount(const QModelIndex &parent) const
 {
     return song_list.count();
@@ -106,12 +116,33 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
 QVariant SongsModel::headerData(int /* section */,
                                  Qt::Orientation /* orientation */,
                                  int role) const
- {
-     //if (role == Qt::SizeHintRole)
-     //   return QSize(1, 1);
-     return QVariant();
- }
+{
+    //if (role == Qt::SizeHintRole)
+    //   return QSize(1, 1);
+    return QVariant();
+}
 
+
+
+/*
+void SongsModel::sort(int column, Qt::SortOrder order)
+{
+    QList<Song> sorted_song_list;
+    if (order == Qt::AscendingOrder )
+    {
+        qDebug("ASCENDING ORDER");
+        song_list
+        for (int i = 0; i < song_list.size(); i++) {
+            Song song = song_list.at(i);
+            song_list.append(song);
+    }
+    }
+    else
+    {
+        qDebug("DESCENDING ORDER");
+    }
+    song_list = sorted_song_list;
+}*/
 
 SongDatabase::SongDatabase()
 {
@@ -297,14 +328,14 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
         sq.exec("SELECT song_id, song_number, sbornik_id FROM SongLink");
         while(sq.next())
         {
-            QString song_id = sq.value(0).toString();
-            int song_num(sq.value(1).toInt());
+            int song_id = sq.value(0).toInt();
+            int song_num = sq.value(1).toInt();
             QString sbornik = sq.value(2).toString();
             QString song_title;
-            sq2.exec("SELECT title FROM Songs WHERE id = " + song_id);
+            sq2.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
             sq2.first();
             song_title = sq2.value(0).toString();
-            Song song = Song(song_id.toInt(), song_num, song_title, sbornik);
+            Song song = Song(song_id, song_num, song_title, sbornik);
             songs.append(song);
         }
     }
@@ -315,13 +346,13 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
         sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '"+sbornik+"'");
         while(sq.next())
         {
-            QString song_id = sq.value(0).toString();
+            int song_id = sq.value(0).toInt();
+            int song_num = sq.value(1).toInt();
             QString song_title;
-            int song_num(sq.value(1).toInt());
-            sq1.exec("SELECT title FROM Songs WHERE id = " + song_id);
+            sq1.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
             sq1.first();
             song_title = sq1.value(0).toString();
-            Song song = Song(song_id.toInt(), song_num, song_title, sbornik);
+            Song song = Song(song_id, song_num, song_title, sbornik);
             songs.append(song);
         }
     } // end of not all sborniks
@@ -366,8 +397,8 @@ bool SongDatabase::isUserOnly(int sId)
         return false;
 }
 
-void SongDatabase::deleteSong(int sId)
+void SongDatabase::deleteSong(int song_id)
 {
     QSqlQuery sq;
-    sq.exec("DELETE FROM Songs WHERE id = " + QString::number(sId) );
+    sq.exec("DELETE FROM Songs WHERE id = " + QString::number(song_id) );
 }
