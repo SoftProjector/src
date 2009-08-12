@@ -9,13 +9,15 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->setupUi(this);
     loadSborniks();
     songs_model = new SongsModel;
-    playlist_model = new SongsModel;
-    ui->songs_view->setModel(songs_model);
-    ui->playlist_view->setModel(playlist_model);
 
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(songs_model);
     proxyModel->setDynamicSortFilter(true);
+    //ui->songs_view->setModel(proxyModel);
+    ui->songs_view->setModel(songs_model);
+
+    playlist_model = new SongsModel;
+    ui->playlist_view->setModel(playlist_model);
 
 
     // Decrease the row height:
@@ -113,19 +115,21 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 {
     // Called when a different sbornik is selected from the pull-down menu
 
-    titleType=1;
-    //SongDatabase t;
-
-    QString sbornik;
+    QList<Song> song_list;
 
     if (index==0)
-        sbornik = "ALL";
+    {
+        song_list = song_database.getSongs("ALL");
+        ui->song_num_spinbox->setEnabled(false);
+    }
     else
-        sbornik = sbornikList[index-1];
-
-    ui->song_num_spinbox->setEnabled(!(sbornik == "ALL"));
-
-    songs_model->setSongs(song_database.getSongs(sbornik));
+    {
+        QString sbornik = sbornikList[index-1];
+        song_list = song_database.getSongs(sbornik);
+        ui->song_num_spinbox->setEnabled(true);
+        ui->song_num_spinbox->setMaximum(song_list.count());
+    }
+    songs_model->setSongs(song_list);
 
     ui->songs_view->selectRow(0);
     // Re-draw the songs table:
@@ -134,11 +138,25 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
 {
-    selectMatchingSong(QString::number(value));
-    //    selector=1;
-//    setSong(value,1);
-//    ui->listPreview->clear();
-//    ui->listPreview->addItems(song_database.getSongList(value, sbornik));
+    //int max_num = 0;
+    // Look for a song with number <value>. Select it and scroll to show it.
+    for (int i = 0; i < songs_model->song_list.size(); i++)
+    {
+        Song s = songs_model->song_list.at(i);
+        if( s.num == value )
+        {
+            // Select the row <i>:
+            ui->songs_view->selectRow(i);
+            // Scroll the songs table to the row <i>:
+            ui->songs_view->scrollTo( songs_model->index(i, 0) );
+            return;
+        }
+        //if( s.num > max_num )
+        //    max_num = s.num;
+    }
+    // If got here, then no such song
+    //if( value > max_num )
+    //    ui->song_num_spinbox->setMaximum();
 }
 
 
