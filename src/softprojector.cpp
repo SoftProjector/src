@@ -271,6 +271,7 @@ void SoftProjector::on_actionExportSongs_triggered()
 
 void SoftProjector::on_actionImportSongs_triggered()
 {
+    importSongs->load();
     importSongs->exec();
 }
 
