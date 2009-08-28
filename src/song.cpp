@@ -70,6 +70,7 @@ void SongsModel::setSongs(QList<Song> songs)
         Song song = songs.at(i);
         song_list.append(song);
     }
+    emit layoutChanged();
 }
 
 void SongsModel::addSong(Song song)
@@ -101,7 +102,11 @@ int SongsModel::columnCount(const QModelIndex &parent) const
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
  {
-     if (!index.isValid() || role != Qt::DisplayRole)
+     if (!index.isValid() )
+         return QVariant();
+
+     //if ( role != Qt::ItemDataRole() )
+     if ( role != Qt::DisplayRole )
          return QVariant();
 
      Song song = song_list.at(index.row());
@@ -113,16 +118,58 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
          return QVariant(song.sbornik);
  }
 
-QVariant SongsModel::headerData(int /* section */,
-                                 Qt::Orientation /* orientation */,
+QVariant SongsModel::headerData(int section,
+                                 Qt::Orientation orientation,
                                  int role) const
 {
-    //if (role == Qt::SizeHintRole)
-    //   return QSize(1, 1);
-    return QVariant();
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+        return QVariant();
+
+    switch(section) {
+    case 0:
+        return QVariant("Num");
+    case 1:
+        return QVariant("Title");
+    case 2:
+        return QVariant("Sbornik");
+    }
 }
 
+SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
+{
+}
 
+bool SongProxyModel::lessThan(const QModelIndex &left,
+                              const QModelIndex &right) const
+{
+    QVariant leftData = sourceModel()->data(left);
+    QVariant rightData = sourceModel()->data(right);
+
+    if( left.column() == 0 )
+        return leftData.toInt() < rightData.toInt();
+    else
+    {
+        QString leftString = leftData.toString();
+        QString rightString = rightData.toString();
+        return QString::localeAwareCompare(leftString, rightString) < 0;
+    }
+}
+
+bool SongProxyModel::filterAcceptsRow(int sourceRow,
+              const QModelIndex &sourceParent) const
+{
+    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
+    QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
+    QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
+
+    QString str0 = sourceModel()->data(index0).toString();
+    QString str1 = sourceModel()->data(index1).toString();
+    QString str2 = sourceModel()->data(index2).toString();
+
+    QRegExp reg = filterRegExp();
+
+    return true; //(str0.contains(reg) || str1.contains(reg)) || str2.contains(reg);
+}
 
 /*
 void SongsModel::sort(int column, Qt::SortOrder order)

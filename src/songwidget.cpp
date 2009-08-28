@@ -10,11 +10,11 @@ SongWidget::SongWidget(QWidget *parent) :
     loadSborniks();
     songs_model = new SongsModel;
 
-    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    SongProxyModel *proxyModel = new SongProxyModel(this);
     proxyModel->setSourceModel(songs_model);
     proxyModel->setDynamicSortFilter(true);
-    //ui->songs_view->setModel(proxyModel);
-    ui->songs_view->setModel(songs_model);
+    ui->songs_view->setModel(proxyModel);
+    //ui->songs_view->sortByColumn(1, Qt::AscendingOrder);
 
     playlist_model = new SongsModel;
     ui->playlist_view->setModel(playlist_model);
@@ -127,13 +127,13 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
         QString sbornik = sbornikList[index-1];
         song_list = song_database.getSongs(sbornik);
         ui->song_num_spinbox->setEnabled(true);
+        // FIXME Instead of using count(), find the song with highest num.
         ui->song_num_spinbox->setMaximum(song_list.count());
     }
     songs_model->setSongs(song_list);
 
     ui->songs_view->selectRow(0);
     // Re-draw the songs table:
-    ui->songs_view->viewport()->repaint();
 }
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)

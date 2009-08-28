@@ -57,6 +57,18 @@ public:
 };
 
 
+class SongProxyModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+public:
+    SongProxyModel(QObject *parent = 0);
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+};
+
 
 class SongDatabase
 {
