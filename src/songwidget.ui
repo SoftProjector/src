@@ -161,9 +161,6 @@
          <property name="text">
           <string>Go Live</string>
          </property>
-         <property name="shortcut">
-          <string>Return</string>
-         </property>
         </widget>
        </item>
        <item>

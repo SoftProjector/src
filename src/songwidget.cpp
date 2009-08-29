@@ -14,10 +14,13 @@ SongWidget::SongWidget(QWidget *parent) :
     proxyModel->setDynamicSortFilter(true);
     ui->songs_view->setModel(proxyModel);
     //ui->songs_view->sortByColumn(1, Qt::AscendingOrder);
+    connect(ui->songs_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
+        this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
     playlist_model = new SongsModel;
     ui->playlist_view->setModel(playlist_model);
-
+    connect(ui->playlist_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
+        this, SLOT(playlistViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
@@ -29,6 +32,22 @@ SongWidget::~SongWidget()
 {
     delete ui;
     delete songs_model;
+}
+
+void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    // Called when a new song is selected in the songs table
+    Song song = songs_model->getSong(current.row());
+    sendToPreview(song);
+    focusInPlaylistTable = false;
+}
+
+void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    // Called when a new song is selected in the playlist table
+    Song song = playlist_model->getSong(current.row());
+    sendToPreview(song);
+    focusInPlaylistTable = true;
 }
 
 void SongWidget::changeEvent(QEvent *e)
@@ -102,13 +121,21 @@ void SongWidget::selectMatchingSong(QString text)
     }
 }
 
-void SongWidget::showPreview(Song song)
+void SongWidget::sendToPreview(Song song)
 {
     ui->listPreview->clear();
     QStringList song_list = song_database.getSongList(song);
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
 }
+
+void SongWidget::sendToProjector(Song song)
+{
+    // Display the specified song text in the right-most column of softProjector:
+    QStringList song_list = song_database.getSongList(song);
+    emit sendSong(song_list, song.title, 0);
+}
+
 
 void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 {
@@ -159,19 +186,24 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
 }
 
 
+void SongWidget::on_song_num_spinbox_editingFinished()
+{
+    // Called when the user presses enter after editing the song number
+    // At this point, the song is already selected in the songs table
+    on_btnAddToPlaylist_clicked();
+}
 
 
 
 void SongWidget::on_btnLive_clicked()
 {
     Song song;
-    if(isPlaylistTitle)
+    if(focusInPlaylistTable)
         song = currentPlaylistSong();
     else
         song = currentSong();
 
-    QStringList song_list = song_database.getSongList(song);
-    emit sendSong(song_list, song.title, ui->listPreview->currentRow());
+    sendToProjector(song);
 }
 
 
@@ -182,9 +214,10 @@ void SongWidget::on_btnAddToPlaylist_clicked()
 
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     ui->playlist_view->setFocus();
-    ui->playlist_view->viewport()->repaint();
+    //ui->playlist_view->viewport()->repaint();
     if( playlist_model->rowCount() > 0 )
         ui->btnRemoveFromPlaylist->setEnabled(true);
+    sendToPreview(currentSong());
 }
 
 void SongWidget::on_btnRemoveFromPlaylist_clicked()
@@ -217,32 +250,24 @@ void SongWidget::on_match_beginning_box_toggled(bool checked)
 }
 
 
-
-void SongWidget::on_songs_view_activated(QModelIndex index)
-{
-    // Called when a new song is selected
-    isPlaylistTitle = false;
-    showPreview(currentSong());
-}
-
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 {
     // Called when a song is double-clicked
-    on_btnAddToPlaylist_clicked();
+    Song song = songs_model->getSong(index.row());
+
+    playlist_model->addSong(song);
+    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
+    ui->playlist_view->setFocus();
+    //ui->playlist_view->viewport()->repaint();
+    ui->btnRemoveFromPlaylist->setEnabled(true);
+    sendToPreview(song);
 }
 
-void SongWidget::on_playlist_view_activated(QModelIndex index)
-{
-    Song song = currentPlaylistSong();
-    isPlaylistTitle = true;
-    showPreview(song);
-    //emit sendSong(song_database.songList, song.title, index.row());
-}
 
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
-    Song song = currentPlaylistSong();
-    QStringList song_list = song_database.getSongList(song);
-    emit sendSong(song_list, song.title, 0);
+    Song song = playlist_model->getSong(index.row());
+    sendToProjector(song);
 }
+
 

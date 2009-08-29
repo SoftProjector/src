@@ -23,14 +23,13 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    // Display the specified song text in the right-most column of softProjector:
+    // To be used ONLY by SongWidget::sendToProjector():
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
+    void on_song_num_spinbox_editingFinished();
     void on_playlist_view_doubleClicked(QModelIndex index);
-    void on_playlist_view_activated(QModelIndex index);
     void on_songs_view_doubleClicked(QModelIndex index);
-    void on_songs_view_activated(QModelIndex index);
     void on_match_beginning_box_toggled(bool checked);
     void on_lineEditSearch_textEdited(QString Text);
     void on_btnRemoveFromPlaylist_clicked();
@@ -39,9 +38,8 @@ private slots:
     void on_song_num_spinbox_valueChanged(int value);
     void on_sbornik_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
-    void showPreview(Song song);
-    //    void loadSong();
-    //    void loadPreview();
+    void sendToPreview(Song song);
+    void sendToProjector(Song song);
     void loadTitles(QString tSbornik);
     void loadSborniks();
     Song currentSong();
@@ -57,9 +55,11 @@ private:
     SongsModel *songs_model;
     SongsModel *playlist_model;
     SongProxyModel *proxyModel;
-    bool isPlaylistTitle;
+    bool focusInPlaylistTable;
     bool allSongs;
-    //    SoftProjector *toShow;
+public slots:
+    void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
 };
 
 #endif // SONGWIDGET_H
