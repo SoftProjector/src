@@ -139,6 +139,13 @@ SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }
 
+void SongProxyModel::setFilterString(QString new_string)
+{
+    filter_string = new_string;
+    setFilterFixedString(new_string);
+}
+
+/*
 bool SongProxyModel::lessThan(const QModelIndex &left,
                               const QModelIndex &right) const
 {
@@ -153,7 +160,7 @@ bool SongProxyModel::lessThan(const QModelIndex &left,
         QString rightString = rightData.toString();
         return QString::localeAwareCompare(leftString, rightString) < 0;
     }
-}
+}*/
 
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
               const QModelIndex &sourceParent) const
@@ -166,30 +173,11 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
     QString str1 = sourceModel()->data(index1).toString();
     QString str2 = sourceModel()->data(index2).toString();
 
-    QRegExp reg = filterRegExp();
+    QRegExp reg = QRegExp(filter_string);
 
-    return true; //(str0.contains(reg) || str1.contains(reg)) || str2.contains(reg);
+    return (str0.contains(reg) || str1.contains(reg)) || str2.contains(reg);
 }
 
-/*
-void SongsModel::sort(int column, Qt::SortOrder order)
-{
-    QList<Song> sorted_song_list;
-    if (order == Qt::AscendingOrder )
-    {
-        qDebug("ASCENDING ORDER");
-        song_list
-        for (int i = 0; i < song_list.size(); i++) {
-            Song song = song_list.at(i);
-            song_list.append(song);
-    }
-    }
-    else
-    {
-        qDebug("DESCENDING ORDER");
-    }
-    song_list = sorted_song_list;
-}*/
 
 SongDatabase::SongDatabase()
 {

@@ -63,10 +63,14 @@ class SongProxyModel : public QSortFilterProxyModel
 
 public:
     SongProxyModel(QObject *parent = 0);
+    void setFilterString(QString new_string);
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
-    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+    //bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+
+private:
+    QString filter_string;
 };
 
 

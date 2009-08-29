@@ -9,8 +9,7 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->setupUi(this);
     loadSborniks();
     songs_model = new SongsModel;
-
-    SongProxyModel *proxyModel = new SongProxyModel(this);
+    proxyModel = new SongProxyModel(this);
     proxyModel->setSourceModel(songs_model);
     proxyModel->setDynamicSortFilter(true);
     ui->songs_view->setModel(proxyModel);
@@ -199,6 +198,7 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
+    proxyModel->setFilterString(text);
     /* FIXME!!!!
     if (ui->sbornik_menu->currentIndex()>0)
         ui->sbornik_menu->setCurrentIndex(0);

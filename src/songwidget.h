@@ -56,6 +56,7 @@ private:
     SongDatabase song_database;
     SongsModel *songs_model;
     SongsModel *playlist_model;
+    SongProxyModel *proxyModel;
     bool isPlaylistTitle;
     bool allSongs;
     //    SoftProjector *toShow;
