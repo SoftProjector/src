@@ -105,7 +105,6 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
      if (!index.isValid() )
          return QVariant();
 
-     //if ( role != Qt::ItemDataRole() )
      if ( role != Qt::DisplayRole )
          return QVariant();
 
@@ -135,47 +134,38 @@ QVariant SongsModel::headerData(int section,
     }
 }
 
+void SongsModel::emitLayoutChanged()
+{
+    emit layoutChanged();
+}
+
+
 SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }
 
-void SongProxyModel::setFilterString(QString new_string)
+void SongProxyModel::setFilterString(QString new_string, bool new_match_beginning)
 {
     filter_string = new_string;
-    setFilterFixedString(new_string);
+    match_beginning = new_match_beginning;
 }
-
-/*
-bool SongProxyModel::lessThan(const QModelIndex &left,
-                              const QModelIndex &right) const
-{
-    QVariant leftData = sourceModel()->data(left);
-    QVariant rightData = sourceModel()->data(right);
-
-    if( left.column() == 0 )
-        return leftData.toInt() < rightData.toInt();
-    else
-    {
-        QString leftString = leftData.toString();
-        QString rightString = rightData.toString();
-        return QString::localeAwareCompare(leftString, rightString) < 0;
-    }
-}*/
 
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
               const QModelIndex &sourceParent) const
 {
     QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
     QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
-    QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
 
     QString str0 = sourceModel()->data(index0).toString();
     QString str1 = sourceModel()->data(index1).toString();
-    QString str2 = sourceModel()->data(index2).toString();
 
     QRegExp reg = QRegExp(filter_string);
 
-    return (str0.contains(reg) || str1.contains(reg)) || str2.contains(reg);
+    if(match_beginning)
+        return (str0.startsWith(filter_string) || str1.startsWith(filter_string, Qt::CaseInsensitive));
+    else
+        return (str0.contains(filter_string) || str1.contains(filter_string, Qt::CaseInsensitive));
+
 }
 
 

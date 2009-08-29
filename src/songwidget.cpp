@@ -198,42 +198,10 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
-    proxyModel->setFilterString(text);
-    /* FIXME!!!!
-    if (ui->sbornik_menu->currentIndex()>0)
-        ui->sbornik_menu->setCurrentIndex(0);
-
-    if (!ui->match_beginning_box->isChecked())
-    {
-        allSongs=false;
-        QStringList tlist = text.split(" ");
-        QStringList tlist2;
-        if(tlist.count()==1){
-            QString tx = tlist[0];
-            tlist2 = allTitles.filter(tx.trimmed(), Qt::CaseInsensitive);
-            songs_model->setSongs(tlist2);
-        }
-        if(tlist.count()==2)
-        {
-            QString tx = tlist[0];
-            tlist2 = allTitles.filter(tx.trimmed(), Qt::CaseInsensitive);
-            tx = tlist[1];
-            songs_model->setSongs(tlist2.filter(tx, Qt::CaseInsensitive));
-        }
-
-    }
-    else
-    {
-        if (!allSongs)
-        {
-            allSongs=true;
-            songs_model->setTitles(allTitles);
-        }
-        selectMatchingSong(text);
-    }
-    */
+    bool match_beginning = ui->match_beginning_box->isChecked();
+    proxyModel->setFilterString(text, match_beginning);
+    songs_model->emitLayoutChanged(); // forces the view to redraw
 }
-
 
 Song SongWidget::getSongToEdit()
 {

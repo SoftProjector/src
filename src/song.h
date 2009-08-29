@@ -54,6 +54,7 @@ public:
 
     bool removeRows( int row, int count, const QModelIndex & parent = QModelIndex() );
     QList<Song> song_list;
+    void emitLayoutChanged();
 };
 
 
@@ -63,14 +64,14 @@ class SongProxyModel : public QSortFilterProxyModel
 
 public:
     SongProxyModel(QObject *parent = 0);
-    void setFilterString(QString new_string);
+    void setFilterString(QString new_string, bool new_match_beginning);
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
-    //bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 
 private:
     QString filter_string;
+    bool match_beginning;
 };
 
 
