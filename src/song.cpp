@@ -63,6 +63,12 @@ Song SongsModel::getSong(int row)
     return song_list.at(row);
 }
 
+Song SongsModel::getSong(QModelIndex index)
+{
+    return song_list.at(index.row());
+}
+
+
 void SongsModel::setSongs(QList<Song> songs)
 {
     song_list.clear();

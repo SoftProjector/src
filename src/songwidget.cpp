@@ -9,10 +9,10 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->setupUi(this);
     loadSborniks();
     songs_model = new SongsModel;
-    proxyModel = new SongProxyModel(this);
-    proxyModel->setSourceModel(songs_model);
-    proxyModel->setDynamicSortFilter(true);
-    ui->songs_view->setModel(proxyModel);
+    proxy_model = new SongProxyModel(this);
+    proxy_model->setSourceModel(songs_model);
+    proxy_model->setDynamicSortFilter(true);
+    ui->songs_view->setModel(proxy_model);
     //ui->songs_view->sortByColumn(1, Qt::AscendingOrder);
     connect(ui->songs_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
         this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
@@ -37,7 +37,8 @@ SongWidget::~SongWidget()
 void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     // Called when a new song is selected in the songs table
-    Song song = songs_model->getSong(current.row());
+    int row = proxy_model->mapToSource(current).row();
+    Song song = songs_model->getSong(row);
     sendToPreview(song);
     focusInPlaylistTable = false;
 }
@@ -84,7 +85,7 @@ void SongWidget::loadTitles(QString tSbornik)
 Song SongWidget::currentSong()
 {
     // Returns the selected song
-    QModelIndex current_index = ui->songs_view->currentIndex();
+    QModelIndex current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
     int current_row = current_index.row();
     return songs_model->getSong(current_row);
 }
@@ -232,7 +233,7 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
     bool match_beginning = ui->match_beginning_box->isChecked();
-    proxyModel->setFilterString(text, match_beginning);
+    proxy_model->setFilterString(text, match_beginning);
     songs_model->emitLayoutChanged(); // forces the view to redraw
 }
 
@@ -253,7 +254,8 @@ void SongWidget::on_match_beginning_box_toggled(bool checked)
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 {
     // Called when a song is double-clicked
-    Song song = songs_model->getSong(index.row());
+    int row = proxy_model->mapToSource(index).row();
+    Song song = songs_model->getSong(row);
 
     playlist_model->addSong(song);
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
@@ -271,3 +273,19 @@ void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 }
 
 
+
+void SongWidget::on_playlist_view_clicked(QModelIndex index)
+{
+    // This method is implemented for the case where the use clicks
+    // in the playlist table without changing the previous selection.
+    Song song = playlist_model->getSong(index);
+    sendToPreview(song);
+}
+
+void SongWidget::on_songs_view_clicked(QModelIndex index)
+{
+    // This method is implemented for the case where the use clicks
+    // in the playlist table without changing the previous selection.
+    Song song = songs_model->getSong(proxy_model->mapToSource(index));
+    sendToPreview(song);
+}

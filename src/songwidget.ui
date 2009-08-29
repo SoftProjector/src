@@ -245,13 +245,6 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QLabel" name="selected_song_label">
-       <property name="text">
-        <string>Selected song: None</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QListWidget" name="listPreview">
        <property name="minimumSize">
         <size>

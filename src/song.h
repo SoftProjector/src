@@ -45,6 +45,7 @@ public:
     void setSongs(QList<Song> songs);
     void addSong(Song song);
     Song getSong(int row);
+    Song getSong(QModelIndex index);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;

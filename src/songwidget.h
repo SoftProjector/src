@@ -27,6 +27,8 @@ signals:
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
+    void on_songs_view_clicked(QModelIndex index);
+    void on_playlist_view_clicked(QModelIndex index);
     void on_song_num_spinbox_editingFinished();
     void on_playlist_view_doubleClicked(QModelIndex index);
     void on_songs_view_doubleClicked(QModelIndex index);
@@ -54,7 +56,7 @@ private:
     SongDatabase song_database;
     SongsModel *songs_model;
     SongsModel *playlist_model;
-    SongProxyModel *proxyModel;
+    SongProxyModel *proxy_model;
     bool focusInPlaylistTable;
     bool allSongs;
 public slots:
