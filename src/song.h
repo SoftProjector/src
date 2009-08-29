@@ -66,8 +66,6 @@ class SongProxyModel : public QSortFilterProxyModel
 public:
     SongProxyModel(QObject *parent = 0);
     void setFilterString(QString new_string, bool new_match_beginning);
-
-protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:

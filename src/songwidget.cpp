@@ -172,10 +172,22 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
         Song s = songs_model->song_list.at(i);
         if( s.num == value )
         {
-            // Select the row <i>:
-            ui->songs_view->selectRow(i);
-            // Scroll the songs table to the row <i>:
-            ui->songs_view->scrollTo( songs_model->index(i, 0) );
+            // Found a song with this song number
+            QModelIndex source_index = songs_model->index(i, 0);
+            if( proxy_model->filterAcceptsRow(source_index.row(), source_index) )
+            {
+                // If this row is visible
+                QModelIndex proxy_index = proxy_model->mapFromSource(source_index);
+
+                // Select the row <i>:
+                ui->songs_view->selectRow(proxy_index.row());
+                // Scroll the songs table to the row <i>:
+                ui->songs_view->scrollTo(proxy_index);
+            }
+            else
+            {
+                sendToPreview(s);
+            }
             return;
         }
         //if( s.num > max_num )
@@ -191,7 +203,7 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 {
     // Called when the user presses enter after editing the song number
     // At this point, the song is already selected in the songs table
-    on_btnAddToPlaylist_clicked();
+    //on_btnAddToPlaylist_clicked();
 }
 
 
@@ -211,14 +223,32 @@ void SongWidget::on_btnLive_clicked()
 
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
-    playlist_model->addSong(currentSong());
+    Song song;
+    if( false ) //ui->song_num_spinbox->hasFocus() )
+    {
+        int value = ui->song_num_spinbox->text().toInt();
+        for (int i = 0; i < songs_model->song_list.size(); i++)
+        {
+            Song s = songs_model->song_list.at(i);
+            if( s.num == value )
+            {
+                song = s;
+                break;
+            }
+        }
+    }
+    else
+    {
+        song = currentSong();
+    }
 
+    playlist_model->addSong(song);
+
+    // Select the row that was just added:
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     ui->playlist_view->setFocus();
-    //ui->playlist_view->viewport()->repaint();
-    if( playlist_model->rowCount() > 0 )
-        ui->btnRemoveFromPlaylist->setEnabled(true);
-    sendToPreview(currentSong());
+    ui->btnRemoveFromPlaylist->setEnabled(true);
+    sendToPreview(song);
 }
 
 void SongWidget::on_btnRemoveFromPlaylist_clicked()
