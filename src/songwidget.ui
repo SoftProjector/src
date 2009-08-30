@@ -64,6 +64,13 @@
    <item row="0" column="1" rowspan="7">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Song Preview:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QListWidget" name="listPreview">
        <property name="minimumSize">
         <size>
@@ -86,7 +93,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Search titles:</string>
+        <string>Filter:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
