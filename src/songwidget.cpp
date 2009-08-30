@@ -133,11 +133,11 @@ void SongWidget::sendToPreview(Song song)
     ui->listPreview->setCurrentRow(0);
 }
 
-void SongWidget::sendToProjector(Song song)
+void SongWidget::sendToProjector(Song song, int row)
 {
     // Display the specified song text in the right-most column of softProjector:
     QStringList song_list = song_database.getSongList(song);
-    emit sendSong(song_list, song.title, 0);
+    emit sendSong(song_list, song.title, row);
 }
 
 
@@ -219,7 +219,7 @@ void SongWidget::on_btnLive_clicked()
     else
         song = currentSong();
 
-    sendToProjector(song);
+    sendToProjector(song, ui->listPreview->currentRow());
 }
 
 
@@ -302,7 +302,7 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
     Song song = playlist_model->getSong(index.row());
-    sendToProjector(song);
+    sendToProjector(song, ui->listPreview->currentRow());
 }
 
 
@@ -321,4 +321,10 @@ void SongWidget::on_songs_view_clicked(QModelIndex index)
     // in the playlist table without changing the previous selection.
     Song song = songs_model->getSong(proxy_model->mapToSource(index));
     sendToPreview(song);
+}
+
+void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
+{
+    Song song = currentSong();
+    sendToProjector(song, index.row());
 }

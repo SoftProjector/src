@@ -27,6 +27,7 @@ signals:
     void sendSong(QStringList songList, QString caption, int currentItem);
 
 private slots:
+    void on_listPreview_doubleClicked(QModelIndex index);
     void on_songs_view_clicked(QModelIndex index);
     void on_playlist_view_clicked(QModelIndex index);
     void on_song_num_spinbox_editingFinished();
@@ -41,7 +42,7 @@ private slots:
     void on_sbornik_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
     void sendToPreview(Song song);
-    void sendToProjector(Song song);
+    void sendToProjector(Song song, int row);
     void loadTitles(QString tSbornik);
     void loadSborniks();
     Song currentSong();
