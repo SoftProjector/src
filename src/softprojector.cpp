@@ -81,6 +81,7 @@ void SoftProjector::readConfigurationFile()
         display->setShowBlack(true);
         bibleWidget->setPrimary(QString("bible_ru"));
         bibleWidget->setSecondary(QString("none"));
+        by_chapter= false;
         return;
     }
     // Read the settings file:
@@ -102,6 +103,9 @@ void SoftProjector::readConfigurationFile()
     primary_bible.chop(1);
     QString secondary_bible = fh.readLine();
     secondary_bible.chop(1);
+
+    // Needs code to read from config file
+    by_chapter= false;
 
     bibleWidget->setPrimary(primary_bible);
     bibleWidget->setSecondary(secondary_bible);
@@ -173,7 +177,7 @@ void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
 
     type = "bible";
     bible = bib; bible2 = bib2; cRow = row;
-    if( bible.primary != bible2 )
+    if( (bible.primary != bible2) && (by_chapter) )
         bible.setSecondary(bible2);
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
@@ -209,11 +213,16 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         else
 	{
 	    QString verse = bible.verseList1[currentRow] + "\n";
-//            verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible2);
-            verse += bible.verseList2[currentRow];
+            if (by_chapter)
+                verse += bible.verseList2[currentRow];
+            else
+                verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible2);
 	    QString caption = bible.captionList1[currentRow] + "    ";
-//            caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible2);
-            caption += bible.captionList2[currentRow];
+            if (by_chapter)
+                caption += bible.captionList2[currentRow];
+            else
+                caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible2);
+
             display->SetAllText(verse, caption);
 	}
     }

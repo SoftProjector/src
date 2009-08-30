@@ -43,6 +43,7 @@ private:
     Bible bible;
     int cRow;
     bool showing; // whether we are currently showing to the projector
+    bool by_chapter; // to pre load bible by chapter or by verse
 
 private slots:
     void on_listShow_doubleClicked(QModelIndex index);
