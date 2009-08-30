@@ -6,1487 +6,582 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>690</height>
+    <width>400</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>400</width>
     <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_11">
-   <property name="margin">
-    <number>3</number>
-   </property>
-   <property name="spacing">
-    <number>3</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="QSplitter" name="splitter_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+  <layout class="QGridLayout" name="gridLayout_6">
+   <item row="0" column="0" colspan="2">
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_20">
+       <property name="text">
+        <string>Song ID:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="lblID">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Title: </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEditTitle"/>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string>Words By:  </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEditWordsBy"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>Music By: </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="lineEditMusicBy"/>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string>Tune: </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEditTune"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>Category: </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QComboBox" name="comboBoxCategory">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+       </property>
+       <item>
+        <property name="text">
+         <string>Other</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Библейские истории</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Благовествование</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Бог</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Божья любовь и величие</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Время</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Воскресение Христово</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Второе пришествие Христа и суд</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Для детей и семейные</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Духовная борьба и победа</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Для новообращённых</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Жатвенные</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Иисус Христос</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Любовь</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Мама</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Молитва</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Молитвенные</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Молодёжные</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На бракосочетание</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На закате</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Наш Друг и Спаситель</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На крещение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На новый год</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На nогребение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На рассвете</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На рукоположение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>На хлебопреломление</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Небесные обители</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Наставление и самоиспытание</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>О Духе Святом, освящение, через Духа Святого</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>О Церкви</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Перед началом собрания</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Последнее время</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Практическая жизнь с Богом</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>При заключении собрания</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Приветственные и nрощальные</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Призыв к труду</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Призыв к покаянию, о покаянии</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Путь веры</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Радость спасения во Христе</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Разные христианские праздники</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Рождество христово</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Решительность и верность</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Руки Христа</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Следование</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Слово Божье</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Спасение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Страдание и смерть Христа</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Уверенность в Господе</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Утешение больным, страждущим узникам</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Утешение и ободрение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Хвала и благодарение</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Христианская радость</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <widget class="QGroupBox" name="aling_groupBox">
+     <property name="minimumSize">
+      <size>
+       <width>85</width>
+       <height>0</height>
+      </size>
      </property>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>Song selector</string>
+     <property name="title">
+      <string>Text Alingment</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <property name="leftMargin">
+       <number>4</number>
       </property>
-      <layout class="QGridLayout" name="gridLayout_10">
-       <property name="margin">
-        <number>3</number>
-       </property>
-       <property name="spacing">
-        <number>3</number>
-       </property>
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QComboBox" name="comboBoxSbornik">
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 3300</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 2500</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 2001</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 2000a</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 2000b</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Возорждения 1730</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Песнь Воз. Cовет Церквей</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Псалмопіві</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Євангелські Пісні </string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>User</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="spinBoxSongNum">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>9999</number>
-           </property>
-           <property name="value">
-            <number>1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="btnEdit">
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Edit</string>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+E</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="Line" name="line">
-         <property name="palette">
-          <palette>
-           <active>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Light">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>127</green>
-               <blue>127</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Midlight">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>63</green>
-               <blue>63</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Dark">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Mid">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>170</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Text">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="BrightText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ButtonText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Shadow">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="AlternateBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>127</green>
-               <blue>127</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>220</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </active>
-           <inactive>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Light">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>127</green>
-               <blue>127</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Midlight">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>63</green>
-               <blue>63</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Dark">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Mid">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>170</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Text">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="BrightText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ButtonText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Shadow">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="AlternateBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>127</green>
-               <blue>127</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>220</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </inactive>
-           <disabled>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Light">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>127</green>
-               <blue>127</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Midlight">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>63</green>
-               <blue>63</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Dark">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Mid">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>170</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Text">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="BrightText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ButtonText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>127</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Shadow">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="AlternateBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipBase">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>220</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="ToolTipText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </disabled>
-          </palette>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout_9">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Search Tiles:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="txtSearch">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="checkBoxAny">
-           <property name="maximumSize">
-            <size>
-             <width>15</width>
-             <height>15</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QPushButton" name="btnSortTitles">
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>A&gt;Z</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0">
-        <widget class="QListWidget" name="listTitles">
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="sortingEnabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QGridLayout" name="gridLayout_7">
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Edit</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_8">
-          <property name="margin">
-           <number>2</number>
-          </property>
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_15">
-              <property name="text">
-               <string>Title: </string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" colspan="3">
-             <widget class="QLineEdit" name="lineEditTitle"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>Words By:  </string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEditWordsBy"/>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_18">
-              <property name="text">
-               <string>Music By: </string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QLineEdit" name="lineEditMusicBy"/>
-            </item>
-            <item row="0" column="4">
-             <widget class="QLabel" name="label_20">
-              <property name="text">
-               <string>ID:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="5">
-             <widget class="QLabel" name="lblID">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0">
-           <widget class="QSplitter" name="splitter">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <widget class="QWidget" name="layoutWidget">
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_17">
-                  <property name="text">
-                   <string>Tune: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEditTune"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_14">
-                  <property name="text">
-                   <string>Category: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QComboBox" name="comboBoxCategory">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>Other</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Библейские истории</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Благовествование</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Бог</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Божья любовь и величие</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Время</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Воскресение Христово</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Второе пришествие Христа и суд</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Для детей и семейные</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Духовная борьба и победа</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Для новообращённых</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Жатвенные</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Иисус Христос</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Любовь</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Мама</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Молитва</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Молитвенные</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Молодёжные</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На бракосочетание</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На закате</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Наш Друг и Спаситель</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На крещение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На новый год</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На nогребение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На рассвете</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На рукоположение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>На хлебопреломление</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Небесные обители</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Наставление и самоиспытание</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>О Духе Святом, освящение, через Духа Святого</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>О Церкви</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Перед началом собрания</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Последнее время</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Практическая жизнь с Богом</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>При заключении собрания</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Приветственные и nрощальные</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Призыв к труду</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Призыв к покаянию, о покаянии</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Путь веры</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Радость спасения во Христе</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Разные христианские праздники</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Рождество христово</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Решительность и верность</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Руки Христа</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Следование</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Слово Божье</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Спасение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Страдание и смерть Христа</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Уверенность в Господе</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Утешение больным, страждущим узникам</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Утешение и ободрение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Хвала и благодарение</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Христианская радость</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_19">
-                  <property name="text">
-                   <string>Language: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QComboBox" name="comboBoxLanguage">
-                  <item>
-                   <property name="text">
-                    <string>Russian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Ukranian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>English</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QCheckBox" name="checkBoxFavorite">
-                  <property name="text">
-                   <string>Favorite</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="0">
-               <layout class="QGridLayout" name="gridLayout_2">
-                <property name="horizontalSpacing">
-                 <number>1</number>
-                </property>
-                <item row="0" column="0" colspan="2">
-                 <widget class="Line" name="line_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0" colspan="2">
-                 <widget class="QLabel" name="label_11">
-                  <property name="text">
-                   <string>SBORNIK</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_3">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>pv3300: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv3300">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>3300</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>pv2500: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv2500">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>2500</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>pv2001: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv2001">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>2001</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_6">
-                  <property name="text">
-                   <string>pv2000a: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv2000a">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>2000</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>pv2000b: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv2000b">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>2000</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>pv1730: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="1">
-                 <widget class="QSpinBox" name="spinBoxpv1730">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>1730</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="0">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>pv СЦ: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="1">
-                 <widget class="QSpinBox" name="spinBoxpvCt">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>800</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="0">
-                 <widget class="QLabel" name="label_10">
-                  <property name="text">
-                   <string>Псалмопіві: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="1">
-                 <widget class="QSpinBox" name="spinBoxuaPsalm">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="0">
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>Євангелські Пісні: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="1">
-                 <widget class="QSpinBox" name="spinBoxuaEpisni">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>521</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="11" column="0">
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>User: </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="11" column="1">
-                 <widget class="QSpinBox" name="spinBoxlpvUser">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="buttonSymbols">
-                   <enum>QAbstractSpinBox::NoButtons</enum>
-                  </property>
-                  <property name="maximum">
-                   <number>9999</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="4" column="0">
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="lblEditProg">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="WindowText">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>0</green>
-                      <blue>0</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="WindowText">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>0</green>
-                      <blue>0</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="WindowText">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>118</red>
-                      <green>116</green>
-                      <blue>108</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>EDITING IN PROGRESS</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::NoTextInteraction</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QTextEdit" name="textEditSong"/>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>Control</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>168</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="btnNew">
-            <property name="text">
-             <string>New</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+N</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="btnSave">
-            <property name="text">
-             <string>Save</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+S</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="btnClose">
-            <property name="text">
-             <string>Close</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+Q</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="btnCancel">
-            <property name="text">
-             <string>Cancel</string>
-            </property>
-            <property name="shortcut">
-             <string>Ctrl+Shift+X</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="bntDelete">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
+      <property name="bottomMargin">
+       <number>3</number>
+      </property>
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="left_radioButton">
+        <property name="text">
+         <string>Left</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="rihgt_radioButton">
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="center_radioButton">
+        <property name="text">
+         <string>Center</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QTableWidget" name="sbornik_table">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>80</height>
+      </size>
+     </property>
+     <column>
+      <property name="text">
+       <string>Sbornik</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Number</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <layout class="QGridLayout" name="font_gridLayout">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="font_textbox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="font_button">
+       <property name="text">
+        <string>Set</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="font_default_button">
+       <property name="text">
+        <string>Use Default</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="font_label">
+       <property name="text">
+        <string>Text Font:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <layout class="QGridLayout" name="wall_gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="wall_label">
+       <property name="text">
+        <string>Background:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="wall_textbox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="wall_button">
+       <property name="text">
+        <string>Set </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="wall_default_button">
+       <property name="text">
+        <string>Use Default</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <widget class="QTextEdit" name="textEditSong"/>
+   </item>
+   <item row="8" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>168</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnSave">
+       <property name="text">
+        <string>Save</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+S</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btnCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+Q</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
