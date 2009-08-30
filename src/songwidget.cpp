@@ -28,7 +28,7 @@ SongWidget::SongWidget(QWidget *parent) :
     on_sbornik_menu_currentIndexChanged(0);
 
     // We don't really need the spin box, since we have search:
-    ui->song_num_spinbox->setVisible(false);
+//    ui->song_num_spinbox->setVisible(false);
 }
 
 SongWidget::~SongWidget()
