@@ -26,6 +26,9 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->songs_view->resizeRowsToContents();
     ui->playlist_view->resizeRowsToContents();
     on_sbornik_menu_currentIndexChanged(0);
+
+    // We don't really need the spin box, since we have search:
+    ui->song_num_spinbox->setVisible(false);
 }
 
 SongWidget::~SongWidget()
