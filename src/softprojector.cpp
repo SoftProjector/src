@@ -297,3 +297,9 @@ void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
     // Called when the user double clicks on a row in the preview table.
     this->on_show_button_clicked();
 }
+
+void SoftProjector::on_actionAbout_triggered()
+{
+    QString text = QString("softProjector.com");
+    QMessageBox::information(this, "Info", text);
+}
