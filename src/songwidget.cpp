@@ -30,7 +30,6 @@ SongWidget::SongWidget(QWidget *parent) :
     // We don't really need the spin box, since we have search:
 //    ui->song_num_spinbox->setVisible(false);
     isSpinboxEditing = false;
-    preview_song = Song();
 }
 
 SongWidget::~SongWidget()
@@ -48,14 +47,35 @@ void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelInd
         Song song = songs_model->getSong(row);
         sendToPreview(song);
         focusInPlaylistTable = false;
-        ui->btnAddToPlaylist->setEnabled(true);
-        ui->btnLive->setEnabled(true);
+    }
+    updateButtonStates();
+}
+
+void SongWidget::updateButtonStates()
+{
+    bool enable_live;
+    bool enable_add;
+    bool enable_remove;
+    if(focusInPlaylistTable)
+    {
+        enable_live = ui->playlist_view->currentIndex().isValid();
+        enable_add = false;
+        enable_remove = ( playlist_model->rowCount() > 0 );
     }
     else
     {
-        ui->btnAddToPlaylist->setEnabled(false);
-        ui->btnLive->setEnabled(false);
+        // focus in songs table
+        if( proxy_model->rowCount() == 0 )
+            enable_live = false;
+        else
+            enable_live = ui->songs_view->currentIndex().isValid();
+        enable_add = enable_live;
+        enable_remove = false;
     }
+
+    ui->btnLive->setEnabled(enable_live);
+    ui->btnAddToPlaylist->setEnabled(enable_add);
+    ui->btnRemoveFromPlaylist->setEnabled(enable_remove);
 }
 
 void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -66,14 +86,12 @@ void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModel
         Song song = playlist_model->getSong(current.row());
         sendToPreview(song);
         focusInPlaylistTable = true;
-        ui->btnAddToPlaylist->setEnabled(true);
     }
     else
     {
         //FIXME clear the preview? Or not...
-        ui->btnAddToPlaylist->setEnabled(false);
     }
-
+    updateButtonStates();
 }
 
 void SongWidget::changeEvent(QEvent *e)
@@ -141,8 +159,8 @@ void SongWidget::selectMatchingSong(QString text)
 
 void SongWidget::sendToPreview(Song song)
 {
-    ui->listPreview->clear();
     QStringList song_list = song_database.getSongList(song);
+    ui->listPreview->clear();
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
     preview_song = song;
@@ -178,7 +196,7 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
     songs_model->setSongs(song_list);
 
     ui->songs_view->selectRow(0);
-    // Re-draw the songs table:
+    updateButtonStates();
 }
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
@@ -240,7 +258,8 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 
 void SongWidget::on_btnLive_clicked()
 {
-    sendToProjector(preview_song, ui->listPreview->currentRow());
+    //sendToProjector(preview_song, ui->listPreview->currentRow());
+    sendToProjector(preview_song, 0); // Send the first verse
 }
 
 
@@ -273,16 +292,14 @@ void SongWidget::on_btnAddToPlaylist_clicked()
     ui->playlist_view->setFocus();
     ui->btnRemoveFromPlaylist->setEnabled(true);
     sendToPreview(song);
+    updateButtonStates();
 }
 
 void SongWidget::on_btnRemoveFromPlaylist_clicked()
 {
     int row = ui->playlist_view->currentIndex().row();
     playlist_model->removeRow(row);
-    return;
-
-    if( playlist_model->rowCount() == 0 )
-        ui->btnRemoveFromPlaylist->setEnabled(false);
+    updateButtonStates();
 }
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
@@ -333,17 +350,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         ui->songs_view->scrollToTop();
     }
 
-
-    if( proxy_model->rowCount() == 0 )
-    {
-        ui->btnAddToPlaylist->setEnabled(false);
-        ui->btnLive->setEnabled(false);
-    }
-    else
-    {
-        ui->btnAddToPlaylist->setEnabled(true);
-        ui->btnLive->setEnabled(true);
-    }
+    updateButtonStates();
 }
 
 Song SongWidget::getSongToEdit()
@@ -367,7 +374,6 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
     playlist_model->addSong(song);
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     ui->playlist_view->setFocus();
-    //ui->playlist_view->viewport()->repaint();
     ui->btnRemoveFromPlaylist->setEnabled(true);
     sendToPreview(song);
 }
@@ -376,9 +382,9 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
     Song song = playlist_model->getSong(index.row());
-    sendToProjector(song, ui->listPreview->currentRow());
+    //sendToProjector(song, ui->listPreview->currentRow());
+    sendToProjector(song, 0); // Send the first verse
 }
-
 
 
 void SongWidget::on_playlist_view_clicked(QModelIndex index)
@@ -386,7 +392,9 @@ void SongWidget::on_playlist_view_clicked(QModelIndex index)
     // This method is implemented for the case where the use clicks
     // in the playlist table without changing the previous selection.
     Song song = playlist_model->getSong(index);
+    focusInPlaylistTable = true;
     sendToPreview(song);
+    updateButtonStates();
 }
 
 void SongWidget::on_songs_view_clicked(QModelIndex index)
@@ -394,7 +402,9 @@ void SongWidget::on_songs_view_clicked(QModelIndex index)
     // This method is implemented for the case where the use clicks
     // in the playlist table without changing the previous selection.
     Song song = songs_model->getSong(proxy_model->mapToSource(index));
+    focusInPlaylistTable = false;
     sendToPreview(song);
+    updateButtonStates();
 }
 
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)

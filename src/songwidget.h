@@ -46,6 +46,7 @@ private slots:
     void loadTitles(QString tSbornik);
     void loadSborniks();
     Song currentSong();
+    void updateButtonStates();
 
 private:
     Ui::SongWidget *ui;
