@@ -40,11 +40,21 @@ SongWidget::~SongWidget()
 
 void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    // Called when a new song is selected in the songs table
-    int row = proxy_model->mapToSource(current).row();
-    Song song = songs_model->getSong(row);
-    sendToPreview(song);
-    focusInPlaylistTable = false;
+    if( current.isValid() )
+    {
+        // Called when a new song is selected in the songs table
+        int row = proxy_model->mapToSource(current).row();
+        Song song = songs_model->getSong(row);
+        sendToPreview(song);
+        focusInPlaylistTable = false;
+        ui->btnAddToPlaylist->setEnabled(true);
+        ui->btnLive->setEnabled(true);
+    }
+    else
+    {
+        ui->btnAddToPlaylist->setEnabled(false);
+        ui->btnLive->setEnabled(false);
+    }
 }
 
 void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -55,10 +65,12 @@ void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModel
         Song song = playlist_model->getSong(current.row());
         sendToPreview(song);
         focusInPlaylistTable = true;
+        ui->btnAddToPlaylist->setEnabled(true);
     }
     else
     {
         //FIXME clear the preview? Or not...
+        ui->btnAddToPlaylist->setEnabled(false);
     }
 
 }
@@ -293,9 +305,9 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 
 
     // If 'text' is of numeric value, then select row with exact match
-    bool ok;
-    int n = text.toInt(&ok,10);
-    if (ok)
+    bool is_int;
+    int n = text.toInt(&is_int,10);
+    if (is_int)
     {
         // Look for a song with number <value>. Select it and scroll to show it.
         for (int i = 0; i < songs_model->song_list.size(); i++)
@@ -327,8 +339,22 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     }
     else
     {
+        // Filter string is not an integer
+
         ui->songs_view->selectRow(0);
         ui->songs_view->scrollToTop();
+    }
+
+
+    if( proxy_model->rowCount() == 0 )
+    {
+        ui->btnAddToPlaylist->setEnabled(false);
+        ui->btnLive->setEnabled(false);
+    }
+    else
+    {
+        ui->btnAddToPlaylist->setEnabled(true);
+        ui->btnLive->setEnabled(true);
     }
 }
 
