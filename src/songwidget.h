@@ -46,7 +46,6 @@ private slots:
     void loadTitles(QString tSbornik);
     void loadSborniks();
     Song currentSong();
-    Song currentPlaylistSong();
 
 private:
     Ui::SongWidget *ui;
@@ -61,6 +60,7 @@ private:
     bool isSpinboxEditing;
     bool focusInPlaylistTable;
     bool allSongs;
+    Song preview_song;
 public slots:
     void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous);

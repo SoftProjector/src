@@ -30,6 +30,7 @@ SongWidget::SongWidget(QWidget *parent) :
     // We don't really need the spin box, since we have search:
 //    ui->song_num_spinbox->setVisible(false);
     isSpinboxEditing = false;
+    preview_song = Song();
 }
 
 SongWidget::~SongWidget()
@@ -114,14 +115,6 @@ Song SongWidget::currentSong()
     return songs_model->getSong(current_row);
 }
 
-Song SongWidget::currentPlaylistSong()
-{
-    // Returns the selected song of the playlist
-    QModelIndex current_index = ui->playlist_view->currentIndex();
-    int current_row = current_index.row();
-    return playlist_model->getSong(current_row);
-}
-
 void SongWidget::selectMatchingSong(QString text)
 {
     bool startonly = ui->match_beginning_box->isChecked();
@@ -152,6 +145,7 @@ void SongWidget::sendToPreview(Song song)
     QStringList song_list = song_database.getSongList(song);
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
+    preview_song = song;
 }
 
 void SongWidget::sendToProjector(Song song, int row)
@@ -246,13 +240,7 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 
 void SongWidget::on_btnLive_clicked()
 {
-    Song song;
-    if(focusInPlaylistTable)
-        song = currentPlaylistSong();
-    else
-        song = currentSong();
-
-    sendToProjector(song, ui->listPreview->currentRow());
+    sendToProjector(preview_song, ui->listPreview->currentRow());
 }
 
 
@@ -360,9 +348,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 
 Song SongWidget::getSongToEdit()
 {
-    // FIXME use the song from the playlist if selected there
-    Song song = currentSong();
-    return song;
+    return preview_song;
 }
 
 void SongWidget::on_match_beginning_box_toggled(bool checked)
@@ -413,6 +399,5 @@ void SongWidget::on_songs_view_clicked(QModelIndex index)
 
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 {
-    Song song = currentSong();
-    sendToProjector(song, index.row());
+    sendToProjector(preview_song, index.row());
 }
