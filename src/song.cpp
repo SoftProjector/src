@@ -88,11 +88,23 @@ void SongsModel::addSong(Song song)
 
 bool SongsModel::removeRows( int row, int count, const QModelIndex & parent)
 {
-    beginRemoveRows(QModelIndex(), row, row+count-1);
+    qDebug("begin");
+    qDebug() << row;
+    qDebug() << count;
+    qDebug() << row+count-1;
+    qDebug("row count:");
+    qDebug() << rowCount();
+
+    beginRemoveRows(parent, row, row+count-1);
     // Need to remove starting from the end:
     for(int i=row+count-1; i>=row; i--)
+    {
+        qDebug("Removing row:");
+        qDebug() << i;
         song_list.removeAt(i);
+    }
     endRemoveRows();
+    qDebug("end");
     return true;
 }
 
