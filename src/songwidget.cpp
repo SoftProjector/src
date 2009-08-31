@@ -85,7 +85,6 @@ void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModel
         // Called when a new song is selected in the playlist table
         Song song = playlist_model->getSong(current.row());
         sendToPreview(song);
-        focusInPlaylistTable = true;
     }
     else
     {
@@ -289,8 +288,9 @@ void SongWidget::on_btnAddToPlaylist_clicked()
 
     // Select the row that was just added:
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
-    ui->playlist_view->setFocus();
-    ui->btnRemoveFromPlaylist->setEnabled(true);
+    //ui->playlist_view->setFocus();
+    //focusInPlaylistTable = true;
+    //ui->btnRemoveFromPlaylist->setEnabled(true);
     sendToPreview(song);
     updateButtonStates();
 }
@@ -373,8 +373,8 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 
     playlist_model->addSong(song);
     ui->playlist_view->selectRow(playlist_model->rowCount()-1);
-    ui->playlist_view->setFocus();
-    ui->btnRemoveFromPlaylist->setEnabled(true);
+    //ui->playlist_view->setFocus();
+    //focusInPlaylistTable = true;
     sendToPreview(song);
 }
 
