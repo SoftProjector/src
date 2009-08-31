@@ -59,6 +59,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(bibleWidget, SIGNAL(goLive(Bible,QString,int)),
             this, SLOT(setBibleList(Bible,QString,int)));
 
+    ui->show_button->setEnabled(false);
+    ui->clear_button->setEnabled(false);
+
 }
 
 SoftProjector::~SoftProjector()
@@ -170,6 +173,8 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->listShow->setFocus();
     this->on_show_button_clicked();
 
+    ui->show_button->setEnabled(false);
+    ui->clear_button->setEnabled(true);
 }
 
 void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
