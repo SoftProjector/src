@@ -49,10 +49,18 @@ void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelInd
 
 void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    // Called when a new song is selected in the playlist table
-    Song song = playlist_model->getSong(current.row());
-    sendToPreview(song);
-    focusInPlaylistTable = true;
+    if( current.isValid() )
+    {
+        // Called when a new song is selected in the playlist table
+        Song song = playlist_model->getSong(current.row());
+        sendToPreview(song);
+        focusInPlaylistTable = true;
+    }
+    else
+    {
+        //FIXME clear the preview? Or not...
+    }
+
 }
 
 void SongWidget::changeEvent(QEvent *e)
@@ -271,6 +279,7 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 {
     int row = ui->playlist_view->currentIndex().row();
     playlist_model->removeRow(row);
+    return;
 
     if( playlist_model->rowCount() == 0 )
         ui->btnRemoveFromPlaylist->setEnabled(false);
