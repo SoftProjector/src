@@ -58,6 +58,7 @@ private:
     SongsModel *songs_model;
     SongsModel *playlist_model;
     SongProxyModel *proxy_model;
+    bool isSpinboxEditing;
     bool focusInPlaylistTable;
     bool allSongs;
 public slots:

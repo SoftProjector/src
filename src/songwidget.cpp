@@ -29,6 +29,7 @@ SongWidget::SongWidget(QWidget *parent) :
 
     // We don't really need the spin box, since we have search:
 //    ui->song_num_spinbox->setVisible(false);
+    isSpinboxEditing = false;
 }
 
 SongWidget::~SongWidget()
@@ -168,6 +169,15 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
 {
+    // checks if spinbox just got into eding mode, it yes, then it reset searchbox and sorts song table view
+    if (!isSpinboxEditing)
+    {
+        isSpinboxEditing = true;
+        ui->lineEditSearch->clear();
+        on_lineEditSearch_textEdited("");
+        ui->songs_view->sortByColumn(0,Qt::AscendingOrder);
+    }
+
     //int max_num = 0;
     // Look for a song with number <value>. Select it and scroll to show it.
     for (int i = 0; i < songs_model->song_list.size(); i++)
@@ -207,6 +217,9 @@ void SongWidget::on_song_num_spinbox_editingFinished()
     // Called when the user presses enter after editing the song number
     // At this point, the song is already selected in the songs table
     //on_btnAddToPlaylist_clicked();
+
+    // Resets spin box to non eding mode
+    isSpinboxEditing = false;
 }
 
 
@@ -268,6 +281,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     bool match_beginning = ui->match_beginning_box->isChecked();
     proxy_model->setFilterString(text, match_beginning);
     songs_model->emitLayoutChanged(); // forces the view to redraw
+
 }
 
 Song SongWidget::getSongToEdit()
