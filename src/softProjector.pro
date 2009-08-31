@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     bible.cpp \
     importdialog.cpp \
     exportdialog.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    aboutdialog.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -24,11 +25,13 @@ HEADERS += softprojector.h \
     bible.h \
     importdialog.h \
     exportdialog.h \
-    settingsdialog.h
+    settingsdialog.h \
+    aboutdialog.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
     editwidget.ui \
     settingsdialog.ui \
     importdialog.ui \
-    exportdialog.ui
+    exportdialog.ui \
+    aboutdialog.ui

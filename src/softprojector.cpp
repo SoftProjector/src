@@ -2,6 +2,7 @@
 #include "softprojector.h"
 #include "ui_softprojector.h"
 #include "settingsdialog.h"
+#include "aboutdialog.h"
 
 
 SoftProjector::SoftProjector(QWidget *parent)
@@ -300,6 +301,10 @@ void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
 
 void SoftProjector::on_actionAbout_triggered()
 {
-    QString text = QString("softProjector.com");
-    QMessageBox::information(this, "Info", text);
+    AboutDialog *aboutDialog;
+    aboutDialog = new AboutDialog(this);
+    aboutDialog->setWindowTitle("About softProjecor");
+    aboutDialog->exec();
+//    QString text = QString("softProjector.com");
+//    QMessageBox::information(this, "Info", text);
 }
