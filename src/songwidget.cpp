@@ -281,7 +281,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     bool match_beginning = ui->match_beginning_box->isChecked();
     proxy_model->setFilterString(text, match_beginning);
     songs_model->emitLayoutChanged(); // forces the view to redraw
-    ui->songs_view->selectRow(0);
+
 
     // If 'text' is of numeric value, then select row with exact match
     bool ok;
@@ -315,6 +315,11 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
             //if( s.num > max_num )
             //    max_num = s.num;
         }
+    }
+    else
+    {
+        ui->songs_view->selectRow(0);
+        ui->songs_view->scrollToTop();
     }
 }
 
