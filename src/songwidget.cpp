@@ -27,6 +27,15 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->playlist_view->resizeRowsToContents();
     on_sbornik_menu_currentIndexChanged(0);
 
+    // Modify the column widths:
+    ui->songs_view->setColumnWidth(0, 55);
+    ui->songs_view->setColumnWidth(1, 150);
+    ui->songs_view->setColumnWidth(2, 70);
+    ui->playlist_view->setColumnWidth(0, 55);
+    ui->playlist_view->setColumnWidth(1, 150);
+    ui->playlist_view->setColumnWidth(2, 70);
+
+
     // We don't really need the spin box, since we have search:
 //    ui->song_num_spinbox->setVisible(false);
     isSpinboxEditing = false;
