@@ -461,6 +461,9 @@
        <height>80</height>
       </size>
      </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <column>
       <property name="text">
        <string>Sbornik</string>
