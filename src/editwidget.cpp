@@ -30,7 +30,7 @@ EditWidget::EditWidget(QWidget *parent) :
 //    ui->label_19->hide();
 //    ui->comboBoxLanguage->hide();
 //    ui->checkBoxFavorite->hide();
-    disablePV();
+//    disablePV();
 }
 
 EditWidget::~EditWidget()
@@ -50,18 +50,18 @@ void EditWidget::changeEvent(QEvent *e)
     }
 }
 
-void EditWidget::disablePV()
-{
-//    ui->spinBoxpv3300->setEnabled(false);
-//    ui->spinBoxpv2500->setEnabled(false);
-//    ui->spinBoxpv2001->setEnabled(false);
-//    ui->spinBoxpv2000a->setEnabled(false);
-//    ui->spinBoxpv2000b->setEnabled(false);
-//    ui->spinBoxpv1730->setEnabled(false);
-//    ui->spinBoxpvCt->setEnabled(false);
-//    ui->spinBoxuaPsalm->setEnabled(false);
-//    ui->spinBoxuaEpisni->setEnabled(false);
-}
+//void EditWidget::disablePV()
+//{
+////    ui->spinBoxpv3300->setEnabled(false);
+////    ui->spinBoxpv2500->setEnabled(false);
+////    ui->spinBoxpv2001->setEnabled(false);
+////    ui->spinBoxpv2000a->setEnabled(false);
+////    ui->spinBoxpv2000b->setEnabled(false);
+////    ui->spinBoxpv1730->setEnabled(false);
+////    ui->spinBoxpvCt->setEnabled(false);
+////    ui->spinBoxuaPsalm->setEnabled(false);
+////    ui->spinBoxuaEpisni->setEnabled(false);
+//}
 
 //void EditWidget::on_btnEdit_clicked()
 //{
@@ -83,21 +83,32 @@ void EditWidget::disablePV()
 //    }
 //}
 
-//void EditWidget::on_bntDelete_clicked()
-//{
-//    QMessageBox ms;
-//    if(song_database.isUserOnly(editSong.songID)) {
-//        song_database.deleteSong(editSong.songID);
-////        loadTitles(sbornik);
-//        resetUiItems();
-//    }
-//    else {
-//        ms.setText("Cannot Delete this song because it is part of some Sbornik\nYou are allowed to delete only song from User ONLY");
-//        ms.setWindowTitle("Cannot Delete Song");
-//        ms.setIcon(QMessageBox::Warning);
-//        ms.exec();
-//    }
-//}
+void EditWidget::on_btnDelete_clicked()
+{
+    QMessageBox ms;
+
+    ms.setWindowTitle("Delete Song?");
+    ms.setText("Are you sure that you want to delete a song?");
+    ms.setInformativeText("This action will permanentrly delete this song");
+    ms.setIcon(QMessageBox::Question);
+    ms.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+    ms.setDefaultButton(QMessageBox::Cancel);
+    int ret = ms.exec();
+
+    switch (ret) {
+    case QMessageBox::Yes:
+        // Delete a song
+        close();
+        break;
+    case QMessageBox::Cancel:
+        // Cancel was clicked
+        break;
+    default:
+        // should never be reached
+        break;
+    }
+
+}
 
 void EditWidget::on_btnSave_clicked()
 {
@@ -260,6 +271,7 @@ void EditWidget::setUiItems()
     ui->lineEditTune->setText(editSong.tune);
     ui->comboBoxCategory->setCurrentIndex(editSong.category);
     ui->lblID->setText(QString::number(editSong.songID));
+    setSbornikTable(editSong.songID);
     ui->font_textbox->setText(editSong.font);
     ui->wall_textbox->setText(editSong.background);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
@@ -311,8 +323,34 @@ QString EditWidget::resetLyric(QString lyric)
     return lyric;
 }
 
-//void EditWidget::on_listTitles_currentTextChanged(QString currentText)
-//{
+void EditWidget::setSbornikTable(int id)
+{
+    QSqlQuery sq;
+    QStringList sbornik, song_num;
+
+    sq.exec("SELECT sbornik_id, song_number FROM SongLink where song_id = "+QString::number(id));
+    int count(0);
+
+    while (sq.next())
+    {
+        ++count;
+        sbornik << sq.value(0).toString();
+        song_num << sq.value(1).toString();
+    }
+    ui->sbornik_table->setRowCount(count);
+
+    QTableWidgetItem *item0 = new QTableWidgetItem();
+    QTableWidgetItem *item1 = new QTableWidgetItem();
+    for (int i(0); i < count; ++i)
+    {
+        item0->setText(sbornik.at(i));
+        item1->setText(song_num.at(i));
+        ui->sbornik_table->setItem(i,0,item0->clone());
+        ui->sbornik_table->setItem(i,1,item1->clone());
+    }
+
+
+}
 //    QStringList list = currentText.split(" - ");
 //    if (list.size()==1)
 //        editSong = song_database.getSong(currentText);
@@ -407,3 +445,4 @@ void EditWidget::on_wall_default_button_clicked()
 {
     ui->wall_textbox->clear();
 }
+
