@@ -30,6 +30,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,0">
      <item>
       <widget class="QComboBox" name="sbornik_menu">
+       <property name="toolTip">
+        <string>Use this menu to show only songs beloning to a particular song collection</string>
+       </property>
        <property name="statusTip">
         <string>Select Sbornik to use</string>
        </property>
@@ -48,6 +51,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="song_num_spinbox">
+       <property name="toolTip">
+        <string>Selects a song by the number in the selected song collection</string>
+       </property>
        <property name="minimum">
         <number>1</number>
        </property>
@@ -110,6 +116,9 @@
          <width>125</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Use this field to limit the display of the songs to only the ones that contain the specified text in the song title or song number</string>
        </property>
       </widget>
      </item>
@@ -181,7 +190,11 @@
      <item>
       <widget class="QPushButton" name="btnLive">
        <property name="toolTip">
-        <string>Display the song on the screen without adding it to playlist first</string>
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Quickly display the selected song on the screen without adding it to playlist first&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
         <string>Go Live</string>
