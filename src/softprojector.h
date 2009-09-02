@@ -46,6 +46,7 @@ private:
     bool by_chapter; // to pre load bible by chapter or by verse
 
 private slots:
+    void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
     void on_show_button_clicked();

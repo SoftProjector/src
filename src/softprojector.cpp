@@ -313,3 +313,17 @@ void SoftProjector::on_actionAbout_triggered()
 //    QString text = QString("softProjector.com");
 //    QMessageBox::information(this, "Info", text);
 }
+
+void SoftProjector::on_tabWidget_currentChanged(int index)
+{
+    if (index ==0)
+    {
+        ui->actionEditSong->setVisible(false);
+        ui->actionNewSong->setVisible(false);
+    }
+    else if (index==1)
+    {
+        ui->actionEditSong->setVisible(true);
+        ui->actionNewSong->setVisible(true);
+    }
+}
