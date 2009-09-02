@@ -444,4 +444,6 @@ void SongDatabase::deleteSong(int song_id)
 {
     QSqlQuery sq;
     sq.exec("DELETE FROM Songs WHERE id = " + QString::number(song_id) );
+    sq.clear();
+    sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
 }
