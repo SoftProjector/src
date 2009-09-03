@@ -262,6 +262,8 @@ void EditWidget::resetUiItems()
     ui->font_textbox->clear();
     ui->wall_textbox->clear();
     ui->left_radioButton->setChecked(true);
+    ui->sbornik_table->clearContents();
+    ui->sbornik_table->setRowCount(0);
 }
 
 void EditWidget::setUiItems()
@@ -414,7 +416,38 @@ void EditWidget::setNew()
     resetUiItems();
     ui->textEditSong->setPlainText(QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь"));
     is_new = true;
-//    on_btnNew_clicked();
+    bool ok;
+
+    if (song_database.hasUserSbornik())
+    {
+        // Select Sbornik to add a new song into
+        QString sb = QInputDialog::getItem(this,"Select Sbornik","Select Sbornik in which you want to add a song",
+                                           song_database.getUserSborniks(),0,false,&ok);
+        if (ok && !sb.isEmpty())
+        {
+            QStringList sl = sb.split(" - ");
+            sb = sl.at(0);
+            int last = song_database.lastUser(sb);
+
+            QTableWidgetItem *item0 = new QTableWidgetItem();
+            QTableWidgetItem *item1 = new QTableWidgetItem();
+            item0->setText(sb);
+            item1->setText(QString::number(last));
+            ui->sbornik_table->setRowCount(1);
+            ui->sbornik_table->setItem(0,0,item0->clone());
+            ui->sbornik_table->setItem(0,1,item1->clone());
+
+        }
+        else
+        {
+            close();
+        }
+    }
+    else
+    {
+        // Add a Sbornik to add a new song into
+        qDebug() << "Sbornik is False";
+    }
 }
 
 void EditWidget::on_font_button_clicked()

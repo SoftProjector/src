@@ -266,8 +266,8 @@ void SoftProjector::on_actionEditSong_triggered()
 void SoftProjector::on_actionNewSong_triggered()
 {
     if (ui->tabWidget->currentIndex()==1){
-        editWidget->setNew();
         editWidget->show();
+        editWidget->setNew();
         editWidget->activateWindow();
 
     }

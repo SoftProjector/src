@@ -402,12 +402,12 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
     return songs;
 }
 
-int SongDatabase::lastUser()
+int SongDatabase::lastUser(QString sbornik)
 {
     int last;
     QList <int> lastInt;
     QSqlQuery sq;
-    sq.exec("SELECT pvUser FROM songs WHERE pvUser > 0");
+    sq.exec("SELECT song_number FROM SongLink WHERE sbornik_id = '" +sbornik+"'");
     while (sq.next())
         lastInt << sq.value(0).toInt();
     qSort(lastInt);
@@ -418,26 +418,28 @@ int SongDatabase::lastUser()
     return last;
 }
 
-bool SongDatabase::isUserOnly(int sId)
+bool SongDatabase::hasUserSbornik()
 {
     int i(0);
     QSqlQuery sq;
-    sq.exec("SELECT pv3300, pv2500, pv2001, pv2000a, pv2000b, pv1700, pvCt, uaPsalm, uaEpisni FROM songs WHERE id = '" + QString::number(sId) + "'");
-    while (sq.next()){
-        i += sq.value(0).toInt();
-        i += sq.value(1).toInt();
-        i += sq.value(2).toInt();
-        i += sq.value(3).toInt();
-        i += sq.value(4).toInt();
-        i += sq.value(5).toInt();
-        i += sq.value(6).toInt();
-        i += sq.value(7).toInt();
-        i += sq.value(8).toInt();
-    }
-    if(i==0)
+    sq.exec("SELECT id FROM Sborniks WHERE is_user = 1");
+    while (sq.next())
+        ++i;
+    if(i>0)
         return true;
     else
         return false;
+}
+
+QStringList SongDatabase::getUserSborniks()
+{
+    QStringList user_sbornik;
+    QSqlQuery sq;
+    sq.exec("SELECT id, name FROM Sborniks WHERE is_user = 1");
+    while (sq.next())
+        user_sbornik << sq.value(0).toString() + " - " + sq.value(1).toString();
+
+    return user_sbornik;
 }
 
 void SongDatabase::deleteSong(int song_id)

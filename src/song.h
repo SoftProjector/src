@@ -79,16 +79,17 @@ class SongDatabase
 public:
     SongDatabase();
     bool hasTitle(QString title);
-    bool isUserOnly(int songId);
+    bool hasUserSbornik();
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
     Song getSong(int id);
     Song getSong(QString title);
     QStringList getSongList(Song song);
+    QStringList getUserSborniks();
     QStringList formatSongList(QString song);
     QList<Song> getSongs(QString sbornik);
-    int lastUser();
+    int lastUser(QString sbornik);
 //private:
 };
 

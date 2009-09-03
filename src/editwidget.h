@@ -2,6 +2,7 @@
 #define EDITWIDGET_H
 
 #include <QtGui/QWidget>
+#include <QtGui>
 #include "song.h"
 
 namespace Ui {
