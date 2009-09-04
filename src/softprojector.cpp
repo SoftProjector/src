@@ -286,8 +286,28 @@ void SoftProjector::on_actionExportSongs_triggered()
 
 void SoftProjector::on_actionImportSongs_triggered()
 {
+    bool ok=false;
     importSongs->load();
-    importSongs->exec();
+    while (!ok)
+    {
+        int ret = importSongs->exec();
+        switch (ret)
+        {
+        case ImportDialog::Accepted:
+            ok = importSongs->isNewSbornik;
+            if (!ok)
+            {
+                QMessageBox ms;
+                ms.setWindowTitle("Error");
+                ms.setText("The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
+                ms.exec();
+            }
+            break;
+        case ImportDialog::Rejected:
+            ok = true;
+            break;
+        }
+    }
 }
 
 void SoftProjector::on_actionSettings_triggered()

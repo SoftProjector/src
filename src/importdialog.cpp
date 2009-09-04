@@ -2,6 +2,7 @@
 #include "ui_importdialog.h"
 #include <QMessageBox>
 #include <QtSql>
+#include "song.h"
 
 
 ImportDialog::ImportDialog(QWidget *parent) :
@@ -9,6 +10,7 @@ ImportDialog::ImportDialog(QWidget *parent) :
     ui(new Ui::ImportDialog)
 {
     ui->setupUi(this);
+    isNewSbornik = false;
 }
 
 ImportDialog::~ImportDialog()
@@ -105,51 +107,48 @@ void ImportDialog::on_buttonBox_accepted()
     QMessageBox mb;
     if (file.open(QIODevice::ReadOnly))
     {
-        sqt.setTable("Sborniks");
-        sqt.insertRows(0,1);
-        sqt.setData(sqt.index(0,0),code.trimmed());
-        sqt.setData(sqt.index(0,1),title.trimmed());
-        sqt.setData(sqt.index(0,2),info.trimmed());
-        sqt.setData(sqt.index(0,3),1);
-        sqt.submitAll();
-        sqt.clear();
+        SongDatabase sdb;
+        isNewSbornik = sdb.addSbornik(code.trimmed(), title.trimmed(), info);
 
-        if (has_info)
+        if (isNewSbornik)
         {
-            QString a;
-            a = file.readLine();
-            a = file.readLine();
-            a = file.readLine();
-        }
-        while (!file.atEnd())
-        {
-            line = QString::fromUtf8(file.readLine());
-            split = line.split("#$#");
+            if (has_info)
+            {
+                QString a;
+                a = file.readLine();
+                a = file.readLine();
+                a = file.readLine();
+            }
+            while (!file.atEnd())
+            {
+                line = QString::fromUtf8(file.readLine());
+                split = line.split("#$#");
 
-            num = split[0];
+                num = split[0];
 
-            sqt.setTable("Songs");
-            sqt.insertRows(0,1);
-            sqt.setData(sqt.index(0,1),split[1]);//title
-            sqt.setData(sqt.index(0,2),split[2]);//cat
-            sqt.setData(sqt.index(0,3),split[3]);//tune
-            sqt.setData(sqt.index(0,4),split[4]);//words
-            sqt.setData(sqt.index(0,5),split[5]);//music
-            sqt.setData(sqt.index(0,6),split[6]);//text
-            sqt.submitAll();
+                sqt.setTable("Songs");
+                sqt.insertRows(0,1);
+                sqt.setData(sqt.index(0,1),split[1]);//title
+                sqt.setData(sqt.index(0,2),split[2]);//cat
+                sqt.setData(sqt.index(0,3),split[3]);//tune
+                sqt.setData(sqt.index(0,4),split[4]);//words
+                sqt.setData(sqt.index(0,5),split[5]);//music
+                sqt.setData(sqt.index(0,6),split[6]);//text
+                sqt.submitAll();
 
-            QString sid = "";
-            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
-            while (sq.next()) sid = sq.value(0).toString();
-            sq.clear();
+                QString sid = "";
+                sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
+                while (sq.next()) sid = sq.value(0).toString();
+                sq.clear();
 
-            sq.exec("INSERT into SongLink (sbornik_id, song_id, song_number) VALUES ('"
-                          + code.trimmed() + "',"
-                          + sid + ","
-                          + num + ")");
+                sq.exec("INSERT into SongLink (sbornik_id, song_id, song_number) VALUES ('"
+                        + code.trimmed() + "',"
+                        + sid + ","
+                        + num + ")");
 
-            ui->progressBar->setValue(row);
-            row++;
+                ui->progressBar->setValue(row);
+                row++;
+            }
         }
 
 //        mb.setText("Sbornik has been imported sussesfully");

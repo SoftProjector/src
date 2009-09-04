@@ -15,6 +15,7 @@ public:
     explicit ImportDialog(QWidget *parent = 0);
     virtual ~ImportDialog();
     void load();
+    bool isNewSbornik;
 
 protected:
     virtual void changeEvent(QEvent *e);

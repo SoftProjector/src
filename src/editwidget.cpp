@@ -421,22 +421,32 @@ void EditWidget::setNew()
     if (song_database.hasUserSbornik())
     {
         // Select Sbornik to add a new song into
+        QStringList sbornik_list;
+        sbornik_list << "Add a new Sbornik";
+        sbornik_list.append(song_database.getUserSborniks());
         QString sb = QInputDialog::getItem(this,"Select Sbornik","Select Sbornik in which you want to add a song",
-                                           song_database.getUserSborniks(),0,false,&ok);
+                                           sbornik_list,0,false,&ok);
         if (ok && !sb.isEmpty())
         {
-            QStringList sl = sb.split(" - ");
-            sb = sl.at(0);
-            int last = song_database.lastUser(sb);
+            if (sb =="Add a new Sbornik")
+            {
+                // Add a Sbornik to add a new song into
+                addSbornik();
+            }
+            else
+            {
+                QStringList sl = sb.split(" - ");
+                sb = sl.at(0);
+                int last = song_database.lastUser(sb);
 
-            QTableWidgetItem *item0 = new QTableWidgetItem();
-            QTableWidgetItem *item1 = new QTableWidgetItem();
-            item0->setText(sb);
-            item1->setText(QString::number(last));
-            ui->sbornik_table->setRowCount(1);
-            ui->sbornik_table->setItem(0,0,item0->clone());
-            ui->sbornik_table->setItem(0,1,item1->clone());
-
+                QTableWidgetItem *item0 = new QTableWidgetItem();
+                QTableWidgetItem *item1 = new QTableWidgetItem();
+                item0->setText(sb);
+                item1->setText(QString::number(last));
+                ui->sbornik_table->setRowCount(1);
+                ui->sbornik_table->setItem(0,0,item0->clone());
+                ui->sbornik_table->setItem(0,1,item1->clone());
+            }
         }
         else
         {
@@ -446,8 +456,51 @@ void EditWidget::setNew()
     else
     {
         // Add a Sbornik to add a new song into
-        qDebug() << "Sbornik is False";
+        addSbornik();
     }
+}
+
+void EditWidget::addSbornik()
+{
+    bool ok = false;
+    AddSbornikDialog add_sbor;
+    add_sbor.setWindowTitle("Add a Sbornik;");
+
+    while (!ok)
+    {
+        int ret = add_sbor.exec();
+        switch(ret)
+        {
+        case AddSbornikDialog::Accepted:
+            ok = song_database.addSbornik(add_sbor.code,add_sbor.title,add_sbor.info);
+
+            if (!ok)
+            {
+                QMessageBox ms;
+                ms.setWindowTitle("Error");
+                ms.setText("The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
+                ms.exec();
+            }
+            else
+            {
+                int last = song_database.lastUser(add_sbor.code);
+
+                QTableWidgetItem *item0 = new QTableWidgetItem();
+                QTableWidgetItem *item1 = new QTableWidgetItem();
+                item0->setText(add_sbor.code);
+                item1->setText(QString::number(last));
+                ui->sbornik_table->setRowCount(1);
+                ui->sbornik_table->setItem(0,0,item0->clone());
+                ui->sbornik_table->setItem(0,1,item1->clone());
+            }
+            break;
+        case AddSbornikDialog::Rejected:
+            ok=true;
+            close();
+            break;
+        }
+    }
+
 }
 
 void EditWidget::on_font_button_clicked()

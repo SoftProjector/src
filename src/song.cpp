@@ -449,3 +449,27 @@ void SongDatabase::deleteSong(int song_id)
     sq.clear();
     sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
 }
+
+bool SongDatabase::addSbornik(QString code, QString name, QString info)
+{
+    QSqlQuery sq;
+    QSqlTableModel sqt;
+    int i(0);
+    qDebug() << code;
+    qDebug() << sq.exec("SELECT id FROM Sborniks WHERE id = '" + code + "'");
+    while(sq.next())
+        ++i;
+    if (i>0)
+        return false;
+    else
+    {
+        sqt.setTable("Sborniks");
+        sqt.insertRows(0,1);
+        sqt.setData(sqt.index(0,0),code.trimmed());
+        sqt.setData(sqt.index(0,1),name.trimmed());
+        sqt.setData(sqt.index(0,2),info);
+        sqt.setData(sqt.index(0,3),1);
+        sqt.submitAll();
+        return true;
+    }
+}

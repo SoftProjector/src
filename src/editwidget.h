@@ -4,6 +4,7 @@
 #include <QtGui/QWidget>
 #include <QtGui>
 #include "song.h"
+#include "addsbornikdialog.h"
 
 namespace Ui {
     class EditWidget;
@@ -34,6 +35,7 @@ private:
 
 private slots:
 //    void on_txtSearch_textChanged(QString );
+    void addSbornik();
     void on_btnDelete_clicked();
 //    void on_listTitles_currentTextChanged(QString currentText);
 //    void on_comboBoxSbornik_currentIndexChanged(int index);
