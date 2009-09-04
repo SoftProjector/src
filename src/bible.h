@@ -13,7 +13,7 @@ public:
     QString getSecondaryCaption(QString id, QString bibleName);
     int maxChapters(QString book, QString bibleName);
     QString getDbBibleName(QString bibleName);
-    void setSecondary(QString bibleName);
+    void loadSecondaryData();
 
     QStringList verseList;
     QStringList idList;
@@ -22,6 +22,7 @@ public:
     QStringList verseList2;
     QStringList captionList2;
     QString primary;
+    QString secondaryId;
 
 private:
     bool hasSecondary;

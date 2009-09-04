@@ -56,8 +56,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     connect(songWidget, SIGNAL(sendSong(QStringList, QString, int)),
             this, SLOT(setSongList(QStringList, QString, int)));
-    connect(bibleWidget, SIGNAL(goLive(Bible,QString,int)),
-            this, SLOT(setBibleList(Bible,QString,int)));
+    connect(bibleWidget, SIGNAL(goLive(Bible,int)),
+            this, SLOT(setBibleList(Bible,int)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -83,8 +83,7 @@ void SoftProjector::readConfigurationFile()
         // display->setNewFont(...
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
-        bibleWidget->setPrimary(QString("bible_ru"));
-        bibleWidget->setSecondary(QString("none"));
+        bibleWidget->setBibles(QString("bible_ru"), QString("none"));
         by_chapter= false;
         return;
     }
@@ -111,8 +110,7 @@ void SoftProjector::readConfigurationFile()
     // Needs code to read from config file
     by_chapter= false;
 
-    bibleWidget->setPrimary(primary_bible);
-    bibleWidget->setSecondary(secondary_bible);
+    bibleWidget->setBibles(primary_bible, secondary_bible);
 
     fh.close();
 }
@@ -177,14 +175,16 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->clear_button->setEnabled(true);
 }
 
-void SoftProjector::setBibleList(Bible bib, QString bib2, int row)
+void SoftProjector::setBibleList(Bible bib, int row)
 {
     // Called to show a bible verse
 
     type = "bible";
-    bible = bib; bible2 = bib2; cRow = row;
+    bible = bib;
+    bible2 = bible.secondaryId;
+    cRow = row;
     if( (bible.primary != bible2) && (by_chapter) )
-        bible.setSecondary(bible2);
+        bible.loadSecondaryData();
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
     ui->labelShow->setText(templ[0]);
@@ -215,7 +215,11 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
     else if(type=="bible")
     {
         if( (bible.primary==bible2) || (bible2=="none") )
-            display->SetAllText(bible.verseList1[currentRow],bible.captionList1[currentRow]);
+        {
+            QString verseStr = bible.verseList1[currentRow];
+            QString captionStr = bible.captionList1[currentRow];
+            display->SetAllText(verseStr, captionStr);
+        }
         else
 	{
 	    QString verse = bible.verseList1[currentRow] + "\n";

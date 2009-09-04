@@ -18,14 +18,13 @@ public:
 public slots:
     QString getPrimary();
     QString getSecondary();
-    void setPrimary(QString bibleId);
-    void setSecondary(QString bibleId);
+    void setBibles(QString primaryId, QString secondaryId);
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    void goLive(Bible bible, QString bible2, int row);
+    void goLive(Bible bible, int row);
 
 private slots:
     void on_btnLive_clicked();

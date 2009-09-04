@@ -61,7 +61,7 @@ private slots:
 //    void on_listShow_currentTextChanged(QString currentText);
     void on_actionClose_triggered();
     void setSongList(QStringList showList, QString caption, int row);
-    void setBibleList(Bible bible, QString bibleSecondary, int row);
+    void setBibleList(Bible bible, int row);
 
 public:
 

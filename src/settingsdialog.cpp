@@ -103,8 +103,7 @@ void SettingsDialog::on_buttonBox_accepted()
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
 
-    softProjector->bibleWidget->setPrimary(primaryBible);
-    softProjector->bibleWidget->setSecondary(secondaryBible);
+    softProjector->bibleWidget->setBibles(primaryBible, secondaryBible);
 
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);

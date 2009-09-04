@@ -41,10 +41,10 @@ QStringList Bible::getChapter(QString bibleId, QString book, int chapter)
     return verseList;
 }
 
-void Bible::setSecondary(QString bibleId)
+void Bible::loadSecondaryData()
 {
     QString id, book, chapter, verse, verseText;
-    QString bibleDbName = getDbBibleName(bibleId);
+    QString bibleDbName = getDbBibleName(secondaryId);
 
     int idCount = idList.count();
     QSqlQuery sq;
@@ -53,7 +53,7 @@ void Bible::setSecondary(QString bibleId)
     for (int i(0); i<idCount; ++i)
     {
         id = idList[i];
-        bool hasVerse = sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+bibleId+"'");
+        bool hasVerse = sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+secondaryId+"'");
         verseText.clear();
         while(sq.next())
         {
