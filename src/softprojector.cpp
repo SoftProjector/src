@@ -84,7 +84,7 @@ void SoftProjector::readConfigurationFile()
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
         bibleWidget->setBibles(QString("bible_ru"), QString("none"));
-        by_chapter= false;
+        bible.by_chapter= false;
         return;
     }
     // Read the settings file:
@@ -108,7 +108,7 @@ void SoftProjector::readConfigurationFile()
     secondary_bible.chop(1);
 
     // Needs code to read from config file
-    by_chapter= false;
+    bible.by_chapter= false;
 
     bibleWidget->setBibles(primary_bible, secondary_bible);
 
@@ -182,7 +182,7 @@ void SoftProjector::setBibleList(Bible bib, int row)
     type = "bible";
     bible = bib;
     cRow = row;
-    if( (bible.primary != bible.secondaryId) && (by_chapter) )
+    if( (bible.primaryId != bible.secondaryId) && (bible.by_chapter) )
         bible.loadSecondaryData();
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
@@ -199,12 +199,12 @@ void SoftProjector::setBibleList(Bible bib, int row)
 
 void SoftProjector::setByChapter(bool bychap)
 {
-    by_chapter = bychap;
+    bible.by_chapter = bychap;
 }
 
 bool SoftProjector::getByChapter()
 {
-    return by_chapter;
+    return bible.by_chapter;
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
@@ -218,31 +218,12 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         return;
 
     if(type=="song")
-        display->SetAllText(ui->listShow->currentItem()->text(),"");
-        //emit sendDisplay(ui->listShow->currentItem()->text(),"");
+        display->setAllText(ui->listShow->currentItem()->text(),"");
+
     else if(type=="bible")
     {
-        if( (bible.primary==bible.secondaryId) || (bible.secondaryId=="none") )
-        {
-            QString verseStr = bible.verseList1[currentRow];
-            QString captionStr = bible.captionList1[currentRow];
-            display->SetAllText(verseStr, captionStr);
-        }
-        else
-	{
-	    QString verse = bible.verseList1[currentRow] + "\n";
-            if (by_chapter)
-                verse += bible.verseList2[currentRow];
-            else
-                verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible.secondaryId);
-	    QString caption = bible.captionList1[currentRow] + "    ";
-            if (by_chapter)
-                caption += bible.captionList2[currentRow];
-            else
-                caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible.secondaryId);
-
-            display->SetAllText(verse, caption);
-	}
+        QStringList verse_caption = bible.getVerseAndCaption(currentRow);
+        display->setAllText(verse_caption[0], verse_caption[1]);
     }
 }
 
@@ -251,7 +232,7 @@ void SoftProjector::on_clear_button_clicked()
     showing = false;
 
     // Do not display any text:
-    display->SetAllText(" ", " ");
+    display->setAllText(" ", " ");
 
     ui->show_button->setEnabled(true);
     ui->clear_button->setEnabled(false);
@@ -309,10 +290,7 @@ void SoftProjector::on_actionImportSongs_triggered()
             ok = importSongs->isNewSbornik;
             if (!ok)
             {
-                QMessageBox ms;
-                ms.setWindowTitle("Error");
-                ms.setText("The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
-                ms.exec();
+                QMessageBox::warning(this, "Error", "The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
             }
             break;
         case ImportDialog::Rejected:
@@ -342,8 +320,6 @@ void SoftProjector::on_actionAbout_triggered()
     aboutDialog = new AboutDialog(this);
     aboutDialog->setWindowTitle("About softProjecor");
     aboutDialog->exec();
-//    QString text = QString("softProjector.com");
-//    QMessageBox::information(this, "Info", text);
 }
 
 void SoftProjector::on_tabWidget_currentChanged(int index)

@@ -184,7 +184,7 @@ void Display1::SetCaptionText(QString text)
 
 }
 
-void Display1::SetAllText(QString text,QString caption)
+void Display1::setAllText(QString text,QString caption)
 {
     hasCaption=1;
     if (caption.size()<3)hasCaption=0;

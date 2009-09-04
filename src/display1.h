@@ -27,7 +27,7 @@ public:
 public slots:
     void SetMainText(QString text);
     void SetCaptionText(QString text);
-    void SetAllText(QString text,QString caption);
+    void setAllText(QString text,QString caption);
     void RenderText();
     void CrossFade();
     QFont getFont();

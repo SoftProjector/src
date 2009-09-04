@@ -23,7 +23,7 @@ QStringList Bible::getChapter(QString bibleId, QString book, int chapter)
     verseList.clear();
     verseList1.clear();
     captionList1.clear();
-    primary = bibleId;
+    primaryId = bibleId;
 
     sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id like '"
             + bibleId + "' AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
@@ -73,6 +73,33 @@ void Bible::loadSecondaryData()
             captionList2 << " ";
         }
     }
+}
+
+QStringList Bible::getVerseAndCaption(int currentRow)
+{
+    QString verse = verseList1[currentRow];
+    QString caption = captionList1[currentRow];
+    if( primaryId==secondaryId || secondaryId=="none" )
+    {
+    }
+    else
+    {
+        verse.append("\n");
+        if (by_chapter)
+            verse += verseList2[currentRow];
+        else
+            verse += getSecondaryVerse(idList.at(currentRow), secondaryId);
+        caption.append("    ");
+        if (by_chapter)
+            caption += captionList2[currentRow];
+        else
+            caption += getSecondaryCaption(idList.at(currentRow), secondaryId);
+    }
+    QStringList verse_and_caption;
+    verse_and_caption.append(verse);
+    verse_and_caption.append(caption);
+    return verse_and_caption;
+
 }
 
 QString Bible::getSecondaryVerse(QString id, QString bibleId)

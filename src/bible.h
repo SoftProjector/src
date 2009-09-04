@@ -14,6 +14,7 @@ public:
     int maxChapters(QString book, QString bibleName);
     QString getDbBibleName(QString bibleName);
     void loadSecondaryData();
+    QStringList getVerseAndCaption(int currentRow);
 
     QStringList verseList;
     QStringList idList;
@@ -21,11 +22,9 @@ public:
     QStringList captionList1;
     QStringList verseList2;
     QStringList captionList2;
-    QString primary;
+    QString primaryId;
     QString secondaryId;
-
-private:
-    bool hasSecondary;
+    bool by_chapter; // to pre load bible by chapter or by verse
 
 private slots:
 
