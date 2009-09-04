@@ -75,7 +75,7 @@
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
-       <widget class="QRadioButton" name="changer_rbutton">
+       <widget class="QRadioButton" name="chapter_rbutton">
         <property name="toolTip">
          <string>Pre-load secondary bible by chapter (slow on initial chapter load when chapter changed, but fast on verse change)</string>
         </property>

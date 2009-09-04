@@ -39,7 +39,7 @@ public:
 
 private:
     Ui::SoftProjectorClass *ui;
-    QString type, bible2;
+    QString type;
     Bible bible;
     int cRow;
     bool showing; // whether we are currently showing to the projector
@@ -64,6 +64,8 @@ private slots:
     void setBibleList(Bible bible, int row);
 
 public:
+    void setByChapter(bool bychap);
+    bool getByChapter();
 
 protected:
     void closeEvent(QCloseEvent *event);

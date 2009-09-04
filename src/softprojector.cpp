@@ -181,9 +181,8 @@ void SoftProjector::setBibleList(Bible bib, int row)
 
     type = "bible";
     bible = bib;
-    bible2 = bible.secondaryId;
     cRow = row;
-    if( (bible.primary != bible2) && (by_chapter) )
+    if( (bible.primary != bible.secondaryId) && (by_chapter) )
         bible.loadSecondaryData();
     QString temp = bible.captionList1[0];
     QStringList templ = temp.split(":");
@@ -198,6 +197,15 @@ void SoftProjector::setBibleList(Bible bib, int row)
 
 }
 
+void SoftProjector::setByChapter(bool bychap)
+{
+    by_chapter = bychap;
+}
+
+bool SoftProjector::getByChapter()
+{
+    return by_chapter;
+}
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
@@ -214,7 +222,7 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         //emit sendDisplay(ui->listShow->currentItem()->text(),"");
     else if(type=="bible")
     {
-        if( (bible.primary==bible2) || (bible2=="none") )
+        if( (bible.primary==bible.secondaryId) || (bible.secondaryId=="none") )
         {
             QString verseStr = bible.verseList1[currentRow];
             QString captionStr = bible.captionList1[currentRow];
@@ -226,12 +234,12 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
             if (by_chapter)
                 verse += bible.verseList2[currentRow];
             else
-                verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible2);
+                verse += bible.getSecondaryVerse(bible.idList.at(currentRow),bible.secondaryId);
 	    QString caption = bible.captionList1[currentRow] + "    ";
             if (by_chapter)
                 caption += bible.captionList2[currentRow];
             else
-                caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible2);
+                caption += bible.getSecondaryCaption(bible.idList.at(currentRow),bible.secondaryId);
 
             display->SetAllText(verse, caption);
 	}
