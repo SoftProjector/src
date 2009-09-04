@@ -28,8 +28,7 @@ void BibleWidget::changeEvent(QEvent *e)
 void BibleWidget::loadBible()
 {
     ui->listBook->clear();
-    book_list = bible.getBooks(bible.primaryId);
-    ui->listBook->addItems(book_list);
+    ui->listBook->addItems(bible.getBooks());
     ui->listBook->setCurrentRow(0);
 }
 
@@ -108,13 +107,13 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
     if( text.isEmpty() )
     {
         ui->listBook->clear();
-        ui->listBook->addItems(book_list);
+        ui->listBook->addItems(bible.getBooks());
         ui->listBook->setCurrentRow(0);
     }
     else
     {
         ui->listBook->clear();
-        ui->listBook->addItems(book_list.filter(text, Qt::CaseInsensitive));
+        ui->listBook->addItems(bible.getBooks().filter(text, Qt::CaseInsensitive));
         if( ui->listBook->count() > 0 )
             ui->listBook->setCurrentRow(0);
     }

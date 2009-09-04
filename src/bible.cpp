@@ -4,12 +4,12 @@ Bible::Bible()
 {
 }
 
-QStringList Bible::getBooks(QString bibleId)
+QStringList Bible::getBooks()
 {
     QStringList books;
     QSqlQuery sq;
 
-    sq.exec("SELECT book_name FROM BibleBooks WHERE bible_id like '"+ bibleId +"'");
+    sq.exec("SELECT book_name FROM BibleBooks WHERE bible_id like '"+ primaryId +"'");
     while (sq.next())
         books << sq.value(0).toString();
     return books;

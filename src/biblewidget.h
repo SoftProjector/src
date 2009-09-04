@@ -40,7 +40,6 @@ private slots:
 private:
     Ui::BibleWidget *ui;
     Bible bible;
-    QStringList book_list;
 };
 
 #endif // BIBLEWIDGET_H
