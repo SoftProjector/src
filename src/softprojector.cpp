@@ -78,13 +78,13 @@ void SoftProjector::readConfigurationFile()
 
     if( ! fh.exists() )
     {
-        // Set default settings:
+        // Settings file does not exist, use default settings:
 
         // display->setNewFont(...
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
-        bibleWidget->setBibles(QString("bible_ru"), QString("none"));
-        bible.by_chapter= false;
+        bibleWidget->setBibles(QString("bible_kjv"), QString("none"));
+        bible.by_chapter = false;
         return;
     }
     // Read the settings file:
