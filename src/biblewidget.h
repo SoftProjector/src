@@ -14,17 +14,18 @@ class BibleWidget : public QWidget {
 public:
     explicit BibleWidget(QWidget *parent = 0);
     virtual ~BibleWidget();
+    Bible bible;
 
 public slots:
     QString getPrimary();
     QString getSecondary();
-    void setBibles(QString primaryId, QString secondaryId);
+    void loadBibles(QString primaryId, QString secondaryId);
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    void goLive(Bible bib, int row);
+    void goLive(int row);
 
 private slots:
     void on_btnLive_clicked();
@@ -35,11 +36,11 @@ private slots:
     void on_listChapter_currentRowChanged(int currentRow);
     void on_listChapterNum_currentTextChanged(QString currentText);
     void on_listBook_currentTextChanged(QString currentText);
-    void loadBible();
+
 
 private:
     Ui::BibleWidget *ui;
-    Bible bible;
+
 };
 
 #endif // BIBLEWIDGET_H

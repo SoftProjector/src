@@ -25,12 +25,6 @@ void BibleWidget::changeEvent(QEvent *e)
     }
 }
 
-void BibleWidget::loadBible()
-{
-    ui->listBook->clear();
-    ui->listBook->addItems(bible.getBooks());
-    ui->listBook->setCurrentRow(0);
-}
 
 QString BibleWidget::getPrimary()
 {
@@ -43,12 +37,14 @@ QString BibleWidget::getSecondary()
 }
 
 
-void BibleWidget::setBibles(QString primaryId, QString secondaryId)
+void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
 {
     // secondaryId may be "none"
     bible.primaryId = primaryId;
     bible.secondaryId = secondaryId;
-    loadBible();
+    ui->listBook->clear();
+    ui->listBook->addItems(bible.getBooks());
+    ui->listBook->setCurrentRow(0);
 }
 
 
@@ -98,7 +94,7 @@ void BibleWidget::on_spinVerse_valueChanged(int value)
 void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 {
     // Called when a chapter or verse is double clicked
-    emit goLive(bible, index.row());
+    emit goLive(index.row());
 }
 
 void BibleWidget::on_lineEditBook_textChanged(QString text)
@@ -121,6 +117,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
 void BibleWidget::on_btnLive_clicked()
 {
-    emit goLive(bible, ui->spinVerse->value() - 1);
+    emit goLive(ui->spinVerse->value() - 1);
 }
 

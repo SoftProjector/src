@@ -43,7 +43,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         int secondary_index = sq.value(0).toInt();
         ui->secondary_bible_menu->setCurrentIndex(secondary_index);
     }
-
+    
+    qDebug() << "getByChapter returned:";
+    qDebug() << softProjector->getByChapter();
     if( softProjector->getByChapter() )
         ui->chapter_rbutton->setChecked(true);
     else
@@ -107,13 +109,14 @@ void SettingsDialog::on_buttonBox_accepted()
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
 
-    softProjector->bibleWidget->setBibles(primaryBible, secondaryBible);
+    softProjector->bibleWidget->loadBibles(primaryBible, secondaryBible);
 
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
     softProjector->display->setShowBlack(show_black);
     softProjector->setByChapter(by_chapter);
-
+    qDebug() << "Setting by chapter:";
+    qDebug() << by_chapter;
     softProjector->writeConfigurationFile();
 
     // Redraw the screen:

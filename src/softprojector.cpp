@@ -37,6 +37,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
 
     bibleWidget = new BibleWidget;
+
     // Will modify display's font and wallpaper:
     readConfigurationFile();
     display->RenderText();
@@ -56,8 +57,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     connect(songWidget, SIGNAL(sendSong(QStringList, QString, int)),
             this, SLOT(setSongList(QStringList, QString, int)));
-    connect(bibleWidget, SIGNAL(goLive(Bible,int)),
-            this, SLOT(setBibleList(Bible,int)));
+    connect(bibleWidget, SIGNAL(goLive(int)),
+            this, SLOT(showBibleVerse(int)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -83,8 +84,8 @@ void SoftProjector::readConfigurationFile()
         // display->setNewFont(...
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
-        bibleWidget->setBibles(QString("bible_kjv"), QString("none"));
-        bible.by_chapter = false;
+        bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
+        setByChapter(false);
         return;
     }
     // Read the settings file:
@@ -108,7 +109,7 @@ void SoftProjector::readConfigurationFile()
     QString secondary_bible = fh.readLine();
     secondary_bible.chop(1);
 
-    bibleWidget->setBibles(primary_bible, secondary_bible);
+    bibleWidget->loadBibles(primary_bible, secondary_bible);
 
     fh.close();
 }
@@ -124,8 +125,6 @@ void SoftProjector::writeConfigurationFile()
     fh.write(qPrintable(fontString));
     fh.write("\n");
     fh.write(qPrintable(wallpaper_path));
-    qDebug("Writing wallpaper to file:");
-    qDebug(qPrintable(wallpaper_path));
     fh.write("\n");
     if( display->getShowBlack() )
         fh.write("Show black: true\n");
@@ -178,22 +177,22 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->clear_button->setEnabled(true);
 }
 
-void SoftProjector::setBibleList(Bible bib, int row)
+void SoftProjector::showBibleVerse(int row)
 {
-    // Called to show a bible verse
+    // Called to show a bible verse from the preview list
 
     type = "bible";
-    bible = bib;
+    Bible *bible = &bibleWidget->bible;
     cRow = row;
-    if( (bible.primaryId != bible.secondaryId) && (bible.by_chapter) )
-        bible.loadSecondaryData();
-    QString temp = bible.captionList1[0];
+    if( bible->primaryId != bible->secondaryId && bible->by_chapter )
+        bible->loadSecondaryData();
+    QString temp = bible->captionList1[0];
     QStringList templ = temp.split(":");
     ui->labelShow->setText(templ[0]);
     ui->listShow->clear();
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
-    ui->listShow->addItems(bible.verseList);
+    ui->listShow->addItems(bible->verseList);
     ui->listShow->setCurrentRow(cRow);
     ui->listShow->setFocus();
     this->on_show_button_clicked();
@@ -202,18 +201,17 @@ void SoftProjector::setBibleList(Bible bib, int row)
 
 void SoftProjector::setByChapter(bool bychap)
 {
-    bible.by_chapter = bychap;
+    bibleWidget->bible.by_chapter = bychap;
 }
 
 bool SoftProjector::getByChapter()
 {
-    return bible.by_chapter;
+    return bibleWidget->bible.by_chapter;
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the preview table.
-//    qDebug() << currentRow;
     if( currentRow == -1 )
         return;
 
@@ -225,7 +223,7 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 
     else if(type=="bible")
     {
-        QStringList verse_caption = bible.getVerseAndCaption(currentRow);
+        QStringList verse_caption = bibleWidget->bible.getVerseAndCaption(currentRow);
         display->setAllText(verse_caption[0], verse_caption[1]);
     }
 }
