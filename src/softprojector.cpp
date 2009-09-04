@@ -338,12 +338,12 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
 {
     if (index ==0)
     {
-        ui->actionEditSong->setVisible(false);
-        ui->actionNewSong->setVisible(false);
+        ui->actionEditSong->setEnabled(false);
+        ui->actionNewSong->setEnabled(false);
     }
     else if (index==1)
     {
-        ui->actionEditSong->setVisible(true);
-        ui->actionNewSong->setVisible(true);
+        ui->actionEditSong->setEnabled(true);
+        ui->actionNewSong->setEnabled(true);
     }
 }
