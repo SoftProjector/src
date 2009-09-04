@@ -24,7 +24,7 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    void goLive(Bible bible, int row);
+    void goLive(Bible bib, int row);
 
 private slots:
     void on_btnLive_clicked();
@@ -40,7 +40,6 @@ private slots:
 private:
     Ui::BibleWidget *ui;
     Bible bible;
-    QString biblePrimary, bibleSecondary;
     QStringList book_list;
 };
 

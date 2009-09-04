@@ -28,27 +28,27 @@ void BibleWidget::changeEvent(QEvent *e)
 void BibleWidget::loadBible()
 {
     ui->listBook->clear();
-    book_list = bible.getBooks(biblePrimary);
+    book_list = bible.getBooks(bible.primaryId);
     ui->listBook->addItems(book_list);
     ui->listBook->setCurrentRow(0);
 }
 
 QString BibleWidget::getPrimary()
 {
-    return biblePrimary;
+    return bible.primaryId;
 }
 
 QString BibleWidget::getSecondary()
 {
-    return bibleSecondary;
+    return bible.secondaryId;
 }
 
 
 void BibleWidget::setBibles(QString primaryId, QString secondaryId)
 {
     // secondaryId may be "none"
-    biblePrimary = primaryId;
-    bibleSecondary = secondaryId;
+    bible.primaryId = primaryId;
+    bible.secondaryId = secondaryId;
     loadBible();
 }
 
@@ -58,7 +58,7 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
     int s = ui->listBook->currentRow();
     if( s != -1 )
     {
-        int maxVerse = bible.maxChapters(currentText, biblePrimary);
+        int maxVerse = bible.maxChapters(currentText, bible.primaryId);
         ui->listChapterNum->clear();
         for(int i=0; i<maxVerse; ++i)
             ui->listChapterNum->addItem(QString::number(i+1));
@@ -72,7 +72,7 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     int s = ui->listChapterNum->currentRow();
     if( s != -1 )
     {
-        QStringList chapters = bible.getChapter(biblePrimary, ui->listBook->currentItem()->text(), currentText.toInt());
+        QStringList chapters = bible.getChapter(bible.primaryId, ui->listBook->currentItem()->text(), currentText.toInt());
         ui->listChapter->clear();
         ui->listChapter->addItems(chapters);
         ui->spinChapter->setValue(currentText.toInt());
@@ -99,7 +99,6 @@ void BibleWidget::on_spinVerse_valueChanged(int value)
 void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 {
     // Called when a chapter or verse is double clicked
-    bible.secondaryId = bibleSecondary;
     emit goLive(bible, index.row());
 }
 
