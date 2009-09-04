@@ -101,14 +101,12 @@ void SoftProjector::readConfigurationFile()
     display->setNewWallpaper(new_wallpaper_path);
 
     display->setShowBlack( fh.readLine() == "Show black: true" );
+    setByChapter( fh.readLine() == "Load by chapter: true" );
 
     QString primary_bible = fh.readLine();
     primary_bible.chop(1);
     QString secondary_bible = fh.readLine();
     secondary_bible.chop(1);
-
-    // Needs code to read from config file
-    bible.by_chapter= false;
 
     bibleWidget->setBibles(primary_bible, secondary_bible);
 
@@ -133,6 +131,11 @@ void SoftProjector::writeConfigurationFile()
         fh.write("Show black: true\n");
     else
         fh.write("Show black: false\n");
+
+    if( getByChapter() )
+        fh.write("Load by chapter: true\n");
+    else
+        fh.write("Load by chapter: false\n");
 
     fh.write(qPrintable(bibleWidget->getPrimary()));
     fh.write("\n");
@@ -326,11 +329,13 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
 {
     if (index ==0)
     {
+        // Bible tab activated
         ui->actionEditSong->setEnabled(false);
         ui->actionNewSong->setEnabled(false);
     }
     else if (index==1)
     {
+        // Songs tab activated
         ui->actionEditSong->setEnabled(true);
         ui->actionNewSong->setEnabled(true);
     }
