@@ -42,7 +42,7 @@ private:
     Ui::BibleWidget *ui;
     Bible bible;
     QString biblePrimary, bibleSecondary;
-
+    QStringList book_list;
 };
 
 #endif // BIBLEWIDGET_H

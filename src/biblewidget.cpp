@@ -28,7 +28,8 @@ void BibleWidget::changeEvent(QEvent *e)
 void BibleWidget::loadBible()
 {
     ui->listBook->clear();
-    ui->listBook->addItems(bible.getBooks(biblePrimary));
+    book_list = bible.getBooks(biblePrimary);
+    ui->listBook->addItems(book_list);
     ui->listBook->setCurrentRow(0);
 }
 
@@ -107,31 +108,19 @@ void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
     // Called when the bible book filter field is modified.
-    bool emt = ui->listBook->findItems(text, Qt::MatchStartsWith).isEmpty();
-    if (!emt)
-        ui->listBook->setCurrentItem(ui->listBook->findItems(text, Qt::MatchStartsWith).takeFirst());
-
-    /* // We do not need this code anymore, since we have chapter and verse entry fields now.
-    QStringList search = text.split(" ");
-    if (search.count()>=1)
+    if( text.isEmpty() )
     {
-        bool emt = ui->listBook->findItems(search[0],Qt::MatchStartsWith).isEmpty();
-        if (!emt) 
-	    ui->listBook->setCurrentItem(ui->listBook->findItems(search[0],Qt::MatchStartsWith).takeFirst());
+        ui->listBook->clear();
+        ui->listBook->addItems(book_list);
+        ui->listBook->setCurrentRow(0);
     }
-    if (search.count()>=2)
+    else
     {
-        QString ch = search[1];
-        int i = ch.toInt();
-        ui->spinChapter->setValue(i);
+        ui->listBook->clear();
+        ui->listBook->addItems(book_list.filter(text, Qt::CaseInsensitive));
+        if( ui->listBook->count() > 0 )
+            ui->listBook->setCurrentRow(0);
     }
-    if (search.count()==3)
-    {
-        QString ch = search[2];
-        int i = ch.toInt();
-        ui->spinVerse->setValue(i);
-    }
-    */
 }
 
 void BibleWidget::on_btnLive_clicked()
