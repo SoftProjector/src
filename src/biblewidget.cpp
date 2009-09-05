@@ -67,13 +67,32 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     int s = ui->listChapterNum->currentRow();
     if( s != -1 )
     {
-        QStringList chapters = bible.getChapter(bible.primaryId, ui->listBook->currentItem()->text(), currentText.toInt());
+        QStringList chapters = bible.getChapter(getCurrentBook(), currentText.toInt());
         ui->listChapter->clear();
         ui->listChapter->addItems(chapters);
         ui->spinChapter->setValue(currentText.toInt());
         ui->spinVerse->setMaximum(ui->listChapter->count());
         ui->listChapter->setCurrentRow(0);
     }
+}
+
+QString BibleWidget::getCurrentBook(void)
+{
+    return ui->listBook->currentItem()->text();
+}
+int BibleWidget::getCurrentChapter(void)
+{
+    return ui->listChapterNum->currentItem()->text().toInt();
+}
+
+QString BibleWidget::getCaption()
+{
+    // Get the caption string to show above the show list (right-most list)
+    QString id = bible.idList.at(0);
+    QStringList temp = bible.getVerseAndCaption(id, bible.primaryId);
+    QStringList temp1;
+    temp1 = temp[1].split(":");
+    return temp1[0];
 }
 
 void BibleWidget::on_listChapter_currentRowChanged(int currentRow)
@@ -94,8 +113,17 @@ void BibleWidget::on_spinVerse_valueChanged(int value)
 void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 {
     // Called when a chapter or verse is double clicked
-    emit goLive(index.row());
+    sendToProjector(index.row());
 }
+
+void BibleWidget::sendToProjector(int verse)
+{
+    if( bible.primaryId != bible.secondaryId && bible.by_chapter )
+        bible.loadSecondaryData();
+
+    emit goLive(bible.verseList, verse, getCaption());
+}
+
 
 void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
@@ -117,6 +145,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
 void BibleWidget::on_btnLive_clicked()
 {
-    emit goLive(ui->spinVerse->value() - 1);
+    sendToProjector(ui->spinVerse->value() - 1);
 }
 

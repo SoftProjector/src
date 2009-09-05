@@ -40,7 +40,6 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
-    int cRow;
     bool showing; // whether we are currently showing to the projector
 
 private slots:
@@ -56,10 +55,9 @@ private slots:
     void on_actionEditSong_triggered();
     void on_clear_button_clicked();
     void on_listShow_currentRowChanged(int currentRow);
-//    void on_listShow_currentTextChanged(QString currentText);
     void on_actionClose_triggered();
     void setSongList(QStringList showList, QString caption, int row);
-    void showBibleVerse(int row);
+    void setChapterList(QStringList chapter_list, int verse, QString caption);
 
 public:
     void setByChapter(bool bychap);

@@ -15,28 +15,22 @@ QStringList Bible::getBooks()
     return books;
 }
 
-QStringList Bible::getChapter(QString bibleId, QString book, int chapter)
+QStringList Bible::getChapter(QString book, int chapter)
 {
-    QSqlQuery sq;
     QString verse, verseText, id;
+    QSqlQuery sq;
     idList.clear();
     verseList.clear();
-    verseList1.clear();
-    captionList1.clear();
-    primaryId = bibleId;
 
     sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id like '"
-            + bibleId + "' AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
+            + primaryId + "' AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
     while (sq.next())
     {
         verseText = sq.value(2).toString();
-        verseList1 << verseText;
         verse  = sq.value(1).toString();
         verseList << verse + ". " + verseText;
-        captionList1 << book + " " + QString::number(chapter) + ":" + verse;
         id = sq.value(0).toString();
         idList << id;
-
     }
     return verseList;
 }
@@ -45,11 +39,9 @@ void Bible::loadSecondaryData()
 {
     QString id, book, chapter, verse, verseText;
     QString bibleDbName = getDbBibleName(secondaryId);
+    QSqlQuery sq;
 
     int idCount = idList.count();
-    QSqlQuery sq;
-    verseList2.clear();
-    captionList2.clear();
     for (int i(0); i<idCount; ++i)
     {
         id = idList[i];
@@ -62,38 +54,27 @@ void Bible::loadSecondaryData()
             verse = sq.value(2).toString();
             verseText += sq.value(3).toString();
         }
-        if(hasVerse)
-        {
-            verseList2 << verseText;
-            captionList2 << book + " " + chapter + ":" + verse;
-        }
-        else
-        {
-            verseList2 << " ";
-            captionList2 << " ";
-        }
+
     }
 }
 
-QStringList Bible::getVerseAndCaption(int currentRow)
+QStringList Bible::getCurrentVerseAndCaption(int currentRow)
 {
-    QString verse = verseList1[currentRow];
-    QString caption = captionList1[currentRow];
+    QString id = idList.at(currentRow);
+    QStringList list = getVerseAndCaption(id, primaryId);
+    QString verse = list[0];
+    QString caption = list[1];
+
     if( primaryId==secondaryId || secondaryId=="none" )
     {
     }
     else
     {
+        list = getVerseAndCaption(id, secondaryId);
         verse.append("\n");
-        if (by_chapter)
-            verse += verseList2[currentRow];
-        else
-            verse += getSecondaryVerse(idList.at(currentRow), secondaryId);
+        verse += list[0];
         caption.append("    ");
-        if (by_chapter)
-            caption += captionList2[currentRow];
-        else
-            caption += getSecondaryCaption(idList.at(currentRow), secondaryId);
+        caption += list[1];
     }
     QStringList verse_and_caption;
     verse_and_caption.append(verse);
@@ -102,25 +83,24 @@ QStringList Bible::getVerseAndCaption(int currentRow)
 
 }
 
-QString Bible::getSecondaryVerse(QString id, QString bibleId)
+
+QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 {
-    QString ver="";
+    QString verse="";
+    QString caption="";
+
     QSqlQuery sq;
-    sq.exec("SELECT verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+bibleId+"'");
-    while (sq.next())
-        ver += sq.value(0).toString();
-    return ver;
+    sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+bibleId+"'");
+    sq.first();
+    verse = sq.value(3).toString();
+    caption = sq.value(0).toString() + " " + sq.value(1).toString() + ":" + sq.value(2).toString();
+
+    QStringList list;
+    list.append(verse);
+    list.append(caption);
+    return list;
 }
 
-QString Bible::getSecondaryCaption(QString id, QString bibleId)
-{
-    QString ver="";
-    QSqlQuery sq;
-    sq.exec("SELECT book,chapter,verse FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+bibleId+"'");
-    sq.first();
-    ver = sq.value(0).toString() + " " + sq.value(1).toString() + ":" + sq.value(2).toString();
-    return ver;
-}
 
 QString Bible::getDbBibleName(QString bibleId)
 {
@@ -138,8 +118,8 @@ int Bible::maxChapters(QString book, QString bibleId)
 {
     int chapters(0);
     QString book_id;
-    QSqlQuery sq;
 
+    QSqlQuery sq;
     sq.exec("SELECT id FROM BibleBooks WHERE book_name like '"+book+"' AND bible_id like '"+bibleId+"'");
     sq.first();
     book_id = sq.value(0).toString();

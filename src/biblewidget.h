@@ -15,17 +15,21 @@ public:
     explicit BibleWidget(QWidget *parent = 0);
     virtual ~BibleWidget();
     Bible bible;
+    QString getCurrentBook(void);
+    int getCurrentChapter(void);
+    QString getCaption();
 
 public slots:
     QString getPrimary();
     QString getSecondary();
     void loadBibles(QString primaryId, QString secondaryId);
+    void sendToProjector(int verse);
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    void goLive(int row);
+    void goLive(QStringList chapter_list, int verse, QString caption);
 
 private slots:
     void on_btnLive_clicked();

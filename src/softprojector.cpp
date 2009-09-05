@@ -57,8 +57,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     connect(songWidget, SIGNAL(sendSong(QStringList, QString, int)),
             this, SLOT(setSongList(QStringList, QString, int)));
-    connect(bibleWidget, SIGNAL(goLive(int)),
-            this, SLOT(showBibleVerse(int)));
+    connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
+            this, SLOT(setChapterList(QStringList, int, QString)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -177,23 +177,17 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->clear_button->setEnabled(true);
 }
 
-void SoftProjector::showBibleVerse(int row)
+void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)
 {
-    // Called to show a bible verse from the preview list
+    // Called to show a bible verse from a chapter in the preview list
 
     type = "bible";
-    Bible *bible = &bibleWidget->bible;
-    cRow = row;
-    if( bible->primaryId != bible->secondaryId && bible->by_chapter )
-        bible->loadSecondaryData();
-    QString temp = bible->captionList1[0];
-    QStringList templ = temp.split(":");
-    ui->labelShow->setText(templ[0]);
+    ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
-    ui->listShow->addItems(bible->verseList);
-    ui->listShow->setCurrentRow(cRow);
+    ui->listShow->addItems(chapter_list);
+    ui->listShow->setCurrentRow(verse);
     ui->listShow->setFocus();
     this->on_show_button_clicked();
 
@@ -211,7 +205,7 @@ bool SoftProjector::getByChapter()
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
-    // Called when the user selects a different row in the preview table.
+    // Called when the user selects a different row in the show (right-most) list.
     if( currentRow == -1 )
         return;
 
@@ -223,7 +217,8 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 
     else if(type=="bible")
     {
-        QStringList verse_caption = bibleWidget->bible.getVerseAndCaption(currentRow);
+
+        QStringList verse_caption = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
         display->setAllText(verse_caption[0], verse_caption[1]);
     }
 }
