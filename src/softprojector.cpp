@@ -40,7 +40,7 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     // Will modify display's font and wallpaper:
     readConfigurationFile();
-    display->RenderText();
+    display->renderText();
 
     songWidget = new SongWidget;
     editWidget = new EditWidget;

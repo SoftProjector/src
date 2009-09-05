@@ -197,12 +197,12 @@ void Display1::setAllText(QString text,QString caption)
     //acounter[1]=255;
 //    sharp0=QPixmap::fromImage (sharp1);
     //timer->stop();
-    RenderText();
+    renderText();
     timer->start(0);
 }
 
 
-void Display1::RenderText()
+void Display1::renderText()
 {
     // Render the text set via SetMainText() and  SetCaptionText()
     QImage temp1;

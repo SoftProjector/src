@@ -46,7 +46,6 @@ private slots:
     void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
-    void on_show_button_clicked();
     void on_actionSettings_triggered();
     void on_actionImportSongs_triggered();
     void on_actionExportSongs_triggered();
@@ -60,6 +59,8 @@ private slots:
     void setChapterList(QStringList chapter_list, int verse, QString caption);
 
 public:
+    void on_show_button_clicked();
+
 
 protected:
     void closeEvent(QCloseEvent *event);
