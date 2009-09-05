@@ -44,13 +44,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         ui->secondary_bible_menu->setCurrentIndex(secondary_index);
     }
     
-    qDebug() << "getByChapter returned:";
-    qDebug() << softProjector->getByChapter();
-    if( softProjector->getByChapter() )
-        ui->chapter_rbutton->setChecked(true);
-    else
-        ui->verse_rbutton->setChecked(true);
-
     // ui->use_fading_effects_box->setChecked(
 
     if( softProjector->display->getShowBlack() )
@@ -95,7 +88,6 @@ void SettingsDialog::on_buttonBox_rejected()
 void SettingsDialog::on_buttonBox_accepted()
 {
     bool show_black = ui->black_screen_rbutton->isChecked();
-    bool by_chapter = ! ui->verse_rbutton->isChecked();
 
     qDebug() << ui->primary_bible_menu->currentIndex();
     QString primaryBible = bible_id_list[ui->primary_bible_menu->currentIndex()];
@@ -114,9 +106,6 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
     softProjector->display->setShowBlack(show_black);
-    softProjector->setByChapter(by_chapter);
-    qDebug() << "Setting by chapter:";
-    qDebug() << by_chapter;
     softProjector->writeConfigurationFile();
 
     // Redraw the screen:

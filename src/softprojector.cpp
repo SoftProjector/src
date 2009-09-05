@@ -85,7 +85,6 @@ void SoftProjector::readConfigurationFile()
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
         bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
-        setByChapter(false);
         return;
     }
     // Read the settings file:
@@ -102,7 +101,6 @@ void SoftProjector::readConfigurationFile()
     display->setNewWallpaper(new_wallpaper_path);
 
     display->setShowBlack( fh.readLine() == "Show black: true" );
-    setByChapter( fh.readLine() == "Load by chapter: true" );
 
     QString primary_bible = fh.readLine();
     primary_bible.chop(1);
@@ -130,11 +128,6 @@ void SoftProjector::writeConfigurationFile()
         fh.write("Show black: true\n");
     else
         fh.write("Show black: false\n");
-
-    if( getByChapter() )
-        fh.write("Load by chapter: true\n");
-    else
-        fh.write("Load by chapter: false\n");
 
     fh.write(qPrintable(bibleWidget->getPrimary()));
     fh.write("\n");
@@ -191,16 +184,6 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     ui->listShow->setFocus();
     this->on_show_button_clicked();
 
-}
-
-void SoftProjector::setByChapter(bool bychap)
-{
-    bibleWidget->bible.by_chapter = bychap;
-}
-
-bool SoftProjector::getByChapter()
-{
-    return bibleWidget->bible.by_chapter;
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)

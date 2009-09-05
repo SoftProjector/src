@@ -18,7 +18,6 @@ public:
     QStringList currentIdList; // Verses that are in the show list
     QString primaryId;
     QString secondaryId;
-    bool by_chapter; // to pre load bible by chapter or by verse
 
 private slots:
     

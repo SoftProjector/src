@@ -69,38 +69,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Secondary bible load order</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QRadioButton" name="chapter_rbutton">
-        <property name="toolTip">
-         <string>Pre-load secondary bible by chapter (slow on initial chapter load when chapter changed, but fast on verse change)</string>
-        </property>
-        <property name="text">
-         <string>Entire chapter</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="verse_rbutton">
-        <property name="toolTip">
-         <string>Pre-load secondary bible verse by verese (fast on chapter load but slightly slower on verse changes)</string>
-        </property>
-        <property name="text">
-         <string>Verse by verse</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QCheckBox" name="display_on_top_box">
      <property name="text">
       <string>Display screen always on top (requires program restart)</string>

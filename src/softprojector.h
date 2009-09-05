@@ -60,8 +60,6 @@ private slots:
     void setChapterList(QStringList chapter_list, int verse, QString caption);
 
 public:
-    void setByChapter(bool bychap);
-    bool getByChapter();
 
 protected:
     void closeEvent(QCloseEvent *event);
