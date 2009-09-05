@@ -5,6 +5,7 @@
 #include <QtGui>
 #include "song.h"
 #include "addsbornikdialog.h"
+#include "highlight.h"
 
 namespace Ui {
     class EditWidget;
@@ -29,6 +30,7 @@ private:
     Song editSong, newSong;
     SongDatabase song_database;
     bool is_new;
+    Highlight *highlight;
 //    QString sbornik, format;
 //    QStringList allTitles;
 //    int titleType;

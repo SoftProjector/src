@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     exportdialog.cpp \
     settingsdialog.cpp \
     aboutdialog.cpp \
-    addsbornikdialog.cpp
+    addsbornikdialog.cpp \
+    highlight.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -28,7 +29,8 @@ HEADERS += softprojector.h \
     exportdialog.h \
     settingsdialog.h \
     aboutdialog.h \
-    addsbornikdialog.h
+    addsbornikdialog.h \
+    highlight.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \

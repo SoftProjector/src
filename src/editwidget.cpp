@@ -7,6 +7,7 @@ EditWidget::EditWidget(QWidget *parent) :
 {
     song_database = SongDatabase();
     ui->setupUi(this);
+    highlight = new Highlight(ui->textEditSong->document());
 
     // Hide font setting options until program will be compatable
     ui->font_button->hide();
