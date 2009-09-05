@@ -88,7 +88,7 @@ int BibleWidget::getCurrentChapter(void)
 QString BibleWidget::getCaption()
 {
     // Get the caption string to show above the show list (right-most list)
-    QString id = bible.idList.at(0);
+    QString id = bible.currentIdList.at(0);
     QStringList temp = bible.getVerseAndCaption(id, bible.primaryId);
     QStringList temp1;
     temp1 = temp[1].split(":");
@@ -118,9 +118,7 @@ void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
 
 void BibleWidget::sendToProjector(int verse)
 {
-    if( bible.primaryId != bible.secondaryId && bible.by_chapter )
-        bible.loadSecondaryData();
-
+    bible.currentIdList = bible.previewIdList;
     emit goLive(bible.verseList, verse, getCaption());
 }
 

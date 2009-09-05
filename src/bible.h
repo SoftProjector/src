@@ -12,18 +12,13 @@ public:
     QStringList getVerseAndCaption(QString id, QString bibleId);
     int maxChapters(QString book, QString bibleName);
     QString getDbBibleName(QString bibleName);
-    void loadSecondaryData();
     QStringList getCurrentVerseAndCaption(int currentRow);
     QStringList verseList;
-    QStringList idList;
-    QStringList currentVerseList; // the right-most table data
-    QStringList currentCaptionList; // the right-most table data
+    QStringList previewIdList; // Verses that are in the preview (chapter) list
+    QStringList currentIdList; // Verses that are in the show list
     QString primaryId;
     QString secondaryId;
     bool by_chapter; // to pre load bible by chapter or by verse
-    // Chapter that is currently in the show list:
-    QString currentBible;
-    int currentChapter;
 
 private slots:
     

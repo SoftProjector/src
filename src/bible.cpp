@@ -19,7 +19,7 @@ QStringList Bible::getChapter(QString book, int chapter)
 {
     QString verse, verseText, id;
     QSqlQuery sq;
-    idList.clear();
+    previewIdList.clear();
     verseList.clear();
 
     sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id like '"
@@ -30,37 +30,15 @@ QStringList Bible::getChapter(QString book, int chapter)
         verse  = sq.value(1).toString();
         verseList << verse + ". " + verseText;
         id = sq.value(0).toString();
-        idList << id;
+        previewIdList << id;
     }
     return verseList;
 }
 
-void Bible::loadSecondaryData()
-{
-    QString id, book, chapter, verse, verseText;
-    QString bibleDbName = getDbBibleName(secondaryId);
-    QSqlQuery sq;
-
-    int idCount = idList.count();
-    for (int i(0); i<idCount; ++i)
-    {
-        id = idList[i];
-        bool hasVerse = sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+secondaryId+"'");
-        verseText.clear();
-        while(sq.next())
-        {
-            book = sq.value(0).toString();
-            chapter = sq.value(1).toString();
-            verse = sq.value(2).toString();
-            verseText += sq.value(3).toString();
-        }
-
-    }
-}
 
 QStringList Bible::getCurrentVerseAndCaption(int currentRow)
 {
-    QString id = idList.at(currentRow);
+    QString id = currentIdList.at(currentRow);
     QStringList list = getVerseAndCaption(id, primaryId);
     QString verse = list[0];
     QString caption = list[1];
