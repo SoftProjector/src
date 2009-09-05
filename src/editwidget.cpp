@@ -20,17 +20,6 @@ EditWidget::EditWidget(QWidget *parent) :
     ui->wall_label->hide();
     // Hide alingment setting options until program will be compatable
     ui->aling_groupBox->hide();
-
-//    s/*b*/ornik=QString("ALL");
-//    loadTitles(sbornik);
-//    ui->comboBoxSbornik->setCurrentIndex(-1);
-    //ui->spinBoxSongNum->setEnabled(false);
-//    ui->checkBoxAny->hide();
-//    ui->lblEditProg->hide();
-//    ui->label_19->hide();
-//    ui->comboBoxLanguage->hide();
-//    ui->checkBoxFavorite->hide();
-//    disablePV();
 }
 
 EditWidget::~EditWidget()
@@ -49,39 +38,6 @@ void EditWidget::changeEvent(QEvent *e)
         break;
     }
 }
-
-//void EditWidget::disablePV()
-//{
-////    ui->spinBoxpv3300->setEnabled(false);
-////    ui->spinBoxpv2500->setEnabled(false);
-////    ui->spinBoxpv2001->setEnabled(false);
-////    ui->spinBoxpv2000a->setEnabled(false);
-////    ui->spinBoxpv2000b->setEnabled(false);
-////    ui->spinBoxpv1730->setEnabled(false);
-////    ui->spinBoxpvCt->setEnabled(false);
-////    ui->spinBoxuaPsalm->setEnabled(false);
-////    ui->spinBoxuaEpisni->setEnabled(false);
-//}
-
-//void EditWidget::on_btnEdit_clicked()
-//{
-//    ui->btnEdit->setEnabled(false);
-//    ui->lblEditProg->setText("EDDITING A SONG");
-//    ui->lblEditProg->show();
-//}
-
-//void EditWidget::on_btnNew_clicked()
-//{
-//    if (ui->btnEdit->isEnabled()){
-//        ui->btnEdit->setEnabled(false);
-//        ui->btnNew->setEnabled(false);
-//        resetUiItems();
-//        ui->lblEditProg->setText("ADDING A SONG");
-//        ui->lblEditProg->show();
-//        ui->spinBoxlpvUser->setValue(song_database.lastUser());
-//        ui->textEditSong->setPlainText(QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь"));
-//    }
-//}
 
 void EditWidget::on_btnDelete_clicked()
 {
@@ -113,82 +69,21 @@ void EditWidget::on_btnDelete_clicked()
 
 void EditWidget::on_btnSave_clicked()
 {
-//    if (!ui->btnEdit->isEnabled()){
-//        QMessageBox ms;
-////        if ((song_database.hasTitle(ui->lineEditTitle->text())) && (!(ui->btnNew->isEnabled()))){
-//            ms.setText("A song with this exact title already exist.\nPlease modify the title.\nAll non Alphanumeric characters will be removes");
-//            ms.setWindowTitle("Title Duplicate");
-//            ms.setIcon(QMessageBox::Critical);
-//            ms.exec();
-//        }
-//        else {
-            setSave();
-            if (is_new)
-                newSong.saveNew();
-            else
-                newSong.saveUpdate();
-            resetUiItems();
-//            loadTitles(sbornik);
-//            ui->btnEdit->setEnabled(true);
-//            ui->btnNew->setEnabled(true);
-//            ui->lblEditProg->hide();
-//        }
-//    }
-            close();
+    setSave();
+    if (is_new)
+        newSong.saveNew();
+    else
+        newSong.saveUpdate();
+    resetUiItems();
+
+    close();
 }
 
 void EditWidget::on_btnCancel_clicked()
 {
-//    ui->btnEdit->setEnabled(true);
-//    ui->btnNew->setEnabled(true);
-//    ui->lblEditProg->hide();
     resetUiItems();
     close();
 }
-
-//void EditWidget::on_btnClose_clicked()
-//{
-//    close();
-//}
-
-//void EditWidget::on_btnSortTitles_clicked()
-//{
-//    titleType=0;
-//    loadTitles("ALL");
-//    ui->comboBoxSbornik->setCurrentIndex(-1);
-//    ui->spinBoxSongNum->setEnabled(false);
-//    //    ui->spinBoxSongNum->setEnabled(false);
-//    sbornik="ALL";
-//    //    }
-//    //    bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
-//    //    if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
-//    //    ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtCenter);
-//}
-
-//void EditWidget::on_spinBoxSongNum_valueChanged(int value)
-//{
-//
-//    bool empty = ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).isEmpty();
-//    if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(QString::number(value),Qt::MatchStartsWith).takeFirst());
-//    ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtCenter);
-//}
-
-//void EditWidget::loadTitles(QString tSbornik)
-//{
-//    QList<Song> songs;
-//
-//    //song_database = SongDatabase();
-//    songs = song_database.getSongs(tSbornik);
-//
-//    QStringList titles;
-//    for (int i = 0; i < songs.size(); i++) {
-//        Song song = songs.at(i);
-//        titles.append(song.title);
-//    }
-//
-//    ui->listTitles->clear();
-//    ui->listTitles->addItems(titles);
-//}
 
 QString EditWidget::setSongText(QString song)
 {
@@ -218,37 +113,6 @@ QString EditWidget::setSongText(QString song)
     }
     return verselist;
 }
-
-
-//
-//void EditWidget::on_comboBoxSbornik_currentIndexChanged(int index)
-//{
-//    if (index>=0){
-//                ui->spinBoxSongNum->setEnabled(true);
-//        if (index == 0) sbornik = "pv3300";
-//        else if (index==1) sbornik = "pv2500";
-//        else if (index==2) sbornik = "pv2001";
-//        else if (index==3) sbornik = "pv2000a";
-//        else if (index==4) sbornik = "pv2000b";
-//        else if (index==5) sbornik = "pv1730";
-//        else if (index==6) sbornik = "pvCt";
-//        else if (index==7) sbornik = "uaPsalm";
-//        else if (index==8) sbornik = "uaEpisni";
-//        else if (index==9) sbornik = "pvUser";
-//
-//        titleType=1;
-//
-//        QList<Song> songs = song_database.getSongs(sbornik);
-//        QStringList titles;
-//        for (int i = 0; i < songs.size(); i++) {
-//            Song song = songs.at(i);
-//            titles.append(song.title);
-//        }
-//
-//        ui->listTitles->clear();
-//        ui->listTitles->addItems(titles);
-//    }
-//}
 
 void EditWidget::resetUiItems()
 {
@@ -291,6 +155,8 @@ void EditWidget::setUiItems()
 
 void EditWidget::setSave(){
     newSong.songID = ui->lblID->text().toInt();
+    newSong.num = ui->sbornik_table->item(0,1)->text().toInt();
+    newSong.sbornik = ui->sbornik_table->item(0,0)->text();
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
     newSong.tune = ui->lineEditTune->text();
@@ -354,53 +220,6 @@ void EditWidget::setSbornikTable(int id)
 
 
 }
-//    QStringList list = currentText.split(" - ");
-//    if (list.size()==1)
-//        editSong = song_database.getSong(currentText);
-//    else
-//        editSong = song_database.getSong(list[1]);
-//    if (ui->btnEdit->isEnabled())setUiItems();
-//}
-//
-//void EditWidget::on_txtSearch_textChanged(QString text)
-//{
-//    if (ui->checkBoxAny->isChecked())
-//    {
-//        titleType =2;
-//        ui->listTitles->clear();
-//        QStringList tlist = text.split(" ");
-//        QStringList tlist2;
-//        if(tlist.count()==1){
-//            QString tx = tlist[0];
-////            qDebug() << "tx1 = " + tx;
-//            tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
-//            ui->listTitles->addItems(tlist2);
-//        }
-//        if(tlist.count()==2)
-//        {
-//            QString tx = tlist[0];
-////            qDebug() << "tx1 = " + tx;
-//            tlist2 = allTitles.filter(tx.trimmed(),Qt::CaseInsensitive);
-//            tx = tlist[1];
-////            qDebug() << "tx2 = " + tx;
-//            ui->listTitles->addItems(tlist2.filter(tx,Qt::CaseInsensitive));
-//        }
-//    }
-//    else
-//    {
-//        if (!titleType==0)
-//        {
-//            titleType =0;
-//            ui->listTitles->clear();
-//            ui->listTitles->addItems(allTitles);
-//            ui->comboBoxSbornik->setCurrentIndex(-1);
-//            ui->spinBoxSongNum->setEnabled(false);
-//        }
-//        bool empty = ui->listTitles->findItems(text,Qt::MatchStartsWith).isEmpty();
-//        if (!empty) ui->listTitles->setCurrentItem(ui->listTitles->findItems(text,Qt::MatchStartsWith).takeFirst());
-//        ui->listTitles->scrollTo(ui->listTitles->currentIndex(),QAbstractItemView::PositionAtTop);
-//    }
-//}
 
 void EditWidget::setEdit(Song sEdit)
 {
@@ -408,7 +227,6 @@ void EditWidget::setEdit(Song sEdit)
     editSong = song_database.getSong(sEdit.songID);
     setUiItems();
     is_new = false;
-//    on_btnEdit_clicked();
 }
 
 void EditWidget::setNew()

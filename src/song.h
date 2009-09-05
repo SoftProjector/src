@@ -79,7 +79,6 @@ class SongDatabase
 public:
     SongDatabase();
     bool addSbornik(QString code, QString name, QString info);
-    bool hasTitle(QString title);
     bool hasUserSbornik();
     void saveUpdate();
     void saveNew();

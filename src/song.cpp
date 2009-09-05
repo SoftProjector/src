@@ -191,19 +191,9 @@ SongDatabase::SongDatabase()
 {
 }
 
-bool SongDatabase::hasTitle(QString title)
-{
-    QSqlQuery sq;
-    bool ys=false;
-    sq.exec("SELECT id FROM Songs WHERE title = '" + clean(title) +"'");
-    while (sq.next()){
-        ys = true;
-    }
-    return ys;
-}
-
 void Song::saveUpdate()
 {
+    // Update song information
     QSqlTableModel sq;
     QSqlRecord sr;
     sq.setTable("Songs");
@@ -222,23 +212,43 @@ void Song::saveUpdate()
     sr.setValue(9,background);
     sq.setRecord(0,sr);
     sq.submitAll();
+
+    // Update SongLink information
+    QSqlQuery sqq;
+    sqq.exec("UPDATE SongLink SET song_number = "
+             + QString::number(num) + " WHERE sbornik_id = '"
+             + sbornik.trimmed() + "' AND song_id = " + QString::number(songID));
 }
 
 void Song::saveNew()
 {
-    QSqlTableModel sq;
-    sq.setTable("Songs");
-    sq.insertRows(0,1);
-    sq.setData(sq.index(0,1),clean(title));
-    sq.setData(sq.index(0,2),category);
-    sq.setData(sq.index(0,3),tune);
-    sq.setData(sq.index(0,4),wordsBy);
-    sq.setData(sq.index(0,5),musicBy);
-    sq.setData(sq.index(0,6),songText);
-    sq.setData(sq.index(0,7),font);
-    sq.setData(sq.index(0,8),alingment);
-    sq.setData(sq.index(0,9),background);
-    sq.submitAll();
+    // Add a new song
+    QSqlTableModel sqt;
+    sqt.setTable("Songs");
+    sqt.insertRows(0,1);
+    sqt.setData(sqt.index(0,1),clean(title));
+    sqt.setData(sqt.index(0,2),category);
+    sqt.setData(sqt.index(0,3),tune);
+    sqt.setData(sqt.index(0,4),wordsBy);
+    sqt.setData(sqt.index(0,5),musicBy);
+    sqt.setData(sqt.index(0,6),songText);
+    sqt.setData(sqt.index(0,7),font);
+    sqt.setData(sqt.index(0,8),alingment);
+    sqt.setData(sqt.index(0,9),background);
+    sqt.submitAll();
+
+    // Connect song with sbornik
+    QSqlQuery sq;
+    QString sid = "";
+    sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
+    while (sq.next())
+        sid = sq.value(0).toString();
+    sq.clear();
+
+    sq.exec("INSERT into SongLink (sbornik_id, song_id, song_number) VALUES ('"
+            + sbornik.trimmed() + "',"
+            + sid + ","
+            + QString::number(num) + ")");
 }
 
 Song SongDatabase::getSong(int id)
