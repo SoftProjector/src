@@ -2,6 +2,7 @@
 #define EXPORTDIALOG_H
 
 #include <QtGui/QDialog>
+#include <QtGui>
 
 namespace Ui {
     class ExportDialog;
@@ -22,10 +23,9 @@ private:
 
 private slots:
     void on_buttonBox_accepted();
-    void on_buttonBox_rejected();
     void preload();
-    void exportUser();
-
+    void exportSbornik(QString sbornik, QString file_path);
+    void deleteSbornik(QString sbornik);
 };
 
 #endif // EXPORTDIALOG_H
