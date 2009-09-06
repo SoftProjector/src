@@ -266,8 +266,8 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 
 void SongWidget::on_btnLive_clicked()
 {
-    //sendToProjector(preview_song, ui->listPreview->currentRow());
-    sendToProjector(preview_song, 0); // Send the first verse
+    sendToProjector(preview_song, ui->listPreview->currentRow());
+//    sendToProjector(preview_song, 0); // Send the first verse
 }
 
 
@@ -351,7 +351,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
             //    max_num = s.num;
         }
     }
-    else
+    else // Select first row and scroll to top;
     {
         // Filter string is not an integer
 
