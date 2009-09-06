@@ -44,8 +44,6 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     songWidget = new SongWidget;
     editWidget = new EditWidget;
-    importSongs = new ImportDialog;
-    exportSongs = new ExportDialog;
 
     showing = false;
 
@@ -253,20 +251,31 @@ void SoftProjector::on_actionEditDialog_triggered()
 
 void SoftProjector::on_actionExportSongs_triggered()
 {
-    exportSongs->exec();
+    ExportDialog exportDialog;
+    int ret = exportDialog.exec();
+    switch (ret)
+    {
+    case ExportDialog::Accepted:
+        // code needed to reload sborniks in SongWidget sbornik combobox
+        break;
+    case ExportDialog::Rejected:
+        // No code needed
+        break;
+    }
 }
 
 void SoftProjector::on_actionImportSongs_triggered()
 {
     bool ok=false;
-    importSongs->load();
+    ImportDialog importSborniks;
+    importSborniks.load();
     while (!ok)
     {
-        int ret = importSongs->exec();
+        int ret = importSborniks.exec();
         switch (ret)
         {
         case ImportDialog::Accepted:
-            ok = importSongs->isNewSbornik;
+            ok = importSborniks.isNewSbornik;
             if (!ok)
             {
                 QMessageBox::warning(this, "Error", "The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");

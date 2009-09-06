@@ -29,8 +29,6 @@ public:
     BibleWidget *bibleWidget;
     Display1 *display;
     EditWidget *editWidget;
-    ImportDialog *importSongs;
-    ExportDialog *exportSongs;
 
     void readConfigurationFile();
     void writeConfigurationFile();

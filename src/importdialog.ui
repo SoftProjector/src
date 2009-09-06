@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>softProjector - Import Songs</string>
+   <string>Import Sbornik</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

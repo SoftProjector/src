@@ -216,7 +216,10 @@
   </action>
   <action name="actionImportSongs">
    <property name="text">
-    <string>Import Songs...</string>
+    <string>Import Sbonik...</string>
+   </property>
+   <property name="iconText">
+    <string>Import Snornik</string>
    </property>
    <property name="toolTip">
     <string>Import songs into user sbornik</string>
@@ -227,7 +230,7 @@
   </action>
   <action name="actionExportSongs">
    <property name="text">
-    <string>Export Songs...</string>
+    <string>Export/Delete Sbornik...</string>
    </property>
    <property name="toolTip">
     <string>Export songs from user sbornik</string>
