@@ -13,7 +13,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     softProjector = (SoftProjector*)parent;
 
     // Get Bibles that exist in the database
-    QStringList bibles;
     QSqlQuery sq;
     sq.exec("SELECT bible_name,bible_id FROM BibleVersions");
     while(sq.next()){
@@ -43,6 +42,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         int secondary_index = sq.value(0).toInt();
         ui->secondary_bible_menu->setCurrentIndex(secondary_index);
     }
+
+    // Remove the primary bible from the secondary list:
+    updateSecondaryBibleMenu();
     
     // ui->use_fading_effects_box->setChecked(
 
@@ -60,6 +62,24 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     }
     else
         ui->wallpaper_label->setText("Wallpaper: " + new_wallpaper_path);
+
+}
+
+void SettingsDialog::updateSecondaryBibleMenu()
+{
+    QString pbible = ui->primary_bible_menu->currentText();
+    QString sbible = ui->secondary_bible_menu->currentText();
+    QStringList secondary_bibles = bibles;
+    secondary_bibles.removeOne(pbible);
+    ui->secondary_bible_menu->clear();
+    ui->secondary_bible_menu->addItem("None");
+    ui->secondary_bible_menu->addItems(secondary_bibles);
+
+    int i = ui->secondary_bible_menu->findText(sbible);
+    if( i != -1 )
+        // The same secondary bible is still available
+        ui->secondary_bible_menu->setCurrentIndex(i);
+
 
 }
 
@@ -148,4 +168,9 @@ void SettingsDialog::on_remove_wallpaper_button_clicked()
     ui->wallpaper_label->setText("Wallpaper: None");
     ui->remove_wallpaper_button->setEnabled(false);
     ui->black_or_wallpaper_group->setEnabled(false);
+}
+
+void SettingsDialog::on_primary_bible_menu_activated(QString )
+{
+    updateSecondaryBibleMenu();
 }

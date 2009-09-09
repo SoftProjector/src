@@ -16,6 +16,7 @@ class SettingsDialog : public QDialog {
 public:
     explicit SettingsDialog(QWidget *parent = 0);
     virtual ~SettingsDialog();
+    void updateSecondaryBibleMenu();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -23,11 +24,13 @@ protected:
 private:
     Ui::SettingsDialog *ui;
     SoftProjector *softProjector;
+    QStringList bibles;
     QFont new_font;
     QString new_wallpaper_path;
     QStringList bible_id_list;
 
 private slots:
+    void on_primary_bible_menu_activated(QString );
     void on_remove_wallpaper_button_clicked();
     void on_set_wallpaper_button_clicked();
     void on_change_font_button_clicked();
