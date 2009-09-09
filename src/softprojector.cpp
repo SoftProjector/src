@@ -199,8 +199,20 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
     else if(type=="bible")
     {
 
-        QStringList verse_caption = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
-        display->setAllText(verse_caption[0], verse_caption[1]);
+        Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
+        QString text = verse.primary_text;
+        QString caption = verse.primary_caption;
+        if( !verse.secondary_text.isNull() )
+        {
+            text.append("\n");
+            text += verse.secondary_text;
+            caption.append("    ");
+            caption += verse.secondary_caption;
+        }
+        // FIXME we need code here that will display the verse so that the
+        // primary caption is right below the primary text, and secondary caption
+        // is right bellow the secondary text
+        display->setAllText(text, caption);
     }
 }
 

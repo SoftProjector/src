@@ -36,12 +36,13 @@ QStringList Bible::getChapter(QString book, int chapter)
 }
 
 
-QStringList Bible::getCurrentVerseAndCaption(int currentRow)
+Verse Bible::getCurrentVerseAndCaption(int currentRow)
 {
     QString id = currentIdList.at(currentRow);
     QStringList list = getVerseAndCaption(id, primaryId);
-    QString verse = list[0];
-    QString caption = list[1];
+    Verse v;
+    v.primary_text = list[0];
+    v.primary_caption = list[1];
 
     if( primaryId==secondaryId || secondaryId=="none" )
     {
@@ -49,15 +50,10 @@ QStringList Bible::getCurrentVerseAndCaption(int currentRow)
     else
     {
         list = getVerseAndCaption(id, secondaryId);
-        verse.append("\n");
-        verse += list[0];
-        caption.append("    ");
-        caption += list[1];
+        v.secondary_text = list[0];
+        v.secondary_caption = list[1];
     }
-    QStringList verse_and_caption;
-    verse_and_caption.append(verse);
-    verse_and_caption.append(caption);
-    return verse_and_caption;
+    return v;
 
 }
 
