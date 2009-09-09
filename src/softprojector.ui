@@ -99,7 +99,7 @@
         <item row="1" column="0" colspan="3">
          <widget class="QLabel" name="labelShow">
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
         </item>
