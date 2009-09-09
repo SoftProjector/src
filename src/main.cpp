@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     }
     
     SoftProjector w;
-    w.setWindowTitle("softProjector 0.9.Beta01");
+    w.setWindowTitle("softProjector 0.9.Alpha02");
     w.show();
     return a.exec();
 }
