@@ -109,7 +109,8 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->writeConfigurationFile();
 
     // Redraw the screen:
-    softProjector->on_show_button_clicked();
+    if( softProjector->showing )
+        softProjector->on_show_button_clicked();
     close();
 }
 
