@@ -266,26 +266,8 @@ void SoftProjector::on_actionExportSongs_triggered()
 
 void SoftProjector::on_actionImportSongs_triggered()
 {
-    bool ok=false;
     ImportDialog importSborniks;
     importSborniks.load();
-    while (!ok)
-    {
-        int ret = importSborniks.exec();
-        switch (ret)
-        {
-        case ImportDialog::Accepted:
-            ok = importSborniks.isNewSbornik;
-            if (!ok)
-            {
-                QMessageBox::warning(this, "Error", "The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
-            }
-            break;
-        case ImportDialog::Rejected:
-            ok = true;
-            break;
-        }
-    }
 }
 
 void SoftProjector::on_actionSettings_triggered()

@@ -36,7 +36,28 @@ void ImportDialog::load()
                          "Select sbornik file to import",
                          ".",
                          "Text File (*.txt *.sps)");
-    load_file(file_path);
+    if( !file_path.isNull() )
+    {
+        load_file(file_path);
+        bool ok = false;
+        while (!ok)
+        {
+            int ret = exec();
+            switch (ret)
+            {
+            case Accepted:
+                ok = isNewSbornik;
+                if (!ok)
+                {
+                    QMessageBox::warning(this, "Error", "The Sbornik code that you have entered already exists.\nPlease enter a diffirent unique Sbornik code.");
+                }
+                break;
+            case Rejected:
+                ok = true;
+                break;
+            }
+        }
+    }
 }
 
 void ImportDialog::load_file(QString path)
