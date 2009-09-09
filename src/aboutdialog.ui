@@ -205,7 +205,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>Data Contributers:</string>
+        <string>Data Contributors:</string>
        </property>
       </widget>
      </item>
