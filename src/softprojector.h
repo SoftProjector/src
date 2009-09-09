@@ -29,6 +29,7 @@ public:
     BibleWidget *bibleWidget;
     Display1 *display;
     EditWidget *editWidget;
+    bool showing; // whether we are currently showing to the projector
 
     void readConfigurationFile();
     void writeConfigurationFile();
@@ -38,7 +39,6 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
-    bool showing; // whether we are currently showing to the projector
 
 private slots:
     void on_tabWidget_currentChanged(int index);
