@@ -162,10 +162,7 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->listShow->addItems(showList);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
-    this->on_show_button_clicked();
-
-    ui->show_button->setEnabled(false);
-    ui->clear_button->setEnabled(true);
+    updateScreen();
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)
@@ -180,25 +177,38 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     ui->listShow->addItems(chapter_list);
     ui->listShow->setCurrentRow(verse);
     ui->listShow->setFocus();
-    this->on_show_button_clicked();
-
+    showing = true;
+    updateScreen();
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the show (right-most) list.
-    if( currentRow == -1 )
-        return;
+    updateScreen();
+}
 
-    if( showing == false )
-        return;
+void SoftProjector::updateScreen()
+{
+    // Display the specified row of the show (rightmost) table to
+    // the display
 
-    if(type=="song")
+    int currentRow = ui->listShow->currentRow();
+
+    if( currentRow == -1 || showing == false )
+    {
+            // Do not display any text:
+        display->setAllText(" ", " ");
+        ui->show_button->setEnabled(true);
+        ui->clear_button->setEnabled(false);
+        return;
+    }
+
+    else if(type=="song")
+    {
         display->setAllText(ui->listShow->currentItem()->text(),"");
-
+    }
     else if(type=="bible")
     {
-
         Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
         QString text = verse.primary_text;
         QString caption = verse.primary_caption;
@@ -214,25 +224,20 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
         // is right bellow the secondary text
         display->setAllText(text, caption);
     }
+    ui->show_button->setEnabled(false);
+    ui->clear_button->setEnabled(true);
 }
 
 void SoftProjector::on_clear_button_clicked()
 {
     showing = false;
-
-    // Do not display any text:
-    display->setAllText(" ", " ");
-
-    ui->show_button->setEnabled(true);
-    ui->clear_button->setEnabled(false);
+    updateScreen();
 }
 
 void SoftProjector::on_show_button_clicked()
 {
     showing = true;
-    on_listShow_currentRowChanged(ui->listShow->currentRow());
-    ui->show_button->setEnabled(false);
-    ui->clear_button->setEnabled(true);
+    updateScreen();
 }
 
 
@@ -293,7 +298,8 @@ void SoftProjector::on_actionSettings_triggered()
 void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
 {
     // Called when the user double clicks on a row in the preview table.
-    this->on_show_button_clicked();
+    showing = true;
+    updateScreen();
 }
 
 void SoftProjector::on_actionAbout_triggered()

@@ -50,6 +50,7 @@ private slots:
     void on_actionEditDialog_triggered();
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
+    void on_show_button_clicked();
     void on_clear_button_clicked();
     void on_listShow_currentRowChanged(int currentRow);
     void on_actionClose_triggered();
@@ -57,7 +58,7 @@ private slots:
     void setChapterList(QStringList chapter_list, int verse, QString caption);
 
 public:
-    void on_show_button_clicked();
+    void updateScreen();
 
 
 protected:
