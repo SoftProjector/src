@@ -17,10 +17,12 @@
 class Display1 : public QWidget
 {
     Q_OBJECT
-    QString display_text;
 public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
+    void paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
+    QString CaptionText;
+    QString display_text;
 
 
 public slots:
@@ -36,15 +38,14 @@ public slots:
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
 
+signals:
+    void requestTextDrawing(QPainter *painter, int width, int height);
 
 protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QString CaptionText;
-    //QString root_path;
     QFont main_font;
-    //QFont current_font; // Font for current scrren
     QString wallpaper_path; // Wallpaper image file path
     QImage wallpaper; // Wallpaper image
     bool show_black; // Whether to show black instead of wallpaper on clear

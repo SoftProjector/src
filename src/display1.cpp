@@ -106,6 +106,35 @@ void Display1::setAllText(QString text, QString caption)
 }
 
 
+
+
+void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
+{
+    int left = origrect.left();
+    int top = origrect.top();
+    int w = origrect.width();
+    int h = origrect.height();
+
+    QFont font = painter->font();
+    // Keep decreasing the font size until the text fits into the allocated space:
+    QRect rect;
+
+    bool exit = false;
+    while( !exit )
+    {
+        rect = painter->boundingRect(left, top, w, h, flags, text);
+        exit = ( rect.left() >= left && rect.top() >= top
+                 && rect.width() <= w && rect.height() <= h );
+        if( !exit )
+        {
+            font.setPointSize( font.pointSize()-1 );
+            painter->setFont(font);
+        }
+    }
+    painter->drawText(rect, flags, text);
+}
+
+
 void Display1::renderText()
 {
     // Render the text
@@ -126,8 +155,6 @@ void Display1::renderText()
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
-            //qDebug("Loading wallpaper from:");
-            //qDebug(qPrintable(wallpaper_path));
             wallpaper.load(wallpaper_path);
             wallpaper = wallpaper.scaled(width(),height());
         }
@@ -136,47 +163,11 @@ void Display1::renderText()
 
     QFontMetrics fm(font());
     text_painter.setPen(QColor(TEXT_COLOR));
+    text_painter.setFont(font());
 
-    int left = fm.width(" ",-1) + MARGIN - 5;
-    int top = MARGIN;
-    int right = width() - left;
-    int bottom = height() - top;
-    if( !CaptionText.isEmpty() )
-        bottom -= fm.height();
+    // Request SoftProjector to write its text to the QPainter:
+    emit requestTextDrawing(&text_painter, width(), height());
 
-    QFont paint_font = font();
-    text_painter.setFont(paint_font);
-
-    // Keep decreasing the font size until the text fits into the allocated space:
-    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
-    QRect rect;
-    bool exit = false;
-    while( !exit )
-    {
-        rect = text_painter.boundingRect(left, top, right-left, bottom-top, flags, display_text);
-        exit = ( rect.left() >= left && rect.right() <= right
-                 && rect.width() <= right-left && rect.height() <= bottom-top );
-        if( !exit )
-        {
-            paint_font.setPointSize( paint_font.pointSize()-1 );
-            text_painter.setFont(paint_font);
-        }
-    }
-
-    text_painter.drawText(rect, flags, display_text);
-    //qDebug() << "DRAWING INTO:" << left << top << right-left << bottom-top;
-
-    if (!CaptionText.isEmpty())
-    {
-
-        QFont caption_font = font();
-        caption_font.setPointSize(20);
-        text_painter.setFont(caption_font);
-        fm = QFontMetrics(caption_font);
-        int start_x=(width()-fm.width(CaptionText))/2;
-        int start_y=height()-20;//fm.height();
-        text_painter.drawText(start_x,start_y,CaptionText);
-    }
     m_blurred=image;
 //    fastbluralpha(m_blurred,BLUR_RADIUS);
     blur_painter.drawImage(BORDER,BORDER,m_blurred);

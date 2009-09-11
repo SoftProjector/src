@@ -59,6 +59,7 @@ private slots:
     void on_actionClose_triggered();
     void setSongList(QStringList showList, QString caption, int row);
     void setChapterList(QStringList chapter_list, int verse, QString caption);
+    void drawText(QPainter *painter, int width, int height);
 
 public:
     void updateScreen();

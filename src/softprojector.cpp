@@ -52,6 +52,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setSongList(QStringList, QString, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
             this, SLOT(setChapterList(QStringList, int, QString)));
+    connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
+            this, SLOT(drawText(QPainter*, int, int)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -197,6 +199,50 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
     updateScreen();
+}
+
+void SoftProjector::drawText(QPainter *painter, int width, int height)
+{
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    QFont font = painter->font();
+
+    QFontMetrics fm = QFontMetrics(font);
+
+    QString CaptionText = display->CaptionText;
+    QString display_text = display->display_text;
+
+    int caption_height = fm.height();
+    if( !CaptionText.isEmpty() )
+        h -= caption_height;
+    int caption_top = top + h;
+
+
+    QRect rect = QRect(left, top, w, h);
+
+
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    display->paintTextToRect(painter, rect, flags, display_text);
+
+
+
+    if (!CaptionText.isEmpty())
+    {
+        font.setPointSize(20);
+        painter->setFont(font);
+        fm = QFontMetrics(font);
+
+        QRect rect = QRect(left, caption_top, w, caption_height);
+        //text_painter.setFont(font());
+
+        int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        display->paintTextToRect(painter, rect, flags, CaptionText);
+    }
+
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)
