@@ -180,7 +180,6 @@ bool SongsModel::removeRows( int row, int count, const QModelIndex & parent)
     for(int i=row+count-1; i>=row; i--)
         song_list.removeAt(i);
     endRemoveRows();
-    qDebug("end");
     return true;
 }
 
@@ -434,8 +433,7 @@ bool SongDatabase::addSbornik(QString code, QString name, QString info)
     QSqlQuery sq;
     QSqlTableModel sqt;
     int i(0);
-    qDebug() << code;
-    qDebug() << sq.exec("SELECT id FROM Sborniks WHERE id = '" + code + "'");
+    sq.exec("SELECT id FROM Sborniks WHERE id = '" + code + "'");
     while(sq.next())
         ++i;
     if (i>0)
