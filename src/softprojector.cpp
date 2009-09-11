@@ -10,12 +10,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 {
 
     //Setting up the Display Screen
-    QDesktopWidget *desktop;
     desktop = new QDesktopWidget();
     display = new Display1(desktop->screen(3));
-
-
-
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
     bibleWidget = new BibleWidget;
@@ -31,16 +27,11 @@ SoftProjector::SoftProjector(QWidget *parent)
     if( desktop->numScreens() > 1 )
     {
         if (desktop->isVirtualDesktop())
-        {
             display->setGeometry(desktop->screen(0)->width()-100,200,100,100);
-        }
         display->showFullScreen();
     }
     else
-    {
         display->show();
-    }
-
 
 
 
@@ -70,6 +61,11 @@ SoftProjector::SoftProjector(QWidget *parent)
 SoftProjector::~SoftProjector()
 {
     delete ui;
+    delete songWidget;
+    delete editWidget;
+    delete bibleWidget;
+    delete display;
+    delete desktop;
 }
 
 void SoftProjector::writeXMLConfigurationFile()
@@ -115,7 +111,11 @@ void SoftProjector::applySetting(QString name, QString value)
     // Apply the specified setting to the program
 
     if( name == "font" )
-        display->setNewFont(value);
+    {
+        QFont new_font;
+        new_font.fromString(value);
+        display->setNewFont(new_font);
+    }
     else if( name == "wallpaper" )
         display->setNewWallpaper(value);
     else if( name == "showblack" )

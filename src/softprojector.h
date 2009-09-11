@@ -27,6 +27,7 @@ public:
     ~SoftProjector();
     SongWidget *songWidget;
     BibleWidget *bibleWidget;
+    QDesktopWidget *desktop;
     Display1 *display;
     EditWidget *editWidget;
     bool showing; // whether we are currently showing to the projector
