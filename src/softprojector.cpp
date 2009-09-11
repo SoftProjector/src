@@ -200,67 +200,44 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
     updateScreen();
 }
 
-void SoftProjector::drawText(QPainter *painter, int width, int height)
+
+void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
-    if( !showing )
-        return;
+    SongDatabase song_database;
+    qDebug() << "GETTING SONG LIST";
+    QStringList song_list = song_database.getSongList(current_song);
+    qDebug() << "  GOT SONG LIST";
 
     QString main_text;
     QString caption_text;
 
-    if(type=="song")
+    bool last_verse = ( current_song_verse == song_list.count()-1 );
+
+    QStringList lines_list = song_list.at(current_song_verse).split("\n");
+
+    // Remove the first line if it starts with "Kuplet" or "Pripev":
+    QString textemp = lines_list[0];
+    textemp.remove(6,10);
+
+    QTextCodec *codec;
+    codec = QTextCodec::codecForName("UTF8");
+
+    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+        lines_list.removeFirst();
+
+    // Convert lines_list to a string:
+    main_text = "";
+    for (int i = 0; i < lines_list.size(); ++i)
     {
-        SongDatabase song_database;
-        QStringList song_list = song_database.getSongList(current_song);
-
-        bool last_verse = ( current_song_verse == song_list.count()-1 );
-
-        QStringList lines_list = song_list.at(current_song_verse).split("\n");
-
-        // Remove the first line if it starts with "Kuplet" or "Pripev":
-        QString textemp = lines_list[0];
-        textemp.remove(6,10);
-
-        QTextCodec *codec;
-        codec = QTextCodec::codecForName("UTF8");
-
-        if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
-            lines_list.removeFirst();
-
-        // Convert lines_list to a string:
-        main_text = "";
-        for (int i = 0; i < lines_list.size(); ++i)
-        {
-            if( i > 0 )
-                main_text += "\n";
-            main_text += lines_list.at(i);
-        }
-
-        if( last_verse )
-            caption_text = "*\t*\t*";
-        else
-            caption_text = "";
-    }
-    else if(type=="bible")
-    {
-        QString text = current_verse.primary_text;
-        QString caption = current_verse.primary_caption;
-        if( !current_verse.secondary_text.isNull() )
-        {
-            text.append("\n");
-            text += current_verse.secondary_text;
-            caption.append("    ");
-            caption += current_verse.secondary_caption;
-        }
-
-        // FIXME we need code here that will display the verse so that the
-        // primary caption is right below the primary text, and secondary caption
-        // is right bellow the secondary text
-
-        main_text = text;
-        caption_text = caption;
+        if( i > 0 )
+            main_text += "\n";
+        main_text += lines_list.at(i);
     }
 
+    if( last_verse )
+        caption_text = "*\t*\t*";
+    else
+        caption_text = "";
 
     // Margins:
     int left = 30;
@@ -297,6 +274,73 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
         display->paintTextToRect(painter, rect, flags, caption_text);
     }
 
+}
+
+
+
+void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int height)
+{
+    QString main_text = current_verse.primary_text;
+    QString caption_text = current_verse.primary_caption;
+    if( !current_verse.secondary_text.isNull() )
+    {
+        main_text.append("\n");
+        main_text += current_verse.secondary_text;
+        caption_text.append("    ");
+        caption_text += current_verse.secondary_caption;
+    }
+
+    // FIXME we need code here that will display the verse so that the
+    // primary caption is right below the primary text, and secondary caption
+    // is right bellow the secondary text
+
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    QFont font = painter->font();
+    qDebug() << "drawText() begin";
+
+    // Allocate this much of the screen to the caption text:
+    int caption_height = 100;
+
+    if( !caption_text.isEmpty() )
+        h -= caption_height;
+    int caption_top = top + h;
+
+
+    QRect rect = QRect(left, top, w, h);
+
+
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    display->paintTextToRect(painter, rect, flags, main_text);
+    qDebug() << "Painted text";
+
+
+    if (!caption_text.isEmpty())
+    {
+        font.setPointSize(20);
+        painter->setFont(font);
+
+        QRect rect = QRect(left, caption_top, w, caption_height);
+        int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        display->paintTextToRect(painter, rect, flags, caption_text);
+    }
+
+}
+
+
+void SoftProjector::drawText(QPainter *painter, int width, int height)
+{
+    if( !showing )
+        return;
+
+    if(type=="song")
+        drawCurrentSongText(painter, width, height);
+    else if(type=="bible")
+        drawCurrentBibleText(painter, width, height);
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)

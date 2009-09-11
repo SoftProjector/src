@@ -64,10 +64,9 @@ QStringList Song::formatSongList()
     QString chorus;
     bool has_chorus=0;
     int i=(0),j(0),k(0),chor(0);
-
-    qDebug() << "SONG TEXT:" << songText;
+    
     songlist = song.split("@$");//songText.split("@$");
-
+    
     while(i < songlist.size() )
     {
         text = songlist[i];

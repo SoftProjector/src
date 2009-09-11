@@ -45,6 +45,8 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
+    void drawCurrentSongText(QPainter *painter, int width, int height);
+    void drawCurrentBibleText(QPainter *painter, int width, int height);
 
 private slots:
     void on_tabWidget_currentChanged(int index);
