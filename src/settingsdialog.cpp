@@ -119,7 +119,6 @@ void SettingsDialog::on_buttonBox_accepted()
 {
     bool show_black = ui->black_screen_rbutton->isChecked();
 
-    qDebug() << ui->primary_bible_menu->currentIndex();
     QString primaryBible = bible_id_list[ui->primary_bible_menu->currentIndex()];
     int secondaryBibleInd = ui->secondary_bible_menu->currentIndex();
     QString secondaryBible;
