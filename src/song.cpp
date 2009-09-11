@@ -353,7 +353,7 @@ QStringList SongDatabase::formatSongList(QString song)
         ++i;
     }
     text = formatedSong[formatedSong.size()-1];
-    text += "\n* * *";
+    //text += "\n* * *";
     formatedSong[formatedSong.size()-1] = text;
     return formatedSong; // Fill verse_list widget
 }

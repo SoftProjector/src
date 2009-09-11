@@ -231,7 +231,7 @@ void SoftProjector::updateScreen()
     if( currentRow == -1 || showing == false )
     {
         // Do not display any text:
-        display->setAllText(" ", " ");
+        display->setAllText(QString(" "), QString());
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
@@ -239,7 +239,11 @@ void SoftProjector::updateScreen()
     {
         if(type=="song")
         {
-            display->setAllText(ui->listShow->currentItem()->text(),"");
+            bool last_verse = ( ui->listShow->currentIndex().row() == ui->listShow->count()-1 );
+            QString caption;
+            if( last_verse )
+                caption = QString("*\t*\t*");
+            display->setAllText(ui->listShow->currentItem()->text(), caption);
         }
         else if(type=="bible")
         {
@@ -248,6 +252,7 @@ void SoftProjector::updateScreen()
             QString caption = verse.primary_caption;
             if( !verse.secondary_text.isNull() )
             {
+                qDebug() << "SECONDARY PRESENT";
                 text.append("\n");
                 text += verse.secondary_text;
                 caption.append("    ");

@@ -82,10 +82,10 @@ void Display1::SetMainText(QString text)
     if (list1[0]=="")
         list1.removeFirst();
     int listlen = list1.size()-1;
-    if (list1[listlen]=="* * *"){
-        CaptionText="*\t*\t*";
-        list1[listlen]="";
-    }
+    //if (list1[listlen]=="* * *"){
+    //    CaptionText="*\t*\t*";
+    //    list1[listlen]="";
+    //}
     if (list1[listlen]=="")
         list1.removeLast(); // removes last line if nothing is there
     if ( text.length() < 3 )
