@@ -271,7 +271,10 @@ void SoftProjector::updateScreen()
     if( currentRow == -1 || showing == false )
     {
         // Do not display any text:
-        setAllText(QString(" "), QString());
+        main_text = "";
+        caption_text = "";
+        display->update();
+
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
@@ -279,28 +282,15 @@ void SoftProjector::updateScreen()
     {
         if(type=="song")
         {
-            bool last_verse = ( ui->listShow->currentIndex().row() == ui->listShow->count()-1 );
-            QString caption;
-            if( last_verse )
-                caption = QString("*\t*\t*");
-            setAllText(ui->listShow->currentItem()->text(), caption);
+            qDebug() << "UPDATE SONG";
+            Song song = songWidget->currentSong();
+            int row = ui->listShow->currentIndex().row();
+            setCurrentSongVerse(song, row);
         }
         else if(type=="bible")
         {
             Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
-            QString text = verse.primary_text;
-            QString caption = verse.primary_caption;
-            if( !verse.secondary_text.isNull() )
-            {
-                text.append("\n");
-                text += verse.secondary_text;
-                caption.append("    ");
-                caption += verse.secondary_caption;
-            }
-            // FIXME we need code here that will display the verse so that the
-            // primary caption is right below the primary text, and secondary caption
-            // is right bellow the secondary text
-            setAllText(text, caption);
+            setCurrentVerse(verse);
         }
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
@@ -310,14 +300,6 @@ void SoftProjector::updateScreen()
 
 void SoftProjector::setAllText(QString text, QString caption)
 {
-
-    if( text.isEmpty() )
-    {
-        main_text = text;
-        caption_text = caption;
-        display->update();
-        return;
-    }
 
     caption_text = caption;
 
@@ -351,6 +333,70 @@ void SoftProjector::setAllText(QString text, QString caption)
 
     //timer->start(0);
 }
+
+
+void SoftProjector::setCurrentVerse(Verse verse)
+{
+    QString text = verse.primary_text;
+    QString caption = verse.primary_caption;
+    if( !verse.secondary_text.isNull() )
+    {
+        text.append("\n");
+        text += verse.secondary_text;
+        caption.append("    ");
+        caption += verse.secondary_caption;
+    }
+
+    // FIXME we need code here that will display the verse so that the
+    // primary caption is right below the primary text, and secondary caption
+    // is right bellow the secondary text
+
+    main_text = text;
+    caption_text = caption;
+
+    display->renderText( !main_text.isEmpty() );
+}
+
+
+void SoftProjector::setCurrentSongVerse(Song song, int row)
+{
+    current_song = song;
+    current_song_verse = row;
+
+    SongDatabase song_database;
+    QStringList song_list = song_database.getSongList(song);
+
+    bool last_verse = ( row == song_list.count()-1 );
+
+    QStringList lines_list = song_list.at(row).split("\n");
+
+    // Remove the first line if it starts with "Kuplet" or "Pripev":
+    QString textemp = lines_list[0];
+    textemp.remove(6,10);
+
+    QTextCodec *codec;
+    codec = QTextCodec::codecForName("UTF8");
+
+    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+        lines_list.removeFirst();
+
+    // Convert lines_list to a string:
+    main_text = "";
+    for (int i = 0; i < lines_list.size(); ++i)
+    {
+        if( i > 0 )
+            main_text += "\n";
+        main_text += lines_list.at(i);
+    }
+
+
+    if( last_verse )
+        caption_text = "*\t*\t*";
+    else
+        caption_text = "";
+    display->renderText( !main_text.isEmpty() );
+}
+
 
 void SoftProjector::on_clear_button_clicked()
 {

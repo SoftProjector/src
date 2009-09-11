@@ -32,6 +32,8 @@ public:
     EditWidget *editWidget;
     bool showing; // whether we are currently showing to the projector
     bool display_on_top; // whether display screen is alway on top on not
+    Song current_song;
+    int current_song_verse;
 
     void applySetting(QString name, QString value);
     void readXMLConfigurationFile();
@@ -66,6 +68,8 @@ private slots:
 public:
     void updateScreen();
     void setAllText(QString main, QString caption);
+    void setCurrentVerse(Verse verse);
+    void setCurrentSongVerse(Song song, int row);
 
 
 protected:

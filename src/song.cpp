@@ -42,6 +42,8 @@ QString clean(QString str)
 }
 
 
+
+
 Song::Song(int song_id, int song_num, QString song_title, QString song_sbornik)
 {
     songID = song_id;
@@ -52,6 +54,79 @@ Song::Song(int song_id, int song_num, QString song_title, QString song_sbornik)
 Song::Song()
 {
 }
+
+QStringList Song::formatSongList()
+{
+    QString song = songText;
+    QStringList formatedSong;
+    QString text, text2, codec;
+    QStringList split, songlist;
+    QString chorus;
+    bool has_chorus=0;
+    int i=(0),j(0),k(0),chor(0);
+
+    qDebug() << "SONG TEXT:" << songText;
+    songlist = song.split("@$");//songText.split("@$");
+
+    while(i < songlist.size() )
+    {
+        text = songlist[i];
+        //text.chop(1);
+        split = text.split("@%"); // split the text into rythmic line seperated by @%
+        k=split.size();
+        text=""; // clear text
+        j=0;
+        text2=split[0];
+        //text2.remove(6,10);
+        if (text2.startsWith(codec.fromUtf8("Куплет")))
+        {// Fill Verse
+            while (j<k)
+            {
+                if (j==k-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                j++;
+            }
+            formatedSong += text.trimmed();
+            if (has_chorus){
+                formatedSong += chorus;
+            }
+        }
+        else if (text2.startsWith(codec.fromUtf8("Припев")))
+        { // Fill Chorus
+            while (j<k)
+            {
+                if (j==k-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                ++j;
+            }
+            chorus = text.trimmed();
+            if (chorus.size()>3)
+            {
+                has_chorus=1;
+                chor++;
+                if (chor ==1)
+                    formatedSong += chorus;
+                else if (chor ==2)
+                {
+                    formatedSong[formatedSong.size()-1] = chorus;
+                    chor-- ;
+                }
+            }
+        }
+        ++i;
+    }
+    text = formatedSong[formatedSong.size()-1];
+    formatedSong[formatedSong.size()-1] = text;
+    return formatedSong; // Fill verse_list widget
+}
+
+
+
+
 
 SongsModel::SongsModel()
 {
@@ -286,76 +361,10 @@ QStringList SongDatabase::getSongList(Song orig_song)
 {    
     Song song = getSong(orig_song.title);
     // For some reason we need to re-get the song for songText to be set correctly
-    QStringList song_list = formatSongList(song.songText);
+    QStringList song_list = song.formatSongList();
     return song_list;
 }
 
-QStringList SongDatabase::formatSongList(QString song)
-{
-    QStringList formatedSong;
-    QString text, text2, codec;
-    QStringList split, songlist;
-    QString chorus;
-    bool has_chorus=0;
-    int i(0),j(0),k(0),chor(0);
-
-    songlist = song.split("@$");//songText.split("@$");
-
-    while(i < songlist.size() )
-    {
-        text = songlist[i];
-        //text.chop(1);
-        split = text.split("@%"); // split the text into rythmic line seperated by @%
-        k=split.size();
-        text=""; // clear text
-        j=0;
-        text2=split[0];
-        //text2.remove(6,10);
-        if (text2.startsWith(codec.fromUtf8("Куплет")))
-        {// Fill Verse
-            while (j<k)
-            {
-                if (j==k-1) 
-                    text += split[j];
-                else 
-                    text += split[j] + "\n";
-                j++;
-            }
-            formatedSong += text.trimmed();
-            if (has_chorus){
-                formatedSong += chorus;
-            }
-        } 
-        else if (text2.startsWith(codec.fromUtf8("Припев")))
-        { // Fill Chorus
-            while (j<k)
-            {
-                if (j==k-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            chorus = text.trimmed();
-            if (chorus.size()>3)
-            {
-                has_chorus=1; 
-                chor++;
-                if (chor ==1) 
-                    formatedSong += chorus;
-                else if (chor ==2)
-                {
-                    formatedSong[formatedSong.size()-1] = chorus;
-                    chor-- ;
-                }
-            }
-        }
-        ++i;
-    }
-    text = formatedSong[formatedSong.size()-1];
-    formatedSong[formatedSong.size()-1] = text;
-    return formatedSong; // Fill verse_list widget
-}
 
 
 QList<Song> SongDatabase::getSongs(QString sbornik)
@@ -471,3 +480,4 @@ bool SongDatabase::addSbornik(QString code, QString name, QString info)
         return true;
     }
 }
+

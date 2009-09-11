@@ -18,6 +18,7 @@ class Song
 
     void saveUpdate();
     void saveNew();
+    QStringList formatSongList();
 
 //private:
     int songID; // Database ID of this song
@@ -41,7 +42,6 @@ class SongsModel : public QAbstractTableModel
     Q_DISABLE_COPY(SongsModel)
 public:
     SongsModel();
-    Song currentSong();
     void setSongs(QList<Song> songs);
     void addSong(Song song);
     Song getSong(int row);
@@ -87,7 +87,6 @@ public:
     Song getSong(QString title);
     QStringList getSongList(Song song);
     QStringList getUserSborniks();
-    QStringList formatSongList(QString song);
     QList<Song> getSongs(QString sbornik);
     int lastUser(QString sbornik);
 //private:
