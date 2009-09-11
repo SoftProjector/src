@@ -17,7 +17,10 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
-//    display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
+
+    getDisplayTop();
+    if (displayOnTop)
+        display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
     if( desktop->numScreens() > 1 )
     {
@@ -68,7 +71,36 @@ SoftProjector::~SoftProjector()
     delete ui;
 }
 
+void SoftProjector::getDisplayTop()
+{
+        // Read the font from the font configuration file:
+    QFile fh("settings.cfg");
 
+    if( ! fh.exists() )
+    {
+        // Settings file does not exist, use default settings:
+        displayOnTop = false;
+    }
+
+    // Read the settings file:
+    QString on_top;
+
+    fh.open(QIODevice::Text | QIODevice::ReadOnly);
+    while (! on_top.startsWith("display"))
+        on_top = QString::fromUtf8(fh.readLine().trimmed());
+
+//    on_top.remove("displayOnTop:");
+//    on_top = on_top.trimmed();
+//
+    qDebug()<< on_top;
+
+    if (on_top == "displayOnTop:true")
+        displayOnTop = true;
+    else
+        displayOnTop = false;
+
+    fh.close();
+}
 
 void SoftProjector::readConfigurationFile()
 {
@@ -141,6 +173,11 @@ void SoftProjector::writeConfigurationFile()
 //    fh.write(qPrintable(bibleWidget->getSecondary()));
 //    fh.write("\n");
     write += bibleWidget->getSecondary() + "\n";
+
+    if (displayOnTop)
+        write += "displayOnTop:true\n";
+    else
+        write += "displayOnTop:false\n";
 
     QTextStream out(&fh);
     out.setCodec("UTF8");

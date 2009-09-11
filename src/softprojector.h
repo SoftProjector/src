@@ -30,6 +30,7 @@ public:
     Display1 *display;
     EditWidget *editWidget;
     bool showing; // whether we are currently showing to the projector
+    bool displayOnTop; // whether display screen is alway on top on not
 
     void readConfigurationFile();
     void writeConfigurationFile();
@@ -41,6 +42,7 @@ private:
     QString type;
 
 private slots:
+    void getDisplayTop();
     void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);

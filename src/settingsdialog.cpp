@@ -46,8 +46,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     // Remove the primary bible from the secondary list:
     updateSecondaryBibleMenu();
     
+    // Set Display screen alway on top or not
+    if (softProjector->displayOnTop)
+        ui->display_on_top_box->setChecked(true);
+
+    // Set to use or not to use fading
     // ui->use_fading_effects_box->setChecked(
 
+
+    // Set type of creen to show Black or Wallpaper
     if( softProjector->display->getShowBlack() )
         ui->black_screen_rbutton->setChecked(true);
     else
@@ -123,6 +130,8 @@ void SettingsDialog::on_buttonBox_accepted()
 
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
+
+    softProjector->displayOnTop = display_on_top;
 
     softProjector->bibleWidget->loadBibles(primaryBible, secondaryBible);
 
