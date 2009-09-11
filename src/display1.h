@@ -41,15 +41,13 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QString MainText;
     QString CaptionText;
     //QString root_path;
     QFont main_font;
+    //QFont current_font; // Font for current scrren
     QString wallpaper_path; // Wallpaper image file path
     QImage wallpaper; // Wallpaper image
     bool show_black; // Whether to show black instead of wallpaper on clear
-    //	QPixmap FaderPixmap;
-    QPixmap sharp0;
     QImage sharp1;
     //	QImage blured1;
     int acounter[2];

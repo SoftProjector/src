@@ -80,11 +80,6 @@ void Display1::setAllText(QString text, QString caption)
 
     CaptionText = caption;
 
-
-    int font_size=45;
-    // FIXME   font_size = main_font.pointSize();
-    int width_of_screen=width();
-    QFontMetrics fm(main_font);
     QStringList lines_list = text.split("\n");
 
     // Remove the first line if it starts with "Kuplet" or "Pripev":
@@ -95,62 +90,70 @@ void Display1::setAllText(QString text, QString caption)
 
 
 
-    int width_of_space;
+    int allowed_width;
+    int allowed_height = height() - 2*MARGIN;
+
+    //int font_size=45;
+    // Set the initial font size:
+    int font_size = main_font.pointSize();
 
     bool exit = false;
     do
     {
-        main_font.setPointSize(font_size);
-        setFont(main_font);
-        fm=QFontMetrics(font());
+        // Go through this loop until the font size is small enough to fit the screen
+        QFont current_font = main_font;
+        current_font.setPointSize(font_size);
+        setFont(current_font);
+        QFontMetrics fm = QFontMetrics(current_font);
 
-        width_of_space=fm.width(" ",-1);
-        MainText.clear();
+        // How many pixels we can use at this font size and sreen width:
+        allowed_width = width() - MARGIN - fm.width(" ",-1);
+
         DisplayList.clear();
-        QString tempText;
 
-        for (int j=0;j<lines_list.size();++j){
-            QString text2="";
-            text2=lines_list.at(j);
-            QStringList list2=text2.split(" ");
+        for (int j=0;j<lines_list.size();++j)
+        {
+            QString curr_line = lines_list.at(j);
+            QStringList words_list = curr_line.split(" ");
 
-            if (fm.width(text2,-1)>(width_of_screen-width_of_space-MARGIN))
+            if (fm.width(curr_line,-1)>allowed_width)
             {
-                MainText.clear();
-                for (int i = 0; i < list2.size(); ++i)
+                // If this line is too wide for the screen
+                QString tempText;
+                QString part_of_line;
+                for (int i = 0; i < words_list.size(); ++i)
                 {
-                    if (fm.width(tempText+" "+list2[i],-1)<(width_of_screen-width_of_space-MARGIN))                    {
-                        MainText += list2[i]+" ";
-                        tempText=MainText;
+                    if (fm.width(tempText+" "+words_list[i],-1) < allowed_width)
+                    {
+                        part_of_line += words_list[i]+" ";
+                        tempText = part_of_line;
                     }
                     else
                     {
-                        DisplayList << MainText;
-                        tempText=list2[i] + " ";
-                        MainText = tempText;
+                        DisplayList << part_of_line;
+                        tempText = words_list[i] + " ";
+                        part_of_line = tempText;
                     }
                 }
-                DisplayList << MainText;
+                DisplayList << part_of_line;
             }
             else
-                DisplayList << text2;
+                DisplayList << curr_line;
 
         }
 
         font_size -= 4;
-
-        int display_height = DisplayList.size() * fm.height();
-        int text_height = height() - 2*MARGIN;
+        //qDebug() << "FM HEIGHT:" << fm.height();
+        int text_height = DisplayList.size() * fm.height();
         if( !CaptionText.isEmpty() )
-            text_height -= fm.height();
-        exit = (display_height <= text_height);
+            text_height += fm.height();
+        exit = (text_height <= allowed_height);
     }
     while( !exit );
 
 
     //acounter[0]=0;
     //acounter[1]=255;
-    //sharp0=QPixmap::fromImage (sharp1);
     //timer->stop();
     renderText();
     timer->start(0);
@@ -160,13 +163,13 @@ void Display1::setAllText(QString text, QString caption)
 void Display1::renderText()
 {
     // Render the text
-    QImage temp1;
-    temp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
+    QImage image;
+    image=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
     sharp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
-    QPainter painter2(&temp1);
-    // painter2.setRenderHint(QPainter::TextAntialiasing);
-    //painter2.setRenderHint( QPainter::Antialiasing);
-    QPainter painter3(&sharp1);
+    QPainter text_painter(&image);
+    // text_painter.setRenderHint(QPainter::TextAntialiasing);
+    //text_painter.setRenderHint( QPainter::Antialiasing);
+    QPainter blur_painter(&sharp1);
     QString path;
 
     if( !show_black || !DisplayList.isEmpty() )
@@ -181,38 +184,39 @@ void Display1::renderText()
             wallpaper.load(wallpaper_path);
             wallpaper=wallpaper.scaled(width(),height());
         }
-        painter3.drawImage(0,0,wallpaper);
+        blur_painter.drawImage(0,0,wallpaper);
 
     }
 
     QFontMetrics fm(font());
     int start_y;
-    painter2.setPen(QColor(TEXT_COLOR));
+    text_painter.setPen(QColor(TEXT_COLOR));
     if( CaptionText.isEmpty() )
         start_y=(height()-(fm.height()*(DisplayList.size()+1)))/2;
     else
         start_y=(height()-(fm.height()*(DisplayList.size()+2)))/2;
 
     int start_x=MARGIN;
-    painter2.setFont(main_font);
+    text_painter.setFont(font());
     for (int i = 0; i < DisplayList.size(); ++i)
     {
-        painter2.drawText(fm.width(" ",-1)+start_x, start_y+(i+1)*fm.height(), DisplayList.at(i));
+        text_painter.drawText(fm.width(" ",-1)+start_x, start_y+(i+1)*fm.height(), DisplayList.at(i));
     }
     if (!CaptionText.isEmpty())
     {
-        main_font.setPointSize(20);
-        painter2.setFont(main_font);
-        fm = QFontMetrics (main_font);
+        QFont caption_font = font();
+        caption_font.setPointSize(20);
+        text_painter.setFont(caption_font);
+        fm = QFontMetrics(caption_font);
         start_x=(width()-fm.width(CaptionText))/2;
         start_y=height()-20;//fm.height();
-        painter2.drawText(start_x,start_y,CaptionText);
+        text_painter.drawText(start_x,start_y,CaptionText);
     }
-    m_blurred=temp1;
+    m_blurred=image;
 //    fastbluralpha(m_blurred,BLUR_RADIUS);
-    painter3.drawImage(BORDER,BORDER,m_blurred);
-    temp1.invertPixels();
-    painter3.drawImage(0,0,temp1);
+    blur_painter.drawImage(BORDER,BORDER,m_blurred);
+    image.invertPixels();
+    blur_painter.drawImage(0,0,image);
 
 }
 
@@ -263,8 +267,7 @@ void Display1::setShowBlack(bool new_show_black)
 void Display1::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,sharp0);
-/*    if (painter.paintEngine()->hasFeature(QPaintEngine::ConstantOpacity))
+    /*    if (painter.paintEngine()->hasFeature(QPaintEngine::ConstantOpacity))
     {
         double alpha;
         alpha=acounter[0]/255;
