@@ -109,7 +109,6 @@ void Display1::renderText(bool text_present)
 
     setFont(main_font);
 
-    qDebug() << "renderText() begin";
 
     if( !show_black || text_present )
     {
