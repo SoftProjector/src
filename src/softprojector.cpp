@@ -188,6 +188,8 @@ void SoftProjector::on_actionClose_triggered()
 
 void SoftProjector::setSongList(Song song, int row)
 {
+    current_song = song;
+    current_song_verse = row;
     SongDatabase song_database;
     QStringList song_list = song.getSongTextList();
 
@@ -207,9 +209,8 @@ void SoftProjector::setSongList(Song song, int row)
 void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
     SongDatabase song_database;
-    qDebug() << "GETTING SONG LIST";
+    //current_song.readData();
     QStringList song_list = current_song.getSongTextList();
-    qDebug() << "  GOT SONG LIST";
 
     QString main_text;
     QString caption_text;
@@ -249,7 +250,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     int h = height - top - top;
 
     QFont font = painter->font();
-    qDebug() << "drawText() begin";
 
     // Allocate this much of the screen to the caption text:
     int caption_height = 100;
@@ -264,7 +264,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 
     int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
     display->paintTextToRect(painter, rect, flags, main_text);
-    qDebug() << "Painted text";
 
 
     if (!caption_text.isEmpty())
@@ -304,7 +303,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     int h = height - top - top;
 
     QFont font = painter->font();
-    qDebug() << "drawText() begin";
 
     // Allocate this much of the screen to the caption text:
     int caption_height = 100;
@@ -319,7 +317,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
     int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
     display->paintTextToRect(painter, rect, flags, main_text);
-    qDebug() << "Painted text";
 
 
     if (!caption_text.isEmpty())
@@ -386,7 +383,6 @@ void SoftProjector::updateScreen()
     {
         if(type=="song")
         {
-            qDebug() << "UPDATE SONG";
             Song song = songWidget->currentSong();
             int row = ui->listShow->currentIndex().row();
             current_song = song;
