@@ -15,6 +15,7 @@ class SongWidget : public QWidget {
 public:
     explicit SongWidget(QWidget *parent = 0);
     virtual ~SongWidget();
+    Song currentSong();
 
 public slots:
     Song getSongToEdit();
@@ -45,7 +46,6 @@ private slots:
     void sendToProjector(Song song, int row);
     void loadTitles(QString tSbornik);
     void loadSborniks();
-    Song currentSong();
     void updateButtonStates();
 
 private:

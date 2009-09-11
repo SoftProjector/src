@@ -34,6 +34,7 @@ public:
     bool display_on_top; // whether display screen is alway on top on not
     Song current_song;
     int current_song_verse;
+    Verse current_verse;
 
     void applySetting(QString name, QString value);
     void readXMLConfigurationFile();
@@ -44,8 +45,6 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
-    QString main_text;
-    QString caption_text;
 
 private slots:
     void on_tabWidget_currentChanged(int index);
@@ -67,10 +66,6 @@ private slots:
 
 public:
     void updateScreen();
-    void setAllText(QString main, QString caption);
-    void setCurrentVerse(Verse verse);
-    void setCurrentSongVerse(Song song, int row);
-
 
 protected:
     void closeEvent(QCloseEvent *event);

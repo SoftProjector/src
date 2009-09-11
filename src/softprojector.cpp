@@ -34,7 +34,7 @@ SoftProjector::SoftProjector(QWidget *parent)
         display->show();
 
 
-    display->renderText( !main_text.isEmpty() );
+    display->renderText(false);
 
     songWidget = new SongWidget;
     editWidget = new EditWidget;
@@ -202,6 +202,66 @@ void SoftProjector::setSongList(QStringList showList, QString caption, int row)
 
 void SoftProjector::drawText(QPainter *painter, int width, int height)
 {
+    if( !showing )
+        return;
+
+    QString main_text;
+    QString caption_text;
+
+    if(type=="song")
+    {
+        SongDatabase song_database;
+        QStringList song_list = song_database.getSongList(current_song);
+
+        bool last_verse = ( current_song_verse == song_list.count()-1 );
+
+        QStringList lines_list = song_list.at(current_song_verse).split("\n");
+
+        // Remove the first line if it starts with "Kuplet" or "Pripev":
+        QString textemp = lines_list[0];
+        textemp.remove(6,10);
+
+        QTextCodec *codec;
+        codec = QTextCodec::codecForName("UTF8");
+
+        if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+            lines_list.removeFirst();
+
+        // Convert lines_list to a string:
+        main_text = "";
+        for (int i = 0; i < lines_list.size(); ++i)
+        {
+            if( i > 0 )
+                main_text += "\n";
+            main_text += lines_list.at(i);
+        }
+
+        if( last_verse )
+            caption_text = "*\t*\t*";
+        else
+            caption_text = "";
+    }
+    else if(type=="bible")
+    {
+        QString text = current_verse.primary_text;
+        QString caption = current_verse.primary_caption;
+        if( !current_verse.secondary_text.isNull() )
+        {
+            text.append("\n");
+            text += current_verse.secondary_text;
+            caption.append("    ");
+            caption += current_verse.secondary_caption;
+        }
+
+        // FIXME we need code here that will display the verse so that the
+        // primary caption is right below the primary text, and secondary caption
+        // is right bellow the secondary text
+
+        main_text = text;
+        caption_text = caption;
+    }
+
+
     // Margins:
     int left = 30;
     int top = 20;
@@ -271,10 +331,7 @@ void SoftProjector::updateScreen()
     if( currentRow == -1 || showing == false )
     {
         // Do not display any text:
-        main_text = "";
-        caption_text = "";
-        display->update();
-
+        display->renderText(false);
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
@@ -285,117 +342,20 @@ void SoftProjector::updateScreen()
             qDebug() << "UPDATE SONG";
             Song song = songWidget->currentSong();
             int row = ui->listShow->currentIndex().row();
-            setCurrentSongVerse(song, row);
+            current_song = song;
+            current_song_verse = row;
+            display->renderText(true);
         }
         else if(type=="bible")
         {
-            Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
-            setCurrentVerse(verse);
+            current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
+            display->renderText(true);
         }
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
     }
 }
 
-
-void SoftProjector::setAllText(QString text, QString caption)
-{
-
-    caption_text = caption;
-
-    QStringList lines_list = text.split("\n");
-
-    // Remove the first line if it starts with "Kuplet" or "Pripev":
-    QString textemp = lines_list[0];
-    textemp.remove(6,10);
-
-    QTextCodec *codec;
-    codec = QTextCodec::codecForName("UTF8");
-
-    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
-        lines_list.removeFirst();
-
-    // Convert lines_list to a string:
-    main_text = "";
-    for (int i = 0; i < lines_list.size(); ++i)
-    {
-        if( i > 0 )
-            main_text += "\n";
-        main_text += lines_list.at(i);
-    }
-
-
-    //acounter[0]=0;
-    //acounter[1]=255;
-    //timer->stop();
-    qDebug() << "calling renderText()...";
-    display->renderText( !main_text.isEmpty() );
-
-    //timer->start(0);
-}
-
-
-void SoftProjector::setCurrentVerse(Verse verse)
-{
-    QString text = verse.primary_text;
-    QString caption = verse.primary_caption;
-    if( !verse.secondary_text.isNull() )
-    {
-        text.append("\n");
-        text += verse.secondary_text;
-        caption.append("    ");
-        caption += verse.secondary_caption;
-    }
-
-    // FIXME we need code here that will display the verse so that the
-    // primary caption is right below the primary text, and secondary caption
-    // is right bellow the secondary text
-
-    main_text = text;
-    caption_text = caption;
-
-    display->renderText( !main_text.isEmpty() );
-}
-
-
-void SoftProjector::setCurrentSongVerse(Song song, int row)
-{
-    current_song = song;
-    current_song_verse = row;
-
-    SongDatabase song_database;
-    QStringList song_list = song_database.getSongList(song);
-
-    bool last_verse = ( row == song_list.count()-1 );
-
-    QStringList lines_list = song_list.at(row).split("\n");
-
-    // Remove the first line if it starts with "Kuplet" or "Pripev":
-    QString textemp = lines_list[0];
-    textemp.remove(6,10);
-
-    QTextCodec *codec;
-    codec = QTextCodec::codecForName("UTF8");
-
-    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
-        lines_list.removeFirst();
-
-    // Convert lines_list to a string:
-    main_text = "";
-    for (int i = 0; i < lines_list.size(); ++i)
-    {
-        if( i > 0 )
-            main_text += "\n";
-        main_text += lines_list.at(i);
-    }
-
-
-    if( last_verse )
-        caption_text = "*\t*\t*";
-    else
-        caption_text = "";
-    display->renderText( !main_text.isEmpty() );
-}
 
 
 void SoftProjector::on_clear_button_clicked()
