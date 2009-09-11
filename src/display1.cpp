@@ -67,45 +67,6 @@ void Display1::CrossFade()
 
 
 
-void Display1::setAllText(QString text, QString caption)
-{
-
-    if( text.isEmpty() )
-    {
-        display_text = "";
-        update();
-        return;
-    }
-
-
-    CaptionText = caption;
-
-    QStringList lines_list = text.split("\n");
-
-    // Remove the first line if it starts with "Kuplet" or "Pripev":
-    QString textemp = lines_list[0];
-    textemp.remove(6,10);
-    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
-        lines_list.removeFirst();
-
-    // Convert lines_list to a string:
-    display_text = "";
-    for (int i = 0; i < lines_list.size(); ++i)
-    {
-        if( i > 0 )
-            display_text += "\n";
-        display_text += lines_list.at(i);
-    }
-
-
-    //acounter[0]=0;
-    //acounter[1]=255;
-    //timer->stop();
-    renderText();
-    timer->start(0);
-}
-
-
 
 
 void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
@@ -135,7 +96,7 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
 }
 
 
-void Display1::renderText()
+void Display1::renderText(bool text_present)
 {
     // Render the text
     QImage image;
@@ -148,7 +109,9 @@ void Display1::renderText()
 
     setFont(main_font);
 
-    if( !show_black || !display_text.isEmpty() )
+    qDebug() << "renderText() begin";
+
+    if( !show_black || text_present )
     {
         // Draw the background picture if there is text to display
         // If show_black is False, always draw the wallpaper
@@ -161,7 +124,6 @@ void Display1::renderText()
         blur_painter.drawImage(0,0,wallpaper);
     }
 
-    QFontMetrics fm(font());
     text_painter.setPen(QColor(TEXT_COLOR));
     text_painter.setFont(font());
 
@@ -173,7 +135,7 @@ void Display1::renderText()
     blur_painter.drawImage(BORDER,BORDER,m_blurred);
     image.invertPixels();
     blur_painter.drawImage(0,0,image);
-
+    update();
 }
 
 QFont Display1::getFont()

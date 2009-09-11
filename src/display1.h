@@ -5,7 +5,6 @@
 #include <QString>
 #include <QFont>
 #include <QStringList>
-#include <QFontMetrics>
 #include <QImage>
 #include <QTimer>
 #include <QPaintEngine>
@@ -21,13 +20,10 @@ public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
     void paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
-    QString CaptionText;
-    QString display_text;
 
 
 public slots:
-    void setAllText(QString text,QString caption);
-    void renderText();
+    void renderText(bool text_present);
     void CrossFade();
     QFont getFont();
     void setNewFont(QFont newFont);

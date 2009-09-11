@@ -34,8 +34,7 @@ SoftProjector::SoftProjector(QWidget *parent)
         display->show();
 
 
-
-    display->renderText();
+    display->renderText( !main_text.isEmpty() );
 
     songWidget = new SongWidget;
     editWidget = new EditWidget;
@@ -210,14 +209,12 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
     int h = height - top - top;
 
     QFont font = painter->font();
+    qDebug() << "drawText() begin";
 
-    QFontMetrics fm = QFontMetrics(font);
+    // Allocate this much of the screen to the caption text:
+    int caption_height = 100;
 
-    QString CaptionText = display->CaptionText;
-    QString display_text = display->display_text;
-
-    int caption_height = fm.height();
-    if( !CaptionText.isEmpty() )
+    if( !caption_text.isEmpty() )
         h -= caption_height;
     int caption_top = top + h;
 
@@ -226,21 +223,18 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
 
 
     int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
-    display->paintTextToRect(painter, rect, flags, display_text);
+    display->paintTextToRect(painter, rect, flags, main_text);
+    qDebug() << "Painted text";
 
 
-
-    if (!CaptionText.isEmpty())
+    if (!caption_text.isEmpty())
     {
         font.setPointSize(20);
         painter->setFont(font);
-        fm = QFontMetrics(font);
 
         QRect rect = QRect(left, caption_top, w, caption_height);
-        //text_painter.setFont(font());
-
         int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
-        display->paintTextToRect(painter, rect, flags, CaptionText);
+        display->paintTextToRect(painter, rect, flags, caption_text);
     }
 
 }
@@ -277,7 +271,7 @@ void SoftProjector::updateScreen()
     if( currentRow == -1 || showing == false )
     {
         // Do not display any text:
-        display->setAllText(QString(" "), QString());
+        setAllText(QString(" "), QString());
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
@@ -289,7 +283,7 @@ void SoftProjector::updateScreen()
             QString caption;
             if( last_verse )
                 caption = QString("*\t*\t*");
-            display->setAllText(ui->listShow->currentItem()->text(), caption);
+            setAllText(ui->listShow->currentItem()->text(), caption);
         }
         else if(type=="bible")
         {
@@ -306,11 +300,56 @@ void SoftProjector::updateScreen()
             // FIXME we need code here that will display the verse so that the
             // primary caption is right below the primary text, and secondary caption
             // is right bellow the secondary text
-            display->setAllText(text, caption);
+            setAllText(text, caption);
         }
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
     }
+}
+
+
+void SoftProjector::setAllText(QString text, QString caption)
+{
+
+    if( text.isEmpty() )
+    {
+        main_text = text;
+        caption_text = caption;
+        display->update();
+        return;
+    }
+
+    caption_text = caption;
+
+    QStringList lines_list = text.split("\n");
+
+    // Remove the first line if it starts with "Kuplet" or "Pripev":
+    QString textemp = lines_list[0];
+    textemp.remove(6,10);
+
+    QTextCodec *codec;
+    codec = QTextCodec::codecForName("UTF8");
+
+    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+        lines_list.removeFirst();
+
+    // Convert lines_list to a string:
+    main_text = "";
+    for (int i = 0; i < lines_list.size(); ++i)
+    {
+        if( i > 0 )
+            main_text += "\n";
+        main_text += lines_list.at(i);
+    }
+
+
+    //acounter[0]=0;
+    //acounter[1]=255;
+    //timer->stop();
+    qDebug() << "calling renderText()...";
+    display->renderText( !main_text.isEmpty() );
+
+    //timer->start(0);
 }
 
 void SoftProjector::on_clear_button_clicked()
