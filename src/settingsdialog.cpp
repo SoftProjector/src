@@ -71,6 +71,9 @@ void SettingsDialog::updateSecondaryBibleMenu()
     QString sbible = ui->secondary_bible_menu->currentText();
     QStringList secondary_bibles = bibles;
     secondary_bibles.removeOne(pbible);
+
+    second_id_list = bible_id_list;
+    second_id_list.removeAt(ui->primary_bible_menu->currentIndex());
     ui->secondary_bible_menu->clear();
     ui->secondary_bible_menu->addItem("None");
     ui->secondary_bible_menu->addItems(secondary_bibles);
@@ -116,7 +119,7 @@ void SettingsDialog::on_buttonBox_accepted()
     if (secondaryBibleInd <= 0)
         secondaryBible = "none";
     else
-        secondaryBible = bible_id_list[ui->secondary_bible_menu->currentIndex()-1];
+        secondaryBible = second_id_list[ui->secondary_bible_menu->currentIndex()-1];
 
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();

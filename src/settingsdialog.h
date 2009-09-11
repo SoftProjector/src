@@ -28,6 +28,7 @@ private:
     QFont new_font;
     QString new_wallpaper_path;
     QStringList bible_id_list;
+    QStringList second_id_list;
 
 private slots:
     void on_primary_bible_menu_activated(QString );
