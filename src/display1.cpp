@@ -88,79 +88,14 @@ void Display1::setAllText(QString text, QString caption)
     if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
         lines_list.removeFirst();
 
-
-    // The displayed text should take less space than this:
-    int allowed_width;
-    int allowed_height = height() - 2*MARGIN;
-
-    // Set the initial font size:
-    int font_size = main_font.pointSize();
-
-
-    bool exit = false;
-    do
+    // Convert lines_list to a string:
+    display_text = "";
+    for (int i = 0; i < lines_list.size(); ++i)
     {
-        // Go through this loop until the font size is small enough to fit the screen
-        // Descrease the font size in each iteration.
-        QFont current_font = main_font;
-        current_font.setPointSize(font_size);
-        setFont(current_font);
-        QFontMetrics fm = QFontMetrics(current_font);
-
-        // How many pixels we can use at this font size and sreen width:
-        allowed_width = width() - MARGIN - fm.width(" ",-1);
-
-        QStringList DisplayList;
-
-        for (int j=0;j<lines_list.size();++j)
-        {
-            QString curr_line = lines_list.at(j);
-            QStringList words_list = curr_line.split(" ");
-
-            if (fm.width(curr_line,-1)>allowed_width)
-            {
-                // If this line is too wide for the screen at this font size;
-                // then try to split it into 2 or more lines:
-                QString tempText;
-                QString part_of_line;
-                for (int i = 0; i < words_list.size(); ++i)
-                {
-                    if (fm.width(tempText+" "+words_list[i],-1) < allowed_width)
-                    {
-                        part_of_line += words_list[i]+" ";
-                        tempText = part_of_line;
-                    }
-                    else
-                    {
-                        DisplayList << part_of_line;
-                        tempText = words_list[i] + " ";
-                        part_of_line = tempText;
-                    }
-                }
-                DisplayList << part_of_line;
-            }
-            else
-                DisplayList << curr_line;
-
-        }
-
-        font_size -= 4;
-        //qDebug() << "FM HEIGHT:" << fm.height();
-        int text_height = DisplayList.size() * fm.height();
-        if( !CaptionText.isEmpty() )
-            text_height += fm.height();
-        exit = (text_height <= allowed_height);
-
-        // Convert DisplayList to a string:
-        display_text = "";
-        for (int i = 0; i < DisplayList.size(); ++i)
-        {
-            if( i > 0 )
-                display_text += "\n";
-            display_text += DisplayList.at(i);
-        }
+        if( i > 0 )
+            display_text += "\n";
+        display_text += lines_list.at(i);
     }
-    while( !exit );
 
 
     //acounter[0]=0;
@@ -181,6 +116,8 @@ void Display1::renderText()
     // text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
     QPainter blur_painter(&sharp1);
+
+    setFont(main_font);
 
     if( !show_black || !display_text.isEmpty() )
     {
@@ -207,10 +144,27 @@ void Display1::renderText()
     if( !CaptionText.isEmpty() )
         bottom -= fm.height();
 
-    text_painter.setFont(font());
+    QFont paint_font = font();
+    text_painter.setFont(paint_font);
 
-    // FIXME Try Qt::TextWordWrap
-    text_painter.drawText(left, top, right-left, bottom-top, Qt::AlignHCenter | Qt::AlignVCenter, display_text);
+    // Keep decreasing the font size until the text fits into the allocated space:
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    QRect rect;
+    bool exit = false;
+    while( !exit )
+    {
+        rect = text_painter.boundingRect(left, top, right-left, bottom-top, flags, display_text);
+        exit = ( rect.left() >= left && rect.right() <= right
+                 && rect.width() <= right-left && rect.height() <= bottom-top );
+        if( !exit )
+        {
+            paint_font.setPointSize( paint_font.pointSize()-1 );
+            text_painter.setFont(paint_font);
+        }
+    }
+
+    text_painter.drawText(rect, flags, display_text);
+    //qDebug() << "DRAWING INTO:" << left << top << right-left << bottom-top;
 
     if (!CaptionText.isEmpty())
     {
