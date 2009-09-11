@@ -47,8 +47,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
-    connect(songWidget, SIGNAL(sendSong(QStringList, QString, int)),
-            this, SLOT(setSongList(QStringList, QString, int)));
+    connect(songWidget, SIGNAL(sendSong(Song, int)),
+            this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
             this, SLOT(setChapterList(QStringList, int, QString)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
@@ -186,15 +186,18 @@ void SoftProjector::on_actionClose_triggered()
     close();
 }
 
-void SoftProjector::setSongList(QStringList showList, QString caption, int row)
+void SoftProjector::setSongList(Song song, int row)
 {
+    SongDatabase song_database;
+    QStringList song_list = song.getSongTextList();
+
     // Display the specified song text in the right-most column of softProjector
     type = "song";
-    ui->labelShow->setText(caption);
+    ui->labelShow->setText(song.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
-    ui->listShow->addItems(showList);
+    ui->listShow->addItems(song_list);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
     updateScreen();
@@ -205,7 +208,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 {
     SongDatabase song_database;
     qDebug() << "GETTING SONG LIST";
-    QStringList song_list = song_database.getSongList(current_song);
+    QStringList song_list = current_song.getSongTextList();
     qDebug() << "  GOT SONG LIST";
 
     QString main_text;

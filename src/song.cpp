@@ -43,21 +43,34 @@ QString clean(QString str)
 
 
 
-
-Song::Song(int song_id, int song_num, QString song_title, QString song_sbornik)
-{
-    songID = song_id;
-    num = song_num;
-    title = song_title;
-    sbornik = song_sbornik;
-}
 Song::Song()
 {
 }
 
-QStringList Song::formatSongList()
+Song::Song(int id)
 {
-    QString song = songText;
+    songID = id;
+}
+
+void Song::readData()
+{
+    QSqlQuery sq;
+    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE id = " + QString::number(songID));
+    sq.first();
+    title = sq.value(0).toString();
+    category = sq.value(1).toInt();
+    tune = sq.value(2).toString();
+    wordsBy = sq.value(3).toString();
+    musicBy = sq.value(4).toString();
+    songText = sq.value(5).toString();
+    font = sq.value(6).toString();
+    alingment = sq.value(7).toString();
+    background = sq.value(8).toString();
+}
+
+
+QStringList Song::getSongTextList()
+{
     QStringList formatedSong;
     QString text, text2, codec;
     QStringList split, songlist;
@@ -65,7 +78,7 @@ QStringList Song::formatSongList()
     bool has_chorus=0;
     int i=(0),j(0),k(0),chor(0);
     
-    songlist = song.split("@$");//songText.split("@$");
+    songlist = songText.split("@$");//songText.split("@$");
     
     while(i < songlist.size() )
     {
@@ -316,53 +329,11 @@ void Song::saveNew()
 
 Song SongDatabase::getSong(int id)
 {
-    QSqlQuery sq;
-    Song song;
-    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE id = " + QString::number(id));
-    while (sq.next()){
-        song.songID = id;
-        song.title = sq.value(0).toString();
-        song.category = sq.value(1).toInt();
-        song.tune = sq.value(2).toString();
-        song.wordsBy = sq.value(3).toString();
-        song.musicBy = sq.value(4).toString();
-        song.songText = sq.value(5).toString();
-        song.font = sq.value(6).toString();
-        song.alingment = sq.value(7).toString();
-        song.background = sq.value(8).toString();
-        break;
-    }
+    Song song(id);
+    song.readData();
     return song;
 }
 
-Song SongDatabase::getSong(QString gtitle)
-{
-    QSqlQuery sq;
-    Song song;
-    sq.exec("SELECT id, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE title like '" + gtitle + "'");
-    while (sq.next()){
-        song.songID = sq.value(0).toInt();
-        song.title = gtitle;
-        song.category = sq.value(1).toInt();
-        song.tune = sq.value(2).toString();
-        song.wordsBy = sq.value(3).toString();
-        song.musicBy = sq.value(4).toString();
-        song.songText = sq.value(5).toString();
-        song.font = sq.value(6).toString();
-        song.alingment = sq.value(7).toString();
-        song.background = sq.value(8).toString();
-        break;
-    }
-    return song;
-}
-
-QStringList SongDatabase::getSongList(Song orig_song)
-{    
-    Song song = getSong(orig_song.title);
-    // For some reason we need to re-get the song for songText to be set correctly
-    QStringList song_list = song.formatSongList();
-    return song_list;
-}
 
 
 
@@ -384,7 +355,10 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
             sq2.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
             sq2.first();
             song_title = sq2.value(0).toString();
-            Song song = Song(song_id, song_num, song_title, sbornik);
+            Song song = Song(song_id);
+            song.readData();
+            song.num = song_num;
+            song.sbornik = sbornik;
             songs.append(song);
         }
     }
@@ -397,11 +371,10 @@ QList<Song> SongDatabase::getSongs(QString sbornik)
         {
             int song_id = sq.value(0).toInt();
             int song_num = sq.value(1).toInt();
-            QString song_title;
-            sq1.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
-            sq1.first();
-            song_title = sq1.value(0).toString();
-            Song song = Song(song_id, song_num, song_title, sbornik);
+            Song song = Song(song_id);
+            song.readData();
+            song.num = song_num;
+            song.sbornik = sbornik;
             songs.append(song);
         }
     } // end of not all sborniks

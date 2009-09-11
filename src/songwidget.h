@@ -25,7 +25,7 @@ protected:
 
 signals:
     // To be used ONLY by SongWidget::sendToProjector():
-    void sendSong(QStringList songList, QString caption, int currentItem);
+    void sendSong(Song song, int currentItem);
 
 private slots:
     void on_listPreview_doubleClicked(QModelIndex index);

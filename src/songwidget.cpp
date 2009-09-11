@@ -167,7 +167,7 @@ void SongWidget::selectMatchingSong(QString text)
 
 void SongWidget::sendToPreview(Song song)
 {
-    QStringList song_list = song_database.getSongList(song);
+    QStringList song_list = song.getSongTextList();
     ui->listPreview->clear();
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
@@ -177,8 +177,7 @@ void SongWidget::sendToPreview(Song song)
 void SongWidget::sendToProjector(Song song, int row)
 {
     // Display the specified song text in the right-most column of softProjector:
-    QStringList song_list = song_database.getSongList(song);
-    emit sendSong(song_list, song.title, row);
+    emit sendSong(song, row);
 }
 
 
@@ -266,8 +265,7 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 
 void SongWidget::on_btnLive_clicked()
 {
-    sendToProjector(preview_song, ui->listPreview->currentRow());
-//    sendToProjector(preview_song, 0); // Send the first verse
+    sendToProjector(preview_song, 0); // Send the first verse
 }
 
 

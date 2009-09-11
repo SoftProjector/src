@@ -11,14 +11,15 @@ class Song
 {
  public:
     Song();
-    Song(int song_id, int song_num, QString song_title, QString song_sbornik);
+    Song(int id);
+    void readData();
     int num; // Number of the song in the specified sbornik
     QString title;
     QString sbornik;
 
     void saveUpdate();
     void saveNew();
-    QStringList formatSongList();
+    QStringList getSongTextList();
 
 //private:
     int songID; // Database ID of this song
@@ -84,8 +85,6 @@ public:
     void saveNew();
     void deleteSong(int songId);
     Song getSong(int id);
-    Song getSong(QString title);
-    QStringList getSongList(Song song);
     QStringList getUserSborniks();
     QList<Song> getSongs(QString sbornik);
     int lastUser(QString sbornik);
