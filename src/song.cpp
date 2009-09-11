@@ -139,17 +139,18 @@ QVariant SongsModel::headerData(int section,
                                  Qt::Orientation orientation,
                                  int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
-        return QVariant();
-
-    switch(section) {
-    case 0:
-        return QVariant("Num");
-    case 1:
-        return QVariant("Title");
-    case 2:
-        return QVariant("Sbornik");
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
+    {
+        switch(section) {
+        case 0:
+            return QVariant("Num");
+        case 1:
+            return QVariant("Title");
+        case 2:
+            return QVariant("Sbornik");
+        }
     }
+    return QVariant();
 }
 
 void SongsModel::emitLayoutChanged()
