@@ -8,6 +8,7 @@
 SoftProjector::SoftProjector(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::SoftProjectorClass)
 {
+
     //Setting up the Display Screen
     QDesktopWidget *desktop;
     desktop = new QDesktopWidget();
@@ -17,9 +18,19 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+    bibleWidget = new BibleWidget;
 
-    getDisplayTop();
-    if (displayOnTop)
+    ui->setupUi(this);
+    ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
+
+
+
+    //readConfigurationFile();
+    readXMLConfigurationFile();
+
+
+    //getDisplayTop();
+    if (display_on_top)
         display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
     if( desktop->numScreens() > 1 )
@@ -36,13 +47,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     }
 
 
-    ui->setupUi(this);
-    ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
 
-    bibleWidget = new BibleWidget;
 
-    // Will modify display's font and wallpaper:
-    readConfigurationFile();
     display->renderText();
 
     songWidget = new SongWidget;
@@ -79,7 +85,7 @@ void SoftProjector::getDisplayTop()
     if( ! fh.exists() )
     {
         // Settings file does not exist, use default settings:
-        displayOnTop = false;
+        display_on_top = false;
     }
 
     // Read the settings file:
@@ -89,18 +95,21 @@ void SoftProjector::getDisplayTop()
     while (! on_top.startsWith("display"))
         on_top = QString::fromUtf8(fh.readLine().trimmed());
 
-//    on_top.remove("displayOnTop:");
-//    on_top = on_top.trimmed();
-//
+    //    on_top.remove("display_on_top:");
+    //    on_top = on_top.trimmed();
+    //
     qDebug()<< on_top;
 
     if (on_top == "displayOnTop:true")
-        displayOnTop = true;
+        display_on_top = true;
     else
-        displayOnTop = false;
+        display_on_top = false;
 
     fh.close();
 }
+
+
+
 
 void SoftProjector::readConfigurationFile()
 {
@@ -140,8 +149,8 @@ void SoftProjector::readConfigurationFile()
     bibleWidget->loadBibles(primary_bible, secondary_bible);
 
     fh.close();
-}
 
+}
 
 void SoftProjector::writeConfigurationFile()
 {
@@ -174,7 +183,7 @@ void SoftProjector::writeConfigurationFile()
 //    fh.write("\n");
     write += bibleWidget->getSecondary() + "\n";
 
-    if (displayOnTop)
+    if (display_on_top)
         write += "displayOnTop:true\n";
     else
         write += "displayOnTop:false\n";
@@ -188,6 +197,93 @@ void SoftProjector::writeConfigurationFile()
     // FIXME also save black, verse, primarybible, secondarybible
 }
 
+
+
+void SoftProjector::writeXMLConfigurationFile()
+{
+    // Method for writing the settings to XML format
+
+    QFile fh("settings.xml");
+    fh.open(QIODevice::WriteOnly);
+    QXmlStreamWriter xml(&fh);
+    xml.setAutoFormatting(true);
+
+    xml.writeStartDocument();
+    xml.writeStartElement("settings");
+
+    QString font_string = display->getFont().toString();
+    xml.writeTextElement("font", font_string);
+
+    QString wallpaper_path = display->getWallpaper();
+    xml.writeTextElement("wallpaper", wallpaper_path);
+
+    if( display->getShowBlack() )
+        xml.writeTextElement("showblack", "true");
+    else
+        xml.writeTextElement("showblack", "false");
+
+    xml.writeTextElement("primary_bible", bibleWidget->getPrimary());
+    xml.writeTextElement("secondary_bible", bibleWidget->getSecondary());
+
+    if (display_on_top)
+        xml.writeTextElement("displayontop", "true");
+    else
+        xml.writeTextElement("displayontop", "false");
+
+    xml.writeEndElement(); // settings
+    xml.writeEndDocument();
+
+    fh.close();
+}
+
+void SoftProjector::applySetting(QString name, QString value)
+{
+    // Apply the specified setting to the program
+
+    if( name == "font" )
+        display->setNewFont(value);
+    else if( name == "wallpaper" )
+        display->setNewWallpaper(value);
+    else if( name == "showblack" )
+        display->setShowBlack( value == "true" );
+    else if( name == "primary_bible" )
+        bibleWidget->loadBibles(value, bibleWidget->bible.secondaryId);
+    else if( name == "secondary_bible" )
+        bibleWidget->loadBibles(bibleWidget->bible.primaryId, value);
+    else if( name == "displayontop" )
+        display_on_top = (value == "true");
+
+}
+
+void SoftProjector::readXMLConfigurationFile()
+{
+    // Method for reading XML settings format
+
+    QFile fh("settings.xml");
+    fh.open(QIODevice::ReadOnly);
+    QXmlStreamReader xml(&fh);
+    QXmlStreamReader::TokenType token;
+
+    while( !xml.atEnd() )
+    {
+        token = xml.readNext();
+        if( token == QXmlStreamReader::StartElement && xml.name() == "settings" )
+            while( token != QXmlStreamReader::EndElement ) // While in <settings>
+            {
+                token = xml.readNext();
+                if( token == QXmlStreamReader::StartElement )
+                    applySetting( xml.name().toString(), xml.readElementText() );
+            }
+    }
+    if( xml.hasError() )
+    {
+        // FIXME Show a friendly error dialog
+        qDebug() << "ERROR reading file: settings.xml";
+        //print "ERROR reading file: settings.xml"
+        //print "ERROR TYPE:", xml.errorString()
+    }
+    fh.close();
+}
 
 
 
@@ -247,36 +343,37 @@ void SoftProjector::updateScreen()
 
     if( currentRow == -1 || showing == false )
     {
-            // Do not display any text:
+        // Do not display any text:
         display->setAllText(" ", " ");
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
-        return;
     }
-
-    else if(type=="song")
+    else
     {
-        display->setAllText(ui->listShow->currentItem()->text(),"");
-    }
-    else if(type=="bible")
-    {
-        Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
-        QString text = verse.primary_text;
-        QString caption = verse.primary_caption;
-        if( !verse.secondary_text.isNull() )
+        if(type=="song")
         {
-            text.append("\n");
-            text += verse.secondary_text;
-            caption.append("    ");
-            caption += verse.secondary_caption;
+            display->setAllText(ui->listShow->currentItem()->text(),"");
         }
-        // FIXME we need code here that will display the verse so that the
-        // primary caption is right below the primary text, and secondary caption
-        // is right bellow the secondary text
-        display->setAllText(text, caption);
+        else if(type=="bible")
+        {
+            Verse verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
+            QString text = verse.primary_text;
+            QString caption = verse.primary_caption;
+            if( !verse.secondary_text.isNull() )
+            {
+                text.append("\n");
+                text += verse.secondary_text;
+                caption.append("    ");
+                caption += verse.secondary_caption;
+            }
+            // FIXME we need code here that will display the verse so that the
+            // primary caption is right below the primary text, and secondary caption
+            // is right bellow the secondary text
+            display->setAllText(text, caption);
+        }
+        ui->show_button->setEnabled(false);
+        ui->clear_button->setEnabled(true);
     }
-    ui->show_button->setEnabled(false);
-    ui->clear_button->setEnabled(true);
 }
 
 void SoftProjector::on_clear_button_clicked()

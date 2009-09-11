@@ -30,10 +30,13 @@ public:
     Display1 *display;
     EditWidget *editWidget;
     bool showing; // whether we are currently showing to the projector
-    bool displayOnTop; // whether display screen is alway on top on not
+    bool display_on_top; // whether display screen is alway on top on not
 
     void readConfigurationFile();
     void writeConfigurationFile();
+    void applySetting(QString name, QString value);
+    void readXMLConfigurationFile();
+    void writeXMLConfigurationFile();
 
 
 
