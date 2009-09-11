@@ -88,21 +88,10 @@ void SongsModel::addSong(Song song)
 
 bool SongsModel::removeRows( int row, int count, const QModelIndex & parent)
 {
-    qDebug("begin");
-    qDebug() << row;
-    qDebug() << count;
-    qDebug() << row+count-1;
-    qDebug("row count:");
-    qDebug() << rowCount();
-
     beginRemoveRows(parent, row, row+count-1);
     // Need to remove starting from the end:
     for(int i=row+count-1; i>=row; i--)
-    {
-        qDebug("Removing row:");
-        qDebug() << i;
         song_list.removeAt(i);
-    }
     endRemoveRows();
     qDebug("end");
     return true;
@@ -120,20 +109,19 @@ int SongsModel::columnCount(const QModelIndex &parent) const
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
  {
-     if (!index.isValid() )
-         return QVariant();
-
-     if ( role != Qt::DisplayRole )
-         return QVariant();
-
-     Song song = song_list.at(index.row());
-     if( index.column() == 0 )
-         return QVariant(song.num);
-     else if( index.column() == 1 )
-         return QVariant(song.title);
-     else
-         return QVariant(song.sbornik);
- }
+    if( index.isValid() && role == Qt::DisplayRole )
+    {
+        Song song = song_list.at(index.row());
+        if( index.column() == 0 )
+            return QVariant(song.num);
+        else if( index.column() == 1 )
+            return QVariant(song.title);
+        else
+            return QVariant(song.sbornik);
+    }
+    else
+        return QVariant();
+}
 
 QVariant SongsModel::headerData(int section,
                                  Qt::Orientation orientation,
