@@ -23,13 +23,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->setupUi(this);
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
 
-
-
-    //readConfigurationFile();
     readXMLConfigurationFile();
 
-
-    //getDisplayTop();
     if (display_on_top)
         display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
@@ -77,128 +72,6 @@ SoftProjector::~SoftProjector()
     delete ui;
 }
 
-void SoftProjector::getDisplayTop()
-{
-        // Read the font from the font configuration file:
-    QFile fh("settings.cfg");
-
-    if( ! fh.exists() )
-    {
-        // Settings file does not exist, use default settings:
-        display_on_top = false;
-    }
-
-    // Read the settings file:
-    QString on_top;
-
-    fh.open(QIODevice::Text | QIODevice::ReadOnly);
-    while (! on_top.startsWith("display"))
-        on_top = QString::fromUtf8(fh.readLine().trimmed());
-
-    //    on_top.remove("display_on_top:");
-    //    on_top = on_top.trimmed();
-    //
-    qDebug()<< on_top;
-
-    if (on_top == "displayOnTop:true")
-        display_on_top = true;
-    else
-        display_on_top = false;
-
-    fh.close();
-}
-
-
-
-
-void SoftProjector::readConfigurationFile()
-{
-    // Read the font from the font configuration file:
-    QFile fh("settings.cfg");
-
-    if( ! fh.exists() )
-    {
-        // Settings file does not exist, use default settings:
-
-        // display->setNewFont(...
-        display->setNewWallpaper(QString());
-        display->setShowBlack(true);
-        bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
-        return;
-    }
-    // Read the settings file:
-
-    fh.open(QIODevice::Text | QIODevice::ReadOnly);
-
-    QFont font;
-    font.fromString(QString::fromUtf8(fh.readLine()));
-    display->setNewFont(font);
-
-    // Read the path of the wallpaper from the configuration file:
-    QString new_wallpaper_path = QString::fromUtf8(fh.readLine().trimmed());
-//    new_wallpaper_path.chop(1); // Remove the trailing return character
-    display->setNewWallpaper(new_wallpaper_path);
-
-    display->setShowBlack( QString::fromUtf8(fh.readLine()) == "Show black: true" );
-
-    QString primary_bible = QString::fromUtf8(fh.readLine().trimmed());
-//    primary_bible.chop(1);
-    QString secondary_bible = QString::fromUtf8(fh.readLine().trimmed());
-//    secondary_bible.chop(1);
-
-    bibleWidget->loadBibles(primary_bible, secondary_bible);
-
-    fh.close();
-
-}
-
-void SoftProjector::writeConfigurationFile()
-{
-    QFile fh("settings.cfg");
-    QString write = "";
-    QString fontString = display->getFont().toString();
-    QString wallpaper_path = display->getWallpaper();
-    fh.open(QIODevice::Text | QIODevice::WriteOnly);
-
-//    fh.write(qPrintable(fontString));
-//    fh.write("\n");
-    write += fontString + "\n";
-
-//    fh.write(qPrintable(wallpaper_path));
-//    fh.write("\n");
-    write += wallpaper_path + "\n";
-
-    if( display->getShowBlack() )
-//        fh.write("Show black: true\n");
-        write += "Show black: true\n";
-    else
-//        fh.write("Show black: false\n");
-        write += "Show black: false\n";
-
-//    fh.write(qPrintable(bibleWidget->getPrimary()));
-//    fh.write("\n");
-    write += bibleWidget->getPrimary() + "\n";
-
-//    fh.write(qPrintable(bibleWidget->getSecondary()));
-//    fh.write("\n");
-    write += bibleWidget->getSecondary() + "\n";
-
-    if (display_on_top)
-        write += "displayOnTop:true\n";
-    else
-        write += "displayOnTop:false\n";
-
-    QTextStream out(&fh);
-    out.setCodec("UTF8");
-    out << write;
-
-    fh.close();
-
-    // FIXME also save black, verse, primarybible, secondarybible
-}
-
-
-
 void SoftProjector::writeXMLConfigurationFile()
 {
     // Method for writing the settings to XML format
@@ -207,6 +80,7 @@ void SoftProjector::writeXMLConfigurationFile()
     fh.open(QIODevice::WriteOnly);
     QXmlStreamWriter xml(&fh);
     xml.setAutoFormatting(true);
+    xml.setCodec("UTF8");
 
     xml.writeStartDocument();
     xml.writeStartElement("settings");

@@ -32,8 +32,6 @@ public:
     bool showing; // whether we are currently showing to the projector
     bool display_on_top; // whether display screen is alway on top on not
 
-    void readConfigurationFile();
-    void writeConfigurationFile();
     void applySetting(QString name, QString value);
     void readXMLConfigurationFile();
     void writeXMLConfigurationFile();
@@ -45,7 +43,6 @@ private:
     QString type;
 
 private slots:
-    void getDisplayTop();
     void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
