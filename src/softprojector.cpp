@@ -252,7 +252,6 @@ void SoftProjector::updateScreen()
             QString caption = verse.primary_caption;
             if( !verse.secondary_text.isNull() )
             {
-                qDebug() << "SECONDARY PRESENT";
                 text.append("\n");
                 text += verse.secondary_text;
                 caption.append("    ");
