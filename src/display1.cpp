@@ -89,18 +89,19 @@ void Display1::setAllText(QString text, QString caption)
         lines_list.removeFirst();
 
 
-
+    // The displayed text should take less space than this:
     int allowed_width;
     int allowed_height = height() - 2*MARGIN;
 
-    //int font_size=45;
     // Set the initial font size:
     int font_size = main_font.pointSize();
+
 
     bool exit = false;
     do
     {
         // Go through this loop until the font size is small enough to fit the screen
+        // Descrease the font size in each iteration.
         QFont current_font = main_font;
         current_font.setPointSize(font_size);
         setFont(current_font);
@@ -118,7 +119,8 @@ void Display1::setAllText(QString text, QString caption)
 
             if (fm.width(curr_line,-1)>allowed_width)
             {
-                // If this line is too wide for the screen
+                // If this line is too wide for the screen at this font size;
+                // then try to split it into 2 or more lines:
                 QString tempText;
                 QString part_of_line;
                 for (int i = 0; i < words_list.size(); ++i)
@@ -170,7 +172,6 @@ void Display1::renderText()
     // text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
     QPainter blur_painter(&sharp1);
-    QString path;
 
     if( !show_black || !DisplayList.isEmpty() )
     {
@@ -179,37 +180,52 @@ void Display1::renderText()
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
-            qDebug("Loading wallpaper from:");
-            qDebug(qPrintable(wallpaper_path));
+            //qDebug("Loading wallpaper from:");
+            //qDebug(qPrintable(wallpaper_path));
             wallpaper.load(wallpaper_path);
-            wallpaper=wallpaper.scaled(width(),height());
+            wallpaper = wallpaper.scaled(width(),height());
         }
         blur_painter.drawImage(0,0,wallpaper);
-
     }
 
     QFontMetrics fm(font());
-    int start_y;
+    //int start_y;
     text_painter.setPen(QColor(TEXT_COLOR));
-    if( CaptionText.isEmpty() )
-        start_y=(height()-(fm.height()*(DisplayList.size()+1)))/2;
-    else
-        start_y=(height()-(fm.height()*(DisplayList.size()+2)))/2;
 
-    int start_x=MARGIN;
+    //if( CaptionText.isEmpty() )
+    //    start_y=(height()-(fm.height()*(DisplayList.size()+1)))/2;
+    //else
+    //    start_y=(height()-(fm.height()*(DisplayList.size()+2)))/2;
+    //int start_y = (height()-(fm.height()*(DisplayList.size()+1)))/2;
+
+    int left = fm.width(" ",-1) + MARGIN - 5;
+    int top = MARGIN; //start_y+(i+1)*fm.height();
+    int right = width() - left;
+    int bottom = height() - top;
+    if( !CaptionText.isEmpty() )
+        bottom -= fm.height();
+
     text_painter.setFont(font());
+    QString all_text;
+
     for (int i = 0; i < DisplayList.size(); ++i)
     {
-        text_painter.drawText(fm.width(" ",-1)+start_x, start_y+(i+1)*fm.height(), DisplayList.at(i));
+        if( i > 0 )
+            all_text += "\n";
+        all_text += DisplayList.at(i);
     }
+    // FIXME Try Qt::TextWordWrap
+    text_painter.drawText(left, top, right-left, bottom-top, Qt::AlignHCenter | Qt::AlignVCenter, all_text);
+
     if (!CaptionText.isEmpty())
     {
+
         QFont caption_font = font();
         caption_font.setPointSize(20);
         text_painter.setFont(caption_font);
         fm = QFontMetrics(caption_font);
-        start_x=(width()-fm.width(CaptionText))/2;
-        start_y=height()-20;//fm.height();
+        int start_x=(width()-fm.width(CaptionText))/2;
+        int start_y=height()-20;//fm.height();
         text_painter.drawText(start_x,start_y,CaptionText);
     }
     m_blurred=image;
