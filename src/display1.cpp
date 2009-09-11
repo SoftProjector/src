@@ -21,7 +21,7 @@ Display1::Display1(QWidget *parent)
 
 
     setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
-    root_path="./";
+    //root_path="./";
 #ifdef Q_WS_MAC
     CFURLRef pluginRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     CFStringRef macPath = CFURLCopyFileSystemPath(pluginRef,
@@ -31,7 +31,7 @@ Display1::Display1(QWidget *parent)
     CFRelease(pluginRef);
     CFRelease(macPath);
 
-    root_path=pathPtr;
+    //root_path=pathPtr;
 #endif
     timer = new QTimer(this);
 
@@ -65,126 +65,90 @@ void Display1::CrossFade()
 
 }
 
-void Display1::SetMainText(QString text)
+
+
+void Display1::setAllText(QString text, QString caption)
 {
 
-    //if(!(4&&windowState()))showFullScreen();
-    int FontSize=45,text_width=0;
-//    FontSize = main_font.pointSize();
-    int width_of_screen=width();
-    max_width=0;
-    QFontMetrics fm(main_font);
-    QStringList list1 = text.split("\n");
-    QString textemp = list1[0];
-    textemp.remove(6,10);
-    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
-        list1[0] ="";
-    if (list1[0]=="")
-        list1.removeFirst();
-    int listlen = list1.size()-1;
-    //if (list1[listlen]=="* * *"){
-    //    CaptionText="*\t*\t*";
-    //    list1[listlen]="";
-    //}
-    if (list1[listlen]=="")
-        list1.removeLast(); // removes last line if nothing is there
-    if ( text.length() < 3 )
+    if( text.isEmpty() )
     {
         DisplayList.clear();
-        list1.clear();
         update();
         return;
     }
+
+
+    CaptionText = caption;
+
+
+    int font_size=45;
+    // FIXME   font_size = main_font.pointSize();
+    int width_of_screen=width();
+    QFontMetrics fm(main_font);
+    QStringList lines_list = text.split("\n");
+
+    // Remove the first line if it starts with "Kuplet" or "Pripev":
+    QString textemp = lines_list[0];
+    textemp.remove(6,10);
+    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+        lines_list.removeFirst();
+
+
+
     int width_of_space;
+
     bool exit = false;
     do
     {
-        main_font.setPointSize(FontSize);
+        main_font.setPointSize(font_size);
         setFont(main_font);
         fm=QFontMetrics(font());
-        //qDebug() << main_font;
+
         width_of_space=fm.width(" ",-1);
         MainText.clear();
         DisplayList.clear();
         QString tempText;
 
-        for (int j=0;j<list1.size();++j){
+        for (int j=0;j<lines_list.size();++j){
             QString text2="";
-            text2=list1.at(j);
+            text2=lines_list.at(j);
             QStringList list2=text2.split(" ");
-            //text2.chop(2);
 
             if (fm.width(text2,-1)>(width_of_screen-width_of_space-MARGIN))
             {
                 MainText.clear();
                 for (int i = 0; i < list2.size(); ++i)
                 {
-                    //if (list2[i]==" ") ++i;
-                    //if (list2[i]=="") ++i;
                     if (fm.width(tempText+" "+list2[i],-1)<(width_of_screen-width_of_space-MARGIN))                    {
                         MainText += list2[i]+" ";
                         tempText=MainText;
-
-                    } else {
-                        if (MainText==""); // Next 3 statements check that empty lines do not print on the screen
-                        else if (MainText==" ");
-                        else if (MainText=="  ");
-                        else DisplayList << MainText;
-                        text_width = fm.width(MainText,-1);
-                        if (text_width>max_width)
-                            max_width=text_width+width_of_space+width_of_space;
-                        tempText=list2[i] + " ";
-                        MainText=tempText;
-
                     }
-
+                    else
+                    {
+                        DisplayList << MainText;
+                        tempText=list2[i] + " ";
+                        MainText = tempText;
+                    }
                 }
-                if (MainText=="")
-                    ;// Next 3 statements check that empty lines do not print on the screen
-                else if (MainText==" ")
-                    ;
-                else if (MainText=="  ")
-                    ;
-                else
-                    DisplayList << MainText;
+                DisplayList << MainText;
             }
             else
                 DisplayList << text2;
 
         }
 
-        text_width=fm.width(MainText,-1);
-        if (text_width>max_width)
-            max_width=text_width;
+        font_size -= 4;
 
-
-        //DisplayList<<MainText;
-        //DisplayList<<text;
-        FontSize-=4;
-
-        int sizeheight = DisplayList.size() * fm.height();
-        int mainheight = height() - 2*MARGIN;
+        int display_height = DisplayList.size() * fm.height();
+        int text_height = height() - 2*MARGIN;
         if( !CaptionText.isEmpty() )
-            exit = (sizeheight <= (mainheight - fm.height()));
-        else
-            exit = (sizeheight <= mainheight);
+            text_height -= fm.height();
+        exit = (display_height <= text_height);
     }
     while( !exit );
 
-    //CaptionText.clear();
-    max_width = max_width-width_of_space;
-    //update();
 
-}
-
-
-
-
-void Display1::setAllText(QString text, QString caption)
-{
-    SetMainText(text);
-    CaptionText = caption;
-    acounter[0]=0;
+    //acounter[0]=0;
     //acounter[1]=255;
     //sharp0=QPixmap::fromImage (sharp1);
     //timer->stop();

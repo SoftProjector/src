@@ -24,7 +24,6 @@ public:
 
 
 public slots:
-    void SetMainText(QString text);
     void setAllText(QString text,QString caption);
     void renderText();
     void CrossFade();
@@ -44,7 +43,7 @@ protected:
 private:
     QString MainText;
     QString CaptionText;
-    QString root_path;
+    //QString root_path;
     QFont main_font;
     QString wallpaper_path; // Wallpaper image file path
     QImage wallpaper; // Wallpaper image
@@ -53,7 +52,6 @@ private:
     QPixmap sharp0;
     QImage sharp1;
     //	QImage blured1;
-    int max_width;
     int acounter[2];
     QImage m_blurred;
     QTimer *timer;
