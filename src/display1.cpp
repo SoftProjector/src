@@ -72,7 +72,7 @@ void Display1::setAllText(QString text, QString caption)
 
     if( text.isEmpty() )
     {
-        DisplayList.clear();
+        display_text = "";
         update();
         return;
     }
@@ -110,7 +110,7 @@ void Display1::setAllText(QString text, QString caption)
         // How many pixels we can use at this font size and sreen width:
         allowed_width = width() - MARGIN - fm.width(" ",-1);
 
-        DisplayList.clear();
+        QStringList DisplayList;
 
         for (int j=0;j<lines_list.size();++j)
         {
@@ -150,6 +150,15 @@ void Display1::setAllText(QString text, QString caption)
         if( !CaptionText.isEmpty() )
             text_height += fm.height();
         exit = (text_height <= allowed_height);
+
+        // Convert DisplayList to a string:
+        display_text = "";
+        for (int i = 0; i < DisplayList.size(); ++i)
+        {
+            if( i > 0 )
+                display_text += "\n";
+            display_text += DisplayList.at(i);
+        }
     }
     while( !exit );
 
@@ -173,7 +182,7 @@ void Display1::renderText()
     //text_painter.setRenderHint( QPainter::Antialiasing);
     QPainter blur_painter(&sharp1);
 
-    if( !show_black || !DisplayList.isEmpty() )
+    if( !show_black || !display_text.isEmpty() )
     {
         // Draw the background picture if there is text to display
         // If show_black is False, always draw the wallpaper
@@ -189,33 +198,19 @@ void Display1::renderText()
     }
 
     QFontMetrics fm(font());
-    //int start_y;
     text_painter.setPen(QColor(TEXT_COLOR));
 
-    //if( CaptionText.isEmpty() )
-    //    start_y=(height()-(fm.height()*(DisplayList.size()+1)))/2;
-    //else
-    //    start_y=(height()-(fm.height()*(DisplayList.size()+2)))/2;
-    //int start_y = (height()-(fm.height()*(DisplayList.size()+1)))/2;
-
     int left = fm.width(" ",-1) + MARGIN - 5;
-    int top = MARGIN; //start_y+(i+1)*fm.height();
+    int top = MARGIN;
     int right = width() - left;
     int bottom = height() - top;
     if( !CaptionText.isEmpty() )
         bottom -= fm.height();
 
     text_painter.setFont(font());
-    QString all_text;
 
-    for (int i = 0; i < DisplayList.size(); ++i)
-    {
-        if( i > 0 )
-            all_text += "\n";
-        all_text += DisplayList.at(i);
-    }
     // FIXME Try Qt::TextWordWrap
-    text_painter.drawText(left, top, right-left, bottom-top, Qt::AlignHCenter | Qt::AlignVCenter, all_text);
+    text_painter.drawText(left, top, right-left, bottom-top, Qt::AlignHCenter | Qt::AlignVCenter, display_text);
 
     if (!CaptionText.isEmpty())
     {

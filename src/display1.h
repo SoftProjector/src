@@ -17,7 +17,7 @@
 class Display1 : public QWidget
 {
     Q_OBJECT
-    QStringList DisplayList;
+    QString display_text;
 public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
