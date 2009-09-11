@@ -260,6 +260,18 @@ void SoftProjector::readXMLConfigurationFile()
     // Method for reading XML settings format
 
     QFile fh("settings.xml");
+    if( ! fh.exists() )
+    {
+        // Apply default settings
+        display->setNewWallpaper(QString());
+        display->setShowBlack(true);
+        bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
+        display_on_top = false;
+        writeXMLConfigurationFile();
+        return;
+    }
+
+
     fh.open(QIODevice::ReadOnly);
     QXmlStreamReader xml(&fh);
     QXmlStreamReader::TokenType token;
@@ -274,6 +286,7 @@ void SoftProjector::readXMLConfigurationFile()
                 if( token == QXmlStreamReader::StartElement )
                     applySetting( xml.name().toString(), xml.readElementText() );
             }
+
     }
     if( xml.hasError() )
     {
