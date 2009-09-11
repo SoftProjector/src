@@ -77,12 +77,12 @@ void Display1::SetMainText(QString text)
     QStringList list1 = text.split("\n");
     QString textemp = list1[0];
     textemp.remove(6,10);
-    if (textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")))list1[0] ="";
+    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+        list1[0] ="";
     if (list1[0]=="")
         list1.removeFirst();
     int listlen = list1.size()-1;
     if (list1[listlen]=="* * *"){
-        hasCaption=1;
         CaptionText="*\t*\t*";
         list1[listlen]="";
     }
@@ -96,6 +96,7 @@ void Display1::SetMainText(QString text)
         return;
     }
     int width_of_space;
+    bool exit = false;
     do
     {
         main_font.setPointSize(FontSize);
@@ -144,14 +145,11 @@ void Display1::SetMainText(QString text)
                     ;
                 else if (MainText=="  ")
                     ;
-                else DisplayList<<MainText
-                    ;
-
-
-            } else
-            {
-                DisplayList<<text2;
+                else
+                    DisplayList << MainText;
             }
+            else
+                DisplayList << text2;
 
         }
 
@@ -163,39 +161,32 @@ void Display1::SetMainText(QString text)
         //DisplayList<<MainText;
         //DisplayList<<text;
         FontSize-=4;
+
+        int sizeheight = DisplayList.size() * fm.height();
+        int mainheight = height() - 2*MARGIN;
+        if( !CaptionText.isEmpty() )
+            exit = (sizeheight <= (mainheight - fm.height()));
+        else
+            exit = (sizeheight <= mainheight);
     }
-    while ((DisplayList.size() * fm.height())>(height()-2*MARGIN-(fm.height()*hasCaption))) ;
+    while( !exit );
+
     //CaptionText.clear();
-    max_width=max_width-width_of_space;
+    max_width = max_width-width_of_space;
     //update();
 
 }
 
-void Display1::quit_kill()
-{
-    // qDebug("hello");
-    exit(0);
-}
 
-void Display1::SetCaptionText(QString text)
-{
-    CaptionText=text;
-    //update();
 
-}
 
-void Display1::setAllText(QString text,QString caption)
+void Display1::setAllText(QString text, QString caption)
 {
-    hasCaption=1;
-    if (caption.size()<3)hasCaption=0;
-    SetCaptionText(caption);
     SetMainText(text);
-    //SetCaptionText(caption);
-//	RenderText();
-    //update();
+    CaptionText = caption;
     acounter[0]=0;
     //acounter[1]=255;
-//    sharp0=QPixmap::fromImage (sharp1);
+    //sharp0=QPixmap::fromImage (sharp1);
     //timer->stop();
     renderText();
     timer->start(0);
@@ -204,7 +195,7 @@ void Display1::setAllText(QString text,QString caption)
 
 void Display1::renderText()
 {
-    // Render the text set via SetMainText() and  SetCaptionText()
+    // Render the text
     QImage temp1;
     temp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
     sharp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
@@ -231,9 +222,13 @@ void Display1::renderText()
     }
 
     QFontMetrics fm(font());
-    int start_y;//=MARGIN;//(height()-(fm.height()*(DisplayList.size()+hasCaption)))/2;
+    int start_y;
     painter2.setPen(QColor(TEXT_COLOR));
-    start_y=(height()-(fm.height()*(DisplayList.size()+1+hasCaption)))/2;
+    if( CaptionText.isEmpty() )
+        start_y=(height()-(fm.height()*(DisplayList.size()+1)))/2;
+    else
+        start_y=(height()-(fm.height()*(DisplayList.size()+2)))/2;
+
     int start_x=MARGIN;
     painter2.setFont(main_font);
     for (int i = 0; i < DisplayList.size(); ++i)

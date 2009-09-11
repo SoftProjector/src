@@ -18,7 +18,6 @@ class Display1 : public QWidget
 {
     Q_OBJECT
     QStringList DisplayList;
-    int hasCaption;
 public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
@@ -26,7 +25,6 @@ public:
 
 public slots:
     void SetMainText(QString text);
-    void SetCaptionText(QString text);
     void setAllText(QString text,QString caption);
     void renderText();
     void CrossFade();
@@ -36,7 +34,6 @@ public slots:
     void setNewWallpaper(QString path);
     bool getShowBlack();
     void setShowBlack(bool show_black);
-    void quit_kill();
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
 
