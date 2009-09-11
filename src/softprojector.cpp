@@ -90,20 +90,20 @@ void SoftProjector::readConfigurationFile()
     fh.open(QIODevice::Text | QIODevice::ReadOnly);
 
     QFont font;
-    font.fromString(fh.readLine());
+    font.fromString(QString::fromUtf8(fh.readLine()));
     display->setNewFont(font);
 
     // Read the path of the wallpaper from the configuration file:
-    QString new_wallpaper_path = fh.readLine();
-    new_wallpaper_path.chop(1); // Remove the trailing return character
+    QString new_wallpaper_path = QString::fromUtf8(fh.readLine().trimmed());
+//    new_wallpaper_path.chop(1); // Remove the trailing return character
     display->setNewWallpaper(new_wallpaper_path);
 
-    display->setShowBlack( fh.readLine() == "Show black: true" );
+    display->setShowBlack( QString::fromUtf8(fh.readLine()) == "Show black: true" );
 
-    QString primary_bible = fh.readLine();
-    primary_bible.chop(1);
-    QString secondary_bible = fh.readLine();
-    secondary_bible.chop(1);
+    QString primary_bible = QString::fromUtf8(fh.readLine().trimmed());
+//    primary_bible.chop(1);
+    QString secondary_bible = QString::fromUtf8(fh.readLine().trimmed());
+//    secondary_bible.chop(1);
 
     bibleWidget->loadBibles(primary_bible, secondary_bible);
 
@@ -114,23 +114,37 @@ void SoftProjector::readConfigurationFile()
 void SoftProjector::writeConfigurationFile()
 {
     QFile fh("settings.cfg");
+    QString write = "";
     QString fontString = display->getFont().toString();
     QString wallpaper_path = display->getWallpaper();
     fh.open(QIODevice::Text | QIODevice::WriteOnly);
 
-    fh.write(qPrintable(fontString));
-    fh.write("\n");
-    fh.write(qPrintable(wallpaper_path));
-    fh.write("\n");
-    if( display->getShowBlack() )
-        fh.write("Show black: true\n");
-    else
-        fh.write("Show black: false\n");
+//    fh.write(qPrintable(fontString));
+//    fh.write("\n");
+    write += fontString + "\n";
 
-    fh.write(qPrintable(bibleWidget->getPrimary()));
-    fh.write("\n");
-    fh.write(qPrintable(bibleWidget->getSecondary()));
-    fh.write("\n");
+//    fh.write(qPrintable(wallpaper_path));
+//    fh.write("\n");
+    write += wallpaper_path + "\n";
+
+    if( display->getShowBlack() )
+//        fh.write("Show black: true\n");
+        write += "Show black: true\n";
+    else
+//        fh.write("Show black: false\n");
+        write += "Show black: false\n";
+
+//    fh.write(qPrintable(bibleWidget->getPrimary()));
+//    fh.write("\n");
+    write += bibleWidget->getPrimary() + "\n";
+
+//    fh.write(qPrintable(bibleWidget->getSecondary()));
+//    fh.write("\n");
+    write += bibleWidget->getSecondary() + "\n";
+
+    QTextStream out(&fh);
+    out.setCodec("UTF8");
+    out << write;
 
     fh.close();
 
