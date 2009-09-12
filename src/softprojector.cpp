@@ -309,7 +309,8 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         display->paintTextToRect(painter, rect, flags, v.secondary_text);
 
         // Draw citations:
-        font.setPointSize(20);
+        if( font.pointSize() > 20 )
+            font.setPointSize(20);
         painter->setFont(font);
 
         flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
@@ -335,7 +336,8 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         display->paintTextToRect(painter, rect, flags, v.primary_text);
 
         // Draw citation:
-        font.setPointSize(20);
+        if( font.pointSize() > 20 )
+            font.setPointSize(20);
         painter->setFont(font);
 
         flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;

@@ -69,6 +69,8 @@ void Display1::CrossFade()
 
 
 
+
+
 void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
 {
     int left = origrect.left();
@@ -77,6 +79,7 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
     int h = origrect.height();
 
     QFont font = painter->font();
+    int orig_font_size = font.pointSize();
     // Keep decreasing the font size until the text fits into the allocated space:
     QRect rect;
 
@@ -84,12 +87,33 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
     while( !exit )
     {
         rect = painter->boundingRect(left, top, w, h, flags, text);
-        exit = ( rect.left() >= left && rect.top() >= top
-                 && rect.width() <= w && rect.height() <= h );
+        exit = ( rect.width() <= w && rect.height() <= h );
         if( !exit )
         {
             font.setPointSize( font.pointSize()-1 );
             painter->setFont(font);
+        }
+    }
+
+    // Force wrapping of songs that have really wide lines:
+    // (Do not allow font to be shrinked less than 30 points)
+    if( font.pointSize() < 30 )
+    {
+        font.setPointSize(orig_font_size);
+        painter->setFont(font);
+        flags = (flags | Qt::TextWordWrap);
+        //qDebug() << "DRAWING WITH WRAP";
+        exit = false;
+        while( !exit )
+        {
+            rect = painter->boundingRect(left, top, w, h, flags, text);
+            exit = ( rect.width() <= w && rect.height() <= h );
+            if( !exit )
+            {
+                font.setPointSize( font.pointSize()-1 );
+                //qDebug() << "SETTING SIZE:" << font.pointSize();
+                painter->setFont(font);
+            }
         }
     }
     painter->drawText(rect, flags, text);
