@@ -209,7 +209,6 @@ void SoftProjector::setSongList(Song song, int row)
 void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
     SongDatabase song_database;
-    //current_song.readData();
     QStringList song_list = current_song.getSongTextList();
 
     QString main_text;
@@ -252,7 +251,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     QFont font = painter->font();
 
     // Allocate this much of the screen to the caption text:
-    int caption_height = 100;
+    int caption_height = 80;
 
     if( !caption_text.isEmpty() )
         h -= caption_height;
@@ -262,7 +261,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     QRect rect = QRect(left, top, w, h);
 
 
-    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter; //| Qt::TextWordWrap;
     display->paintTextToRect(painter, rect, flags, main_text);
 
 
@@ -272,7 +271,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
         painter->setFont(font);
 
         QRect rect = QRect(left, caption_top, w, caption_height);
-        int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        int flags = Qt::AlignHCenter | Qt::AlignHCenter | Qt::TextWordWrap;
         display->paintTextToRect(painter, rect, flags, caption_text);
     }
 
@@ -305,7 +304,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     QFont font = painter->font();
 
     // Allocate this much of the screen to the caption text:
-    int caption_height = 100;
+    int caption_height = 80;
 
     if( !caption_text.isEmpty() )
         h -= caption_height;
@@ -315,7 +314,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     QRect rect = QRect(left, top, w, h);
 
 
-    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    int flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
     display->paintTextToRect(painter, rect, flags, main_text);
 
 
