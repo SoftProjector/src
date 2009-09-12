@@ -71,7 +71,7 @@ void Display1::CrossFade()
 
 
 
-void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
+int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
 {
     int left = origrect.left();
     int top = origrect.top();
@@ -96,8 +96,8 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
     }
 
     // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than a percantage of the desired font)
-    if( font.pointSize() < (orig_font_size/5*4) )
+    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
+    if( font.pointSize() < (orig_font_size*4/5) )
     {
         font.setPointSize(orig_font_size);
         painter->setFont(font);
@@ -117,6 +117,7 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
         }
     }
     painter->drawText(rect, flags, text);
+    return font.pointSize();
 }
 
 

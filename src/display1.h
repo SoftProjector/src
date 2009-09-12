@@ -19,7 +19,7 @@ class Display1 : public QWidget
 public:
     Display1(QWidget *parent = 0);
     QTextCodec *codec;
-    void paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
+    int paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
 
 
 public slots:

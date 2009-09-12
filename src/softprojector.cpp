@@ -288,6 +288,10 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     Verse v = current_verse; // for convenience
     QRect rect;
     int flags;
+    // Write captions 3/4 of the size as the main text:
+    int original_font_size = font.pointSize();
+    int used_font_size;
+    int caption_font_size;
 
     if( !v.secondary_text.isNull() )
     {
@@ -305,12 +309,15 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         rect = QRect(left, top, w, h);
         display->paintTextToRect(painter, rect, flags, v.primary_text);
 
-        rect = QRect(left, middle+caption_height, w, h);
-        display->paintTextToRect(painter, rect, flags, v.secondary_text);
+        rect = QRect(left, middle, w, h);
+        used_font_size = display->paintTextToRect(painter, rect, flags, v.secondary_text);
 
         // Draw citations:
-        if( font.pointSize() > 20 )
-            font.setPointSize(20);
+        if( used_font_size < original_font_size*3/4 )
+            // Shriked down the bible verse too much
+            font.setPointSize(used_font_size);
+        else
+            font.setPointSize(original_font_size*3/4);
         painter->setFont(font);
 
         flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
@@ -333,11 +340,14 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         // Draw verse text:
         flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
         rect = QRect(left, top, w, h);
-        display->paintTextToRect(painter, rect, flags, v.primary_text);
+        used_font_size = display->paintTextToRect(painter, rect, flags, v.primary_text);
 
         // Draw citation:
-        if( font.pointSize() > 20 )
-            font.setPointSize(20);
+        if( used_font_size < original_font_size*3/4 )
+            // Shriked down the bible verse too much
+            font.setPointSize(used_font_size);
+        else
+            font.setPointSize(original_font_size*3/4);
         painter->setFont(font);
 
         flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
