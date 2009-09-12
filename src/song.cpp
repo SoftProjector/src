@@ -131,8 +131,6 @@ QStringList Song::getSongTextList()
         }
         ++i;
     }
-    text = formatedSong[formatedSong.size()-1];
-    formatedSong[formatedSong.size()-1] = text;
     return formatedSong; // Fill verse_list widget
 }
 
