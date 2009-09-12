@@ -222,10 +222,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     QString textemp = lines_list[0];
     textemp.remove(6,10);
 
-    QTextCodec *codec;
-    codec = QTextCodec::codecForName("UTF8");
-
-    if( textemp.startsWith(codec->toUnicode("Припев")) || textemp.startsWith(codec->toUnicode("Куплет")) )
+    if( textemp.startsWith(QString::fromUtf8("Припев")) || textemp.startsWith(QString::fromUtf8("Куплет")) )
         lines_list.removeFirst();
 
     // Convert lines_list to a string:
