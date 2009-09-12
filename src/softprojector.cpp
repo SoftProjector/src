@@ -278,53 +278,69 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 
 void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int height)
 {
-    QString main_text = current_verse.primary_text;
-    QString caption_text = current_verse.primary_caption;
-    if( !current_verse.secondary_text.isNull() )
-    {
-        main_text.append("\n");
-        main_text += current_verse.secondary_text;
-        caption_text.append("    ");
-        caption_text += current_verse.secondary_caption;
-    }
-
-    // FIXME we need code here that will display the verse so that the
-    // primary caption is right below the primary text, and secondary caption
-    // is right bellow the secondary text
-
     // Margins:
     int left = 30;
     int top = 20;
     int w = width - left - left;
     int h = height - top - top;
-
     QFont font = painter->font();
+    Verse v = current_verse; // for convenience
+    QRect rect;
+    int flags;
 
-    // Allocate this much of the screen to the caption text:
-    int caption_height = 80;
-
-    if( !caption_text.isEmpty() )
-        h -= caption_height;
-    int caption_top = top + h;
-
-
-    QRect rect = QRect(left, top, w, h);
-
-
-    int flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
-    display->paintTextToRect(painter, rect, flags, main_text);
-
-
-    if (!caption_text.isEmpty())
+    if( !v.secondary_text.isNull() )
     {
+        // Two bible versions are selected
+
+        int caption_height = 80;
+        h -= caption_height;
+        int caption_top = top + h;
+        int middle = (height / 2);
+
+        // Draw verse text:
+        flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+        h = middle-top-caption_height;
+
+        rect = QRect(left, top, w, h);
+        display->paintTextToRect(painter, rect, flags, v.primary_text);
+
+        rect = QRect(left, middle+caption_height, w, h);
+        display->paintTextToRect(painter, rect, flags, v.secondary_text);
+
+        // Draw citations:
         font.setPointSize(20);
         painter->setFont(font);
 
-        QRect rect = QRect(left, caption_top, w, caption_height);
-        int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
-        display->paintTextToRect(painter, rect, flags, caption_text);
-    }
+        flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
 
+        rect = QRect(width/2, middle-caption_height, width/2, caption_height);
+        display->paintTextToRect(painter, rect, flags, v.primary_caption);
+
+        rect = QRect(width/2, middle+h, width/2, caption_height);
+        display->paintTextToRect(painter, rect, flags, v.secondary_caption);
+
+    }
+    else
+    {
+        // Only one bible used
+
+        int caption_height = 80;
+        h -= caption_height;
+        int caption_top = top + h;
+
+        // Draw verse text:
+        flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+        rect = QRect(left, top, w, h);
+        display->paintTextToRect(painter, rect, flags, v.primary_text);
+
+        // Draw citation:
+        font.setPointSize(20);
+        painter->setFont(font);
+
+        flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        rect = QRect(width/2, caption_top, width/2, caption_height);
+        display->paintTextToRect(painter, rect, flags, v.primary_caption);
+    }
 }
 
 
