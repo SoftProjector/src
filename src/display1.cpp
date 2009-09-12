@@ -96,8 +96,8 @@ void Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QSt
     }
 
     // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than 30 points)
-    if( font.pointSize() < 30 )
+    // (Do not allow font to be shrinked less than a percantage of the desired font)
+    if( font.pointSize() < (orig_font_size/5*4) )
     {
         font.setPointSize(orig_font_size);
         painter->setFont(font);
