@@ -3,6 +3,7 @@
 #include "ui_softprojector.h"
 #include "settingsdialog.h"
 #include "aboutdialog.h"
+#include "managedatadialog.h"
 
 
 SoftProjector::SoftProjector(QWidget *parent)
@@ -509,4 +510,10 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
         ui->actionEditSong->setEnabled(true);
         ui->actionNewSong->setEnabled(true);
     }
+}
+
+void SoftProjector::on_actionManage_Database_triggered()
+{
+    ManageDataDialog manage;
+    manage.exec();
 }

@@ -49,6 +49,7 @@ private:
     void drawCurrentBibleText(QPainter *painter, int width, int height);
 
 private slots:
+    void on_actionManage_Database_triggered();
     void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);

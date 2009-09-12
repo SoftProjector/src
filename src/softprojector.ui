@@ -142,6 +142,7 @@
     <addaction name="separator"/>
     <addaction name="actionImportSongs"/>
     <addaction name="actionExportSongs"/>
+    <addaction name="actionManage_Database"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -237,6 +238,14 @@
    </property>
    <property name="statusTip">
     <string>Export songs from user sbornik</string>
+   </property>
+  </action>
+  <action name="actionManage_Database">
+   <property name="text">
+    <string>Manage Database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import and Export Sborniks and Bibles</string>
    </property>
   </action>
  </widget>
