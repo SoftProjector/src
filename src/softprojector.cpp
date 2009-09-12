@@ -188,13 +188,13 @@ void SoftProjector::on_actionClose_triggered()
 
 void SoftProjector::setSongList(Song song, int row)
 {
+    QStringList song_list = song.getSongTextList();
     current_song = song;
     current_song_verse = row;
-    SongDatabase song_database;
-    QStringList song_list = song.getSongTextList();
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
+    showing = true;
     ui->labelShow->setText(song.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
