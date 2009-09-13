@@ -408,9 +408,9 @@ void SoftProjector::updateScreen()
     {
         if(type=="song")
         {
-            Song song = songWidget->currentSong();
-            int row = ui->listShow->currentIndex().row();
-            current_song = song;
+//            Song song = songWidget->currentSong();
+            int row = ui->listShow->currentRow();
+//            current_song = song;
             current_song_verse = row;
             display->renderText(true);
         }
