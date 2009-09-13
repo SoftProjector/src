@@ -309,7 +309,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
         // Draw verse text:
         flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
-        h = middle-top-caption_height;
+        h = middle-top-(caption_height/3);
 
         rect = QRect(left, top, w, h);
         display->paintTextToRect(painter, rect, flags, v.primary_text);
@@ -318,6 +318,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         used_font_size = display->paintTextToRect(painter, rect, flags, v.secondary_text);
 
         // Draw citations:
+        h = middle-top-caption_height;
         if( used_font_size < original_font_size*3/4 )
             // Shriked down the bible verse too much
             font.setPointSize(used_font_size);
