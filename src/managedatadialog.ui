@@ -37,18 +37,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QTableWidget" name="tableWidget_4">
-           <column>
-            <property name="text">
-             <string>Code</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Title</string>
-            </property>
-           </column>
-          </widget>
+          <widget class="QTableView" name="bibleTableView"/>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
