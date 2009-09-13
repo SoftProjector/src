@@ -236,7 +236,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     }
 
     if( last_verse )
-        caption_text = "*\t*\t*";
+        caption_text = "*    *    *";
     else
         caption_text = "";
 
@@ -265,7 +265,12 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 
     if (!caption_text.isEmpty())
     {
-        font.setPointSize(20);
+        int font_size = font.pointSize();
+        if((font_size*3/4)<20)
+            font.setPointSize(20);
+        else
+            font.setPointSize(font_size*3/4);
+
         painter->setFont(font);
 
         QRect rect = QRect(left, caption_top, w, caption_height);
