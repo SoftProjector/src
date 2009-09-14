@@ -13,12 +13,20 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     bible_model = new BiblesModel;
     bible_model->setBible(bible_list);
     ui->bibleTableView->setModel(bible_model);
+    ui->bibleTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->bibleTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->bibleTableView->verticalHeader()->hide();
 
     // Set Sborniks Table
     sbornik_list = db.getSborniks();
     sbornik_model = new SborniksModel;
     sbornik_model->setSbornik(sbornik_list);
     ui->sbornikTableView->setModel(sbornik_model);
+    ui->sbornikTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->sbornikTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->sbornikTableView->verticalHeader()->hide();
+    // FIXME set widths like this:
+    // ui->songs_view->setColumnWidth(0, 55);
 
 }
 
