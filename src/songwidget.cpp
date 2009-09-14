@@ -265,7 +265,7 @@ void SongWidget::on_song_num_spinbox_editingFinished()
 
 void SongWidget::on_btnLive_clicked()
 {
-    sendToProjector(preview_song, 0); // Send the first verse
+    sendToProjector(preview_song, ui->listPreview->currentRow()); // Send current selected
 }
 
 
