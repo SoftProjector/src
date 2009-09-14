@@ -123,7 +123,7 @@ void EditWidget::resetUiItems()
     ui->lineEditTune->clear();
     ui->comboBoxCategory->setCurrentIndex(0);
     ui->textEditSong->clear();
-    ui->lblID->setText("");
+    //ui->lblID->setText("");
     ui->font_textbox->clear();
     ui->wall_textbox->clear();
     ui->left_radioButton->setChecked(true);
@@ -138,7 +138,6 @@ void EditWidget::setUiItems()
     ui->lineEditWordsBy->setText(editSong.wordsBy);
     ui->lineEditTune->setText(editSong.tune);
     ui->comboBoxCategory->setCurrentIndex(editSong.category);
-    ui->lblID->setText(QString::number(editSong.songID));
     setSbornikTable(editSong.songID);
     ui->font_textbox->setText(editSong.font);
     ui->wall_textbox->setText(editSong.background);
@@ -155,8 +154,7 @@ void EditWidget::setUiItems()
 }
 
 void EditWidget::setSave(){
-    newSong.songID = ui->lblID->text().toInt();
-    newSong.num = ui->sbornik_table->item(0,1)->text().toInt();
+    newSong.num = editSong.songID;
     newSong.sbornik = ui->sbornik_table->item(0,0)->text();
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
