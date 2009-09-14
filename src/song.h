@@ -20,6 +20,7 @@ class Song
     void saveUpdate();
     void saveNew();
     QStringList getSongTextList();
+    QString getSbornikName();
 
 //private:
     int songID; // Database ID of this song

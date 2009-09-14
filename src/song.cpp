@@ -1,3 +1,4 @@
+
 #include "song.h"
 #include <QDebug>
 
@@ -134,7 +135,13 @@ QStringList Song::getSongTextList()
     return formatedSong; // Fill verse_list widget
 }
 
-
+QString Song::getSbornikName()
+{
+    QSqlQuery sq;
+    sq.exec("SELECT name FROM Sborniks WHERE id = '" + sbornik + "'");
+    sq.first();
+    return sq.value(0).toString();
+}
 
 
 
@@ -193,7 +200,10 @@ int SongsModel::columnCount(const QModelIndex &parent) const
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
  {
-    if( index.isValid() && role == Qt::DisplayRole )
+    if( !index.isValid() )
+        return QVariant();
+
+    if( role == Qt::DisplayRole )
     {
         Song song = song_list.at(index.row());
         if( index.column() == 0 )
@@ -203,8 +213,13 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
         else
             return QVariant(song.sbornik);
     }
-    else
-        return QVariant();
+    else if( role == Qt::ToolTipRole )
+    {
+        Song song = song_list.at(index.row());
+        if( index.column() == 2 )
+            return QVariant( song.getSbornikName() );
+    }
+    return QVariant();
 }
 
 QVariant SongsModel::headerData(int section,
