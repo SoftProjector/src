@@ -258,7 +258,7 @@ p, li { white-space: pre-wrap; }
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="listChapter">
+      <widget class="QListWidget" name="chapter_preview_list">
        <property name="alternatingRowColors">
         <bool>false</bool>
        </property>
@@ -277,7 +277,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>spinChapter</tabstop>
   <tabstop>spinVerse</tabstop>
   <tabstop>listChapterNum</tabstop>
-  <tabstop>listChapter</tabstop>
+  <tabstop>chapter_preview_list</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -60,6 +60,12 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         ui->spinChapter->setMaximum(maxVerse);
         ui->listChapterNum->setCurrentRow(0);
     }
+    else
+    {
+        // No bible book selected
+        ui->spinChapter->setMaximum(1);
+        ui->listChapterNum->clear();
+    }
 }
 
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
@@ -68,11 +74,15 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     if( s != -1 )
     {
         QStringList chapters = bible.getChapter(getCurrentBook(), currentText.toInt());
-        ui->listChapter->clear();
-        ui->listChapter->addItems(chapters);
+        ui->chapter_preview_list->clear();
+        ui->chapter_preview_list->addItems(chapters);
         ui->spinChapter->setValue(currentText.toInt());
-        ui->spinVerse->setMaximum(ui->listChapter->count());
-        ui->listChapter->setCurrentRow(0);
+        ui->spinVerse->setMaximum(ui->chapter_preview_list->count());
+        ui->chapter_preview_list->setCurrentRow(0);
+    }
+    else
+    {
+        ui->chapter_preview_list->clear();
     }
 }
 
@@ -111,7 +121,7 @@ bool BibleWidget::eventFilter(QObject *object, QEvent *event)
 }
 */
 
-void BibleWidget::on_listChapter_currentRowChanged(int currentRow)
+void BibleWidget::on_chapter_preview_list_currentRowChanged(int currentRow)
 {
     ui->spinVerse->setValue(currentRow+1);
 }
@@ -123,10 +133,10 @@ void BibleWidget::on_spinChapter_valueChanged(int value)
 
 void BibleWidget::on_spinVerse_valueChanged(int value)
 {
-    ui->listChapter->setCurrentRow(value-1);
+    ui->chapter_preview_list->setCurrentRow(value-1);
 }
 
-void BibleWidget::on_listChapter_doubleClicked(QModelIndex index)
+void BibleWidget::on_chapter_preview_list_doubleClicked(QModelIndex index)
 {
     // Called when a chapter or verse is double clicked
     sendToProjector(index.row());
