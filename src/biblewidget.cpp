@@ -94,6 +94,22 @@ QString BibleWidget::getCaption()
     temp1 = temp[1].split(":");
     return temp1[0];
 }
+/*
+bool BibleWidget::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == ui->spinVerse && event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::KeyDown) {
+            qDebug() << "DOWN KEY";
+            // Special tab handling
+            return true;
+        } else
+            return false;
+    }
+    return false;
+}
+*/
 
 void BibleWidget::on_listChapter_currentRowChanged(int currentRow)
 {
@@ -126,19 +142,45 @@ void BibleWidget::sendToProjector(int verse)
 void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
     // Called when the bible book filter field is modified.
+
+    // FIXME We need to cache this info:
+    // If we do this, make sure the cache is updated whe primary bible is changed
+    QStringList all_books = bible.getBooks();
+
+    ui->listBook->clear();
     if( text.isEmpty() )
-    {
-        ui->listBook->clear();
-        ui->listBook->addItems(bible.getBooks());
-        ui->listBook->setCurrentRow(0);
-    }
+        ui->listBook->addItems(all_books);
     else
     {
-        ui->listBook->clear();
-        ui->listBook->addItems(bible.getBooks().filter(text, Qt::CaseInsensitive));
-        if( ui->listBook->count() > 0 )
-            ui->listBook->setCurrentRow(0);
+        if( text.at(0).isDigit() )
+        {
+            // First character of filter text is a number. Special search, where the
+            // first character must be the first character of the first word of the book;
+            // while the rest of the filter must be the beginning of the second book word.
+            QString num_str(text.at(0));
+            QString name_str = text.remove(0, 1);
+            QStringList filtered_books;
+            for(int i=0; i<all_books.count(); i++)
+            {
+                QString book = all_books.at(i);
+                QStringList book_words = book.split(" ");
+
+                if( ! book_words.at(0).startsWith(num_str) )
+                    continue;
+                if( !book_words.at(1).startsWith(name_str, Qt::CaseInsensitive) )
+                    continue;
+
+                filtered_books.append(book);
+            }
+            ui->listBook->addItems(filtered_books);
+        }
+        else
+        {
+            ui->listBook->addItems(all_books.filter(text, Qt::CaseInsensitive));
+        }
     }
+    if( ui->listBook->count() > 0 )
+        ui->listBook->setCurrentRow(0);
 }
 
 void BibleWidget::on_btnLive_clicked()
