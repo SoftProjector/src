@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
-    <height>302</height>
+    <width>538</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,13 +26,13 @@
       <widget class="QLabel" name="lblBook">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>16777215</height>
         </size>
        </property>
@@ -51,15 +51,18 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Filter criteria for the bible list. If the first character of the filter is a number, then only books starting with this number are matched. Example filters: &quot;Deuter&quot;, &quot;1Thes&quot;.</string>
        </property>
       </widget>
      </item>
@@ -73,13 +76,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>150</width>
+         <width>160</width>
          <height>16777215</height>
         </size>
        </property>
