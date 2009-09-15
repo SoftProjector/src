@@ -38,6 +38,8 @@ QString clean(QString str)
     str.remove("~");
     str.remove("=");
     str.remove("+");
+    str.remove(str.fromUtf8("«"));
+    str.remove(str.fromUtf8("»"));
     str = str.trimmed();
     return str;
 }
