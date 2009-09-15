@@ -194,8 +194,8 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
     }
     else
     {
-        QString sbornik = sbornikList[index-1];
-        song_list = song_database.getSongs(sbornik);
+        QString sbornik_id = sbornikList[index-1];
+        song_list = song_database.getSongs(sbornik_id);
         ui->song_num_spinbox->setEnabled(true);
         // FIXME Instead of using count(), find the song with highest num.
         ui->song_num_spinbox->setMaximum(song_list.count());

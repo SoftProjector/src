@@ -12,10 +12,12 @@ class Song
  public:
     Song();
     Song(int id);
+    Song(int id, int num, QString sbornik_id);
     void readData();
     int num; // Number of the song in the specified sbornik
     QString title;
-    QString sbornik;
+    QString sbornik_id;
+    QString sbornik_name;
 
     void saveUpdate();
     void saveNew();
@@ -85,10 +87,11 @@ public:
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
+    QString getSbornikIdStringFromName(QString sbornik_name);
     Song getSong(int id);
     QStringList getUserSborniks();
-    QList<Song> getSongs(QString sbornik);
-    int lastUser(QString sbornik);
+    QList<Song> getSongs(QString sbornik_id);
+    int lastUser(QString sbornik_id);
 //private:
 };
 
