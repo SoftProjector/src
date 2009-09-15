@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
     // Connected to the database OK:
     SoftProjector w;
-    w.setWindowTitle("softProjector 0.9.Alpha02");
+    w.setWindowTitle("softProjector 0.9.Alpha04");
     w.show();
     return a.exec();
 }
