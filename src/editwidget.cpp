@@ -156,7 +156,7 @@ void EditWidget::setUiItems()
 void EditWidget::setSave(){
     newSong.songID = editSong.songID;
     newSong.num = ui->sbornik_table->item(0,1)->text().toInt();
-    newSong.sbornik = ui->sbornik_table->item(0,0)->text();
+    newSong.sbornik_id = ui->sbornik_table->item(0,0)->text();
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
     newSong.tune = ui->lineEditTune->text();
