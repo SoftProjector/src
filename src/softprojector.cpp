@@ -139,6 +139,9 @@ void SoftProjector::readXMLConfigurationFile()
     if( ! fh.exists() )
     {
         // Apply default settings
+        QFont new_font;
+        new_font.setPixelSize(36);
+        display->setNewFont(new_font);
         display->setNewWallpaper(QString());
         display->setShowBlack(true);
         bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
@@ -293,10 +296,8 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     Verse v = current_verse; // for convenience
     QRect rect;
     int flags;
-    // Write captions 3/4 of the size as the main text:
     int original_font_size = font.pointSize();
     int used_font_size;
-    int caption_font_size;
 
     if( !v.secondary_text.isNull() )
     {
@@ -326,7 +327,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
             font.setPointSize(original_font_size*3/4);
         painter->setFont(font);
 
-        flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        flags = Qt::AlignHCenter | Qt::AlignVCenter;
 
         rect = QRect(width/2, middle-caption_height, width/2, caption_height);
         display->paintTextToRect(painter, rect, flags, v.primary_caption);
@@ -356,7 +357,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
             font.setPointSize(original_font_size*3/4);
         painter->setFont(font);
 
-        flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        flags = Qt::AlignHCenter | Qt::AlignVCenter;
         rect = QRect(width/2, caption_top, width/2, caption_height);
         display->paintTextToRect(painter, rect, flags, v.primary_caption);
     }
