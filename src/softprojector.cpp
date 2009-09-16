@@ -18,7 +18,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     bibleWidget = new BibleWidget;
 
     ui->setupUi(this);
-    ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit www.softprojector.com");
+    ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/");
 
     readXMLConfigurationFile();
 
