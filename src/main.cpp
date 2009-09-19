@@ -28,7 +28,7 @@ bool connect()
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //QApplication::setStyle("Plastique");
+    QApplication::setStyle("Plastique");
 
     bool fileExist = QFile::exists("spData.sqlite");
     if (!fileExist)
