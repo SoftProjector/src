@@ -16,10 +16,6 @@
 Display1::Display1(QWidget *parent)
         : QWidget(parent)
 {
-
-    codec = QTextCodec::codecForName("UTF8");
-
-
     setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
     //root_path="./";
 #ifdef Q_WS_MAC
@@ -34,45 +30,35 @@ Display1::Display1(QWidget *parent)
     //root_path=pathPtr;
 #endif
     timer = new QTimer(this);
+    timer_out = new QTimer(this);
 
+    connect(timer, SIGNAL(timeout()), this, SLOT(fadeIn()));
+    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
 
-
-    connect(timer, SIGNAL(timeout()), this, SLOT(CrossFade()));
-//    acounter[0]=255;
-//    acounter[0]=0;
-    //acounter[1]=255;
-    //FaderPixmap=QPixmap::QPixmap(width(),height());
-
-
-    //timer->start(1000/15);
-    //setUpdatesEnabled(0);
+    acounter[0]=255;
 
 }
 
-
-
-void Display1::CrossFade()
+void Display1::fadeIn()
 {
-//    acounter[0]+=50;
-//    if (acounter[0]>255)acounter[0]=255;
-    //acounter[1]--;
-    //qDebug("a");
-//    if (acounter[0]>254){timer->stop();}
-    //setUpdatesEnabled(1);
-    //setUpdatesEnabled(0);
-    timer->stop();
+    acounter[0]+=64;
+    if (acounter[0]>255)acounter[0]=255;
+    if (acounter[0]>254){timer->stop();}
     update();
-
 }
 
 
-
-
-
-
+void Display1::fadeOut() // For future
+{
+    acounter[0]-=24;
+    if (acounter[0]<0)acounter[0]=0;
+    if (acounter[0]<1){timer_out->stop();}
+    update();
+}
 
 int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
 {
+
     int left = origrect.left();
     int top = origrect.top();
     int w = origrect.width();
@@ -118,11 +104,18 @@ int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QStr
     }
     painter->drawText(rect, flags, text);
     return font.pointSize();
+    
 }
 
 
 void Display1::renderText(bool text_present)
 {
+    if(use_fading)
+    {
+        acounter[0]=0;
+        sharp0=QPixmap::fromImage (sharp1);
+    }
+
     // Render the text
     QImage image;
     image=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
@@ -155,11 +148,28 @@ void Display1::renderText(bool text_present)
     emit requestTextDrawing(&text_painter, width(), height());
 
     m_blurred=image;
-//    fastbluralpha(m_blurred,BLUR_RADIUS);
+
+//    if(use_blur)
+//        fastbluralpha(m_blurred,BLUR_RADIUS);
+
     blur_painter.drawImage(BORDER,BORDER,m_blurred);
     image.invertPixels();
     blur_painter.drawImage(0,0,image);
-    update();
+
+    if(use_fading)
+        timer->start(33); // 1/24 sec = ~42miliseconds
+    else
+        update();
+}
+
+bool Display1::useFading()
+{
+    return use_fading;
+}
+
+void Display1::setFading(bool fade)
+{
+    use_fading = fade;
 }
 
 QFont Display1::getFont()
@@ -204,25 +214,13 @@ void Display1::setShowBlack(bool new_show_black)
     show_black = new_show_black;
 }
 
-
-
-void Display1::paintEvent(QPaintEvent * /* event */)
+void Display1::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
-    /*    if (painter.paintEngine()->hasFeature(QPaintEngine::ConstantOpacity))
-    {
-        double alpha;
-        alpha=acounter[0]/255;
-        painter.setOpacity(alpha);
-        qDebug("opacity\a");
-
-    }else
-    { */
-//            alphaImage(sharp1,acounter[0]);
-        //}
+    painter.drawPixmap(0,0,sharp0);
+    alphaImage(sharp1,acounter[0]);
     painter.drawImage(0,0,sharp1);
 }
-
 
 void Display1::alphaImage(QImage &img, int alpha1)
 {
@@ -234,11 +232,10 @@ void Display1::alphaImage(QImage &img, int alpha1)
     for (int i = 0; i < wh; ++i)
     {
         p = pix[i];
-        pix[i] = qRgba(qRed(p), qGreen(p),qBlue(p),255);///dv[asum]);
+        pix[i] = qRgba(qRed(p), qGreen(p),qBlue(p),alpha1);///dv[asum]);
     }
 
 }
-
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 void Display1::fastbluralpha(QImage &img, int radius)

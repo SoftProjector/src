@@ -51,8 +51,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         ui->display_on_top_box->setChecked(true);
 
     // Set to use or not to use fading
-    // ui->use_fading_effects_box->setChecked(
-
+    ui->use_fading_effects_box->setChecked(softProjector->display->useFading());
 
     // Set type of creen to show Black or Wallpaper
     if( softProjector->display->getShowBlack() )
@@ -137,6 +136,7 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
     softProjector->display->setShowBlack(show_black);
+    softProjector->display->setFading(use_fading);
     softProjector->writeXMLConfigurationFile();
 
 

@@ -89,7 +89,7 @@ void SoftProjector::writeXMLConfigurationFile()
     QString wallpaper_path = display->getWallpaper();
     xml.writeTextElement("wallpaper", wallpaper_path);
 
-    if( display->getShowBlack() )
+    if(display->getShowBlack())
         xml.writeTextElement("showblack", "true");
     else
         xml.writeTextElement("showblack", "false");
@@ -101,6 +101,11 @@ void SoftProjector::writeXMLConfigurationFile()
         xml.writeTextElement("displayontop", "true");
     else
         xml.writeTextElement("displayontop", "false");
+
+    if (display->useFading())
+        xml.writeTextElement("usefading", "true");
+    else
+        xml.writeTextElement("usefading", "false");
 
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
@@ -128,6 +133,8 @@ void SoftProjector::applySetting(QString name, QString value)
         bibleWidget->loadBibles(bibleWidget->bible.primaryId, value);
     else if( name == "displayontop" )
         display_on_top = (value == "true");
+    else if( name == "usefading")
+        display->setFading( value == "true");
 
 }
 
@@ -146,6 +153,7 @@ void SoftProjector::readXMLConfigurationFile()
         display->setShowBlack(true);
         bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
         display_on_top = false;
+        display->setFading(false);
         writeXMLConfigurationFile();
         return;
     }
