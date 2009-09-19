@@ -33,7 +33,7 @@ Display1::Display1(QWidget *parent)
     timer_out = new QTimer(this);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(fadeIn()));
-    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
+//    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
 
     acounter[0]=255;
 
@@ -41,19 +41,22 @@ Display1::Display1(QWidget *parent)
 
 void Display1::fadeIn()
 {
-    acounter[0]+=64;
-    if (acounter[0]>255)acounter[0]=255;
-    if (acounter[0]>254){timer->stop();}
-    update();
+    if (use_fading)
+    {
+        acounter[0]+=64;
+        if (acounter[0]>255)acounter[0]=255;
+        if (acounter[0]>254){timer->stop();}
+        update();
+    }
 }
 
 
 void Display1::fadeOut() // For future
 {
-    acounter[0]-=24;
-    if (acounter[0]<0)acounter[0]=0;
-    if (acounter[0]<1){timer_out->stop();}
-    update();
+//    acounter[0]-=24;
+//    if (acounter[0]<0)acounter[0]=0;
+//    if (acounter[0]<1){timer_out->stop();}
+//    update();
 }
 
 int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
@@ -104,7 +107,7 @@ int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QStr
     }
     painter->drawText(rect, flags, text);
     return font.pointSize();
-    
+
 }
 
 
@@ -149,8 +152,8 @@ void Display1::renderText(bool text_present)
 
     m_blurred=image;
 
-//    if(use_blur)
-//        fastbluralpha(m_blurred,BLUR_RADIUS);
+    if(use_blur)
+        fastbluralpha(m_blurred,BLUR_RADIUS);
 
     blur_painter.drawImage(BORDER,BORDER,m_blurred);
     image.invertPixels();
@@ -160,6 +163,16 @@ void Display1::renderText(bool text_present)
         timer->start(33); // 1/24 sec = ~42miliseconds
     else
         update();
+}
+
+bool Display1::useBlur()
+{
+    return use_blur;
+}
+
+void Display1::setBlur(bool blur)
+{
+    use_blur = blur;
 }
 
 bool Display1::useFading()

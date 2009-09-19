@@ -107,6 +107,11 @@ void SoftProjector::writeXMLConfigurationFile()
     else
         xml.writeTextElement("usefading", "false");
 
+    if (display->useBlur())
+        xml.writeTextElement("useblur", "true");
+    else
+        xml.writeTextElement("useblur", "false");
+
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
 
@@ -134,7 +139,9 @@ void SoftProjector::applySetting(QString name, QString value)
     else if( name == "displayontop" )
         display_on_top = (value == "true");
     else if( name == "usefading")
-        display->setFading( value == "true");
+        display->setFading(value == "true");
+    else if( name == "useblur")
+        display->setBlur(value == "true");
 
 }
 
@@ -154,6 +161,7 @@ void SoftProjector::readXMLConfigurationFile()
         bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
         display_on_top = false;
         display->setFading(false);
+        display->setBlur(false);
         writeXMLConfigurationFile();
         return;
     }

@@ -45,13 +45,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Remove the primary bible from the secondary list:
     updateSecondaryBibleMenu();
-    
+
     // Set Display screen alway on top or not
     if (softProjector->display_on_top)
         ui->display_on_top_box->setChecked(true);
 
     // Set to use or not to use fading
     ui->use_fading_effects_box->setChecked(softProjector->display->useFading());
+
+    // Set to use blured shadow or not
+    ui->use_blur_check_box->setChecked(softProjector->display->useBlur());
 
     // Set type of creen to show Black or Wallpaper
     if( softProjector->display->getShowBlack() )
@@ -101,11 +104,11 @@ void SettingsDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch ( e->type() ) {
-	case QEvent::LanguageChange:
-	    ui->retranslateUi(this);
-	    break;
-	default:
-	    break;
+        case QEvent::LanguageChange:
+            ui->retranslateUi(this);
+            break;
+        default:
+            break;
     }
 }
 
@@ -128,6 +131,7 @@ void SettingsDialog::on_buttonBox_accepted()
 
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
+    bool use_blur = ui->use_blur_check_box->isChecked();
 
     softProjector->display_on_top = display_on_top;
 
@@ -137,6 +141,7 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setNewWallpaper(new_wallpaper_path);
     softProjector->display->setShowBlack(show_black);
     softProjector->display->setFading(use_fading);
+    softProjector->display->setBlur(use_blur);
     softProjector->writeXMLConfigurationFile();
 
 
