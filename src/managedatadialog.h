@@ -28,6 +28,13 @@ private:
     SborniksModel *sbornik_model;
     Ui::ManageDataDialog *ui;
 
+
+private slots:
+    void on_delete_sbornik_pushButton_clicked();
+    void on_export_sbornik_pushButton_clicked();
+    void on_import_sbornik_pushButton_clicked();
+    void load_sborniks();
+    void load_bibles();
 };
 
 

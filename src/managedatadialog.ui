@@ -27,7 +27,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -92,21 +92,21 @@
        <item row="0" column="1">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="import_sbornik_pushButton">
            <property name="text">
             <string>Import...</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_8">
+          <widget class="QPushButton" name="export_sbornik_pushButton">
            <property name="text">
             <string>Export...</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_9">
+          <widget class="QPushButton" name="delete_sbornik_pushButton">
            <property name="text">
             <string>Delete...</string>
            </property>
