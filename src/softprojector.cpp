@@ -20,6 +20,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->setupUi(this);
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/");
 
+
+    // Apply default settings, in case configuration file does not exist
+    // or is out of date:
+    applyDefaults();
+
+    // Will replace defaults if setting is saved:
     readXMLConfigurationFile();
 
     if (display_on_top)
@@ -69,6 +75,21 @@ SoftProjector::~SoftProjector()
     delete display;
     delete desktop;
 }
+
+void SoftProjector::applyDefaults()
+{
+    // Apply configuration defaults - in case settings file is missing or out of date
+    QFont new_font;
+    new_font.fromString("Arial,27,-1,5,75,0,0,0,0,0");
+    display->setNewFont(new_font);
+    display->setNewWallpaper(QString());
+    display->setShowBlack(true);
+    bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
+    display_on_top = false;
+    display->setFading(false);
+    display->setBlur(true);
+}
+
 
 void SoftProjector::writeXMLConfigurationFile()
 {
@@ -152,17 +173,7 @@ void SoftProjector::readXMLConfigurationFile()
     QFile fh("settings.xml");
     if( ! fh.exists() )
     {
-        // Apply default settings
-        QFont new_font;
-        new_font.setPixelSize(36);
-        display->setNewFont(new_font);
-        display->setNewWallpaper(QString());
-        display->setShowBlack(true);
-        bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
-        display_on_top = false;
-        display->setFading(false);
-        display->setBlur(false);
-        writeXMLConfigurationFile();
+        // Defaults were already applied ealier
         return;
     }
 

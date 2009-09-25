@@ -37,6 +37,7 @@ public:
     Verse current_verse;
 
     void applySetting(QString name, QString value);
+    void applyDefaults();
     void readXMLConfigurationFile();
     void writeXMLConfigurationFile();
 
