@@ -139,9 +139,11 @@ void Display1::renderText(bool text_present)
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
             wallpaper.load(wallpaper_path);
-            wallpaper = wallpaper.scaled(width(),height());
+            if( !wallpaper.isNull() )
+                wallpaper = wallpaper.scaled(width(),height());
         }
-        blur_painter.drawImage(0,0,wallpaper);
+        if( ! wallpaper.isNull() )
+            blur_painter.drawImage(0,0,wallpaper);
     }
 
     text_painter.setPen(QColor(TEXT_COLOR));
