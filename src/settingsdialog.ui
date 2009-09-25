@@ -58,6 +58,9 @@
    </item>
    <item row="2" column="0" colspan="2">
     <widget class="QCheckBox" name="display_on_top_box">
+     <property name="toolTip">
+      <string>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector's screen.</string>
+     </property>
      <property name="text">
       <string>Display screen always on top (requires program restart)</string>
      </property>
@@ -67,6 +70,9 @@
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QCheckBox" name="use_fading_effects_box">
+       <property name="toolTip">
+        <string>If checked, when switching displayed text, fades the old text out and fades the new text in .</string>
+       </property>
        <property name="text">
         <string>Use fading effects</string>
        </property>
@@ -74,6 +80,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QCheckBox" name="use_blur_check_box">
+       <property name="toolTip">
+        <string>Useful when using a wallpaper image. Displays a fancy shadow effect.</string>
+       </property>
        <property name="text">
         <string>Use Blured Shodow</string>
        </property>
