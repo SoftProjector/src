@@ -134,7 +134,7 @@ void ManageDataDialog::importSbornik(QString path)
 
         // Create sbornik
         SongDatabase sdb;
-        sdb.addSbornik("new", title, info);
+        sdb.addSbornik(title, info);
 
         // Set Sbornik Code
         code = "0";

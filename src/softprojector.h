@@ -7,8 +7,8 @@
 #include "display1.h"
 #include "editwidget.h"
 #include "bible.h"
-#include "importdialog.h"
-#include "exportdialog.h"
+//#include "importdialog.h"
+//#include "exportdialog.h"
 
 
 class QActionGroup;
@@ -55,8 +55,8 @@ private slots:
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
     void on_actionSettings_triggered();
-    void on_actionImportSongs_triggered();
-    void on_actionExportSongs_triggered();
+//    void on_actionImportSongs_triggered();
+//    void on_actionExportSongs_triggered();
     void on_actionEditDialog_triggered();
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();

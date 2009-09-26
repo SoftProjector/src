@@ -9,7 +9,7 @@ QStringList Bible::getBooks()
     QStringList books;
     QSqlQuery sq;
 
-    sq.exec("SELECT book_name FROM BibleBooks WHERE bible_id like '"+ primaryId +"'");
+    sq.exec("SELECT book_name FROM BibleBooks WHERE bible_id = "+ primaryId );
     while (sq.next())
         books << sq.value(0).toString();
     return books;
@@ -22,8 +22,8 @@ QStringList Bible::getChapter(QString book, int chapter)
     previewIdList.clear();
     verseList.clear();
 
-    sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id like '"
-            + primaryId + "' AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
+    sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id = "
+            + primaryId + " AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
     while (sq.next())
     {
         verseText = sq.value(2).toString();
@@ -64,7 +64,7 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
     QString caption="";
 
     QSqlQuery sq;
-    sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id like '"+bibleId+"'");
+    sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"+id+"%' AND bible_id = " + bibleId);
     sq.first();
     verse = sq.value(3).toString();
     caption = sq.value(0).toString() + " " + sq.value(1).toString() + ":" + sq.value(2).toString();
@@ -94,7 +94,7 @@ int Bible::maxChapters(QString book, QString bibleId)
     QString book_id;
 
     QSqlQuery sq;
-    sq.exec("SELECT id FROM BibleBooks WHERE book_name like '"+book+"' AND bible_id like '"+bibleId+"'");
+    sq.exec("SELECT id FROM BibleBooks WHERE book_name like '"+book+"' AND bible_id = "+bibleId);
     sq.first();
     book_id = sq.value(0).toString();
     sq.clear();

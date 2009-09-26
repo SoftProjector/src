@@ -14,7 +14,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Get Bibles that exist in the database
     QSqlQuery sq;
-    sq.exec("SELECT bible_name,bible_id FROM BibleVersions");
+    sq.exec("SELECT bible_name, id FROM BibleVersions");
     while(sq.next()){
         bibles << sq.value(0).toString();
         bible_id_list << sq.value(1).toString();
@@ -27,14 +27,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->secondary_bible_menu->addItems(bibles);
 
     // Set current item for primary Bible
-    sq.exec("SELECT rowid FROM BibleVersions WHERE bible_id like '" +softProjector->bibleWidget->getPrimary() +"'");
+    sq.exec("SELECT rowid FROM BibleVersions WHERE id = " +softProjector->bibleWidget->getPrimary() );
     sq.first();
     int primary_index = sq.value(0).toInt();
     ui->primary_bible_menu->setCurrentIndex(primary_index-1);
     sq.clear();
 
     // Set current item for secondary Bible
-    bool has2nd = sq.exec("SELECT rowid FROM BibleVersions WHERE bible_id like '" +softProjector->bibleWidget->getSecondary() +"'");
+    bool has2nd = sq.exec("SELECT rowid FROM BibleVersions WHERE id = " +softProjector->bibleWidget->getSecondary() );
     if (!has2nd)
         ui->secondary_bible_menu->setCurrentIndex(0);
     else {

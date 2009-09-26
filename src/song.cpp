@@ -79,7 +79,7 @@ void Song::readData()
 
     if( !sbornik_id.isEmpty() )
     {
-        sq.exec("SELECT name FROM Sborniks WHERE id = '" + sbornik_id + "'");
+        sq.exec("SELECT name FROM Sborniks WHERE id = " + sbornik_id );
         sq.first();
         sbornik_name = sq.value(0).toString();
     }
@@ -313,8 +313,8 @@ void Song::saveUpdate()
     // Update SongLink information
     QSqlQuery sqq;
     sqq.exec("UPDATE SongLink SET song_number = "
-             + QString::number(num) + " WHERE sbornik_id = '"
-             + sbornik_id.trimmed() + "' AND song_id = " + QString::number(songID));
+             + QString::number(num) + " WHERE sbornik_id = "
+             + sbornik_id + " AND song_id = " + QString::number(songID));
 }
 
 void Song::saveNew()
@@ -385,7 +385,7 @@ QList<Song> SongDatabase::getSongs(QString sbornik_id)
     {
         QSqlQuery sq, sq1;
 
-        sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '"+sbornik_id+"'");
+        sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id = "+sbornik_id);
         while(sq.next())
         {
             int song_id = sq.value(0).toInt();
@@ -403,7 +403,7 @@ int SongDatabase::lastUser(QString sbornik_id)
     int last;
     QList <int> lastInt;
     QSqlQuery sq;
-    sq.exec("SELECT song_number FROM SongLink WHERE sbornik_id = '" +sbornik_id+"'");
+    sq.exec("SELECT song_number FROM SongLink WHERE sbornik_id = " +sbornik_id);
     while (sq.next())
         lastInt << sq.value(0).toInt();
     qSort(lastInt);
@@ -412,30 +412,6 @@ int SongDatabase::lastUser(QString sbornik_id)
     else
         last = lastInt.takeLast() + 1;
     return last;
-}
-
-bool SongDatabase::hasUserSbornik()
-{
-    int i(0);
-    QSqlQuery sq;
-    sq.exec("SELECT id FROM Sborniks WHERE is_user = 1");
-    while (sq.next())
-        ++i;
-    if(i>0)
-        return true;
-    else
-        return false;
-}
-
-QStringList SongDatabase::getUserSborniks()
-{
-    QStringList user_sbornik;
-    QSqlQuery sq;
-    sq.exec("SELECT id, name FROM Sborniks WHERE is_user = 1");
-    while (sq.next())
-        user_sbornik << sq.value(0).toString() + " - " + sq.value(1).toString();
-
-    return user_sbornik;
 }
 
 void SongDatabase::deleteSong(int song_id)
@@ -449,31 +425,19 @@ void SongDatabase::deleteSong(int song_id)
 QString SongDatabase::getSbornikIdStringFromName(QString sbornik_name)
 {
     QSqlQuery sq;
-    sq.exec("SELECT id FROM Sborniks WHERE name = " + sbornik_name);
+    sq.exec("SELECT id FROM Sborniks WHERE name like '" + sbornik_name +"'");
     sq.first();
     return sq.value(0).toString();
 }
 
-bool SongDatabase::addSbornik(QString code, QString name, QString info)
+void SongDatabase::addSbornik(QString name, QString info)
 {
-    QSqlQuery sq;
     QSqlTableModel sqt;
-    int i(0);
-    sq.exec("SELECT id FROM Sborniks WHERE id = '" + code + "'");
-    while(sq.next())
-        ++i;
-    if (i>0)
-        return false;
-    else
-    {
-        sqt.setTable("Sborniks");
-        sqt.insertRows(0,1);
-        sqt.setData(sqt.index(0,0),code.trimmed());
-        sqt.setData(sqt.index(0,1),name.trimmed());
-        sqt.setData(sqt.index(0,2),info);
-        sqt.setData(sqt.index(0,3),1);
-        sqt.submitAll();
-        return true;
-    }
+    sqt.setTable("Sborniks");
+    sqt.insertRows(0,1);
+    sqt.setData(sqt.index(0,1),name.trimmed());
+    sqt.setData(sqt.index(0,2),info);
+    sqt.setData(sqt.index(0,3),1);
+    sqt.submitAll();
 }
 

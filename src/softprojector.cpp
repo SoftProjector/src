@@ -498,27 +498,27 @@ void SoftProjector::on_actionEditDialog_triggered()
     editWidget->activateWindow();
 }
 
-void SoftProjector::on_actionExportSongs_triggered()
-{
-    ExportDialog exportDialog;
-    int ret = exportDialog.exec();
-    switch (ret)
-    {
-    case ExportDialog::Accepted:
-        // code needed to reload sborniks in SongWidget sbornik combobox
-        break;
-    case ExportDialog::Rejected:
-        // No code needed
-        break;
-    }
-}
-
-void SoftProjector::on_actionImportSongs_triggered()
-{
-    ImportDialog importSborniks;
-    importSborniks.load();
-}
-
+//void SoftProjector::on_actionExportSongs_triggered()
+//{
+//    ExportDialog exportDialog;
+//    int ret = exportDialog.exec();
+//    switch (ret)
+//    {
+//    case ExportDialog::Accepted:
+//        // code needed to reload sborniks in SongWidget sbornik combobox
+//        break;
+//    case ExportDialog::Rejected:
+//        // No code needed
+//        break;
+//    }
+//}
+//
+//void SoftProjector::on_actionImportSongs_triggered()
+//{
+//    ImportDialog importSborniks;
+//    importSborniks.load();
+//}
+//
 void SoftProjector::on_actionSettings_triggered()
 {
     SettingsDialog *settingsDialog;

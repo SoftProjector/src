@@ -144,8 +144,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionNewSong"/>
     <addaction name="actionEditDialog"/>
     <addaction name="separator"/>
-    <addaction name="actionImportSongs"/>
-    <addaction name="actionExportSongs"/>
     <addaction name="actionManage_Database"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
@@ -217,31 +215,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
-   </property>
-  </action>
-  <action name="actionImportSongs">
-   <property name="text">
-    <string>Import Sbonik...</string>
-   </property>
-   <property name="iconText">
-    <string>Import Snornik</string>
-   </property>
-   <property name="toolTip">
-    <string>Import songs into user sbornik</string>
-   </property>
-   <property name="statusTip">
-    <string>Import songs into user sbornik</string>
-   </property>
-  </action>
-  <action name="actionExportSongs">
-   <property name="text">
-    <string>Export/Delete Sbornik...</string>
-   </property>
-   <property name="toolTip">
-    <string>Export songs from user sbornik</string>
-   </property>
-   <property name="statusTip">
-    <string>Export songs from user sbornik</string>
    </property>
   </action>
   <action name="actionManage_Database">

@@ -82,14 +82,12 @@ class SongDatabase
 {
 public:
     SongDatabase();
-    bool addSbornik(QString code, QString name, QString info);
-    bool hasUserSbornik();
+    void addSbornik(QString name, QString info);
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
     QString getSbornikIdStringFromName(QString sbornik_name);
     Song getSong(int id);
-    QStringList getUserSborniks();
     QList<Song> getSongs(QString sbornik_id);
     int lastUser(QString sbornik_id);
 //private:

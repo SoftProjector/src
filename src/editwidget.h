@@ -31,6 +31,7 @@ private:
     SongDatabase song_database;
     bool is_new;
     Highlight *highlight;
+    QString sbornik_id;
 //    QString sbornik, format;
 //    QStringList allTitles;
 //    int titleType;
