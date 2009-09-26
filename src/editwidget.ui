@@ -19,8 +19,55 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_6">
-   <item row="0" column="0" colspan="2">
+  <layout class="QGridLayout" name="gridLayout_7">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_6">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Sbornik: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="sbornik_label">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="song_number_lineEdit">
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_15">
@@ -37,7 +84,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0">
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
       <widget class="QLabel" name="label_16">
@@ -67,7 +114,7 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="3" column="0">
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="0" column="0">
       <widget class="QLabel" name="label_17">
@@ -372,7 +419,7 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QGroupBox" name="aling_groupBox">
      <property name="minimumSize">
       <size>
@@ -384,21 +431,6 @@
       <string>Text Alingment</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
-      <property name="leftMargin">
-       <number>4</number>
-      </property>
-      <property name="topMargin">
-       <number>3</number>
-      </property>
-      <property name="rightMargin">
-       <number>3</number>
-      </property>
-      <property name="bottomMargin">
-       <number>3</number>
-      </property>
-      <property name="spacing">
-       <number>3</number>
-      </property>
       <item row="0" column="0">
        <widget class="QRadioButton" name="left_radioButton">
         <property name="text">
@@ -409,53 +441,24 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QRadioButton" name="rihgt_radioButton">
-        <property name="text">
-         <string>Right</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
+      <item row="0" column="1">
        <widget class="QRadioButton" name="center_radioButton">
         <property name="text">
          <string>Center</string>
         </property>
        </widget>
       </item>
+      <item row="0" column="2">
+       <widget class="QRadioButton" name="rihgt_radioButton">
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QTableWidget" name="sbornik_table">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>80</height>
-      </size>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <column>
-      <property name="text">
-       <string>Sbornik</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Number</string>
-      </property>
-     </column>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0">
     <layout class="QGridLayout" name="font_gridLayout">
      <item row="0" column="1">
       <widget class="QLineEdit" name="font_textbox">
@@ -490,7 +493,7 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0" colspan="2">
+   <item row="6" column="0">
     <layout class="QGridLayout" name="wall_gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="wall_label">
@@ -525,10 +528,10 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0">
     <widget class="QTextEdit" name="textEditSong"/>
    </item>
-   <item row="7" column="0" colspan="2">
+   <item row="8" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="1">
       <spacer name="horizontalSpacer">
