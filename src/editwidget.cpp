@@ -262,17 +262,15 @@ void EditWidget::addSbornik()
     bool ok = false;
     AddSbornikDialog add_sbor;
     add_sbor.setWindowTitle("Add a Sbornik;");
-
+    int last(0);
     int ret = add_sbor.exec();
     switch(ret)
     {
     case AddSbornikDialog::Accepted:
         song_database.addSbornik(add_sbor.title,add_sbor.info);
-        int last = song_database.lastUser(add_sbor.code);
-
+        last = song_database.lastUser(song_database.getSbornikIdStringFromName(add_sbor.title));
         ui->sbornik_label->setText(add_sbor.title);
         ui->song_number_lineEdit->setText(QString::number(last));
-
         break;
     case AddSbornikDialog::Rejected:
         close();

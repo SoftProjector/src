@@ -27,9 +27,8 @@ void AddSbornikDialog::changeEvent(QEvent *e)
 
 void AddSbornikDialog::on_buttonBox_accepted()
 {
-    code = ui->sbornik_code_box->text().trimmed();
     title = ui->sbornik_title_box->text().trimmed();
-    info = ui->sbornik_info_box->toPlainText();
+    info = ui->sbornik_info_box->text().trimmed();
     close();
 }
 

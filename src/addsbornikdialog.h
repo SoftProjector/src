@@ -11,7 +11,6 @@ class AddSbornikDialog : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(AddSbornikDialog)
 public:
-    QString code;
     QString title;
     QString info;
     explicit AddSbornikDialog(QWidget *parent = 0);
