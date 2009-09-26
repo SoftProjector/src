@@ -36,8 +36,6 @@ FORMS += softprojector.ui \
     biblewidget.ui \
     editwidget.ui \
     settingsdialog.ui \
-    importdialog.ui \
-    exportdialog.ui \
     aboutdialog.ui \
     addsbornikdialog.ui \
     managedatadialog.ui
