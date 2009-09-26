@@ -560,6 +560,7 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
 
 void SoftProjector::on_actionManage_Database_triggered()
 {
-    ManageDataDialog manage;
-    manage.exec();
+    ManageDataDialog *manage;
+    manage = new ManageDataDialog(this);
+    manage->exec();
 }

@@ -226,7 +226,7 @@ QList<Bibles> Database::getBibles()
     QList<Bibles> bibles;
     Bibles bible;
         QSqlQuery sq;
-    sq.exec("SELECT bible_name, bible_id FROM BibleVersions");
+    sq.exec("SELECT bible_name, id FROM BibleVersions");
     while (sq.next())
     {
         bible.title = sq.value(0).toString();

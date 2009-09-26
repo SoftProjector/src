@@ -6,6 +6,7 @@
 #include <QtSql>
 
 #include "managedata.h"
+#include "song.h"
 
 namespace Ui {
     class ManageDataDialog;
@@ -30,9 +31,19 @@ private:
 
 
 private slots:
+    void on_delete_bible_pushButton_clicked();
+    void on_export_bible_pushButton_clicked();
+    void on_import_bible_pushButton_clicked();
+    void on_ok_pushButton_clicked();
     void on_delete_sbornik_pushButton_clicked();
     void on_export_sbornik_pushButton_clicked();
     void on_import_sbornik_pushButton_clicked();
+    void deleteBible(Bibles bilbe);
+    void importBible(QString path);
+    void exportBible(QString path);
+    void deleteSbornik(Sbornik sbornik);
+    void importSbornik(QString path);
+    void exportSbornik(QString path);
     void load_sborniks();
     void load_bibles();
 };
