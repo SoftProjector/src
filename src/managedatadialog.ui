@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Manage Database</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0" colspan="4">
@@ -35,6 +35,13 @@
             <widget class="QPushButton" name="import_bible_pushButton">
              <property name="text">
               <string>Import...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="edit_bible_pushButton">
+             <property name="text">
+              <string>Edit</string>
              </property>
             </widget>
            </item>
@@ -85,6 +92,13 @@
           <widget class="QPushButton" name="import_sbornik_pushButton">
            <property name="text">
             <string>Import...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="edit_sbornik_pushButton">
+           <property name="text">
+            <string>Edit...</string>
            </property>
           </widget>
          </item>

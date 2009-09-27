@@ -36,3 +36,9 @@ void AddSbornikDialog::on_buttonBox_rejected()
 {
     close();
 }
+
+void AddSbornikDialog::setSbornik(QString tit, QString inf)
+{
+    ui->sbornik_title_box->setText(tit);
+    ui->sbornik_info_box->setText(inf);
+}

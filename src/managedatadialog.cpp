@@ -491,3 +491,56 @@ void ManageDataDialog::deleteBible(Bibles bible)
 
     load_bibles();
 }
+
+void ManageDataDialog::on_edit_sbornik_pushButton_clicked()
+{
+    int row = ui->sbornikTableView->currentIndex().row();
+    Sbornik sbornik = sbornik_model->getSbornik(row);
+    QSqlTableModel sq;
+    QSqlRecord sr;
+
+    AddSbornikDialog sbornik_dialog;
+    sbornik_dialog.setSbornik(sbornik.title,sbornik.info);
+    int ret = sbornik_dialog.exec();
+    switch(ret)
+    {
+    case AddSbornikDialog::Accepted:
+        sq.setTable("Sborniks");
+        sq.setFilter("id = " + sbornik.sbornikId);
+        sq.select();
+                sr = sq.record(0);
+        sr.setValue(1,sbornik_dialog.title.trimmed());
+        sr.setValue(2,sbornik_dialog.info.trimmed());
+        sq.setRecord(0,sr);
+        sq.submitAll();
+        break;
+    case AddSbornikDialog::Rejected:
+//        close();
+        break;
+    }
+
+    load_sborniks();
+}
+
+void ManageDataDialog::on_edit_bible_pushButton_clicked()
+{
+    int row = ui->bibleTableView->currentIndex().row();
+    Bibles bible = bible_model->getBible(row);
+    bool ok;
+    QString name = QInputDialog::getText(this,"Edit Bible Name",
+                                         "Bible title:",QLineEdit::Normal,
+                                         bible.title, &ok);
+    if(ok)
+    {
+        QSqlTableModel sq;
+        QSqlRecord sr;
+        sq.setTable("BibleVersions");
+        sq.setFilter("id = " + bible.bibleId);
+        sq.select();
+        sr = sq.record(0);
+        sr.setValue(1,name.trimmed());
+        sq.setRecord(0,sr);
+        sq.submitAll();
+    }
+    load_bibles();
+}

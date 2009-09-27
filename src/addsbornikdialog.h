@@ -16,6 +16,9 @@ public:
     explicit AddSbornikDialog(QWidget *parent = 0);
     virtual ~AddSbornikDialog();
 
+public slots:
+    void setSbornik(QString title, QString info);
+
 protected:
     virtual void changeEvent(QEvent *e);
 
