@@ -49,7 +49,7 @@ int BiblesModel::rowCount(const QModelIndex &parent) const
 
 int BiblesModel::columnCount(const QModelIndex &parent) const
 {
-    return 2;
+    return 1;
 }
 
 QVariant BiblesModel::data(const QModelIndex &index, int role) const
@@ -58,8 +58,6 @@ QVariant BiblesModel::data(const QModelIndex &index, int role) const
     {
         Bibles bible = bible_list.at(index.row());
         if( index.column() == 0 )
-            return QVariant(bible.bibleId);
-        else if( index.column() == 1 )
             return QVariant(bible.title);
     }
     else
@@ -74,8 +72,6 @@ QVariant BiblesModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant("Bible Id");
-        case 1:
             return QVariant("Title");
         }
     }
@@ -151,7 +147,7 @@ int SborniksModel::rowCount(const QModelIndex &parent) const
 
 int SborniksModel::columnCount(const QModelIndex &parent) const
 {
-    return 3;
+    return 2;
 }
 
 QVariant SborniksModel::data(const QModelIndex &index, int role) const
@@ -160,10 +156,8 @@ QVariant SborniksModel::data(const QModelIndex &index, int role) const
     {
         Sbornik sbornik = sbornik_list.at(index.row());
         if( index.column() == 0 )
-            return QVariant(sbornik.sbornikId);
-        else if( index.column() == 1 )
             return QVariant(sbornik.title);
-        else
+        else if( index.column() == 1 )
             return QVariant(sbornik.info);
     }
     else
@@ -178,10 +172,8 @@ QVariant SborniksModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant("Id");
-        case 1:
             return QVariant("Title");
-        case 2:
+        case 1:
             return QVariant("Info");
         }
     }
