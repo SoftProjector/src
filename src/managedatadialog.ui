@@ -41,7 +41,7 @@
            <item>
             <widget class="QPushButton" name="edit_bible_pushButton">
              <property name="text">
-              <string>Edit</string>
+              <string>Edit...</string>
              </property>
             </widget>
            </item>
