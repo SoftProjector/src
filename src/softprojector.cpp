@@ -49,8 +49,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     showing = false;
 
     ui->tabWidget->clear();
-    ui->tabWidget->addTab(bibleWidget, "Bible");
-    ui->tabWidget->addTab(songWidget, "Songs");
+    ui->tabWidget->addTab(bibleWidget, "Bible (F6)");
+    ui->tabWidget->addTab(songWidget, "Songs (F7)");
 
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
@@ -211,6 +211,22 @@ void SoftProjector::closeEvent(QCloseEvent *event)
     QCoreApplication::exit(0);
     event->accept();
 }
+
+void SoftProjector::keyPressEvent( QKeyEvent * event )
+{
+    // Will get called when a key is pressed
+    int key = event->key();
+    if( key == Qt::Key_F6 )
+        ui->tabWidget->setCurrentWidget(bibleWidget);
+    else if( key == Qt::Key_F7 )
+        ui->tabWidget->setCurrentWidget(songWidget);
+    else
+        QMainWindow::keyPressEvent(event);
+}
+
+
+
+
 
 void SoftProjector::on_actionClose_triggered()
 {

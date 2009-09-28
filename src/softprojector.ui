@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Stop displaying text to the screen (display black screen or wallpaper). Sortcut for this button is the Escape key.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>Hide</string>
+           <string>Hide (Esc)</string>
           </property>
           <property name="shortcut">
            <string>Esc</string>
@@ -77,7 +77,7 @@ p, li { white-space: pre-wrap; }
            <string>If Clear was pressed earlier, this will re-display the text to the screen</string>
           </property>
           <property name="text">
-           <string>Show</string>
+           <string>Show (F4)</string>
           </property>
           <property name="shortcut">
            <string>F4</string>

@@ -73,6 +73,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void keyPressEvent( QKeyEvent * event );
 };
 
 #endif // SOFTPROJECTOR_H

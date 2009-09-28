@@ -34,7 +34,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,0">
@@ -176,7 +176,10 @@
             <string>Add the selected song to the playlist</string>
            </property>
            <property name="text">
-            <string>Add to playlist</string>
+            <string>Add to playlist (F2)</string>
+           </property>
+           <property name="shortcut">
+            <string>F2</string>
            </property>
           </widget>
          </item>
@@ -232,7 +235,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
