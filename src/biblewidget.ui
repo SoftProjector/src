@@ -283,10 +283,12 @@ p, li { white-space: pre-wrap; }
  </widget>
  <tabstops>
   <tabstop>lineEditBook</tabstop>
-  <tabstop>btnLive</tabstop>
+  <tabstop>chapter_ef</tabstop>
+  <tabstop>verse_ef</tabstop>
   <tabstop>listBook</tabstop>
   <tabstop>listChapterNum</tabstop>
   <tabstop>chapter_preview_list</tabstop>
+  <tabstop>btnLive</tabstop>
  </tabstops>
  <resources/>
  <connections/>
