@@ -27,24 +27,20 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->secondary_bible_menu->addItems(bibles);
 
     // Set current item for primary Bible
-    sq.exec("SELECT rowid FROM BibleVersions WHERE id = " +softProjector->bibleWidget->getPrimary() );
-    sq.first();
-    int primary_index = sq.value(0).toInt();
-    ui->primary_bible_menu->setCurrentIndex(primary_index-1);
-    sq.clear();
-
-    // Set current item for secondary Bible
-    bool has2nd = sq.exec("SELECT rowid FROM BibleVersions WHERE id = " +softProjector->bibleWidget->getSecondary() );
-    if (!has2nd)
-        ui->secondary_bible_menu->setCurrentIndex(0);
-    else {
-        sq.first();
-        int secondary_index = sq.value(0).toInt();
-        ui->secondary_bible_menu->setCurrentIndex(secondary_index);
-    }
+    int primary_index = bible_id_list.indexOf(softProjector->bibleWidget->getPrimary());
+    ui->primary_bible_menu->setCurrentIndex(primary_index);
 
     // Remove the primary bible from the secondary list:
     updateSecondaryBibleMenu();
+
+    // Set current item for secondary Bible
+    qDebug() << softProjector->bibleWidget->getSecondary();
+    if (softProjector->bibleWidget->getSecondary() == "none")
+        ui->secondary_bible_menu->setCurrentIndex(0);
+    else {
+        int secondary_index = second_id_list.indexOf(softProjector->bibleWidget->getSecondary());
+        ui->secondary_bible_menu->setCurrentIndex(secondary_index+1);
+    }
 
     // Set Display screen alway on top or not
     if (softProjector->display_on_top)
