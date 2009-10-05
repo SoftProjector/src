@@ -30,6 +30,10 @@ public:
     QString primaryId;
     QString secondaryId;
 
+private:
+    QStringList books;
+    QStringList book_ids;
+
 private slots:
     
 

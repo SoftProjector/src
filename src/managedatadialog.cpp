@@ -350,11 +350,14 @@ void ManageDataDialog::importBible(QString path)
             bk_id = split[0];
             bk_name = split[1];
 
-            sq.exec("INSERT INTO BibleBooks VALUES ("
-                    + bk_id.trimmed() + ",'"
-                    + bk_name.trimmed() + "',"
-                    + id + ")");
-            sq.clear();
+            sqt.setTable("BibleBooks");
+            sqt.insertRows(0,1);
+            sqt.setData(sqt.index(0,0), bk_id.trimmed());
+            sqt.setData(sqt.index(0,1), bk_name.trimmed());
+            sqt.setData(sqt.index(0,2), id);
+            sqt.submitAll();
+            sqt.clear();
+
             line = QString::fromUtf8(file.readLine());
             row++;
             ui->pbar->setValue(row);
@@ -367,12 +370,12 @@ void ManageDataDialog::importBible(QString path)
             line = QString::fromUtf8(file.readLine());
             split = line.split("\t");
             ok = sq.exec("INSERT INTO BibleVerse VALUES ('"
-                         + line[0] +"',"
+                         + split[0] +"',"
                          + id + ","
-                         + line[1] +"','"
-                         + line[2] +"','"
-                         + line[3] +"','"
-                         + line[4] +"')");
+                         + split[1] +"','"
+                         + split[2] +"','"
+                         + split[3] +"','"
+                         + split[4] +"')");
             if (!ok)
             {
                 sqt.setTable("BibleVerse");
