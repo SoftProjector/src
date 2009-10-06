@@ -83,7 +83,6 @@ void ManageDataDialog::importSbornik(QString path)
     QString line, code, title, info, num;
     QStringList split;
     QSqlQuery sq, sq1;
-    QSqlTableModel sqt;
     QMessageBox mb;
 
     // get max number for progress bar
@@ -248,6 +247,12 @@ void ManageDataDialog::exportSbornik(QString path)
         out << songs;
     }
     ofile.close();
+
+    QMessageBox mb;
+    mb.setWindowTitle("Sbornik has been exported");
+    mb.setText("Sbornik:\n     " + title + "\nHas been saved to:\n     " + path);
+    mb.setIcon(QMessageBox::Information);
+    mb.exec();
 }
 
 void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
@@ -443,6 +448,11 @@ void ManageDataDialog::exportBible(QString path)
         out << to_file;
     }
     ofile.close();
+        QMessageBox mb;
+    mb.setWindowTitle("Bible has been exported");
+    mb.setText("Bible:\n     " + bible.title + "\nHas been saved to:\n     " + path);
+    mb.setIcon(QMessageBox::Information);
+    mb.exec();
 }
 
 void ManageDataDialog::on_delete_bible_pushButton_clicked()
