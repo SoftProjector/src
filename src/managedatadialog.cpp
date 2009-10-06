@@ -24,6 +24,10 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui->sbornikTableView->setColumnWidth(0, 195);
     ui->sbornikTableView->setColumnWidth(1, 195);
 
+    //Set reload cariers to false
+    reload_bible = false;
+    reload_sbornik = false;
+
 }
 
 ManageDataDialog::~ManageDataDialog()
@@ -102,6 +106,7 @@ void ManageDataDialog::importSbornik(QString path)
 
     if (file.open(QIODevice::ReadOnly))
     {
+        reload_sbornik = true;
         //Set Sbornik Title and Information
         line = QString::fromUtf8(file.readLine());
         if (line.startsWith("##"))
@@ -286,6 +291,7 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
 
 void ManageDataDialog::deleteSbornik(Sbornik sbornik)
 {
+    reload_sbornik = true;
     QSqlQuery sq,sq1;
     QString id = sbornik.sbornikId.trimmed();
 
@@ -517,6 +523,7 @@ void ManageDataDialog::on_edit_sbornik_pushButton_clicked()
     switch(ret)
     {
     case AddSbornikDialog::Accepted:
+        reload_sbornik = true;
         sq.setTable("Sborniks");
         sq.setFilter("id = " + sbornik.sbornikId);
         sq.select();

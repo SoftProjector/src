@@ -19,6 +19,7 @@ public:
 
 public slots:
     Song getSongToEdit();
+    void updateSborniks();
 
 protected:
     virtual void changeEvent(QEvent *e);

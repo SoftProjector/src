@@ -19,6 +19,8 @@ class ManageDataDialog : public QDialog {
 public:
     explicit ManageDataDialog(QWidget *parent = 0);
     virtual ~ManageDataDialog();
+    bool reload_bible;
+    bool reload_sbornik;
 
 protected:
     virtual void changeEvent(QEvent *e);

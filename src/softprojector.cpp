@@ -579,4 +579,6 @@ void SoftProjector::on_actionManage_Database_triggered()
     ManageDataDialog *manage;
     manage = new ManageDataDialog(this);
     manage->exec();
+    if (manage->reload_sbornik)
+        songWidget->updateSborniks();
 }

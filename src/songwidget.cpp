@@ -185,25 +185,28 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 {
     // Called when a different sbornik is selected from the pull-down menu
 
-    QList<Song> song_list;
-
-    if (index==0)
+    if (index>=0) // load titles only when sbornik_menu has more than one item.
     {
-        song_list = song_database.getSongs("ALL");
-        ui->song_num_spinbox->setEnabled(false);
-    }
-    else
-    {
-        QString sbornik_id = sbornikList[index-1];
-        song_list = song_database.getSongs(sbornik_id);
-        ui->song_num_spinbox->setEnabled(true);
-        // FIXME Instead of using count(), find the song with highest num.
-        ui->song_num_spinbox->setMaximum(song_list.count());
-    }
-    songs_model->setSongs(song_list);
+        QList<Song> song_list;
 
-    ui->songs_view->selectRow(0);
-    updateButtonStates();
+        if (index==0)
+        {
+            song_list = song_database.getSongs("ALL");
+            ui->song_num_spinbox->setEnabled(false);
+        }
+        else
+        {
+            QString sbornik_id = sbornikList[index-1];
+            song_list = song_database.getSongs(sbornik_id);
+            ui->song_num_spinbox->setEnabled(true);
+            // FIXME Instead of using count(), find the song with highest num.
+            ui->song_num_spinbox->setMaximum(song_list.count());
+        }
+        songs_model->setSongs(song_list);
+
+        ui->songs_view->selectRow(0);
+        updateButtonStates();
+    }
 }
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
@@ -417,4 +420,12 @@ void SongWidget::on_songs_view_clicked(QModelIndex index)
 void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 {
     sendToProjector(preview_song, index.row());
+}
+
+void SongWidget::updateSborniks()
+{
+    int current_sbornik = ui->sbornik_menu->currentIndex();
+    ui->sbornik_menu->clear();
+    loadSborniks();
+    ui->sbornik_menu->setCurrentIndex(current_sbornik);
 }
