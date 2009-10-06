@@ -82,7 +82,7 @@ void ManageDataDialog::importSbornik(QString path)
     QFile file(path), file2(path);
     QString line, code, title, info, num;
     QStringList split;
-    QSqlQuery sq;
+    QSqlQuery sq, sq1;
     QSqlTableModel sqt;
     QMessageBox mb;
 
@@ -137,6 +137,9 @@ void ManageDataDialog::importSbornik(QString path)
         sq.clear();
 
         // Import Songs
+        QSqlDatabase::database().transaction();
+        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background)"
+                   "VALUES (?,?,?,?,?,?,?,?,?)");
         while (!file.atEnd())
         {
             line = QString::fromUtf8(file.readLine());
@@ -145,21 +148,25 @@ void ManageDataDialog::importSbornik(QString path)
             num = split[0];
 
             // Add song to Songs table
-            sqt.setTable("Songs");
-            sqt.insertRows(0,1);
-            sqt.setData(sqt.index(0,1),split[1]);//title
-            sqt.setData(sqt.index(0,2),split[2]);//cat
-            sqt.setData(sqt.index(0,3),split[3]);//tune
-            sqt.setData(sqt.index(0,4),split[4]);//words
-            sqt.setData(sqt.index(0,5),split[5]);//music
-            sqt.setData(sqt.index(0,6),split[6]);//song text
+            sq1.addBindValue(split[1]);//title
+            sq1.addBindValue(split[2]);//cat
+            sq1.addBindValue(split[3]);//tune
+            sq1.addBindValue(split[4]);//words
+            sq1.addBindValue(split[5]);//music
+            sq1.addBindValue(split[6]);//song text
             if (split.count() > 7)
             {
-                sqt.setData(sqt.index(0,7),split[7]);//font
-                sqt.setData(sqt.index(0,8),split[8]);//alignment
-                sqt.setData(sqt.index(0,9),split[9]);//background
+                sq1.addBindValue(split[7]);//font
+                sq1.addBindValue(split[8]);//alignment
+                sq1.addBindValue(split[9]);//background
             }
-            sqt.submitAll();
+            else
+            {
+                sq1.addBindValue("");//font
+                sq1.addBindValue("");//alignment
+                sq1.addBindValue("");//background
+            }
+            sq1.exec();
 
             // Get song id for the last song added
             QString sid = "";
@@ -176,6 +183,7 @@ void ManageDataDialog::importSbornik(QString path)
             row++;
             ui->pbar->setValue(row);
         }
+        QSqlDatabase::database().commit();
     }
     ui->pbar->setVisible(false);
     load_sborniks();
@@ -320,7 +328,6 @@ void ManageDataDialog::importBible(QString path)
     QString line, title, id;
     QStringList split;
     QSqlQuery sq;
-    QSqlTableModel sqt;
     int row(0);
 
     if (file.open(QIODevice::ReadOnly))
@@ -343,6 +350,8 @@ void ManageDataDialog::importBible(QString path)
 
         // add Bible book names
         line = QString::fromUtf8(file.readLine());
+        QSqlDatabase::database().transaction();
+        sq.prepare("INSERT INTO BibleBooks (id, book_name, bible_id) VALUES (?,?,?)");
         while (!line.startsWith("---"))
         {
             QString bk_id, bk_name;
@@ -350,47 +359,37 @@ void ManageDataDialog::importBible(QString path)
             bk_id = split[0];
             bk_name = split[1];
 
-            sqt.setTable("BibleBooks");
-            sqt.insertRows(0,1);
-            sqt.setData(sqt.index(0,0), bk_id.trimmed());
-            sqt.setData(sqt.index(0,1), bk_name.trimmed());
-            sqt.setData(sqt.index(0,2), id);
-            sqt.submitAll();
-            sqt.clear();
+            sq.addBindValue(bk_id.trimmed());
+            sq.addBindValue(bk_name.trimmed());
+            sq.addBindValue(id);
+            sq.exec();
 
             line = QString::fromUtf8(file.readLine());
-            row++;
+            ++row;
             ui->pbar->setValue(row);
         }
+        QSqlDatabase::database().commit();
+        sq.clear();
 
         // add bible verses
-        bool ok;
+        QSqlDatabase::database().transaction();
+        sq.prepare("INSERT INTO BibleVerse (verse_id, bible_id, book, chapter, verse, verse_text)"
+                   "VALUES (?,?,?,?,?,?)");
         while (!file.atEnd())
         {
             line = QString::fromUtf8(file.readLine());
             split = line.split("\t");
-            ok = sq.exec("INSERT INTO BibleVerse VALUES ('"
-                         + split[0] +"',"
-                         + id + ","
-                         + split[1] +"','"
-                         + split[2] +"','"
-                         + split[3] +"','"
-                         + split[4] +"')");
-            if (!ok)
-            {
-                sqt.setTable("BibleVerse");
-                sqt.insertRows(0,1);
-                sqt.setData(sqt.index(0,0), split[0]);
-                sqt.setData(sqt.index(0,1), id);
-                sqt.setData(sqt.index(0,2), split[1]);
-                sqt.setData(sqt.index(0,3), split[2]);
-                sqt.setData(sqt.index(0,4), split[3]);
-                sqt.setData(sqt.index(0,5), split[4]);
-                sqt.submitAll();
-            }
-            row++;
+            sq.addBindValue(split.at(0));
+            sq.addBindValue(id);
+            sq.addBindValue(split.at(1));
+            sq.addBindValue(split.at(2));
+            sq.addBindValue(split.at(3));
+            sq.addBindValue(split.at(4));
+            sq.exec();
+            ++row;
             ui->pbar->setValue(row);
         }
+        QSqlDatabase::database().commit();
         file.close();
     }
     ui->pbar->setVisible(false);
