@@ -4,6 +4,7 @@
 #include <QtGui/QMainWindow>
 #include "songwidget.h"
 #include "biblewidget.h"
+#include "announcewidget.h"
 #include "display1.h"
 #include "editwidget.h"
 #include "bible.h"
@@ -27,6 +28,7 @@ public:
     ~SoftProjector();
     SongWidget *songWidget;
     BibleWidget *bibleWidget;
+    AnnounceWidget *announceWidget;
     QDesktopWidget *desktop;
     Display1 *display;
     EditWidget *editWidget;
@@ -35,6 +37,7 @@ public:
     Song current_song;
     int current_song_verse;
     Verse current_verse;
+    QString announce_text;
 
     void applySetting(QString name, QString value);
     void applyDefaults();
@@ -50,6 +53,7 @@ private:
     QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
     void drawCurrentBibleText(QPainter *painter, int width, int height);
+    void drawAnnounceText(QPainter *painter, int width, int height);
 
 private slots:
     void on_actionManage_Database_triggered();
@@ -67,6 +71,7 @@ private slots:
     void on_listShow_currentRowChanged(int currentRow);
     void on_actionClose_triggered();
     void setSongList(Song song, int row);
+    void setAnnounceText(QString text);
     void setChapterList(QStringList chapter_list, int verse, QString caption);
     void drawText(QPainter *painter, int width, int height);
 

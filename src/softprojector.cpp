@@ -45,12 +45,14 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     songWidget = new SongWidget;
     editWidget = new EditWidget;
+    announceWidget = new AnnounceWidget;
 
     showing = false;
 
     ui->tabWidget->clear();
     ui->tabWidget->addTab(bibleWidget, "Bible (F6)");
     ui->tabWidget->addTab(songWidget, "Songs (F7)");
+    ui->tabWidget->addTab(announceWidget, "Announcements (F8)");
 
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
@@ -58,6 +60,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
             this, SLOT(setChapterList(QStringList, int, QString)));
+    connect(announceWidget,SIGNAL(sendText(QString)),
+            this, SLOT(setAnnounceText(QString)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
             this, SLOT(drawText(QPainter*, int, int)));
 
@@ -72,6 +76,7 @@ SoftProjector::~SoftProjector()
     delete songWidget;
     delete editWidget;
     delete bibleWidget;
+    delete announceWidget;
     delete display;
     delete desktop;
 }
@@ -225,6 +230,8 @@ void SoftProjector::keyPressEvent( QKeyEvent * event )
         ui->tabWidget->setCurrentWidget(bibleWidget);
     else if( key == Qt::Key_F7 )
         ui->tabWidget->setCurrentWidget(songWidget);
+    else if( key == Qt::Key_F8 )
+        ui->tabWidget->setCurrentWidget(announceWidget);
     else
         QMainWindow::keyPressEvent(event);
 }
@@ -236,6 +243,20 @@ void SoftProjector::keyPressEvent( QKeyEvent * event )
 void SoftProjector::on_actionClose_triggered()
 {
     close();
+}
+
+void SoftProjector::setAnnounceText(QString text)
+{
+    announce_text = text;
+    type = "announce";
+    ui->labelShow->setText("Announcement");
+    ui->listShow->clear();
+    ui->listShow->setSpacing(5); // ?
+    ui->listShow->setWordWrap(true);
+    ui->listShow->addItem(text);
+    showing = true;
+    ui->listShow->setCurrentRow(0);
+    ui->listShow->setFocus();
 }
 
 void SoftProjector::setSongList(Song song, int row)
@@ -260,6 +281,9 @@ void SoftProjector::setSongList(Song song, int row)
 
 QRect SoftProjector::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)
 {
+    // If draw is false, calculate the rectangle that the specified text would be
+    // drawn into if it was draw. If draw is true, draw as well.
+    // Output rect is returned.
     QRect out_rect;
     if(draw)
         painter->drawText(left, top, width, height, flags, text, &out_rect);
@@ -270,6 +294,10 @@ QRect SoftProjector::boundRectOrDrawText(QPainter *painter, bool draw, int left,
 
 QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str)
 {
+    // Figure out how to draw the specified song verse to the specified rect.
+    // Return the rectangle of the output - may be bigger than input rect.
+    // draw - whether to actually draw or to simply calculate the rect.
+
     QRect caption_rect, num_rect, main_rect, out_rect;
     int left = bound_rect.left();
     int top = bound_rect.top();
@@ -306,6 +334,9 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
 
 void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
+    // Draw the text of the current song verse to the specified painter; making
+    // sure that the output rect is narrower than <width> and shorter than <height>.
+
     SongDatabase song_database;
     QStringList song_list = current_song.getSongTextList();
 
@@ -472,6 +503,25 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 }
 
 
+
+
+void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
+{
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    int flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+    QRect rect = QRect(left, top, w, h);
+    display->paintTextToRect(painter, rect, flags, announce_text);
+}
+
+
+
+
+
 void SoftProjector::drawText(QPainter *painter, int width, int height)
 {
     if( !showing )
@@ -481,6 +531,8 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
         drawCurrentSongText(painter, width, height);
     else if(type=="bible")
         drawCurrentBibleText(painter, width, height);
+    else if( type == "announce" )
+        drawAnnounceText(painter, width, height);
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)
@@ -522,18 +574,12 @@ void SoftProjector::updateScreen()
     else
     {
         if(type=="song")
-        {
-//            Song song = songWidget->currentSong();
-//            int row = ui->listShow->currentRow();
-//            current_song = song;
             current_song_verse = currentRow;
-            display->renderText(true);
-        }
         else if(type=="bible")
-        {
             current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
-            display->renderText(true);
-        }
+        else if( type == "announce" )
+            announce_text = announceWidget->getText();
+        display->renderText(true);
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
     }
