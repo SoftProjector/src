@@ -61,12 +61,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     new_font = softProjector->display->getFont();
     new_wallpaper_path = softProjector->display->getWallpaper();
     if(new_wallpaper_path == "") {
-        ui->wallpaper_label->setText("Wallpaper: None");
+        ui->wallpaper_ef->setText("None");
         ui->remove_wallpaper_button->setEnabled(false);
         ui->black_or_wallpaper_group->setEnabled(false);
     }
     else
-        ui->wallpaper_label->setText("Wallpaper: " + new_wallpaper_path);
+        ui->wallpaper_ef->setText(new_wallpaper_path);
 
 }
 
@@ -167,7 +167,7 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
 
     if( !filename.isNull() ) {
         new_wallpaper_path = filename;
-        ui->wallpaper_label->setText("Wallpaper: " + filename);
+        ui->wallpaper_ef->setText(filename);
         ui->remove_wallpaper_button->setEnabled(true);
         ui->black_or_wallpaper_group->setEnabled(true);
     }
@@ -177,7 +177,7 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
 void SettingsDialog::on_remove_wallpaper_button_clicked()
 {
     new_wallpaper_path = "";
-    ui->wallpaper_label->setText("Wallpaper: None");
+    ui->wallpaper_ef->setText("None");
     ui->remove_wallpaper_button->setEnabled(false);
     ui->black_or_wallpaper_group->setEnabled(false);
 }
