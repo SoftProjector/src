@@ -241,15 +241,15 @@ void SoftProjector::setSongList(Song song, int row)
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
-    showing = true;
     ui->labelShow->setText(song.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
     ui->listShow->addItems(song_list);
+    showing = true;
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
-    updateScreen();
+//    updateScreen();
 }
 
 
@@ -428,10 +428,10 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
+    showing = true;
     ui->listShow->setCurrentRow(verse);
     ui->listShow->setFocus();
-    showing = true;
-    updateScreen();
+//    updateScreen();
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
@@ -459,9 +459,9 @@ void SoftProjector::updateScreen()
         if(type=="song")
         {
 //            Song song = songWidget->currentSong();
-            int row = ui->listShow->currentRow();
+//            int row = ui->listShow->currentRow();
 //            current_song = song;
-            current_song_verse = row;
+            current_song_verse = currentRow;
             display->renderText(true);
         }
         else if(type=="bible")
