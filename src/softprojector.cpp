@@ -84,7 +84,12 @@ void SoftProjector::applyDefaults()
     display->setNewFont(new_font);
     display->setNewWallpaper(QString());
     display->setShowBlack(true);
-    bibleWidget->loadBibles(QString("bible_kjv"), QString("none"));
+
+    // Get fist Bible in the Database
+    QSqlQuery sq;
+    sq.exec("SELECT id FROM BibleVersions");
+    sq.first();
+    bibleWidget->loadBibles(QString(sq.value(0).toString()), QString("none"));
     display_on_top = false;
     display->setFading(false);
     display->setBlur(true);
