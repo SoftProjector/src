@@ -263,8 +263,6 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     QRect caption_rect, num_rect, main_rect, out_rect;
     int left = bound_rect.left();
     int top = bound_rect.top();
-    int bottom = bound_rect.bottom();
-    int right = bound_rect.right();
     int width = bound_rect.width();
     int height = bound_rect.height();
     int main_flags;
@@ -274,20 +272,28 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     else
        main_flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
 
+    QFont orig_font = painter->font();
+    QFont caption_font = orig_font;
+    caption_font.setPointSize( orig_font.pointSize() *4/5 );
+
     if(draw)
     {
+        painter->setFont(caption_font);
         painter->drawText(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str, &caption_rect);
         painter->drawText(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str, &num_rect);
 
         int cheight = caption_rect.height(); // Height of the caption text
+        painter->setFont(orig_font);
         painter->drawText(left, top+cheight, width, height-cheight, main_flags, main_text, &main_rect);
     }
     else
     {  
+        painter->setFont(caption_font);
         caption_rect = painter->boundingRect(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
         num_rect = painter->boundingRect(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
 
         int cheight = caption_rect.height(); // Height of the caption text
+        painter->setFont(orig_font);
         main_rect = painter->boundingRect(left, top+cheight, width, height-cheight, main_flags, main_text);
     }
 
@@ -295,7 +301,7 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     left = main_rect.left();
     height = main_rect.bottom() - top;
     width = main_rect.right() - left;
-    qDebug() << "OUT top, left, height, width:" << top << left << height << width;
+    //qDebug() << "OUT top, left, height, width:" << top << left << height << width;
     out_rect.setRect(left, top, width, height);
     return out_rect;
 }
@@ -312,6 +318,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool last_verse = ( current_song_verse == song_list.count()-1 );
 
     QStringList lines_list = song_list.at(current_song_verse).split("\n");
+    QString song_num_str = QString::number(current_song.num);
 
     // Remove the first line if it starts with "Kuplet" or "Pripev":
     QString textemp = lines_list[0];
@@ -320,8 +327,8 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     if( textemp.startsWith(QString::fromUtf8("Припев")) || textemp.startsWith(QString::fromUtf8("Куплет")) )
     {
         top_caption_str = lines_list.at(0);
-        qDebug() << "CAPTION:";
-        qDebug() << top_caption_str;
+        //qDebug() << "CAPTION:";
+        //qDebug() << top_caption_str;
         lines_list.removeFirst();
     }
 
@@ -351,8 +358,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     int orig_font_size = font.pointSize();
 
     // Keep decreasing the font size until the text fits into the allocated space:
-    QString song_num_str = QString::number(current_song.num);
-
     bool exit = false;
     while( !exit )
     {
@@ -412,7 +417,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
         int caption_height = 80;
         h -= caption_height;
-        int caption_top = top + h;
         int middle = (height / 2);
 
         // Draw verse text:
