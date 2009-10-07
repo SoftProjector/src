@@ -258,6 +258,16 @@ void SoftProjector::setSongList(Song song, int row)
 }
 
 
+QRect SoftProjector::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)
+{
+    QRect out_rect;
+    if(draw)
+        painter->drawText(left, top, width, height, flags, text, &out_rect);
+    else
+        out_rect = painter->boundingRect(left, top, width, height, flags, text);
+    return out_rect;
+}
+
 QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str)
 {
     QRect caption_rect, num_rect, main_rect, out_rect;
@@ -276,26 +286,13 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     QFont caption_font = orig_font;
     caption_font.setPointSize( orig_font.pointSize() *4/5 );
 
-    if(draw)
-    {
-        painter->setFont(caption_font);
-        painter->drawText(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str, &caption_rect);
-        painter->drawText(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str, &num_rect);
+    painter->setFont(caption_font);
+    caption_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+    num_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
 
-        int cheight = caption_rect.height(); // Height of the caption text
-        painter->setFont(orig_font);
-        painter->drawText(left, top+cheight, width, height-cheight, main_flags, main_text, &main_rect);
-    }
-    else
-    {  
-        painter->setFont(caption_font);
-        caption_rect = painter->boundingRect(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
-        num_rect = painter->boundingRect(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
-
-        int cheight = caption_rect.height(); // Height of the caption text
-        painter->setFont(orig_font);
-        main_rect = painter->boundingRect(left, top+cheight, width, height-cheight, main_flags, main_text);
-    }
+    int cheight = caption_rect.height(); // Height of the caption text
+    painter->setFont(orig_font);
+    main_rect = boundRectOrDrawText(painter, draw, left, top+cheight, width, height-cheight, main_flags, main_text);
 
     top = top;
     left = main_rect.left();
