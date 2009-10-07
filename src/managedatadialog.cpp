@@ -492,6 +492,7 @@ void ManageDataDialog::on_delete_bible_pushButton_clicked()
 
 void ManageDataDialog::deleteBible(Bibles bible)
 {
+    reload_bible = true;
     QSqlQuery sq;
     QString id = bible.bibleId.trimmed();
 

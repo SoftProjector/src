@@ -581,9 +581,33 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
 
 void SoftProjector::on_actionManage_Database_triggered()
 {
+    QString primaryBible = bibleWidget->getPrimary();
+    QString secondaryBible = bibleWidget->getSecondary();
+    QSqlQuery sq;
+
     ManageDataDialog *manage;
     manage = new ManageDataDialog(this);
     manage->exec();
+
+    // Reload sborniks if Sbornik has been added, edited, or deleted
     if (manage->reload_sbornik)
         songWidget->updateSborniks();
+
+    // Reload Bibles if Bile has been deleted
+    if (manage->reload_bible)
+    {
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + primaryBible);
+        if (!sq.first())
+        {
+            sq.clear();
+            sq.exec("SELECT id FROM BibleVersions");
+            sq.first();
+            primaryBible = sq.value(0).toString();
+        }
+        sq.clear();
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + secondaryBible);
+        if (!sq.first())
+            secondaryBible = "none";
+        bibleWidget->loadBibles(primaryBible, secondaryBible);
+    }
 }
