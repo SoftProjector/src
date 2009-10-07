@@ -46,6 +46,7 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
+    QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
     void drawCurrentBibleText(QPainter *painter, int width, int height);
 

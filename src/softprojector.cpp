@@ -258,13 +258,56 @@ void SoftProjector::setSongList(Song song, int row)
 }
 
 
+QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str)
+{
+    QRect caption_rect, num_rect, main_rect, out_rect;
+    int left = bound_rect.left();
+    int top = bound_rect.top();
+    int bottom = bound_rect.bottom();
+    int right = bound_rect.right();
+    int width = bound_rect.width();
+    int height = bound_rect.height();
+    int main_flags;
+
+    if(wrap)
+       main_flags = Qt::AlignHCenter | Qt::AlignVCenter;
+    else
+       main_flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+
+    if(draw)
+    {
+        painter->drawText(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str, &caption_rect);
+        painter->drawText(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str, &num_rect);
+
+        int cheight = caption_rect.height(); // Height of the caption text
+        painter->drawText(left, top+cheight, width, height-cheight, main_flags, main_text, &main_rect);
+    }
+    else
+    {  
+        caption_rect = painter->boundingRect(left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+        num_rect = painter->boundingRect(left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
+
+        int cheight = caption_rect.height(); // Height of the caption text
+        main_rect = painter->boundingRect(left, top+cheight, width, height-cheight, main_flags, main_text);
+    }
+
+    top = top;
+    left = main_rect.left();
+    height = main_rect.bottom() - top;
+    width = main_rect.right() - left;
+    qDebug() << "OUT top, left, height, width:" << top << left << height << width;
+    out_rect.setRect(left, top, width, height);
+    return out_rect;
+}
+
+
 void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
     SongDatabase song_database;
     QStringList song_list = current_song.getSongTextList();
 
     QString main_text;
-    QString caption_text;
+    QString top_caption_str;
 
     bool last_verse = ( current_song_verse == song_list.count()-1 );
 
@@ -275,7 +318,13 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     textemp.remove(6,10);
 
     if( textemp.startsWith(QString::fromUtf8("Припев")) || textemp.startsWith(QString::fromUtf8("Куплет")) )
+    {
+        top_caption_str = lines_list.at(0);
+        qDebug() << "CAPTION:";
+        qDebug() << top_caption_str;
         lines_list.removeFirst();
+    }
+
 
     // Convert lines_list to a string:
     main_text = "";
@@ -287,48 +336,58 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     }
 
     if( last_verse )
-        caption_text = "*    *    *";
-    else
-        caption_text = "";
+        main_text += "\n*   *   *";
 
     // Margins:
     int left = 30;
     int top = 20;
     int w = width - left - left;
     int h = height - top - top;
-
-    QFont font = painter->font();
-
-    // Allocate this much of the screen to the caption text:
-    int caption_height = 80;
-
-    if( !caption_text.isEmpty() )
-        h -= caption_height;
-    int caption_top = top + h;
-
-
     QRect rect = QRect(left, top, w, h);
 
+    QRect out_rect;
 
-    int flags = Qt::AlignHCenter | Qt::AlignVCenter; //| Qt::TextWordWrap;
-    display->paintTextToRect(painter, rect, flags, main_text);
+    QFont font = painter->font();
+    int orig_font_size = font.pointSize();
 
+    // Keep decreasing the font size until the text fits into the allocated space:
+    QString song_num_str = QString::number(current_song.num);
 
-    if (!caption_text.isEmpty())
+    bool exit = false;
+    while( !exit )
     {
-        int font_size = font.pointSize();
-        if((font_size*3/4)<20)
-            font.setPointSize(20);
-        else
-            font.setPointSize(font_size*3/4);
-
-        painter->setFont(font);
-
-        QRect rect = QRect(left, caption_top, w, caption_height);
-        int flags = Qt::AlignHCenter | Qt::AlignHCenter | Qt::TextWordWrap;
-        display->paintTextToRect(painter, rect, flags, caption_text);
+        out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str);
+        exit = ( out_rect.width() <= w && out_rect.height() <= h );
+        if( !exit )
+        {
+            // Decrease font size by one point and try again
+            font.setPointSize( font.pointSize()-1 );
+            painter->setFont(font);
+        }
     }
-
+    bool wrap = false;
+    // Force wrapping of songs that have really wide lines:
+    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
+    if( font.pointSize() < (orig_font_size*4/5) )
+    {
+        font.setPointSize(orig_font_size);
+        painter->setFont(font);
+        exit = false;
+        wrap = true;
+        while( !exit )
+        {
+            out_rect = drawSongTextToRect(painter, rect, false, true, main_text, top_caption_str, song_num_str);
+            exit = ( out_rect.width() <= w && out_rect.height() <= h );
+            if( !exit )
+            {
+                // Decrease font size by one point and try again
+                font.setPointSize( font.pointSize()-1 );
+                painter->setFont(font);
+            }
+        }
+    }
+    // At this point we picked correct font size and flags; so it's safe to draw:
+    drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str);
 }
 
 
