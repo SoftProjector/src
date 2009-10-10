@@ -220,7 +220,6 @@ void ManageDataDialog::exportSbornik(QString path)
             + title + "\n##"
             + info;
 
-    int i(0);
     sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '" + sbornik_id +"'");
     while (sq.next())
     {

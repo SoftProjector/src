@@ -291,7 +291,9 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
     QString str0 = sourceModel()->data(index0).toString();
     QString str1 = sourceModel()->data(index1).toString();
 
-    QRegExp reg = QRegExp(filter_string);
+    if( filter_string.isEmpty() )
+        // No filter specified
+        return true;
 
     if(exact_match)
         return ( str0.compare(filter_string, Qt::CaseInsensitive) == 0
