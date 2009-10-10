@@ -38,6 +38,7 @@ public:
     int current_song_verse;
     Verse current_verse;
     QString announce_text;
+    QString version_string;
 
     void applySetting(QString name, QString value);
     void applyDefaults();

@@ -12,7 +12,7 @@ class AboutDialog : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(AboutDialog)
 public:
-    explicit AboutDialog(QWidget *parent = 0);
+    explicit AboutDialog(QWidget *parent, QString version_string);
     virtual ~AboutDialog();
 
 protected:

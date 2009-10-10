@@ -68,6 +68,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
+    version_string = "0.9 Alpha 05";
+    this->setWindowTitle("softProjector " + version_string);
+
 }
 
 SoftProjector::~SoftProjector()
@@ -664,7 +667,7 @@ void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
 void SoftProjector::on_actionAbout_triggered()
 {
     AboutDialog *aboutDialog;
-    aboutDialog = new AboutDialog(this);
+    aboutDialog = new AboutDialog(this, version_string);
     aboutDialog->setWindowTitle("About softProjecor");
     aboutDialog->exec();
 }
