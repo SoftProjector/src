@@ -180,10 +180,16 @@ QString EditWidget::resetLyric(QString lyric)
     lyric = lSong[0];
     while (i<lSong.size()){
         fSong = lSong[i];
-        if (fSong.startsWith(QString::fromUtf8("Куплет")) || fSong.startsWith(QString::fromUtf8("Припев"))){
+        if( fSong.startsWith(QString::fromUtf8("Куплет"))
+                || fSong.startsWith(QString::fromUtf8("Припев"))
+                || fSong.startsWith(QString::fromUtf8("Вставка") ) )
+        {
             lyric += "@$" + lSong[i];
-        }else if ((fSong == "") || (fSong == " "));
-        else  {
+        }
+        else if ((fSong == "") || (fSong == " "))
+            ;
+        else
+        {
             lyric += "@%" + lSong[i];
         }
         ++i;

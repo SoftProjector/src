@@ -1,4 +1,3 @@
-
 #include "song.h"
 #include <QDebug>
 
@@ -92,26 +91,42 @@ QStringList Song::getSongTextList()
     QString text, text2, codec;
     QStringList split, songlist;
     QString chorus;
-    bool has_chorus=0;
-    int i=(0),j(0),k(0),chor(0);
-    
+    bool has_chorus=false;
+    int pnum = 0;
+    int chor = 0;
+
     songlist = songText.split("@$");//songText.split("@$");
     
-    while(i < songlist.size() )
+    while(pnum < songlist.size() )
     {
-        text = songlist[i];
+        text = songlist[pnum];
         //text.chop(1);
         split = text.split("@%"); // split the text into rythmic line seperated by @%
-        k=split.size();
+        int split_size = split.size();
         text=""; // clear text
-        j=0;
+        int j = 0;
         text2=split[0];
         //text2.remove(6,10);
         if (text2.startsWith(codec.fromUtf8("Куплет")))
         {// Fill Verse
-            while (j<k)
+            while (j<split_size)
             {
-                if (j==k-1)
+                if (j==split_size-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                j++;
+            }
+            formatedSong += text.trimmed();
+            if (has_chorus){
+                formatedSong += chorus;
+            }
+        }
+        else if (text2.startsWith(codec.fromUtf8("Вставка")))
+        {// Fill vstavka
+            while (j<split_size)
+            {
+                if (j==split_size-1)
                     text += split[j];
                 else
                     text += split[j] + "\n";
@@ -124,9 +139,9 @@ QStringList Song::getSongTextList()
         }
         else if (text2.startsWith(codec.fromUtf8("Припев")))
         { // Fill Chorus
-            while (j<k)
+            while (j<split_size)
             {
-                if (j==k-1)
+                if (j==split_size-1)
                     text += split[j];
                 else
                     text += split[j] + "\n";
@@ -135,7 +150,7 @@ QStringList Song::getSongTextList()
             chorus = text.trimmed();
             if (chorus.size()>3)
             {
-                has_chorus=1;
+                has_chorus=true;
                 chor++;
                 if (chor ==1)
                     formatedSong += chorus;
@@ -146,7 +161,7 @@ QStringList Song::getSongTextList()
                 }
             }
         }
-        ++i;
+        ++pnum;
     }
     return formatedSong; // Fill verse_list widget
 }

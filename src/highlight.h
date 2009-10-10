@@ -24,9 +24,7 @@ private:
     };
     QVector<HighlightingRule> highlightingRules;
 
-    QTextCharFormat verseFormat;
-    QTextCharFormat chorusFormat;
-
+    QTextCharFormat verseFormat, chorusFormat, vstavkaFormat;
 };
 
 #endif // HIGHLIGHT_H

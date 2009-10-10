@@ -17,6 +17,13 @@ Highlight::Highlight(QTextDocument *parent)
     rule.pattern = QRegExp(QString::fromUtf8("Припев[^\n]*"));
     rule.format = chorusFormat;
     highlightingRules.append(rule);
+
+    vstavkaFormat.setFontItalic(true);
+    vstavkaFormat.setForeground(Qt::darkBlue);
+    vstavkaFormat.setBackground(Qt::yellow);
+    rule.pattern = QRegExp(QString::fromUtf8("Вставка[^\n]*"));
+    rule.format = vstavkaFormat;
+    highlightingRules.append(rule);
 }
 
 void Highlight::highlightBlock(const QString &text)
