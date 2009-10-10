@@ -314,8 +314,11 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
+    // These two options are mutually exclusive:
     bool match_beginning = ui->match_beginning_box->isChecked();
-    proxy_model->setFilterString(text, match_beginning);
+    bool exact_match = ui->exact_match_box->isChecked();
+
+    proxy_model->setFilterString(text, match_beginning, exact_match);
     songs_model->emitLayoutChanged(); // forces the view to redraw
 
 
@@ -370,10 +373,21 @@ Song SongWidget::getSongToEdit()
 
 void SongWidget::on_match_beginning_box_toggled(bool checked)
 {
+    // Update the filter:
+    if(checked)
+        ui->exact_match_box->setChecked(false);
     QString new_text = ui->lineEditSearch->text();
     on_lineEditSearch_textEdited(new_text);
 }
 
+void SongWidget::on_exact_match_box_toggled(bool checked)
+{
+    // Update the filter:
+    if(checked)
+        ui->match_beginning_box->setChecked(false);
+    QString new_text = ui->lineEditSearch->text();
+    on_lineEditSearch_textEdited(new_text);
+}
 
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
 {
@@ -429,3 +443,4 @@ void SongWidget::updateSborniks()
     loadSborniks();
     ui->sbornik_menu->setCurrentIndex(current_sbornik);
 }
+

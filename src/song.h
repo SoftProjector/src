@@ -69,12 +69,12 @@ class SongProxyModel : public QSortFilterProxyModel
 
 public:
     SongProxyModel(QObject *parent = 0);
-    void setFilterString(QString new_string, bool new_match_beginning);
+    void setFilterString(QString new_string, bool new_match_beginning, bool new_exact_match);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
     QString filter_string;
-    bool match_beginning;
+    bool match_beginning, exact_match;
 };
 
 

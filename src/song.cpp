@@ -100,13 +100,12 @@ QStringList Song::getSongTextList()
     while(pnum < songlist.size() )
     {
         text = songlist[pnum];
-        //text.chop(1);
         split = text.split("@%"); // split the text into rythmic line seperated by @%
         int split_size = split.size();
         text=""; // clear text
         int j = 0;
-        text2=split[0];
-        //text2.remove(6,10);
+        text2 = split[0];
+
         if (text2.startsWith(codec.fromUtf8("Куплет")))
         {// Fill Verse
             while (j<split_size)
@@ -124,7 +123,9 @@ QStringList Song::getSongTextList()
         }
         else if (text2.startsWith(codec.fromUtf8("Вставка")))
         {// Fill vstavka
-            while (j<split_size)
+            // FIXME did I do this correctly?
+            // I'm not sure how this code works -Matvey
+            while (j < split_size)
             {
                 if (j==split_size-1)
                     text += split[j];
@@ -274,10 +275,11 @@ SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }
 
-void SongProxyModel::setFilterString(QString new_string, bool new_match_beginning)
+void SongProxyModel::setFilterString(QString new_string, bool new_match_beginning, bool new_exact_match)
 {
     filter_string = new_string;
     match_beginning = new_match_beginning;
+    exact_match = new_exact_match;
 }
 
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
@@ -291,10 +293,15 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
 
     QRegExp reg = QRegExp(filter_string);
 
-    if(match_beginning)
-        return (str0.startsWith(filter_string) || str1.startsWith(filter_string, Qt::CaseInsensitive));
+    if(exact_match)
+        return ( str0.compare(filter_string, Qt::CaseInsensitive) == 0
+                || str1.compare(filter_string, Qt::CaseInsensitive) == 0 );
+    else if(match_beginning)
+        return (str0.startsWith(filter_string)
+                || str1.startsWith(filter_string, Qt::CaseInsensitive) );
     else
-        return (str0.contains(filter_string) || str1.contains(filter_string, Qt::CaseInsensitive));
+        return (str0.contains(filter_string)
+                || str1.contains(filter_string, Qt::CaseInsensitive) );
 
 }
 

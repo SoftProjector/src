@@ -29,6 +29,7 @@ signals:
     void sendSong(Song song, int currentItem);
 
 private slots:
+    void on_exact_match_box_toggled(bool checked);
     void on_listPreview_doubleClicked(QModelIndex index);
     void on_songs_view_clicked(QModelIndex index);
     void on_playlist_view_clicked(QModelIndex index);
