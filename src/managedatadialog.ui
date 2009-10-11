@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>429</height>
+    <height>257</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,9 @@
              </property>
              <property name="shortcut">
               <string>Ctrl+I</string>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
