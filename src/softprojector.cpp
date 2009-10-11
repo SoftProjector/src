@@ -521,7 +521,7 @@ void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
     int w = width - left - left;
     int h = height - top - top;
 
-    int flags = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
     QRect rect = QRect(left, top, w, h);
     display->paintTextToRect(painter, rect, flags, announce_text);
 }
