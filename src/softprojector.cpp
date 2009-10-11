@@ -276,9 +276,9 @@ void SoftProjector::setSongList(Song song, int row)
     showing = true;
     new_list = true;
     ui->labelShow->setText(song.title);
-    ui->listShow->clear();
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
+    ui->listShow->clear();
     ui->listShow->addItems(song_list);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
@@ -344,7 +344,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 {
     // Draw the text of the current song verse to the specified painter; making
     // sure that the output rect is narrower than <width> and shorter than <height>.
-
     SongDatabase song_database;
     QStringList song_list = current_song.getSongTextList();
 
@@ -571,9 +570,7 @@ void SoftProjector::updateScreen()
 {
     // Display the specified row of the show (rightmost) table to
     // the display
-
     int currentRow = ui->listShow->currentRow();
-
     if( showing == false )
     {
         // Do not display any text:

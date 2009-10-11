@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     
     #ifndef Q_WS_MAC
-    QApplication::setStyle("Plastique");
+    //QApplication::setStyle("Plastique");
     #endif
 
     bool fileExist = QFile::exists("spData.sqlite");
