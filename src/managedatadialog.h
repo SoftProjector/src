@@ -34,6 +34,10 @@ private:
 
 
 private slots:
+    void on_sbornikTableView_clicked(QModelIndex index);
+    void on_bibleTableView_clicked(QModelIndex index);
+    void updateBibleButtons();
+    void updateSbornikButtons();
     void on_edit_bible_pushButton_clicked();
     void on_edit_sbornik_pushButton_clicked();
     void on_delete_bible_pushButton_clicked();

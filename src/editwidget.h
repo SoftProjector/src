@@ -35,7 +35,6 @@ private:
 
 private slots:
     void addSbornik();
-    void on_btnDelete_clicked();
     void on_wall_default_button_clicked();
     void on_wall_button_clicked();
     void on_font_default_button_clicked();

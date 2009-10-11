@@ -42,34 +42,6 @@ void EditWidget::changeEvent(QEvent *e)
     }
 }
 
-void EditWidget::on_btnDelete_clicked()
-{
-    QMessageBox ms;
-
-    ms.setWindowTitle("Delete Song?");
-    ms.setText("Are you sure that you want to delete a song?");
-    ms.setInformativeText("This action will permanentrly delete this song");
-    ms.setIcon(QMessageBox::Question);
-    ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    ms.setDefaultButton(QMessageBox::Yes);
-    int ret = ms.exec();
-
-    switch (ret) {
-    case QMessageBox::Yes:
-        // Delete a song
-        close();
-        song_database.deleteSong(editSong.songID);
-        break;
-    case QMessageBox::No:
-        // Cancel was clicked
-        break;
-    default:
-        // should never be reached
-        break;
-    }
-
-}
-
 void EditWidget::on_btnSave_clicked()
 {
     setSave();

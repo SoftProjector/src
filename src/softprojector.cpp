@@ -4,7 +4,7 @@
 #include "settingsdialog.h"
 #include "aboutdialog.h"
 #include "managedatadialog.h"
-
+#include "helpdialog.h"
 
 SoftProjector::SoftProjector(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::SoftProjectorClass)
@@ -252,14 +252,17 @@ void SoftProjector::setAnnounceText(QString text)
 {
     announce_text = text;
     type = "announce";
+    showing = true;
+    new_list = true;
     ui->labelShow->setText("Announcement");
     ui->listShow->clear();
     ui->listShow->setSpacing(5); // ?
     ui->listShow->setWordWrap(true);
     ui->listShow->addItem(text);
-    showing = true;
     ui->listShow->setCurrentRow(0);
     ui->listShow->setFocus();
+    new_list = false;
+    updateScreen();
 }
 
 void SoftProjector::setSongList(Song song, int row)
@@ -270,15 +273,17 @@ void SoftProjector::setSongList(Song song, int row)
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
+    showing = true;
+    new_list = true;
     ui->labelShow->setText(song.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
     ui->listShow->addItems(song_list);
-    showing = true;
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
-//    updateScreen();
+    new_list = false;
+    updateScreen();
 }
 
 
@@ -543,15 +548,17 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     // Called to show a bible verse from a chapter in the preview list
 
     type = "bible";
+    showing = true;
+    new_list = true;
     ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
-    showing = true;
     ui->listShow->setCurrentRow(verse);
     ui->listShow->setFocus();
-//    updateScreen();
+    new_list = false;
+    updateScreen();
 }
 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
@@ -567,14 +574,14 @@ void SoftProjector::updateScreen()
 
     int currentRow = ui->listShow->currentRow();
 
-    if( currentRow == -1 || showing == false )
+    if( showing == false )
     {
         // Do not display any text:
         display->renderText(false);
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
-    else
+    else if (currentRow >=0 && !new_list)
     {
         if(type=="song")
             current_song_verse = currentRow;
@@ -622,40 +629,39 @@ void SoftProjector::on_actionNewSong_triggered()
     }
 }
 
-void SoftProjector::on_actionEditDialog_triggered()
+void SoftProjector::on_actionDeleteSong_triggered()
 {
-    editWidget->show();
-    editWidget->activateWindow();
+    QMessageBox ms;
+    ms.setWindowTitle("Delete Song?");
+    ms.setText("Are you sure that you want to delete a song?");
+    ms.setInformativeText("This action will permanentrly delete this song");
+    ms.setIcon(QMessageBox::Question);
+    ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    ms.setDefaultButton(QMessageBox::Yes);
+    int ret = ms.exec();
+
+    switch (ret) {
+    case QMessageBox::Yes:
+        // Delete a song
+//        close();
+        songWidget->deleteSong();
+        break;
+    case QMessageBox::No:
+        // Cancel was clicked
+        break;
+    default:
+        // should never be reached
+        break;
+    }
+
 }
 
-//void SoftProjector::on_actionExportSongs_triggered()
-//{
-//    ExportDialog exportDialog;
-//    int ret = exportDialog.exec();
-//    switch (ret)
-//    {
-//    case ExportDialog::Accepted:
-//        // code needed to reload sborniks in SongWidget sbornik combobox
-//        break;
-//    case ExportDialog::Rejected:
-//        // No code needed
-//        break;
-//    }
-//}
-//
-//void SoftProjector::on_actionImportSongs_triggered()
-//{
-//    ImportDialog importSborniks;
-//    importSborniks.load();
-//}
-//
 void SoftProjector::on_actionSettings_triggered()
 {
     SettingsDialog *settingsDialog;
     settingsDialog = new SettingsDialog(this);
     settingsDialog->exec();
 }
-
 
 void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
 {
@@ -674,17 +680,19 @@ void SoftProjector::on_actionAbout_triggered()
 
 void SoftProjector::on_tabWidget_currentChanged(int index)
 {
-    if (index ==0)
+    if (index == 1)
     {
-        // Bible tab activated
-        ui->actionEditSong->setEnabled(false);
-        ui->actionNewSong->setEnabled(false);
-    }
-    else if (index==1)
-    {
-        // Songs tab activated
+        // Songs tab is activated
         ui->actionEditSong->setEnabled(true);
         ui->actionNewSong->setEnabled(true);
+        ui->actionDeleteSong->setEnabled(true);
+    }
+    else
+    {
+        // Other tabs are activated
+        ui->actionEditSong->setEnabled(false);
+        ui->actionNewSong->setEnabled(false);
+        ui->actionDeleteSong->setEnabled(false);
     }
 }
 
@@ -702,21 +710,32 @@ void SoftProjector::on_actionManage_Database_triggered()
     if (manage->reload_sbornik)
         songWidget->updateSborniks();
 
-    // Reload Bibles if Bile has been deleted
+    // Reload Bibles if Bible has been deleted
     if (manage->reload_bible)
     {
+        // check if Primary bible has been removed
         sq.exec("SELECT * FROM BibleVersions WHERE id = " + primaryBible);
         if (!sq.first())
         {
+            // If original primary bible has been removed, set first bible in the list to be primary
             sq.clear();
             sq.exec("SELECT id FROM BibleVersions");
             sq.first();
             primaryBible = sq.value(0).toString();
         }
         sq.clear();
+
+        // check if secondary bible has been removed, if yes, set secondary to "none"
         sq.exec("SELECT * FROM BibleVersions WHERE id = " + secondaryBible);
         if (!sq.first())
             secondaryBible = "none";
         bibleWidget->loadBibles(primaryBible, secondaryBible);
     }
+}
+
+void SoftProjector::on_action_Help_triggered()
+{
+    HelpDialog *help_dialog;
+    help_dialog = new HelpDialog();
+    help_dialog->show();
 }

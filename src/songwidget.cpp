@@ -443,4 +443,13 @@ void SongWidget::updateSborniks()
     loadSborniks();
     ui->sbornik_menu->setCurrentIndex(current_sbornik);
 }
+//<<<<<<< .mine
 
+void SongWidget::deleteSong()
+{
+    song_database.deleteSong(currentSong().songID);
+    updateSborniks();
+}
+//=======
+
+//>>>>>>> .r255

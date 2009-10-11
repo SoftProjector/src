@@ -8,9 +8,6 @@
 #include "display1.h"
 #include "editwidget.h"
 #include "bible.h"
-//#include "importdialog.h"
-//#include "exportdialog.h"
-
 
 class QActionGroup;
 
@@ -50,6 +47,7 @@ public:
 private:
     Ui::SoftProjectorClass *ui;
     QString type;
+    bool new_list;
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
@@ -57,6 +55,8 @@ private:
     void drawAnnounceText(QPainter *painter, int width, int height);
 
 private slots:
+    void on_action_Help_triggered();
+    void on_actionDeleteSong_triggered();
     void on_actionManage_Database_triggered();
     void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
@@ -64,7 +64,6 @@ private slots:
     void on_actionSettings_triggered();
 //    void on_actionImportSongs_triggered();
 //    void on_actionExportSongs_triggered();
-    void on_actionEditDialog_triggered();
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
     void on_show_button_clicked();

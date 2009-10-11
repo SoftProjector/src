@@ -15,6 +15,7 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui->bibleTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->bibleTableView->verticalHeader()->hide();
     ui->bibleTableView->setColumnWidth(0, 395);
+//    updateBibleButtons();
 
     // Set Sborniks Table
     load_sborniks();
@@ -55,6 +56,7 @@ void ManageDataDialog::load_sborniks()
     sbornik_model = new SborniksModel;
     sbornik_model->setSbornik(sbornik_list);
     ui->sbornikTableView->setModel(sbornik_model);
+    updateSbornikButtons();
 }
 
 void ManageDataDialog::load_bibles()
@@ -65,8 +67,62 @@ void ManageDataDialog::load_bibles()
     bible_model = new BiblesModel;
     bible_model->setBible(bible_list);
     ui->bibleTableView->setModel(bible_model);
+    updateBibleButtons();
 }
 
+void ManageDataDialog::updateBibleButtons()
+{
+    bool enable_edit;
+    bool enable_export;
+    bool enable_delete;
+
+    if (ui->bibleTableView->hasFocus())
+    {
+        enable_edit = true;
+        enable_export = true;
+        if (bible_model->rowCount()>=2)
+            enable_delete = true;
+        else
+            enable_delete = false;
+    }
+    else
+    {
+        enable_edit = false;
+        enable_export = false;
+        enable_delete = false;
+    }
+
+    ui->edit_bible_pushButton->setEnabled(enable_edit);
+    ui->export_bible_pushButton->setEnabled(enable_export);
+    ui->delete_bible_pushButton->setEnabled(enable_delete);
+}
+
+void ManageDataDialog::updateSbornikButtons()
+{
+    bool enable_edit;
+    bool enable_export;
+    bool enable_delete;
+
+    if (ui->sbornikTableView->hasFocus())
+    {
+        enable_edit = true;
+        enable_export = true;
+        if (sbornik_model->rowCount()>=2)
+            enable_delete = true;
+        else
+            enable_delete = false;
+    }
+    else
+    {
+        enable_edit = false;
+        enable_export = false;
+        enable_delete = false;
+    }
+
+    ui->edit_sbornik_pushButton->setEnabled(enable_edit);
+    ui->export_sbornik_pushButton->setEnabled(enable_export);
+    ui->delete_sbornik_pushButton->setEnabled(enable_delete);
+}
 
 void ManageDataDialog::on_import_sbornik_pushButton_clicked()
 {
@@ -562,4 +618,14 @@ void ManageDataDialog::on_edit_bible_pushButton_clicked()
         sq.submitAll();
     }
     load_bibles();
+}
+
+void ManageDataDialog::on_bibleTableView_clicked(QModelIndex index)
+{
+    updateBibleButtons();
+}
+
+void ManageDataDialog::on_sbornikTableView_clicked(QModelIndex index)
+{
+    updateSbornikButtons();
 }
