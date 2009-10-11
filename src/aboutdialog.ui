@@ -88,7 +88,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Version: 0.9 Alpha 02</string>
+        <string>Version: *gets set later*</string>
        </property>
       </widget>
      </item>
