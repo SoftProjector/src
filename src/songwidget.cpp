@@ -124,7 +124,6 @@ void SongWidget::loadSborniks()
         sbornikList << sq.value(0).toString();
         sbor << sq.value(1).toString();
     }
-
     ui->sbornik_menu->addItems(sbor);
 }
 
@@ -438,10 +437,20 @@ void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 
 void SongWidget::updateSborniks()
 {
-    int current_sbornik = ui->sbornik_menu->currentIndex();
+    // Reload the sbornik and reselect the one that used to be selected
+    // if it's still available, otherwise show all sborniks
+
+    QString current_sbornik = ui->sbornik_menu->currentText();
+    QString item0 = ui->sbornik_menu->itemText(0);
     ui->sbornik_menu->clear();
+    ui->sbornik_menu->addItem(item0);
     loadSborniks();
-    ui->sbornik_menu->setCurrentIndex(current_sbornik);
+
+    int new_index = ui->sbornik_menu->findText(current_sbornik);
+    if( new_index == -1 )
+        new_index = 0; // All sborniks
+
+    ui->sbornik_menu->setCurrentIndex(new_index);
 }
 //<<<<<<< .mine
 
