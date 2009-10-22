@@ -7,7 +7,6 @@ SongWidget::SongWidget(QWidget *parent) :
     ui(new Ui::SongWidget)
 {
     ui->setupUi(this);
-    loadSborniks();
     songs_model = new SongsModel;
     proxy_model = new SongProxyModel(this);
     proxy_model->setSourceModel(songs_model);
@@ -25,7 +24,7 @@ SongWidget::SongWidget(QWidget *parent) :
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
     ui->playlist_view->resizeRowsToContents();
-    on_sbornik_menu_currentIndexChanged(0);
+    // IS this needed?
 
     // Modify the column widths:
     ui->songs_view->setColumnWidth(0, 55);
@@ -35,9 +34,9 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->playlist_view->setColumnWidth(1, 150);
     ui->playlist_view->setColumnWidth(2, 70);
 
+    proxy_model->setSbornikFilter("ALL");
+    loadSborniks();
 
-    // We don't really need the spin box, since we have search:
-//    ui->song_num_spinbox->setVisible(false);
     isSpinboxEditing = false;
 }
 
@@ -125,6 +124,13 @@ void SongWidget::loadSborniks()
         sbor << sq.value(1).toString();
     }
     ui->sbornik_menu->addItems(sbor);
+    QList<Song> song_list = song_database.getSongs("ALL");
+
+    //ui->song_num_spinbox->setEnabled(false);
+    songs_model->setSongs(song_list);
+
+    // update the song spin box and redraw the table:
+    on_sbornik_menu_currentIndexChanged( ui->sbornik_menu->currentIndex() );
 }
 
 void SongWidget::loadTitles(QString tSbornik)
@@ -184,28 +190,22 @@ void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
 {
     // Called when a different sbornik is selected from the pull-down menu
 
-    if (index>=0) // load titles only when sbornik_menu has more than one item.
+    if( index == 0 )
     {
-        QList<Song> song_list;
-
-        if (index==0)
-        {
-            song_list = song_database.getSongs("ALL");
-            ui->song_num_spinbox->setEnabled(false);
-        }
-        else
-        {
-            QString sbornik_id = sbornikList[index-1];
-            song_list = song_database.getSongs(sbornik_id);
-            ui->song_num_spinbox->setEnabled(true);
-            // FIXME Instead of using count(), find the song with highest num.
-            ui->song_num_spinbox->setMaximum(song_list.count());
-        }
-        songs_model->setSongs(song_list);
-
-        ui->songs_view->selectRow(0);
-        updateButtonStates();
+        proxy_model->setSbornikFilter("ALL");
+        ui->song_num_spinbox->setEnabled(false);
     }
+    else
+    {
+        QString sbornik_name = ui->sbornik_menu->currentText();
+        proxy_model->setSbornikFilter(sbornik_name);
+        ui->song_num_spinbox->setEnabled(true);
+    }
+
+    updateButtonStates();
+
+    songs_model->emitLayoutChanged(); // forces the view to redraw
+
 }
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
@@ -224,7 +224,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
         Song s = songs_model->song_list.at(i);
-        if( s.num == value )
+        if( s.num == value && s.sbornik_name == ui->sbornik_menu->currentText() )
         {
             // Found a song with this song number
             QModelIndex source_index = songs_model->index(i, 0);
@@ -240,6 +240,8 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
             }
             else
             {
+                // This song is filtered out using text filter, so can't select
+                // it in the table. Just show it:
                 sendToPreview(s);
             }
             return;
@@ -250,6 +252,13 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     // If got here, then no such song
     //if( value > max_num )
     //    ui->song_num_spinbox->setMaximum();
+
+    QMessageBox mb;
+    mb.setText("Could not find song with number " + QString::number(value) );
+    mb.setWindowTitle("No such song");
+    mb.setIcon(QMessageBox::Warning);
+    mb.exec();
+
 }
 
 
@@ -452,13 +461,9 @@ void SongWidget::updateSborniks()
 
     ui->sbornik_menu->setCurrentIndex(new_index);
 }
-//<<<<<<< .mine
 
 void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
     updateSborniks();
 }
-//=======
-
-//>>>>>>> .r255

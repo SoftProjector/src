@@ -237,7 +237,6 @@ void EditWidget::setNew()
 
 void EditWidget::addSbornik()
 {
-    bool ok = false;
     AddSbornikDialog add_sbor;
     add_sbor.setWindowTitle("Add a Sbornik;");
     int last(0);

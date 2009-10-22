@@ -70,10 +70,11 @@ class SongProxyModel : public QSortFilterProxyModel
 public:
     SongProxyModel(QObject *parent = 0);
     void setFilterString(QString new_string, bool new_match_beginning, bool new_exact_match);
+    void setSbornikFilter(QString new_sbornik);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
-    QString filter_string;
+    QString filter_string, sbornik_filter;
     bool match_beginning, exact_match;
 };
 

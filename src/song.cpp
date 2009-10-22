@@ -282,14 +282,28 @@ void SongProxyModel::setFilterString(QString new_string, bool new_match_beginnin
     exact_match = new_exact_match;
 }
 
+void SongProxyModel::setSbornikFilter(QString new_sbornik)
+{
+    sbornik_filter = new_sbornik;
+}
+
+
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
               const QModelIndex &sourceParent) const
 {
     QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
     QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
+    QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
 
     QString str0 = sourceModel()->data(index0).toString();
     QString str1 = sourceModel()->data(index1).toString();
+    QString str2 = sourceModel()->data(index2).toString();
+
+
+    // Exclude rows that are not part of the selected sbornik:
+    if( sbornik_filter != "ALL" )
+        if( str2 != sbornik_filter )
+            return false;
 
     if( filter_string.isEmpty() )
         // No filter specified
