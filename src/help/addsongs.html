@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>softProject Help</title>
+<link rel="stylesheet" href="sphelp.css" type="text/css">
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 14px;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+
+<body>
+<table width="440" border="0">
+  <tr>
+    <th colspan="3" scope="col"><h1>SoftProject Help</h1></th>
+  </tr>
+  <tr>
+    <td width="140"><div align="center"><a href="showannouce.html">Previous</a></div></td>
+    <td width="140"><div align="center"><a href="index.html">Home</a></div></td>
+    <td width="140"><div align="center"><a href="editsong.html">Next</a></div></td>
+  </tr>
+  <tr>
+    <td colspan="3"><p align="center" ><span class="subtitle">Adding New Songs </span></p>
+      <p ><a href="#add">To add a new song</a> <br />
+        <a href="#format">Song format</a><br />
+        <a href="#songbook">To add a new songbook</a><br />
+      </p>
+      <p><span class="dingbat"><a name="add" id="add"></a>To add a new song: </span><br />
+          <span class="sidebar">1. Select &quot;Songs&quot; tab.</span> You will be allowed to add a song only when &quot;Songs&quot; tab in selected.<br />
+        <span class="sidebar">2. Edit&gt;New Song.</span> Shortcut: Crtl+N<br />
+        <span class="sidebar">3. Select Songbook.</span>Select a songbook that you want to add a new song to. If you do not want to add to any existing songbooks, you may add a new songbook. See also <a href="#songbook">To add a songbook</a>.<br />
+        <span class="sidebar">3. Enter song number.</span>softProjector will automatically enter a next song number. If for any reason you do not want to use that number, you may change it.<br />
+        <span class="sidebar">4. Enter song title.</span> You must have a song title for all song. All none alphanumeric charecters will be removed from the title. This is done so that song searching/filtering made esier.<br />
+        <span class="sidebar">5. Enter author of the word for this song.</span> &quot;Words By&quot; entry field.<br />
+        <span class="sidebar">6. Enter authof of the music for this song.</span> &quot;Music By&quot; entry field.<br />
+        <span class="sidebar">7. Enter tune.</span>This is the tune/key/тональность that this song is sung in.<br />
+        <span class="sidebar">8. Select Category.</span> optional. Select closed caterogry that this song falls into.<br />
+        <span class="sidebar">9. Enter song text.</span> Song text must be properly formated in order not to crash the program and to show the song properly. See <a href="#format">Song Format</a> below.<br />
+        <span class="sidebar">10. Click &quot;Save&quot; button.</span>If you do not want to save changes, click &quot;Cancel&quot; button<br />
+</p>
+      <p><span class="dingbat"><a name="format" id="format"></a>Song format: </span><br />
+        When entering a song or editing a song, make sure that you keep proper song format. If the song format will not be kept, it may not show the song properly and might cause program crash.<br />
+        <span class="sidebar">Stanza Title.</span> Each stanza must have a stanza title. You have the option of three stanza titles (currently only in Russian) <span class="sidebarFooter">Куплет</span>. <span class="sidebarFooter">Припев</span> and <span class="sidebarFooter">Вставка</span>. After the stanza title (on the same line), you can have number or any text.<br />
+  <span class="sidebar">Куплет.</span>(Verse) Is shown only once, and <span class="sidebarFooter">Припев</span> will follow <span class="sidebarFooter">Куплет</span> automaticallyif there it exists.<br />
+  <span class="sidebar">Припев.</span>(Chorus/Refrain) Will be automatically shown after each <span class="sidebarFooter">Куплет</span> and will not be shown after <span class="sidebarFooter">Вставка</span>. If there is more than one <span class="sidebarFooter">Припев</span>, then the second <span class="sidebarFooter">Припев</span> will replace the first one when it gets to it. <br />
+  <span class="sidebar">Вставка.</span>(Insert) Will be shown only once and <span class="sidebarFooter">Припев</span> will not follow automatically. If  <span class="sidebarFooter">Припев</span> is needed after <span class="sidebarFooter">Вставка</span>, please add it manual. <br />
+  <span class="sidebar">&amp;Куплет.</span>This is to be used only when <span class="sidebarFooter">Куплет</span> is large and needs to be shown one more than one slide. <span class="sidebarFooter">&amp;Куплет</span> must follow <span class="sidebarFooter">Куплет</span> otherwise there will be formating error. The <span class="sidebarFooter">&amp;</span><span class="sidebarFooter">Куплет</span> tells the program that it is part of <span class="sidebarFooter">Куплет</span> that is above it.<br />
+  <span class="sidebar">&amp;Припев.</span>This is to be used only when <span class="sidebarFooter">Припев </span>is large and needs to be shown one more than one slide. <span class="sidebarFooter">&amp;Припев</span> must follow <span class="sidebarFooter">Припев</span> otherwise there will be formating error. The <span class="sidebarFooter">&amp;</span><span class="sidebarFooter">Припев</span> tells the program that it is part of<span class="sidebarFooter"> Припев</span> that is above it. The program will create <span class="sidebarFooter">Припев</span> list that will be automatically repeated after each <span class="sidebarFooter">Куплет</span>.</p>
+      <p><br />
+        <span class="sidebar">Example 1 - as Edited.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2</span>, <span class="sidebarFooter">Куплет3</span>. <br />
+        <span class="sidebar">Example 1 - Shown.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2</span>,<span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет3</span>, <span class="sidebarFooter">Припев</span>. <br />
+        <span class="sidebar">Example 2 - as Edited.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2</span>,<span class="sidebarFooter"> Вставка</span>, <span class="sidebarFooter">Куплет3</span>. <br />
+        <span class="sidebar">Example 2 - Shown.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2</span>,<span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Вставка</span>,<span class="sidebarFooter">Куплет3</span>, <span class="sidebarFooter">Припев</span>. <br />
+        <span class="sidebar">Example 3 - as Edited.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев1</span>, <span class="sidebarFooter">Куплет2</span>, <span class="sidebarFooter">Куплет3, Припев2</span>. <br />
+        <span class="sidebar">Example 3 - Shown.</span><span class="sidebarFooter">Куплет1</span>, <span class="sidebarFooter">Припев1</span>, <span class="sidebarFooter">Куплет2</span>,<span class="sidebarFooter">Припев1</span>, <span class="sidebarFooter">Куплет3</span>, <span class="sidebarFooter">Припев2</span>. <br />
+        <span class="sidebar">Example 4 - as Edited.</span><span class="sidebarFooter">Куплет1a</span>, <span class="sidebarFooter">&amp;Куплет1b</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2a, &amp;Куплет2b</span>, <span class="sidebarFooter">Куплет3a, &amp;Куплет3b</span>. <br />
+        <span class="sidebar">Example 4 - Shown.</span><span class="sidebarFooter">Куплет1a</span>, <span class="sidebarFooter">Куплет1b</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет2a, Куплет2b</span>, <span class="sidebarFooter">Припев</span>, <span class="sidebarFooter">Куплет3a, Куплет3b</span>,<span class="sidebarFooter">Припев</span>. <br />
+        <span class="sidebar">Example 5 - as Edited.</span><span class="sidebarFooter">Куплет1a</span>, <span class="sidebarFooter">&amp;Куплет1b</span>, <span class="sidebarFooter">Припев-a, &amp;Припев-b</span>, <span class="sidebarFooter">Куплет2a, &amp;Куплет2b</span>, <span class="sidebarFooter">Куплет3a, &amp;Куплет3b</span>. <br />
+        <span class="sidebar">Example 5 - Shown.</span><span class="sidebarFooter">Куплет1a</span>, <span class="sidebarFooter">Куплет1b</span>,<span class="sidebarFooter"> Припев-a, Припев-b</span>, <span class="sidebarFooter">Куплет2a, Куплет2b</span>, <span class="sidebarFooter"> Припев-a, Припев-b</span>, <span class="sidebarFooter">Куплет3a, Куплет3b</span>,<span class="sidebarFooter"> Припев-a, Припев-b</span>. <br />
+      </p>
+      <p><span class="dingbat"><a name="songbook" id="songbook"></a>To add a new songbook: </span><br />
+        When adding a song and you have selected to add a songbook, a diffirent dialog will pop up where you will enter new songbooks information.<br />
+  <span class="sidebar">&quot;Songbook title&quot;.</span>Enter the title of the new songbook.<br />
+  <span class="sidebar">&quot;Songbook information&quot;.</span> Enter some information about new songbook.<br />
+  <span class="sidebar">Click &quot;Ok&quot; button.</span>This will add a new songbook into the database.<br />
+  The dialog box will close and now you will be able to <a href="#add">add a new song</a>.<br />
+      </p>
+    <p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="140"><div align="center"><a href="showannouce.html">Previous</a></div></td>
+    <td width="140"><div align="center"><a href="index.html">Home</a></div></td>
+    <td width="140"><div align="center"><a href="editsong.html">Next</a></div></td>
+  </tr>
+</table>
+</body>
+
+</html>
