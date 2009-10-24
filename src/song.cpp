@@ -90,10 +90,12 @@ QStringList Song::getSongTextList()
     QStringList formatedSong;
     QString text, text2, codec;
     QStringList split, songlist;
-    QString chorus;
+    QStringList chorus;
     bool has_chorus=false;
+    bool has_vstavka=false;
     int pnum = 0;
     int chor = 0;
+    int chorus_block_count=0;
 
     songlist = songText.split("@$");//songText.split("@$");
     
@@ -118,8 +120,38 @@ QStringList Song::getSongTextList()
             }
             formatedSong += text.trimmed();
             if (has_chorus){
-                formatedSong += chorus;
+                formatedSong.append(chorus);
             }
+            has_vstavka=false;
+        }
+        else if (text2.startsWith(codec.fromUtf8("&Куплет")))
+        {// Fill Additional parts of the verse
+            text2.remove("&");
+            text += text2 + "\n";
+            ++j;
+            while (j < split_size)
+            {
+                if (j==split_size-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                ++j;
+            }
+            if (has_chorus)
+            {
+                formatedSong.removeLast();
+                int i(1);
+                while (i<chorus_block_count)
+                {
+                    ++i;
+                    formatedSong.removeLast();
+                }
+            }
+            formatedSong += text.trimmed();
+            if (has_chorus){
+                formatedSong.append(chorus);
+            }
+            has_vstavka=false;
         }
         else if (text2.startsWith(codec.fromUtf8("Вставка")))
         {// Fill vstavka
@@ -134,12 +166,14 @@ QStringList Song::getSongTextList()
                 j++;
             }
             formatedSong += text.trimmed();
-            if (has_chorus){
-                formatedSong += chorus;
-            }
+            //            if (has_chorus){
+            //                formatedSong += chorus;
+            //            }
+            has_vstavka=true;
         }
         else if (text2.startsWith(codec.fromUtf8("Припев")))
         { // Fill Chorus
+
             while (j<split_size)
             {
                 if (j==split_size-1)
@@ -148,19 +182,63 @@ QStringList Song::getSongTextList()
                     text += split[j] + "\n";
                 ++j;
             }
-            chorus = text.trimmed();
-            if (chorus.size()>3)
+            chorus.clear();
+            chorus += text.trimmed();
+            has_chorus=true;
+            ++chor;
+            if ((chor ==1) && !has_vstavka )
+                formatedSong.append(chorus);
+            else if ((chor ==2) && !has_vstavka )
             {
-                has_chorus=true;
-                chor++;
-                if (chor ==1)
-                    formatedSong += chorus;
-                else if (chor ==2)
+                formatedSong.removeLast();
+                if (chorus_block_count>1)
                 {
-                    formatedSong[formatedSong.size()-1] = chorus;
-                    chor-- ;
+                    int i(1);
+                    while (i<chorus_block_count)
+                    {
+                        ++i;
+                        formatedSong.removeLast();
+                    }
+                }
+
+                formatedSong.append(chorus);
+                chor-- ;
+            }
+            else if ((chor ==2) && has_vstavka )
+            {
+                formatedSong += chorus;
+                chor-- ;
+            }
+            chorus_block_count=1;
+            has_vstavka=false;
+        }
+        else if (text2.startsWith(codec.fromUtf8("&Припев")))
+        { // Fill other chorus parts to Chorus block
+            ++chorus_block_count;
+            text2.remove("&");
+            text += text2 +"\n";
+            ++j;
+            while (j<split_size)
+            {
+                if (j==split_size-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                ++j;
+            }
+            chorus += text.trimmed();
+
+            if (chorus_block_count>1)
+            {
+                int i(1);
+                while (i<chorus_block_count)
+                {
+                    ++i;
+                    formatedSong.removeLast();
                 }
             }
+            formatedSong.append(chorus);
+
         }
         ++pnum;
     }
@@ -230,7 +308,7 @@ int SongsModel::columnCount(const QModelIndex &parent) const
 }
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
- {
+{
     if( !index.isValid() )
         return QVariant();
 
@@ -248,8 +326,8 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
 }
 
 QVariant SongsModel::headerData(int section,
-                                 Qt::Orientation orientation,
-                                 int role) const
+                                Qt::Orientation orientation,
+                                int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
     {
@@ -289,7 +367,7 @@ void SongProxyModel::setSbornikFilter(QString new_sbornik)
 
 
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
-              const QModelIndex &sourceParent) const
+                                      const QModelIndex &sourceParent) const
 {
     QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
     QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
@@ -311,7 +389,7 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
 
     if(exact_match)
         return ( str0.compare(filter_string, Qt::CaseInsensitive) == 0
-                || str1.compare(filter_string, Qt::CaseInsensitive) == 0 );
+                 || str1.compare(filter_string, Qt::CaseInsensitive) == 0 );
     else if(match_beginning)
         return (str0.startsWith(filter_string)
                 || str1.startsWith(filter_string, Qt::CaseInsensitive) );

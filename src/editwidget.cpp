@@ -153,8 +153,10 @@ QString EditWidget::resetLyric(QString lyric)
     while (i<lSong.size()){
         fSong = lSong[i];
         if( fSong.startsWith(QString::fromUtf8("Куплет"))
-                || fSong.startsWith(QString::fromUtf8("Припев"))
-                || fSong.startsWith(QString::fromUtf8("Вставка") ) )
+            || fSong.startsWith(QString::fromUtf8("&Куплет"))
+            || fSong.startsWith(QString::fromUtf8("Припев"))
+            || fSong.startsWith(QString::fromUtf8("&Припев"))
+            || fSong.startsWith(QString::fromUtf8("Вставка")))
         {
             lyric += "@$" + lSong[i];
         }

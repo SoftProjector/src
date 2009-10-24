@@ -356,11 +356,13 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     QString sbornik_str = current_song.sbornik_name;
     QString song_num_str = QString::number(current_song.num);
 
-    // Remove the first line if it starts with "Kuplet" or "Pripev":
+    // Remove the first line if it starts with "Kuplet" or "Pripev" or "Vstavka":
     QString textemp = lines_list[0];
-    textemp.remove(6,10);
+//    textemp.remove(6,10);
 
-    if( textemp.startsWith(QString::fromUtf8("Припев")) || textemp.startsWith(QString::fromUtf8("Куплет")) )
+    if( textemp.startsWith(QString::fromUtf8("Вставка"))
+        || textemp.startsWith(QString::fromUtf8("Куплет"))
+        || textemp.startsWith(QString::fromUtf8("Припев")) )
     {
         top_caption_str = lines_list.at(0);
         //qDebug() << "CAPTION:";
