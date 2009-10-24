@@ -21,6 +21,8 @@ public slots:
     void deleteSong();
     Song getSongToEdit();
     void updateSborniks();
+    // will be called by the edit widget:
+    void updateSongFromDatabase(int songid);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -58,13 +60,15 @@ private:
     QStringList sbornikList;
     int titleType;
     SongDatabase song_database;
-    SongsModel *songs_model;
     SongsModel *playlist_model;
     SongProxyModel *proxy_model;
     bool isSpinboxEditing;
     bool focusInPlaylistTable;
     bool allSongs;
     Song preview_song;
+public:
+    SongsModel *songs_model;
+
 public slots:
     void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous);

@@ -60,6 +60,7 @@ public:
     bool removeRows( int row, int count, const QModelIndex & parent = QModelIndex() );
     QList<Song> song_list;
     void emitLayoutChanged();
+    void updateSongFromDatabase(int songid);
 };
 
 

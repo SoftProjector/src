@@ -23,6 +23,8 @@ public slots:
     void setNew();
 
 signals:
+    // For communicating with SongsModel
+    void updateSongFromDatabase(int songid);
     void addedNew();
 
 protected:

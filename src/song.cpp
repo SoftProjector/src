@@ -280,6 +280,21 @@ void SongsModel::setSongs(QList<Song> songs)
     emit layoutChanged();
 }
 
+void SongsModel::updateSongFromDatabase(int songid)
+{
+    for( int i=0; i < song_list.size(); i++) {
+        Song *song = (Song*)&(song_list.at(i));
+        if( song->songID == songid )
+        {
+            qDebug() << "found song. updating data...";
+            song->readData();
+            emitLayoutChanged(); // To redraw the table
+            return;
+        }
+    }
+}
+
+
 void SongsModel::addSong(Song song)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -347,6 +362,7 @@ void SongsModel::emitLayoutChanged()
 {
     emit layoutChanged();
 }
+
 
 
 SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)

@@ -57,13 +57,20 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
     connect(songWidget, SIGNAL(sendSong(Song, int)),
-            this, SLOT(setSongList(Song, int)));
+            this, SLOT(setSongList(Song, int))
+    );
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
-            this, SLOT(setChapterList(QStringList, int, QString)));
+            this, SLOT(setChapterList(QStringList, int, QString))
+    );
     connect(announceWidget,SIGNAL(sendText(QString)),
-            this, SLOT(setAnnounceText(QString)));
+            this, SLOT(setAnnounceText(QString))
+    );
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
-            this, SLOT(drawText(QPainter*, int, int)));
+            this, SLOT(drawText(QPainter*, int, int))
+    );
+    connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
+            songWidget, SLOT(updateSongFromDatabase(int))
+    );
     connect(editWidget, SIGNAL(addedNew()),
             songWidget,SLOT(updateSborniks()));
 

@@ -462,6 +462,14 @@ void SongWidget::updateSborniks()
     ui->sbornik_menu->setCurrentIndex(new_index);
 }
 
+void SongWidget::updateSongFromDatabase(int songid)
+{
+    qDebug() << "update song from database:" << songid;
+    songs_model->updateSongFromDatabase(songid);
+    // Update the preview table:
+    sendToPreview( currentSong() );
+}
+
 void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);

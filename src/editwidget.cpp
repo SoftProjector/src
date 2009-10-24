@@ -1,5 +1,6 @@
 #include "editwidget.h"
 #include "ui_editwidget.h"
+#include "song.h"
 
 EditWidget::EditWidget(QWidget *parent) :
         QWidget(parent),
@@ -53,6 +54,8 @@ void EditWidget::on_btnSave_clicked()
         newSong.saveUpdate();
     
     resetUiItems();
+
+    emit updateSongFromDatabase(newSong.songID);
 
     close();
 }
