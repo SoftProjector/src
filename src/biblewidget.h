@@ -48,6 +48,7 @@ private slots:
 
 private:
     Ui::BibleWidget *ui;
+    BibleSearch search_results;
     QIntValidator *chapter_validator, *verse_validator;
 
 };

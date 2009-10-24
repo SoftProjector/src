@@ -213,14 +213,24 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
-ui->result_lable->show();;
-ui->search_results_list->show();
-ui->hide_result_button->show();
+    ui->result_lable->show();;
+    ui->search_results_list->show();
+    ui->hide_result_button->show();
+
+    QString search_text = ui->search_ef->text();
+
+    if (ui->begin_radioButton->isChecked())
+        search_results = bible.searchStartsWith(getPrimary(),search_text);
+    else if (ui->contain_radioButton->isChecked())
+        search_results = bible.searchContains(getPrimary(),search_text);
+
+    ui->search_results_list->clear();
+    ui->search_results_list->addItems(search_results.verse_text);
 }
 
 void BibleWidget::on_hide_result_button_clicked()
 {
-ui->result_lable->hide();
-ui->search_results_list->hide();
-ui->hide_result_button->hide();
+    ui->result_lable->hide();
+    ui->search_results_list->hide();
+    ui->hide_result_button->hide();
 }

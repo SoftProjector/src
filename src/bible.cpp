@@ -117,3 +117,65 @@ int Bible::maxChapters(QString book, QString bibleId)
 
     return chapters;
 }
+
+BibleSearch Bible::searchStartsWith(QString bibleId, QString searchText)
+{
+    QString book,chapter,verse,verse_text;
+    BibleSearch results;
+    QSqlQuery sq,sq1;
+    qDebug() << bibleId;
+    qDebug() << sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+                        "AND verse_text like '" + searchText.trimmed() + "%'");
+   while (sq.next())
+    {
+        qDebug() << sq.value(0).toString();
+        book = sq.value(1).toString();
+        chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + book + " AND bible_id = " + bibleId);
+        sq1.first();
+        book = sq1.value(0).toString();
+
+        verse_text = book + " " + chapter + " : " + verse + " " + sq.value(4).toString().trimmed();
+        results.book += book;
+        results.chapter += chapter;
+        results.verse += verse;
+        results.verse_text += verse_text;
+    }
+    return results;
+}
+
+BibleSearch Bible::searchContains(QString bibleId, QString searchText)
+{
+    QString book,chapter,verse,verse_text;
+    BibleSearch results;
+    QSqlQuery sq,sq1;
+    qDebug() << bibleId;
+    qDebug() << sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+                        "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
+    {
+        qDebug() << sq.value(0).toString();
+        book = sq.value(1).toString();
+        chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + book + " AND bible_id = " + bibleId);
+        sq1.first();
+        book = sq1.value(0).toString();
+
+        verse_text = book + " " + chapter + " : " + verse + " " + sq.value(4).toString().trimmed();
+        results.book += book;
+        results.chapter += chapter;
+        results.verse += verse;
+        results.verse_text += verse_text;
+    }
+    return results;
+}

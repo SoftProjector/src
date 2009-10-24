@@ -73,14 +73,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="begin_radioButton">
        <property name="text">
         <string>Begins</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="contain_radioButton">
        <property name="text">
         <string>Contains</string>
        </property>

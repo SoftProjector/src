@@ -14,10 +14,22 @@ public:
     QString secondary_caption;
 };
 
+class BibleSearch
+{
+    // For holding search results
+public:
+    QStringList book;
+    QStringList chapter;
+    QStringList verse;
+    QStringList verse_text;
+};
+
 class Bible
 {
 public:
     Bible();
+    BibleSearch searchStartsWith(QString bibleId, QString searchText);
+    BibleSearch searchContains(QString bibleId, QString searchText);
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);
