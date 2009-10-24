@@ -87,7 +87,9 @@ void Song::readData()
 
 QStringList Song::getSongTextList()
 {
-    QStringList formatedSong;
+    // This function prepares a song list that will be shown in the song preview and show list.
+    // It will it will automatically prepare correct sining order of verses and choruses.
+    QStringList formatedSong; // List container for correctely ordered item. This item will be returned.
     QString text, text2, codec;
     QStringList split, songlist;
     QStringList chorus;
@@ -95,41 +97,24 @@ QStringList Song::getSongTextList()
     bool has_vstavka=false;
     int pnum = 0;
     int chor = 0;
-    int chorus_block_count=0;
+    int chorus_block_count=0; // Chorus slide counter.
 
-    songlist = songText.split("@$");//songText.split("@$");
+    songlist = songText.split("@$");// Splits song text line that from database into
+                                    // stansas which were delimited by "@$"
     
     while(pnum < songlist.size() )
     {
         text = songlist[pnum];
-        split = text.split("@%"); // split the text into rythmic line seperated by @%
+        split = text.split("@%"); // Split each stansa into rythmic line delimited by @%
         int split_size = split.size();
         text=""; // clear text
         int j = 0;
         text2 = split[0];
 
+        // From here on, the program will determine what each stasa it: Verse, Chorus or Insert
         if (text2.startsWith(codec.fromUtf8("Куплет")))
         {// Fill Verse
-            while (j<split_size)
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                j++;
-            }
-            formatedSong += text.trimmed();
-            if (has_chorus){
-                formatedSong.append(chorus);
-            }
-            has_vstavka=false;
-        }
-        else if (text2.startsWith(codec.fromUtf8("&Куплет")))
-        {// Fill Additional parts of the verse
-            text2.remove("&");
-            text += text2 + "\n";
-            ++j;
-            while (j < split_size)
+            while (j<split_size) // convert form list to string
             {
                 if (j==split_size-1)
                     text += split[j];
@@ -137,7 +122,27 @@ QStringList Song::getSongTextList()
                     text += split[j] + "\n";
                 ++j;
             }
-            if (has_chorus)
+            formatedSong += text.trimmed(); // add Verse stansa to the formated list
+            if (has_chorus){ // add Chorus stansa to the formated list if it exists
+                formatedSong.append(chorus);
+            }
+            has_vstavka=false;
+        }
+        else if (text2.startsWith(codec.fromUtf8("&Куплет")))
+        {// Fill Additional parts of the verse
+            text2.remove("&"); // remove '&' from stansa title
+            text += text2 + "\n";
+            ++j;
+            while (j < split_size) // convert form list to string
+            {
+                if (j==split_size-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                ++j;
+            }
+            if (has_chorus) // it chorus esits, this means that it was added to the formated list
+                            // and needs to be removed before adding addintion Veres stansas to formated list
             {
                 formatedSong.removeLast();
                 int i(1);
@@ -147,34 +152,15 @@ QStringList Song::getSongTextList()
                     formatedSong.removeLast();
                 }
             }
-            formatedSong += text.trimmed();
-            if (has_chorus){
+            formatedSong += text.trimmed(); // add Verse stansa to the formated list
+            if (has_chorus){ // add Chorus stansa to the formated list if it exists
                 formatedSong.append(chorus);
             }
             has_vstavka=false;
         }
         else if (text2.startsWith(codec.fromUtf8("Вставка")))
-        {// Fill vstavka
-            // FIXME did I do this correctly?
-            // I'm not sure how this code works -Matvey
-            while (j < split_size)
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                j++;
-            }
-            formatedSong += text.trimmed();
-            //            if (has_chorus){
-            //                formatedSong += chorus;
-            //            }
-            has_vstavka=true;
-        }
-        else if (text2.startsWith(codec.fromUtf8("Припев")))
-        { // Fill Chorus
-
-            while (j<split_size)
+        {// Fill Insert
+            while (j < split_size) // convert form list to string
             {
                 if (j==split_size-1)
                     text += split[j];
@@ -182,13 +168,32 @@ QStringList Song::getSongTextList()
                     text += split[j] + "\n";
                 ++j;
             }
-            chorus.clear();
-            chorus += text.trimmed();
-            has_chorus=true;
+            formatedSong += text.trimmed(); // Add Insert stansa to the formated list.
+                                            // Chorus is not added to Insert, if one is needed,
+                                            // it should be added when song is edited, otherwise
+                                            // there is no difirence between Veres and Insert
+            has_vstavka=true;
+        }
+        else if (text2.startsWith(codec.fromUtf8("Припев")))
+        { // Fill Chorus
+
+            while (j<split_size)  // convert form list to string
+            {
+                if (j==split_size-1)
+                    text += split[j];
+                else
+                    text += split[j] + "\n";
+                ++j;
+            }
+            chorus.clear(); // clear chorus list
+            chorus += text.trimmed(); // add chorus text to chorus list
+            has_chorus=true; // let getSongTextList function know that chorus exists
             ++chor;
-            if ((chor ==1) && !has_vstavka )
+            if (chor ==1) // if first Chorus, add chorus to formated list
                 formatedSong.append(chorus);
-            else if ((chor ==2) && !has_vstavka )
+            else if ((chor ==2) && !has_vstavka ) // if second chorus and Insert was not added
+                                                  // remove exising chorus
+                                                  // and add new chorus to formated list
             {
                 formatedSong.removeLast();
                 if (chorus_block_count>1)
@@ -204,21 +209,22 @@ QStringList Song::getSongTextList()
                 formatedSong.append(chorus);
                 chor-- ;
             }
-            else if ((chor ==2) && has_vstavka )
+            else if ((chor ==2) && has_vstavka ) // if second chorus and Insert was added
+                                                  // and add new chorus to formated list
             {
                 formatedSong += chorus;
                 chor-- ;
             }
-            chorus_block_count=1;
+            chorus_block_count=1; // set chorus_block_count to 1 because its the first chorus item count
             has_vstavka=false;
         }
         else if (text2.startsWith(codec.fromUtf8("&Припев")))
         { // Fill other chorus parts to Chorus block
-            ++chorus_block_count;
-            text2.remove("&");
+            ++chorus_block_count; // increase chorus block count
+            text2.remove("&");  // remove '&' from stansa title
             text += text2 +"\n";
             ++j;
-            while (j<split_size)
+            while (j<split_size) // convert form list to string
             {
                 if (j==split_size-1)
                     text += split[j];
@@ -228,7 +234,7 @@ QStringList Song::getSongTextList()
             }
             chorus += text.trimmed();
 
-            if (chorus_block_count>1)
+            if (chorus_block_count>1) // remove existing chorus parts
             {
                 int i(1);
                 while (i<chorus_block_count)
@@ -237,12 +243,12 @@ QStringList Song::getSongTextList()
                     formatedSong.removeLast();
                 }
             }
-            formatedSong.append(chorus);
+            formatedSong.append(chorus); // replace removed chorus parts with complete chorus list
 
         }
         ++pnum;
     }
-    return formatedSong; // Fill verse_list widget
+    return formatedSong;
 }
 
 QString Song::getSbornikName()
