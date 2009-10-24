@@ -22,6 +22,9 @@ public slots:
     void setEdit(Song sEdit);
     void setNew();
 
+signals:
+    void addedNew();
+
 protected:
     virtual void changeEvent(QEvent *e);
 

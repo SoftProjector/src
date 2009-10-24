@@ -64,6 +64,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setAnnounceText(QString)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
             this, SLOT(drawText(QPainter*, int, int)));
+    connect(editWidget, SIGNAL(addedNew()),
+            songWidget,SLOT(updateSborniks()));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);

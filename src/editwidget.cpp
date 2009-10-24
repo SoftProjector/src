@@ -45,10 +45,13 @@ void EditWidget::changeEvent(QEvent *e)
 void EditWidget::on_btnSave_clicked()
 {
     setSave();
-    if (is_new)
+    if (is_new){
         newSong.saveNew();
+        emit addedNew();
+    }
     else
         newSong.saveUpdate();
+    
     resetUiItems();
 
     close();
