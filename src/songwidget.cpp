@@ -148,7 +148,7 @@ Song SongWidget::currentSong()
 
 void SongWidget::selectMatchingSong(QString text)
 {
-    bool startonly = ui->match_beginning_box->isChecked();
+    bool startonly = ui->begins_rbutton->isChecked();
     // Look for a song matching <text>. Select it and scroll to show it.
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
@@ -323,8 +323,8 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
     // These two options are mutually exclusive:
-    bool match_beginning = ui->match_beginning_box->isChecked();
-    bool exact_match = ui->exact_match_box->isChecked();
+    bool match_beginning = ui->begins_rbutton->isChecked();
+    bool exact_match = ui->exact_match_rbutton->isChecked();
 
     proxy_model->setFilterString(text, match_beginning, exact_match);
     songs_model->emitLayoutChanged(); // forces the view to redraw
@@ -377,24 +377,6 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 Song SongWidget::getSongToEdit()
 {
     return preview_song;
-}
-
-void SongWidget::on_match_beginning_box_toggled(bool checked)
-{
-    // Update the filter:
-    if(checked)
-        ui->exact_match_box->setChecked(false);
-    QString new_text = ui->lineEditSearch->text();
-    on_lineEditSearch_textEdited(new_text);
-}
-
-void SongWidget::on_exact_match_box_toggled(bool checked)
-{
-    // Update the filter:
-    if(checked)
-        ui->match_beginning_box->setChecked(false);
-    QString new_text = ui->lineEditSearch->text();
-    on_lineEditSearch_textEdited(new_text);
 }
 
 void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
@@ -474,4 +456,24 @@ void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
     updateSborniks();
+}
+
+void SongWidget::filterModeChanged()
+{
+    // Re-apply the filter:
+    QString new_text = ui->lineEditSearch->text();
+    on_lineEditSearch_textEdited(new_text);
+}
+
+void SongWidget::on_contains_rbutton_clicked()
+{
+    filterModeChanged();
+}
+void SongWidget::on_begins_rbutton_clicked()
+{
+    filterModeChanged();
+}
+void SongWidget::on_exact_match_rbutton_clicked()
+{
+    filterModeChanged();
 }

@@ -32,14 +32,15 @@ signals:
     void sendSong(Song song, int currentItem);
 
 private slots:
-    void on_exact_match_box_toggled(bool checked);
+    void on_exact_match_rbutton_clicked();
+    void on_begins_rbutton_clicked();
+    void on_contains_rbutton_clicked();
     void on_listPreview_doubleClicked(QModelIndex index);
     void on_songs_view_clicked(QModelIndex index);
     void on_playlist_view_clicked(QModelIndex index);
     void on_song_num_spinbox_editingFinished();
     void on_playlist_view_doubleClicked(QModelIndex index);
     void on_songs_view_doubleClicked(QModelIndex index);
-    void on_match_beginning_box_toggled(bool checked);
     void on_lineEditSearch_textEdited(QString Text);
     void on_btnRemoveFromPlaylist_clicked();
     void on_btnAddToPlaylist_clicked();
@@ -52,6 +53,7 @@ private slots:
     void loadTitles(QString tSbornik);
     void loadSborniks();
     void updateButtonStates();
+    void filterModeChanged();
 
 private:
     Ui::SongWidget *ui;

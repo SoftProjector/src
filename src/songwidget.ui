@@ -110,44 +110,24 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QCheckBox" name="match_beginning_box">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>1000</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>If checked, only songs that start with the search text are displayed; otherwise all songs which contain the search text in the title are displayed</string>
-           </property>
+          <widget class="QRadioButton" name="contains_rbutton">
            <property name="text">
-            <string>Match beginning</string>
+            <string>Contains</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="exact_match_box">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QRadioButton" name="begins_rbutton">
+           <property name="text">
+            <string>Begins</string>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>1000</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>If checked, only songs that start with the search text are displayed; otherwise all songs which contain the search text in the title are displayed</string>
-           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="exact_match_rbutton">
            <property name="text">
             <string>Exact match</string>
            </property>
