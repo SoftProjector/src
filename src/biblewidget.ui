@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0,0,0">
      <item>
       <widget class="QLabel" name="lblBook_2">
        <property name="sizePolicy">
@@ -73,6 +73,23 @@
       </widget>
      </item>
      <item>
+      <widget class="QRadioButton" name="radioButton">
+       <property name="text">
+        <string>Begins</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="text">
+        <string>Contains</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="search_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -98,11 +115,11 @@ p, li { white-space: pre-wrap; }
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
+    <layout class="QHBoxLayout" name="result_layout" stretch="0,0,0">
      <item>
-      <widget class="QLabel" name="lblBook_3">
+      <widget class="QLabel" name="result_lable">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -146,6 +163,14 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="alternatingRowColors">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="hide_result_button">
+       <property name="text">
+        <string>Hide
+Results</string>
        </property>
       </widget>
      </item>

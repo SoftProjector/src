@@ -7,6 +7,8 @@ BibleWidget::BibleWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    on_hide_result_button_clicked();
+
     chapter_validator = new QIntValidator(1, 1, ui->chapter_ef);
     verse_validator = new QIntValidator(1, 1, ui->verse_ef);
     ui->chapter_ef->setValidator( chapter_validator );
@@ -207,4 +209,18 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 {
     int value = new_string.toInt();
     ui->listChapterNum->setCurrentRow(value-1);
+}
+
+void BibleWidget::on_search_button_clicked()
+{
+ui->result_lable->show();;
+ui->search_results_list->show();
+ui->hide_result_button->show();
+}
+
+void BibleWidget::on_hide_result_button_clicked()
+{
+ui->result_lable->hide();
+ui->search_results_list->hide();
+ui->hide_result_button->hide();
 }
