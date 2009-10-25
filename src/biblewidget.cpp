@@ -234,3 +234,18 @@ void BibleWidget::on_hide_result_button_clicked()
     ui->search_results_list->hide();
     ui->hide_result_button->hide();
 }
+
+void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
+{
+    if (!(currentRow == -1))
+    {
+        QStringList all_books = bible.getBooks();
+
+        int row = all_books.indexOf(search_results.book.at(currentRow));
+        ui->listBook->setCurrentRow(row);
+
+
+        ui->chapter_ef->setText(search_results.chapter.at(currentRow));
+        ui->verse_ef->setText(search_results.verse.at(currentRow));
+    }
+}
