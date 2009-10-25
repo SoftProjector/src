@@ -218,7 +218,7 @@ void BibleWidget::on_search_button_clicked()
         ui->result_label->show();
         ui->search_results_list->show();
         ui->hide_result_button->show();
-        ui->search_layout->addLayout(ui->result_layout);
+        ui->search_layout->addItem(ui->result_layout);
         ui->results_splitter->restoreState(shown_splitter_state);
     }
     this->setCursor(Qt::WaitCursor);
