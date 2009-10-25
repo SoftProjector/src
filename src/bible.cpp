@@ -123,13 +123,11 @@ BibleSearch Bible::searchStartsWith(QString bibleId, QString searchText)
     QString book,chapter,verse,verse_text;
     BibleSearch results;
     QSqlQuery sq,sq1;
-    qDebug() << bibleId;
-    qDebug() << sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+    sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
                         "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                         "AND verse_text like '" + searchText.trimmed() + "%'");
    while (sq.next())
     {
-        qDebug() << sq.value(0).toString();
         book = sq.value(1).toString();
         chapter = sq.value(2).toString();
         verse = sq.value(3).toString();
@@ -154,13 +152,11 @@ BibleSearch Bible::searchContains(QString bibleId, QString searchText)
     QString book,chapter,verse,verse_text;
     BibleSearch results;
     QSqlQuery sq,sq1;
-    qDebug() << bibleId;
-    qDebug() << sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+    sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
                         "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                         "AND verse_text like '%" + searchText.trimmed() + "%'");
     while (sq.next())
     {
-        qDebug() << sq.value(0).toString();
         book = sq.value(1).toString();
         chapter = sq.value(2).toString();
         verse = sq.value(3).toString();
