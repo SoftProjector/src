@@ -253,3 +253,11 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
         ui->verse_ef->setText(search_results.verse.at(currentRow));
     }
 }
+
+void BibleWidget::on_search_ef_textChanged(QString text)
+{
+    if(text.size()>3)
+        ui->search_button->setEnabled(true);
+    else
+        ui->search_button->setEnabled(false);
+}
