@@ -213,6 +213,7 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
+    this->setCursor(Qt::WaitCursor);
     ui->result_lable->show();;
     ui->search_results_list->show();
     ui->hide_result_button->show();
@@ -238,6 +239,7 @@ void BibleWidget::on_search_button_clicked()
         mb.setIcon(QMessageBox::Information);
         mb.exec();
     }
+    this->setCursor(Qt::ArrowCursor);
 }
 
 void BibleWidget::on_hide_result_button_clicked()
