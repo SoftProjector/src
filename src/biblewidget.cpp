@@ -241,6 +241,7 @@ void BibleWidget::on_search_button_clicked()
         mb.setWindowTitle(tr("No search results"));
         mb.setIcon(QMessageBox::Information);
         mb.exec();
+        on_hide_result_button_clicked();
     }
     this->setCursor(Qt::ArrowCursor);
 }
