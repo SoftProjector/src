@@ -227,7 +227,17 @@ void BibleWidget::on_search_button_clicked()
         search_results = bible.searchContains(getPrimary(),search_text);
 
     ui->search_results_list->clear();
-    ui->search_results_list->addItems(search_results.verse_text);
+
+    if (!search_results.verse_text.isEmpty())
+        ui->search_results_list->addItems(search_results.verse_text);
+    else
+    {
+        QMessageBox mb;
+        mb.setText(tr("No search results have retrieved"));
+        mb.setWindowTitle(tr("No search results"));
+        mb.setIcon(QMessageBox::Information);
+        mb.exec();
+    }
 }
 
 void BibleWidget::on_hide_result_button_clicked()

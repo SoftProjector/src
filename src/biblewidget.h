@@ -2,7 +2,7 @@
 #define BIBLEWIDGET_H
 
 #include <QtGui/QWidget>
-//#include <QtCore/QKeyEvent>
+#include <QtGui>
 #include "bible.h"
 
 namespace Ui {
