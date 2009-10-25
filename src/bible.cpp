@@ -138,7 +138,7 @@ BibleSearch Bible::searchStartsWith(QString bibleId, QString searchText)
         sq1.first();
         book = sq1.value(0).toString();
 
-        verse_text = book + " " + chapter + " :" + verse + " " + sq.value(4).toString().trimmed();
+        verse_text = book + " " + chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
         results.book += book;
         results.chapter += chapter;
         results.verse += verse;
@@ -167,7 +167,7 @@ BibleSearch Bible::searchContains(QString bibleId, QString searchText)
         sq1.first();
         book = sq1.value(0).toString();
 
-        verse_text = book + " " + chapter + " :" + verse + " " + sq.value(4).toString().trimmed();
+        verse_text = book + " " + chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
         results.book += book;
         results.chapter += chapter;
         results.verse += verse;
