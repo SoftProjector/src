@@ -278,3 +278,8 @@ void BibleWidget::on_search_ef_textChanged(QString text)
     else
         ui->search_button->setEnabled(false);
 }
+
+void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
+{
+    on_btnLive_clicked();
+}

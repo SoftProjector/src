@@ -34,6 +34,7 @@ signals:
     void goLive(QStringList chapter_list, int verse, QString caption);
 
 private slots:
+    void on_search_results_list_doubleClicked(QModelIndex index);
     void on_search_ef_textChanged(QString text);
     void on_search_results_list_currentRowChanged(int currentRow);
     void on_hide_result_button_clicked();
