@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_9">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="results_splitter">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -127,7 +127,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <layout class="QHBoxLayout" name="result_layout" stretch="0,0,0">
          <item>
-          <widget class="QLabel" name="result_lable">
+          <widget class="QLabel" name="result_label">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -154,7 +154,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QListWidget" name="search_results_list">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

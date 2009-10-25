@@ -52,7 +52,7 @@ private:
     Ui::BibleWidget *ui;
     BibleSearch search_results;
     QIntValidator *chapter_validator, *verse_validator;
-
+    QByteArray hidden_splitter_state, shown_splitter_state;
 };
 
 #endif // BIBLEWIDGET_H

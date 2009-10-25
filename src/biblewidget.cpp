@@ -6,7 +6,6 @@ BibleWidget::BibleWidget(QWidget *parent) :
     ui(new Ui::BibleWidget)
 {
     ui->setupUi(this);
-
     on_hide_result_button_clicked();
 
     chapter_validator = new QIntValidator(1, 1, ui->chapter_ef);
@@ -213,13 +212,17 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
+    if( not ui->result_label->isVisible() )
+    {
+        hidden_splitter_state = ui->results_splitter->saveState();
+        ui->result_label->show();
+        ui->search_results_list->show();
+        ui->hide_result_button->show();
+        ui->search_layout->addLayout(ui->result_layout);
+        ui->results_splitter->restoreState(shown_splitter_state);
+    }
     this->setCursor(Qt::WaitCursor);
-    ui->result_lable->show();;
-    ui->search_results_list->show();
-    ui->hide_result_button->show();
-    ui->search_layout->addLayout(ui->result_layout);
     
-
     QString search_text = ui->search_ef->text();
 
     if (ui->begin_radioButton->isChecked())
@@ -244,11 +247,12 @@ void BibleWidget::on_search_button_clicked()
 
 void BibleWidget::on_hide_result_button_clicked()
 {
-    ui->result_lable->hide();
+    shown_splitter_state = ui->results_splitter->saveState();
+    ui->result_label->hide();
     ui->search_results_list->hide();
     ui->hide_result_button->hide();
     ui->search_layout->removeItem(ui->result_layout);
-
+    ui->results_splitter->restoreState(hidden_splitter_state);
 }
 
 void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
