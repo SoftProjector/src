@@ -216,6 +216,8 @@ void BibleWidget::on_search_button_clicked()
     ui->result_lable->show();;
     ui->search_results_list->show();
     ui->hide_result_button->show();
+    ui->search_layout->addLayout(ui->result_layout);
+    
 
     QString search_text = ui->search_ef->text();
 
@@ -233,6 +235,8 @@ void BibleWidget::on_hide_result_button_clicked()
     ui->result_lable->hide();
     ui->search_results_list->hide();
     ui->hide_result_button->hide();
+    ui->search_layout->removeItem(ui->result_layout);
+
 }
 
 void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
