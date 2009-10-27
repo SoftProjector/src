@@ -124,7 +124,7 @@ BibleSearch Bible::searchStartsWith(QString bibleId, QString searchText)
     BibleSearch results;
     QSqlQuery sq,sq1;
     sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
-                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
                         "AND verse_text like '" + searchText.trimmed() + "%' COLLATE NOCASE");
    while (sq.next())
     {
@@ -153,7 +153,7 @@ BibleSearch Bible::searchContains(QString bibleId, QString searchText)
     BibleSearch results;
     QSqlQuery sq,sq1;
     sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
-                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
                         "AND verse_text like '%" + searchText.trimmed() + "%' COLLATE NOCASE");
     while (sq.next())
     {

@@ -1,5 +1,6 @@
 #include "managedatadialog.h"
 #include "ui_managedatadialog.h"
+#include "song.h"
 
 ManageDataDialog::ManageDataDialog(QWidget *parent) :
     QDialog(parent),
@@ -441,6 +442,7 @@ void ManageDataDialog::importBible(QString path)
         QSqlDatabase::database().transaction();
         sq.prepare("INSERT INTO BibleVerse (verse_id, bible_id, book, chapter, verse, verse_text)"
                    "VALUES (?,?,?,?,?,?)");
+        QString v="";
         while (!file.atEnd())
         {
             line = QString::fromUtf8(file.readLine());
@@ -452,6 +454,20 @@ void ManageDataDialog::importBible(QString path)
             sq.addBindValue(split.at(3));
             sq.addBindValue(split.at(4));
             sq.exec();
+
+            // Create duplticate verse for bible search
+            sq.addBindValue(split.at(0));
+            sq.addBindValue(id+"_");
+            sq.addBindValue(split.at(1));
+            sq.addBindValue(split.at(2));
+            sq.addBindValue(split.at(3));
+            v=split.at(4);
+            v = v.toLower();    // Convert to all to lower case
+            v = clean(v);       // Remove all non alphanumeric charecters
+            v = v.simplified(); // Leave only single white space between each word
+            sq.addBindValue(v);
+            sq.exec();
+
             ++row;
             ui->pbar->setValue(row);
         }
@@ -556,7 +572,11 @@ void ManageDataDialog::deleteBible(Bibles bible)
     sq.clear();
 
     // Delete form BibleVerse Table
-    sq.exec("Delete FROM BibleVerse WHERE bible_id = '" + id +"'");
+    sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"'");
+    sq.clear();
+
+    // Delete form BibleVerse Table
+    sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"_'");
     sq.clear();
 
     // Delete from BibleVersions Table
