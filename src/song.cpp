@@ -15,6 +15,7 @@ QString clean(QString str)
     str.remove("`");
     str.remove("-");
     str.remove("_");
+    str.remove("—");
     str.remove("@");
     str.remove("#");
     str.remove("$");
