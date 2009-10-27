@@ -214,7 +214,9 @@ void BibleWidget::on_search_button_clicked()
 {
     this->setCursor(Qt::WaitCursor);
     
-    QString search_text = ui->search_ef->text();
+    // Always search lower-case, because in order for searches to be case-insensitive, all
+    // bible verses are stored in lower case:
+    QString search_text = ui->search_ef->text().toLower();
 
     if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
     {
