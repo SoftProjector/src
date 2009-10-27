@@ -212,29 +212,41 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
-    if( not ui->result_label->isVisible() )
-    {
-        hidden_splitter_state = ui->results_splitter->saveState();
-        ui->result_label->show();
-        ui->search_results_list->show();
-        ui->hide_result_button->show();
-        ui->search_layout->addItem(ui->result_layout);
-        ui->results_splitter->restoreState(shown_splitter_state);
-    }
     this->setCursor(Qt::WaitCursor);
     
     QString search_text = ui->search_ef->text();
 
-    if (ui->begin_radioButton->isChecked())
-        search_results = bible.searchStartsWith(getPrimary(),search_text);
-    else if (ui->contain_radioButton->isChecked())
-        search_results = bible.searchContains(getPrimary(),search_text);
-
+    if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
+    {
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),search_text);
+        ui->lineEditBook->clear();
+    }
+    else if (ui->current_book_radioButton->isChecked()) // Search current book only
+    {
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
+                                           ui->listBook->currentItem()->text(),search_text);
+    }
+    else if (ui->current_chapter_radioButton->isChecked()) // Search current chapter only
+    {
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
+                                           ui->listBook->currentItem()->text(),ui->listChapterNum->currentItem()->text(),search_text);
+    }
     ui->search_results_list->clear();
 
-    if (!search_results.verse_text.isEmpty())
+    if (!search_results.verse_text.isEmpty()) // If have results, then show them
+    {
+        if( not ui->result_label->isVisible() )
+        {
+            hidden_splitter_state = ui->results_splitter->saveState();
+            ui->result_label->show();
+            ui->search_results_list->show();
+            ui->hide_result_button->show();
+            ui->search_layout->addItem(ui->result_layout);
+            ui->results_splitter->restoreState(shown_splitter_state);
+        }
         ui->search_results_list->addItems(search_results.verse_text);
-    else
+    }
+    else // If no relust, notify the user and hide result list
     {
         QMessageBox mb;
         mb.setText(tr("No search results have retrieved"));

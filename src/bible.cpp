@@ -118,58 +118,110 @@ int Bible::maxChapters(QString book, QString bibleId)
     return chapters;
 }
 
-BibleSearch Bible::searchStartsWith(QString bibleId, QString searchText)
+BibleSearch Bible::searchBible(bool begins, QString bibleId, QString searchText)
 {
-    QString book,chapter,verse,verse_text;
+    QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QSqlQuery sq,sq1;
-    sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
-                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
-                        "AND verse_text like '" + searchText.trimmed() + "%' COLLATE NOCASE");
-   while (sq.next())
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
     {
-        book = sq.value(1).toString();
-        chapter = sq.value(2).toString();
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
         verse = sq.value(3).toString();
 
         // Get Book name instead of number
         sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + book + " AND bible_id = " + bibleId);
+                 + s_book + " AND bible_id = " + bibleId);
         sq1.first();
-        book = sq1.value(0).toString();
+        s_book = sq1.value(0).toString();
 
-        verse_text = book + " " + chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
-        results.book += book;
-        results.chapter += chapter;
+        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book += s_book;
+        results.chapter += s_chapter;
         results.verse += verse;
         results.verse_text += verse_text;
     }
     return results;
 }
 
-BibleSearch Bible::searchContains(QString bibleId, QString searchText)
+BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
 {
-    QString book,chapter,verse,verse_text;
+    QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QSqlQuery sq,sq1;
-    sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
-                        "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
-                        "AND verse_text like '%" + searchText.trimmed() + "%' COLLATE NOCASE");
+    book = book_ids.at(books.indexOf(book,0));
+
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
     while (sq.next())
     {
-        book = sq.value(1).toString();
-        chapter = sq.value(2).toString();
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
         verse = sq.value(3).toString();
 
         // Get Book name instead of number
         sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + book + " AND bible_id = " + bibleId);
+                 + s_book + " AND bible_id = " + bibleId);
         sq1.first();
-        book = sq1.value(0).toString();
+        s_book = sq1.value(0).toString();
 
-        verse_text = book + " " + chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
-        results.book += book;
-        results.chapter += chapter;
+        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book += s_book;
+        results.chapter += s_chapter;
+        results.verse += verse;
+        results.verse_text += verse_text;
+    }
+    return results;
+}
+
+BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
+{
+    QString s_book,s_chapter,verse,verse_text;
+    BibleSearch results;
+    QSqlQuery sq,sq1;
+    book = book_ids.at(books.indexOf(book,0));
+
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
+    {
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + s_book + " AND bible_id = " + bibleId);
+        sq1.first();
+        s_book = sq1.value(0).toString();
+
+        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book += s_book;
+        results.chapter += s_chapter;
         results.verse += verse;
         results.verse_text += verse_text;
     }

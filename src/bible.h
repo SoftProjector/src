@@ -28,8 +28,9 @@ class Bible
 {
 public:
     Bible();
-    BibleSearch searchStartsWith(QString bibleId, QString searchText);
-    BibleSearch searchContains(QString bibleId, QString searchText);
+    BibleSearch searchBible(bool begins, QString bibleId, QString searchText);
+    BibleSearch searchBible(bool begins, QString bibleId, QString book, QString searchText);
+    BibleSearch searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText);
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);
