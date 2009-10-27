@@ -280,10 +280,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Quickly display the selected song on the screen without adding it to playlist first&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="text">
-            <string>Go Live</string>
+            <string>Go Live (F5)</string>
            </property>
            <property name="shortcut">
-            <string>Return</string>
+            <string>F5</string>
            </property>
           </widget>
          </item>
