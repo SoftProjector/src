@@ -12,6 +12,10 @@ BibleWidget::BibleWidget(QWidget *parent) :
     verse_validator = new QIntValidator(1, 1, ui->verse_ef);
     ui->chapter_ef->setValidator( chapter_validator );
     ui->verse_ef->setValidator( verse_validator );
+
+    search_type_buttongroup.addButton(ui->begin_radioButton);
+    search_type_buttongroup.addButton(ui->contain_radioButton);
+    ui->contain_radioButton->setChecked(true);
 }
 
 BibleWidget::~BibleWidget()
