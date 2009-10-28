@@ -139,6 +139,7 @@ void ManageDataDialog::on_import_sbornik_pushButton_clicked()
 
 void ManageDataDialog::importSbornik(QString path)
 {
+    emit setWaitCursor();
     int row(1),max(0);
     QFile file(path), file2(path);
     QString line, code, title, info, num;
@@ -248,6 +249,7 @@ void ManageDataDialog::importSbornik(QString path)
     }
     ui->pbar->setVisible(false);
     load_sborniks();
+    emit setArrowCursor();
 }
 
 void ManageDataDialog::on_export_sbornik_pushButton_clicked()
@@ -260,6 +262,7 @@ void ManageDataDialog::on_export_sbornik_pushButton_clicked()
 
 void ManageDataDialog::exportSbornik(QString path)
 {
+    emit setWaitCursor();
     int row = ui->sbornikTableView->currentIndex().row();
     Sbornik sbornik = sbornik_model->getSbornik(row);
     QSqlQuery sq,sq1;
@@ -308,6 +311,7 @@ void ManageDataDialog::exportSbornik(QString path)
         out << songs;
     }
     ofile.close();
+    emit setArrowCursor();
 
     QMessageBox mb;
     mb.setWindowTitle("Sbornik has been exported");
@@ -347,6 +351,7 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
 
 void ManageDataDialog::deleteSbornik(Sbornik sbornik)
 {
+    emit setWaitCursor();
     reload_sbornik = true;
     QSqlQuery sq,sq1;
     QString id = sbornik.sbornikId.trimmed();
@@ -369,6 +374,7 @@ void ManageDataDialog::deleteSbornik(Sbornik sbornik)
     sq.exec("DELETE FROM SongLink WHERE sbornik_id like '" + id +"'");
 
     load_sborniks();
+    emit setArrowCursor();
 }
 
 void ManageDataDialog::on_ok_pushButton_clicked()
@@ -390,6 +396,7 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
 
 void ManageDataDialog::importBible(QString path)
 {
+    emit setWaitCursor();
     QFile file;
     file.setFileName(path);
     QString line, title, id;
@@ -476,6 +483,7 @@ void ManageDataDialog::importBible(QString path)
     }
     ui->pbar->setVisible(false);
     load_bibles();
+    emit setArrowCursor();
 }
 
 void ManageDataDialog::on_export_bible_pushButton_clicked()
@@ -488,6 +496,7 @@ void ManageDataDialog::on_export_bible_pushButton_clicked()
 
 void ManageDataDialog::exportBible(QString path)
 {
+    emit setWaitCursor();
     int row = ui->bibleTableView->currentIndex().row();
     Bibles bible = bible_model->getBible(row);
     QSqlQuery sq;
@@ -525,7 +534,9 @@ void ManageDataDialog::exportBible(QString path)
         out << to_file;
     }
     ofile.close();
-        QMessageBox mb;
+    emit setArrowCursor();
+
+    QMessageBox mb;
     mb.setWindowTitle("Bible has been exported");
     mb.setText("Bible:\n     " + bible.title + "\nHas been saved to:\n     " + path);
     mb.setIcon(QMessageBox::Information);
@@ -563,6 +574,7 @@ void ManageDataDialog::on_delete_bible_pushButton_clicked()
 
 void ManageDataDialog::deleteBible(Bibles bible)
 {
+    emit setWaitCursor();
     reload_bible = true;
     QSqlQuery sq;
     QString id = bible.bibleId.trimmed();
@@ -584,6 +596,7 @@ void ManageDataDialog::deleteBible(Bibles bible)
     sq.exec("DELETE FROM BibleVersions WHERE id = '" + id +"'");
 
     load_bibles();
+    emit setArrowCursor();
 }
 
 void ManageDataDialog::on_edit_sbornik_pushButton_clicked()

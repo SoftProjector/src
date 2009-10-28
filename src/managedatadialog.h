@@ -25,6 +25,10 @@ public:
 protected:
     virtual void changeEvent(QEvent *e);
 
+signals:
+    void setWaitCursor();
+    void setArrowCursor();
+
 private:
     QList<Bibles> bible_list;
     QList<Sbornik> sbornik_list;

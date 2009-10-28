@@ -8,6 +8,7 @@
 #include "display1.h"
 #include "editwidget.h"
 #include "bible.h"
+#include "managedatadialog.h"
 
 class QActionGroup;
 
@@ -26,6 +27,7 @@ public:
     SongWidget *songWidget;
     BibleWidget *bibleWidget;
     AnnounceWidget *announceWidget;
+    ManageDataDialog *manageDialog;
     QDesktopWidget *desktop;
     Display1 *display;
     EditWidget *editWidget;
@@ -42,6 +44,9 @@ public:
     void readXMLConfigurationFile();
     void writeXMLConfigurationFile();
 
+public slots:
+    void setWaitCursor();
+    void setArrowCursor();
 
 
 private:

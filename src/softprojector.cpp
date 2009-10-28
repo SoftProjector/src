@@ -3,7 +3,6 @@
 #include "ui_softprojector.h"
 #include "settingsdialog.h"
 #include "aboutdialog.h"
-#include "managedatadialog.h"
 #include "helpdialog.h"
 
 SoftProjector::SoftProjector(QWidget *parent)
@@ -46,6 +45,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     songWidget = new SongWidget;
     editWidget = new EditWidget;
     announceWidget = new AnnounceWidget;
+    manageDialog = new ManageDataDialog(this);
 
     showing = false;
 
@@ -57,22 +57,21 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget->setWindowTitle("Edit and/or Add New songs");
 
     connect(songWidget, SIGNAL(sendSong(Song, int)),
-            this, SLOT(setSongList(Song, int))
-    );
+            this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
-            this, SLOT(setChapterList(QStringList, int, QString))
-    );
+            this, SLOT(setChapterList(QStringList, int, QString)));
     connect(announceWidget,SIGNAL(sendText(QString)),
-            this, SLOT(setAnnounceText(QString))
-    );
+            this, SLOT(setAnnounceText(QString)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
-            this, SLOT(drawText(QPainter*, int, int))
-    );
+            this, SLOT(drawText(QPainter*, int, int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
-            songWidget, SLOT(updateSongFromDatabase(int))
-    );
+            songWidget, SLOT(updateSongFromDatabase(int)));
     connect(editWidget, SIGNAL(addedNew()),
             songWidget,SLOT(updateSborniks()));
+    connect(manageDialog, SIGNAL(setArrowCursor()),
+            this, SLOT(setArrowCursor()));
+    connect(manageDialog, SIGNAL(setWaitCursor()),
+            this, SLOT(setWaitCursor()));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -711,16 +710,16 @@ void SoftProjector::on_actionManage_Database_triggered()
     QString secondaryBible = bibleWidget->getSecondary();
     QSqlQuery sq;
 
-    ManageDataDialog *manage;
-    manage = new ManageDataDialog(this);
-    manage->exec();
+
+
+    manageDialog->exec();
 
     // Reload sborniks if Sbornik has been added, edited, or deleted
-    if (manage->reload_sbornik)
+    if (manageDialog->reload_sbornik)
         songWidget->updateSborniks();
 
     // Reload Bibles if Bible has been deleted
-    if (manage->reload_bible)
+    if (manageDialog->reload_bible)
     {
         // check if Primary bible has been removed
         sq.exec("SELECT * FROM BibleVersions WHERE id = " + primaryBible);
@@ -748,3 +747,14 @@ void SoftProjector::on_action_Help_triggered()
     help_dialog = new HelpDialog();
     help_dialog->show();
 }
+
+void SoftProjector::setArrowCursor()
+{
+    this->setCursor(Qt::ArrowCursor);
+}
+
+void SoftProjector::setWaitCursor()
+{
+    this->setCursor(Qt::WaitCursor);
+}
+
