@@ -28,6 +28,8 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
+    void setWaitCursor();
+    void setArrowCursor();
     // To be used ONLY by SongWidget::sendToProjector():
     void sendSong(Song song, int currentItem);
 

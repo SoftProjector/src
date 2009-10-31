@@ -216,7 +216,8 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
-    this->setCursor(Qt::WaitCursor);
+//    this->setCursor(Qt::WaitCursor);
+    emit setWaitCursor();
     
     // Always search lower-case, because in order for searches to be case-insensitive, all
     // bible verses are stored in lower case:
@@ -261,7 +262,8 @@ void BibleWidget::on_search_button_clicked()
         mb.exec();
         on_hide_result_button_clicked();
     }
-    this->setCursor(Qt::ArrowCursor);
+//    this->setCursor(Qt::ArrowCursor);
+    emit setArrowCursor();
 }
 
 void BibleWidget::on_hide_result_button_clicked()

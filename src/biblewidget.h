@@ -31,6 +31,8 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
+    void setWaitCursor();
+    void setArrowCursor();
     void goLive(QStringList chapter_list, int verse, QString caption);
 
 private slots:

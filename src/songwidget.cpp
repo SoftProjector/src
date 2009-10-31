@@ -428,7 +428,7 @@ void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
 
 void SongWidget::updateSborniks()
 {
-    this->setCursor(Qt::WaitCursor);
+    emit setWaitCursor();
     // Reload the sbornik and reselect the one that used to be selected
     // if it's still available, otherwise show all sborniks
 
@@ -443,7 +443,7 @@ void SongWidget::updateSborniks()
         new_index = 0; // All sborniks
 
     ui->sbornik_menu->setCurrentIndex(new_index);
-    this->setCursor(Qt::ArrowCursor);
+    emit setArrowCursor();
 }
 
 void SongWidget::updateSongFromDatabase(int songid)

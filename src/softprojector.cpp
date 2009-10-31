@@ -68,9 +68,17 @@ SoftProjector::SoftProjector(QWidget *parent)
             songWidget, SLOT(updateSongFromDatabase(int)));
     connect(editWidget, SIGNAL(addedNew()),
             songWidget,SLOT(updateSborniks()));
-    connect(manageDialog, SIGNAL(setArrowCursor()),
+    connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
-    connect(manageDialog, SIGNAL(setWaitCursor()),
+    connect(manageDialog, SIGNAL(setMainWaitCursor()),
+            this, SLOT(setWaitCursor()));
+    connect(bibleWidget, SIGNAL(setArrowCursor()),
+            this, SLOT(setArrowCursor()));
+    connect(bibleWidget, SIGNAL(setWaitCursor()),
+            this, SLOT(setWaitCursor()));
+    connect(songWidget, SIGNAL(setArrowCursor()),
+            this, SLOT(setArrowCursor()));
+    connect(songWidget, SIGNAL(setWaitCursor()),
             this, SLOT(setWaitCursor()));
 
     ui->show_button->setEnabled(false);

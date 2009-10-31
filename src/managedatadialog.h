@@ -26,8 +26,8 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 signals:
-    void setWaitCursor();
-    void setArrowCursor();
+    void setMainWaitCursor();
+    void setMainArrowCursor();
 
 private:
     QList<Bibles> bible_list;
@@ -38,6 +38,8 @@ private:
 
 
 private slots:
+    void setWaitCursor();
+    void setArrowCursor();
     void on_sbornikTableView_clicked(QModelIndex index);
     void on_bibleTableView_clicked(QModelIndex index);
     void updateBibleButtons();
