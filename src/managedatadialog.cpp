@@ -157,13 +157,12 @@ void ManageDataDialog::importSbornik(QString path)
         }
     }
 
-    ui->pbar->setVisible(true);
-    ui->pbar->setMaximum(max);
-    ui->pbar->setValue(row);
-
+    QProgressDialog progress("Importing...", "Cancel", 0, max, this);
+    progress.setValue(row);
 
     if (file.open(QIODevice::ReadOnly))
     {
+
         reload_sbornik = true;
         //Set Sbornik Title and Information
         line = QString::fromUtf8(file.readLine());
@@ -204,6 +203,8 @@ void ManageDataDialog::importSbornik(QString path)
                    "VALUES (?,?,?,?,?,?,?,?,?)");
         while (!file.atEnd())
         {
+            if (progress.wasCanceled())
+                break;
             line = QString::fromUtf8(file.readLine());
             split = line.split("#$#");
 
@@ -243,11 +244,10 @@ void ManageDataDialog::importSbornik(QString path)
                     + num + ")");
 
             row++;
-            ui->pbar->setValue(row);
+            progress.setValue(row);
         }
         QSqlDatabase::database().commit();
     }
-    ui->pbar->setVisible(false);
     load_sborniks();
     emit setArrowCursor();
 }
@@ -406,14 +406,13 @@ void ManageDataDialog::importBible(QString path)
 
     if (file.open(QIODevice::ReadOnly))
     {
-        ui->pbar->setVisible(true);
-        ui->pbar->setMaximum(31200);
-        ui->pbar->setValue(row);
+        QProgressDialog progress("Importing...", "Cancel", 0, 31200, this);
+        progress.setValue(row);
 
         // add Bible Name
         title = QString::fromUtf8(file.readLine());
         sq.exec("INSERT INTO BibleVersions (bible_name)"
-                            "VALUES ('" + title.trimmed()+"')");
+                "VALUES ('" + title.trimmed()+"')");
         sq.clear();
 
         // get Bible id of newly added Bible
@@ -439,8 +438,8 @@ void ManageDataDialog::importBible(QString path)
             sq.exec();
 
             line = QString::fromUtf8(file.readLine());
-            ++row;
-            ui->pbar->setValue(row);
+            row++;
+            progress.setValue(row);
         }
         QSqlDatabase::database().commit();
         sq.clear();
@@ -452,6 +451,9 @@ void ManageDataDialog::importBible(QString path)
         QString v="";
         while (!file.atEnd())
         {
+            if (progress.wasCanceled())
+                break;
+
             line = QString::fromUtf8(file.readLine());
             split = line.split("\t");
             sq.addBindValue(split.at(0));
@@ -475,13 +477,13 @@ void ManageDataDialog::importBible(QString path)
             sq.addBindValue(v);
             sq.exec();
 
-            ++row;
-            ui->pbar->setValue(row);
+            row++;
+            progress.setValue(row);
         }
         QSqlDatabase::database().commit();
         file.close();
     }
-    ui->pbar->setVisible(false);
+
     load_bibles();
     emit setArrowCursor();
 }
