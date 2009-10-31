@@ -5,42 +5,8 @@
 
 QString clean(QString str)
 {
-    str.remove("\"");
-    str.remove("\\");
-    str.remove(".");
-    str.remove(",");
-    str.remove("?");
-    str.remove("!");
-    str.remove("'");
-    str.remove("`");
-    str.remove("-");
-    str.remove("_");
-    str.remove("—");
-    str.remove("@");
-    str.remove("#");
-    str.remove("$");
-    str.remove("%");
-    str.remove("^");
-    str.remove("&");
-    str.remove("*");
-    str.remove("(");
-    str.remove(")");
-    str.remove("{");
-    str.remove("}");
-    str.remove("[");
-    str.remove("]");
-    str.remove("|");
-    str.remove(";");
-    str.remove(":");
-    str.remove("/");
-    str.remove(">");
-    str.remove("<");
-    str.remove("~");
-    str.remove("=");
-    str.remove("+");
-    str.remove(str.fromUtf8("«"));
-    str.remove(str.fromUtf8("»"));
-    str = str.trimmed();
+    str.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\\[\\\]\\\\]")));
+    str = str.simplified();
     return str;
 }
 
