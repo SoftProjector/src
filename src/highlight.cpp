@@ -40,3 +40,36 @@ void Highlight::highlightBlock(const QString &text)
 
     setCurrentBlockState(0);
 }
+
+// *** Highligting for search results ***
+HighlightSearch::HighlightSearch(QTextDocument *parent)
+        : QSyntaxHighlighter(parent)
+{
+
+}
+
+void HighlightSearch::highlightBlock(const QString &text)
+{
+    foreach (const HighlightingRule &rule, highlightingRules) {
+        QRegExp expression(rule.pattern);
+        int index = expression.indexIn(text);
+        while (index >= 0) {
+            int length = expression.matchedLength();
+            setFormat(index, length, rule.format);
+            index = expression.indexIn(text, index + length);
+        }
+    }
+
+    setCurrentBlockState(0);
+}
+
+void HighlightSearch::setHighlightText(QString text)
+{
+    HighlightingRule rule;
+    highlightingRules.clear();
+    resultFormat.setForeground(Qt::red);
+//    resultFormat.setBackground(Qt::yellow);
+    rule.pattern = QRegExp(text);
+    rule.format = resultFormat;
+    highlightingRules.append(rule);
+}

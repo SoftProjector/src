@@ -4,10 +4,27 @@
 #include <QtGui/QWidget>
 #include <QtGui>
 #include "bible.h"
+#include "highlight.h"
 
 namespace Ui {
     class BibleWidget;
 }
+
+class HihghlighterDelegate: public QItemDelegate
+{
+    Q_OBJECT
+
+public:
+    HihghlighterDelegate(QObject *parent = 0);
+    HighlightSearch *highlighter;
+
+protected:
+    void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const;
+
+private:
+    QTextDocument *textDocument;
+
+};
 
 class BibleWidget : public QWidget {
     Q_OBJECT
@@ -53,10 +70,14 @@ private slots:
 
 private:
     Ui::BibleWidget *ui;
+    HihghlighterDelegate *highlight;
     BibleSearch search_results;
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;
 };
+//class HighlightSearch;
+//class QTextDocument;
+
 
 #endif // BIBLEWIDGET_H

@@ -10,12 +10,16 @@ BibleWidget::BibleWidget(QWidget *parent) :
 
     chapter_validator = new QIntValidator(1, 1, ui->chapter_ef);
     verse_validator = new QIntValidator(1, 1, ui->verse_ef);
+
     ui->chapter_ef->setValidator( chapter_validator );
     ui->verse_ef->setValidator( verse_validator );
 
     search_type_buttongroup.addButton(ui->begin_radioButton);
     search_type_buttongroup.addButton(ui->contain_radioButton);
     ui->contain_radioButton->setChecked(true);
+
+    highlight = new HihghlighterDelegate(ui->search_results_list);
+    ui->search_results_list->setItemDelegate(highlight);
 }
 
 BibleWidget::~BibleWidget()
@@ -216,13 +220,14 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
+
 //    this->setCursor(Qt::WaitCursor);
     emit setWaitCursor();
     
     // Always search lower-case, because in order for searches to be case-insensitive, all
     // bible verses are stored in lower case:
     QString search_text = ui->search_ef->text().toLower();
-
+    highlight->highlighter->setHighlightText(search_text);
     if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
     {
         search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),search_text);
@@ -302,4 +307,26 @@ void BibleWidget::on_search_ef_textChanged(QString text)
 void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
 {
     on_btnLive_clicked();
+}
+// *** Class for higlighting search results ****
+HihghlighterDelegate::HihghlighterDelegate(QObject *parent)
+    : QItemDelegate(parent)
+{
+    textDocument = new QTextDocument(this);
+    highlighter = new HighlightSearch(textDocument);
+}
+
+void HihghlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
+{
+    Q_UNUSED(option);
+    textDocument->setDocumentMargin(0);
+    textDocument->setPlainText(text);
+
+    QPixmap pixmap(rect.size());
+    pixmap.fill(Qt::transparent);
+    QPainter p(&pixmap);
+
+    textDocument->drawContents(&p);
+
+    painter->drawPixmap(rect, pixmap);
 }
