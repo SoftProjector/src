@@ -1,5 +1,6 @@
 #include "biblewidget.h"
 #include "ui_biblewidget.h"
+#include "song.h"
 
 BibleWidget::BibleWidget(QWidget *parent) :
     QWidget(parent),
@@ -227,11 +228,13 @@ void BibleWidget::on_search_button_clicked()
     // Always search lower-case, because in order for searches to be case-insensitive, all
     // bible verses are stored in lower case:
     QString search_text = ui->search_ef->text().toLower();
-    highlight->highlighter->setHighlightText(search_text);
+    search_text = clean(search_text); // remove all none alphanumeric charecters
+    search_text = search_text.simplified(); // remove all extra spaces
+    highlight->highlighter->setHighlightText(search_text); // set highlighting rule
+
     if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
     {
         search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),search_text);
-        ui->lineEditBook->clear();
     }
     else if (ui->current_book_radioButton->isChecked()) // Search current book only
     {
@@ -249,6 +252,7 @@ void BibleWidget::on_search_button_clicked()
     {
         if( not ui->result_label->isVisible() )
         {
+            ui->lineEditBook->clear();
             hidden_splitter_state = ui->results_splitter->saveState();
             ui->result_label->show();
             ui->search_results_list->show();
