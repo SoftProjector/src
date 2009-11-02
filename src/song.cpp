@@ -259,7 +259,7 @@ void SongsModel::updateSongFromDatabase(int songid)
         Song *song = (Song*)&(song_list.at(i));
         if( song->songID == songid )
         {
-            qDebug() << "found song. updating data...";
+            //qDebug() << "found song. updating data...";
             song->readData();
             emitLayoutChanged(); // To redraw the table
             return;

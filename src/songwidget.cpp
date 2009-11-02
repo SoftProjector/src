@@ -448,7 +448,7 @@ void SongWidget::updateSborniks()
 
 void SongWidget::updateSongFromDatabase(int songid)
 {
-    qDebug() << "update song from database:" << songid;
+    //qDebug() << "update song from database:" << songid;
     songs_model->updateSongFromDatabase(songid);
     // Update the preview table:
     sendToPreview( currentSong() );
