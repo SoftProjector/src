@@ -164,6 +164,40 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
     // If we do this, make sure the cache is updated whe primary bible is changed
     QStringList all_books = bible.getBooks();
 
+    // Remove trailing spaces:
+    text = text.trimmed();
+
+    int chapter = 0;
+    int verse = 0;
+
+    // Check whether the user entered a search string that include book, chapter,
+    // and verse. For example: "1King 3 13"
+    QStringList search_words = text.split(" ");
+    if( search_words.count() > 1 )
+    {
+        bool ok;
+        int num1 = search_words.last().toInt(&ok);
+        if( ok )
+        {
+            chapter = num1;
+            search_words.removeLast();
+            if( search_words.count() > 1 )
+            {
+                bool ok2;
+                int num2 = search_words.last().toInt(&ok2);
+                if( ok2 )
+                {
+                    search_words.removeLast();
+                    chapter = num2;
+                    verse = num1;
+                }
+            }
+            text = search_words.join(" ");
+        }
+
+    }
+
+    // Now search all books to find the matching book:
     ui->listBook->clear();
     if( text.isEmpty() )
         ui->listBook->addItems(all_books);
@@ -198,6 +232,13 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
     }
     if( ui->listBook->count() > 0 )
         ui->listBook->setCurrentRow(0);
+
+    if( chapter != 0 && chapter <= ui->listChapterNum->count() )
+    {
+        ui->listChapterNum->setCurrentRow(chapter-1);
+        if( verse != 0 && verse <= ui->chapter_preview_list->count() )
+            ui->chapter_preview_list->setCurrentRow(verse-1);
+    }
 }
 
 void BibleWidget::on_btnLive_clicked()
