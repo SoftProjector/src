@@ -68,6 +68,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     else
         ui->wallpaper_ef->setText(new_wallpaper_path);
 
+    // Set Song Items
+    ui->stanza_title_checkBox->setChecked(softProjector->show_stanza_title);
+    ui->song_key_checkBox->setChecked(softProjector->show_song_key);
+    ui->song_number_checkBox->setChecked(softProjector->show_song_number);
+
 }
 
 void SettingsDialog::updateSecondaryBibleMenu()
@@ -128,8 +133,15 @@ void SettingsDialog::on_buttonBox_accepted()
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
     bool use_blur = ui->use_blur_check_box->isChecked();
+    bool show_stanza_title = ui->stanza_title_checkBox->isChecked();
+    bool show_song_number = ui->song_number_checkBox->isChecked();
+    bool show_song_key = ui->song_key_checkBox->isChecked();
 
     softProjector->display_on_top = display_on_top;
+
+    softProjector->show_stanza_title = show_stanza_title;
+    softProjector->show_song_number = show_song_number;
+    softProjector->show_song_key = show_song_key;
 
     softProjector->bibleWidget->loadBibles(primaryBible, secondaryBible);
 

@@ -33,6 +33,9 @@ public:
     EditWidget *editWidget;
     bool showing; // whether we are currently showing to the projector
     bool display_on_top; // whether display screen is alway on top on not
+    bool show_stanza_title; // whether to display song stanza title "Verse, Chorus, Insert"
+    bool show_song_number; // whether to show song numbers
+    bool show_song_key; // whether to show song key
     Song current_song;
     int current_song_verse;
     Verse current_verse;

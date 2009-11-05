@@ -255,10 +255,6 @@ void SoftProjector::keyPressEvent( QKeyEvent * event )
         QMainWindow::keyPressEvent(event);
 }
 
-
-
-
-
 void SoftProjector::on_actionClose_triggered()
 {
     close();
@@ -371,16 +367,33 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     QStringList lines_list = song_list.at(current_song_verse).split("\n");
     QString sbornik_str = current_song.sbornik_name;
     QString song_num_str = QString::number(current_song.num);
+    QString song_key_str = current_song.tune;
 
     // Remove the first line if it starts with "Kuplet" or "Pripev" or "Vstavka":
     QString textemp = lines_list[0];
 //    textemp.remove(6,10);
 
+    // Check whether to display song numbers
+    if (show_song_number)
+        song_num_str = song_num_str;
+    else
+        song_num_str = "";
+
+    // Check whether to display song key
+    if (show_song_key)
+        song_num_str = song_key_str + "  " + song_num_str;
+    else
+        song_num_str = song_num_str;
+
+
     if( textemp.startsWith(QString::fromUtf8("Вставка"))
         || textemp.startsWith(QString::fromUtf8("Куплет"))
         || textemp.startsWith(QString::fromUtf8("Припев")) )
     {
-        top_caption_str = lines_list.at(0);
+        if (show_stanza_title)
+            top_caption_str = lines_list.at(0);
+        else
+            top_caption_str = "";
         //qDebug() << "CAPTION:";
         //qDebug() << top_caption_str;
         lines_list.removeFirst();
