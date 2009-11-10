@@ -117,6 +117,9 @@ void SoftProjector::applyDefaults()
     display_on_top = false;
     display->setFading(false);
     display->setBlur(true);
+    show_stanza_title = false;
+    show_song_number = false;
+    show_song_key = false;
 }
 
 
@@ -162,6 +165,22 @@ void SoftProjector::writeXMLConfigurationFile()
     else
         xml.writeTextElement("useblur", "false");
 
+    // Save song settings
+    if (show_stanza_title)
+        xml.writeTextElement("showstanzatitle", "true");
+    else
+        xml.writeTextElement("showstanzatitle", "false");
+
+    if (show_song_number)
+        xml.writeTextElement("showsongnumber", "true");
+    else
+        xml.writeTextElement("showsongnumber", "false");
+
+    if (show_song_key)
+        xml.writeTextElement("showsongkey", "true");
+    else
+        xml.writeTextElement("showsongkey", "false");
+
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
 
@@ -192,6 +211,12 @@ void SoftProjector::applySetting(QString name, QString value)
         display->setFading(value == "true");
     else if( name == "useblur")
         display->setBlur(value == "true");
+    else if(name == "showstanzatitle")
+        show_stanza_title = (value == "true");
+    else if(name == "showsongnumber")
+        show_song_number = (value == "true");
+    else if(name == "showsongkey")
+        show_song_key = (value == "true");
 
 }
 
