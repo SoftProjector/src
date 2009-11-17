@@ -42,8 +42,8 @@ void AnnounceWidget::sendToProjector()
 
 void AnnounceWidget::on_btnLive_clicked()
 {
-    qDebug() << "Go LIVE TEXT:";
-    qDebug() << ui->announceTextEdit->toPlainText();
+    //qDebug() << "Go LIVE TEXT:";
+    //qDebug() << ui->announceTextEdit->toPlainText();
     QString text = ui->announceTextEdit->toPlainText();
     emit sendText(text);
 }

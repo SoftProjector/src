@@ -44,7 +44,7 @@
             <string>Use this menu to show only songs beloning to a particular song collection</string>
            </property>
            <property name="statusTip">
-            <string>Select Sbornik to use</string>
+            <string>Select song collection to use</string>
            </property>
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
@@ -249,26 +249,16 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="preview_top_label">
            <property name="text">
-            <string>Song Preview:</string>
+            <string>Song preview</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="btnLive">
@@ -288,6 +278,13 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="preview_label">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QListWidget" name="listPreview">

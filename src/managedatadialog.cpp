@@ -128,11 +128,11 @@ void ManageDataDialog::updateSbornikButtons()
 void ManageDataDialog::on_import_sbornik_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     "Select sbornik file to import",
+                                                     "Select a song collection to import",
                                                      ".",
-                                                     "softProjector Sbornik File (*.txt *.sps)");
+                                                     "softProjector song collection file (*.txt *.sps)");
 
-    // if file_path exits or "Open" is clicked, then import Sbornik
+    // if file_path exits or "Open" is clicked, then import a song collection
     if( !file_path.isNull() )
         importSbornik(file_path);
 }
@@ -182,8 +182,8 @@ void ManageDataDialog::importSbornik(QString path)
         }
         else
         {
-            title = "User Sbornik";
-            info = "Sbornik Imported by User";
+            title = "User Song Collection";
+            info = "Song collection imported by the user";
         }
 
         // Create sbornik
@@ -254,8 +254,8 @@ void ManageDataDialog::importSbornik(QString path)
 
 void ManageDataDialog::on_export_sbornik_pushButton_clicked()
 {
-    QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported sbornik as:"),
-                                             ".",tr("softProjector Sbornik File (*.sps)"));
+    QString file_path = QFileDialog::getSaveFileName(this,tr("Save the song collection as:"),
+                                             ".",tr("softProjector song collection file (*.sps)"));
     if( !file_path.isNull() )
         exportSbornik(file_path);
 }
@@ -314,8 +314,8 @@ void ManageDataDialog::exportSbornik(QString path)
     setArrowCursor();
 
     QMessageBox mb;
-    mb.setWindowTitle("Sbornik has been exported");
-    mb.setText("Sbornik:\n     " + title + "\nHas been saved to:\n     " + path);
+    mb.setWindowTitle("Export Complete");
+    mb.setText("The song collection \"" + title + "\"\nHas been saved to:\n     " + path);
     mb.setIcon(QMessageBox::Information);
     mb.exec();
 }
@@ -327,9 +327,9 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
     QString name = sbornik.title;
 
     QMessageBox ms;
-    ms.setWindowTitle("Delete Sbornik?");
+    ms.setWindowTitle("Delete Song Collection?");
     ms.setText("Are you sure that you want to delete: "+ name);
-    ms.setInformativeText("This action will permanentrly delete this sbornik");
+    ms.setInformativeText("This action will permanentrly delete this song collection");
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);

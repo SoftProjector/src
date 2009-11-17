@@ -100,7 +100,7 @@ void EditWidget::resetUiItems()
     ui->lineEditTitle->clear();
     ui->lineEditMusicBy->clear();
     ui->lineEditWordsBy->clear();
-    ui->lineEditTune->clear();
+    ui->lineEditKey->clear();
     ui->comboBoxCategory->setCurrentIndex(0);
     ui->textEditSong->clear();
     ui->font_textbox->clear();
@@ -114,7 +114,7 @@ void EditWidget::setUiItems()
     ui->lineEditTitle->setText(editSong.title);
     ui->lineEditMusicBy->setText(editSong.musicBy);
     ui->lineEditWordsBy->setText(editSong.wordsBy);
-    ui->lineEditTune->setText(editSong.tune);
+    ui->lineEditKey->setText(editSong.tune);
     ui->comboBoxCategory->setCurrentIndex(editSong.category);
     setSbornik(editSong.songID);
     ui->font_textbox->setText(editSong.font);
@@ -137,7 +137,7 @@ void EditWidget::setSave(){
     newSong.sbornik_id = song_database.getSbornikIdStringFromName(ui->sbornik_label->text());
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
-    newSong.tune = ui->lineEditTune->text();
+    newSong.tune = ui->lineEditKey->text();
     newSong.wordsBy = ui->lineEditWordsBy->text();
     newSong.musicBy = ui->lineEditMusicBy->text();
     newSong.songText = resetLyric(ui->textEditSong->toPlainText());
@@ -221,7 +221,7 @@ void EditWidget::setNew()
         sbornik_list << sq.value(1).toString();
 
 
-    QString sb = QInputDialog::getItem(this,"Select Sbornik","Select Sbornik in which you want to add a song",
+    QString sb = QInputDialog::getItem(this,"Select Song Collection","Select a song collection to which you want to add a song",
                                        sbornik_list,0,false,&ok);
 
     if (ok && !sb.isEmpty())
@@ -247,7 +247,7 @@ void EditWidget::setNew()
 void EditWidget::addSbornik()
 {
     AddSbornikDialog add_sbor;
-    add_sbor.setWindowTitle("Add a Sbornik;");
+    add_sbor.setWindowTitle("Add a Song Collection");
     int last(0);
     int ret = add_sbor.exec();
     switch(ret)

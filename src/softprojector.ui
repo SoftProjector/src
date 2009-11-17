@@ -210,7 +210,7 @@ p, li { white-space: pre-wrap; }
     <string>&amp;Manage Database...</string>
    </property>
    <property name="toolTip">
-    <string>Import and Export Sborniks and Bibles</string>
+    <string>Import and export song collections and Bibles</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
