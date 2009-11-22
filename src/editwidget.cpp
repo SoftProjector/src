@@ -215,18 +215,18 @@ void EditWidget::setNew()
 
     QSqlQuery sq;
     QStringList sbornik_list;
-    sbornik_list << "Add a new Sbornik";
+    sbornik_list << tr("Add a new Song Collection");
     sq.exec("SELECT id, name FROM Sborniks");
     while (sq.next())
         sbornik_list << sq.value(1).toString();
 
 
-    QString sb = QInputDialog::getItem(this,"Select Song Collection","Select a song collection to which you want to add a song",
+    QString sb = QInputDialog::getItem(this,tr("Select Song Collection"),tr("Select a song collection to which you want to add a song"),
                                        sbornik_list,0,false,&ok);
 
     if (ok && !sb.isEmpty())
     {
-        if (sb =="Add a new Sbornik")
+        if (sb ==tr("Add a new Song Collection"))
         {
             // Add a Sbornik to add a new song into
             addSbornik();
@@ -247,7 +247,7 @@ void EditWidget::setNew()
 void EditWidget::addSbornik()
 {
     AddSbornikDialog add_sbor;
-    add_sbor.setWindowTitle("Add a Song Collection");
+    add_sbor.setWindowTitle(tr("Add a Song Collection"));
     int last(0);
     int ret = add_sbor.exec();
     switch(ret)
@@ -282,7 +282,7 @@ void EditWidget::on_font_default_button_clicked()
 void EditWidget::on_wall_button_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,
-                                                    "Select a picture for the wallpaper",
+                                                    tr("Select a picture for the wallpaper"),
                                                     ".", "Images (*.png *.jpg *.jpeg)");
 
     if( !filename.isNull() )
