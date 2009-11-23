@@ -427,15 +427,24 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 
     // Convert lines_list to a string:
     main_text = "";
+    int num_lines = 0;
     for (int i = 0; i < lines_list.size(); ++i)
     {
         if( i > 0 )
             main_text += "\n";
         main_text += lines_list.at(i);
+        num_lines++;
     }
 
     if( last_verse )
-        main_text += "\n*   *   *";
+        // If the last vers is very large, do not put extra blank lines:
+        // FIXME use better logic here. Instead of number of lines, analyze the
+        // height vs width ratio.
+        if( num_lines > 8 )
+            main_text += "\n*   *   *";
+        else
+            // The extra blank lines make the display cleaner:
+            main_text = "\n" + main_text + "\n\n*   *   *";
 
     // Margins:
     int left = 30;
