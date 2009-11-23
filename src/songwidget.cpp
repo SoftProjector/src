@@ -330,47 +330,9 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     proxy_model->setFilterString(text, match_beginning, exact_match);
     songs_model->emitLayoutChanged(); // forces the view to redraw
 
-
-    // If 'text' is of numeric value, then select row with exact match
-    bool is_int;
-    int n = text.toInt(&is_int,10);
-    if (is_int)
-    {
-        // Look for a song with number <value>. Select it and scroll to show it.
-        for (int i = 0; i < songs_model->song_list.size(); i++)
-        {
-            Song s = songs_model->song_list.at(i);
-            if( s.num == n )
-            {
-                // Found a song with this song number
-                QModelIndex source_index = songs_model->index(i, 0);
-                if( proxy_model->filterAcceptsRow(source_index.row(), source_index) )
-                {
-                    // If this row is visible
-                    QModelIndex proxy_index = proxy_model->mapFromSource(source_index);
-
-                    // Select the row <i>:
-                    ui->songs_view->selectRow(proxy_index.row());
-                    // Scroll the songs table to the row <i>:
-                    ui->songs_view->scrollTo(proxy_index);
-                }
-                else
-                {
-                    sendToPreview(s);
-                }
-                return;
-            }
-            //if( s.num > max_num )
-            //    max_num = s.num;
-        }
-    }
-    else // Select first row and scroll to top;
-    {
-        // Filter string is not an integer
-
-        ui->songs_view->selectRow(0);
-        ui->songs_view->scrollToTop();
-    }
+    // Select the first row that matches the new filter:
+    ui->songs_view->selectRow(0);
+    ui->songs_view->scrollToTop();
 
     updateButtonStates();
 }
