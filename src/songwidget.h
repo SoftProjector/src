@@ -23,6 +23,8 @@ public slots:
     void updateSborniks();
     // will be called by the edit widget:
     void updateSongFromDatabase(int songid);
+    QByteArray getSplitterState();
+    void setSplitterState(QString state);
 
 protected:
     virtual void changeEvent(QEvent *e);

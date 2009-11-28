@@ -442,3 +442,16 @@ void SongWidget::on_exact_match_rbutton_clicked()
 {
     filterModeChanged();
 }
+
+QByteArray SongWidget::getSplitterState()
+{
+    return ui->splitter->saveState();
+}
+
+void SongWidget::setSplitterState(QString state)
+{
+    QByteArray b;
+    b.insert(0,state);
+    b = b.fromHex(b);
+    ui->splitter->restoreState(b);
+}

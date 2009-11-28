@@ -14,7 +14,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     display = new Display1(desktop->screen(3));
     display->setGeometry(10, 10, 800, 600);
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+
     bibleWidget = new BibleWidget;
+    songWidget = new SongWidget;
+    editWidget = new EditWidget;
+    announceWidget = new AnnounceWidget;
+    manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/");
@@ -41,11 +46,6 @@ SoftProjector::SoftProjector(QWidget *parent)
 
 
     display->renderText(false);
-
-    songWidget = new SongWidget;
-    editWidget = new EditWidget;
-    announceWidget = new AnnounceWidget;
-    manageDialog = new ManageDataDialog(this);
 
     showing = false;
 
@@ -91,6 +91,7 @@ SoftProjector::SoftProjector(QWidget *parent)
 
 SoftProjector::~SoftProjector()
 {
+    writeXMLConfigurationFile();
     delete ui;
     delete songWidget;
     delete editWidget;
@@ -181,6 +182,18 @@ void SoftProjector::writeXMLConfigurationFile()
     else
         xml.writeTextElement("showsongkey", "false");
 
+    // save softProjectors window settings
+    if (this->isMaximized())
+        xml.writeTextElement("maximizedscreen", "true");
+    else
+        xml.writeTextElement("maximizedscreen", "false");
+
+    // save splitter states
+    xml.writeTextElement("softprojectorsplitterstate", ui->splitter->saveState().toHex());
+    xml.writeTextElement("biblehiddensplitterstate", bibleWidget->getHiddenSplitterState().toHex());
+    xml.writeTextElement("bibleshownsplitterstate", bibleWidget->getShownSplitterState().toHex());
+    xml.writeTextElement("songsplitterstate", songWidget->getSplitterState().toHex());
+
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
 
@@ -191,6 +204,7 @@ void SoftProjector::applySetting(QString name, QString value)
 {
     // Apply the specified setting to the program
 
+    QByteArray b;
     if( name == "font" )
     {
         QFont new_font;
@@ -217,6 +231,24 @@ void SoftProjector::applySetting(QString name, QString value)
         show_song_number = (value == "true");
     else if(name == "showsongkey")
         show_song_key = (value == "true");
+    else if(name == "maximizedscreen")
+    {
+        if(value == "true")
+            this->setWindowState(Qt::WindowMaximized);
+    }
+    else if(name == "softprojectorsplitterstate")
+    {
+        QByteArray b;
+        b.insert(0,value);
+        b = b.fromHex(b);
+        ui->splitter->restoreState(b);
+    }
+    else if(name == "biblehiddensplitterstate")
+        bibleWidget->setHiddenSplitterState(value);
+    else if(name == "bibleshownsplitterstate")
+        bibleWidget->setShownSplitterState(value);
+    else if(name == "songsplitterstate")
+        songWidget->setSplitterState(value);
 
 }
 
