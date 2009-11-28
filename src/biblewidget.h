@@ -40,6 +40,10 @@ public:
 public slots:
     QString getPrimary();
     QString getSecondary();
+    QByteArray getHiddenSplitterState();
+    QByteArray getShownSplitterState();
+    void setHiddenSplitterState(QString state);
+    void setShownSplitterState(QString state);
     void loadBibles(QString primaryId, QString secondaryId);
     void sendToProjector(int verse);
     //bool eventFilter(QObject *object, QEvent *event);
@@ -53,6 +57,10 @@ signals:
     void goLive(QStringList chapter_list, int verse, QString caption);
 
 private slots:
+    void on_history_listWidget_doubleClicked(QModelIndex index);
+    void on_history_listWidget_currentRowChanged(int currentRow);
+    void on_remove_from_history_pushButton_clicked();
+    void on_add_to_history_pushButton_clicked();
     void on_search_results_list_doubleClicked(QModelIndex index);
     void on_search_ef_textChanged(QString text);
     void on_search_results_list_currentRowChanged(int currentRow);
@@ -67,11 +75,14 @@ private slots:
     void on_listChapterNum_currentTextChanged(QString currentText);
     void on_listBook_currentTextChanged(QString currentText);
 
+    void addToHistory();
+
 
 private:
     Ui::BibleWidget *ui;
     HihghlighterDelegate *highlight;
     BibleSearch search_results;
+    BibleSearch history_items;
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;

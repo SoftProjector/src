@@ -21,6 +21,8 @@ BibleWidget::BibleWidget(QWidget *parent) :
 
     highlight = new HihghlighterDelegate(ui->search_results_list);
     ui->search_results_list->setItemDelegate(highlight);
+    
+//    ui->
 }
 
 BibleWidget::~BibleWidget()
@@ -83,6 +85,7 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         chapter_validator->setTop(1);
         ui->listChapterNum->clear();
     }
+    
 }
 
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
@@ -153,6 +156,7 @@ void BibleWidget::sendToProjector(int verse)
 {
     bible.currentIdList = bible.previewIdList;
     emit goLive(bible.verseList, verse, getCaption());
+    addToHistory();
 }
 
 
@@ -374,4 +378,86 @@ void HihghlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionView
     textDocument->drawContents(&p);
 
     painter->drawPixmap(rect, pixmap);
+}
+
+void BibleWidget::addToHistory()
+{
+    QString h_book = ui->listBook->currentItem()->text();
+    QString h_chapter = ui->chapter_ef->text();
+    QString h_verse = ui->verse_ef->text();
+    QString h_verse_text = ui->chapter_preview_list->currentItem()->text().trimmed();
+    history_items.book.append(h_book);
+    history_items.chapter.append(h_chapter);
+    history_items.verse.append(h_verse);
+    history_items.verse_text.append(h_verse_text);
+
+
+    ui->history_listWidget->addItem(h_book + " " + h_chapter + ":" + h_verse_text);
+}
+
+void BibleWidget::on_add_to_history_pushButton_clicked()
+{
+    addToHistory();
+}
+
+void BibleWidget::on_remove_from_history_pushButton_clicked()
+{
+    int current_row = ui->history_listWidget->currentRow();
+    if (current_row>=0)
+    {
+        ui->history_listWidget->takeItem(current_row);
+        history_items.book.takeAt(current_row);
+        history_items.chapter.takeAt(current_row);
+        history_items.verse.takeAt(current_row);
+        history_items.verse_text.takeAt(current_row);
+    }
+}
+void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
+{
+    if (!(currentRow == -1))
+    {
+        QStringList all_books = bible.getBooks();
+        ui->listBook->clear();
+        ui->listBook->addItems(all_books);
+
+        int row = all_books.indexOf(history_items.book.at(currentRow));
+        ui->listBook->setCurrentRow(row);
+
+        ui->chapter_ef->setText(history_items.chapter.at(currentRow));
+        ui->verse_ef->setText(history_items.verse.at(currentRow));
+    }
+}
+
+void BibleWidget::on_history_listWidget_doubleClicked(QModelIndex index)
+{
+    on_btnLive_clicked();
+}
+
+QByteArray BibleWidget::getHiddenSplitterState()
+{
+    if(ui->hide_result_button->isHidden())
+        hidden_splitter_state = ui->results_splitter->saveState();
+    return hidden_splitter_state;
+}
+
+QByteArray BibleWidget::getShownSplitterState()
+{
+    if(!ui->hide_result_button->isHidden())
+        shown_splitter_state = ui->results_splitter->saveState();
+    return shown_splitter_state;
+}
+
+void BibleWidget::setHiddenSplitterState(QString state)
+{
+    hidden_splitter_state.clear();
+    hidden_splitter_state.insert(0,state);
+    hidden_splitter_state = hidden_splitter_state.fromHex(hidden_splitter_state);
+    ui->results_splitter->restoreState(hidden_splitter_state);
+}
+
+void BibleWidget::setShownSplitterState(QString state)
+{
+    shown_splitter_state.clear();
+    shown_splitter_state.insert(0,state);
+    shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
 }
