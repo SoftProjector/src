@@ -119,8 +119,7 @@ void SoftProjector::applyDefaults()
     QFont new_font;
     new_font.fromString("Arial,27,-1,5,75,0,0,0,0,0");
     display->setNewFont(new_font);
-    display->setNewWallpaper(QString());
-    display->setShowBlack(true);
+    display->setWallpaper(0,QString(),QString());
 
     // Get fist Bible in the Database
     QSqlQuery sq;
@@ -152,13 +151,15 @@ void SoftProjector::writeXMLConfigurationFile()
     QString font_string = display->getFont().toString();
     xml.writeTextElement("font", font_string);
 
-    QString wallpaper_path = display->getWallpaper();
-    xml.writeTextElement("wallpaper", wallpaper_path);
+//    QString wallpaper_path = display->getWallpaper();
+    xml.writeTextElement("wallpaper_state", QString::number(display->getWallState()));
+    xml.writeTextElement("wallpaper", display->getWallpaper());
+    xml.writeTextElement("fill_wallpaper", display->getFillWallpaper());
 
-    if(display->getShowBlack())
-        xml.writeTextElement("showblack", "true");
-    else
-        xml.writeTextElement("showblack", "false");
+//    if(display->getShowBlack())
+//        xml.writeTextElement("showblack", "true");
+//    else
+//        xml.writeTextElement("showblack", "false");
 
     xml.writeTextElement("primary_bible", bibleWidget->getPrimary());
     xml.writeTextElement("secondary_bible", bibleWidget->getSecondary());
@@ -217,16 +218,19 @@ void SoftProjector::applySetting(QString name, QString value)
     // Apply the specified setting to the program
 
     QByteArray b;
+
     if( name == "font" )
     {
         QFont new_font;
         new_font.fromString(value);
         display->setNewFont(new_font);
     }
+    else if( name == "wallpaper_state")
+        display->setWallpaper(name,value);
     else if( name == "wallpaper" )
-        display->setNewWallpaper(value);
-    else if( name == "showblack" )
-        display->setShowBlack( value == "true" );
+        display->setWallpaper(name,value);
+    else if( name == "fill_wallpaper" )
+        display->setWallpaper(name,value);
     else if( name == "primary_bible" )
         bibleWidget->loadBibles(value, bibleWidget->bible.secondaryId);
     else if( name == "secondary_bible" )

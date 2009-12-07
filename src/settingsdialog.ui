@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>429</height>
+    <width>400</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,6 +88,19 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
    <item>
@@ -123,7 +136,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Wallpaper</string>
+      <string>Display wallpaper</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -175,7 +188,7 @@
      <property name="title">
       <string>When not displaying text, show:</string>
      </property>
-     <layout class="QFormLayout" name="formLayout_2">
+     <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <widget class="QRadioButton" name="black_screen_rbutton">
         <property name="text">
@@ -189,9 +202,37 @@
       <item row="0" column="1">
        <widget class="QRadioButton" name="wallpaper_rbutton">
         <property name="text">
-         <string>Wallpaper picture</string>
+         <string>Dispaly wallpaper picture</string>
         </property>
        </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QRadioButton" name="fill_wallpaper_rbutton">
+        <property name="text">
+         <string>Fill wallpaper picture</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLineEdit" name="fill_wallpaper_ef">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="fill_wallaper_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

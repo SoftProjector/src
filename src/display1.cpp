@@ -131,7 +131,8 @@ void Display1::renderText(bool text_present)
     setFont(main_font);
 
 
-    if( !show_black || text_present )
+    //    if( !show_black || text_present )
+    if( wallpaper_state>0 || text_present )
     {
         // Draw the background picture if there is text to display
         // If show_black is False, always draw the wallpaper
@@ -142,8 +143,20 @@ void Display1::renderText(bool text_present)
             if( !wallpaper.isNull() )
                 wallpaper = wallpaper.scaled(width(),height());
         }
-        if( ! wallpaper.isNull() )
+
+        if (fill_wallpaper.width()!=width() || fill_wallpaper.isNull())
+        {
+            fill_wallpaper.load(fill_wallpaper_path);
+            if( !wallpaper.isNull() )
+                fill_wallpaper = fill_wallpaper.scaled(width(),height());
+        }
+
+        if( !wallpaper.isNull() && !(wallpaper_state == 2) )
             blur_painter.drawImage(0,0,wallpaper);
+        else if ( !wallpaper.isNull() && (wallpaper_state == 2) && text_present)
+            blur_painter.drawImage(0,0,wallpaper);
+        else if ( !fill_wallpaper.isNull() && (wallpaper_state == 2) && !text_present)
+            blur_painter.drawImage(0,0,fill_wallpaper);
     }
 
     text_painter.setPen(QColor(TEXT_COLOR));
@@ -197,36 +210,57 @@ void Display1::setNewFont(QFont new_font)
     main_font = new_font;
 }
 
+int Display1::getWallState()
+{
+    return wallpaper_state;
+}
+
 QString Display1::getWallpaper()
 {
     return wallpaper_path;
 }
 
-void Display1::setNewWallpaper(QString path)
+QString Display1::getFillWallpaper()
 {
-    wallpaper_path = path;
-    if( path.isEmpty() ) {
-        QImage null_wallpaper;
+    return fill_wallpaper_path;
+}
+
+void Display1::setWallpaper(QString name, QString value)
+{
+    if (name == "wallpaper_state")
+        wallpaper_state = value.toInt();
+    else if (name == "wallpaper")
+        wallpaper_path = value;
+    else if (name == "fill_wallpaper")
+        fill_wallpaper_path = value;
+
+    setWallpaper(wallpaper_state,wallpaper_path,fill_wallpaper_path);
+}
+
+void Display1::setWallpaper(int state, QString display_path, QString fill_path)
+{
+    wallpaper_state = state;
+    wallpaper_path = display_path;
+    fill_wallpaper_path = fill_path;
+
+    QImage null_wallpaper;
+
+    if( wallpaper_path.isEmpty())
         wallpaper = null_wallpaper;
-    }
     else
     {
         wallpaper.load(wallpaper_path);
         wallpaper = wallpaper.scaled(width(),height());
     }
 
-}
+    if( fill_wallpaper_path.isNull())
+        fill_wallpaper = null_wallpaper;
+    else
+    {
+        fill_wallpaper.load(fill_wallpaper_path);
+        fill_wallpaper = fill_wallpaper.scaled(width(),height());
+    }
 
-bool Display1::getShowBlack()
-{
-    return show_black;
-}
-
-void Display1::setShowBlack(bool new_show_black)
-{
-    // Whether to show black instead of the wallpaper when not
-    // displaying anything to the screen
-    show_black = new_show_black;
 }
 
 void Display1::paintEvent(QPaintEvent *event )

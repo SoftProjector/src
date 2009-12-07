@@ -52,21 +52,30 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     // Set to use blured shadow or not
     ui->use_blur_check_box->setChecked(softProjector->display->useBlur());
 
-    // Set type of creen to show Black or Wallpaper
-    if( softProjector->display->getShowBlack() )
-        ui->black_screen_rbutton->setChecked(true);
-    else
-        ui->wallpaper_rbutton->setChecked(true);
-
+    // Set font
     new_font = softProjector->display->getFont();
-    new_wallpaper_path = softProjector->display->getWallpaper();
-    if(new_wallpaper_path == "") {
+
+    // Set type of creen to show Black or Display wallpaper or Fill wallpaper
+    wallpaper_state = softProjector->display->getWallState();
+    if( wallpaper_state == 0 )
+        ui->black_screen_rbutton->setChecked(true);
+    else if (wallpaper_state == 1)
+        ui->wallpaper_rbutton->setChecked(true);
+    else if (wallpaper_state == 2)
+        ui->fill_wallpaper_rbutton->setChecked(true);
+
+    // Set wallpaper paths
+    display_wallpaper_path = softProjector->display->getWallpaper();
+    fill_wallpaper_path = softProjector->display->getFillWallpaper();
+    if(display_wallpaper_path == "") {
         ui->wallpaper_ef->setText("None");
         ui->remove_wallpaper_button->setEnabled(false);
-        ui->black_or_wallpaper_group->setEnabled(false);
+        ui->wallpaper_rbutton->setEnabled(false);
+//        ui->black_or_wallpaper_group->setEnabled(false);
     }
     else
-        ui->wallpaper_ef->setText(new_wallpaper_path);
+        ui->wallpaper_ef->setText(display_wallpaper_path);
+    ui->fill_wallpaper_ef->setText(fill_wallpaper_path);
 
     // Set Song Items
     ui->stanza_title_checkBox->setChecked(softProjector->show_stanza_title);
@@ -120,8 +129,17 @@ void SettingsDialog::on_buttonBox_rejected()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
-    bool show_black = ui->black_screen_rbutton->isChecked();
+    // Wallpaper Settings
+    if (ui->black_screen_rbutton->isChecked())
+        wallpaper_state = 0;
+    else if (ui->wallpaper_rbutton->isChecked())
+        wallpaper_state = 1;
+    else if (ui->fill_wallpaper_rbutton->isChecked())
+        wallpaper_state = 2;
 
+//    bool show_black = ui->black_screen_rbutton->isChecked();
+
+    // Bible Settings
     QString primaryBible = bible_id_list[ui->primary_bible_menu->currentIndex()];
     int secondaryBibleInd = ui->secondary_bible_menu->currentIndex();
     QString secondaryBible;
@@ -130,9 +148,12 @@ void SettingsDialog::on_buttonBox_accepted()
     else
         secondaryBible = second_id_list[ui->secondary_bible_menu->currentIndex()-1];
 
+    // Dispaly Settings
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
     bool use_blur = ui->use_blur_check_box->isChecked();
+
+    // Song settings
     bool show_stanza_title = ui->stanza_title_checkBox->isChecked();
     bool show_song_number = ui->song_number_checkBox->isChecked();
     bool show_song_key = ui->song_key_checkBox->isChecked();
@@ -146,8 +167,8 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->bibleWidget->loadBibles(primaryBible, secondaryBible);
 
     softProjector->display->setNewFont(new_font);
-    softProjector->display->setNewWallpaper(new_wallpaper_path);
-    softProjector->display->setShowBlack(show_black);
+    softProjector->display->setWallpaper(wallpaper_state, display_wallpaper_path, fill_wallpaper_path);
+//    softProjector->display->setShowBlack(show_black);
     softProjector->display->setFading(use_fading);
     softProjector->display->setBlur(use_blur);
     softProjector->writeXMLConfigurationFile();
@@ -178,23 +199,55 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
                          "Images (*.png *.jpg *.jpeg)");
 
     if( !filename.isNull() ) {
-        new_wallpaper_path = filename;
+        display_wallpaper_path = filename;
         ui->wallpaper_ef->setText(filename);
         ui->remove_wallpaper_button->setEnabled(true);
-        ui->black_or_wallpaper_group->setEnabled(true);
+        ui->wallpaper_rbutton->setEnabled(true);
+//        ui->black_or_wallpaper_group->setEnabled(true);
     }
 }
 
 
 void SettingsDialog::on_remove_wallpaper_button_clicked()
 {
-    new_wallpaper_path = "";
+    display_wallpaper_path = "";
     ui->wallpaper_ef->setText("None");
     ui->remove_wallpaper_button->setEnabled(false);
-    ui->black_or_wallpaper_group->setEnabled(false);
+    ui->wallpaper_rbutton->setEnabled(false);
+    if (ui->wallpaper_rbutton->isChecked())
+        ui->black_screen_rbutton->setChecked(true);
+//    ui->black_or_wallpaper_group->setEnabled(false);
 }
 
 void SettingsDialog::on_primary_bible_menu_activated(QString )
 {
     updateSecondaryBibleMenu();
+}
+
+void SettingsDialog::on_fill_wallaper_pushButton_clicked()
+{
+        // Change fill background
+    QString filename = QFileDialog::getOpenFileName(this,
+                         "Select a picture for the fill wallpaper",
+                         ".",
+                         "Images (*.png *.jpg *.jpeg)");
+
+    if( !filename.isNull() ) {
+        fill_wallpaper_path = filename;
+        ui->fill_wallpaper_ef->setText(filename);
+    }
+}
+
+void SettingsDialog::on_fill_wallpaper_rbutton_toggled(bool checked)
+{
+    if(checked)
+    {
+        ui->fill_wallaper_pushButton->setEnabled(true);
+        ui->fill_wallpaper_ef->setEnabled(true);
+    }
+    else
+    {
+        ui->fill_wallaper_pushButton->setEnabled(false);
+        ui->fill_wallpaper_ef->setEnabled(false);
+    }
 }

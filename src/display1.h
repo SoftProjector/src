@@ -22,10 +22,11 @@ public slots:
     void renderText(bool text_present);
     QFont getFont();
     void setNewFont(QFont newFont);
+    int getWallState();
     QString getWallpaper();
-    void setNewWallpaper(QString path);
-    bool getShowBlack();
-    void setShowBlack(bool show_black);
+    QString getFillWallpaper();
+    void setWallpaper(QString name, QString value);
+    void setWallpaper(int state, QString display_path, QString fill_path);
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
 
@@ -37,12 +38,13 @@ protected:
 
 
 private:
+    int wallpaper_state; // 0 for black, 1 for display, 2 for fill
     bool use_fading;
     bool use_blur;
     QFont main_font;
     QString wallpaper_path; // Wallpaper image file path
-    QImage wallpaper; // Wallpaper image
-    bool show_black; // Whether to show black instead of wallpaper on clear
+    QString fill_wallpaper_path; // Fill wallpaper file path for when not displaying text
+    QImage wallpaper, fill_wallpaper; // Wallpaper image
     QPixmap sharp0;
     QImage sharp1;
     //	QImage blured1;
