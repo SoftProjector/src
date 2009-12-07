@@ -147,11 +147,11 @@ void Display1::renderText(bool text_present)
         if (fill_wallpaper.width()!=width() || fill_wallpaper.isNull())
         {
             fill_wallpaper.load(fill_wallpaper_path);
-            if( !wallpaper.isNull() )
+            if( !fill_wallpaper.isNull() )
                 fill_wallpaper = fill_wallpaper.scaled(width(),height());
         }
 
-        if( !wallpaper.isNull() && !(wallpaper_state == 2) )
+        if( !wallpaper.isNull() && (wallpaper_state != 2) )
             blur_painter.drawImage(0,0,wallpaper);
         else if ( !wallpaper.isNull() && (wallpaper_state == 2) && text_present)
             blur_painter.drawImage(0,0,wallpaper);
