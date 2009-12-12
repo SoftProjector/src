@@ -79,7 +79,7 @@ QStringList Song::getSongTextList()
         text2 = split[0];
 
         // From here on, the program will determine what each stasa it: Verse, Chorus or Insert
-        if (text2.startsWith(codec.fromUtf8("Куплет")))
+        if (text2.startsWith("Verse") || text2.startsWith(QString::fromUtf8("Куплет")))
         {// Fill Verse
             while (j<split_size) // convert form list to string
             {
@@ -95,7 +95,7 @@ QStringList Song::getSongTextList()
             }
             has_vstavka=false;
         }
-        else if (text2.startsWith(codec.fromUtf8("&Куплет")))
+        else if (text2.startsWith("&Verse") || text2.startsWith(QString::fromUtf8("&Куплет")))
         {// Fill Additional parts of the verse
             text2.remove("&"); // remove '&' from stansa title
             text += text2 + "\n";
@@ -125,7 +125,9 @@ QStringList Song::getSongTextList()
             }
             has_vstavka=false;
         }
-        else if (text2.startsWith(codec.fromUtf8("Вставка")))
+        else if (text2.startsWith("Slide") || text2.startsWith("Insert") || text2.startsWith(QString::fromUtf8("Вставка"))
+            || text2.startsWith("Intro") || text2.startsWith(QString::fromUtf8("Вступление"))
+            || text2.startsWith("Ending") || text2.startsWith(QString::fromUtf8("Окончание")))
         {// Fill Insert
             while (j < split_size) // convert form list to string
             {
@@ -141,7 +143,7 @@ QStringList Song::getSongTextList()
                                             // there is no difirence between Veres and Insert
             has_vstavka=true;
         }
-        else if (text2.startsWith(codec.fromUtf8("Припев")))
+        else if (text2.startsWith("Chorus") || text2.startsWith("Refrain") || text2.startsWith(QString::fromUtf8("Припев")))
         { // Fill Chorus
 
             while (j<split_size)  // convert form list to string
@@ -185,7 +187,7 @@ QStringList Song::getSongTextList()
             chorus_block_count=1; // set chorus_block_count to 1 because its the first chorus item count
             has_vstavka=false;
         }
-        else if (text2.startsWith(codec.fromUtf8("&Припев")))
+        else if (text2.startsWith("&Chorus") || text2.startsWith("&Refrain") || text2.startsWith(QString::fromUtf8("&Припев")))
         { // Fill other chorus parts to Chorus block
             ++chorus_block_count; // increase chorus block count
             text2.remove("&");  // remove '&' from stansa title

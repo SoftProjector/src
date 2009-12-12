@@ -159,11 +159,14 @@ QString EditWidget::resetLyric(QString lyric)
     lyric = lSong[0];
     while (i<lSong.size()){
         fSong = lSong[i];
-        if( fSong.startsWith(QString::fromUtf8("Куплет"))
-            || fSong.startsWith(QString::fromUtf8("&Куплет"))
-            || fSong.startsWith(QString::fromUtf8("Припев"))
-            || fSong.startsWith(QString::fromUtf8("&Припев"))
-            || fSong.startsWith(QString::fromUtf8("Вставка")))
+        if(fSong.startsWith("Verse") || fSong.startsWith(QString::fromUtf8("Куплет"))
+            || fSong.startsWith("&Verse") || fSong.startsWith(QString::fromUtf8("&Куплет"))
+            || fSong.startsWith("Chorus") || fSong.startsWith(QString::fromUtf8("Припев"))
+            || fSong.startsWith("&Chorus") || fSong.startsWith(QString::fromUtf8("&Припев"))
+            || fSong.startsWith("Refrain") || fSong.startsWith("&Refrain") || fSong.startsWith("Slide")
+            || fSong.startsWith("Insert") || fSong.startsWith(QString::fromUtf8("Вставка"))
+            || fSong.startsWith("Intro") || fSong.startsWith(QString::fromUtf8("Вступление"))
+            || fSong.startsWith("Ending") || fSong.startsWith(QString::fromUtf8("Окончание")))
         {
             lyric += "@$" + lSong[i];
         }

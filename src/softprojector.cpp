@@ -458,10 +458,13 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     else
         song_num_str = song_num_str;
 
-
-    if( textemp.startsWith(QString::fromUtf8("Вставка"))
-        || textemp.startsWith(QString::fromUtf8("Куплет"))
-        || textemp.startsWith(QString::fromUtf8("Припев")) )
+    // Remove Stanza Title from the stanza and send it to top caption
+    if( textemp.startsWith("Verse") || textemp.startsWith(QString::fromUtf8("Куплет"))
+            || textemp.startsWith("Chorus") || textemp.startsWith(QString::fromUtf8("Припев"))
+            || textemp.startsWith("Refrain") || textemp.startsWith("Slide")
+            || textemp.startsWith("Insert") || textemp.startsWith(QString::fromUtf8("Вставка"))
+            || textemp.startsWith("Intro") || textemp.startsWith(QString::fromUtf8("Вступление"))
+            || textemp.startsWith("Ending") || textemp.startsWith(QString::fromUtf8("Окончание")))
     {
         if (show_stanza_title)
             top_caption_str = lines_list.at(0);

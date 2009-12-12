@@ -5,25 +5,49 @@ Highlight::Highlight(QTextDocument *parent)
 {
     HighlightingRule rule;
 
+    QStringList patterns;
+
+    // Verse formating
     verseFormat.setForeground(Qt::red);
     verseFormat.setBackground(Qt::yellow);
-    rule.pattern = QRegExp(QString::fromUtf8("Куплет[^\n]*"));
-    rule.format = verseFormat;
-    highlightingRules.append(rule);
+    patterns << "^Verse[^\n]*" << QString::fromUtf8("^Куплет[^\n]*")
+            << "^&Verse[^\n]*" << QString::fromUtf8("^&Куплет[^\n]*");
+    foreach (const QString &pattern, patterns)
+    {
+        rule.pattern = QRegExp(pattern);
+        rule.format = verseFormat;
+        highlightingRules.append(rule);
+    }
 
+    patterns.clear();
+
+    // Chorus formating
     chorusFormat.setFontItalic(true);
     chorusFormat.setForeground(Qt::darkBlue);
-    chorusFormat.setBackground(Qt::yellow);
-    rule.pattern = QRegExp(QString::fromUtf8("Припев[^\n]*"));
-    rule.format = chorusFormat;
-    highlightingRules.append(rule);
+    chorusFormat.setBackground(QColor(212,240,28,255));
+    patterns << "^Chorus[^\n]*" << "^Refrain[^\n]*" << QString::fromUtf8("^Припев[^\n]*")
+            << "^&Chorus[^\n]*" << "^&Refrain[^\n]*" << QString::fromUtf8("^&Припев[^\n]*");
+    foreach (const QString &pattern, patterns)
+    {
+        rule.pattern = QRegExp(pattern);
+        rule.format = chorusFormat;
+        highlightingRules.append(rule);
+    }
 
-    vstavkaFormat.setFontItalic(true);
-    vstavkaFormat.setForeground(Qt::darkBlue);
-    vstavkaFormat.setBackground(Qt::yellow);
-    rule.pattern = QRegExp(QString::fromUtf8("Вставка[^\n]*"));
-    rule.format = vstavkaFormat;
-    highlightingRules.append(rule);
+    patterns.clear();
+
+    // Vsavka formating
+    vstavkaFormat.setForeground(Qt::darkMagenta);
+    vstavkaFormat.setBackground(QColor(255,140,0,255));
+    patterns << "^Insert[^\n]*" << "^Slide[^\n]*" << "^Ending[^\n]*"
+            << "^Intro[^\n]*" << QString::fromUtf8("^Вставка[^\n]*")
+            << QString::fromUtf8("^Вступление[^\n]*") << QString::fromUtf8("^Окончание[^\n]*");
+    foreach (const QString &pattern, patterns)
+    {
+        rule.pattern = QRegExp(pattern);
+        rule.format = vstavkaFormat;
+        highlightingRules.append(rule);
+    }
 }
 
 void Highlight::highlightBlock(const QString &text)
