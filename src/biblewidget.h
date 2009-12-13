@@ -45,7 +45,7 @@ public slots:
     void setHiddenSplitterState(QString state);
     void setShownSplitterState(QString state);
     void loadBibles(QString primaryId, QString secondaryId);
-    void sendToProjector(int verse);
+    void sendToProjector(int verse, bool add_to_history);
     //bool eventFilter(QObject *object, QEvent *event);
 
 protected:

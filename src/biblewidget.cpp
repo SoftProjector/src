@@ -149,14 +149,15 @@ void BibleWidget::on_chapter_preview_list_currentRowChanged(int currentRow)
 void BibleWidget::on_chapter_preview_list_doubleClicked(QModelIndex index)
 {
     // Called when a chapter or verse is double clicked
-    sendToProjector(index.row());
+    sendToProjector(index.row(), true);
 }
 
-void BibleWidget::sendToProjector(int verse)
+void BibleWidget::sendToProjector(int verse, bool add_to_history)
 {
     bible.currentIdList = bible.previewIdList;
     emit goLive(bible.verseList, verse, getCaption());
-    addToHistory();
+    if (add_to_history)
+        addToHistory();
 }
 
 
@@ -248,7 +249,7 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 void BibleWidget::on_btnLive_clicked()
 {
     int value = ui->verse_ef->text().toInt();
-    sendToProjector(value - 1);
+    sendToProjector((value - 1), true);
 }
 
 
@@ -430,7 +431,8 @@ void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
 
 void BibleWidget::on_history_listWidget_doubleClicked(QModelIndex index)
 {
-    on_btnLive_clicked();
+    int value = ui->verse_ef->text().toInt();
+    sendToProjector((value - 1), false);
 }
 
 QByteArray BibleWidget::getHiddenSplitterState()
