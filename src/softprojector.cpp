@@ -560,6 +560,8 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     int h = height - top - top;
 
     QFont font = painter->font();
+    int original_size = font.pointSize();
+    int current_size = original_size;
     Verse v = current_verse; // for convenience
 
 
@@ -579,24 +581,32 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
             // Secondary bible present:
 
             // Figure out how much space the drawing will take at the current font size:
+            // Determine rect of primary verse text:
+            font.setPointSize(current_size);
+            painter->setFont(font);
             trect1 = painter->boundingRect(left, top, w, 10, tflags, v.primary_text);
-            int backup_size = font.pointSize();
+            QStringList lines = v.primary_text.split("\n");
+            //qDebug() << "Num primary lines:" << lines.count();
 
-            font.setPointSize(backup_size*3/4);
+            // Determine rect of primary caption:
+            font.setPointSize(current_size*3/4);
+            painter->setFont(font);
             crect1 = painter->boundingRect(left, trect1.bottom(), w, 10, cflags, v.primary_caption);
-
-            font.setPointSize(backup_size);
 
             // Calculate the top of the secondary verse text:
             int v2_bottom = crect1.bottom();
             if( v2_bottom < height/2 )
                 v2_bottom = height/2;
 
-            trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.primary_text);
+            // Determine rect of secondary verse text:
+            font.setPointSize(current_size);
+            painter->setFont(font);
+            trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.secondary_text);
 
-            font.setPointSize(backup_size*3/4);
-            crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.primary_caption);
-            font.setPointSize(backup_size);
+            // Determine rect of secondary caption:
+            font.setPointSize(current_size*3/4);
+            painter->setFont(font);
+            crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.secondary_caption);
 
             exit = ( crect2.bottom() <= bottom );
         }
@@ -604,38 +614,42 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         {
             // No secondary bible:
             // Figure out how much space the drawing will take at the current font size:
+            font.setPointSize(original_size);
+            painter->setFont(font);
             trect1 = painter->boundingRect(left, top, w, h, tflags, v.primary_text);
-            int backup_size = font.pointSize();
-            font.setPointSize(backup_size*3/4);
+
+            font.setPointSize(current_size*3/4);
+            painter->setFont(font);
             crect1 = painter->boundingRect(left, trect1.bottom(), w, bottom-trect1.bottom(), cflags, v.primary_caption);
-            font.setPointSize(backup_size);
+
             exit = ( crect1.bottom() <= bottom );
         }
 
         if( !exit )
         {
             // The current font is too large, decrease and try again:
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
+            current_size++;
         }
     }
 
 
-    // Draw the text & caption at the final size:
-
+    // Draw the bible text verse(s) at the final size:
+    font.setPointSize(current_size);
+    painter->setFont(font);
     painter->drawText(trect1, tflags, v.primary_text);
     if( !v.secondary_text.isNull() )
         painter->drawText(trect2, tflags, v.secondary_text);
 
-    int backup_size = font.pointSize();
-    font.setPointSize(backup_size*3/4);
+    // Draw the verse caption(s) at the final size:
+    font.setPointSize(current_size*3/4);
     painter->setFont(font);
     painter->drawText(crect1, cflags, v.primary_caption);
     if( !v.secondary_text.isNull() )
         painter->drawText(crect2, cflags, v.secondary_caption);
-    font.setPointSize(backup_size);
-    painter->setFont(font);
 
+    // Restore the original font:
+    font.setPointSize(original_size);
+    painter->setFont(font);
 }
 
 

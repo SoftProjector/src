@@ -65,8 +65,8 @@ Verse Bible::getCurrentVerseAndCaption(int currentRow)
 
 QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 {
-    QString verse="";
-    QString caption="";
+    QString verse;
+    QString caption;
     QString book;
 
     QSqlQuery sq;
@@ -74,6 +74,9 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
             +id+"%' AND bible_id = " + bibleId);
     sq.first();
     verse = sq.value(3).toString();
+    verse.chop(1); // Remove the empty line at the end
+    //qDebug() << "VERSE: '" << verse << "'";
+
     book = sq.value(0).toString();
     caption =" " + sq.value(1).toString() + ":" + sq.value(2).toString();
     sq.clear();
