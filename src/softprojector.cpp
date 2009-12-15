@@ -30,7 +30,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     bibleWidget = new BibleWidget;
     songWidget = new SongWidget;
     editWidget = new EditWidget;
-    announceWidget = new AnnounceWidget;
+    announceWidget = new AnnounceWidget(display);
     manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
@@ -555,7 +555,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     int left = 30;
     int top = 20;
     int bottom = height - top;
-    int right = width - left;
+    //int right = width - left;
     int w = width - left - left;
     int h = height - top - top;
 
@@ -657,15 +657,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
 void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
 {
-    // Margins:
-    int left = 30;
-    int top = 20;
-    int w = width - left - left;
-    int h = height - top - top;
-
-    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
-    QRect rect = QRect(left, top, w, h);
-    display->paintTextToRect(painter, rect, flags, announce_text);
 }
 
 
@@ -682,7 +673,7 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
     else if(type=="bible")
         drawCurrentBibleText(painter, width, height);
     else if( type == "announce" )
-        drawAnnounceText(painter, width, height);
+        announceWidget->drawToPainter(painter, width, height);
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)

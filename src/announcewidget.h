@@ -2,7 +2,7 @@
 #define ANNOUNCEWIDGET_H
 
 #include <QtGui/QWidget>
-//#include "softprojector.h"
+#include "display1.h"
 
 namespace Ui {
     class AnnounceWidget;
@@ -15,6 +15,7 @@ public:
     explicit AnnounceWidget(QWidget *parent = 0);
     virtual ~AnnounceWidget();
     QString getText();
+    void drawToPainter(QPainter *painter, int width, int height);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -29,6 +30,8 @@ signals:
 
 private:
     Ui::AnnounceWidget *ui;
+    Display1 *display;
+
 public slots:
 };
 
