@@ -654,15 +654,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
 
 
-
-void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
-{
-}
-
-
-
-
-
 void SoftProjector::drawText(QPainter *painter, int width, int height)
 {
     if( !showing )

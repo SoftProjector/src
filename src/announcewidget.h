@@ -8,6 +8,16 @@ namespace Ui {
     class AnnounceWidget;
 }
 
+
+class Announcement
+// Class for holding all information about an announcement
+{
+public:
+    QString text;
+    // FIXME add aligment info, font size, etc.
+};
+
+
 class AnnounceWidget : public QWidget {
     Q_OBJECT
     Q_DISABLE_COPY(AnnounceWidget)
@@ -21,6 +31,10 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 private slots:
+    void on_history_listWidget_currentRowChanged(int currentRow);
+    void on_history_listWidget_doubleClicked(QModelIndex index);
+    void on_remove_from_history_pushButton_clicked();
+    void on_add_to_history_pushButton_clicked();
     void on_btnLive_clicked();
     void sendToProjector();
 
@@ -31,6 +45,7 @@ signals:
 private:
     Ui::AnnounceWidget *ui;
     Display1 *display;
+    QList<Announcement> history_items;
 
 public slots:
 };

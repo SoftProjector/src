@@ -60,7 +60,6 @@ private:
     QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
     void drawCurrentBibleText(QPainter *painter, int width, int height);
-    void drawAnnounceText(QPainter *painter, int width, int height);
 
 private slots:
     void on_action_Help_triggered();

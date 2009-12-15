@@ -77,3 +77,40 @@ void AnnounceWidget::on_btnLive_clicked()
     QString text = ui->announceTextEdit->toPlainText();
     emit sendText(text);
 }
+
+
+
+
+void AnnounceWidget::on_add_to_history_pushButton_clicked()
+{
+    Announcement a;
+    a.text = ui->announceTextEdit->toPlainText();
+    history_items.append(a);
+    ui->history_listWidget->addItem(a.text);
+}
+
+void AnnounceWidget::on_remove_from_history_pushButton_clicked()
+{
+    int current_row = ui->history_listWidget->currentRow();
+    // FIXME disable this item if there is no row selected
+    if (current_row >= 0)
+    {
+        ui->history_listWidget->takeItem(current_row);
+        history_items.takeAt(current_row);
+    }
+}
+void AnnounceWidget::on_history_listWidget_currentRowChanged(int currentRow)
+{
+    if( currentRow != -1 )
+    {
+        Announcement a = history_items.at(currentRow);
+        ui->announceTextEdit->setText(a.text);
+    }
+}
+
+void AnnounceWidget::on_history_listWidget_doubleClicked(QModelIndex index)
+{
+    Announcement a = history_items.at(index.row());
+    //ui->announceTextEdit->setText(a.text);
+    emit sendText(a.text);
+}
