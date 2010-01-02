@@ -18,19 +18,19 @@ class BibleSearch
 {
     // For holding search results
 public:
-    QStringList book;
-    QStringList chapter;
-    QStringList verse;
-    QStringList verse_text;
+    QString book;
+    QString chapter;
+    QString verse;
+    QString verse_text;
 };
 
 class Bible
 {
 public:
     Bible();
-    BibleSearch searchBible(bool begins, QString bibleId, QString searchText);
-    BibleSearch searchBible(bool begins, QString bibleId, QString book, QString searchText);
-    BibleSearch searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString book, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText);
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);

@@ -81,8 +81,8 @@ private slots:
 private:
     Ui::BibleWidget *ui;
     HihghlighterDelegate *highlight;
-    BibleSearch search_results;
-    BibleSearch history_items;
+    QList<BibleSearch> search_results;
+    QList<BibleSearch> history_items;
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;

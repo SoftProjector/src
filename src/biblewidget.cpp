@@ -294,7 +294,7 @@ void BibleWidget::on_search_button_clicked()
     }
     ui->search_results_list->clear();
 
-    if (!search_results.verse_text.isEmpty()) // If have results, then show them
+    if (!search_results.isEmpty()) // If have results, then show them
     {
         if( not ui->result_label->isVisible() )
         {
@@ -306,7 +306,11 @@ void BibleWidget::on_search_button_clicked()
             ui->search_layout->addItem(ui->result_layout);
             ui->results_splitter->restoreState(shown_splitter_state);
         }
-        ui->search_results_list->addItems(search_results.verse_text);
+        QStringList verse_list;
+        for(int i(0);i<search_results.size();i++)
+            verse_list.append(search_results.at(i).verse_text);
+
+        ui->search_results_list->addItems(verse_list);
     }
     else // If no relust, notify the user and hide result list
     {
@@ -337,12 +341,12 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
     {
         QStringList all_books = bible.getBooks();
 
-        int row = all_books.indexOf(search_results.book.at(currentRow));
+        int row = all_books.indexOf(search_results.at(currentRow).book);
         ui->listBook->setCurrentRow(row);
 
 
-        ui->chapter_ef->setText(search_results.chapter.at(currentRow));
-        ui->verse_ef->setText(search_results.verse.at(currentRow));
+        ui->chapter_ef->setText(search_results.at(currentRow).chapter);
+        ui->verse_ef->setText(search_results.at(currentRow).verse);
     }
 }
 
@@ -383,17 +387,15 @@ void HihghlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionView
 
 void BibleWidget::addToHistory()
 {
-    QString h_book = ui->listBook->currentItem()->text();
-    QString h_chapter = ui->chapter_ef->text();
-    QString h_verse = ui->verse_ef->text();
-    QString h_verse_text = ui->chapter_preview_list->currentItem()->text().trimmed();
-    history_items.book.append(h_book);
-    history_items.chapter.append(h_chapter);
-    history_items.verse.append(h_verse);
-    history_items.verse_text.append(h_verse_text);
+    BibleSearch b;
 
+    b.book = ui->listBook->currentItem()->text();
+    b.chapter = ui->chapter_ef->text();
+    b.verse = ui->verse_ef->text();
+    b.verse_text = ui->chapter_preview_list->currentItem()->text().trimmed();
+    history_items.append(b);
 
-    ui->history_listWidget->addItem(h_book + " " + h_chapter + ":" + h_verse_text);
+    ui->history_listWidget->addItem(b.book + " " + b.chapter + ":" + b.verse_text);
 }
 
 void BibleWidget::on_add_to_history_pushButton_clicked()
@@ -407,10 +409,10 @@ void BibleWidget::on_remove_from_history_pushButton_clicked()
     if (current_row>=0)
     {
         ui->history_listWidget->takeItem(current_row);
-        history_items.book.takeAt(current_row);
-        history_items.chapter.takeAt(current_row);
-        history_items.verse.takeAt(current_row);
-        history_items.verse_text.takeAt(current_row);
+        history_items.takeAt(current_row);
+//        history_items.chapter.takeAt(current_row);
+//        history_items.verse.takeAt(current_row);
+//        history_items.verse_text.takeAt(current_row);
     }
 }
 void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
@@ -421,11 +423,11 @@ void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
         ui->listBook->clear();
         ui->listBook->addItems(all_books);
 
-        int row = all_books.indexOf(history_items.book.at(currentRow));
+        int row = all_books.indexOf(history_items.at(currentRow).book);
         ui->listBook->setCurrentRow(row);
 
-        ui->chapter_ef->setText(history_items.chapter.at(currentRow));
-        ui->verse_ef->setText(history_items.verse.at(currentRow));
+        ui->chapter_ef->setText(history_items.at(currentRow).chapter);
+        ui->verse_ef->setText(history_items.at(currentRow).verse);
     }
 }
 

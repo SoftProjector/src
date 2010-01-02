@@ -120,10 +120,11 @@ int Bible::maxChapters(QString book, QString bibleId)
     return chapters;
 }
 
-BibleSearch Bible::searchBible(bool begins, QString bibleId, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString searchText)
 {
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
+    QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
     if (begins) // Search verses that begin with searchText
         sq.exec("SELECT verse_id, book, chapter, verse, verse_text "
@@ -145,19 +146,20 @@ BibleSearch Bible::searchBible(bool begins, QString bibleId, QString searchText)
         sq1.first();
         s_book = sq1.value(0).toString();
 
-        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
-        results.book += s_book;
-        results.chapter += s_chapter;
-        results.verse += verse;
-        results.verse_text += verse_text;
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
     }
-    return results;
+    return return_results;
 }
 
-BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
 {
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
+    QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
     book = book_ids.at(books.indexOf(book,0));
 
@@ -183,19 +185,20 @@ BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QStri
         sq1.first();
         s_book = sq1.value(0).toString();
 
-        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
-        results.book += s_book;
-        results.chapter += s_chapter;
-        results.verse += verse;
-        results.verse_text += verse_text;
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
     }
-    return results;
+    return return_results;
 }
 
-BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
 {
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
+    QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
     book = book_ids.at(books.indexOf(book,0));
 
@@ -221,11 +224,11 @@ BibleSearch Bible::searchBible(bool begins, QString bibleId, QString book, QStri
         sq1.first();
         s_book = sq1.value(0).toString();
 
-        verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
-        results.book += s_book;
-        results.chapter += s_chapter;
-        results.verse += verse;
-        results.verse_text += verse_text;
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
     }
-    return results;
+    return return_results;
 }
