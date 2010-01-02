@@ -628,7 +628,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         if( !exit )
         {
             // The current font is too large, decrease and try again:
-            current_size++;
+            --current_size;
         }
     }
 

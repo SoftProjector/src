@@ -73,8 +73,7 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
     sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
             +id+"%' AND bible_id = " + bibleId);
     sq.first();
-    verse = sq.value(3).toString();
-    verse.chop(1); // Remove the empty line at the end
+    verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
     //qDebug() << "VERSE: '" << verse << "'";
 
     book = sq.value(0).toString();
