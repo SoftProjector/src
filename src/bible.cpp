@@ -122,6 +122,7 @@ int Bible::maxChapters(QString book, QString bibleId)
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString searchText)
 {
+ /*
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
@@ -152,11 +153,53 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString sear
         results.verse = verse;
         return_results.append(results);
     }
-    return return_results;
+    return return_results; */
+
+///*
+    QString s_id, s_book,s_chapter,verse,verse_text;
+    BibleSearch results;
+    QList<BibleSearch> return_results;
+    QSqlQuery sq,sq1;
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
+    {
+        s_id = sq.value(0).toString();
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + s_book + " AND bible_id = " + bibleId);
+        sq1.first();
+        s_book = sq1.value(0).toString();
+        sq1.clear();
+
+        // Get properly formated text instead of simplified
+        sq1.exec("SELECT verse_text FROM BibleVerse WHERE verse_id like '" + s_id + "'"
+                 "AND bible_id = '" + bibleId + "'");
+        sq1.first();
+        verse_text = sq1.value(0).toString().trimmed();
+
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
+    }
+    return return_results;//*/
 }
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
 {
+    /*
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
@@ -186,6 +229,50 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
         s_book = sq1.value(0).toString();
 
         results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
+    }
+    return return_results;
+    */
+    QString s_id, s_book,s_chapter,verse,verse_text;
+    BibleSearch results;
+    QList<BibleSearch> return_results;
+    QSqlQuery sq,sq1;
+    book = book_ids.at(books.indexOf(book,0));
+
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
+    {
+        s_id = sq.value(0).toString();
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + s_book + " AND bible_id = " + bibleId);
+        sq1.first();
+        s_book = sq1.value(0).toString();
+        sq1.clear();
+
+        // Get properly formated text instead of simplified
+        sq1.exec("SELECT verse_text FROM BibleVerse WHERE verse_id like '" + s_id + "'"
+                 "AND bible_id = '" + bibleId + "'");
+        sq1.first();
+        verse_text = sq1.value(0).toString().trimmed();
+
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
         results.book = s_book;
         results.chapter = s_chapter;
         results.verse = verse;
@@ -196,6 +283,7 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
 {
+    /*
     QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
@@ -225,6 +313,50 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
         s_book = sq1.value(0).toString();
 
         results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + sq.value(4).toString().trimmed();
+        results.book = s_book;
+        results.chapter = s_chapter;
+        results.verse = verse;
+        return_results.append(results);
+    }
+    return return_results;
+    */
+    QString s_id, s_book,s_chapter,verse,verse_text;
+    BibleSearch results;
+    QList<BibleSearch> return_results;
+    QSqlQuery sq,sq1;
+    book = book_ids.at(books.indexOf(book,0));
+
+    if (begins) // Search verses that begin with searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
+                "AND verse_text like '" + searchText.trimmed() + "%'");
+    else        // Search verses that contain searchText
+        sq.exec("SELECT verse_id, book, chapter, verse "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
+                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    while (sq.next())
+    {
+        s_id = sq.value(0).toString();
+        s_book = sq.value(1).toString();
+        s_chapter = sq.value(2).toString();
+        verse = sq.value(3).toString();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + s_book + " AND bible_id = " + bibleId);
+        sq1.first();
+        s_book = sq1.value(0).toString();
+        sq1.clear();
+
+        // Get properly formated text instead of simplified
+        sq1.exec("SELECT verse_text FROM BibleVerse WHERE verse_id like '" + s_id + "'"
+                 "AND bible_id = '" + bibleId + "'");
+        sq1.first();
+        verse_text = sq1.value(0).toString().trimmed();
+
+        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
         results.book = s_book;
         results.chapter = s_chapter;
         results.verse = verse;
