@@ -301,15 +301,22 @@ void BibleWidget::on_search_button_clicked()
             ui->lineEditBook->clear();
             hidden_splitter_state = ui->results_splitter->saveState();
             ui->result_label->show();
+            ui->result_count_label->show();
             ui->search_results_list->show();
             ui->hide_result_button->show();
             ui->search_layout->addItem(ui->result_layout);
             ui->results_splitter->restoreState(shown_splitter_state);
         }
         QStringList verse_list;
-        for(int i(0);i<search_results.size();i++)
-            verse_list.append(search_results.at(i).verse_text);
+        int count = search_results.count();
 
+        if (count <= 280)
+            ui->result_count_label->setText("Total of " + QString::number(count) + " search results returned.");
+        else
+            ui->result_count_label->setText("<font color=red>More than 281 results, only 281 can be returned.</font>");
+
+        for(int i(0);i<count;i++)
+            verse_list.append(search_results.at(i).verse_text);
         ui->search_results_list->addItems(verse_list);
     }
     else // If no relust, notify the user and hide result list
@@ -329,6 +336,7 @@ void BibleWidget::on_hide_result_button_clicked()
 {
     shown_splitter_state = ui->results_splitter->saveState();
     ui->result_label->hide();
+    ui->result_count_label->hide();
     ui->search_results_list->hide();
     ui->hide_result_button->hide();
     ui->search_layout->removeItem(ui->result_layout);
