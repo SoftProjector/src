@@ -362,12 +362,16 @@ void ManageDataDialog::deleteSbornik(Sbornik sbornik)
 
     // Delete form Songs Table
     sq.exec("SELECT song_id FROM SongLink WHERE sbornik_id like '" + id +"'");
+    QString s;
+    QSqlDatabase::database().transaction();
+    sq1.prepare("DELETE FROM Songs WHERE id = :id");
     while (sq.next())
     {
-        QString s;
-        s = sq.value(0).toString();
-        sq1.exec("DELETE FROM Songs WHERE id = "+s);
+        s = sq.value(0).toString().trimmed();
+        sq1.bindValue(":id",s);
+        sq1.exec();
     }
+    QSqlDatabase::database().commit();
 
     // Delete from SongLink Table
     sq.clear();
