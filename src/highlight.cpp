@@ -93,7 +93,7 @@ void HighlightSearch::setHighlightText(QString text)
     highlightingRules.clear();
     resultFormat.setForeground(Qt::red);
 //    resultFormat.setBackground(Qt::yellow);
-    rule.pattern = QRegExp(text);
+    rule.pattern = QRegExp(text,Qt::CaseInsensitive);
     rule.format = resultFormat;
     highlightingRules.append(rule);
 }

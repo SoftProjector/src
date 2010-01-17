@@ -313,7 +313,7 @@ void BibleWidget::on_search_button_clicked()
         if (count <= 280)
             ui->result_count_label->setText("Total of " + QString::number(count) + " search results returned.");
         else
-            ui->result_count_label->setText("<font color=red>More than 281 results, only 281 can be returned.</font>");
+            ui->result_count_label->setText("Total of 281 or more results. <font color=red>Only 281 results can be returned.</font>");
 
         for(int i(0);i<count;i++)
             verse_list.append(search_results.at(i).verse_text);
