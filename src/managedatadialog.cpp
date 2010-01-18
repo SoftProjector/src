@@ -128,9 +128,9 @@ void ManageDataDialog::updateSbornikButtons()
 void ManageDataDialog::on_import_sbornik_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     "Select a song collection to import",
+                                                     tr("Select a song collection to import"),
                                                      ".",
-                                                     "softProjector song collection file (*.txt *.sps)");
+                                                     tr("softProjector song collection file (*.txt *.sps)"));
 
     // if file_path exits or "Open" is clicked, then import a song collection
     if( !file_path.isNull() )
@@ -157,7 +157,7 @@ void ManageDataDialog::importSbornik(QString path)
         }
     }
 
-    QProgressDialog progress("Importing...", "Cancel", 0, max, this);
+    QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, max, this);
     progress.setValue(row);
 
     if (file.open(QIODevice::ReadOnly))
@@ -182,8 +182,8 @@ void ManageDataDialog::importSbornik(QString path)
         }
         else
         {
-            title = "User Song Collection";
-            info = "Song collection imported by the user";
+            title = tr("User Song Collection");
+            info = tr("Song collection imported by the user");
         }
 
         // Create sbornik
@@ -314,8 +314,8 @@ void ManageDataDialog::exportSbornik(QString path)
     setArrowCursor();
 
     QMessageBox mb;
-    mb.setWindowTitle("Export Complete");
-    mb.setText("The song collection \"" + title + "\"\nHas been saved to:\n     " + path);
+    mb.setWindowTitle(tr("Export Complete"));
+    mb.setText(tr("The song collection \"") + title + tr("\"\nHas been saved to:\n     ") + path);
     mb.setIcon(QMessageBox::Information);
     mb.exec();
 }
@@ -327,9 +327,9 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
     QString name = sbornik.title;
 
     QMessageBox ms;
-    ms.setWindowTitle("Delete Song Collection?");
-    ms.setText("Are you sure that you want to delete: "+ name);
-    ms.setInformativeText("This action will permanentrly delete this song collection");
+    ms.setWindowTitle(tr("Delete Song Collection?"));
+    ms.setText(tr("Are you sure that you want to delete: ")+ name);
+    ms.setInformativeText(tr("This action will permanentrly delete this song collection"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);
@@ -389,9 +389,9 @@ void ManageDataDialog::on_ok_pushButton_clicked()
 void ManageDataDialog::on_import_bible_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     "Select Bible file to import",
+                                                     tr("Select Bible file to import"),
                                                      ".",
-                                                     "softProjector Bible File (*.spb)");
+                                                     tr("softProjector Bible File (*.spb)"));
 
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
@@ -410,7 +410,7 @@ void ManageDataDialog::importBible(QString path)
 
     if (file.open(QIODevice::ReadOnly))
     {
-        QProgressDialog progress("Importing...", "Cancel", 0, 31200, this);
+        QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, 31200, this);
         progress.setValue(row);
 
         // add Bible Name
@@ -543,8 +543,8 @@ void ManageDataDialog::exportBible(QString path)
     setArrowCursor();
 
     QMessageBox mb;
-    mb.setWindowTitle("Bible has been exported");
-    mb.setText("Bible:\n     " + bible.title + "\nHas been saved to:\n     " + path);
+    mb.setWindowTitle(tr("Bible has been exported"));
+    mb.setText(tr("Bible:\n     ") + bible.title + tr("\nHas been saved to:\n     " )+ path);
     mb.setIcon(QMessageBox::Information);
     mb.exec();
 }
@@ -556,9 +556,9 @@ void ManageDataDialog::on_delete_bible_pushButton_clicked()
     QString name = bible.title;
 
     QMessageBox ms;
-    ms.setWindowTitle("Delete Bible?");
-    ms.setText("Are you sure that you want to delete: "+ name);
-    ms.setInformativeText("This action will permanentrly delete this Bible");
+    ms.setWindowTitle(tr("Delete Bible?"));
+    ms.setText(tr("Are you sure that you want to delete: ")+ name);
+    ms.setInformativeText(tr("This action will permanentrly delete this Bible"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);
@@ -641,8 +641,8 @@ void ManageDataDialog::on_edit_bible_pushButton_clicked()
     int row = ui->bibleTableView->currentIndex().row();
     Bibles bible = bible_model->getBible(row);
     bool ok;
-    QString name = QInputDialog::getText(this,"Edit Bible Name",
-                                         "Bible title:",QLineEdit::Normal,
+    QString name = QInputDialog::getText(this,tr("Edit Bible Name"),
+                                         tr("Bible title:"),QLineEdit::Normal,
                                          bible.title, &ok);
     if(ok)
     {

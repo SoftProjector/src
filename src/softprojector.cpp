@@ -62,11 +62,11 @@ SoftProjector::SoftProjector(QWidget *parent)
     showing = false;
 
     ui->tabWidget->clear();
-    ui->tabWidget->addTab(bibleWidget, "Bible (F6)");
-    ui->tabWidget->addTab(songWidget, "Songs (F7)");
-    ui->tabWidget->addTab(announceWidget, "Announcements (F8)");
+    ui->tabWidget->addTab(bibleWidget, tr("Bible (F6)"));
+    ui->tabWidget->addTab(songWidget, tr("Songs (F7)"));
+    ui->tabWidget->addTab(announceWidget, tr("Announcements (F8)"));
 
-    editWidget->setWindowTitle("Edit and/or Add New songs");
+    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
 
     connect(songWidget, SIGNAL(sendSong(Song, int)),
             this, SLOT(setSongList(Song, int)));

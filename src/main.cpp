@@ -33,6 +33,12 @@ int main(int argc, char *argv[])
     //QApplication::setStyle("Plastique");
     #endif
 
+    //Sets translation to be used (.qm files is needed)
+    QTranslator translator;
+    translator.load("sotftpro_ru");
+    a.installTranslator(&translator);
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+
     bool fileExist = QFile::exists("spData.sqlite");
     if (!fileExist)
     {

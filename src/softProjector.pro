@@ -45,3 +45,5 @@ FORMS += softprojector.ui \
     managedatadialog.ui \
     announcewidget.ui \
     helpdialog.ui
+ TRANSLATIONS = sotftpro_ru.ts
+ CODECFORTR = UTF-8

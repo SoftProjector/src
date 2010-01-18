@@ -72,7 +72,7 @@ QVariant BiblesModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant("Title");
+            return QVariant(tr("Title"));
         }
     }
     return QVariant();
@@ -172,9 +172,9 @@ QVariant SborniksModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant("Title");
+            return QVariant(tr("Title"));
         case 1:
-            return QVariant("Info");
+            return QVariant(tr("Infomation"));
         }
     }
     return QVariant();

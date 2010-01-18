@@ -23,7 +23,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Fill primary and secondary Bible comboboxes
     ui->primary_bible_menu->addItems(bibles);
-    ui->secondary_bible_menu->addItem("None");
+    ui->secondary_bible_menu->addItem(tr("None"));
     ui->secondary_bible_menu->addItems(bibles);
 
     // Set current item for primary Bible
@@ -68,7 +68,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     display_wallpaper_path = softProjector->display->getWallpaper();
     fill_wallpaper_path = softProjector->display->getFillWallpaper();
     if(display_wallpaper_path == "") {
-        ui->wallpaper_ef->setText("None");
+        ui->wallpaper_ef->setText(tr("None"));
         ui->remove_wallpaper_button->setEnabled(false);
         ui->wallpaper_rbutton->setEnabled(false);
 //        ui->black_or_wallpaper_group->setEnabled(false);
@@ -94,7 +94,7 @@ void SettingsDialog::updateSecondaryBibleMenu()
     second_id_list = bible_id_list;
     second_id_list.removeAt(ui->primary_bible_menu->currentIndex());
     ui->secondary_bible_menu->clear();
-    ui->secondary_bible_menu->addItem("None");
+    ui->secondary_bible_menu->addItem(tr("None"));
     ui->secondary_bible_menu->addItems(secondary_bibles);
 
     int i = ui->secondary_bible_menu->findText(sbible);
@@ -194,9 +194,9 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
 {
     // Change background
     QString filename = QFileDialog::getOpenFileName(this,
-                         "Select a picture for the wallpaper",
+                         tr("Select a picture for the wallpaper"),
                          ".",
-                         "Images (*.png *.jpg *.jpeg)");
+                         tr("Images (*.png *.jpg *.jpeg)"));
 
     if( !filename.isNull() ) {
         display_wallpaper_path = filename;
@@ -211,7 +211,7 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
 void SettingsDialog::on_remove_wallpaper_button_clicked()
 {
     display_wallpaper_path = "";
-    ui->wallpaper_ef->setText("None");
+    ui->wallpaper_ef->setText(tr("None"));
     ui->remove_wallpaper_button->setEnabled(false);
     ui->wallpaper_rbutton->setEnabled(false);
     if (ui->wallpaper_rbutton->isChecked())
@@ -228,9 +228,9 @@ void SettingsDialog::on_fill_wallaper_pushButton_clicked()
 {
         // Change fill background
     QString filename = QFileDialog::getOpenFileName(this,
-                         "Select a picture for the fill wallpaper",
+                         tr("Select a picture for the fill wallpaper"),
                          ".",
-                         "Images (*.png *.jpg *.jpeg)");
+                         tr("Images (*.png *.jpg *.jpeg)"));
 
     if( !filename.isNull() ) {
         fill_wallpaper_path = filename;

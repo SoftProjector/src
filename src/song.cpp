@@ -323,11 +323,11 @@ QVariant SongsModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant("Num");
+            return QVariant(tr("Num"));
         case 1:
-            return QVariant("Title");
+            return QVariant(tr("Title"));
         case 2:
-            return QVariant("Song Collection");
+            return QVarianttr(tr("Song Collection"));
         }
     }
     return QVariant();

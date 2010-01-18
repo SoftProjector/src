@@ -255,8 +255,8 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     //    ui->song_num_spinbox->setMaximum();
 
     QMessageBox mb;
-    mb.setText("Could not find song with number " + QString::number(value) );
-    mb.setWindowTitle("No such song");
+    mb.setText(tr("Could not find song with number ") + QString::number(value) );
+    mb.setWindowTitle(tr("No such song"));
     mb.setIcon(QMessageBox::Warning);
     mb.exec();
 
