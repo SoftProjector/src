@@ -327,7 +327,7 @@ QVariant SongsModel::headerData(int section,
         case 1:
             return QVariant(tr("Title"));
         case 2:
-            return QVarianttr(tr("Song Collection"));
+            return QVariant(tr("Song Collection"));
         }
     }
     return QVariant();
