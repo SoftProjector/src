@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>471</height>
+    <width>328</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>softProjector - Settings</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
@@ -88,19 +88,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
    <item>
@@ -136,7 +123,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Display wallpaper</string>
+      <string>Active Wallpaper</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -184,53 +171,55 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="black_or_wallpaper_group">
-     <property name="title">
-      <string>When not displaying text, show:</string>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QRadioButton" name="black_screen_rbutton">
-        <property name="text">
-         <string>Black screen</string>
+     <property name="title">
+      <string>Passive Wallpaper</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="passive_wallpaper_ef">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-        <property name="checked">
+        <property name="readOnly">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="wallpaper_rbutton">
-        <property name="text">
-         <string>Dispaly wallpaper picture</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QRadioButton" name="fill_wallpaper_rbutton">
-        <property name="text">
-         <string>Fill wallpaper picture</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="3">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QLineEdit" name="fill_wallpaper_ef">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="fill_wallaper_pushButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="QPushButton" name="set_passive_wallpaper">
           <property name="text">
            <string>Browse...</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="remove_passive_wallpaper_button">
+          <property name="text">
+           <string>Remove Wallpaper</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -243,13 +232,6 @@
       <string>Songs</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="stanza_title_checkBox">
-        <property name="text">
-         <string>Show stanza title</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="song_number_checkBox">
         <property name="text">
@@ -264,21 +246,15 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="stanza_title_checkBox">
+        <property name="text">
+         <string>Show stanza title</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>17</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

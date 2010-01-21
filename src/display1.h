@@ -10,7 +10,8 @@ public:
     Display1(QWidget *parent = 0);
 //    QTextCodec *codec;
     int paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
-
+    void setNewWallpaper(QString path);
+    void setNewPassiveWallpaper(QString path);
 
 public slots:
     void fadeIn();
@@ -22,11 +23,9 @@ public slots:
     void renderText(bool text_present);
     QFont getFont();
     void setNewFont(QFont newFont);
-    int getWallState();
     QString getWallpaper();
-    QString getFillWallpaper();
-    void setWallpaper(QString name, QString value);
-    void setWallpaper(int state, QString display_path, QString fill_path);
+    QString getPassiveWallpaper();
+
     void fastbluralpha(QImage &img, int radius);
     void alphaImage(QImage &img, int alpha);
 
@@ -38,13 +37,14 @@ protected:
 
 
 private:
-    int wallpaper_state; // 0 for black, 1 for display, 2 for fill
     bool use_fading;
     bool use_blur;
     QFont main_font;
     QString wallpaper_path; // Wallpaper image file path
-    QString fill_wallpaper_path; // Fill wallpaper file path for when not displaying text
-    QImage wallpaper, fill_wallpaper; // Wallpaper image
+    QImage wallpaper; // Wallpaper image
+    QString passive_wallpaper_path;
+    QImage passive_wallpaper;
+
     QPixmap sharp0;
     QImage sharp1;
     //	QImage blured1;

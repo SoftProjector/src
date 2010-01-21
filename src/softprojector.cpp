@@ -30,7 +30,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     bibleWidget = new BibleWidget;
     songWidget = new SongWidget;
     editWidget = new EditWidget;
-    announceWidget = new AnnounceWidget(display);
+    announceWidget = new AnnounceWidget;
     manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
@@ -119,7 +119,8 @@ void SoftProjector::applyDefaults()
     QFont new_font;
     new_font.fromString("Arial,27,-1,5,75,0,0,0,0,0");
     display->setNewFont(new_font);
-    display->setWallpaper(0,QString(),QString());
+    display->setNewWallpaper(QString());
+    display->setNewPassiveWallpaper(QString());
 
     // Get fist Bible in the Database
     QSqlQuery sq;
@@ -151,15 +152,11 @@ void SoftProjector::writeXMLConfigurationFile()
     QString font_string = display->getFont().toString();
     xml.writeTextElement("font", font_string);
 
-//    QString wallpaper_path = display->getWallpaper();
-    xml.writeTextElement("wallpaper_state", QString::number(display->getWallState()));
-    xml.writeTextElement("wallpaper", display->getWallpaper());
-    xml.writeTextElement("fill_wallpaper", display->getFillWallpaper());
+    QString wallpaper_path = display->getWallpaper();
+    QString passive_wallpaper_path = display->getPassiveWallpaper();
 
-//    if(display->getShowBlack())
-//        xml.writeTextElement("showblack", "true");
-//    else
-//        xml.writeTextElement("showblack", "false");
+    xml.writeTextElement("wallpaper", wallpaper_path);
+    xml.writeTextElement("passive_wallpaper", passive_wallpaper_path);
 
     xml.writeTextElement("primary_bible", bibleWidget->getPrimary());
     xml.writeTextElement("secondary_bible", bibleWidget->getSecondary());
@@ -218,19 +215,16 @@ void SoftProjector::applySetting(QString name, QString value)
     // Apply the specified setting to the program
 
     QByteArray b;
-
     if( name == "font" )
     {
         QFont new_font;
         new_font.fromString(value);
         display->setNewFont(new_font);
     }
-    else if( name == "wallpaper_state")
-        display->setWallpaper(name,value);
     else if( name == "wallpaper" )
-        display->setWallpaper(name,value);
-    else if( name == "fill_wallpaper" )
-        display->setWallpaper(name,value);
+        display->setNewWallpaper(value);
+    else if( name == "passive_wallpaper" )
+        display->setNewPassiveWallpaper(value);
     else if( name == "primary_bible" )
         bibleWidget->loadBibles(value, bibleWidget->bible.secondaryId);
     else if( name == "secondary_bible" )
@@ -459,12 +453,12 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
         song_num_str = song_num_str;
 
     // Remove Stanza Title from the stanza and send it to top caption
-    if( textemp.startsWith("Verse") || textemp.startsWith(QString::fromUtf8("ÐšÑƒÐ¿Ð»ÐµÑ‚"))
-            || textemp.startsWith("Chorus") || textemp.startsWith(QString::fromUtf8("ÐŸÑ€Ð¸Ð¿ÐµÐ²"))
+    if( textemp.startsWith("Verse") || textemp.startsWith(QString::fromUtf8("Êóïëåò"))
+            || textemp.startsWith("Chorus") || textemp.startsWith(QString::fromUtf8("Ïðèïåâ"))
             || textemp.startsWith("Refrain") || textemp.startsWith("Slide")
-            || textemp.startsWith("Insert") || textemp.startsWith(QString::fromUtf8("Ð’ÑÑ‚Ð°Ð²ÐºÐ°"))
-            || textemp.startsWith("Intro") || textemp.startsWith(QString::fromUtf8("Ð’ÑÑ‚ÑƒÐ¿Ð»ÐµÐ½Ð¸Ðµ"))
-            || textemp.startsWith("Ending") || textemp.startsWith(QString::fromUtf8("ÐžÐºÐ¾Ð½Ñ‡Ð°Ð½Ð¸Ðµ")))
+            || textemp.startsWith("Insert") || textemp.startsWith(QString::fromUtf8("Âñòàâêà"))
+            || textemp.startsWith("Intro") || textemp.startsWith(QString::fromUtf8("Âñòóïëåíèå"))
+            || textemp.startsWith("Ending") || textemp.startsWith(QString::fromUtf8("Îêîí÷àíèå")))
     {
         if (show_stanza_title)
             top_caption_str = lines_list.at(0);
@@ -560,8 +554,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     int h = height - top - top;
 
     QFont font = painter->font();
-    int original_size = font.pointSize();
-    int current_size = original_size;
     Verse v = current_verse; // for convenience
 
 
@@ -581,32 +573,24 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
             // Secondary bible present:
 
             // Figure out how much space the drawing will take at the current font size:
-            // Determine rect of primary verse text:
-            font.setPointSize(current_size);
-            painter->setFont(font);
             trect1 = painter->boundingRect(left, top, w, 10, tflags, v.primary_text);
-            QStringList lines = v.primary_text.split("\n");
-            //qDebug() << "Num primary lines:" << lines.count();
+            int backup_size = font.pointSize();
 
-            // Determine rect of primary caption:
-            font.setPointSize(current_size*3/4);
-            painter->setFont(font);
+            font.setPointSize(backup_size*3/4);
             crect1 = painter->boundingRect(left, trect1.bottom(), w, 10, cflags, v.primary_caption);
+
+            font.setPointSize(backup_size);
 
             // Calculate the top of the secondary verse text:
             int v2_bottom = crect1.bottom();
             if( v2_bottom < height/2 )
                 v2_bottom = height/2;
 
-            // Determine rect of secondary verse text:
-            font.setPointSize(current_size);
-            painter->setFont(font);
-            trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.secondary_text);
+            trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.primary_text);
 
-            // Determine rect of secondary caption:
-            font.setPointSize(current_size*3/4);
-            painter->setFont(font);
-            crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.secondary_caption);
+            font.setPointSize(backup_size*3/4);
+            crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.primary_caption);
+            font.setPointSize(backup_size);
 
             exit = ( crect2.bottom() <= bottom );
         }
@@ -614,43 +598,57 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         {
             // No secondary bible:
             // Figure out how much space the drawing will take at the current font size:
-            font.setPointSize(original_size);
-            painter->setFont(font);
             trect1 = painter->boundingRect(left, top, w, h, tflags, v.primary_text);
-
-            font.setPointSize(current_size*3/4);
-            painter->setFont(font);
+            int backup_size = font.pointSize();
+            font.setPointSize(backup_size*3/4);
             crect1 = painter->boundingRect(left, trect1.bottom(), w, bottom-trect1.bottom(), cflags, v.primary_caption);
-
+            font.setPointSize(backup_size);
             exit = ( crect1.bottom() <= bottom );
         }
 
         if( !exit )
         {
             // The current font is too large, decrease and try again:
-            --current_size;
+            font.setPointSize( font.pointSize()-1 );
+            painter->setFont(font);
         }
     }
 
 
-    // Draw the bible text verse(s) at the final size:
-    font.setPointSize(current_size);
-    painter->setFont(font);
+    // Draw the text & caption at the final size:
+
     painter->drawText(trect1, tflags, v.primary_text);
     if( !v.secondary_text.isNull() )
         painter->drawText(trect2, tflags, v.secondary_text);
 
-    // Draw the verse caption(s) at the final size:
-    font.setPointSize(current_size*3/4);
+    int backup_size = font.pointSize();
+    font.setPointSize(backup_size*3/4);
     painter->setFont(font);
     painter->drawText(crect1, cflags, v.primary_caption);
     if( !v.secondary_text.isNull() )
         painter->drawText(crect2, cflags, v.secondary_caption);
-
-    // Restore the original font:
-    font.setPointSize(original_size);
+    font.setPointSize(backup_size);
     painter->setFont(font);
+
 }
+
+
+
+
+void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
+{
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    int flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+    QRect rect = QRect(left, top, w, h);
+    display->paintTextToRect(painter, rect, flags, announce_text);
+}
+
+
 
 
 
@@ -664,7 +662,7 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
     else if(type=="bible")
         drawCurrentBibleText(painter, width, height);
     else if( type == "announce" )
-        announceWidget->drawToPainter(painter, width, height);
+        drawAnnounceText(painter, width, height);
 }
 
 void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)

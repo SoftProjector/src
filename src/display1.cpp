@@ -131,11 +131,10 @@ void Display1::renderText(bool text_present)
     setFont(main_font);
 
 
-    //    if( !show_black || text_present )
-    if( wallpaper_state>0 || text_present )
+    if( text_present )
     {
-        // Draw the background picture if there is text to display
-        // If show_black is False, always draw the wallpaper
+        // Draw the active wallpaper if there is text to display
+        //qDebug() << "text present, active path:" << wallpaper_path;
 
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
@@ -143,20 +142,22 @@ void Display1::renderText(bool text_present)
             if( !wallpaper.isNull() )
                 wallpaper = wallpaper.scaled(width(),height());
         }
+        if( ! wallpaper.isNull() )
+            blur_painter.drawImage(0,0,wallpaper);
+    }
+    else
+    {
+        // Draw the passive wallpaper if set:
+        //qDebug() << "no text present, passive path:" << passive_wallpaper_path;
 
-        if (fill_wallpaper.width()!=width() || fill_wallpaper.isNull())
+        if (passive_wallpaper.width()!=width() || passive_wallpaper.isNull())
         {
-            fill_wallpaper.load(fill_wallpaper_path);
-            if( !fill_wallpaper.isNull() )
-                fill_wallpaper = fill_wallpaper.scaled(width(),height());
+            passive_wallpaper.load(passive_wallpaper_path);
+            if( !passive_wallpaper.isNull() )
+                passive_wallpaper = passive_wallpaper.scaled(width(),height());
         }
-
-        if( !wallpaper.isNull() && (wallpaper_state != 2) )
-            blur_painter.drawImage(0,0,wallpaper);
-        else if ( !wallpaper.isNull() && (wallpaper_state == 2) && text_present)
-            blur_painter.drawImage(0,0,wallpaper);
-        else if ( !fill_wallpaper.isNull() && (wallpaper_state == 2) && !text_present)
-            blur_painter.drawImage(0,0,fill_wallpaper);
+        if( ! passive_wallpaper.isNull() )
+            blur_painter.drawImage(0,0, passive_wallpaper);
     }
 
     text_painter.setPen(QColor(TEXT_COLOR));
@@ -210,58 +211,44 @@ void Display1::setNewFont(QFont new_font)
     main_font = new_font;
 }
 
-int Display1::getWallState()
-{
-    return wallpaper_state;
-}
-
 QString Display1::getWallpaper()
 {
     return wallpaper_path;
 }
 
-QString Display1::getFillWallpaper()
+QString Display1::getPassiveWallpaper()
 {
-    return fill_wallpaper_path;
+    return passive_wallpaper_path;
 }
 
-void Display1::setWallpaper(QString name, QString value)
+void Display1::setNewWallpaper(QString path)
 {
-    if (name == "wallpaper_state")
-        wallpaper_state = value.toInt();
-    else if (name == "wallpaper")
-        wallpaper_path = value;
-    else if (name == "fill_wallpaper")
-        fill_wallpaper_path = value;
-
-    setWallpaper(wallpaper_state,wallpaper_path,fill_wallpaper_path);
-}
-
-void Display1::setWallpaper(int state, QString display_path, QString fill_path)
-{
-    wallpaper_state = state;
-    wallpaper_path = display_path;
-    fill_wallpaper_path = fill_path;
-
-    QImage null_wallpaper;
-
-    if( wallpaper_path.isEmpty())
+    wallpaper_path = path;
+    if( path.isEmpty() ) {
+        QImage null_wallpaper;
         wallpaper = null_wallpaper;
+    }
     else
     {
         wallpaper.load(wallpaper_path);
         wallpaper = wallpaper.scaled(width(),height());
     }
+}
 
-    if( fill_wallpaper_path.isNull())
-        fill_wallpaper = null_wallpaper;
+void Display1::setNewPassiveWallpaper(QString path)
+{
+    passive_wallpaper_path = path;
+    if( path.isEmpty() ) {
+        QImage null_wallpaper;
+        passive_wallpaper = null_wallpaper;
+    }
     else
     {
-        fill_wallpaper.load(fill_wallpaper_path);
-        fill_wallpaper = fill_wallpaper.scaled(width(),height());
+        passive_wallpaper.load(passive_wallpaper_path);
+        passive_wallpaper = passive_wallpaper.scaled(width(), height());
     }
-
 }
+
 
 void Display1::paintEvent(QPaintEvent *event )
 {
