@@ -60,8 +60,7 @@ QVariant BiblesModel::data(const QModelIndex &index, int role) const
         if( index.column() == 0 )
             return QVariant(bible.title);
     }
-    else
-        return QVariant();
+    return QVariant();
 }
 
 QVariant BiblesModel::headerData(int section,
@@ -160,8 +159,7 @@ QVariant SborniksModel::data(const QModelIndex &index, int role) const
         else if( index.column() == 1 )
             return QVariant(sbornik.info);
     }
-    else
-        return QVariant();
+    return QVariant();
 }
 
 QVariant SborniksModel::headerData(int section,
