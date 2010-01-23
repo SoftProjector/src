@@ -546,94 +546,106 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int height)
 {
     // Margins:
-    int left = 30;
-    int top = 20;
-    int bottom = height - top;
-    //int right = width - left;
-    int w = width - left - left;
-    int h = height - top - top;
+       int left = 30;
+       int top = 20;
+       int bottom = height - top;
+       //int right = width - left;
+       int w = width - left - left;
+       int h = height - top - top;
 
-    QFont font = painter->font();
-    Verse v = current_verse; // for convenience
-
-
-    // Keep decreasing the font size until the text fits into the allocated space:
-
-    // Rects for storing the position of the text and caption drawing:
-    QRect trect1, crect1, trect2, crect2;
-    // Flags to be used for drawing verse text and caption:
-    int tflags = Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap;
-    int cflags = Qt::AlignRight | Qt::AlignTop;
-
-    bool exit = false;
-    while( !exit )
-    {
-        if( !v.secondary_text.isNull() )
-        {
-            // Secondary bible present:
-
-            // Figure out how much space the drawing will take at the current font size:
-            trect1 = painter->boundingRect(left, top, w, 10, tflags, v.primary_text);
-            int backup_size = font.pointSize();
-
-            font.setPointSize(backup_size*3/4);
-            crect1 = painter->boundingRect(left, trect1.bottom(), w, 10, cflags, v.primary_caption);
-
-            font.setPointSize(backup_size);
-
-            // Calculate the top of the secondary verse text:
-            int v2_bottom = crect1.bottom();
-            if( v2_bottom < height/2 )
-                v2_bottom = height/2;
-
-            trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.primary_text);
-
-            font.setPointSize(backup_size*3/4);
-            crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.primary_caption);
-            font.setPointSize(backup_size);
-
-            exit = ( crect2.bottom() <= bottom );
-        }
-        else
-        {
-            // No secondary bible:
-            // Figure out how much space the drawing will take at the current font size:
-            trect1 = painter->boundingRect(left, top, w, h, tflags, v.primary_text);
-            int backup_size = font.pointSize();
-            font.setPointSize(backup_size*3/4);
-            crect1 = painter->boundingRect(left, trect1.bottom(), w, bottom-trect1.bottom(), cflags, v.primary_caption);
-            font.setPointSize(backup_size);
-            exit = ( crect1.bottom() <= bottom );
-        }
-
-        if( !exit )
-        {
-            // The current font is too large, decrease and try again:
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
-        }
-    }
+       QFont font = painter->font();
+       int original_size = font.pointSize();
+       int current_size = original_size;
+       Verse v = current_verse; // for convenience
 
 
-    // Draw the text & caption at the final size:
+       // Keep decreasing the font size until the text fits into the allocated space:
 
-    painter->drawText(trect1, tflags, v.primary_text);
-    if( !v.secondary_text.isNull() )
-        painter->drawText(trect2, tflags, v.secondary_text);
+       // Rects for storing the position of the text and caption drawing:
+       QRect trect1, crect1, trect2, crect2;
+       // Flags to be used for drawing verse text and caption:
+       int tflags = Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap;
+       int cflags = Qt::AlignRight | Qt::AlignTop;
 
-    int backup_size = font.pointSize();
-    font.setPointSize(backup_size*3/4);
-    painter->setFont(font);
-    painter->drawText(crect1, cflags, v.primary_caption);
-    if( !v.secondary_text.isNull() )
-        painter->drawText(crect2, cflags, v.secondary_caption);
-    font.setPointSize(backup_size);
-    painter->setFont(font);
+       bool exit = false;
+       while( !exit )
+       {
+           if( !v.secondary_text.isNull() )
+           {
+               // Secondary bible present:
+
+               // Figure out how much space the drawing will take at the current font size:
+               // Determine rect of primary verse text:
+               font.setPointSize(current_size);
+               painter->setFont(font);
+               trect1 = painter->boundingRect(left, top, w, 10, tflags, v.primary_text);
+               QStringList lines = v.primary_text.split("\n");
+               //qDebug() << "Num primary lines:" << lines.count();
+
+               // Determine rect of primary caption:
+               font.setPointSize(current_size*3/4);
+               painter->setFont(font);
+               crect1 = painter->boundingRect(left, trect1.bottom(), w, 10, cflags, v.primary_caption);
+
+               // Calculate the top of the secondary verse text:
+               int v2_bottom = crect1.bottom();
+               if( v2_bottom < height/2 )
+                   v2_bottom = height/2;
+
+               // Determine rect of secondary verse text:
+               font.setPointSize(current_size);
+               painter->setFont(font);
+               trect2 = painter->boundingRect(left, v2_bottom, w, 10, tflags, v.secondary_text);
+
+               // Determine rect of secondary caption:
+               font.setPointSize(current_size*3/4);
+               painter->setFont(font);
+               crect2 = painter->boundingRect(left, trect2.bottom(), w, 10, cflags, v.secondary_caption);
+
+               exit = ( crect2.bottom() <= bottom );
+           }
+           else
+           {
+               // No secondary bible:
+               // Figure out how much space the drawing will take at the current font size:
+               font.setPointSize(original_size);
+               painter->setFont(font);
+               trect1 = painter->boundingRect(left, top, w, h, tflags, v.primary_text);
+
+               font.setPointSize(current_size*3/4);
+               painter->setFont(font);
+               crect1 = painter->boundingRect(left, trect1.bottom(), w, bottom-trect1.bottom(), cflags, v.primary_caption);
+
+               exit = ( crect1.bottom() <= bottom );
+           }
+
+           if( !exit )
+           {
+               // The current font is too large, decrease and try again:
+               --current_size;
+           }
+       }
+
+
+       // Draw the bible text verse(s) at the final size:
+       font.setPointSize(current_size);
+       painter->setFont(font);
+       painter->drawText(trect1, tflags, v.primary_text);
+       if( !v.secondary_text.isNull() )
+           painter->drawText(trect2, tflags, v.secondary_text);
+
+       // Draw the verse caption(s) at the final size:
+       font.setPointSize(current_size*3/4);
+       painter->setFont(font);
+       painter->drawText(crect1, cflags, v.primary_caption);
+       if( !v.secondary_text.isNull() )
+           painter->drawText(crect2, cflags, v.secondary_caption);
+
+       // Restore the original font:
+       font.setPointSize(original_size);
+       painter->setFont(font);
 
 }
-
-
-
 
 void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
 {
@@ -647,10 +659,6 @@ void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
     QRect rect = QRect(left, top, w, h);
     display->paintTextToRect(painter, rect, flags, announce_text);
 }
-
-
-
-
 
 void SoftProjector::drawText(QPainter *painter, int width, int height)
 {
