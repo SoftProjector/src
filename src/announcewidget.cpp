@@ -52,15 +52,19 @@ void AnnounceWidget::drawToPainter(QPainter *painter, int width, int height)
         flags = flags | Qt::AlignLeft;
     else if( ui->horizontal_comboBox->currentText() == "Right" )
         flags = flags | Qt::AlignRight;
+    else if( ui->horizontal_comboBox->currentText() == "Center" )
+        flags = flags | Qt::AlignHCenter;
     else
-        flags = flags | Qt::AlignCenter;
+        qDebug() << "ERROR no such horizontal alignment";
 
     if( ui->vertical_comboBox->currentText() == "Top" )
         flags = flags | Qt::AlignTop;
     else if( ui->vertical_comboBox->currentText() == "Bottom" )
         flags = flags | Qt::AlignBottom;
+    else if( ui->vertical_comboBox->currentText() == "Middle" )
+        flags = flags | Qt::AlignVCenter;
     else
-        flags = flags | Qt::AlignHCenter;
+        qDebug() << "ERROR no such vertical alignment";
 
     QRect rect = QRect(left, top, w, h);
     QString announce_text = ui->announceTextEdit->toPlainText();
