@@ -9,7 +9,9 @@ EditWidget::EditWidget(QWidget *parent) :
     song_database = SongDatabase();
     ui->setupUi(this);
     highlight = new Highlight(ui->textEditSong->document());
-    song_num_validator = new QIntValidator(1,1,ui->song_number_lineEdit);
+
+    // Allow only positive values for the song number:
+    song_num_validator = new QIntValidator(1,10000000,ui->song_number_lineEdit);
     ui->song_number_lineEdit->setValidator(song_num_validator);
 
     // Hide font setting options until program will be compatable
@@ -45,6 +47,20 @@ void EditWidget::changeEvent(QEvent *e)
 
 void EditWidget::on_btnSave_clicked()
 {
+    /* This will never happen, because song number is automatically
+       set when a sbornik is chosen:
+    if( ui->song_number_lineEdit->text().isEmpty() )
+    {
+
+        QMessageBox mb;
+        mb.setText(tr("Please specify a song number to use"));
+        mb.setWindowTitle(tr("Song number is missing"));
+        mb.setIcon(QMessageBox::Warning);
+        mb.exec();
+        return;
+    }
+    */
+
     setSave();
     if (is_new)
     {
@@ -106,7 +122,7 @@ void EditWidget::resetUiItems()
     ui->font_textbox->clear();
     ui->wall_textbox->clear();
     ui->left_radioButton->setChecked(true);
-    ui->song_number_lineEdit->setText("0");
+    ui->song_number_lineEdit->setText("");
 }
 
 void EditWidget::setUiItems()
