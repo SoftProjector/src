@@ -22,7 +22,7 @@ QStringList Bible::getBooks()
 
 QStringList Bible::getChapter(QString book, int chapter)
 {
-    QString verse, verseText, id;
+    QString verse, verseText, id, verse_old;
     QSqlQuery sq;
     previewIdList.clear();
     verseList.clear();
@@ -31,11 +31,22 @@ QStringList Bible::getChapter(QString book, int chapter)
             + primaryId + " AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
     while (sq.next())
     {
-        verseText = sq.value(2).toString();
         verse  = sq.value(1).toString();
+        if(verse==verse_old)
+        {
+            verseText = verseText.simplified() + " " + sq.value(2).toString();
+            id += "," + sq.value(0).toString();
+            verseList.removeLast();
+            previewIdList.removeLast();
+        }
+        else
+        {
+            verseText = sq.value(2).toString();
+            id = sq.value(0).toString();
+        }
         verseList << verse + ". " + verseText;
-        id = sq.value(0).toString();
         previewIdList << id;
+        verse_old = verse;
     }
     return verseList;
 }
@@ -65,29 +76,72 @@ Verse Bible::getCurrentVerseAndCaption(int currentRow)
 
 QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 {
-    QString verse;
+    QString verse, verse_old, verse_n, verse_nold;
     QString caption;
     QString book;
-
+    QStringList ids;
     QSqlQuery sq;
-    sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
-            +id+"%' AND bible_id = " + bibleId);
-    sq.first();
-    verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
-    //qDebug() << "VERSE: '" << verse << "'";
 
-    book = sq.value(0).toString();
-    caption =" " + sq.value(1).toString() + ":" + sq.value(2).toString();
-    sq.clear();
+    if (id.contains(","))// Run if more than one database verse items exist or show muliple verses
+    {
+        ids = id.split(",");
+        for (int i(0); i<ids.count(); ++i)
+        {
+            sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
+                    +ids.at(i)+"%' AND bible_id = " + bibleId);
+            sq.first();
+            verse = sq.value(3).toString().trimmed();
 
-    sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
-            + book + " AND bible_id = " + bibleId);
-    sq.first();
-    caption = sq.value(0).toString() + caption;
+            book = sq.value(0).toString();
+            verse_n = sq.value(2).toString();
+
+            if (verse_n==verse_nold  ||  verse_nold.isEmpty())
+                // If second(nold) verse number is the same or it is empty, then create a regular sigle verse
+                // Else create a single display of muliple verses
+            {
+                caption =" " + sq.value(1).toString() + ":" + verse_n;
+                verse = verse_old + " " + verse;
+            }
+            else
+            {
+                caption =" " + sq.value(1).toString() + ":" + verse_nold + "," + verse_n;
+                verse = "(" + verse_nold + ") " + verse_old + " (" + verse_n + ") " + verse;
+            }
+
+            verse_old = verse;
+            verse_nold = verse_n;
+            verse = verse.simplified();
+            sq.clear();
+
+            sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                    + book + " AND bible_id = " + bibleId);
+            sq.first();
+            caption = sq.value(0).toString() + caption;
+            sq.clear();
+
+        }
+    }
+    else // Run as standard single verse item from database
+    {
+        sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
+                +id+"%' AND bible_id = " + bibleId);
+        sq.first();
+        verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
+        //qDebug() << "VERSE: '" << verse << "'";
+
+        book = sq.value(0).toString();
+        caption =" " + sq.value(1).toString() + ":" + sq.value(2).toString();
+        sq.clear();
+
+        sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                + book + " AND bible_id = " + bibleId);
+        sq.first();
+        caption = sq.value(0).toString() + caption;
+    }
 
     QStringList list;
-    list.append(verse);
-    list.append(caption);
+    list.append(verse.simplified());
+    list.append(caption.simplified());
     return list;
 }
 
