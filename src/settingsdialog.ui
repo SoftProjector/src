@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>449</height>
+    <width>418</width>
+    <height>515</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -116,12 +116,6 @@
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
      <property name="title">
       <string>Active Wallpaper</string>
      </property>
@@ -172,12 +166,6 @@
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox_3">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
      <property name="title">
       <string>Passive Wallpaper</string>
      </property>
