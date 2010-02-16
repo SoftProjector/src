@@ -96,7 +96,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    version_string = "0.9 Alpha 07";
+    version_string = "0.9 Beta 1";
     this->setWindowTitle("softProjector " + version_string);
 
 }
