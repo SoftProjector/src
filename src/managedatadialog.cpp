@@ -391,7 +391,8 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
     QString file_path = QFileDialog::getOpenFileName(this,
                                                      tr("Select Bible file to import"),
                                                      ".",
-                                                     tr("softProjector Bible File (*.spb);;Unbound Bible File (*.txt)"));
+                                                     tr("All supported Bible files (*.spb *.txt);;"
+                                                        "softProjector Bible file (*.spb);;Unbound Bible file (*.txt)"));
 
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
@@ -543,7 +544,6 @@ void ManageDataDialog::importBibleUnbound(QString path)
                     QString col;
                     for(int i(0); i<split.count(); ++i)
                     {
-                        qDebug()<<"got to here:1: " + QString::number(i);
                         col = split.at(i);
                         col = col.trimmed();
                         if(col=="orig_book_index")
@@ -555,6 +555,7 @@ void ManageDataDialog::importBibleUnbound(QString path)
                         else if(col=="text")
                             c_text = i-1;
                     }
+                    break;
                 }
                 line = QString::fromUtf8(file.readLine());
             }
@@ -567,7 +568,6 @@ void ManageDataDialog::importBibleUnbound(QString path)
 
             // add Bible book names
             QSqlDatabase::database().transaction();
-            qDebug()<<"got to here:: transaction";
             sq.prepare("INSERT INTO BibleBooks (id, book_name, bible_id) VALUES (?,?,?)");
             QString bk_id, bk_name;
             for(int i(0); i<book_names.count(); ++i)
@@ -597,6 +597,8 @@ void ManageDataDialog::importBibleUnbound(QString path)
                 if (progress.wasCanceled())
                     break;
 
+                line = QString::fromUtf8(file.readLine());
+
                 split = line.split("\t");
                 v=split.at(c_text);
                 v=v.trimmed() + "\n";
@@ -619,8 +621,6 @@ void ManageDataDialog::importBibleUnbound(QString path)
                 v = v.simplified(); // Leave only single white space between each word
                 sq.addBindValue(v);
                 sq.exec();
-
-                line = QString::fromUtf8(file.readLine());
 
                 row++;
                 progress.setValue(row);
