@@ -38,6 +38,9 @@ private:
 
 
 private slots:
+    QString get3(int i);
+    QString getBibleIdUnbound(QString id);
+    QString getVerseId(QString book, QString chapter, QString verse);
     void setWaitCursor();
     void setArrowCursor();
     void on_sbornikTableView_clicked(QModelIndex index);
@@ -55,6 +58,7 @@ private slots:
     void on_import_sbornik_pushButton_clicked();
     void deleteBible(Bibles bilbe);
     void importBible(QString path);
+    void importBibleUnbound(QString path);
     void exportBible(QString path);
     void deleteSbornik(Sbornik sbornik);
     void importSbornik(QString path);
