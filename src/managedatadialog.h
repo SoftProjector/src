@@ -7,7 +7,7 @@
 
 #include "managedata.h"
 #include "song.h"
-#include "addsbornikdialog.h"
+#include "addsongbookdialog.h"
 
 namespace Ui {
     class ManageDataDialog;
@@ -20,7 +20,7 @@ public:
     explicit ManageDataDialog(QWidget *parent = 0);
     virtual ~ManageDataDialog();
     bool reload_bible;
-    bool reload_sbornik;
+    bool reload_songbook;
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -31,9 +31,9 @@ signals:
 
 private:
     QList<Bibles> bible_list;
-    QList<Sbornik> sbornik_list;
+    QList<Songbook> songbook_list;
     BiblesModel *bible_model;
-    SborniksModel *sbornik_model;
+    SongbooksModel *songbook_model;
     Ui::ManageDataDialog *ui;
 
 
@@ -43,27 +43,27 @@ private slots:
     QString getVerseId(QString book, QString chapter, QString verse);
     void setWaitCursor();
     void setArrowCursor();
-    void on_sbornikTableView_clicked(QModelIndex index);
+    void on_songbookTableView_clicked(QModelIndex index);
     void on_bibleTableView_clicked(QModelIndex index);
     void updateBibleButtons();
-    void updateSbornikButtons();
+    void updateSongbookButtons();
     void on_edit_bible_pushButton_clicked();
-    void on_edit_sbornik_pushButton_clicked();
+    void on_edit_songbook_pushButton_clicked();
     void on_delete_bible_pushButton_clicked();
     void on_export_bible_pushButton_clicked();
     void on_import_bible_pushButton_clicked();
     void on_ok_pushButton_clicked();
-    void on_delete_sbornik_pushButton_clicked();
-    void on_export_sbornik_pushButton_clicked();
-    void on_import_sbornik_pushButton_clicked();
+    void on_delete_songbook_pushButton_clicked();
+    void on_export_songbook_pushButton_clicked();
+    void on_import_songbook_pushButton_clicked();
     void deleteBible(Bibles bilbe);
     void importBible(QString path);
     void importBibleUnbound(QString path);
     void exportBible(QString path);
-    void deleteSbornik(Sbornik sbornik);
-    void importSbornik(QString path);
-    void exportSbornik(QString path);
-    void load_sborniks();
+    void deleteSongbook(Songbook songbook);
+    void importSongbook(QString path);
+    void exportSongbook(QString path);
+    void load_songbooks();
     void load_bibles();
 };
 

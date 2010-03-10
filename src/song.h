@@ -6,23 +6,23 @@
 QString clean(QString str);
 
 class Song
-// Class for storing song information: number, name, sbornik
-// The instance of this class is specific to a song & sbornik.
+// Class for storing song information: number, name, songbook
+// The instance of this class is specific to a song & songbook.
 {
  public:
     Song();
     Song(int id);
-    Song(int id, int num, QString sbornik_id);
+    Song(int id, int num, QString songbook_id);
     void readData();
-    int num; // Number of the song in the specified sbornik
+    int num; // Number of the song in the specified songbook
     QString title;
-    QString sbornik_id;
-    QString sbornik_name;
+    QString songbook_id;
+    QString songbook_name;
 
     void saveUpdate();
     void saveNew();
     QStringList getSongTextList();
-    QString getSbornikName();
+    QString getSongbookName();
 
 //private:
     int songID; // Database ID of this song
@@ -71,11 +71,11 @@ class SongProxyModel : public QSortFilterProxyModel
 public:
     SongProxyModel(QObject *parent = 0);
     void setFilterString(QString new_string, bool new_match_beginning, bool new_exact_match);
-    void setSbornikFilter(QString new_sbornik);
+    void setSongbookFilter(QString new_songbook);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
-    QString filter_string, sbornik_filter;
+    QString filter_string, songbook_filter;
     bool match_beginning, exact_match;
 };
 
@@ -84,14 +84,14 @@ class SongDatabase
 {
 public:
     SongDatabase();
-    void addSbornik(QString name, QString info);
+    void addSongbook(QString name, QString info);
     void saveUpdate();
     void saveNew();
     void deleteSong(int songId);
-    QString getSbornikIdStringFromName(QString sbornik_name);
+    QString getSongbookIdStringFromName(QString songbook_name);
     Song getSong(int id);
-    QList<Song> getSongs(QString sbornik_id);
-    int lastUser(QString sbornik_id);
+    QList<Song> getSongs(QString songbook_id);
+    int lastUser(QString songbook_id);
 //private:
 };
 

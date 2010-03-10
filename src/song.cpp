@@ -21,11 +21,11 @@ Song::Song(int id)
     songID = id;
 }
 
-Song::Song(int song_id, int song_num, QString song_sbornik)
+Song::Song(int song_id, int song_num, QString song_songbook)
 {
     songID = song_id;
     num = song_num;
-    sbornik_id = song_sbornik;
+    songbook_id = song_songbook;
 }
 
 void Song::readData()
@@ -43,11 +43,11 @@ void Song::readData()
     alingment = sq.value(7).toString();
     background = sq.value(8).toString();
 
-    if( !sbornik_id.isEmpty() )
+    if( !songbook_id.isEmpty() )
     {
-        sq.exec("SELECT name FROM Sborniks WHERE id = " + sbornik_id );
+        sq.exec("SELECT name FROM Songbooks WHERE id = " + songbook_id );
         sq.first();
-        sbornik_name = sq.value(0).toString();
+        songbook_name = sq.value(0).toString();
     }
 }
 
@@ -220,11 +220,11 @@ QStringList Song::getSongTextList()
     return formatedSong;
 }
 
-QString Song::getSbornikName()
+QString Song::getSongbookName()
 {
-    if( sbornik_name.isEmpty() )
+    if( songbook_name.isEmpty() )
         readData();
-    return sbornik_name;
+    return songbook_name;
 }
 
 
@@ -310,7 +310,7 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
         else if( index.column() == 1 )
             return QVariant(song.title);
         else
-            return QVariant(song.getSbornikName());
+            return QVariant(song.getSongbookName());
     }
     return QVariant();
 }
@@ -327,7 +327,7 @@ QVariant SongsModel::headerData(int section,
         case 1:
             return QVariant(tr("Title"));
         case 2:
-            return QVariant(tr("Song Collection"));
+            return QVariant(tr("Songbook"));
         }
     }
     return QVariant();
@@ -351,9 +351,9 @@ void SongProxyModel::setFilterString(QString new_string, bool new_match_beginnin
     exact_match = new_exact_match;
 }
 
-void SongProxyModel::setSbornikFilter(QString new_sbornik)
+void SongProxyModel::setSongbookFilter(QString new_songbook)
 {
-    sbornik_filter = new_sbornik;
+    songbook_filter = new_songbook;
 }
 
 
@@ -369,9 +369,9 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
     QString str2 = sourceModel()->data(index2).toString();
 
 
-    // Exclude rows that are not part of the selected sbornik:
-    if( sbornik_filter != "ALL" )
-        if( str2 != sbornik_filter )
+    // Exclude rows that are not part of the selected songbook:
+    if( songbook_filter != "ALL" )
+        if( str2 != songbook_filter )
             return false;
 
     if( filter_string.isEmpty() )
@@ -420,8 +420,8 @@ void Song::saveUpdate()
     // Update SongLink information
     QSqlQuery sqq;
     sqq.exec("UPDATE SongLink SET song_number = "
-             + QString::number(num) + " WHERE sbornik_id = "
-             + sbornik_id + " AND song_id = " + QString::number(songID));
+             + QString::number(num) + " WHERE songbook_id = "
+             + songbook_id + " AND song_id = " + QString::number(songID));
 }
 
 void Song::saveNew()
@@ -441,7 +441,7 @@ void Song::saveNew()
     sqt.setData(sqt.index(0,9),background);
     sqt.submitAll();
 
-    // Connect song with sbornik
+    // Connect song with songbook
     QSqlQuery sq;
     QString sid = "";
     sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
@@ -449,8 +449,8 @@ void Song::saveNew()
         sid = sq.value(0).toString();
     sq.clear();
 
-    sq.exec("INSERT into SongLink (sbornik_id, song_id, song_number) VALUES ('"
-            + sbornik_id.trimmed() + "',"
+    sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ('"
+            + songbook_id.trimmed() + "',"
             + sid + ","
             + QString::number(num) + ")");
 }
@@ -465,25 +465,25 @@ Song SongDatabase::getSong(int id)
 
 
 
-QList<Song> SongDatabase::getSongs(QString sbornik_id)
+QList<Song> SongDatabase::getSongs(QString songbook_id)
 {
     QList<Song> songs;
 
-    if( sbornik_id == QString("ALL") ) {
+    if( songbook_id == QString("ALL") ) {
         // Loads all titles in database
         QSqlQuery sq, sq2;
 
-        sq.exec("SELECT song_id, song_number, sbornik_id FROM SongLink");
+        sq.exec("SELECT song_id, song_number, songbook_id FROM SongLink");
         while(sq.next())
         {
             int song_id = sq.value(0).toInt();
             int song_num = sq.value(1).toInt();
-            QString sbornik_id = sq.value(2).toString();
+            QString songbook_id = sq.value(2).toString();
             QString song_title;
             sq2.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
             sq2.first();
             song_title = sq2.value(0).toString();
-            Song song = Song(song_id, song_num, sbornik_id);
+            Song song = Song(song_id, song_num, songbook_id);
             song.readData();
             songs.append(song);
         }
@@ -492,25 +492,25 @@ QList<Song> SongDatabase::getSongs(QString sbornik_id)
     {
         QSqlQuery sq, sq1;
 
-        sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id = "+sbornik_id);
+        sq.exec("SELECT song_id, song_number FROM SongLink WHERE songbook_id = "+songbook_id);
         while(sq.next())
         {
             int song_id = sq.value(0).toInt();
             int song_num = sq.value(1).toInt();
-            Song song = Song(song_id, song_num, sbornik_id);
+            Song song = Song(song_id, song_num, songbook_id);
             song.readData();
             songs.append(song);
         }
-    } // end of not all sborniks
+    } // end of not all songbooks
     return songs;
 }
 
-int SongDatabase::lastUser(QString sbornik_id)
+int SongDatabase::lastUser(QString songbook_id)
 {
     int last;
     QList <int> lastInt;
     QSqlQuery sq;
-    sq.exec("SELECT song_number FROM SongLink WHERE sbornik_id = " +sbornik_id);
+    sq.exec("SELECT song_number FROM SongLink WHERE songbook_id = " +songbook_id);
     while (sq.next())
         lastInt << sq.value(0).toInt();
     qSort(lastInt);
@@ -529,18 +529,18 @@ void SongDatabase::deleteSong(int song_id)
     sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
 }
 
-QString SongDatabase::getSbornikIdStringFromName(QString sbornik_name)
+QString SongDatabase::getSongbookIdStringFromName(QString songbook_name)
 {
     QSqlQuery sq;
-    sq.exec("SELECT id FROM Sborniks WHERE name like '" + sbornik_name +"'");
+    sq.exec("SELECT id FROM Songbooks WHERE name like '" + songbook_name +"'");
     sq.first();
     return sq.value(0).toString();
 }
 
-void SongDatabase::addSbornik(QString name, QString info)
+void SongDatabase::addSongbook(QString name, QString info)
 {
     QSqlTableModel sqt;
-    sqt.setTable("Sborniks");
+    sqt.setTable("Songbooks");
     sqt.insertRows(0,1);
     sqt.setData(sqt.index(0,1),name.trimmed());
     sqt.setData(sqt.index(0,2),info);

@@ -107,16 +107,16 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>Song Collections</string>
+       <string>Songbooks</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QTableView" name="sbornikTableView"/>
+        <widget class="QTableView" name="songbookTableView"/>
        </item>
        <item row="0" column="1">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QPushButton" name="import_sbornik_pushButton">
+          <widget class="QPushButton" name="import_songbook_pushButton">
            <property name="toolTip">
             <string>Import a new Songbook into database.</string>
            </property>
@@ -129,7 +129,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="edit_sbornik_pushButton">
+          <widget class="QPushButton" name="edit_songbook_pushButton">
            <property name="toolTip">
             <string>Edit the title and information about the Songbook.</string>
            </property>
@@ -142,7 +142,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="export_sbornik_pushButton">
+          <widget class="QPushButton" name="export_songbook_pushButton">
            <property name="toolTip">
             <string>Export currently selected Songbook to be able to share with others and for backup.</string>
            </property>
@@ -155,7 +155,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="delete_sbornik_pushButton">
+          <widget class="QPushButton" name="delete_songbook_pushButton">
            <property name="toolTip">
             <string>Delete currently selected Songbook from database.</string>
            </property>

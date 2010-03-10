@@ -79,7 +79,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
             songWidget, SLOT(updateSongFromDatabase(int)));
     connect(editWidget, SIGNAL(addedNew()),
-            songWidget,SLOT(updateSborniks()));
+            songWidget,SLOT(updateSongbooks()));
     connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()),
@@ -432,7 +432,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool last_verse = ( current_song_verse == song_list.count()-1 );
 
     QStringList lines_list = song_list.at(current_song_verse).split("\n");
-    QString sbornik_str = current_song.sbornik_name;
+    QString songbook_str = current_song.songbook_name;
     QString song_num_str = QString::number(current_song.num);
     QString song_key_str = current_song.tune;
 
@@ -829,9 +829,9 @@ void SoftProjector::on_actionManage_Database_triggered()
 
     manageDialog->exec();
 
-    // Reload sborniks if Sbornik has been added, edited, or deleted
-    if (manageDialog->reload_sbornik)
-        songWidget->updateSborniks();
+    // Reload songbooks if Songbook has been added, edited, or deleted
+    if (manageDialog->reload_songbook)
+        songWidget->updateSongbooks();
 
     // Reload Bibles if Bible has been deleted
     if (manageDialog->reload_bible)

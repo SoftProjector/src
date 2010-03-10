@@ -46,35 +46,35 @@ public:
 };
 
 ///////////////////////
-// Sbornik Class
+// Songbook Class
 ///////////////////////
-class Sbornik
+class Songbook
 {
 public:
-    Sbornik();
-//    Sbornik(QString id);
+    Songbook();
+//    Songbook(QString id);
 //    void readData();
-    QString sbornikId;
+    QString songbookId;
     QString title;
     QString info;
 };
 
 ///////////////////////
-// Sborniks Model Class
+// Songbooks Model Class
 ///////////////////////
-class SborniksModel : public QAbstractTableModel
-//  Class for storing data for Sbornik Table
+class SongbooksModel : public QAbstractTableModel
+//  Class for storing data for Songbook Table
 {
     Q_OBJECT
-    Q_DISABLE_COPY(SborniksModel)
+    Q_DISABLE_COPY(SongbooksModel)
 
 public:
-    SborniksModel();
-    QList<Sbornik> sbornik_list;
+    SongbooksModel();
+    QList<Songbook> songbook_list;
 
-    void setSbornik(QList<Sbornik> sborniks);
-    void addSbornik(Sbornik sbornik);
-    Sbornik getSbornik(int row);
+    void setSongbook(QList<Songbook> songbooks);
+    void addSongbook(Songbook songbook);
+    Songbook getSongbook(int row);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -91,7 +91,7 @@ class Database
 {
 public:
     Database();
-    QList<Sbornik> getSborniks();
+    QList<Songbook> getSongbooks();
     QList<Bibles> getBibles();
 };
 

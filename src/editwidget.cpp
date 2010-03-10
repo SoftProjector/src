@@ -48,7 +48,7 @@ void EditWidget::changeEvent(QEvent *e)
 void EditWidget::on_btnSave_clicked()
 {
     /* This will never happen, because song number is automatically
-       set when a sbornik is chosen:
+       set when a songbook is chosen:
     if( ui->song_number_lineEdit->text().isEmpty() )
     {
 
@@ -132,7 +132,7 @@ void EditWidget::setUiItems()
     ui->lineEditWordsBy->setText(editSong.wordsBy);
     ui->lineEditKey->setText(editSong.tune);
     ui->comboBoxCategory->setCurrentIndex(editSong.category);
-    setSbornik(editSong.songID);
+    setSongbook(editSong.songID);
     ui->font_textbox->setText(editSong.font);
     ui->wall_textbox->setText(editSong.background);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
@@ -150,7 +150,7 @@ void EditWidget::setUiItems()
 void EditWidget::setSave(){
     newSong.songID = editSong.songID;
     newSong.num = ui->song_number_lineEdit->text().toInt();
-    newSong.sbornik_id = song_database.getSbornikIdStringFromName(ui->sbornik_label->text());
+    newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
     newSong.title = ui->lineEditTitle->text();
     newSong.category = ui->comboBoxCategory->currentIndex();
     newSong.tune = ui->lineEditKey->text();
@@ -197,23 +197,23 @@ QString EditWidget::resetLyric(QString lyric)
     return lyric;
 }
 
-void EditWidget::setSbornik(int id)
+void EditWidget::setSongbook(int id)
 {
     QSqlQuery sq;
-    QString sbornik, song_num;
+    QString songbook, song_num;
 
-    sq.exec("SELECT sbornik_id, song_number FROM SongLink WHERE song_id = "+QString::number(id));
+    sq.exec("SELECT songbook_id, song_number FROM SongLink WHERE song_id = "+QString::number(id));
     sq.first();
-        sbornik = sq.value(0).toString();
+        songbook = sq.value(0).toString();
         song_num = sq.value(1).toString();
     sq.clear();
 
-    sq.exec("SELECT name FROM Sborniks WHERE id = " + sbornik);
+    sq.exec("SELECT name FROM Songbooks WHERE id = " + songbook);
     sq.first();
-    sbornik = sq.value(0).toString();
+    songbook = sq.value(0).toString();
     sq.clear();
 
-    ui->sbornik_label->setText(sbornik);
+    ui->songbook_label->setText(songbook);
     ui->song_number_lineEdit->setText(song_num);
 }
 
@@ -233,27 +233,27 @@ void EditWidget::setNew()
     bool ok;
 
     QSqlQuery sq;
-    QStringList sbornik_list;
-    sbornik_list << tr("Add a new Song Collection");
-    sq.exec("SELECT id, name FROM Sborniks");
+    QStringList songbook_list;
+    songbook_list << tr("Add a new Songbook");
+    sq.exec("SELECT id, name FROM Songbooks");
     while (sq.next())
-        sbornik_list << sq.value(1).toString();
+        songbook_list << sq.value(1).toString();
 
 
-    QString sb = QInputDialog::getItem(this,tr("Select Song Collection"),tr("Select a song collection to which you want to add a song"),
-                                       sbornik_list,0,false,&ok);
+    QString sb = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to add a song"),
+                                       songbook_list,0,false,&ok);
 
     if (ok && !sb.isEmpty())
     {
-        if (sb ==tr("Add a new Song Collection"))
+        if (sb ==tr("Add a new Songbook"))
         {
-            // Add a Sbornik to add a new song into
-            addSbornik();
+            // Add a Songbook to add a new song into
+            addSongbook();
         }
         else
         {
-            int last = song_database.lastUser(song_database.getSbornikIdStringFromName(sb));
-            ui->sbornik_label->setText(sb);
+            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(sb));
+            ui->songbook_label->setText(sb);
             ui->song_number_lineEdit->setText(QString::number(last));
         }
     }
@@ -263,21 +263,21 @@ void EditWidget::setNew()
     }
 }
 
-void EditWidget::addSbornik()
+void EditWidget::addSongbook()
 {
-    AddSbornikDialog add_sbor;
-    add_sbor.setWindowTitle(tr("Add a Song Collection"));
+    AddSongbookDialog add_sbor;
+    add_sbor.setWindowTitle(tr("Add a Songbook"));
     int last(0);
     int ret = add_sbor.exec();
     switch(ret)
     {
-    case AddSbornikDialog::Accepted:
-        song_database.addSbornik(add_sbor.title,add_sbor.info);
-        last = song_database.lastUser(song_database.getSbornikIdStringFromName(add_sbor.title));
-        ui->sbornik_label->setText(add_sbor.title);
+    case AddSongbookDialog::Accepted:
+        song_database.addSongbook(add_sbor.title,add_sbor.info);
+        last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_sbor.title));
+        ui->songbook_label->setText(add_sbor.title);
         ui->song_number_lineEdit->setText(QString::number(last));
         break;
-    case AddSbornikDialog::Rejected:
+    case AddSongbookDialog::Rejected:
         close();
         break;
     }

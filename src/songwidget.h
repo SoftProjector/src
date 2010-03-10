@@ -20,7 +20,7 @@ public:
 public slots:
     void deleteSong();
     Song getSongToEdit();
-    void updateSborniks();
+    void updateSongbooks();
     // will be called by the edit widget:
     void updateSongFromDatabase(int songid);
     QByteArray getSplitterState();
@@ -50,20 +50,20 @@ private slots:
     void on_btnAddToPlaylist_clicked();
     void on_btnLive_clicked();
     void on_song_num_spinbox_valueChanged(int value);
-    void on_sbornik_menu_currentIndexChanged(int index);
+    void on_songbook_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
     void sendToPreview(Song song);
     void sendToProjector(Song song, int row);
-    void loadTitles(QString tSbornik);
-    void loadSborniks();
+    void loadTitles(QString tsongbook);
+    void loadSongbooks();
     void updateButtonStates();
     void filterModeChanged();
 
 private:
     Ui::SongWidget *ui;
-    QString sbornik;
+    QString songbook;
     QStringList allTitles;
-    QStringList sbornikList;
+    QStringList songbookList;
     int titleType;
     SongDatabase song_database;
     SongsModel *playlist_model;

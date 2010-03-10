@@ -14,7 +14,7 @@ SOURCES += main.cpp \
     bible.cpp \
     settingsdialog.cpp \
     aboutdialog.cpp \
-    addsbornikdialog.cpp \
+    addsongbookdialog.cpp \
     highlight.cpp \
     managedatadialog.cpp \
     managedata.cpp \
@@ -29,7 +29,7 @@ HEADERS += softprojector.h \
     bible.h \
     settingsdialog.h \
     aboutdialog.h \
-    addsbornikdialog.h \
+    addsongbookdialog.h \
     highlight.h \
     managedatadialog.h \
     managedata.h \
@@ -41,7 +41,7 @@ FORMS += softprojector.ui \
     editwidget.ui \
     settingsdialog.ui \
     aboutdialog.ui \
-    addsbornikdialog.ui \
+    addsongbookdialog.ui \
     managedatadialog.ui \
     announcewidget.ui \
     helpdialog.ui

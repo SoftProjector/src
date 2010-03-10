@@ -18,17 +18,17 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui->bibleTableView->setColumnWidth(0, 395);
 //    updateBibleButtons();
 
-    // Set Sborniks Table
-    load_sborniks();
-    ui->sbornikTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->sbornikTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->sbornikTableView->verticalHeader()->hide();
-    ui->sbornikTableView->setColumnWidth(0, 195);
-    ui->sbornikTableView->setColumnWidth(1, 195);
+    // Set Songbooks Table
+    load_songbooks();
+    ui->songbookTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->songbookTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->songbookTableView->verticalHeader()->hide();
+    ui->songbookTableView->setColumnWidth(0, 195);
+    ui->songbookTableView->setColumnWidth(1, 195);
 
     //Set reload cariers to false
     reload_bible = false;
-    reload_sbornik = false;
+    reload_songbook = false;
 
 }
 
@@ -49,15 +49,15 @@ void ManageDataDialog::changeEvent(QEvent *e)
     }
 }
 
-void ManageDataDialog::load_sborniks()
+void ManageDataDialog::load_songbooks()
 {
     Database db;
-    // Set Sborniks Table
-    sbornik_list = db.getSborniks();
-    sbornik_model = new SborniksModel;
-    sbornik_model->setSbornik(sbornik_list);
-    ui->sbornikTableView->setModel(sbornik_model);
-    updateSbornikButtons();
+    // Set Songbooks Table
+    songbook_list = db.getSongbooks();
+    songbook_model = new SongbooksModel;
+    songbook_model->setSongbook(songbook_list);
+    ui->songbookTableView->setModel(songbook_model);
+    updateSongbookButtons();
 }
 
 void ManageDataDialog::load_bibles()
@@ -98,17 +98,17 @@ void ManageDataDialog::updateBibleButtons()
     ui->delete_bible_pushButton->setEnabled(enable_delete);
 }
 
-void ManageDataDialog::updateSbornikButtons()
+void ManageDataDialog::updateSongbookButtons()
 {
     bool enable_edit;
     bool enable_export;
     bool enable_delete;
 
-    if (ui->sbornikTableView->hasFocus())
+    if (ui->songbookTableView->hasFocus())
     {
         enable_edit = true;
         enable_export = true;
-        if (sbornik_model->rowCount()>=2)
+        if (songbook_model->rowCount()>=2)
             enable_delete = true;
         else
             enable_delete = false;
@@ -120,24 +120,24 @@ void ManageDataDialog::updateSbornikButtons()
         enable_delete = false;
     }
 
-    ui->edit_sbornik_pushButton->setEnabled(enable_edit);
-    ui->export_sbornik_pushButton->setEnabled(enable_export);
-    ui->delete_sbornik_pushButton->setEnabled(enable_delete);
+    ui->edit_songbook_pushButton->setEnabled(enable_edit);
+    ui->export_songbook_pushButton->setEnabled(enable_export);
+    ui->delete_songbook_pushButton->setEnabled(enable_delete);
 }
 
-void ManageDataDialog::on_import_sbornik_pushButton_clicked()
+void ManageDataDialog::on_import_songbook_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     tr("Select a song collection to import"),
+                                                     tr("Select a Songbook to import"),
                                                      ".",
-                                                     tr("softProjector song collection file (*.txt *.sps)"));
+                                                     tr("softProjector Songbook file (*.txt *.sps)"));
 
-    // if file_path exits or "Open" is clicked, then import a song collection
+    // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
-        importSbornik(file_path);
+        importSongbook(file_path);
 }
 
-void ManageDataDialog::importSbornik(QString path)
+void ManageDataDialog::importSongbook(QString path)
 {
     setWaitCursor();
     int row(1),max(0);
@@ -163,12 +163,12 @@ void ManageDataDialog::importSbornik(QString path)
     if (file.open(QIODevice::ReadOnly))
     {
 
-        reload_sbornik = true;
-        //Set Sbornik Title and Information
+        reload_songbook = true;
+        //Set Songbook Title and Information
         line = QString::fromUtf8(file.readLine());
         if (line.startsWith("##"))
         {
-            // Set Sbornik Title
+            // Set Songbook Title
             line = QString::fromUtf8(file.readLine());
             line.remove("#");
             title = line.trimmed();
@@ -182,17 +182,17 @@ void ManageDataDialog::importSbornik(QString path)
         }
         else
         {
-            title = tr("User Song Collection");
-            info = tr("Song collection imported by the user");
+            title = tr("User Songbook");
+            info = tr("Songbook imported by the user");
         }
 
-        // Create sbornik
+        // Create songbook
         SongDatabase sdb;
-        sdb.addSbornik(title, info);
+        sdb.addSongbook(title, info);
 
-        // Set Sbornik Code
+        // Set Songbook Code
         code = "0";
-        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Sborniks'");
+        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
         while (sq.next())
             code = sq.value(0).toString();
         sq.clear();
@@ -237,8 +237,8 @@ void ManageDataDialog::importSbornik(QString path)
             while (sq.next()) sid = sq.value(0).toString();
             sq.clear();
 
-            // Connect newly added song with its sbornik
-            sq.exec("INSERT into SongLink (sbornik_id, song_id, song_number) VALUES ("
+            // Connect newly added song with its songbook
+            sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ("
                     + code + ","
                     + sid + ","
                     + num + ")");
@@ -248,39 +248,39 @@ void ManageDataDialog::importSbornik(QString path)
         }
         QSqlDatabase::database().commit();
     }
-    load_sborniks();
+    load_songbooks();
     setArrowCursor();
 }
 
-void ManageDataDialog::on_export_sbornik_pushButton_clicked()
+void ManageDataDialog::on_export_songbook_pushButton_clicked()
 {
-    QString file_path = QFileDialog::getSaveFileName(this,tr("Save the song collection as:"),
-                                             ".",tr("softProjector song collection file (*.sps)"));
+    QString file_path = QFileDialog::getSaveFileName(this,tr("Save the Songbook as:"),
+                                             ".",tr("softProjector Songbook file (*.sps)"));
     if( !file_path.isNull() )
-        exportSbornik(file_path);
+        exportSongbook(file_path);
 }
 
-void ManageDataDialog::exportSbornik(QString path)
+void ManageDataDialog::exportSongbook(QString path)
 {
     setWaitCursor();
-    int row = ui->sbornikTableView->currentIndex().row();
-    Sbornik sbornik = sbornik_model->getSbornik(row);
+    int row = ui->songbookTableView->currentIndex().row();
+    Songbook songbook = songbook_model->getSongbook(row);
     QSqlQuery sq,sq1;
-    QString sbornik_id = sbornik.sbornikId;
+    QString songbook_id = songbook.songbookId;
     QString songs,song,num,id,title,info;
 //    QFileDialog file;
 
-    sq.exec("SELECT name, info FROM Sborniks WHERE id = '" + sbornik_id + "'");
+    sq.exec("SELECT name, info FROM Songbooks WHERE id = '" + songbook_id + "'");
     sq.first();
     title = sq.value(0).toString().trimmed();
     info = sq.value(1).toString().trimmed();
     sq.clear();
 
-    songs = "##" + sbornik_id + "\n##"
+    songs = "##" + songbook_id + "\n##"
             + title + "\n##"
             + info;
 
-    sq.exec("SELECT song_id, song_number FROM SongLink WHERE sbornik_id like '" + sbornik_id +"'");
+    sq.exec("SELECT song_id, song_number FROM SongLink WHERE songbook_id like '" + songbook_id +"'");
     while (sq.next())
     {
         id = sq.value(0).toString();
@@ -315,21 +315,21 @@ void ManageDataDialog::exportSbornik(QString path)
 
     QMessageBox mb;
     mb.setWindowTitle(tr("Export Complete"));
-    mb.setText(tr("The song collection \"") + title + tr("\"\nHas been saved to:\n     ") + path);
+    mb.setText(tr("The Songbook \"") + title + tr("\"\nHas been saved to:\n     ") + path);
     mb.setIcon(QMessageBox::Information);
     mb.exec();
 }
 
-void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
+void ManageDataDialog::on_delete_songbook_pushButton_clicked()
 {
-    int row = ui->sbornikTableView->currentIndex().row();
-    Sbornik sbornik = sbornik_model->getSbornik(row);
-    QString name = sbornik.title;
+    int row = ui->songbookTableView->currentIndex().row();
+    Songbook songbook = songbook_model->getSongbook(row);
+    QString name = songbook.title;
 
     QMessageBox ms;
-    ms.setWindowTitle(tr("Delete Song Collection?"));
+    ms.setWindowTitle(tr("Delete Songbook?"));
     ms.setText(tr("Are you sure that you want to delete: ")+ name);
-    ms.setInformativeText(tr("This action will permanentrly delete this song collection"));
+    ms.setInformativeText(tr("This action will permanentrly delete this Songbook"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);
@@ -337,8 +337,8 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
 
     switch (ret) {
     case QMessageBox::Yes:
-        // Delete a sbornik
-        deleteSbornik(sbornik);
+        // Delete a songbook
+        deleteSongbook(songbook);
         break;
     case QMessageBox::No:
         // Cancel was clicked
@@ -349,19 +349,19 @@ void ManageDataDialog::on_delete_sbornik_pushButton_clicked()
     }
 }
 
-void ManageDataDialog::deleteSbornik(Sbornik sbornik)
+void ManageDataDialog::deleteSongbook(Songbook songbook)
 {
     setWaitCursor();
-    reload_sbornik = true;
+    reload_songbook = true;
     QSqlQuery sq,sq1;
-    QString id = sbornik.sbornikId.trimmed();
+    QString id = songbook.songbookId.trimmed();
 
-    // Delete from Sbornik Table
-    sq.exec("DELETE FROM Sborniks WHERE id = '" + id + "'");
+    // Delete from Songbook Table
+    sq.exec("DELETE FROM Songbooks WHERE id = '" + id + "'");
     sq.clear();
 
     // Delete form Songs Table
-    sq.exec("SELECT song_id FROM SongLink WHERE sbornik_id like '" + id +"'");
+    sq.exec("SELECT song_id FROM SongLink WHERE songbook_id like '" + id +"'");
     QString s;
     QSqlDatabase::database().transaction();
     sq1.prepare("DELETE FROM Songs WHERE id = :id");
@@ -375,9 +375,9 @@ void ManageDataDialog::deleteSbornik(Sbornik sbornik)
 
     // Delete from SongLink Table
     sq.clear();
-    sq.exec("DELETE FROM SongLink WHERE sbornik_id like '" + id +"'");
+    sq.exec("DELETE FROM SongLink WHERE songbook_id like '" + id +"'");
 
-    load_sborniks();
+    load_songbooks();
     setArrowCursor();
 }
 
@@ -752,35 +752,35 @@ void ManageDataDialog::deleteBible(Bibles bible)
     setArrowCursor();
 }
 
-void ManageDataDialog::on_edit_sbornik_pushButton_clicked()
+void ManageDataDialog::on_edit_songbook_pushButton_clicked()
 {
-    int row = ui->sbornikTableView->currentIndex().row();
-    Sbornik sbornik = sbornik_model->getSbornik(row);
+    int row = ui->songbookTableView->currentIndex().row();
+    Songbook songbook = songbook_model->getSongbook(row);
     QSqlTableModel sq;
     QSqlRecord sr;
 
-    AddSbornikDialog sbornik_dialog;
-    sbornik_dialog.setSbornik(sbornik.title,sbornik.info);
-    int ret = sbornik_dialog.exec();
+    AddSongbookDialog songbook_dialog;
+    songbook_dialog.setSongbook(songbook.title,songbook.info);
+    int ret = songbook_dialog.exec();
     switch(ret)
     {
-    case AddSbornikDialog::Accepted:
-        reload_sbornik = true;
-        sq.setTable("Sborniks");
-        sq.setFilter("id = " + sbornik.sbornikId);
+    case AddSongbookDialog::Accepted:
+        reload_songbook = true;
+        sq.setTable("Songbooks");
+        sq.setFilter("id = " + songbook.songbookId);
         sq.select();
                 sr = sq.record(0);
-        sr.setValue(1,sbornik_dialog.title.trimmed());
-        sr.setValue(2,sbornik_dialog.info.trimmed());
+        sr.setValue(1,songbook_dialog.title.trimmed());
+        sr.setValue(2,songbook_dialog.info.trimmed());
         sq.setRecord(0,sr);
         sq.submitAll();
         break;
-    case AddSbornikDialog::Rejected:
+    case AddSongbookDialog::Rejected:
 //        close();
         break;
     }
 
-    load_sborniks();
+    load_songbooks();
 }
 
 void ManageDataDialog::on_edit_bible_pushButton_clicked()
@@ -811,9 +811,9 @@ void ManageDataDialog::on_bibleTableView_clicked(QModelIndex index)
     updateBibleButtons();
 }
 
-void ManageDataDialog::on_sbornikTableView_clicked(QModelIndex index)
+void ManageDataDialog::on_songbookTableView_clicked(QModelIndex index)
 {
-    updateSbornikButtons();
+    updateSongbookButtons();
 }
 
 void ManageDataDialog::setArrowCursor()

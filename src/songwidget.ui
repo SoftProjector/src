@@ -39,12 +39,12 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,0">
          <item>
-          <widget class="QComboBox" name="sbornik_menu">
+          <widget class="QComboBox" name="songbook_menu">
            <property name="toolTip">
-            <string>Use this menu to show only songs beloning to a particular song collection</string>
+            <string>Use this menu to show only songs beloning to a particular Songbook</string>
            </property>
            <property name="statusTip">
-            <string>Select song collection to use</string>
+            <string>Select Songbook to use</string>
            </property>
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
@@ -54,7 +54,7 @@
            </property>
            <item>
             <property name="text">
-             <string>All Song Collections</string>
+             <string>All Songbooks</string>
             </property>
            </item>
           </widget>
@@ -62,7 +62,7 @@
          <item>
           <widget class="QSpinBox" name="song_num_spinbox">
            <property name="toolTip">
-            <string>Selects a song by the number in the selected song collection</string>
+            <string>Selects a song by the number in the selected Songbook</string>
            </property>
            <property name="minimum">
             <number>1</number>

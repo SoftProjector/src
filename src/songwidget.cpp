@@ -34,8 +34,8 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->playlist_view->setColumnWidth(1, 150);
     ui->playlist_view->setColumnWidth(2, 70);
 
-    proxy_model->setSbornikFilter("ALL");
-    loadSborniks();
+    proxy_model->setSongbookFilter("ALL");
+    loadSongbooks();
 
     isSpinboxEditing = false;
 }
@@ -113,27 +113,27 @@ void SongWidget::changeEvent(QEvent *e)
     }
 }
 
-void SongWidget::loadSborniks()
+void SongWidget::loadSongbooks()
 {
     QSqlQuery sq;
     QStringList sbor;
-    sq.exec("SELECT id, name FROM Sborniks");
+    sq.exec("SELECT id, name FROM Songbooks");
     while (sq.next())
     {
-        sbornikList << sq.value(0).toString();
+        songbookList << sq.value(0).toString();
         sbor << sq.value(1).toString();
     }
-    ui->sbornik_menu->addItems(sbor);
+    ui->songbook_menu->addItems(sbor);
     QList<Song> song_list = song_database.getSongs("ALL");
 
     //ui->song_num_spinbox->setEnabled(false);
     songs_model->setSongs(song_list);
 
     // update the song spin box and redraw the table:
-    on_sbornik_menu_currentIndexChanged( ui->sbornik_menu->currentIndex() );
+    on_songbook_menu_currentIndexChanged( ui->songbook_menu->currentIndex() );
 }
 
-void SongWidget::loadTitles(QString tSbornik)
+void SongWidget::loadTitles(QString tsongbook)
 {
    songs_model->setSongs(song_database.getSongs("ALL"));
 }
@@ -187,19 +187,19 @@ void SongWidget::sendToProjector(Song song, int row)
 }
 
 
-void SongWidget::on_sbornik_menu_currentIndexChanged(int index)
+void SongWidget::on_songbook_menu_currentIndexChanged(int index)
 {
-    // Called when a different sbornik is selected from the pull-down menu
+    // Called when a different songbook is selected from the pull-down menu
 
     if( index == 0 )
     {
-        proxy_model->setSbornikFilter("ALL");
+        proxy_model->setSongbookFilter("ALL");
         ui->song_num_spinbox->setEnabled(false);
     }
     else
     {
-        QString sbornik_name = ui->sbornik_menu->currentText();
-        proxy_model->setSbornikFilter(sbornik_name);
+        QString songbook_name = ui->songbook_menu->currentText();
+        proxy_model->setSongbookFilter(songbook_name);
         ui->song_num_spinbox->setEnabled(true);
     }
 
@@ -225,7 +225,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
         Song s = songs_model->song_list.at(i);
-        if( s.num == value && s.sbornik_name == ui->sbornik_menu->currentText() )
+        if( s.num == value && s.songbook_name == ui->songbook_menu->currentText() )
         {
             // Found a song with this song number
             QModelIndex source_index = songs_model->index(i, 0);
@@ -389,23 +389,23 @@ void SongWidget::on_listPreview_doubleClicked(QModelIndex index)
     sendToProjector(preview_song, index.row());
 }
 
-void SongWidget::updateSborniks()
+void SongWidget::updateSongbooks()
 {
     emit setWaitCursor();
-    // Reload the sbornik and reselect the one that used to be selected
-    // if it's still available, otherwise show all sborniks
+    // Reload the songbook and reselect the one that used to be selected
+    // if it's still available, otherwise show all songbooks
 
-    QString current_sbornik = ui->sbornik_menu->currentText();
-    QString item0 = ui->sbornik_menu->itemText(0);
-    ui->sbornik_menu->clear();
-    ui->sbornik_menu->addItem(item0);
-    loadSborniks();
+    QString current_songbook = ui->songbook_menu->currentText();
+    QString item0 = ui->songbook_menu->itemText(0);
+    ui->songbook_menu->clear();
+    ui->songbook_menu->addItem(item0);
+    loadSongbooks();
 
-    int new_index = ui->sbornik_menu->findText(current_sbornik);
+    int new_index = ui->songbook_menu->findText(current_songbook);
     if( new_index == -1 )
-        new_index = 0; // All sborniks
+        new_index = 0; // All songbooks
 
-    ui->sbornik_menu->setCurrentIndex(new_index);
+    ui->songbook_menu->setCurrentIndex(new_index);
     emit setArrowCursor();
 }
 
@@ -420,7 +420,7 @@ void SongWidget::updateSongFromDatabase(int songid)
 void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
-    updateSborniks();
+    updateSongbooks();
 }
 
 void SongWidget::filterModeChanged()

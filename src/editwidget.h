@@ -4,7 +4,7 @@
 #include <QtGui/QWidget>
 #include <QtGui>
 #include "song.h"
-#include "addsbornikdialog.h"
+#include "addsongbookdialog.h"
 #include "highlight.h"
 
 namespace Ui {
@@ -39,7 +39,7 @@ private:
     QIntValidator *song_num_validator;
 
 private slots:
-    void addSbornik();
+    void addSongbook();
     void on_wall_default_button_clicked();
     void on_wall_button_clicked();
     void on_font_default_button_clicked();
@@ -49,7 +49,7 @@ private slots:
     void resetUiItems();
     void setUiItems();
     void setSave();
-    void setSbornik(int id);
+    void setSongbook(int id);
     QString resetLyric(QString lyric);
     QString setSongText(QString text);
 };

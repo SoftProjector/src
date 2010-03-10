@@ -89,80 +89,80 @@ bool BiblesModel::removeRows(int row, int count, const QModelIndex &parent)
 
 
 //***************************************
-//****        Sbornik                ****
+//****        Songbook                ****
 //***************************************
-Sbornik::Sbornik()
+Songbook::Songbook()
 {
 }
 
-//Sbornik::Sbornik(QString id)
+//Songbook::Songbook(QString id)
 //{
-//    sbornikId = id;
+//    songbookId = id;
 //}
 //
-//void Sbornik::readData()
+//void Songbook::readData()
 //{
 //    QSqlQuery sq;
-//    sq.exec("SELECT id, name, info FROM Sborniks WHERE id = '" + sbornikId + "'");
+//    sq.exec("SELECT id, name, info FROM Songbooks WHERE id = '" + songbookId + "'");
 //    sq.first();
 //    title = sq.value(1).toString();
 //    info = sq.value(2).toString();
 //}
 
 //***************************************
-//****        Sborniks Model         ****
+//****        Songbooks Model         ****
 //***************************************
-SborniksModel::SborniksModel()
+SongbooksModel::SongbooksModel()
 {
 }
 
-void SborniksModel::setSbornik(QList<Sbornik> sborniks)
+void SongbooksModel::setSongbook(QList<Songbook> songbooks)
 {
-    sbornik_list.clear();
-    for (int i(0); i < sborniks.size(); i++)
+    songbook_list.clear();
+    for (int i(0); i < songbooks.size(); i++)
     {
-        Sbornik sbornik = sborniks.at(i);
-        sbornik_list.append(sbornik);
+        Songbook songbook = songbooks.at(i);
+        songbook_list.append(songbook);
     }
     emit layoutChanged();
 }
 
-void SborniksModel::addSbornik(Sbornik sbornik)
+void SongbooksModel::addSongbook(Songbook songbook)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    sbornik_list.append(sbornik);
+    songbook_list.append(songbook);
     endInsertRows();
 }
 
-Sbornik SborniksModel::getSbornik(int row)
+Songbook SongbooksModel::getSongbook(int row)
 {
-    return sbornik_list.at(row);
+    return songbook_list.at(row);
 }
 
-int SborniksModel::rowCount(const QModelIndex &parent) const
+int SongbooksModel::rowCount(const QModelIndex &parent) const
 {
-    return sbornik_list.count();
+    return songbook_list.count();
 }
 
-int SborniksModel::columnCount(const QModelIndex &parent) const
+int SongbooksModel::columnCount(const QModelIndex &parent) const
 {
     return 2;
 }
 
-QVariant SborniksModel::data(const QModelIndex &index, int role) const
+QVariant SongbooksModel::data(const QModelIndex &index, int role) const
 {
     if( index.isValid() && role == Qt::DisplayRole )
     {
-        Sbornik sbornik = sbornik_list.at(index.row());
+        Songbook songbook = songbook_list.at(index.row());
         if( index.column() == 0 )
-            return QVariant(sbornik.title);
+            return QVariant(songbook.title);
         else if( index.column() == 1 )
-            return QVariant(sbornik.info);
+            return QVariant(songbook.info);
     }
     return QVariant();
 }
 
-QVariant SborniksModel::headerData(int section,
+QVariant SongbooksModel::headerData(int section,
                                  Qt::Orientation orientation,
                                  int role) const
 {
@@ -178,12 +178,12 @@ QVariant SborniksModel::headerData(int section,
     return QVariant();
 }
 
-bool SborniksModel::removeRows(int row, int count, const QModelIndex &parent)
+bool SongbooksModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row+count-1);
     // Need to remove starting from the end:
     for(int i=row+count-1; i>=row; i--)
-        sbornik_list.removeAt(i);
+        songbook_list.removeAt(i);
     endRemoveRows();
     return true;
 }
@@ -195,20 +195,20 @@ Database::Database()
 {
 }
 
-QList<Sbornik> Database::getSborniks()
+QList<Songbook> Database::getSongbooks()
 {
-    QList<Sbornik> sborniki;
-    Sbornik sbornik;
+    QList<Songbook> songbooki;
+    Songbook songbook;
     QSqlQuery sq;
-    sq.exec("SELECT id, name, info FROM Sborniks");
+    sq.exec("SELECT id, name, info FROM Songbooks");
     while (sq.next())
     {
-        sbornik.sbornikId = sq.value(0).toString();
-        sbornik.title = sq.value(1).toString();
-        sbornik.info = sq.value(2).toString();
-        sborniki.append(sbornik);
+        songbook.songbookId = sq.value(0).toString();
+        songbook.title = sq.value(1).toString();
+        songbook.info = sq.value(2).toString();
+        songbooki.append(songbook);
     }
-    return sborniki;
+    return songbooki;
 }
 
 QList<Bibles> Database::getBibles()
