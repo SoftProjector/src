@@ -36,6 +36,13 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->setupUi(this);
     ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/");
 
+    // Create action group for language slections
+    languageGroup = new QActionGroup(this);
+    languageGroup->addAction(ui->actionRussian);
+    languageGroup->addAction(ui->actionEnglish);
+
+    // TODO: MOVE TO SETTINGS
+    ui->actionEnglish->setChecked(true);
 
     // Apply default settings, in case configuration file does not exist
     // or is out of date:
@@ -873,3 +880,16 @@ void SoftProjector::setWaitCursor()
     this->setCursor(Qt::WaitCursor);
 }
 
+
+void SoftProjector::on_actionRussian_triggered()
+{
+//    QTranslator translator;
+    translator.load(":sotftpro_ru");
+//    a.installTranslator(&translator);
+    QApplication::installTranslator(&translator);
+}
+
+void SoftProjector::on_actionEnglish_triggered()
+{
+    QApplication::removeTranslator(&translator);
+}

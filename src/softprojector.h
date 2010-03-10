@@ -58,13 +58,17 @@ private:
     Ui::SoftProjectorClass *ui;
     QString type;
     bool new_list;
+    QActionGroup *languageGroup;
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
     void drawCurrentBibleText(QPainter *painter, int width, int height);
     void drawAnnounceText(QPainter *painter, int width, int height);
+    QTranslator translator;
 
 private slots:
+    void on_actionEnglish_triggered();
+    void on_actionRussian_triggered();
     void on_action_Help_triggered();
     void on_actionDeleteSong_triggered();
     void on_actionManage_Database_triggered();
