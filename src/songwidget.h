@@ -18,6 +18,7 @@ public:
     Song currentSong();
 
 public slots:
+    void retranslateUis();
     void deleteSong();
     Song getSongToEdit();
     void updateSongbooks();

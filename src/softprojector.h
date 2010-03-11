@@ -67,6 +67,7 @@ private:
     QTranslator translator;
 
 private slots:
+    void retranslateUis();
     void on_actionEnglish_triggered();
     void on_actionRussian_triggered();
     void on_action_Help_triggered();

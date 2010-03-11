@@ -48,20 +48,20 @@ void AnnounceWidget::drawToPainter(QPainter *painter, int width, int height)
     int h = height - top - top;
 
     int flags = Qt::TextWordWrap;
-    if( ui->horizontal_comboBox->currentText() == "Left" )
+    if( ui->horizontal_comboBox->currentText() == tr("Left") )
         flags = flags | Qt::AlignLeft;
-    else if( ui->horizontal_comboBox->currentText() == "Right" )
+    else if( ui->horizontal_comboBox->currentText() == tr("Right") )
         flags = flags | Qt::AlignRight;
-    else if( ui->horizontal_comboBox->currentText() == "Center" )
+    else if( ui->horizontal_comboBox->currentText() == tr("Center") )
         flags = flags | Qt::AlignHCenter;
     else
         qDebug() << "ERROR no such horizontal alignment";
 
-    if( ui->vertical_comboBox->currentText() == "Top" )
+    if( ui->vertical_comboBox->currentText() == tr("Top") )
         flags = flags | Qt::AlignTop;
-    else if( ui->vertical_comboBox->currentText() == "Bottom" )
+    else if( ui->vertical_comboBox->currentText() == tr("Bottom") )
         flags = flags | Qt::AlignBottom;
-    else if( ui->vertical_comboBox->currentText() == "Middle" )
+    else if( ui->vertical_comboBox->currentText() == tr("Middle") )
         flags = flags | Qt::AlignVCenter;
     else
         qDebug() << "ERROR no such vertical alignment";

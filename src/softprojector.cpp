@@ -34,15 +34,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
-    ui->statusBar->showMessage("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/");
+    ui->statusBar->showMessage(tr("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/"));
 
     // Create action group for language slections
     languageGroup = new QActionGroup(this);
     languageGroup->addAction(ui->actionRussian);
     languageGroup->addAction(ui->actionEnglish);
-
-    // TODO: MOVE TO SETTINGS
-    ui->actionEnglish->setChecked(true);
 
     // Apply default settings, in case configuration file does not exist
     // or is out of date:
@@ -73,7 +70,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->tabWidget->addTab(songWidget, tr("Songs (F7)"));
     ui->tabWidget->addTab(announceWidget, tr("Announcements (F8)"));
 
-    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
+//    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
 
     connect(songWidget, SIGNAL(sendSong(Song, int)),
             this, SLOT(setSongList(Song, int)));
@@ -211,6 +208,12 @@ void SoftProjector::writeXMLConfigurationFile()
     xml.writeTextElement("bibleshownsplitterstate", bibleWidget->getShownSplitterState().toHex());
     xml.writeTextElement("songsplitterstate", songWidget->getSplitterState().toHex());
 
+    // save translation settings
+    if (ui->actionRussian->isChecked())
+        xml.writeTextElement("translate", "ru");
+    else if (ui->actionEnglish->isChecked())
+        xml.writeTextElement("translate", "en");
+
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
 
@@ -266,6 +269,21 @@ void SoftProjector::applySetting(QString name, QString value)
         bibleWidget->setShownSplitterState(value);
     else if(name == "songsplitterstate")
         songWidget->setSplitterState(value);
+    else if(name == "translate")
+    {
+        if(value == "ru")
+        {
+            ui->actionRussian->setChecked(true);
+            on_actionRussian_triggered();
+        }
+        else if(value == "en")
+        {
+            ui->actionEnglish->setChecked(true);
+            on_actionEnglish_triggered();
+        }
+        ui->retranslateUi(this);
+        retranslateUis();
+    }
 
 }
 
@@ -340,7 +358,7 @@ void SoftProjector::setAnnounceText(QString text)
     type = "announce";
     showing = true;
     new_list = true;
-    ui->labelShow->setText("Announcement");
+    ui->labelShow->setText(tr("Announcement"));
     ui->listShow->clear();
     ui->listShow->setSpacing(5); // ?
     ui->listShow->setWordWrap(true);
@@ -762,9 +780,9 @@ void SoftProjector::on_actionNewSong_triggered()
 void SoftProjector::on_actionDeleteSong_triggered()
 {
     QMessageBox ms;
-    ms.setWindowTitle("Delete Song?");
-    ms.setText("Are you sure that you want to delete a song?");
-    ms.setInformativeText("This action will permanentrly delete this song");
+    ms.setWindowTitle(tr("Delete Song?"));
+    ms.setText(tr("Are you sure that you want to delete a song?"));
+    ms.setInformativeText(tr("This action will permanentrly delete this song"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);
@@ -804,7 +822,7 @@ void SoftProjector::on_actionAbout_triggered()
 {
     AboutDialog *aboutDialog;
     aboutDialog = new AboutDialog(this, version_string);
-    aboutDialog->setWindowTitle("About softProjecor");
+//    aboutDialog->setWindowTitle("About softProjecor");
     aboutDialog->exec();
 }
 
@@ -883,13 +901,22 @@ void SoftProjector::setWaitCursor()
 
 void SoftProjector::on_actionRussian_triggered()
 {
-//    QTranslator translator;
     translator.load(":sotftpro_ru");
-//    a.installTranslator(&translator);
-    QApplication::installTranslator(&translator);
+    qApp->installTranslator(&translator);
+    retranslateUis();
 }
 
 void SoftProjector::on_actionEnglish_triggered()
 {
-    QApplication::removeTranslator(&translator);
+    qApp->removeTranslator(&translator);
+    retranslateUis();
+}
+
+void SoftProjector::retranslateUis()
+{
+    ui->retranslateUi(this);
+    ui->tabWidget->setTabText(0, tr("Bible (F6)"));
+    ui->tabWidget->setTabText(1, tr("Songs (F7)"));
+    ui->tabWidget->setTabText(2, tr("Announcements (F8)"));
+    songWidget->retranslateUis();
 }
