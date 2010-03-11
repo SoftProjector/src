@@ -178,6 +178,10 @@
    </property>
   </action>
   <action name="actionClose">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/base-22x22-actions-application-exit.png</normaloff>:/icons/icons/base-22x22-actions-application-exit.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -194,6 +198,10 @@
    </property>
   </action>
   <action name="actionEditSong">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/song_edit.png</normaloff>:/icons/icons/song_edit.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Edit Current Song...</string>
    </property>
@@ -202,6 +210,10 @@
    </property>
   </action>
   <action name="actionNewSong">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/song_new.png</normaloff>:/icons/icons/song_new.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;New Song...</string>
    </property>
@@ -221,6 +233,10 @@
    </property>
   </action>
   <action name="actionDeleteSong">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/song_delete.png</normaloff>:/icons/icons/song_delete.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Delete Current Song</string>
    </property>
@@ -254,6 +270,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

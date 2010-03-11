@@ -1,5 +1,11 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>sotftpro_ru.qm</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icons/base-22x22-actions-application-exit.png</file>
+        <file>icons/song_new.png</file>
+        <file>icons/song_delete.png</file>
+        <file>icons/song_edit.png</file>
     </qresource>
 </RCC>
