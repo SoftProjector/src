@@ -193,6 +193,10 @@
            <property name="text">
             <string>Add to playlist (F2)</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/add.png</normaloff>:/icons/icons/add.png</iconset>
+           </property>
            <property name="shortcut">
             <string>F2</string>
            </property>
@@ -208,6 +212,10 @@
            </property>
            <property name="text">
             <string>Remove from playlist</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
            </property>
           </widget>
          </item>

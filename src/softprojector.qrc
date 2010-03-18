@@ -17,6 +17,9 @@
         <file>icons/Main.ico</file>
         <file>icons/settings.ico</file>
         <file>icons/go_live.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/search.png</file>
+        <file>icons/add.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
