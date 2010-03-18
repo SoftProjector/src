@@ -7,11 +7,6 @@ HelpDialog::HelpDialog(QWidget *parent) :
     ui(new Ui::HelpDialog)
 {
     ui->setupUi(this);
-
-    QUrl url;
-    url.setPath("./help/index.html");
-    ui->textBrowser->setSource(url);
-//    ui->textBrowser
 }
 
 HelpDialog::~HelpDialog()

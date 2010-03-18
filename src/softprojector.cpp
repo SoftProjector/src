@@ -66,8 +66,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     showing = false;
 
     ui->tabWidget->clear();
-    ui->tabWidget->addTab(bibleWidget, tr("Bible (F6)"));
-    ui->tabWidget->addTab(songWidget, tr("Songs (F7)"));
+    ui->tabWidget->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
+    ui->tabWidget->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->tabWidget->addTab(announceWidget, tr("Announcements (F8)"));
 
 //    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
@@ -780,7 +780,7 @@ void SoftProjector::on_actionNewSong_triggered()
 void SoftProjector::on_actionDeleteSong_triggered()
 {
     QMessageBox ms;
-    ms.setWindowTitle(tr("Delete Song?"));
+    ms.setWindowTitle(tr("Delete song?"));
     ms.setText(tr("Are you sure that you want to delete a song?"));
     ms.setInformativeText(tr("This action will permanentrly delete this song"));
     ms.setIcon(QMessageBox::Question);
@@ -828,6 +828,7 @@ void SoftProjector::on_actionAbout_triggered()
 
 void SoftProjector::on_tabWidget_currentChanged(int index)
 {
+    qDebug()<<"Tab index: "+ QString::number(index);
     if (index == 1)
     {
         // Songs tab is activated
@@ -901,19 +902,25 @@ void SoftProjector::setWaitCursor()
 
 void SoftProjector::on_actionRussian_triggered()
 {
-    translator.load(":sotftpro_ru");
-    qApp->installTranslator(&translator);
     retranslateUis();
 }
 
 void SoftProjector::on_actionEnglish_triggered()
 {
-    qApp->removeTranslator(&translator);
     retranslateUis();
 }
 
 void SoftProjector::retranslateUis()
 {
+    if(ui->actionEnglish->isChecked()) // Set English language
+    {
+        qApp->removeTranslator(&translator);
+    }
+    else if(ui->actionRussian->isChecked()) // Set Russian language
+    {
+        translator.load(":/language/sotftpro_ru");
+        qApp->installTranslator(&translator);
+    }
     ui->retranslateUi(this);
     ui->tabWidget->setTabText(0, tr("Bible (F6)"));
     ui->tabWidget->setTabText(1, tr("Songs (F7)"));

@@ -106,8 +106,9 @@ p, li { white-space: pre-wrap; }
     <name>AddSongbookDialog</name>
     <message>
         <location filename="addsongbookdialog.ui" line="14"/>
-        <source>Edit Songbook</source>
-        <translation>Изменить Сборник</translation>
+        <source>Add songbook</source>
+        <oldsource>Edit Songbook</oldsource>
+        <translation type="unfinished">Изменить Сборник</translation>
     </message>
     <message>
         <location filename="addsongbookdialog.ui" line="20"/>
@@ -458,13 +459,15 @@ Results</source>
     </message>
     <message>
         <location filename="editwidget.ui" line="92"/>
-        <source>Words By:  </source>
-        <translation>Слова:</translation>
+        <source>Words by:  </source>
+        <oldsource>Words By:  </oldsource>
+        <translation type="unfinished">Слова:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="105"/>
-        <source>Music By: </source>
-        <translation>Музыка:</translation>
+        <source>Music by: </source>
+        <oldsource>Music By: </oldsource>
+        <translation type="unfinished">Музыка:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="122"/>
@@ -763,18 +766,25 @@ Results</source>
     </message>
     <message>
         <location filename="editwidget.ui" line="476"/>
+        <location filename="editwidget.ui" line="518"/>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Set</source>
-        <translation type="unfinished">устанавить</translation>
+        <translation type="obsolete">устанавить</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="483"/>
         <location filename="editwidget.ui" line="525"/>
-        <source>Use Default</source>
+        <source>Use default</source>
+        <oldsource>Use Default</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="490"/>
-        <source>Text Font:</source>
+        <source>Text font:</source>
+        <oldsource>Text Font:</oldsource>
         <translation type="unfinished">Шрифт:</translation>
     </message>
     <message>
@@ -783,9 +793,8 @@ Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="518"/>
         <source>Set </source>
-        <translation type="unfinished">устанавить</translation>
+        <translation type="obsolete">устанавить</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="552"/>
@@ -854,21 +863,17 @@ Results</source>
         <translation>softProjector Справка</translation>
     </message>
     <message>
-        <location filename="helpdialog.ui" line="20"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="helpdialog.ui" line="21"/>
+        <source>qrc:/help/help/index.html</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="helpdialog.ui" line="46"/>
+        <location filename="helpdialog.ui" line="44"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="helpdialog.ui" line="49"/>
+        <location filename="helpdialog.ui" line="47"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
@@ -956,7 +961,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="managedatadialog.ui" line="110"/>
         <source>Songbooks</source>
-        <translation>Сборники</translation>
+        <translation>Песенники</translation>
     </message>
     <message>
         <source>Song Collections</source>
@@ -1004,34 +1009,34 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="131"/>
-        <source>Select a Songbook to import</source>
-        <oldsource>Select a song collection to import</oldsource>
+        <source>Select a songbook to import</source>
+        <oldsource>Select a Songbook to import</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="133"/>
-        <source>softProjector Songbook file (*.txt *.sps)</source>
-        <oldsource>softProjector song collection file (*.txt *.sps)</oldsource>
+        <source>softProjector songbook file </source>
+        <oldsource>softProjector Songbook file (*.txt *.sps)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="160"/>
-        <location filename="managedatadialog.cpp" line="419"/>
-        <location filename="managedatadialog.cpp" line="526"/>
+        <location filename="managedatadialog.cpp" line="420"/>
+        <location filename="managedatadialog.cpp" line="527"/>
         <source>Importing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="160"/>
-        <location filename="managedatadialog.cpp" line="419"/>
-        <location filename="managedatadialog.cpp" line="526"/>
+        <location filename="managedatadialog.cpp" line="420"/>
+        <location filename="managedatadialog.cpp" line="527"/>
         <source>Cancel</source>
         <translation type="unfinished">Отмена</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="185"/>
-        <source>User Songbook</source>
-        <oldsource>User Song Collection</oldsource>
+        <source>User songbook</source>
+        <oldsource>User Songbook</oldsource>
         <translation type="unfinished">Сборник Пользователя</translation>
     </message>
     <message>
@@ -1042,26 +1047,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="257"/>
-        <source>Save the Songbook as:</source>
-        <oldsource>Save the song collection as:</oldsource>
+        <source>Save the songbook as:</source>
+        <oldsource>Save the Songbook as:</oldsource>
         <translation type="unfinished">Сохранить сборник как:</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="258"/>
-        <source>softProjector Songbook file (*.sps)</source>
-        <oldsource>softProjector song collection file (*.sps)</oldsource>
+        <source>softProjector songbook file (*.sps)</source>
+        <oldsource>softProjector Songbook file (*.sps)</oldsource>
         <translation type="unfinished">softProjector сборник файл (*.sps)</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="317"/>
-        <source>Export Complete</source>
+        <source>Export complete</source>
+        <oldsource>Export Complete</oldsource>
         <translation type="unfinished">Экспорт завершен</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="318"/>
-        <source>The Songbook &quot;</source>
-        <oldsource>The song collection &quot;</oldsource>
-        <translation type="unfinished">Сборник &quot;</translation>
+        <source>The songbook &quot;</source>
+        <oldsource>The Songbook &quot;</oldsource>
+        <translation>Песенник </translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="318"/>
@@ -1074,20 +1080,20 @@ Has been saved to:
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="330"/>
-        <source>Delete Songbook?</source>
-        <oldsource>Delete Song Collection?</oldsource>
-        <translation type="unfinished">Удалить Сборник?</translation>
+        <source>Delete songbook?</source>
+        <oldsource>Delete Songbook?</oldsource>
+        <translation type="unfinished">Удалить песенник?</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="331"/>
-        <location filename="managedatadialog.cpp" line="707"/>
+        <location filename="managedatadialog.cpp" line="708"/>
         <source>Are you sure that you want to delete: </source>
         <translation type="unfinished">Вы уверены, что вы хотите удалить:</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="332"/>
-        <source>This action will permanentrly delete this Songbook</source>
-        <oldsource>This action will permanentrly delete this song collection</oldsource>
+        <source>This action will permanentrly delete this songbook</source>
+        <oldsource>This action will permanentrly delete this Songbook</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1097,56 +1103,57 @@ Has been saved to:
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="394"/>
-        <source>All supported Bible files (*.spb *.txt);;softProjector Bible file (*.spb);;Unbound Bible file (*.txt)</source>
+        <source>All supported Bible files </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="644"/>
+        <location filename="managedatadialog.cpp" line="395"/>
+        <location filename="managedatadialog.cpp" line="646"/>
+        <source>softProjector Bible file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="396"/>
+        <source>Unbound Bible file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="645"/>
         <source>Save exported Bible as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="693"/>
+        <location filename="managedatadialog.cpp" line="694"/>
         <source>Bible has been exported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="694"/>
+        <location filename="managedatadialog.cpp" line="695"/>
         <source>Bible:
      </source>
         <translation type="unfinished">Библия:
      </translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="694"/>
+        <location filename="managedatadialog.cpp" line="695"/>
         <source>
 Has been saved to:
      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="706"/>
+        <location filename="managedatadialog.cpp" line="707"/>
         <source>Delete Bible?</source>
         <translation type="unfinished">Удалить Библию?</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="708"/>
+        <location filename="managedatadialog.cpp" line="709"/>
         <source>This action will permanentrly delete this Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="791"/>
-        <source>Edit Bible Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="managedatadialog.cpp" line="792"/>
+        <location filename="managedatadialog.cpp" line="793"/>
         <source>Bible title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="managedatadialog.cpp" line="645"/>
-        <source>softProjector Bible File (*.spb)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1205,7 +1212,8 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="87"/>
-        <source>Use Blured Shodow</source>
+        <source>Use blured shodow</source>
+        <oldsource>Use Blured Shodow</oldsource>
         <translation type="unfinished">Использование расплывшуюся тень</translation>
     </message>
     <message>
@@ -1222,8 +1230,9 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="145"/>
         <location filename="settingsdialog.ui" line="195"/>
-        <source>Remove Wallpaper</source>
-        <translation type="unfinished">Удалить обои</translation>
+        <source>Remove wallpaper</source>
+        <oldsource>Remove Wallpaper</oldsource>
+        <translation type="unfinished">Удалить обою</translation>
     </message>
     <message>
         <source>Black screen</source>
@@ -1246,12 +1255,14 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="120"/>
-        <source>Active Wallpaper</source>
+        <source>Active wallpaper</source>
+        <oldsource>Active Wallpaper</oldsource>
         <translation type="unfinished">Активная обюя</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="170"/>
-        <source>Passive Wallpaper</source>
+        <source>Passive wallpaper</source>
+        <oldsource>Passive Wallpaper</oldsource>
         <translation type="unfinished">Пассивная обоя</translation>
     </message>
     <message>
@@ -1289,19 +1300,19 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.cpp" line="69"/>
-        <location filename="softprojector.cpp" line="918"/>
+        <location filename="softprojector.cpp" line="919"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="70"/>
-        <location filename="softprojector.cpp" line="919"/>
+        <location filename="softprojector.cpp" line="920"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="71"/>
-        <location filename="softprojector.cpp" line="920"/>
+        <location filename="softprojector.cpp" line="921"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
@@ -1312,7 +1323,8 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.cpp" line="783"/>
-        <source>Delete Song?</source>
+        <source>Delete song?</source>
+        <oldsource>Delete Song?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1379,7 +1391,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.ui" line="149"/>
-        <location filename="softprojector.ui" line="233"/>
+        <location filename="softprojector.ui" line="249"/>
         <source>&amp;Help</source>
         <translation type="unfinished">Справка</translation>
     </message>
@@ -1396,7 +1408,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="174"/>
         <source>&amp;Settings...</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation type="unfinished">Настройки...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="177"/>
@@ -1404,77 +1416,77 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="182"/>
+        <location filename="softprojector.ui" line="186"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">Выход</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="185"/>
+        <location filename="softprojector.ui" line="189"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="190"/>
+        <location filename="softprojector.ui" line="194"/>
         <source>DataBase</source>
         <translation type="unfinished">База Данных</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="198"/>
+        <location filename="softprojector.ui" line="206"/>
         <source>&amp;Edit Current Song...</source>
         <translation type="unfinished">Редактировать Песню...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="201"/>
+        <location filename="softprojector.ui" line="209"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="206"/>
+        <location filename="softprojector.ui" line="218"/>
         <source>&amp;New Song...</source>
         <translation type="unfinished">Новую Песню...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="209"/>
+        <location filename="softprojector.ui" line="221"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="214"/>
+        <location filename="softprojector.ui" line="226"/>
         <source>&amp;Manage Database...</source>
         <translation type="unfinished">Управления Базой Данных...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="217"/>
+        <location filename="softprojector.ui" line="229"/>
         <source>Import and export song collections and Bibles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="220"/>
+        <location filename="softprojector.ui" line="232"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="225"/>
+        <location filename="softprojector.ui" line="241"/>
         <source>&amp;Delete Current Song</source>
         <translation type="unfinished">Удалить Песню</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="228"/>
+        <location filename="softprojector.ui" line="244"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="236"/>
+        <location filename="softprojector.ui" line="252"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="244"/>
+        <location filename="softprojector.ui" line="260"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="252"/>
+        <location filename="softprojector.ui" line="268"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1500,10 +1512,10 @@ Has been saved to:
     </message>
     <message>
         <location filename="songwidget.cpp" line="126"/>
-        <location filename="songwidget.cpp" line="462"/>
-        <source>All Songbooks</source>
-        <oldsource>All Song Collections</oldsource>
-        <translation>Все Сборники</translation>
+        <location filename="songwidget.cpp" line="461"/>
+        <source>All songbooks</source>
+        <oldsource>All Songbooks</oldsource>
+        <translation>Все песенники</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="60"/>
@@ -1574,7 +1586,7 @@ Has been saved to:
     <message>
         <location filename="songwidget.ui" line="210"/>
         <source>Remove from playlist</source>
-        <translation type="unfinished">Удалить из плейлист</translation>
+        <translation type="unfinished">Удалить из плейлиста</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="269"/>

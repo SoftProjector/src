@@ -48,3 +48,7 @@ FORMS += softprojector.ui \
 TRANSLATIONS = sotftpro_ru.ts
 CODECFORTR = UTF-8
 RESOURCES += softprojector.qrc
+
+win32 {
+    RC_FILE = softprojector.rc
+}

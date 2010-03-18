@@ -84,7 +84,7 @@
         <string>Useful when using a wallpaper image. Displays a fancy shadow effect.</string>
        </property>
        <property name="text">
-        <string>Use Blured Shodow</string>
+        <string>Use blured shodow</string>
        </property>
       </widget>
      </item>
@@ -117,7 +117,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Active Wallpaper</string>
+      <string>Active wallpaper</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -142,7 +142,7 @@
         <item>
          <widget class="QPushButton" name="remove_wallpaper_button">
           <property name="text">
-           <string>Remove Wallpaper</string>
+           <string>Remove wallpaper</string>
           </property>
          </widget>
         </item>
@@ -167,7 +167,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Passive Wallpaper</string>
+      <string>Passive wallpaper</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -192,7 +192,7 @@
         <item>
          <widget class="QPushButton" name="remove_passive_wallpaper_button">
           <property name="text">
-           <string>Remove Wallpaper</string>
+           <string>Remove wallpaper</string>
           </property>
          </widget>
         </item>

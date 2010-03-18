@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/Main.ico</normaloff>:/icons/icons/Main.ico</iconset>
+  </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextOnly</enum>
   </property>
@@ -135,7 +139,6 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="actionDataBase"/>
     <addaction name="actionNewSong"/>
     <addaction name="actionEditSong"/>
     <addaction name="actionDeleteSong"/>
@@ -170,6 +173,10 @@
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/settings.ico</normaloff>:/icons/icons/settings.ico</iconset>
+   </property>
    <property name="text">
     <string>&amp;Settings...</string>
    </property>
@@ -187,14 +194,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
-   </property>
-  </action>
-  <action name="actionDataBase">
-   <property name="text">
-    <string>DataBase</string>
-   </property>
-   <property name="visible">
-    <bool>false</bool>
    </property>
   </action>
   <action name="actionEditSong">
@@ -222,6 +221,10 @@
    </property>
   </action>
   <action name="actionManage_Database">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Manage Database...</string>
    </property>
@@ -256,6 +259,11 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/lang_ru.png</normaloff>
+     <selectedoff>:/icons/icons/lang_ru_ck.png</selectedoff>:/icons/icons/lang_ru.png</iconset>
+   </property>
    <property name="text">
     <string>Russian</string>
    </property>
@@ -263,6 +271,10 @@
   <action name="actionEnglish">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/lang_en.png</normaloff>:/icons/icons/lang_en.png</iconset>
    </property>
    <property name="text">
     <string>English</string>

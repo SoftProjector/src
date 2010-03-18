@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/language">
         <file>sotftpro_ru.qm</file>
     </qresource>
     <qresource prefix="/icons">
@@ -7,5 +7,29 @@
         <file>icons/song_new.png</file>
         <file>icons/song_delete.png</file>
         <file>icons/song_edit.png</file>
+        <file>icons/song_tab.png</file>
+        <file>icons/database.png</file>
+        <file>icons/book.png</file>
+        <file>icons/lang_en.png</file>
+        <file>icons/lang_en_ck.png</file>
+        <file>icons/lang_ru.png</file>
+        <file>icons/lang_ru_ck.png</file>
+        <file>icons/Main.ico</file>
+        <file>icons/settings.ico</file>
+    </qresource>
+    <qresource prefix="/help">
+        <file>help/sphelp.css</file>
+        <file>help/addsongs.html</file>
+        <file>help/biblesettings.html</file>
+        <file>help/deletesongs.html</file>
+        <file>help/editsong.html</file>
+        <file>help/generalsettings.html</file>
+        <file>help/index.html</file>
+        <file>help/managebible.html</file>
+        <file>help/managesongbooks.html</file>
+        <file>help/showannouce.html</file>
+        <file>help/showbible.html</file>
+        <file>help/showsongs.html</file>
+        <file>help/songsettings.html</file>
     </qresource>
 </RCC>

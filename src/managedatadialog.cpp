@@ -128,9 +128,9 @@ void ManageDataDialog::updateSongbookButtons()
 void ManageDataDialog::on_import_songbook_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     tr("Select a Songbook to import"),
+                                                     tr("Select a songbook to import"),
                                                      ".",
-                                                     tr("softProjector Songbook file (*.txt *.sps)"));
+                                                     tr("softProjector songbook file ") + "(*.sps)");
 
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
@@ -182,7 +182,7 @@ void ManageDataDialog::importSongbook(QString path)
         }
         else
         {
-            title = tr("User Songbook");
+            title = tr("User songbook");
             info = tr("Songbook imported by the user");
         }
 
@@ -254,8 +254,8 @@ void ManageDataDialog::importSongbook(QString path)
 
 void ManageDataDialog::on_export_songbook_pushButton_clicked()
 {
-    QString file_path = QFileDialog::getSaveFileName(this,tr("Save the Songbook as:"),
-                                             ".",tr("softProjector Songbook file (*.sps)"));
+    QString file_path = QFileDialog::getSaveFileName(this,tr("Save the songbook as:"),
+                                             ".",tr("softProjector songbook file (*.sps)"));
     if( !file_path.isNull() )
         exportSongbook(file_path);
 }
@@ -314,8 +314,8 @@ void ManageDataDialog::exportSongbook(QString path)
     setArrowCursor();
 
     QMessageBox mb;
-    mb.setWindowTitle(tr("Export Complete"));
-    mb.setText(tr("The Songbook \"") + title + tr("\"\nHas been saved to:\n     ") + path);
+    mb.setWindowTitle(tr("Export complete"));
+    mb.setText(tr("The songbook \"") + title + tr("\"\nHas been saved to:\n     ") + path);
     mb.setIcon(QMessageBox::Information);
     mb.exec();
 }
@@ -327,9 +327,9 @@ void ManageDataDialog::on_delete_songbook_pushButton_clicked()
     QString name = songbook.title;
 
     QMessageBox ms;
-    ms.setWindowTitle(tr("Delete Songbook?"));
+    ms.setWindowTitle(tr("Delete songbook?"));
     ms.setText(tr("Are you sure that you want to delete: ")+ name);
-    ms.setInformativeText(tr("This action will permanentrly delete this Songbook"));
+    ms.setInformativeText(tr("This action will permanentrly delete this songbook"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     ms.setDefaultButton(QMessageBox::Yes);
@@ -391,8 +391,9 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
     QString file_path = QFileDialog::getOpenFileName(this,
                                                      tr("Select Bible file to import"),
                                                      ".",
-                                                     tr("All supported Bible files (*.spb *.txt);;"
-                                                        "softProjector Bible file (*.spb);;Unbound Bible file (*.txt)"));
+                                                     tr("All supported Bible files ") + "(*.spb *.txt);;" +
+                                                        tr("softProjector Bible file ") + "(*.spb);;"+
+                                                        tr("Unbound Bible file ") +"(*.txt)");
 
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
@@ -642,7 +643,7 @@ void ManageDataDialog::importBibleUnbound(QString path)
 void ManageDataDialog::on_export_bible_pushButton_clicked()
 {
     QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported Bible as:"),
-                                             ".",tr("softProjector Bible File (*.spb)"));
+                                             ".",tr("softProjector Bible file ") + "(*.spb)");
     if( !file_path.isNull() )
         exportBible(file_path);
 }
@@ -788,7 +789,7 @@ void ManageDataDialog::on_edit_bible_pushButton_clicked()
     int row = ui->bibleTableView->currentIndex().row();
     Bibles bible = bible_model->getBible(row);
     bool ok;
-    QString name = QInputDialog::getText(this,tr("Edit Bible Name"),
+    QString name = QInputDialog::getText(this,tr("Edit Bible name"),
                                          tr("Bible title:"),QLineEdit::Normal,
                                          bible.title, &ok);
     if(ok)

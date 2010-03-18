@@ -123,7 +123,7 @@ void SongWidget::loadSongbooks()
         songbookList << sq.value(0).toString();
         sbor << sq.value(1).toString();
     }
-    ui->songbook_menu->addItem(tr("All Songbooks"));
+    ui->songbook_menu->addItem(tr("All songbooks"));
     ui->songbook_menu->addItems(sbor);
     QList<Song> song_list = song_database.getSongs("ALL");
 
@@ -399,7 +399,6 @@ void SongWidget::updateSongbooks()
     QString current_songbook = ui->songbook_menu->currentText();
     QString item0 = ui->songbook_menu->itemText(0);
     ui->songbook_menu->clear();
-    ui->songbook_menu->addItem(item0);
     loadSongbooks();
 
     int new_index = ui->songbook_menu->findText(current_songbook);
@@ -459,5 +458,5 @@ void SongWidget::setSplitterState(QString state)
 
 void SongWidget::retranslateUis()
 {
-    ui->songbook_menu->setItemText(0,tr("All Songbooks"));
+    ui->songbook_menu->setItemText(0,tr("All songbooks"));
 }
