@@ -418,9 +418,9 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     int main_flags;
 
     if(wrap)
-       main_flags = Qt::AlignHCenter | Qt::AlignVCenter;
+        main_flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
     else
-       main_flags = Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap;
+        main_flags = Qt::AlignHCenter | Qt::AlignVCenter;
 
     QFont orig_font = painter->font();
     QFont caption_font = orig_font;
@@ -507,6 +507,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     }
 
     if( last_verse )
+    {
         // If the last vers is very large, do not put extra blank lines:
         // FIXME use better logic here. Instead of number of lines, analyze the
         // height vs width ratio.
@@ -515,7 +516,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
         else
             // The extra blank lines make the display cleaner:
             main_text = "\n" + main_text + "\n\n*   *   *";
-
+    }
     // Margins:
     int left = 30;
     int top = 20;
@@ -532,10 +533,12 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool exit = false;
     while( !exit )
     {
+        //qDebug() << "Trying to draw song using font " << font.pointSize();
         out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str);
         exit = ( out_rect.width() <= w && out_rect.height() <= h );
         if( !exit )
         {
+            //qDebug() << "  not fitting, decreasing font size";
             // Decrease font size by one point and try again
             font.setPointSize( font.pointSize()-1 );
             painter->setFont(font);
@@ -546,22 +549,26 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     // (Do not allow font to be shrinked less than a 4/5 of the desired font)
     if( font.pointSize() < (orig_font_size*4/5) )
     {
+        //qDebug() << "Font size is less than 4/5 of the original; attempting to wrap";
         font.setPointSize(orig_font_size);
         painter->setFont(font);
         exit = false;
         wrap = true;
         while( !exit )
         {
+            //qDebug() << "WRAP: Trying to draw song using font " << font.pointSize();
             out_rect = drawSongTextToRect(painter, rect, false, true, main_text, top_caption_str, song_num_str);
             exit = ( out_rect.width() <= w && out_rect.height() <= h );
             if( !exit )
             {
+                //qDebug() << "  WRAP: not fitting, decreasing font size";
                 // Decrease font size by one point and try again
                 font.setPointSize( font.pointSize()-1 );
                 painter->setFont(font);
             }
         }
     }
+    //qDebug() << "Drawing with wrap set to " << wrap;
     // At this point we picked correct font size and flags; so it's safe to draw:
     drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str);
 }
@@ -675,10 +682,10 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
 {
     // Margins:
-    int left = 30;
-    int top = 20;
-    int w = width - left - left;
-    int h = height - top - top;
+    //int left = 30;
+    //int top = 20;
+    //int w = width - left - left;
+    //int h = height - top - top;
 
     announceWidget->drawToPainter(painter, width, height);
 }
@@ -828,7 +835,7 @@ void SoftProjector::on_actionAbout_triggered()
 
 void SoftProjector::on_tabWidget_currentChanged(int index)
 {
-    qDebug()<<"Tab index: "+ QString::number(index);
+    //qDebug()<<"Tab index: "+ QString::number(index);
     if (index == 1)
     {
         // Songs tab is activated
