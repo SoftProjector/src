@@ -56,6 +56,10 @@
        <property name="text">
         <string>Go Live (F5)</string>
        </property>
+       <property name="icon">
+        <iconset resource="softprojector.qrc">
+         <normaloff>:/icons/icons/go_live.png</normaloff>:/icons/icons/go_live.png</iconset>
+       </property>
        <property name="shortcut">
         <string>F5</string>
        </property>
@@ -201,6 +205,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

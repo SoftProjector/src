@@ -16,6 +16,7 @@
         <file>icons/lang_ru_ck.png</file>
         <file>icons/Main.ico</file>
         <file>icons/settings.ico</file>
+        <file>icons/go_live.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
