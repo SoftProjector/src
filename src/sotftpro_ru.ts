@@ -7,22 +7,23 @@
     <message>
         <location filename="aboutdialog.ui" line="14"/>
         <source>About softProjecor</source>
-        <translation>О программе softProjector</translation>
+        <translation type="unfinished">О программе softProjector</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="42"/>
         <source>softProjector</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Софт Проектор</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="91"/>
         <source>Version: *gets set later*</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Версия: *будет установлена позже*</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="116"/>
         <source>an open souce media projection software</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>УТОЧНИТЬ!!!</translatorcomment>
+        <translation type="unfinished">Открытая программа проектор</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="149"/>
@@ -43,7 +44,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="aboutdialog.ui" line="208"/>
         <source>Data Contributors:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Участники в разработке базы данных:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="215"/>
@@ -88,32 +89,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AddSbornikDialog</name>
-    <message>
-        <source>Edit Song Collection</source>
-        <translation type="obsolete">Изменить Сборник</translation>
-    </message>
-    <message>
-        <source>Song Collection Title:</source>
-        <translation type="obsolete">Названия Сборника:</translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation type="obsolete">Описание:</translation>
-    </message>
-</context>
-<context>
     <name>AddSongbookDialog</name>
     <message>
         <location filename="addsongbookdialog.ui" line="14"/>
         <source>Add songbook</source>
         <oldsource>Edit Songbook</oldsource>
-        <translation type="unfinished">Изменить Сборник</translation>
+        <translation type="unfinished">Добавить песенник</translation>
     </message>
     <message>
         <location filename="addsongbookdialog.ui" line="20"/>
         <source>Songbook Title:</source>
-        <translation>Названия Сборника:</translation>
+        <translation type="unfinished">Название песенника:</translation>
     </message>
     <message>
         <location filename="addsongbookdialog.ui" line="33"/>
@@ -126,7 +112,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcewidget.ui" line="26"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Форма</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="34"/>
@@ -136,7 +122,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcewidget.ui" line="54"/>
         <source>Quickly display the selected song on the screen without adding it to playlist first</source>
-        <translation type="unfinished">Быстрое отображение объявления экране</translation>
+        <translation type="unfinished">Быстрое отображение объявления на экране без предварительного включения в список</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="57"/>
@@ -202,7 +188,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcewidget.ui" line="157"/>
         <source>add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">выбранный текст автоматически добавляется в список истории при нажатии F5</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="160"/>
@@ -450,7 +436,7 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="28"/>
         <source>Songbook:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песенник:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="75"/>
@@ -790,7 +776,8 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="501"/>
         <source>Background:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>если только цвет, если рисунок то - Фоновый рисунок</translatorcomment>
+        <translation type="unfinished">Фон:</translation>
     </message>
     <message>
         <source>Set </source>
@@ -832,22 +819,22 @@ Results</source>
         <location filename="editwidget.cpp" line="237"/>
         <location filename="editwidget.cpp" line="248"/>
         <source>Add a new Songbook</source>
-        <translation type="unfinished">Добавить новый сборник</translation>
+        <translation type="unfinished">Добавить новый песенник</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="243"/>
         <source>Select Songbook</source>
-        <translation type="unfinished">Выберите Сборник</translation>
+        <translation type="unfinished">Выберите Песенник</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="243"/>
         <source>Select a Songbook to which you want to add a song</source>
-        <translation type="unfinished">Выберите Сборник который вы хотите добавить песню</translation>
+        <translation type="unfinished">Выберите Песенник в который вы хотите добавить песню</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="269"/>
         <source>Add a Songbook</source>
-        <translation type="unfinished">Добавить Сборник</translation>
+        <translation type="unfinished">Добавить Песенник</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="304"/>
@@ -893,13 +880,13 @@ Results</source>
     <message>
         <location filename="managedatadialog.ui" line="37"/>
         <source>Import a new Bible into your database/</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импортировать новую версию Библию в базу данных/</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="40"/>
         <location filename="managedatadialog.ui" line="124"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Импортировать...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="43"/>
@@ -910,13 +897,13 @@ Results</source>
     <message>
         <location filename="managedatadialog.ui" line="53"/>
         <source>Edit Bible title of currently selected Bible.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактировать название выбранной версии Библии.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="56"/>
         <location filename="managedatadialog.ui" line="137"/>
         <source>&amp;Edit...</source>
-        <translation type="unfinished">Изменить...</translation>
+        <translation type="unfinished">&amp;Изменить...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="59"/>
@@ -950,7 +937,7 @@ Results</source>
         <location filename="managedatadialog.ui" line="82"/>
         <location filename="managedatadialog.ui" line="163"/>
         <source>&amp;Delete...</source>
-        <translation type="unfinished">Удалить...</translation>
+        <translation type="unfinished">&amp;Удалить...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="85"/>
@@ -970,22 +957,22 @@ Results</source>
     <message>
         <location filename="managedatadialog.ui" line="121"/>
         <source>Import a new Songbook into database.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импортировать новый сборник в базу данных.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="134"/>
         <source>Edit the title and information about the Songbook.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактировать название сборника и информацию о нем.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="147"/>
         <source>Export currently selected Songbook to be able to share with others and for backup.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспортировать выбранный сборник для других пользователей и для резервной копии.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="160"/>
         <source>Delete currently selected Songbook from database.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить выбранный сборник из базы данных.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="201"/>
@@ -995,7 +982,7 @@ Results</source>
     <message>
         <location filename="managedatadialog.ui" line="221"/>
         <source>Close Manage Database Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть диалоговое окно редактирования базы данных</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="224"/>
@@ -1011,20 +998,21 @@ Results</source>
         <location filename="managedatadialog.cpp" line="131"/>
         <source>Select a songbook to import</source>
         <oldsource>Select a Songbook to import</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать песенник для импортирования</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="133"/>
         <source>softProjector songbook file </source>
         <oldsource>softProjector Songbook file (*.txt *.sps)</oldsource>
-        <translation type="unfinished"></translation>
+        <translatorcomment>ПРОВЕРИТЬ ПРАВИЛЬНОСТЬ!!!</translatorcomment>
+        <translation type="unfinished">Файл песенника в формате Софт Проектора</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="160"/>
         <location filename="managedatadialog.cpp" line="420"/>
         <location filename="managedatadialog.cpp" line="527"/>
         <source>Importing...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импортировать...</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="160"/>
@@ -1043,19 +1031,19 @@ Results</source>
         <location filename="managedatadialog.cpp" line="186"/>
         <source>Songbook imported by the user</source>
         <oldsource>Song collection imported by the user</oldsource>
-        <translation type="unfinished">Сборник добавленный пользователем</translation>
+        <translation type="unfinished">Песенник добавленный пользователем</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="257"/>
         <source>Save the songbook as:</source>
         <oldsource>Save the Songbook as:</oldsource>
-        <translation type="unfinished">Сохранить сборник как:</translation>
+        <translation type="unfinished">Сохранить песенник как:</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="258"/>
         <source>softProjector songbook file (*.sps)</source>
         <oldsource>softProjector Songbook file (*.sps)</oldsource>
-        <translation type="unfinished">softProjector сборник файл (*.sps)</translation>
+        <translation type="unfinished">Файл песенника в формате Софт Проектор (*.sps)</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="317"/>
@@ -1067,7 +1055,7 @@ Results</source>
         <location filename="managedatadialog.cpp" line="318"/>
         <source>The songbook &quot;</source>
         <oldsource>The Songbook &quot;</oldsource>
-        <translation>Песенник </translation>
+        <translation type="unfinished">Сборник </translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="318"/>
@@ -1088,44 +1076,45 @@ Has been saved to:
         <location filename="managedatadialog.cpp" line="331"/>
         <location filename="managedatadialog.cpp" line="708"/>
         <source>Are you sure that you want to delete: </source>
-        <translation type="unfinished">Вы уверены, что вы хотите удалить:</translation>
+        <translation type="unfinished">Вы уверены, что хотите удалить:</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="332"/>
         <source>This action will permanentrly delete this songbook</source>
         <oldsource>This action will permanentrly delete this Songbook</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сборник будет удален навсегда</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="392"/>
         <source>Select Bible file to import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбор версии Библии для импортирования</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="394"/>
         <source>All supported Bible files </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Все поддерживаемые файлы Библий</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="395"/>
         <location filename="managedatadialog.cpp" line="646"/>
         <source>softProjector Bible file </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">файл Библии в формате Софт Проектор</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="396"/>
         <source>Unbound Bible file </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>ПРОВЕРИТЬ ПЕРЕВОД!!!</translatorcomment>
+        <translation type="unfinished">Неформатированный файл Библии</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="645"/>
         <source>Save exported Bible as:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранить экспортируемую Библию как:</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="694"/>
         <source>Bible has been exported</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Экспорт Библии завершен</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="695"/>
@@ -1139,7 +1128,8 @@ Has been saved to:
         <source>
 Has been saved to:
      </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранена как:
+      </translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="707"/>
@@ -1149,23 +1139,12 @@ Has been saved to:
     <message>
         <location filename="managedatadialog.cpp" line="709"/>
         <source>This action will permanentrly delete this Bible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Библия будет удалена навсегда</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="793"/>
         <source>Bible title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SborniksModel</name>
-    <message>
-        <source>Title</source>
-        <translation type="obsolete">Название</translation>
-    </message>
-    <message>
-        <source>Infomation</source>
-        <translation type="obsolete">Информация</translation>
+        <translation type="unfinished">Название Библии:</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1487,7 @@ Has been saved to:
         <location filename="songwidget.ui" line="47"/>
         <source>Select Songbook to use</source>
         <oldsource>Select song collection to use</oldsource>
-        <translation type="unfinished">Выбрать сборник для исползования</translation>
+        <translation type="unfinished">Выбрать песенник для исползования</translation>
     </message>
     <message>
         <location filename="songwidget.cpp" line="126"/>
@@ -1647,7 +1626,7 @@ Has been saved to:
     <message>
         <location filename="song.cpp" line="330"/>
         <source>Songbook</source>
-        <translation>Сборник</translation>
+        <translation>Песенник</translation>
     </message>
     <message>
         <source>Song Collection</source>
