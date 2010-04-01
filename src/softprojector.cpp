@@ -48,6 +48,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Will replace defaults if setting is saved:
     readXMLConfigurationFile();
 
+    display->setWindowIcon(QIcon(":icons/icons/display.png"));
     if (display_on_top)
         display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no

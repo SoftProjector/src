@@ -14,12 +14,16 @@
         <file>icons/lang_en_ck.png</file>
         <file>icons/lang_ru.png</file>
         <file>icons/lang_ru_ck.png</file>
-        <file>icons/Main.ico</file>
-        <file>icons/settings.ico</file>
         <file>icons/go_live.png</file>
         <file>icons/remove.png</file>
         <file>icons/search.png</file>
         <file>icons/add.png</file>
+        <file>icons/remove_all.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/add_songbook.png</file>
+        <file>icons/softprojector.png</file>
+        <file>icons/display.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
@@ -36,4 +40,5 @@
         <file>help/showsongs.html</file>
         <file>help/songsettings.html</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

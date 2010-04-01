@@ -57,6 +57,7 @@ signals:
     void goLive(QStringList chapter_list, int verse, QString caption);
 
 private slots:
+    void on_clear_history_pushButton_clicked();
     void on_history_listWidget_doubleClicked(QModelIndex index);
     void on_history_listWidget_currentRowChanged(int currentRow);
     void on_remove_from_history_pushButton_clicked();

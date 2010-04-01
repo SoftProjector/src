@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>softProjector - Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -256,6 +260,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

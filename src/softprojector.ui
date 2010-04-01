@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="softprojector.qrc">
-    <normaloff>:/icons/icons/Main.ico</normaloff>:/icons/icons/Main.ico</iconset>
+    <normaloff>:/icons/icons/softprojector.png</normaloff>:/icons/icons/softprojector.png</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextOnly</enum>
@@ -175,7 +175,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/settings.ico</normaloff>:/icons/icons/settings.ico</iconset>
+     <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Settings...</string>

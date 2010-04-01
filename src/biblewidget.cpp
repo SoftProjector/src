@@ -423,6 +423,13 @@ void BibleWidget::on_remove_from_history_pushButton_clicked()
 //        history_items.verse_text.takeAt(current_row);
     }
 }
+
+void BibleWidget::on_clear_history_pushButton_clicked()
+{
+    ui->history_listWidget->clear();
+    history_items.clear();
+}
+
 void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
 {
     if (!(currentRow == -1))

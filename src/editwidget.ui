@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Edit and/or Add New songs</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/edit.png</normaloff>:/icons/icons/edit.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_7">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_6">
@@ -570,6 +574,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>
