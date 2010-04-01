@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="uk" sourcelanguage="en_US">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutDialog</name>
@@ -55,12 +55,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="addsongbookdialog.ui" line="20"/>
+        <location filename="addsongbookdialog.ui" line="24"/>
         <source>Songbook Title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="addsongbookdialog.ui" line="33"/>
+        <location filename="addsongbookdialog.ui" line="37"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,6 +346,16 @@ Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="biblewidget.ui" line="642"/>
+        <source>Clear all history items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="biblewidget.ui" line="645"/>
+        <source>Clear History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="biblewidget.cpp" line="314"/>
         <source>Total of </source>
         <translation type="unfinished"></translation>
@@ -387,359 +397,99 @@ Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="28"/>
+        <location filename="editwidget.ui" line="32"/>
         <source>Songbook:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="75"/>
+        <location filename="editwidget.ui" line="79"/>
         <source>Title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="92"/>
+        <location filename="editwidget.ui" line="96"/>
         <source>Words by:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="105"/>
+        <location filename="editwidget.ui" line="109"/>
         <source>Music by: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="122"/>
+        <location filename="editwidget.ui" line="126"/>
         <source>Key: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="135"/>
+        <location filename="editwidget.ui" line="139"/>
         <source>Category: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="155"/>
+        <location filename="editwidget.ui" line="159"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="160"/>
-        <source>Библейские истории</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="165"/>
-        <source>Благовествование</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="170"/>
-        <source>Бог</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="175"/>
-        <source>Божья любовь и величие</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="180"/>
-        <source>Время</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="185"/>
-        <source>Воскресение Христово</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="190"/>
-        <source>Второе пришествие Христа и суд</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="195"/>
-        <source>Для детей и семейные</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="200"/>
-        <source>Духовная борьба и победа</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="205"/>
-        <source>Для новообращённых</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="210"/>
-        <source>Жатвенные</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="215"/>
-        <source>Иисус Христос</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="220"/>
-        <source>Любовь</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="225"/>
-        <source>Мама</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="230"/>
-        <source>Молитва</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="235"/>
-        <source>Молитвенные</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="240"/>
-        <source>Молодёжные</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="245"/>
-        <source>На бракосочетание</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="250"/>
-        <source>На закате</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="255"/>
-        <source>Наш Друг и Спаситель</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="260"/>
-        <source>На крещение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="265"/>
-        <source>На новый год</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="270"/>
-        <source>На nогребение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="275"/>
-        <source>На рассвете</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="280"/>
-        <source>На рукоположение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="285"/>
-        <source>На хлебопреломление</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="290"/>
-        <source>Небесные обители</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="295"/>
-        <source>Наставление и самоиспытание</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="300"/>
-        <source>О Духе Святом, освящение, через Духа Святого</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="305"/>
-        <source>О Церкви</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="310"/>
-        <source>Перед началом собрания</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="315"/>
-        <source>Последнее время</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="320"/>
-        <source>Практическая жизнь с Богом</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="325"/>
-        <source>При заключении собрания</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="330"/>
-        <source>Приветственные и nрощальные</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="335"/>
-        <source>Призыв к труду</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="340"/>
-        <source>Призыв к покаянию, о покаянии</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="345"/>
-        <source>Путь веры</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="350"/>
-        <source>Радость спасения во Христе</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="355"/>
-        <source>Разные христианские праздники</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="360"/>
-        <source>Рождество христово</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="365"/>
-        <source>Решительность и верность</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="370"/>
-        <source>Руки Христа</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="375"/>
-        <source>Следование</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="380"/>
-        <source>Слово Божье</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="385"/>
-        <source>Спасение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="390"/>
-        <source>Страдание и смерть Христа</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="395"/>
-        <source>Уверенность в Господе</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="400"/>
-        <source>Утешение больным, страждущим узникам</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="405"/>
-        <source>Утешение и ободрение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="410"/>
-        <source>Хвала и благодарение</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="415"/>
-        <source>Христианская радость</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="editwidget.ui" line="431"/>
+        <location filename="editwidget.ui" line="435"/>
         <source>Text Alingment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="437"/>
+        <location filename="editwidget.ui" line="441"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="447"/>
+        <location filename="editwidget.ui" line="451"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="454"/>
+        <location filename="editwidget.ui" line="458"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="476"/>
-        <location filename="editwidget.ui" line="518"/>
+        <location filename="editwidget.ui" line="480"/>
+        <location filename="editwidget.ui" line="522"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="483"/>
-        <location filename="editwidget.ui" line="525"/>
+        <location filename="editwidget.ui" line="487"/>
+        <location filename="editwidget.ui" line="529"/>
         <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="490"/>
+        <location filename="editwidget.ui" line="494"/>
         <source>Text font:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="501"/>
+        <location filename="editwidget.ui" line="505"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="552"/>
+        <location filename="editwidget.ui" line="556"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="555"/>
+        <location filename="editwidget.ui" line="559"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="562"/>
+        <location filename="editwidget.ui" line="566"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="565"/>
+        <location filename="editwidget.ui" line="569"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1068,89 +818,89 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="22"/>
+        <location filename="settingsdialog.ui" line="26"/>
         <source>Primary Bible:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="43"/>
+        <location filename="settingsdialog.ui" line="47"/>
         <source>Secondary Bible:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="62"/>
+        <location filename="settingsdialog.ui" line="66"/>
         <source>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector&apos;s screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="65"/>
+        <location filename="settingsdialog.ui" line="69"/>
         <source>Display screen always on top (requires program restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="74"/>
+        <location filename="settingsdialog.ui" line="78"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="77"/>
+        <location filename="settingsdialog.ui" line="81"/>
         <source>Use fading effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="84"/>
+        <location filename="settingsdialog.ui" line="88"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="87"/>
+        <location filename="settingsdialog.ui" line="91"/>
         <source>Use blured shodow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="98"/>
+        <location filename="settingsdialog.ui" line="102"/>
         <source>Change Font...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="120"/>
+        <location filename="settingsdialog.ui" line="124"/>
         <source>Active wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="138"/>
-        <location filename="settingsdialog.ui" line="188"/>
+        <location filename="settingsdialog.ui" line="142"/>
+        <location filename="settingsdialog.ui" line="192"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="145"/>
-        <location filename="settingsdialog.ui" line="195"/>
+        <location filename="settingsdialog.ui" line="149"/>
+        <location filename="settingsdialog.ui" line="199"/>
         <source>Remove wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="170"/>
+        <location filename="settingsdialog.ui" line="174"/>
         <source>Passive wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="220"/>
+        <location filename="settingsdialog.ui" line="224"/>
         <source>Songs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="226"/>
+        <location filename="settingsdialog.ui" line="230"/>
         <source>Show song number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="233"/>
+        <location filename="settingsdialog.ui" line="237"/>
         <source>Show song key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="240"/>
+        <location filename="settingsdialog.ui" line="244"/>
         <source>Show stanza title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1183,40 +933,40 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="69"/>
-        <location filename="softprojector.cpp" line="932"/>
-        <source>Bible (F6)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="softprojector.cpp" line="70"/>
         <location filename="softprojector.cpp" line="933"/>
-        <source>Songs (F7)</source>
+        <source>Bible (F6)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="71"/>
         <location filename="softprojector.cpp" line="934"/>
+        <source>Songs (F7)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="72"/>
+        <location filename="softprojector.cpp" line="935"/>
         <source>Announcements (F8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="361"/>
+        <location filename="softprojector.cpp" line="362"/>
         <source>Announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="790"/>
+        <location filename="softprojector.cpp" line="791"/>
         <source>Delete song?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="791"/>
+        <location filename="softprojector.cpp" line="792"/>
         <source>Are you sure that you want to delete a song?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="792"/>
+        <location filename="softprojector.cpp" line="793"/>
         <source>This action will permanentrly delete this song</source>
         <translation type="unfinished"></translation>
     </message>
