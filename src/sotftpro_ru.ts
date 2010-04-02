@@ -241,7 +241,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="biblewidget.ui" line="191"/>
         <source>Entire Bible</source>
-        <translation type="unfinished">Вся Библия</translation>
+        <translation type="unfinished">Всей Библии</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="201"/>
@@ -251,7 +251,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="biblewidget.ui" line="204"/>
         <source>Current Book</source>
-        <translation type="unfinished">Выбранная книга</translation>
+        <translation type="unfinished">Выбранной книге</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="211"/>
@@ -261,17 +261,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="biblewidget.ui" line="214"/>
         <source>Current Chapter</source>
-        <translation type="unfinished">Выбранная глава</translation>
+        <translation type="unfinished">Выбранной главе</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="642"/>
         <source>Clear all history items</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>уточнить</translatorcomment>
+        <translation type="unfinished">Очистить список истории</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="645"/>
         <source>Clear History</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>уточнить</translatorcomment>
+        <translation type="unfinished">Очистить историю</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="322"/>
@@ -288,13 +290,13 @@ p, li { white-space: pre-wrap; }
         <location filename="biblewidget.ui" line="450"/>
         <location filename="biblewidget.ui" line="515"/>
         <source>Filter criteria for the bible list. If the first character of the filter is a number, then only books starting with this number are matched. Example filters: &quot;Deuter&quot;, &quot;1Thes&quot;.</source>
-        <translation type="unfinished">Критерии поиска по  книгам Библии. Если первым знаком является цифра, то подбираются только книги начинающиеся с этой цифры. Примеры задания критериев: &quot;Втор&quot;, &quot;1Тим&quot;.</translation>
+        <translation type="unfinished">Критерии поиска по  книгам Библии. Если вначале ставится цифра, то подбираются только книги начинающиеся с этой цифры. Примеры задания критериев: &quot;Втор&quot;, &quot;1Тим&quot;.</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="126"/>
         <location filename="biblewidget.ui" line="543"/>
         <source>Quickly display  the selected Bible verse on the screen</source>
-        <translation type="unfinished">Показать выбранный текст на экране</translation>
+        <translation type="unfinished">Вывести выбранный текст на экран</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="263"/>
@@ -316,7 +318,7 @@ Results</source>
     <message>
         <location filename="biblewidget.ui" line="546"/>
         <source>Go Live (F5)</source>
-        <translation type="unfinished">Показать (F5)</translation>
+        <translation type="unfinished">На экран (F5)</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="553"/>
@@ -341,7 +343,7 @@ Results</source>
     <message>
         <location filename="biblewidget.ui" line="605"/>
         <source>This list contains verses that were sent to be shown</source>
-        <translation type="unfinished">В этом списке находятся стихи которые были высвечены на экране</translation>
+        <translation type="unfinished">В этом списке находятся стихи для вывода на экран</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="612"/>
@@ -438,22 +440,22 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="435"/>
         <source>Text Alingment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выравнивание текста</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="441"/>
         <source>Left</source>
-        <translation>Левый</translation>
+        <translation type="unfinished">Слева</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="451"/>
         <source>Center</source>
-        <translation>Центр</translation>
+        <translation type="unfinished">По центру</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="458"/>
         <source>Right</source>
-        <translation>Правый</translation>
+        <translation type="unfinished">Справа</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="480"/>
@@ -508,7 +510,7 @@ Results</source>
     <message>
         <location filename="editwidget.cpp" line="243"/>
         <source>Select Songbook</source>
-        <translation type="unfinished">Выбрать Сборник</translation>
+        <translation type="unfinished">Выбрать сборник</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="243"/>
@@ -523,7 +525,7 @@ Results</source>
     <message>
         <location filename="editwidget.cpp" line="304"/>
         <source>Select a picture for the wallpaper</source>
-        <translation type="unfinished">Выберите изображение для обоев</translation>
+        <translation type="unfinished">Выбрать рисунок для обоев</translation>
     </message>
 </context>
 <context>
@@ -685,7 +687,7 @@ Results</source>
         <source>softProjector songbook file </source>
         <oldsource>softProjector songbook file</oldsource>
         <translatorcomment>ПРОВЕРИТЬ ПРАВИЛЬНОСТЬ!!!</translatorcomment>
-        <translation type="unfinished">Файл сборника в формате SoftProjectorа</translation>
+        <translation type="unfinished">Файл сборника в формате SoftProjector</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="160"/>
@@ -810,7 +812,8 @@ Has been saved to:
         <source>
 Has been saved to:
      </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранена как:
+     </translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="707"/>
@@ -825,7 +828,7 @@ Has been saved to:
     <message>
         <location filename="managedatadialog.cpp" line="792"/>
         <source>Edit Bible name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактировать название Библии</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="793"/>
@@ -858,7 +861,7 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="69"/>
         <source>Display screen always on top (requires program restart)</source>
-        <translation type="unfinished">Окно экрана постоянно сверху других окон (требуется перезапуск программы)</translation>
+        <translation type="unfinished">Окно экрана сверху (требуется перезапуск программы)</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="78"/>
@@ -868,7 +871,7 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="81"/>
         <source>Use fading effects</source>
-        <translation type="unfinished">Использовать эффект затухания</translation>
+        <translation type="unfinished">Эффект затухания</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="88"/>
@@ -910,8 +913,9 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="91"/>
-        <source>Use blured shodow</source>
-        <translation type="unfinished">Использовать растушеванную тень</translation>
+        <source>Use blurred shodow</source>
+        <translatorcomment>Use blured shodow BLURRED SHADOW!!!</translatorcomment>
+        <translation type="unfinished">Размытая тень</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="124"/>
@@ -938,17 +942,18 @@ Has been saved to:
         <location filename="settingsdialog.cpp" line="207"/>
         <location filename="settingsdialog.cpp" line="219"/>
         <source>None</source>
+        <translatorcomment>УТОЧНИТЬ!!!</translatorcomment>
         <translation>Никакой</translation>
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="178"/>
         <source>Select a picture for the wallpaper</source>
-        <translation type="unfinished">Выберите изображение для обоев</translation>
+        <translation type="unfinished">Выберите изображение для фонового рисунка</translation>
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="180"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Изображения ((*.png *.jpg *.jpeg)</translation>
+        <translation type="unfinished">Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -1003,7 +1008,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="54"/>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закладка</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="64"/>
@@ -1239,17 +1244,17 @@ Has been saved to:
     <message>
         <location filename="songwidget.ui" line="277"/>
         <source>Song preview</source>
-        <translation type="unfinished">Просмотр песни</translation>
+        <translation type="unfinished">Предварительный просмотр</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="287"/>
         <source>Quickly display the selected song on the screen without adding it to playlist first</source>
-        <translation type="unfinished">Вывод песни на экран без занесения в список воспроизведения</translation>
+        <translation type="unfinished">Вывод на экран без занесения в список воспроизведения</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="290"/>
         <source>Go Live (F5)</source>
-        <translation type="unfinished">Показать (F5)</translation>
+        <translation type="unfinished">На экран (F5)</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="297"/>
@@ -1265,7 +1270,7 @@ Has been saved to:
     <message>
         <location filename="songwidget.cpp" line="260"/>
         <source>No such song</source>
-        <translation type="unfinished">Нет такой песни</translation>
+        <translation type="unfinished">Песня отсутствует</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1291,7 @@ Has been saved to:
     <message>
         <location filename="song.cpp" line="326"/>
         <source>Num</source>
-        <translation>№</translation>
+        <translation type="unfinished">Номер</translation>
     </message>
     <message>
         <location filename="song.cpp" line="328"/>

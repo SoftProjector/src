@@ -854,7 +854,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="91"/>
-        <source>Use blured shodow</source>
+        <source>Use blurred shodow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
