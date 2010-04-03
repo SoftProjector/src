@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/language">
         <file>sotftpro_ru.qm</file>
+        <file>sotftpro_ua.qm</file>
+        <file>sotftpro_de.qm</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/base-22x22-actions-application-exit.png</file>
@@ -10,10 +12,6 @@
         <file>icons/song_tab.png</file>
         <file>icons/database.png</file>
         <file>icons/book.png</file>
-        <file>icons/lang_en.png</file>
-        <file>icons/lang_en_ck.png</file>
-        <file>icons/lang_ru.png</file>
-        <file>icons/lang_ru_ck.png</file>
         <file>icons/go_live.png</file>
         <file>icons/remove.png</file>
         <file>icons/search.png</file>

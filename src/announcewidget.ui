@@ -158,17 +158,17 @@
      <item row="0" column="0">
       <widget class="QPushButton" name="add_to_history_pushButton">
        <property name="toolTip">
-        <string>add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</string>
+        <string>Add this announcement to history list, automatically will be added to the list when &quot;Go Live&quot; button is pressed</string>
        </property>
        <property name="text">
-        <string>Add to history</string>
+        <string>Add (F2)</string>
        </property>
        <property name="icon">
         <iconset resource="softprojector.qrc">
          <normaloff>:/icons/icons/add.png</normaloff>:/icons/icons/add.png</iconset>
        </property>
        <property name="shortcut">
-        <string>Ctrl+A</string>
+        <string>F2</string>
        </property>
       </widget>
      </item>
@@ -182,17 +182,17 @@
      <item row="1" column="0">
       <widget class="QPushButton" name="remove_from_history_pushButton">
        <property name="toolTip">
-        <string>Remove current selected verse in the history list</string>
+        <string>Remove current selected announcement in the history list</string>
        </property>
        <property name="text">
-        <string>Remove from history</string>
+        <string>Remove (F3)</string>
        </property>
        <property name="icon">
         <iconset resource="softprojector.qrc">
          <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
        </property>
        <property name="shortcut">
-        <string>Ctrl+R</string>
+        <string>F3</string>
        </property>
       </widget>
      </item>

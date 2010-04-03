@@ -7,7 +7,6 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui(new Ui::ManageDataDialog)
 {
     ui->setupUi(this);
-    ui->pbar->setVisible(false);
     //    Database db;
 
     // Set Bible Table

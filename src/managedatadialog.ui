@@ -34,7 +34,7 @@
            <item>
             <widget class="QPushButton" name="import_bible_pushButton">
              <property name="toolTip">
-              <string>Import a new Bible into your database/</string>
+              <string>Import a new Bible into your database</string>
              </property>
              <property name="text">
               <string>&amp;Import...</string>
@@ -184,22 +184,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QProgressBar" name="pbar">
-     <property name="minimumSize">
-      <size>
-       <width>300</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="format">
-      <string>%v  -  %p%</string>
-     </property>
     </widget>
    </item>
    <item row="1" column="1">

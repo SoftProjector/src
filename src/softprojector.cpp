@@ -40,6 +40,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     languageGroup = new QActionGroup(this);
     languageGroup->addAction(ui->actionRussian);
     languageGroup->addAction(ui->actionEnglish);
+    languageGroup->addAction(ui->actionGerman);
+    languageGroup->addAction(ui->actionUkrainian);
+    ui->actionUkrainian->setVisible(false);
 
     // Apply default settings, in case configuration file does not exist
     // or is out of date:
@@ -134,10 +137,11 @@ void SoftProjector::applyDefaults()
     bibleWidget->loadBibles(QString(sq.value(0).toString()), QString("none"));
     display_on_top = false;
     display->setFading(false);
-    display->setBlur(true);
+    display->setBlur(false);
     show_stanza_title = false;
     show_song_number = false;
     show_song_key = false;
+    ui->actionEnglish->setChecked(true);
 }
 
 
@@ -214,6 +218,10 @@ void SoftProjector::writeXMLConfigurationFile()
         xml.writeTextElement("translate", "ru");
     else if (ui->actionEnglish->isChecked())
         xml.writeTextElement("translate", "en");
+    else if (ui->actionGerman->isChecked())
+        xml.writeTextElement("translate", "de");
+    else if (ui->actionUkrainian->isChecked())
+        xml.writeTextElement("translate", "ua");
 
     xml.writeEndElement(); // settings
     xml.writeEndDocument();
@@ -272,17 +280,15 @@ void SoftProjector::applySetting(QString name, QString value)
         songWidget->setSplitterState(value);
     else if(name == "translate")
     {
-        if(value == "ru")
-        {
-            ui->actionRussian->setChecked(true);
-            on_actionRussian_triggered();
-        }
-        else if(value == "en")
-        {
+        if(value == "en")
             ui->actionEnglish->setChecked(true);
-            on_actionEnglish_triggered();
-        }
-        ui->retranslateUi(this);
+        else if(value == "ru")
+            ui->actionRussian->setChecked(true);
+        else if(value == "de")
+            ui->actionGerman->setChecked(true);
+        else if(value == "ua")
+            ui->actionUkrainian->setChecked(true);
+
         retranslateUis();
     }
 
@@ -918,6 +924,17 @@ void SoftProjector::on_actionEnglish_triggered()
     retranslateUis();
 }
 
+
+void SoftProjector::on_actionGerman_triggered()
+{
+    retranslateUis();
+}
+
+void SoftProjector::on_actionUkrainian_triggered()
+{
+    retranslateUis();
+}
+
 void SoftProjector::retranslateUis()
 {
     if(ui->actionEnglish->isChecked()) // Set English language
@@ -927,6 +944,16 @@ void SoftProjector::retranslateUis()
     else if(ui->actionRussian->isChecked()) // Set Russian language
     {
         translator.load(":/language/sotftpro_ru");
+        qApp->installTranslator(&translator);
+    }
+    else if(ui->actionGerman->isChecked()) // Set Russian language
+    {
+        translator.load(":/language/sotftpro_de");
+        qApp->installTranslator(&translator);
+    }
+    else if(ui->actionUkrainian->isChecked()) // Set Russian language
+    {
+        translator.load(":/language/sotftpro_ua");
         qApp->installTranslator(&translator);
     }
     ui->retranslateUi(this);

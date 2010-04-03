@@ -191,7 +191,7 @@
             <string>Add the selected song to the playlist</string>
            </property>
            <property name="text">
-            <string>Add to playlist (F2)</string>
+            <string>Add (F2)</string>
            </property>
            <property name="icon">
             <iconset resource="softprojector.qrc">
@@ -211,11 +211,14 @@
             <string>Remove the selected song from the playlist</string>
            </property>
            <property name="text">
-            <string>Remove from playlist</string>
+            <string>Remove (F3)</string>
            </property>
            <property name="icon">
             <iconset resource="softprojector.qrc">
              <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
+           </property>
+           <property name="shortcut">
+            <string>F3</string>
            </property>
           </widget>
          </item>
