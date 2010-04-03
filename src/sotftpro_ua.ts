@@ -454,7 +454,8 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="480"/>
         <location filename="editwidget.ui" line="522"/>
-        <source>Browse</source>
+        <source>Browse...</source>
+        <oldsource>Browse</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -854,7 +855,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="91"/>
-        <source>Use blurred shodow</source>
+        <source>Use blurred shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
