@@ -533,7 +533,7 @@ Results</source>
     <message>
         <location filename="editwidget.cpp" line="304"/>
         <source>Select a picture for the wallpaper</source>
-        <translation type="unfinished">Выбрать рисунок для обоев</translation>
+        <translation type="unfinished">Выбрать фоновый рисунок</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@ Has been saved to:
         <location filename="settingsdialog.ui" line="149"/>
         <location filename="settingsdialog.ui" line="199"/>
         <source>Remove wallpaper</source>
-        <translation>Удалить фоновый рисунок</translation>
+        <translation type="unfinished">Удалить рисунок</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="224"/>
@@ -911,12 +911,12 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="124"/>
         <source>Active wallpaper</source>
-        <translation type="unfinished">Загруженный фоновый рисунок</translation>
+        <translation type="unfinished">Фоновый рисунок</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="174"/>
         <source>Passive wallpaper</source>
-        <translation type="unfinished">Не загруженный фоновый рисунок</translation>
+        <translation type="unfinished">Рисунок заставка</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="237"/>
@@ -1001,7 +1001,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="64"/>
         <source>Stop displaying text to the screen (display black screen or wallpaper). Sortcut for this button is the Escape key.</source>
-        <translation type="unfinished">Убрать текст с экрана (останется черный экран или фоновый рисунок). Клавиша - Escape.</translation>
+        <translation type="unfinished">Убрать текст с экрана (останется черный экран или рисунок заставка). Клавиша - Escape.</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="67"/>
