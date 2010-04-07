@@ -25,7 +25,7 @@ form {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 18px;
 	line-height: 30px;
-  background-color: #990000; color: #FFFF66;
+  	background-color: #990000; color: #FFFF66;
 }
 
 .subtitle {
@@ -33,14 +33,14 @@ form {
 	font-size: 16px;
 	line-height: 20px;
 	font-weight: bold;
-  color: #660000; font-style: oblique;
+  	color: #660000; font-style: oblique;
 }
 
 .header {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 24px;
 	background-color: #990000;
-  color: #FFFF66;
+  	color: #FFFF66;
 }
 
 .nav {
@@ -57,8 +57,8 @@ form {
 	background-color: #DEDECA;
 }
 a:hover {
-	color: #DEDECA;
-	background-color: #330000;
+	color: #330000;
+	background-color: #4899b0;
 }
 
 .sidebar {
@@ -77,19 +77,36 @@ a:hover {
 	line-height: 18px;
 	color: #FFFF99;
 	background-color: #999933;
- font-weight: bold;
+	font-weight: bold;
 }
 
-.sidebarFooter {
+.verse{
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 12px;
 	line-height: 18px;
 	background-color: #FFFF99;
- color: #990000;
+	color: #FF0000;
+}
+
+.chorus{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: italic;
+	line-height: 18px;
+	background-color: #d4f01c;
+	color: #000090;
+}
+
+.insert{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	line-height: 18px;
+	background-color: #e08c00;
+	color: #800080;
 }
 
 .footer {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 22px;
@@ -107,12 +124,17 @@ a:hover {
 .box1 {
 	border-width: 2px;
 	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-  border-style: dotted;
+  	border-style: dotted;
 	}
 
 .promo {
 	font-family: "Times New Roman", Times, serif;
 	color: #000033;
+}
+
+.style1 {
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .titlebar {
@@ -137,3 +159,4 @@ input.big {
 input.small {
 	width: 50px;
 }
+
