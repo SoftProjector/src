@@ -34,6 +34,9 @@ public:
     virtual ~BibleWidget();
     Bible bible;
     QString getCurrentBook(void);
+    QString currentBook;
+    int currentChapter;
+    QStringList currentChapterList;
     int getCurrentChapter(void);
     QString getCaption();
 

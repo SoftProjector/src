@@ -1,6 +1,15 @@
 #include "biblewidget.h"
 #include "ui_biblewidget.h"
 #include "song.h"
+#include <time.h>
+
+double diffclock(clock_t clock1,clock_t clock2)
+{
+        double diffticks=clock1-clock2;
+        double diffms=(diffticks*1000)/CLOCKS_PER_SEC;
+        return diffms;
+}
+
 
 BibleWidget::BibleWidget(QWidget *parent) :
     QWidget(parent),
@@ -69,6 +78,7 @@ void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
 
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
+    //clock_t begin=clock();
     int s = ui->listBook->currentRow();
     if( s != -1 )
     {
@@ -77,7 +87,8 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         for(int i=0; i<maxVerse; ++i)
             ui->listChapterNum->addItem(QString::number(i+1));
         chapter_validator->setTop(maxVerse);
-        ui->listChapterNum->setCurrentRow(0);
+        if( ui->listChapterNum->currentRow() != 0 )
+            ui->listChapterNum->setCurrentRow(0);
     }
     else
     {
@@ -85,7 +96,7 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         chapter_validator->setTop(1);
         ui->listChapterNum->clear();
     }
-    
+    //qDebug() << "Time to run on_listBook_currentTextChanged:" << double(diffclock(clock(), begin)) << " ms";
 }
 
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
@@ -93,9 +104,15 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     int s = ui->listChapterNum->currentRow();
     if( s != -1 )
     {
-        QStringList chapters = bible.getChapter(getCurrentBook(), currentText.toInt());
+        if( currentBook != getCurrentBook() || currentChapter != currentText.toInt() )
+        {
+            currentBook = getCurrentBook();
+            currentChapter = currentText.toInt();
+            currentChapterList = bible.getChapter(currentBook, currentChapter);
+        }
+
         ui->chapter_preview_list->clear();
-        ui->chapter_preview_list->addItems(chapters);
+        ui->chapter_preview_list->addItems(currentChapterList);
         ui->chapter_ef->setText(currentText);
         verse_validator->setTop(ui->chapter_preview_list->count());
         ui->chapter_preview_list->setCurrentRow(0);
@@ -165,8 +182,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
     // Called when the bible book filter field is modified.
 
-    // FIXME We need to cache this info:
-    // If we do this, make sure the cache is updated whe primary bible is changed
     QStringList all_books = bible.getBooks();
 
     // Remove trailing spaces:
@@ -202,12 +217,20 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
     }
 
+
     // Now search all books to find the matching book:
-    ui->listBook->clear();
+
     if( text.isEmpty() )
-        ui->listBook->addItems(all_books);
+    {
+        if( ui->listBook->count() != all_books.count() )
+        {
+            ui->listBook->clear();
+            ui->listBook->addItems(all_books);
+        }
+    }
     else
     {
+        QStringList filtered_books;
         if( text.at(0).isDigit() )
         {
             // First character of filter text is a number. Special search, where the
@@ -215,7 +238,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
             // while the rest of the filter must be the beginning of the second book word.
             QString num_str(text.at(0));
             QString name_str = text.remove(0, 1);
-            QStringList filtered_books;
             for(int i=0; i<all_books.count(); i++)
             {
                 QString book = all_books.at(i);
@@ -228,22 +250,29 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
                 filtered_books.append(book);
             }
-            ui->listBook->addItems(filtered_books);
         }
         else
+            filtered_books = all_books.filter(text, Qt::CaseInsensitive);
+
+        if( ui->listBook->count() != filtered_books.count() )
         {
-            ui->listBook->addItems(all_books.filter(text, Qt::CaseInsensitive));
+            ui->listBook->clear();
+            ui->listBook->addItems(filtered_books);
         }
     }
+
     if( ui->listBook->count() > 0 )
         ui->listBook->setCurrentRow(0);
 
     if( chapter != 0 && chapter <= ui->listChapterNum->count() )
     {
-        ui->listChapterNum->setCurrentRow(chapter-1);
+        if( ui->listChapterNum->currentRow() != (chapter-1) )
+            ui->listChapterNum->setCurrentRow(chapter-1);
         if( verse != 0 && verse <= ui->chapter_preview_list->count() )
             ui->chapter_preview_list->setCurrentRow(verse-1);
     }
+
+
 }
 
 void BibleWidget::on_btnLive_clicked()

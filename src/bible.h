@@ -46,6 +46,7 @@ public:
 private:
     QStringList books;
     QStringList book_ids;
+    void retrieveBooks();
 
 private slots:
     

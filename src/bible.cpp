@@ -4,7 +4,7 @@ Bible::Bible()
 {
 }
 
-QStringList Bible::getBooks()
+void Bible::retrieveBooks()
 {
     //    QStringList books;
     QSqlQuery sq;
@@ -17,6 +17,12 @@ QStringList Bible::getBooks()
         books << sq.value(0).toString();
         book_ids << sq.value(1).toString();
     }
+}
+
+QStringList Bible::getBooks()
+{
+    if( books.count() == 0 )
+        retrieveBooks();
     return books;
 }
 
