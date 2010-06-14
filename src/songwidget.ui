@@ -273,16 +273,19 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
          <item>
-          <widget class="QLabel" name="preview_top_label">
-           <property name="text">
-            <string>Song preview</string>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="btnLive">
@@ -306,7 +309,7 @@
        <item>
         <widget class="QLabel" name="preview_label">
          <property name="text">
-          <string/>
+          <string>Song preview: None</string>
          </property>
         </widget>
        </item>

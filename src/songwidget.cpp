@@ -177,7 +177,7 @@ void SongWidget::sendToPreview(Song song)
     ui->listPreview->clear();
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
-    ui->preview_label->setText(song.title);
+    ui->preview_label->setText("Song Preview: " + song.title);
     preview_song = song;
 }
 
