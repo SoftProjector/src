@@ -37,6 +37,8 @@ signals:
     void sendSong(Song song, int currentItem);
 
 private slots:
+    void on_btnDownInPlaylist_clicked();
+    void on_btnUpInPlaylist_clicked();
     void on_exact_match_rbutton_clicked();
     void on_begins_rbutton_clicked();
     void on_contains_rbutton_clicked();

@@ -64,11 +64,17 @@ void SongWidget::updateButtonStates()
     bool enable_live;
     bool enable_add;
     bool enable_remove;
+    bool enable_up;
+    bool enable_down;
+
     if(focusInPlaylistTable)
     {
         enable_live = ui->playlist_view->currentIndex().isValid();
         enable_add = false;
         enable_remove = ( playlist_model->rowCount() > 0 );
+        int selrow = ui->playlist_view->currentIndex().row();
+        enable_up = (playlist_model->rowCount() > 1) && (selrow != 0);
+        enable_down = (playlist_model->rowCount() > 1) && (selrow+1 != playlist_model->rowCount());
     }
     else
     {
@@ -79,11 +85,15 @@ void SongWidget::updateButtonStates()
             enable_live = ui->songs_view->currentIndex().isValid();
         enable_add = enable_live;
         enable_remove = false;
+        enable_up = false;
+        enable_down = false;
     }
 
     ui->btnLive->setEnabled(enable_live);
     ui->btnAddToPlaylist->setEnabled(enable_add);
     ui->btnRemoveFromPlaylist->setEnabled(enable_remove);
+    ui->btnUpInPlaylist->setEnabled(enable_up);
+    ui->btnDownInPlaylist->setEnabled(enable_down);
 }
 
 void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -321,6 +331,33 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
     playlist_model->removeRow(row);
     updateButtonStates();
 }
+
+void SongWidget::on_btnDownInPlaylist_clicked()
+{
+    int row = ui->playlist_view->currentIndex().row();
+    Song song = playlist_model->song_list.takeAt(row);
+    playlist_model->song_list.insert(row+1, song);
+    playlist_model->emitLayoutChanged();
+
+    ui->playlist_view->selectRow(row+1);
+
+    updateButtonStates();
+}
+
+void SongWidget::on_btnUpInPlaylist_clicked()
+{
+    int row = ui->playlist_view->currentIndex().row();
+    Song song = playlist_model->song_list.takeAt(row);
+    playlist_model->song_list.insert(row-1, song);
+    playlist_model->emitLayoutChanged();
+
+    ui->playlist_view->selectRow(row-1);
+
+    updateButtonStates();
+}
+
+
+
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
