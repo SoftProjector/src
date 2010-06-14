@@ -78,7 +78,7 @@ void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
 
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
-    //clock_t begin=clock();
+
     int s = ui->listBook->currentRow();
     if( s != -1 )
     {
@@ -96,7 +96,7 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         chapter_validator->setTop(1);
         ui->listChapterNum->clear();
     }
-    //qDebug() << "Time to run on_listBook_currentTextChanged:" << double(diffclock(clock(), begin)) << " ms";
+
 }
 
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
@@ -104,6 +104,7 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     int s = ui->listChapterNum->currentRow();
     if( s != -1 )
     {
+        // This optimization is required in order for the bible filter entry field to work fast:
         if( currentBook != getCurrentBook() || currentChapter != currentText.toInt() )
         {
             currentBook = getCurrentBook();
@@ -193,6 +194,10 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
     // Check whether the user entered a search string that include book, chapter,
     // and verse. For example: "1King 3 13"
     QStringList search_words = text.split(" ");
+
+    // Allows the user to use more than one space as a seperator:
+    search_words.removeAll("");
+
     if( search_words.count() > 1 )
     {
         bool ok;
@@ -222,14 +227,17 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
     if( text.isEmpty() )
     {
+        // Show all bible books
         if( ui->listBook->count() != all_books.count() )
         {
+            // This is an important optimization
             ui->listBook->clear();
             ui->listBook->addItems(all_books);
         }
     }
     else
     {
+        // Show only the bible books that match the filter
         QStringList filtered_books;
         if( text.at(0).isDigit() )
         {
@@ -256,13 +264,21 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
         if( ui->listBook->count() != filtered_books.count() )
         {
+            // This is an important optimization
+            // FIXME don't just check the count; check values
             ui->listBook->clear();
             ui->listBook->addItems(filtered_books);
         }
     }
 
     if( ui->listBook->count() > 0 )
+        // Select the first row. This will take a longer time only if it will cause
+        // a new chapter to be loaded into the preview
         ui->listBook->setCurrentRow(0);
+
+
+//    clock_t begin=clock();
+//    qDebug() << "Time to select first row:" << double(diffclock(clock(), begin)) << " ms";
 
     if( chapter != 0 && chapter <= ui->listChapterNum->count() )
     {

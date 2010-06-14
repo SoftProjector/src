@@ -34,9 +34,12 @@ public:
     virtual ~BibleWidget();
     Bible bible;
     QString getCurrentBook(void);
+
+    // For optimization:
     QString currentBook;
     int currentChapter;
     QStringList currentChapterList;
+
     int getCurrentChapter(void);
     QString getCaption();
 
