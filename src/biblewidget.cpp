@@ -349,7 +349,7 @@ void BibleWidget::on_search_button_clicked()
             ui->result_count_label->show();
             ui->search_results_list->show();
             ui->hide_result_button->show();
-            ui->search_layout->addItem(ui->result_layout);
+            ui->search_layout->addItem(ui->results_layout);
             ui->results_splitter->restoreState(shown_splitter_state);
         }
         QStringList verse_list;
@@ -384,7 +384,7 @@ void BibleWidget::on_hide_result_button_clicked()
     ui->result_count_label->hide();
     ui->search_results_list->hide();
     ui->hide_result_button->hide();
-    ui->search_layout->removeItem(ui->result_layout);
+    ui->search_layout->removeItem(ui->results_layout);
     ui->results_splitter->restoreState(hidden_splitter_state);
 }
 
