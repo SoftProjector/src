@@ -4,6 +4,13 @@ Bible::Bible()
 {
 }
 
+void Bible::setBibles(QString pId, QString sId)
+{
+    primaryId = pId;
+    secondaryId = sId;
+    retrieveBooks();
+}
+
 void Bible::retrieveBooks()
 {
     //    QStringList books;

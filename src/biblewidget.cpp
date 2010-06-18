@@ -68,8 +68,7 @@ QString BibleWidget::getSecondary()
 void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
 {
     // secondaryId may be "none"
-    bible.primaryId = primaryId;
-    bible.secondaryId = secondaryId;
+    bible.setBibles(primaryId, secondaryId);
     ui->listBook->clear();
     ui->listBook->addItems(bible.getBooks());
     ui->listBook->setCurrentRow(0);

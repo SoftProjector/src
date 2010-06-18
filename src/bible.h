@@ -42,6 +42,7 @@ public:
     QStringList currentIdList; // Verses that are in the show list
     QString primaryId;
     QString secondaryId;
+    void setBibles(QString primaryId, QString secondaryId);
 
 private:
     QStringList books;
