@@ -28,6 +28,7 @@ signals:
     void updateSongFromDatabase(int songid);
     void addedNew();
 
+
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -38,7 +39,10 @@ private:
     bool is_new;
     Highlight *highlight;
     QIntValidator *song_num_validator;
+    void setWaitCursor();
+    void setArrowCursor();
     QString add_to_songbook;
+
 
 private slots:
     void addNewSong(Song song, QString newSongbookTitle, QString msgCaption);

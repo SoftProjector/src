@@ -62,6 +62,8 @@ void EditWidget::on_btnSave_clicked()
     */
 
     setSave();
+
+    setWaitCursor();
     if (is_new)
     {
         newSong.saveNew();
@@ -72,9 +74,20 @@ void EditWidget::on_btnSave_clicked()
         newSong.saveUpdate();
         emit updateSongFromDatabase(newSong.songID);
     }
+    setArrowCursor();
     
     resetUiItems();
     close();
+}
+
+void EditWidget::setArrowCursor()
+{
+    this->setCursor(Qt::ArrowCursor);
+}
+
+void EditWidget::setWaitCursor()
+{
+    this->setCursor(Qt::WaitCursor);
 }
 
 void EditWidget::on_btnCancel_clicked()
