@@ -800,9 +800,10 @@ void SoftProjector::on_actionCopy_Song_triggered()
 
 void SoftProjector::on_actionDeleteSong_triggered()
 {
+    QString song_title = songWidget->currentSong().title;
     QMessageBox ms;
     ms.setWindowTitle(tr("Delete song?"));
-    ms.setText(tr("Are you sure that you want to delete a song?"));
+    ms.setText("Delete song \"" + song_title + "\"?");
     ms.setInformativeText(tr("This action will permanentrly delete this song"));
     ms.setIcon(QMessageBox::Question);
     ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
