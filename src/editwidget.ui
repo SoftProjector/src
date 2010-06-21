@@ -533,7 +533,11 @@
     </layout>
    </item>
    <item row="7" column="0">
-    <widget class="QTextEdit" name="textEditSong"/>
+    <widget class="QTextEdit" name="textEditSong">
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="8" column="0">
     <layout class="QGridLayout" name="gridLayout">
