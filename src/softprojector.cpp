@@ -793,8 +793,8 @@ void SoftProjector::on_actionNewSong_triggered()
 
 void SoftProjector::on_actionCopy_Song_triggered()
 {
-    editWidget->setCopy(songWidget->getSongToEdit());
     editWidget->show();
+    editWidget->setCopy(songWidget->getSongToEdit());
     editWidget->activateWindow();
 }
 

@@ -227,83 +227,54 @@ void EditWidget::setEdit(Song sEdit)
 
 void EditWidget::setCopy(Song copy)
 {
-
-    editSong = copy;
-    setUiItems();
-    is_new = true;
-    bool ok;
-
-    QSqlQuery sq;
-    QStringList songbook_list;
-    songbook_list << tr("Copy to a new Songbook");
-    sq.exec("SELECT id, name FROM Songbooks");
-    while (sq.next())
-        songbook_list << sq.value(1).toString();
-
-    int current_songbook(0);
-    if (!addToSongbook.isEmpty())
-        current_songbook = songbook_list.indexOf(addToSongbook);
-    else
-        current_songbook = 0;
-
-    addToSongbook = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to copy this song to"),
-                                       songbook_list,current_songbook,false,&ok);
-
-    if (ok && !addToSongbook.isEmpty())
-    {
-        if (addToSongbook ==tr("Copy to a new Songbook"))
-        {
-            // Add a Songbook to add a new song into
-            addSongbook();
-        }
-        else
-        {
-            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(addToSongbook));
-            ui->songbook_label->setText(addToSongbook);
-            ui->song_number_lineEdit->setText(QString::number(last));
-        }
-    }
-    else
-    {
-        close();
-    }
+    addNewSong(copy,tr("Copy to a new Songbook"),tr("Select a Songbook to which you want to copy this song to"));
 }
 
 void EditWidget::setNew()
 {
-    resetUiItems();
-    ui->textEditSong->setPlainText(QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь"));
+    Song new_song;
+    new_song.songText = "Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here";
+//    new_song.songText = QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь");
+    addNewSong(new_song,tr("Add a new Songbook"),tr("Select a Songbook to which you want to add a song"));
+}
+
+void EditWidget::addNewSong(Song song, QString newSongbookTitle, QString msgCaption)
+{
+    editSong = song;
+    if (song.songbook_id.isEmpty())
+        ui->textEditSong->setPlainText(song.songText);
+    else
+        setUiItems();
     is_new = true;
     bool ok;
 
     QSqlQuery sq;
     QStringList songbook_list;
-    songbook_list << tr("Add a new Songbook");
+    songbook_list << newSongbookTitle;
     sq.exec("SELECT id, name FROM Songbooks");
     while (sq.next())
         songbook_list << sq.value(1).toString();
 
     int current_songbook(0);
-    qDebug() << addToSongbook;
-    if (!addToSongbook.isEmpty())
-        current_songbook = songbook_list.indexOf(addToSongbook);
+    if (!add_to_songbook.isEmpty())
+        current_songbook = songbook_list.indexOf(add_to_songbook);
     else
         current_songbook = 0;
 
-    addToSongbook = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to add a song"),
+    add_to_songbook = QInputDialog::getItem(this,tr("Select Songbook"),msgCaption,
                                        songbook_list,current_songbook,false,&ok);
 
-    if (ok && !addToSongbook.isEmpty())
+    if (ok && !add_to_songbook.isEmpty())
     {
-        if (addToSongbook ==tr("Add a new Songbook"))
+        if (add_to_songbook == newSongbookTitle)
         {
             // Add a Songbook to add a new song into
             addSongbook();
         }
         else
         {
-            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(addToSongbook));
-            ui->songbook_label->setText(addToSongbook);
+            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_to_songbook));
+            ui->songbook_label->setText(add_to_songbook);
             ui->song_number_lineEdit->setText(QString::number(last));
         }
     }
@@ -326,7 +297,7 @@ void EditWidget::addSongbook()
         last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_sbor.title));
         ui->songbook_label->setText(add_sbor.title);
         ui->song_number_lineEdit->setText(QString::number(last));
-        addToSongbook = add_sbor.title;
+        add_to_songbook = add_sbor.title;
         break;
     case AddSongbookDialog::Rejected:
         close();

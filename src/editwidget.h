@@ -38,9 +38,10 @@ private:
     bool is_new;
     Highlight *highlight;
     QIntValidator *song_num_validator;
-    QString addToSongbook;
+    QString add_to_songbook;
 
 private slots:
+    void addNewSong(Song song, QString newSongbookTitle, QString msgCaption);
     void addSongbook();
     void on_wall_default_button_clicked();
     void on_wall_button_clicked();
