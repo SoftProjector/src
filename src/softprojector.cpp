@@ -791,6 +791,13 @@ void SoftProjector::on_actionNewSong_triggered()
     editWidget->activateWindow();
 }
 
+void SoftProjector::on_actionCopy_Song_triggered()
+{
+    editWidget->setCopy(songWidget->getSongToEdit());
+    editWidget->show();
+    editWidget->activateWindow();
+}
+
 void SoftProjector::on_actionDeleteSong_triggered()
 {
     QMessageBox ms;

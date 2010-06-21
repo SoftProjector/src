@@ -19,6 +19,7 @@ public:
     virtual ~EditWidget();
 
 public slots:
+    void setCopy(Song copy);
     void setEdit(Song sEdit);
     void setNew();
 
@@ -37,6 +38,7 @@ private:
     bool is_new;
     Highlight *highlight;
     QIntValidator *song_num_validator;
+    QString addToSongbook;
 
 private slots:
     void addSongbook();

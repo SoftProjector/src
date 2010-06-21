@@ -220,9 +220,53 @@ void EditWidget::setSongbook(int id)
 void EditWidget::setEdit(Song sEdit)
 {
     editSong = sEdit;
-    editSong = song_database.getSong(sEdit.songID);
+//    editSong = song_database.getSong(sEdit.songID);
     setUiItems();
     is_new = false;
+}
+
+void EditWidget::setCopy(Song copy)
+{
+
+    editSong = copy;
+    setUiItems();
+    is_new = true;
+    bool ok;
+
+    QSqlQuery sq;
+    QStringList songbook_list;
+    songbook_list << tr("Copy to a new Songbook");
+    sq.exec("SELECT id, name FROM Songbooks");
+    while (sq.next())
+        songbook_list << sq.value(1).toString();
+
+    int current_songbook(0);
+    if (!addToSongbook.isEmpty())
+        current_songbook = songbook_list.indexOf(addToSongbook);
+    else
+        current_songbook = 0;
+
+    addToSongbook = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to copy this song to"),
+                                       songbook_list,current_songbook,false,&ok);
+
+    if (ok && !addToSongbook.isEmpty())
+    {
+        if (addToSongbook ==tr("Copy to a new Songbook"))
+        {
+            // Add a Songbook to add a new song into
+            addSongbook();
+        }
+        else
+        {
+            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(addToSongbook));
+            ui->songbook_label->setText(addToSongbook);
+            ui->song_number_lineEdit->setText(QString::number(last));
+        }
+    }
+    else
+    {
+        close();
+    }
 }
 
 void EditWidget::setNew()
@@ -239,21 +283,27 @@ void EditWidget::setNew()
     while (sq.next())
         songbook_list << sq.value(1).toString();
 
+    int current_songbook(0);
+    qDebug() << addToSongbook;
+    if (!addToSongbook.isEmpty())
+        current_songbook = songbook_list.indexOf(addToSongbook);
+    else
+        current_songbook = 0;
 
-    QString sb = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to add a song"),
-                                       songbook_list,0,false,&ok);
+    addToSongbook = QInputDialog::getItem(this,tr("Select Songbook"),tr("Select a Songbook to which you want to add a song"),
+                                       songbook_list,current_songbook,false,&ok);
 
-    if (ok && !sb.isEmpty())
+    if (ok && !addToSongbook.isEmpty())
     {
-        if (sb ==tr("Add a new Songbook"))
+        if (addToSongbook ==tr("Add a new Songbook"))
         {
             // Add a Songbook to add a new song into
             addSongbook();
         }
         else
         {
-            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(sb));
-            ui->songbook_label->setText(sb);
+            int last = song_database.lastUser(song_database.getSongbookIdStringFromName(addToSongbook));
+            ui->songbook_label->setText(addToSongbook);
             ui->song_number_lineEdit->setText(QString::number(last));
         }
     }
@@ -276,6 +326,7 @@ void EditWidget::addSongbook()
         last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_sbor.title));
         ui->songbook_label->setText(add_sbor.title);
         ui->song_number_lineEdit->setText(QString::number(last));
+        addToSongbook = add_sbor.title;
         break;
     case AddSongbookDialog::Rejected:
         close();

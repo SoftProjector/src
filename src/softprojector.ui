@@ -20,7 +20,7 @@
    <string notr="true"/>
   </property>
   <property name="windowIcon">
-   <iconset resource="softprojector.qrc">
+   <iconset>
     <normaloff>:/icons/icons/softprojector.png</normaloff>:/icons/icons/softprojector.png</iconset>
   </property>
   <property name="toolButtonStyle">
@@ -141,6 +141,7 @@
     </property>
     <addaction name="actionNewSong"/>
     <addaction name="actionEditSong"/>
+    <addaction name="actionCopy_Song"/>
     <addaction name="actionDeleteSong"/>
     <addaction name="separator"/>
     <addaction name="actionManage_Database"/>
@@ -176,7 +177,7 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
    </property>
    <property name="text">
@@ -188,7 +189,7 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/base-22x22-actions-application-exit.png</normaloff>:/icons/icons/base-22x22-actions-application-exit.png</iconset>
    </property>
    <property name="text">
@@ -200,7 +201,7 @@
   </action>
   <action name="actionEditSong">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/song_edit.png</normaloff>:/icons/icons/song_edit.png</iconset>
    </property>
    <property name="text">
@@ -212,7 +213,7 @@
   </action>
   <action name="actionNewSong">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/song_new.png</normaloff>:/icons/icons/song_new.png</iconset>
    </property>
    <property name="text">
@@ -224,7 +225,7 @@
   </action>
   <action name="actionManage_Database">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/database.png</normaloff>:/icons/icons/database.png</iconset>
    </property>
    <property name="text">
@@ -239,7 +240,7 @@
   </action>
   <action name="actionDeleteSong">
    <property name="icon">
-    <iconset resource="softprojector.qrc">
+    <iconset>
      <normaloff>:/icons/icons/song_delete.png</normaloff>:/icons/icons/song_delete.png</iconset>
    </property>
    <property name="text">
@@ -289,10 +290,19 @@
     <string notr="true">Український</string>
    </property>
   </action>
+  <action name="actionCopy_Song">
+   <property name="text">
+    <string>Copy Current Song...</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy current song into a new songbook</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="softprojector.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
