@@ -28,7 +28,6 @@ signals:
     void updateSongFromDatabase(int songid);
     void addedNew();
 
-
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -45,7 +44,7 @@ private:
 
 
 private slots:
-    void addNewSong(Song song, QString newSongbookTitle, QString msgCaption);
+    void addNewSong(Song song, QString msgNewSongbook, QString msgCaption);
     void addSongbook();
     void on_wall_default_button_clicked();
     void on_wall_button_clicked();
