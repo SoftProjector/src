@@ -274,6 +274,8 @@ void SoftProjector::applySetting(QString name, QString value)
     }
     // If this code is run, then if the GUI is closed when the results section is visible,
     // then when it is opened, the top bible splitter will take up a lot of space
+    else if(name == "biblehiddensplitterstate")
+        bibleWidget->setHiddenSplitterState(value);
     else if(name == "bibleshownsplitterstate")
         bibleWidget->setShownSplitterState(value);
     else if(name == "songsplitterstate")
