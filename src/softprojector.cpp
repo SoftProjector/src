@@ -69,10 +69,10 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     showing = false;
 
-    ui->tabWidget->clear();
-    ui->tabWidget->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
-    ui->tabWidget->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
-    ui->tabWidget->addTab(announceWidget, tr("Announcements (F8)"));
+    ui->projectTab->clear();
+    ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
+    ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
+    ui->projectTab->addTab(announceWidget, tr("Announcements (F8)"));
 
 //    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
 
@@ -347,11 +347,11 @@ void SoftProjector::keyPressEvent( QKeyEvent * event )
     // Will get called when a key is pressed
     int key = event->key();
     if( key == Qt::Key_F6 )
-        ui->tabWidget->setCurrentWidget(bibleWidget);
+        ui->projectTab->setCurrentWidget(bibleWidget);
     else if( key == Qt::Key_F7 )
-        ui->tabWidget->setCurrentWidget(songWidget);
+        ui->projectTab->setCurrentWidget(songWidget);
     else if( key == Qt::Key_F8 )
-        ui->tabWidget->setCurrentWidget(announceWidget);
+        ui->projectTab->setCurrentWidget(announceWidget);
     else
         QMainWindow::keyPressEvent(event);
 }
@@ -582,8 +582,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str);
 }
 
-
-
 void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int height)
 {
     // Margins:
@@ -762,8 +760,6 @@ void SoftProjector::updateScreen()
     }
 }
 
-
-
 void SoftProjector::on_clear_button_clicked()
 {
     showing = false;
@@ -776,14 +772,11 @@ void SoftProjector::on_show_button_clicked()
     updateScreen();
 }
 
-
 void SoftProjector::on_actionEditSong_triggered()
 {
-    if (ui->tabWidget->currentIndex()==1){
-        editWidget->setEdit(songWidget->getSongToEdit());
-        editWidget->show();
-        editWidget->activateWindow();
-    }
+    editWidget->setEdit(songWidget->getSongToEdit());
+    editWidget->show();
+    editWidget->activateWindow();
 }
 
 void SoftProjector::on_actionNewSong_triggered()
@@ -846,18 +839,17 @@ void SoftProjector::on_actionAbout_triggered()
 {
     AboutDialog *aboutDialog;
     aboutDialog = new AboutDialog(this, version_string);
-//    aboutDialog->setWindowTitle("About softProjecor");
     aboutDialog->exec();
 }
 
-void SoftProjector::on_tabWidget_currentChanged(int index)
+void SoftProjector::on_projectTab_currentChanged(int index)
 {
-    //qDebug()<<"Tab index: "+ QString::number(index);
     if (index == 1)
     {
         // Songs tab is activated
         ui->actionEditSong->setEnabled(true);
         ui->actionNewSong->setEnabled(true);
+        ui->actionCopy_Song->setEnabled(true);
         ui->actionDeleteSong->setEnabled(true);
     }
     else
@@ -865,6 +857,7 @@ void SoftProjector::on_tabWidget_currentChanged(int index)
         // Other tabs are activated
         ui->actionEditSong->setEnabled(false);
         ui->actionNewSong->setEnabled(false);
+        ui->actionCopy_Song->setEnabled(false);
         ui->actionDeleteSong->setEnabled(false);
     }
 }
@@ -874,8 +867,6 @@ void SoftProjector::on_actionManage_Database_triggered()
     QString primaryBible = bibleWidget->getPrimary();
     QString secondaryBible = bibleWidget->getSecondary();
     QSqlQuery sq;
-
-
 
     manageDialog->exec();
 
@@ -923,7 +914,6 @@ void SoftProjector::setWaitCursor()
     this->setCursor(Qt::WaitCursor);
 }
 
-
 void SoftProjector::on_actionRussian_triggered()
 {
     retranslateUis();
@@ -933,7 +923,6 @@ void SoftProjector::on_actionEnglish_triggered()
 {
     retranslateUis();
 }
-
 
 void SoftProjector::on_actionGerman_triggered()
 {
@@ -967,8 +956,12 @@ void SoftProjector::retranslateUis()
         qApp->installTranslator(&translator);
     }
     ui->retranslateUi(this);
-    ui->tabWidget->setTabText(0, tr("Bible (F6)"));
-    ui->tabWidget->setTabText(1, tr("Songs (F7)"));
-    ui->tabWidget->setTabText(2, tr("Announcements (F8)"));
+    ui->projectTab->setTabText(0, tr("Bible (F6)"));
+    ui->projectTab->setTabText(1, tr("Songs (F7)"));
+    ui->projectTab->setTabText(2, tr("Announcements (F8)"));
     songWidget->retranslateUis();
 }
+
+
+
+

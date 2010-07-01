@@ -67,6 +67,7 @@ private:
     QTranslator translator;
 
 private slots:
+    void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();
     void on_actionUkrainian_triggered();
     void on_actionGerman_triggered();
@@ -76,12 +77,9 @@ private slots:
     void on_action_Help_triggered();
     void on_actionDeleteSong_triggered();
     void on_actionManage_Database_triggered();
-    void on_tabWidget_currentChanged(int index);
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
     void on_actionSettings_triggered();
-//    void on_actionImportSongs_triggered();
-//    void on_actionExportSongs_triggered();
     void on_actionNewSong_triggered();
     void on_actionEditSong_triggered();
     void on_show_button_clicked();
