@@ -22,6 +22,9 @@ public:
     bool reload_bible;
     bool reload_songbook;
 
+public slots:
+    void load_songbooks();
+
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -63,7 +66,6 @@ private slots:
     void deleteSongbook(Songbook songbook);
     void importSongbook(QString path);
     void exportSongbook(QString path);
-    void load_songbooks();
     void load_bibles();
 };
 

@@ -868,6 +868,7 @@ void SoftProjector::on_actionManage_Database_triggered()
     QString secondaryBible = bibleWidget->getSecondary();
     QSqlQuery sq;
 
+    manageDialog->load_songbooks();
     manageDialog->exec();
 
     // Reload songbooks if Songbook has been added, edited, or deleted
