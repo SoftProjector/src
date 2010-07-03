@@ -10,8 +10,6 @@ QString clean(QString str)
     return str;
 }
 
-
-
 Song::Song()
 {
 }
@@ -50,7 +48,6 @@ void Song::readData()
         songbook_name = sq.value(0).toString();
     }
 }
-
 
 QStringList Song::getSongTextList()
 {
@@ -227,12 +224,17 @@ QString Song::getSongbookName()
     return songbook_name;
 }
 
-
+bool Song::isEmpty()
+{
+    if(songbook_id.isEmpty())
+        return true;
+    else
+        return false;
+}
 
 SongsModel::SongsModel()
 {
 }
-
 
 Song SongsModel::getSong(int row)
 {

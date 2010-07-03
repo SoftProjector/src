@@ -774,9 +774,20 @@ void SoftProjector::on_show_button_clicked()
 
 void SoftProjector::on_actionEditSong_triggered()
 {
-    editWidget->setEdit(songWidget->getSongToEdit());
-    editWidget->show();
-    editWidget->activateWindow();
+    if (!songWidget->currentSong().isEmpty())
+    {
+        editWidget->setEdit(songWidget->getSongToEdit());
+        editWidget->show();
+        editWidget->activateWindow();
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be edited"));
+        ms.setInformativeText(tr("Please select a song to be edited"));
+        ms.exec();
+    }
 }
 
 void SoftProjector::on_actionNewSong_triggered()
@@ -788,37 +799,58 @@ void SoftProjector::on_actionNewSong_triggered()
 
 void SoftProjector::on_actionCopy_Song_triggered()
 {
-    editWidget->show();
-    editWidget->setCopy(songWidget->getSongToEdit());
-    editWidget->activateWindow();
+    if (!songWidget->currentSong().isEmpty())
+    {
+        editWidget->show();
+        editWidget->setCopy(songWidget->getSongToEdit());
+        editWidget->activateWindow();
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be coppied"));
+        ms.setInformativeText(tr("Please select a song to be coppied"));
+        ms.exec();
+    }
 }
 
 void SoftProjector::on_actionDeleteSong_triggered()
 {
-    QString song_title = songWidget->currentSong().title;
-    QMessageBox ms;
-    ms.setWindowTitle(tr("Delete song?"));
-    ms.setText("Delete song \"" + song_title + "\"?");
-    ms.setInformativeText(tr("This action will permanentrly delete this song"));
-    ms.setIcon(QMessageBox::Question);
-    ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    ms.setDefaultButton(QMessageBox::Yes);
-    int ret = ms.exec();
+    if (!songWidget->currentSong().isEmpty())
+    {
+        QString song_title = songWidget->currentSong().title;
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Delete song?"));
+        ms.setText(tr("Delete song \"") + song_title + "\"?");
+        ms.setInformativeText(tr("This action will permanentrly delete this song"));
+        ms.setIcon(QMessageBox::Question);
+        ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        ms.setDefaultButton(QMessageBox::Yes);
+        int ret = ms.exec();
 
-    switch (ret) {
-    case QMessageBox::Yes:
-        // Delete a song
-//        close();
-        songWidget->deleteSong();
-        break;
-    case QMessageBox::No:
-        // Cancel was clicked
-        break;
-    default:
-        // should never be reached
-        break;
+        switch (ret) {
+        case QMessageBox::Yes:
+            // Delete a song
+            //        close();
+            songWidget->deleteSong();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked
+            break;
+        default:
+            // should never be reached
+            break;
+        }
     }
-
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be deleted"));
+        ms.setInformativeText(tr("Please select a song to be deleted"));
+        ms.exec();
+    }
 }
 
 void SoftProjector::on_actionSettings_triggered()
