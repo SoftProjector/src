@@ -10,7 +10,6 @@ double diffclock(clock_t clock1,clock_t clock2)
         return diffms;
 }
 
-
 BibleWidget::BibleWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BibleWidget)
@@ -30,8 +29,6 @@ BibleWidget::BibleWidget(QWidget *parent) :
 
     highlight = new HihghlighterDelegate(ui->search_results_list);
     ui->search_results_list->setItemDelegate(highlight);
-    
-//    ui->
 }
 
 BibleWidget::~BibleWidget()
@@ -53,7 +50,6 @@ void BibleWidget::changeEvent(QEvent *e)
     }
 }
 
-
 QString BibleWidget::getPrimary()
 {
     return bible.primaryId;
@@ -64,16 +60,21 @@ QString BibleWidget::getSecondary()
     return bible.secondaryId;
 }
 
-
 void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
 {
     // secondaryId may be "none"
+    QString initial_primary_id = bible.primaryId;
     bible.setBibles(primaryId, secondaryId);
-    ui->listBook->clear();
-    ui->listBook->addItems(bible.getBooks());
-    ui->listBook->setCurrentRow(0);
-}
 
+    // Check if primary bible is different that what has been loaded already
+    // If it is different, then reload the bible list
+    if(initial_primary_id!=primaryId)
+    {
+        ui->listBook->clear();
+        ui->listBook->addItems(bible.getBooks());
+        ui->listBook->setCurrentRow(0);
+    }
+}
 
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
@@ -177,7 +178,6 @@ void BibleWidget::sendToProjector(int verse, bool add_to_history)
         addToHistory();
 }
 
-
 void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
     // Called when the bible book filter field is modified.
@@ -223,7 +223,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
 
 
     // Now search all books to find the matching book:
-
     if( text.isEmpty() )
     {
         // Show all bible books
@@ -286,8 +285,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
         if( verse != 0 && verse <= ui->chapter_preview_list->count() )
             ui->chapter_preview_list->setCurrentRow(verse-1);
     }
-
-
 }
 
 void BibleWidget::on_btnLive_clicked()
@@ -295,7 +292,6 @@ void BibleWidget::on_btnLive_clicked()
     int value = ui->verse_ef->text().toInt();
     sendToProjector((value - 1), true);
 }
-
 
 void BibleWidget::on_verse_ef_textChanged(QString new_string)
 {
@@ -311,8 +307,6 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
-
-//    this->setCursor(Qt::WaitCursor);
     emit setWaitCursor();
     
     // Always search lower-case, because in order for searches to be case-insensitive, all
@@ -372,7 +366,6 @@ void BibleWidget::on_search_button_clicked()
         mb.exec();
         on_hide_result_button_clicked();
     }
-//    this->setCursor(Qt::ArrowCursor);
     emit setArrowCursor();
 }
 
@@ -413,28 +406,6 @@ void BibleWidget::on_search_ef_textChanged(QString text)
 void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
 {
     on_btnLive_clicked();
-}
-// *** Class for higlighting search results ****
-HihghlighterDelegate::HihghlighterDelegate(QObject *parent)
-    : QItemDelegate(parent)
-{
-    textDocument = new QTextDocument(this);
-    highlighter = new HighlightSearch(textDocument);
-}
-
-void HihghlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
-{
-    Q_UNUSED(option);
-    textDocument->setDocumentMargin(0);
-    textDocument->setPlainText(text);
-
-    QPixmap pixmap(rect.size());
-    pixmap.fill(Qt::transparent);
-    QPainter p(&pixmap);
-
-    textDocument->drawContents(&p);
-
-    painter->drawPixmap(rect, pixmap);
 }
 
 void BibleWidget::addToHistory()
@@ -523,4 +494,29 @@ void BibleWidget::setShownSplitterState(QString state)
     shown_splitter_state.clear();
     shown_splitter_state.insert(0,state);
     shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
+}
+
+/**********************************************/
+/**** Class for higlighting search results ****/
+/**********************************************/
+HihghlighterDelegate::HihghlighterDelegate(QObject *parent)
+    : QItemDelegate(parent)
+{
+    textDocument = new QTextDocument(this);
+    highlighter = new HighlightSearch(textDocument);
+}
+
+void HihghlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
+{
+    Q_UNUSED(option);
+    textDocument->setDocumentMargin(0);
+    textDocument->setPlainText(text);
+
+    QPixmap pixmap(rect.size());
+    pixmap.fill(Qt::transparent);
+    QPainter p(&pixmap);
+
+    textDocument->drawContents(&p);
+
+    painter->drawPixmap(rect, pixmap);
 }
