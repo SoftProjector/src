@@ -774,7 +774,7 @@ void SoftProjector::on_show_button_clicked()
 
 void SoftProjector::on_actionEditSong_triggered()
 {
-    if (!songWidget->currentSong().isEmpty())
+    if (songWidget->isSongSelected())
     {
         editWidget->setEdit(songWidget->getSongToEdit());
         editWidget->show();
@@ -786,6 +786,7 @@ void SoftProjector::on_actionEditSong_triggered()
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to be edited"));
         ms.setInformativeText(tr("Please select a song to be edited"));
+        ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
 }
@@ -799,7 +800,7 @@ void SoftProjector::on_actionNewSong_triggered()
 
 void SoftProjector::on_actionCopy_Song_triggered()
 {
-    if (!songWidget->currentSong().isEmpty())
+    if (songWidget->isSongSelected())
     {
         editWidget->show();
         editWidget->setCopy(songWidget->getSongToEdit());
@@ -811,13 +812,14 @@ void SoftProjector::on_actionCopy_Song_triggered()
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to be coppied"));
         ms.setInformativeText(tr("Please select a song to be coppied"));
+        ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
 }
 
 void SoftProjector::on_actionDeleteSong_triggered()
 {
-    if (!songWidget->currentSong().isEmpty())
+    if (songWidget->isSongSelected())
     {
         QString song_title = songWidget->currentSong().title;
         QMessageBox ms;
@@ -849,6 +851,7 @@ void SoftProjector::on_actionDeleteSong_triggered()
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to be deleted"));
         ms.setInformativeText(tr("Please select a song to be deleted"));
+        ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
 }

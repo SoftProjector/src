@@ -154,13 +154,7 @@ Song SongWidget::currentSong()
     // Returns the selected song
     QModelIndex current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
     int current_row = current_index.row();
-    if(current_row>=0)
-        return songs_model->getSong(current_row);
-    else
-    {
-        Song s;
-        return s;
-    }
+    return songs_model->getSong(current_row);
 }
 
 void SongWidget::selectMatchingSong(QString text)
@@ -502,4 +496,9 @@ void SongWidget::setSplitterState(QString state)
 void SongWidget::retranslateUis()
 {
     ui->songbook_menu->setItemText(0,tr("All songbooks"));
+}
+
+bool SongWidget::isSongSelected()
+{
+    return ui->songs_view->currentIndex().isValid();
 }

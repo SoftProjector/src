@@ -224,14 +224,6 @@ QString Song::getSongbookName()
     return songbook_name;
 }
 
-bool Song::isEmpty()
-{
-    if(songbook_id.isEmpty())
-        return true;
-    else
-        return false;
-}
-
 SongsModel::SongsModel()
 {
 }

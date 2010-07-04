@@ -22,6 +22,7 @@ public slots:
     void deleteSong();
     Song getSongToEdit();
     void updateSongbooks();
+    bool isSongSelected();
     // will be called by the edit widget:
     void updateSongFromDatabase(int songid);
     QByteArray getSplitterState();
