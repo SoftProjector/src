@@ -29,25 +29,67 @@
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
+        <file>help/about.html</file>
+        <file>help/about_de.html</file>
+        <file>help/about_ru.html</file>
         <file>help/addsongs.html</file>
         <file>help/biblesettings.html</file>
         <file>help/deletesongs.html</file>
         <file>help/editsong.html</file>
+        <file>help/features.html</file>
+        <file>help/features_de.html</file>
+        <file>help/features_ru.html</file>
         <file>help/generalsettings.html</file>
         <file>help/index.html</file>
+        <file>help/index_de.html</file>
+        <file>help/index_ru.html</file>
         <file>help/managebible.html</file>
         <file>help/managesongbooks.html</file>
-        <file>help/showannouce.html</file>
+        <file>help/overview.html</file>
+        <file>help/overview_de.html</file>
+        <file>help/overview_ru.html</file>
+        <file>help/show.html</file>
+        <file>help/show_de.html</file>
+        <file>help/show_ru.html</file>
+        <file>help/showannounce.html</file>
+        <file>help/showannounce_de.html</file>
+        <file>help/showannounce_ru.html</file>
         <file>help/showbible.html</file>
+        <file>help/showbible_de.html</file>
+        <file>help/showbible_ru.html</file>
         <file>help/showsongs.html</file>
+        <file>help/showsongs_de.html</file>
+        <file>help/showsongs_ru.html</file>
         <file>help/songsettings.html</file>
-        <file>help/indexru.html</file>
-        <file>help/indexde.html</file>
+        <file>help/images/add.png</file>
+        <file>help/images/add_songbook.png</file>
+        <file>help/images/announce.png</file>
+        <file>help/images/book.png</file>
+        <file>help/images/database.png</file>
         <file>help/images/de.png</file>
+        <file>help/images/display.png</file>
+        <file>help/images/edit.png</file>
         <file>help/images/en.png</file>
+        <file>help/images/exit.png</file>
+        <file>help/images/go_live.png</file>
         <file>help/images/next.png</file>
+        <file>help/images/oveview.png</file>
         <file>help/images/prev.png</file>
+        <file>help/images/remove.png</file>
+        <file>help/images/remove_all.png</file>
         <file>help/images/ru.png</file>
+        <file>help/images/search.png</file>
+        <file>help/images/settings.png</file>
+        <file>help/images/show_announce.png</file>
+        <file>help/images/show_bible.png</file>
+        <file>help/images/show_main.png</file>
+        <file>help/images/show_songs.png</file>
+        <file>help/images/softprojector.png</file>
+        <file>help/images/song_copy.png</file>
+        <file>help/images/song_delete.png</file>
+        <file>help/images/song_edit.png</file>
+        <file>help/images/song_new.png</file>
+        <file>help/images/song_tab.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
