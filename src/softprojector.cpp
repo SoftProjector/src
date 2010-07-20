@@ -72,7 +72,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->clear();
     ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
-    ui->projectTab->addTab(announceWidget, tr("Announcements (F8)"));
+    ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
 
 //    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
 
