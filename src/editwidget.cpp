@@ -61,6 +61,20 @@ void EditWidget::on_btnSave_clicked()
     }
     */
 
+    // Check if song title exists. A song title MUST exits
+    QString song_title = ui->lineEditTitle->text();
+    song_title = song_title.simplified(); // make sure that its not all empty spaces
+
+    if(song_title.isEmpty())
+    {
+        QMessageBox mb;
+        mb.setText(tr("Song title cannot be left empty.\nPlease enter song title."));
+        mb.setWindowTitle(tr("Song title is missing"));
+        mb.setIcon(QMessageBox::Warning);
+        mb.exec();
+        ui->lineEditTitle->setFocus();
+        return;
+    }
     setSave();
 
     setWaitCursor();
