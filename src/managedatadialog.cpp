@@ -760,6 +760,7 @@ void ManageDataDialog::on_edit_songbook_pushButton_clicked()
     QSqlRecord sr;
 
     AddSongbookDialog songbook_dialog;
+    songbook_dialog.setWindowTitle("Edit Songbook");
     songbook_dialog.setSongbook(songbook.title,songbook.info);
     int ret = songbook_dialog.exec();
     switch(ret)

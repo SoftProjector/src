@@ -172,7 +172,7 @@ QVariant SongbooksModel::headerData(int section,
         case 0:
             return QVariant(tr("Title"));
         case 1:
-            return QVariant(tr("Infomation"));
+            return QVariant(tr("Information"));
         }
     }
     return QVariant();
