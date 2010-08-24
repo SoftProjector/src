@@ -35,7 +35,6 @@ public:
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);
     int maxChapters(QString book, QString bibleName);
-    QString getDbBibleName(QString bibleName);
     Verse getCurrentVerseAndCaption(int currentRow);
     QStringList verseList;
     QStringList previewIdList; // Verses that are in the preview (chapter) list

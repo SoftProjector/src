@@ -32,22 +32,51 @@
         <file>help/about.html</file>
         <file>help/about_de.html</file>
         <file>help/about_ru.html</file>
+        <file>help/addsongbooks.html</file>
+        <file>help/addsongbooks_de.html</file>
+        <file>help/addsongbooks_ru.html</file>
         <file>help/addsongs.html</file>
+        <file>help/addsongs_de.html</file>
+        <file>help/addsongs_ru.html</file>
         <file>help/biblesettings.html</file>
+        <file>help/biblesettings_de.html</file>
+        <file>help/biblesettings_ru.html</file>
+        <file>help/copysong.html</file>
+        <file>help/copysong_de.html</file>
+        <file>help/copysong_ru.html</file>
         <file>help/deletesongs.html</file>
+        <file>help/deletesongs_de.html</file>
+        <file>help/deletesongs_ru.html</file>
+        <file>help/dualscreen.html</file>
+        <file>help/dualscreen_de.html</file>
+        <file>help/dualscreen_ru.html</file>
         <file>help/editsong.html</file>
+        <file>help/editsong_de.html</file>
+        <file>help/editsong_ru.html</file>
         <file>help/features.html</file>
         <file>help/features_de.html</file>
         <file>help/features_ru.html</file>
         <file>help/generalsettings.html</file>
+        <file>help/generalsettings_de.html</file>
+        <file>help/generalsettings_ru.html</file>
         <file>help/index.html</file>
         <file>help/index_de.html</file>
         <file>help/index_ru.html</file>
         <file>help/managebible.html</file>
+        <file>help/managebible_de.html</file>
+        <file>help/managebible_ru.html</file>
         <file>help/managesongbooks.html</file>
+        <file>help/managesongbooks_de.html</file>
+        <file>help/managesongbooks_ru.html</file>
         <file>help/overview.html</file>
         <file>help/overview_de.html</file>
         <file>help/overview_ru.html</file>
+        <file>help/releasenotes.html</file>
+        <file>help/releasenotes_de.html</file>
+        <file>help/releasenotes_ru.html</file>
+        <file>help/shortcuts.html</file>
+        <file>help/shortcuts_de.html</file>
+        <file>help/shortcuts_ru.html</file>
         <file>help/show.html</file>
         <file>help/show_de.html</file>
         <file>help/show_ru.html</file>
@@ -60,36 +89,48 @@
         <file>help/showsongs.html</file>
         <file>help/showsongs_de.html</file>
         <file>help/showsongs_ru.html</file>
+        <file>help/songformat.html</file>
+        <file>help/songformat_de.html</file>
+        <file>help/songformat_ru.html</file>
         <file>help/songsettings.html</file>
-        <file>help/images/add.png</file>
+        <file>help/songsettings_de.html</file>
+        <file>help/songsettings_ru.html</file>
         <file>help/images/add_songbook.png</file>
         <file>help/images/announce.png</file>
+        <file>help/images/bible_settings.png</file>
         <file>help/images/book.png</file>
         <file>help/images/database.png</file>
         <file>help/images/de.png</file>
-        <file>help/images/display.png</file>
-        <file>help/images/edit.png</file>
+        <file>help/images/edit_bible.png</file>
+        <file>help/images/edit_songbook.png</file>
+        <file>help/images/edit_songs.png</file>
         <file>help/images/en.png</file>
         <file>help/images/exit.png</file>
-        <file>help/images/go_live.png</file>
+        <file>help/images/general_settings.png</file>
+        <file>help/images/manage_bibles.png</file>
+        <file>help/images/manage_songbooks.png</file>
         <file>help/images/next.png</file>
         <file>help/images/oveview.png</file>
         <file>help/images/prev.png</file>
-        <file>help/images/remove.png</file>
-        <file>help/images/remove_all.png</file>
         <file>help/images/ru.png</file>
-        <file>help/images/search.png</file>
+        <file>help/images/select_songbook.png</file>
+        <file>help/images/select_songbook_c.png</file>
         <file>help/images/settings.png</file>
         <file>help/images/show_announce.png</file>
         <file>help/images/show_bible.png</file>
         <file>help/images/show_main.png</file>
         <file>help/images/show_songs.png</file>
-        <file>help/images/softprojector.png</file>
         <file>help/images/song_copy.png</file>
         <file>help/images/song_delete.png</file>
         <file>help/images/song_edit.png</file>
         <file>help/images/song_new.png</file>
+        <file>help/images/song_settings.png</file>
         <file>help/images/song_tab.png</file>
+        <file>help/images/unbound_down.png</file>
+        <file>help/images/unbound_select.png</file>
+        <file>help/images/vistSettings.png</file>
+        <file>help/images/w7Settings.png</file>
+        <file>help/images/xpSettings.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

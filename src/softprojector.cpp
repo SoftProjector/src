@@ -34,7 +34,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
-    ui->statusBar->showMessage(tr("This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/"));
+    ui->statusBar->showMessage(tr("This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net"));
 
     // Create action group for language slections
     languageGroup = new QActionGroup(this);

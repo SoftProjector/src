@@ -58,7 +58,6 @@ private slots:
     void selectMatchingSong(QString title);
     void sendToPreview(Song song);
     void sendToProjector(Song song, int row);
-    void loadTitles(QString tsongbook);
     void loadSongbooks();
     void updateButtonStates();
     void filterModeChanged();

@@ -260,8 +260,8 @@ void EditWidget::setCopy(Song copy)
 void EditWidget::setNew()
 {
     Song new_song;
-//    new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
-    new_song.songText = QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь");
+    new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
+//    new_song.songText = QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь");
     addNewSong(new_song,tr("Add a new Songbook"),tr("Select a Songbook to which you want to add a song"));
 }
 

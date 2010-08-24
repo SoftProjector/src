@@ -144,11 +144,6 @@ void SongWidget::loadSongbooks()
     on_songbook_menu_currentIndexChanged( ui->songbook_menu->currentIndex() );
 }
 
-void SongWidget::loadTitles(QString tsongbook)
-{
-   songs_model->setSongs(song_database.getSongs("ALL"));
-}
-
 Song SongWidget::currentSong()
 {
     // Returns the selected song
@@ -187,7 +182,7 @@ void SongWidget::sendToPreview(Song song)
     ui->listPreview->clear();
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
-    ui->preview_label->setText("Song Preview: " + song.title);
+    ui->preview_label->setText(tr("Song Preview: ") + song.title);
     preview_song = song;
 }
 

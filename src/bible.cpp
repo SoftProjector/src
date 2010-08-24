@@ -159,18 +159,6 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 }
 
 
-QString Bible::getDbBibleName(QString bibleId)
-{
-    QString bibleDbName;
-    if( bibleId == "Russian" )
-        bibleDbName = "bibleRu";
-    else if( bibleId == "Ukrainian" )
-        bibleDbName = "bibleUa";
-    else if( bibleId == "English (KJV)" )
-        bibleDbName = "bibleKjv";
-    return bibleDbName;
-}
-
 int Bible::maxChapters(QString book, QString bibleId)
 {
     int chapters(0);
