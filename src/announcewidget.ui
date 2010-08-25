@@ -177,6 +177,9 @@
        <property name="toolTip">
         <string>This list contains verses that were sent to be shown</string>
        </property>
+       <property name="spacing">
+        <number>2</number>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">

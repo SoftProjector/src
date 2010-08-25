@@ -39,7 +39,7 @@ public:
     Song current_song;
     int current_song_verse;
     Verse current_verse;
-    QString announce_text;
+    Announcement announcement_text;
     QString version_string;
 
     SoftProjector *softProjector;
@@ -87,7 +87,7 @@ private slots:
     void on_listShow_currentRowChanged(int currentRow);
     void on_actionClose_triggered();
     void setSongList(Song song, int row);
-    void setAnnounceText(QString text);
+    void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, int verse, QString caption);
     void drawText(QPainter *painter, int width, int height);
 

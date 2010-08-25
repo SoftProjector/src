@@ -38,57 +38,37 @@ void AnnounceWidget::sendToProjector()
     //emit sendSong(song, row);
 }
 
+//void AnnounceWidget::drawToPainter(QPainter *painter, int width, int height)
+//{
+//    // Margins:
+//    int left = 30;
+//    int top = 20;
+//    int w = width - left - left;
+//    int h = height - top - top;
 
-void AnnounceWidget::drawToPainter(QPainter *painter, int width, int height)
-{
-    // Margins:
-    int left = 30;
-    int top = 20;
-    int w = width - left - left;
-    int h = height - top - top;
+//    int flags = get_align_flags();
 
-    int flags = Qt::TextWordWrap;
-    if( ui->horizontal_comboBox->currentText() == tr("Left") )
-        flags = flags | Qt::AlignLeft;
-    else if( ui->horizontal_comboBox->currentText() == tr("Right") )
-        flags = flags | Qt::AlignRight;
-    else if( ui->horizontal_comboBox->currentText() == tr("Center") )
-        flags = flags | Qt::AlignHCenter;
-    else
-        qDebug() << "ERROR no such horizontal alignment";
-
-    if( ui->vertical_comboBox->currentText() == tr("Top") )
-        flags = flags | Qt::AlignTop;
-    else if( ui->vertical_comboBox->currentText() == tr("Bottom") )
-        flags = flags | Qt::AlignBottom;
-    else if( ui->vertical_comboBox->currentText() == tr("Middle") )
-        flags = flags | Qt::AlignVCenter;
-    else
-        qDebug() << "ERROR no such vertical alignment";
-
-    QRect rect = QRect(left, top, w, h);
-    QString announce_text = ui->announceTextEdit->toPlainText();
-    display->paintTextToRect(painter, rect, flags, announce_text);
-}
-
-
-
+//    QRect rect = QRect(left, top, w, h);
+//    QString announce_text = ui->announceTextEdit->toPlainText();
+//    display->paintTextToRect(painter, rect, flags, announce_text);
+//}
 
 void AnnounceWidget::on_btnLive_clicked()
 {
     //qDebug() << "Go LIVE TEXT:";
     //qDebug() << ui->announceTextEdit->toPlainText();
-    QString text = ui->announceTextEdit->toPlainText();
-    emit sendText(text);
+//    QString text = ui->announceTextEdit->toPlainText();
+    Announcement a;
+    a.text = ui->announceTextEdit->toPlainText();
+    a.align_flags = get_align_flags();
+    emit sendText(a);
 }
-
-
-
 
 void AnnounceWidget::on_add_to_history_pushButton_clicked()
 {
     Announcement a;
     a.text = ui->announceTextEdit->toPlainText();
+    a.align_flags = get_align_flags();
     history_items.append(a);
     ui->history_listWidget->addItem(a.text);
 }
@@ -109,6 +89,7 @@ void AnnounceWidget::on_history_listWidget_currentRowChanged(int currentRow)
     {
         Announcement a = history_items.at(currentRow);
         ui->announceTextEdit->setText(a.text);
+        set_align_boxes(a.align_flags);
     }
 }
 
@@ -116,5 +97,78 @@ void AnnounceWidget::on_history_listWidget_doubleClicked(QModelIndex index)
 {
     Announcement a = history_items.at(index.row());
     //ui->announceTextEdit->setText(a.text);
-    emit sendText(a.text);
+    emit sendText(a);
+}
+
+int AnnounceWidget::get_align_flags()
+{
+    int flags = Qt::TextWordWrap;
+    if( ui->horizontal_comboBox->currentText() == tr("Left") )
+        flags = flags | Qt::AlignLeft;
+    else if( ui->horizontal_comboBox->currentText() == tr("Right") )
+        flags = flags | Qt::AlignRight;
+    else if( ui->horizontal_comboBox->currentText() == tr("Center") )
+        flags = flags | Qt::AlignHCenter;
+    else
+        qDebug() << "ERROR no such horizontal alignment";
+
+    if( ui->vertical_comboBox->currentText() == tr("Top") )
+        flags = flags | Qt::AlignTop;
+    else if( ui->vertical_comboBox->currentText() == tr("Bottom") )
+        flags = flags | Qt::AlignBottom;
+    else if( ui->vertical_comboBox->currentText() == tr("Middle") )
+        flags = flags | Qt::AlignVCenter;
+    else
+        qDebug() << "ERROR no such vertical alignment";
+
+    return flags;
+}
+
+void AnnounceWidget::set_align_boxes(int flags)
+{
+    if(flags == 4129)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(0);
+        ui->vertical_comboBox->setCurrentIndex(0);
+    }
+    else if(flags == 4225)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(0);
+        ui->vertical_comboBox->setCurrentIndex(1);
+    }
+    else if(flags == 4161)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(0);
+        ui->vertical_comboBox->setCurrentIndex(2);
+    }
+    else if(flags == 4132)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(1);
+        ui->vertical_comboBox->setCurrentIndex(0);
+    }
+    else if(flags == 4228)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(1);
+        ui->vertical_comboBox->setCurrentIndex(1);
+    }
+    else if(flags == 4164)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(1);
+        ui->vertical_comboBox->setCurrentIndex(2);
+    }
+    else if(flags == 4130)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(2);
+        ui->vertical_comboBox->setCurrentIndex(0);
+    }
+    else if(flags == 4226)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(2);
+        ui->vertical_comboBox->setCurrentIndex(1);
+    }
+    else if(flags == 4162)
+    {
+        ui->horizontal_comboBox->setCurrentIndex(2);
+        ui->vertical_comboBox->setCurrentIndex(2);
+    }
 }

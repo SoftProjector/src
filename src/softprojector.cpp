@@ -80,8 +80,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
             this, SLOT(setChapterList(QStringList, int, QString)));
-    connect(announceWidget,SIGNAL(sendText(QString)),
-            this, SLOT(setAnnounceText(QString)));
+    connect(announceWidget,SIGNAL(sendText(Announcement)),
+            this, SLOT(setAnnounceText(Announcement)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
             this, SLOT(drawText(QPainter*, int, int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
@@ -361,9 +361,9 @@ void SoftProjector::on_actionClose_triggered()
     close();
 }
 
-void SoftProjector::setAnnounceText(QString text)
+void SoftProjector::setAnnounceText(Announcement text)
 {
-    announce_text = text;
+    announcement_text = text;
     type = "announce";
     showing = true;
     new_list = true;
@@ -371,7 +371,7 @@ void SoftProjector::setAnnounceText(QString text)
     ui->listShow->clear();
     ui->listShow->setSpacing(5); // ?
     ui->listShow->setWordWrap(true);
-    ui->listShow->addItem(text);
+    ui->listShow->addItem(announcement_text.text);
     ui->listShow->setCurrentRow(0);
     ui->listShow->setFocus();
     new_list = false;
@@ -689,12 +689,18 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
 {
     // Margins:
-    //int left = 30;
-    //int top = 20;
-    //int w = width - left - left;
-    //int h = height - top - top;
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
 
-    announceWidget->drawToPainter(painter, width, height);
+    int flags = announcement_text.align_flags;
+
+    QRect rect = QRect(left, top, w, h);
+    QString announce_text = announcement_text.text;
+    display->paintTextToRect(painter, rect, flags, announce_text);
+
+//    announceWidget->drawToPainter(painter, width, height);
 }
 
 void SoftProjector::drawText(QPainter *painter, int width, int height)
@@ -753,7 +759,7 @@ void SoftProjector::updateScreen()
         else if(type=="bible")
             current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
         else if( type == "announce" )
-            announce_text = announceWidget->getText();
+            announcement_text.text = announceWidget->getText();
         display->renderText(true);
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);

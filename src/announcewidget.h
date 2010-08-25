@@ -14,6 +14,7 @@ class Announcement
 {
 public:
     QString text;
+    int align_flags;
     // FIXME add aligment info, font size, etc.
 };
 
@@ -25,7 +26,7 @@ public:
     explicit AnnounceWidget(QWidget *parent = 0);
     virtual ~AnnounceWidget();
     QString getText();
-    void drawToPainter(QPainter *painter, int width, int height);
+//    void drawToPainter(QPainter *painter, int width, int height);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -37,10 +38,12 @@ private slots:
     void on_add_to_history_pushButton_clicked();
     void on_btnLive_clicked();
     void sendToProjector();
+    int get_align_flags();
+    void set_align_boxes(int flags);
 
 signals:
     // To be used ONLY by SongWidget::sendToProjector():
-    void sendText(QString text);
+    void sendText(Announcement text);
 
 private:
     Ui::AnnounceWidget *ui;
