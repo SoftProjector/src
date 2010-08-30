@@ -37,8 +37,16 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;If you would like to help developing this program &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;or would like to contribute data, please visit:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.sourceforge.net/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;If you would like to help developing this program &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;or would like to contribute data, please visit:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.com/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -104,19 +112,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="93"/>
-        <location filename="announcewidget.cpp" line="51"/>
+        <location filename="announcewidget.cpp" line="106"/>
         <source>Left</source>
         <translation type="unfinished">Links</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="98"/>
-        <location filename="announcewidget.cpp" line="55"/>
+        <location filename="announcewidget.cpp" line="110"/>
         <source>Center</source>
         <translation type="unfinished">Zentriert</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="103"/>
-        <location filename="announcewidget.cpp" line="53"/>
+        <location filename="announcewidget.cpp" line="108"/>
         <source>Right</source>
         <translation type="unfinished">Rechts</translation>
     </message>
@@ -127,19 +135,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="122"/>
-        <location filename="announcewidget.cpp" line="60"/>
+        <location filename="announcewidget.cpp" line="115"/>
         <source>Top</source>
         <translation type="unfinished">Oben</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="127"/>
-        <location filename="announcewidget.cpp" line="64"/>
+        <location filename="announcewidget.cpp" line="119"/>
         <source>Middle</source>
         <translation type="unfinished">Zentrieren</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="132"/>
-        <location filename="announcewidget.cpp" line="62"/>
+        <location filename="announcewidget.cpp" line="117"/>
         <source>Bottom</source>
         <translation type="unfinished">Unten</translation>
     </message>
@@ -160,7 +168,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="195"/>
+        <location filename="announcewidget.ui" line="198"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -174,13 +182,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Diese Liste enthalt Verse, die geschickt wurden, um an gezeigt zu werden</translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="185"/>
+        <location filename="announcewidget.ui" line="188"/>
         <source>Remove current selected announcement in the history list</source>
         <oldsource>Remove current selected verse in the history list</oldsource>
         <translation type="unfinished">Entfernen Sie aktuell ausgewahlte Verse aus der Geschichte-Liste</translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="188"/>
+        <location filename="announcewidget.ui" line="191"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from history</oldsource>
         <translation type="unfinished">Entfernen (F3)</translation>
@@ -988,19 +996,19 @@ Gespeichert als:
     </message>
     <message>
         <location filename="softprojector.cpp" line="73"/>
-        <location filename="softprojector.cpp" line="995"/>
+        <location filename="softprojector.cpp" line="1001"/>
         <source>Bible (F6)</source>
         <translation type="unfinished">Bibel (F6)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="74"/>
-        <location filename="softprojector.cpp" line="996"/>
+        <location filename="softprojector.cpp" line="1002"/>
         <source>Songs (F7)</source>
         <translation type="unfinished">Lieder (F7)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="75"/>
-        <location filename="softprojector.cpp" line="997"/>
+        <location filename="softprojector.cpp" line="1003"/>
         <source>Announcements (F8)</source>
         <translation type="unfinished">Ankündigungen (F8)</translation>
     </message>
@@ -1010,49 +1018,49 @@ Gespeichert als:
         <translation type="unfinished">Ankundigung</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="786"/>
-        <location filename="softprojector.cpp" line="812"/>
-        <location filename="softprojector.cpp" line="851"/>
+        <location filename="softprojector.cpp" line="792"/>
+        <location filename="softprojector.cpp" line="818"/>
+        <location filename="softprojector.cpp" line="857"/>
         <source>No song selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="787"/>
+        <location filename="softprojector.cpp" line="793"/>
         <source>No song has been selected to be edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="788"/>
+        <location filename="softprojector.cpp" line="794"/>
         <source>Please select a song to be edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="813"/>
+        <location filename="softprojector.cpp" line="819"/>
         <source>No song has been selected to be coppied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="814"/>
+        <location filename="softprojector.cpp" line="820"/>
         <source>Please select a song to be coppied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="826"/>
+        <location filename="softprojector.cpp" line="832"/>
         <source>Delete song?</source>
         <translation type="unfinished">Lied loschen?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="827"/>
+        <location filename="softprojector.cpp" line="833"/>
         <source>Delete song &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="852"/>
+        <location filename="softprojector.cpp" line="858"/>
         <source>No song has been selected to be deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="853"/>
+        <location filename="softprojector.cpp" line="859"/>
         <source>Please select a song to be deleted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1061,7 +1069,7 @@ Gespeichert als:
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="828"/>
+        <location filename="softprojector.cpp" line="834"/>
         <source>This action will permanentrly delete this song</source>
         <translation type="unfinished">Diese Aktion wird dieses Lied unwiderruflich loschen</translation>
     </message>

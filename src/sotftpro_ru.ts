@@ -17,8 +17,7 @@
     <message>
         <location filename="aboutdialog.ui" line="116"/>
         <source>an open souce media projection software</source>
-        <translatorcomment>УТОЧНИТЬ!!!</translatorcomment>
-        <translation type="unfinished">Открытая программа проектор</translation>
+        <translation type="unfinished">Открытая программа Софт Проектор</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="149"/>
@@ -38,9 +37,24 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;If you would like to help developing this program &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;or would like to contribute data, please visit:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.sourceforge.net/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;If you would like to help developing this program &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;or would like to contribute data, please visit:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.com/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Если вы хотите помочь в разроботке или желаете&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;внести свой вклад данных, пожалуйста, посетите:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.sourceforge.net/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="300"/>
@@ -105,19 +119,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="93"/>
-        <location filename="announcewidget.cpp" line="51"/>
+        <location filename="announcewidget.cpp" line="106"/>
         <source>Left</source>
         <translation>По левому краю</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="98"/>
-        <location filename="announcewidget.cpp" line="55"/>
+        <location filename="announcewidget.cpp" line="110"/>
         <source>Center</source>
         <translation>По центру</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="103"/>
-        <location filename="announcewidget.cpp" line="53"/>
+        <location filename="announcewidget.cpp" line="108"/>
         <source>Right</source>
         <translation>По правому краю</translation>
     </message>
@@ -128,19 +142,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="122"/>
-        <location filename="announcewidget.cpp" line="60"/>
+        <location filename="announcewidget.cpp" line="115"/>
         <source>Top</source>
         <translation>По верхнему краю</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="127"/>
-        <location filename="announcewidget.cpp" line="64"/>
+        <location filename="announcewidget.cpp" line="119"/>
         <source>Middle</source>
         <translation>По середине</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="132"/>
-        <location filename="announcewidget.cpp" line="62"/>
+        <location filename="announcewidget.cpp" line="117"/>
         <source>Bottom</source>
         <translation>По нижнему краю</translation>
     </message>
@@ -161,7 +175,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="195"/>
+        <location filename="announcewidget.ui" line="198"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -175,13 +189,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">В списке находятся куплеты выбранные для вывода на экран</translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="185"/>
+        <location filename="announcewidget.ui" line="188"/>
         <source>Remove current selected announcement in the history list</source>
         <oldsource>Remove current selected verse in the history list</oldsource>
         <translation type="unfinished">Удалить выбранный куплет из списка истории</translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="188"/>
+        <location filename="announcewidget.ui" line="191"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from history</oldsource>
         <translation type="unfinished">Удалить (F3)</translation>
@@ -232,7 +246,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="biblewidget.ui" line="130"/>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="159"/>
@@ -272,17 +286,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="biblewidget.ui" line="597"/>
         <source>Add (F2)</source>
-        <translation type="unfinished">Добавить (F2)</translation>
+        <translation>Добавить (F2)</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="604"/>
         <source>F2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="628"/>
         <source>F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="648"/>
@@ -293,7 +307,7 @@ p, li { white-space: pre-wrap; }
         <location filename="biblewidget.ui" line="651"/>
         <source>Clear</source>
         <oldsource>Clear History</oldsource>
-        <translation type="unfinished">Очистить</translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="236"/>
@@ -343,7 +357,7 @@ Results</source>
     <message>
         <location filename="biblewidget.ui" line="559"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="594"/>
@@ -369,7 +383,7 @@ Results</source>
         <location filename="biblewidget.ui" line="621"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from history</oldsource>
-        <translation type="unfinished">Удалить (F3)</translation>
+        <translation>Удалить (F3)</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="352"/>
@@ -497,7 +511,7 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="563"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="570"/>
@@ -507,7 +521,7 @@ Results</source>
     <message>
         <location filename="editwidget.ui" line="573"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="265"/>
@@ -528,22 +542,23 @@ Results</source>
         <location filename="editwidget.cpp" line="71"/>
         <source>Song title cannot be left empty.
 Please enter song title.</source>
-        <translation type="unfinished"></translation>
+        <translation>Названия песни на может остаться не заполненным.
+Пожалуйста в ведите названия песни.</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="72"/>
         <source>Song title is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Название песни отсутствует</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="257"/>
         <source>Copy to a new Songbook</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать песню в новый сборник</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="257"/>
         <source>Select a Songbook to which you want to copy this song to</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать сборник в который вы хотите добавить песню</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="263"/>
@@ -556,14 +571,14 @@ go here
 
 Verse 2
  - words of verse go here</source>
-        <translation type="unfinished">Куплет 1
- - слова куплета сдесь
+        <translation>Куплет 1
+ - слова куплета здесь
 
 Припев
- - слова припева сдесь
+ - слова припева здесь
 
 Куплет 2
- - слова куплета сдесь</translation>
+ - слова куплета здесь</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="317"/>
@@ -573,7 +588,7 @@ Verse 2
     <message>
         <location filename="editwidget.cpp" line="353"/>
         <source>Select a picture for the wallpaper</source>
-        <translation type="unfinished">Выбрать фоновый рисунок</translation>
+        <translation>Выбрать фоновый рисунок</translation>
     </message>
 </context>
 <context>
@@ -582,7 +597,7 @@ Verse 2
         <location filename="helpdialog.ui" line="14"/>
         <source>softProjector Help</source>
         <oldsource>softProject Help</oldsource>
-        <translation type="unfinished">Справка softProjector</translation>
+        <translation>Справка softProjector</translation>
     </message>
     <message>
         <location filename="helpdialog.ui" line="21"/>
@@ -616,13 +631,14 @@ Verse 2
         <location filename="managedatadialog.ui" line="40"/>
         <source>Import a new Bible into your database</source>
         <oldsource>Import a new Bible into your database/</oldsource>
-        <translation type="unfinished">Добавить в базу данных новую версию Библию</translation>
+        <translation type="unfinished">Добавить в базу данных новый модуль Библии</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="43"/>
         <location filename="managedatadialog.ui" line="127"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished">&amp;Импортировать...</translation>
+        <translatorcomment>Импортирование модуля Библии</translatorcomment>
+        <translation type="unfinished">&amp;Импорт...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="46"/>
@@ -633,13 +649,13 @@ Verse 2
     <message>
         <location filename="managedatadialog.ui" line="56"/>
         <source>Edit Bible title of currently selected Bible.</source>
-        <translation>Редактировать название выбранной версии Библии.</translation>
+        <translation type="unfinished">Редактировать название выбранного модуля Библии.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="59"/>
         <location filename="managedatadialog.ui" line="140"/>
         <source>&amp;Edit...</source>
-        <translation type="unfinished">&amp;Изменить...</translation>
+        <translation type="unfinished">&amp;Правка...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="62"/>
@@ -650,7 +666,7 @@ Verse 2
     <message>
         <location filename="managedatadialog.ui" line="69"/>
         <source>Export currently selected Bible to share with others.</source>
-        <translation>Экспортировать выбранную версию Библии.</translation>
+        <translation type="unfinished">Экспортировать выбранный модуль Библии.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="72"/>
@@ -667,13 +683,13 @@ Verse 2
     <message>
         <location filename="managedatadialog.ui" line="82"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
-        <translation>Удалить версию Библии которую вы больше не будете использовать в этой программе.</translation>
+        <translation type="unfinished">Удалить модуль Библии который не будет использоваться в этой программе.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="85"/>
         <location filename="managedatadialog.ui" line="166"/>
         <source>&amp;Delete...</source>
-        <translation type="unfinished">&amp;Удалить...</translation>
+        <translation type="unfinished">&amp;Удаление...</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="88"/>
@@ -729,7 +745,7 @@ Verse 2
     <message>
         <location filename="managedatadialog.cpp" line="132"/>
         <source>softProjector songbook file </source>
-        <translatorcomment>ПРОВЕРИТЬ ПРАВИЛЬНОСТЬ!!!</translatorcomment>
+        <translatorcomment></translatorcomment>
         <translation>Файл сборника в формате softProjector</translation>
     </message>
     <message>
@@ -804,18 +820,18 @@ Has been saved to:
     <message>
         <location filename="managedatadialog.cpp" line="391"/>
         <source>Select Bible file to import</source>
-        <translation>Выбор версии Библии для импортирования</translation>
+        <translation type="unfinished">Выбор модуля Библии для импортирования</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="393"/>
         <source>All supported Bible files </source>
-        <translation>Все поддерживаемые файлы Библий</translation>
+        <translation type="unfinished">Все поддерживаемые модули Библий</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="394"/>
         <location filename="managedatadialog.cpp" line="645"/>
         <source>softProjector Bible file </source>
-        <translation>файл Библии в формате softProjector</translation>
+        <translation type="unfinished">модуль Библии в формате softProjector</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="395"/>
@@ -861,7 +877,7 @@ Has been saved to:
     <message>
         <location filename="managedatadialog.cpp" line="763"/>
         <source>Edit Songbook</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать сборник</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="792"/>
@@ -961,7 +977,7 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="174"/>
         <source>Passive wallpaper</source>
-        <translation type="unfinished">Рисунок заставка</translation>
+        <translation type="unfinished">Заставка</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="237"/>
@@ -976,8 +992,7 @@ Has been saved to:
         <location filename="settingsdialog.cpp" line="207"/>
         <location filename="settingsdialog.cpp" line="219"/>
         <source>None</source>
-        <translatorcomment>УТОЧНИТЬ!!!</translatorcomment>
-        <translation>Не выбран</translation>
+        <translation type="unfinished">Не выбрана</translation>
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="178"/>
@@ -996,23 +1011,23 @@ Has been saved to:
         <location filename="softprojector.cpp" line="37"/>
         <source>This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net</source>
         <oldsource>This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/</oldsource>
-        <translation type="unfinished">Эта программа бесплатная с открытым исходным кодом. Если вы можете помочь в улучшении этой программы посетите sourceforge.net/projects/softprojector/</translation>
+        <translation type="unfinished">Эта программа бесплатная, с открытым исходным кодом. Если вы можете помочь в улучшении этой программы посетите sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="73"/>
-        <location filename="softprojector.cpp" line="995"/>
+        <location filename="softprojector.cpp" line="1001"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="74"/>
-        <location filename="softprojector.cpp" line="996"/>
+        <location filename="softprojector.cpp" line="1002"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="75"/>
-        <location filename="softprojector.cpp" line="997"/>
+        <location filename="softprojector.cpp" line="1003"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
@@ -1022,58 +1037,58 @@ Has been saved to:
         <translation>Объявление</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="786"/>
-        <location filename="softprojector.cpp" line="812"/>
-        <location filename="softprojector.cpp" line="851"/>
+        <location filename="softprojector.cpp" line="792"/>
+        <location filename="softprojector.cpp" line="818"/>
+        <location filename="softprojector.cpp" line="857"/>
         <source>No song selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песня не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="787"/>
+        <location filename="softprojector.cpp" line="793"/>
         <source>No song has been selected to be edited</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песня для правки не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="788"/>
+        <location filename="softprojector.cpp" line="794"/>
         <source>Please select a song to be edited</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выберите песню для правки</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="813"/>
+        <location filename="softprojector.cpp" line="819"/>
         <source>No song has been selected to be coppied</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песня для копирования не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="814"/>
+        <location filename="softprojector.cpp" line="820"/>
         <source>Please select a song to be coppied</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выберите песню для копирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="826"/>
+        <location filename="softprojector.cpp" line="832"/>
         <source>Delete song?</source>
         <translation>Удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="827"/>
+        <location filename="softprojector.cpp" line="833"/>
         <source>Delete song &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удаление песни &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="852"/>
+        <location filename="softprojector.cpp" line="858"/>
         <source>No song has been selected to be deleted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Песня для удаления не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="853"/>
+        <location filename="softprojector.cpp" line="859"/>
         <source>Please select a song to be deleted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выберите песню для удаления</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete a song?</source>
         <translation type="obsolete">Вы уверены что хотите удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="828"/>
+        <location filename="softprojector.cpp" line="834"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Песня будет удалена навсегда</translation>
     </message>
@@ -1083,12 +1098,12 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="54"/>
         <source>Tab</source>
-        <translation type="unfinished">Закладка</translation>
+        <translation>Закладка</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="64"/>
         <source>Stop displaying text to the screen (display black screen or wallpaper). Sortcut for this button is the Escape key.</source>
-        <translation type="unfinished">Убрать текст с экрана (останется черный экран или рисунок заставка). Клавиша - Escape.</translation>
+        <translation>Убрать текст с экрана (останется черный экран или заставка). Клавиша - Escape.</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="67"/>
@@ -1103,7 +1118,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="77"/>
         <source>If Clear was pressed earlier, this will re-display the text to the screen</source>
-        <translation type="unfinished">Вернуть на экран скрытый текст</translation>
+        <translation>Вернуть на экран скрытый текст</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="80"/>
@@ -1118,33 +1133,33 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="134"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Файл</translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="140"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Правка</translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="153"/>
         <location filename="softprojector.ui" line="255"/>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Справка</translation>
+        <translation>&amp;Справка</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="160"/>
         <source>Language</source>
-        <translation type="unfinished">Язык</translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="175"/>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;О программе</translation>
+        <translation>&amp;О программе</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="184"/>
         <source>&amp;Settings...</source>
-        <translation type="unfinished">&amp;Настройки...</translation>
+        <translation>&amp;Настройки...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="187"/>
@@ -1154,7 +1169,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="196"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished">В&amp;ыход</translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="199"/>
@@ -1164,7 +1179,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="208"/>
         <source>&amp;Edit Current Song...</source>
-        <translation type="unfinished">&amp;Редактировать песню...</translation>
+        <translation>&amp;Редактировать песню...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="211"/>
@@ -1174,7 +1189,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="220"/>
         <source>&amp;New Song...</source>
-        <translation type="unfinished">&amp;Новая песня...</translation>
+        <translation>&amp;Новая песня...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="223"/>
@@ -1184,12 +1199,12 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="232"/>
         <source>&amp;Manage Database...</source>
-        <translation type="unfinished">&amp;Управление базой данных...</translation>
+        <translation>&amp;Управление базой данных...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="235"/>
         <source>Import and export song collections and Bibles</source>
-        <translation type="unfinished">Импортирование и экспортирование сборников и Библий</translation>
+        <translation>Импортирование и экспортирование сборников и Библий</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="238"/>
@@ -1199,7 +1214,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="247"/>
         <source>&amp;Delete Current Song</source>
-        <translation type="unfinished">&amp;Удалить песню</translation>
+        <translation>&amp;Удалить песню</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="250"/>
@@ -1214,17 +1229,17 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="299"/>
         <source>Copy Current Song...</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать песню...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="302"/>
         <source>Copy current song into a new songbook</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать песню в новый сборник</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="305"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Russian</source>
@@ -1291,7 +1306,7 @@ Has been saved to:
     <message>
         <location filename="songwidget.ui" line="126"/>
         <source>Begins</source>
-        <translation>Начинается</translation>
+        <translation type="unfinished">Начинается</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="133"/>
@@ -1306,7 +1321,7 @@ Has been saved to:
     <message>
         <location filename="songwidget.ui" line="191"/>
         <source>Add the selected song to the playlist</source>
-        <translation type="unfinished">Добавить песню к списку воспроизведения</translation>
+        <translation type="unfinished">Добавить песню в список воспроизведения</translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="194"/>
@@ -1333,12 +1348,12 @@ Has been saved to:
     <message>
         <location filename="songwidget.ui" line="221"/>
         <source>F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="songwidget.ui" line="328"/>
         <source>Song preview: None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Предосмотр: Песня отсутствует</translation>
     </message>
     <message>
         <source>Song preview</source>
@@ -1362,7 +1377,7 @@ Has been saved to:
     <message>
         <location filename="songwidget.cpp" line="185"/>
         <source>Song Preview: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Предосмотр песни:</translation>
     </message>
     <message>
         <location filename="songwidget.cpp" line="264"/>
