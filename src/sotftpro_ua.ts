@@ -86,11 +86,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="announcewidget.ui" line="54"/>
-        <source>Quickly display the selected song on the screen without adding it to playlist first</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="announcewidget.ui" line="57"/>
         <source>Go Live (F5)</source>
         <translation type="unfinished"></translation>
@@ -175,6 +170,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcewidget.ui" line="178"/>
         <source>This list contains verses that were sent to be shown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="announcewidget.ui" line="54"/>
+        <source>Quickly display announcement</source>
+        <oldsource>Quickly display announcemnt</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1025,12 +1026,14 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.cpp" line="819"/>
-        <source>No song has been selected to be coppied</source>
+        <source>No song has been selected to be copied</source>
+        <oldsource>No song has been selected to be coppied</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="820"/>
-        <source>Please select a song to be coppied</source>
+        <source>Please select a song to be copied</source>
+        <oldsource>Please select a song to be coppied</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

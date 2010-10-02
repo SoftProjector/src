@@ -5,6 +5,11 @@
 <title>Справочник по Софт Проектору</title>
 
 <link rel="stylesheet" href="sphelp.css" type="text/css" />
+<style type="text/css">
+.style2 {
+				background-color: #CCCC99;
+}
+</style>
 </head><body>
 <table border="0" width="100%">
 <tbody>
@@ -16,87 +21,81 @@
 			<a href="songformat_de.html"><img border="0" alt="German" src="images/de.png" /></a></div>
 		</td>
 	</tr>
-	<tr><th colspan="3" scope="col"><h1>Справочник по СофтПроектору</h1></th></tr>
+	<tr><th colspan="3" scope="col"><h1>Справочник по Софт Проектору</h1></th></tr>
 	<tr>
 		<td><div align="left"><a href="addsongbooks_ru.html"><img border="0" alt="Previous" src="images/prev.png" /></a></div></td>
 		<td><div align="center"><a href="index_ru.html">В начало</a></div></td>
 		<td><div align="right"><a href="editsong_ru.html"><img border="0" alt="Next" src="images/next.png" /></a></div></td>
 	</tr>
     <tr>
-    <td colspan="3"><p align="center"><span class="subtitle">3.1.2 ФорматSong Format</span></p>
-      <p> При добавлении или редактировании песен,<span class="style1">ОЧЕНЬ ВАЖНО </span>
-	  соблюдать заданный формат. При несоблюдении формата, песня может быть выведена на экран неправильно,
-	  либо может зависнуть программа.</p>
+    <td colspan="3"><p align="center"><span class="subtitle">3.1.2 Форматирование текста песен</span></p>
+      <p> При добавлении или редактировании песен<span class="style1"> ОЧЕНЬ ВАЖНО </span>
+	  соблюдать заданный формат. При несоблюдении формата песня может быть выведена на экран неправильно,
+	  и может случиться сбой в работе программы.</p>
 	<p><span class="dingbat">Название куплета.</span> <br />
-		Каждый куплет должен иметь название. Софт Проектор поддерживает три варианта названий для куплета: 
-		Куплет, Припев и Слайд (см. ниже). Название куплета может быть введено кириллицей или латиницей
-		и должно начинаться с большой буквы
-		r Russian and 
-		must start from a beginning of a new line and must be capitalized.&nbsp; After the stanza title (on the same line), 
-		a stanza number or any text can be entered. </p>
+		Каждый куплет должен иметь свое название. Софт Проектор поддерживает три варианта названий для куплета: 
+		Куплет, Припев и Слайд (см. ниже). Название куплета может быть написано кириллицей или латиницей
+		и должно начинаться с большой буквы. После названия куплета, на той же строчке, можно ввести номер куплета или другой нужный 
+	текст. </p>
 			<dl><dd><dl>
-			<dt><span class="sidebar">Verse Block.</span> Is shown only once, and 
-			<span class="sidebarFooter">
-			refrain block</span> will follow automatically if one exists.<br />
+			<dt><span class="sidebar"><span lang="ru">Поле для куплета</span>.</span> 
+			<span lang="ru">Поле для куплетов песен.</span><br />
 				<dd><span class="verse">Verse</span>, <span class="verse">&amp;Verse</span><br />
 				<span class="verse">Куплет</span>, <span class="verse">&amp;Куплет</span></dd>
 			</dt>
-			<dt><span class="sidebar">Refrain Block.</span> 
-			Will be automatically shown after each verse block and will not be shown after 
-			slide block. If there is more than one refrain block, then the second refrain 
-			block will replace the first one when it gets to it. <br />
+			<dt><span class="sidebar">Поле для припева.</span> 
+			Припев появляется автоматически после каждого куплета, однако он не появляется после слайда.
+			Если имеется несколько припевов, то второй припев заменит первый, когда до него дойдет очередь. <br />
 				<dd><span class="chorus">Chorus</span>, <span class="chorus">&amp;Chorus</span>, 
 				<span class="chorus">Refrain</span>, <span class="chorus">&amp;Refrain</span>, 	<br />
 				<span class="chorus">Припев</span>, <span class="chorus">&amp;Припев</span></dd>
 			</dt>
-			<dt><span class="sidebar">Slide Block.</span> This stanza block is for stanzas that is other than 
-			verse or refrain. It will be shown only once and <span class="sidebarFooter">
-			refrain block</span> will not follow automatically after. If refrain 
-			block is needed after slide block, please add it manual. <br />
+			<dt><span class="sidebar">Поле для слайда.</span> Это поле предназначено для куплетов (стихов) не относящихся к 
+			категории куплета или припева. Оно показывается один раз, и за ним следует <span class="sidebarFooter">
+			поле для припева</span>, если таковой имеется. Если блок припева необходимо вставить после блока слайдов, нужно ввести его вручную. <br />
 				<dd><span class="insert">Slide</span>, <span class="insert">Insert</span>, 
 				<span class="insert">Intro</span>, <span class="insert">Ending</span>,
 				<br />
-				<span class="insert">Вставка</span>, <span class="insert">Вступление</span>, 
+				<span class="insert">Слайд</span>,<span class="insert">Вставка</span>, <span class="insert">Вступление</span>, 
 				<span class="insert">Окончание</span></dd><span class="insert">
 				</span>
 			</dt>
 		</dl></dd></dl>
 	<p>
-<span class="dingbat">Special Stanza Blocks</span><br />
-  Verse block and refrain block, each have special continuing block. Sometime a 
-verse or refrain is too large to put it into a one slide, adding &amp; to next 
-verse/refrain block will solve the problem. An &quot;&amp;&quot; sing in front of 
-verse/refrain title means that it is part of the block above it and the two 
-block will act as one. See examples below.<br />
+<span class="dingbat">Поля для длинных куплетов</span><br />
+  Поля для куплетов и припева имеют специальную возможность для продолжения. Если куплет или припев слишком длинный и не помещается в один слайд,
+  можно разрешить проблему путем добавления знака &amp; к следующему куплету (припеву). 
+  Знак &quot;&amp;&quot; перед куплетом (припевом) означает его принадлежность к предыдущему куплету, и оба куплета будут показаны как один. См. примеры ниже.<br />
   	</p>
-      <p><span class="dingbat">Some Examples</span><br />
-        <span class="sidebar">Example 1 - as Edited.</span><span class="verse">Куплет1</span>, 
+      <p><span class="dingbat"><span class="style2">Некоторые 
+		примеры</span></span></span><br />
+        <span class="sidebar">Пример 1 - Пишется:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2</span>, 
 		<span class="verse">Куплет3</span>. <br />
-        <span class="sidebar">Example 1 - Shown.</span><span class="verse">Куплет1</span>, 
+        <span class="sidebar">Пример 1 - Показыватся:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2</span>,<span class="chorus">Припев</span>, <span class="verse">Куплет3</span>, 
 		<span class="chorus">Припев</span>. <br />
-        <span class="sidebar">Example 2 - as Edited.</span><span class="verse">Куплет1</span>, 
+        <span class="sidebar">Пример 2 - Пишется:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2</span>,<span class="insert"> Вставка</span>, <span class="verse">Куплет3</span>. <br />
-        <span class="sidebar">Example 2 - Shown.</span><span class="verse">Куплет1</span>, 
+        <span class="sidebar">Пример 2 - Показыватся:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2</span>,<span class="chorus">Припев</span>, 
 		<span class="insert">Вставка</span>,<span class="verse">Куплет3</span>, 
 		<span class="chorus">Припев</span>. <br />
-        <span class="sidebar">Example 3 - as Edited.</span><span class="verse">Куплет1</span>, 
+        <span class="sidebar">Пример 3 - Пишется:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев1</span>, <span class="verse">Куплет2</span>, 
 		<span class="verse">Куплет3</span>, <span class="chorus">Припев2</span>. <br />
-        <span class="sidebar">Example 3 - Shown.</span><span class="verse">Куплет1</span>, 
+        <span class="sidebar">Example 3 - Показыватся:</span><span class="verse">Куплет1</span>, 
 		<span class="chorus">Припев1</span>, <span class="verse">Куплет2</span>,<span class="chorus">Припев1</span>, <span class="verse">Куплет3</span>, 
 		<span class="chorus">Припев2</span>. <br />
-        <span class="sidebar">Example 4 - as Edited.</span><span class="verse">Куплет1a</span>, <span class="verse">&amp;Куплет1b</span>, 
+        <span class="sidebar">Example 4 - Пишется:</span><span class="verse">Куплет1a</span>, <span class="verse">&amp;Куплет1b</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2a</span>, <span class="verse">&amp;Куплет2b</span>, <span class="verse">Куплет3a</span>, <span class="verse">&amp;Куплет3b</span>. <br />
-        <span class="sidebar">Example 4 - Shown.</span><span class="verse">Куплет1a</span>, <span class="verse">Куплет1b</span>, 
+        <span class="sidebar">Example 4 - Показыватся:</span><span class="verse">Куплет1a</span>, <span class="verse">Куплет1b</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет2a</span>, <span class="verse">Куплет2b</span>, 
 		<span class="chorus">Припев</span>, <span class="verse">Куплет3a</span>, <span class="verse">Куплет3b</span>, <span class="chorus">Припев</span>. <br />
-        <span class="sidebar">Example 5 - as Edited.</span><span class="verse">Куплет1a</span>, <span class="verse">&amp;Куплет1b</span>, 
+        <span class="sidebar">Example 5 - Пишется:</span><span class="verse">Куплет1a</span>, <span class="verse">&amp;Куплет1b</span>, 
 		<span class="chorus">Припев-a</span>, <span class="chorus">&amp;Припев-b</span>, <span class="verse">Куплет2a</span>, <span class="verse">&amp;Куплет2b</span>, 
 		<span class="verse">Куплет3a</span>, <span class="verse">&amp;Куплет3b</span>. <br />
-        <span class="sidebar">Example 5 - Shown.</span><span class="verse">Куплет1a</span>, <span class="verse">Куплет1b</span>,<span class="chorus"> Припев-a</span>, <span class="chorus">Припев-b</span>, <span class="verse">Куплет2a</span>, <span class="verse">Куплет2b</span>, 
+        <span class="sidebar">Example 5 - Показыватся:</span><span class="verse">Куплет1a</span>, <span class="verse">Куплет1b</span>,<span class="chorus"> Припев-a</span>, <span class="chorus">Припев-b</span>, <span class="verse">Куплет2a</span>, <span class="verse">Куплет2b</span>, 
 		<span class="chorus"> Припев-a</span>, <span class="chorus">Припев-b</span>, <span class="verse">Куплет3a</span>, <span class="verse">Куплет3b</span>,<span class="chorus"> Припев-a</span>, <span class="chorus">Припев-b</span>. <br />
       </p>
       </td>

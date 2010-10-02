@@ -51,7 +51,7 @@
      <item>
       <widget class="QPushButton" name="btnLive">
        <property name="toolTip">
-        <string>Quickly display the selected song on the screen without adding it to playlist first</string>
+        <string>Quickly display announcement</string>
        </property>
        <property name="text">
         <string>Go Live (F5)</string>

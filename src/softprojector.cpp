@@ -104,7 +104,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    version_string = "0.9 Beta 2";
+    version_string = "1.0";
     this->setWindowTitle("softProjector " + version_string);
 
 }
@@ -816,8 +816,8 @@ void SoftProjector::on_actionCopy_Song_triggered()
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be coppied"));
-        ms.setInformativeText(tr("Please select a song to be coppied"));
+        ms.setText(tr("No song has been selected to be copied"));
+        ms.setInformativeText(tr("Please select a song to be copied"));
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
