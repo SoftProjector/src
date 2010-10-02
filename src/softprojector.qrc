@@ -26,6 +26,7 @@
         <file>icons/down.png</file>
         <file>icons/song_copy.png</file>
         <file>icons/announce.png</file>
+        <file>icons/splash.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>

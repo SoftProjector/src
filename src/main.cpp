@@ -33,6 +33,12 @@ int main(int argc, char *argv[])
 //    QApplication::setStyle("Plastique");
     #endif
 
+    QPixmap pixmap(":icons/icons/splash.png");
+    QSplashScreen splash(pixmap);
+    splash.show();
+    a.processEvents();
+
+
     //Sets translation to be used (.qm files is needed)
 //    QTranslator translator;
 //    translator.load(":sotftpro_ru");
@@ -62,5 +68,6 @@ int main(int argc, char *argv[])
     // Connected to the database OK:
     SoftProjector w;
     w.show();
+    splash.finish(&w);
     return a.exec();
 }
