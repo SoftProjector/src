@@ -35,14 +35,10 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap(":icons/icons/splash.png");
     QSplashScreen splash(pixmap);
+    splash.setMask(pixmap.mask());
     splash.show();
     a.processEvents();
 
-
-    //Sets translation to be used (.qm files is needed)
-//    QTranslator translator;
-//    translator.load(":sotftpro_ru");
-//    a.installTranslator(&translator);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     bool fileExist = QFile::exists("spData.sqlite");

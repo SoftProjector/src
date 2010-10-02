@@ -27,6 +27,7 @@
         <file>icons/song_copy.png</file>
         <file>icons/announce.png</file>
         <file>icons/splash.png</file>
+        <file>icons/softprojector_cloud.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
@@ -165,6 +166,12 @@
         <file>help/images/w7Settings.png</file>
         <file>help/images/xpSettings.png</file>
         <file>help/images/xpSettings_ru.png</file>
+        <file>help/images/softprojector_help.png</file>
+        <file>help/images/softprojector_help_cloud.png</file>
+        <file>help/images/softprojector_help_cloud_de.png</file>
+        <file>help/images/softprojector_help_cloud_ru.png</file>
+        <file>help/images/softprojector_help_de.png</file>
+        <file>help/images/softprojector_help_ru.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
