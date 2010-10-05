@@ -10,27 +10,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="42"/>
-        <source>softProjector</source>
+        <location filename="aboutdialog.ui" line="109"/>
+        <source>Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="116"/>
+        <location filename="aboutdialog.ui" line="183"/>
         <source>an open souce media projection software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="149"/>
+        <location filename="aboutdialog.ui" line="218"/>
         <source>Developers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="208"/>
+        <location filename="aboutdialog.ui" line="261"/>
         <source>Special thanks to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="273"/>
+        <location filename="aboutdialog.ui" line="327"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -50,7 +50,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="300"/>
+        <location filename="aboutdialog.ui" line="354"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
