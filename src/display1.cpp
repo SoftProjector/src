@@ -21,12 +21,9 @@
 #include <QDebug>
 
 #include "display1.h"
-#ifdef Q_WS_MAC
-#include <CoreFoundation/CoreFoundation.h>
-#endif
 #define MARGIN 20
 #define	BORDER 3
-#define TEXT_COLOR "BLACK" //inverse?
+#define INVERTED_TEXT_COLOR "BLACK" // Inverse of the actual text color (see the code below)
 #define SHADOW_COLOR "BLACK"
 #define BLUR_RADIUS 15
 
@@ -36,18 +33,7 @@ Display1::Display1(QWidget *parent)
         : QWidget(parent)
 {
     setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
-    //root_path="./";
-#ifdef Q_WS_MAC
-    CFURLRef pluginRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    CFStringRef macPath = CFURLCopyFileSystemPath(pluginRef,
-                          kCFURLPOSIXPathStyle);
-    const char *pathPtr = CFStringGetCStringPtr(macPath,
-                          CFStringGetSystemEncoding());
-    CFRelease(pluginRef);
-    CFRelease(macPath);
 
-    //root_path=pathPtr;
-#endif
     timer = new QTimer(this);
     timer_out = new QTimer(this);
 
@@ -135,17 +121,34 @@ void Display1::renderText(bool text_present)
     if(use_fading)
     {
         acounter[0]=0;
-        sharp0=QPixmap::fromImage (sharp1);
+        // Save the previous image for fade-out effect:
+        previous_image_pixmap = QPixmap::fromImage(output_image);
     }
 
     // Render the text
-    QImage image;
-    image=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
-    sharp1=QImage::QImage (width(),height(),QImage::Format_ARGB32);//_Premultiplied);
-    QPainter text_painter(&image);
-    // text_painter.setRenderHint(QPainter::TextAntialiasing);
+    QImage text_image;
+    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);
+    // Fill the newly created image with 0's instead of initial garbage (fixes issues on MacOSX):
+    text_image.fill(0); // transparent black
+    //qDebug() << "FILLED WITH COLOR:" << text_image.pixel(0, 0);
+
+    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);
+
+
+    // Painter for drawing the foreground (text):
+    QPainter text_painter(&text_image);
+
+    //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
-    QPainter blur_painter(&sharp1);
+
+    //text_painter.setPen(QColor(Qt::transparent));
+    //text_painter.drawRect( 0, 0, width(), height() );
+    //text_painter.setBrush(QColor(0, 0, 0, 0));
+    //text_painter.drawRect(0, 0, width(), height());
+
+
+    // Painter for drawing the background:
+    QPainter output_painter(&output_image);
 
     setFont(main_font);
 
@@ -162,7 +165,7 @@ void Display1::renderText(bool text_present)
                 wallpaper = wallpaper.scaled(width(),height());
         }
         if( ! wallpaper.isNull() )
-            blur_painter.drawImage(0,0,wallpaper);
+            output_painter.drawImage(0,0,wallpaper);
     }
     else
     {
@@ -176,23 +179,29 @@ void Display1::renderText(bool text_present)
                 passive_wallpaper = passive_wallpaper.scaled(width(),height());
         }
         if( ! passive_wallpaper.isNull() )
-            blur_painter.drawImage(0,0, passive_wallpaper);
+            output_painter.drawImage(0,0, passive_wallpaper);
     }
 
-    text_painter.setPen(QColor(TEXT_COLOR));
+    // Set the pen to black (will draw shadow first):
+    text_painter.setPen(QColor(INVERTED_TEXT_COLOR));
     text_painter.setFont(font());
 
     // Request SoftProjector to write its text to the QPainter:
     emit requestTextDrawing(&text_painter, width(), height());
 
-    m_blurred=image;
 
+    // Set the blured image to the produced text image:
+    m_blurred = text_image;
     if(use_blur)
+        // If using blur, actually blur the blur copy of the text image:
         fastbluralpha(m_blurred,BLUR_RADIUS);
 
-    blur_painter.drawImage(BORDER,BORDER,m_blurred);
-    image.invertPixels();
-    blur_painter.drawImage(0,0,image);
+    // Draw the blurred shadow (or not-blurred black shadow, if blur is off) to the background image:
+    output_painter.drawImage(BORDER, BORDER, m_blurred);
+    // Change the black pixles in the image to white:
+    text_image.invertPixels();
+    // Draw the actual white text to the image:
+    output_painter.drawImage(0, 0, text_image);
 
     if(use_fading)
         timer->start(33); // 1/24 sec = ~42miliseconds
@@ -272,9 +281,13 @@ void Display1::setNewPassiveWallpaper(QString path)
 void Display1::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,sharp0);
-    alphaImage(sharp1,acounter[0]);
-    painter.drawImage(0,0,sharp1);
+
+    // Draw the previous image into the window:
+    painter.drawPixmap(0, 0, previous_image_pixmap);
+
+    // Draw the output_image into the window, at the transparencey requested by the transition effect:
+    alphaImage(output_image, acounter[0]);
+    painter.drawImage(0, 0, output_image);
 }
 
 void Display1::alphaImage(QImage &img, int alpha1)

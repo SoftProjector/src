@@ -64,9 +64,8 @@ private:
     QString passive_wallpaper_path;
     QImage passive_wallpaper;
 
-    QPixmap sharp0;
-    QImage sharp1;
-    //	QImage blured1;
+    QPixmap previous_image_pixmap;
+    QImage output_image;
     int acounter[2];
     QImage m_blurred;
     QTimer *timer;
