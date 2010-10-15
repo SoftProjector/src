@@ -141,7 +141,8 @@ void Display1::renderText(bool text_present)
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
 
-    // For later determening which background to draw:
+    // For later determening which background to draw, and whether to transition to it:
+    background_needs_transition = ( use_active_background != text_present );
     use_active_background = text_present;
 
 
@@ -252,7 +253,16 @@ void Display1::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
 
-    // Draw the background:
+    // This code will, with each iteraction, draw the previous image with increasing transparency, and draw
+    // the current image with increasing opacity; making a smooth transition:
+    double curr_opacity = acounter[0] / 255.0;
+    double prev_opacity = 1.0 - curr_opacity;
+
+    // FIXME transition out of the previous background as well
+    // Draw the background at the current opacity:
+    if(background_needs_transition)
+        painter.setOpacity(curr_opacity);
+
     if( use_active_background )
     {
         // Draw the active wallpaper if there is text to display
@@ -292,10 +302,6 @@ void Display1::paintEvent(QPaintEvent *event )
         }
     }
 
-    // This code will, with each iteraction, draw the previous image with increasing transparency, and draw
-    // the current image with increasing opacity; making a smooth transition:
-    double curr_opacity = acounter[0] / 255.0;
-    double prev_opacity = 1.0 - curr_opacity;
 
     // Draw the previous image into the window, at decreasing opacity:
     painter.setOpacity(prev_opacity);
