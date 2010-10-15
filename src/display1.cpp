@@ -127,60 +127,28 @@ void Display1::renderText(bool text_present)
 
     // Render the text
     QImage text_image;
-    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);
-    // Fill the newly created image with 0's instead of initial garbage (fixes issues on MacOSX):
-    text_image.fill(0); // transparent black
-    //qDebug() << "FILLED WITH COLOR:" << text_image.pixel(0, 0);
+    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
+    text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
 
-    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);
-
+    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
 
     // Painter for drawing the foreground (text):
     QPainter text_painter(&text_image);
 
+    // FIXME Is this needed?
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
 
-    //text_painter.setPen(QColor(Qt::transparent));
-    //text_painter.drawRect( 0, 0, width(), height() );
-    //text_painter.setBrush(QColor(0, 0, 0, 0));
-    //text_painter.drawRect(0, 0, width(), height());
+    // For later determening which background to draw:
+    use_active_background = text_present;
 
 
-    // Painter for drawing the background:
+    // Painter for drawing the final image:
     QPainter output_painter(&output_image);
 
     setFont(main_font);
-
-
-    if( text_present )
-    {
-        // Draw the active wallpaper if there is text to display
-        //qDebug() << "text present, active path:" << wallpaper_path;
-
-        if (wallpaper.width()!=width() || wallpaper.isNull())
-        {
-            wallpaper.load(wallpaper_path);
-            if( !wallpaper.isNull() )
-                wallpaper = wallpaper.scaled(width(),height());
-        }
-        if( ! wallpaper.isNull() )
-            output_painter.drawImage(0,0,wallpaper);
-    }
-    else
-    {
-        // Draw the passive wallpaper if set:
-        //qDebug() << "no text present, passive path:" << passive_wallpaper_path;
-
-        if (passive_wallpaper.width()!=width() || passive_wallpaper.isNull())
-        {
-            passive_wallpaper.load(passive_wallpaper_path);
-            if( !passive_wallpaper.isNull() )
-                passive_wallpaper = passive_wallpaper.scaled(width(),height());
-        }
-        if( ! passive_wallpaper.isNull() )
-            output_painter.drawImage(0,0, passive_wallpaper);
-    }
 
     // Set the pen to black (will draw shadow first):
     text_painter.setPen(QColor(INVERTED_TEXT_COLOR));
@@ -198,8 +166,10 @@ void Display1::renderText(bool text_present)
 
     // Draw the blurred shadow (or not-blurred black shadow, if blur is off) to the background image:
     output_painter.drawImage(BORDER, BORDER, m_blurred);
+
     // Change the black pixles in the image to white:
     text_image.invertPixels();
+
     // Draw the actual white text to the image:
     output_painter.drawImage(0, 0, text_image);
 
@@ -282,28 +252,63 @@ void Display1::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
 
-    // Draw the previous image into the window:
-    painter.drawPixmap(0, 0, previous_image_pixmap);
-
-    // Draw the output_image into the window, at the transparencey requested by the transition effect:
-    alphaImage(output_image, acounter[0]);
-    painter.drawImage(0, 0, output_image);
-}
-
-void Display1::alphaImage(QImage &img, int alpha1)
-{
-    QRgb *pix = (QRgb*)img.bits();
-    int w   = img.width();
-    int h   = img.height();
-    int wh = w*h;
-    QRgb p;
-    for (int i = 0; i < wh; ++i)
+    // Draw the background:
+    if( use_active_background )
     {
-        p = pix[i];
-        pix[i] = qRgba(qRed(p), qGreen(p),qBlue(p),alpha1);///dv[asum]);
+        // Draw the active wallpaper if there is text to display
+        if (wallpaper.width()!=width() || wallpaper.isNull())
+        {
+            wallpaper.load(wallpaper_path);
+            if( !wallpaper.isNull() )
+                wallpaper = wallpaper.scaled(width(),height());
+        }
+        if( ! wallpaper.isNull() )
+            painter.drawImage(0,0,wallpaper);
+        else
+        {
+            // Use black for the background:
+            painter.setPen(QColor(Qt::black));
+            painter.drawRect( 0, 0, width(), height() );
+        }
+    }
+    else
+    {
+        // Draw the passive wallpaper if set:
+        //qDebug() << "no text present, passive path:" << passive_wallpaper_path;
+
+        if (passive_wallpaper.width()!=width() || passive_wallpaper.isNull())
+        {
+            passive_wallpaper.load(passive_wallpaper_path);
+            if( !passive_wallpaper.isNull() )
+                passive_wallpaper = passive_wallpaper.scaled(width(),height());
+        }
+        if( ! passive_wallpaper.isNull() )
+            painter.drawImage(0,0, passive_wallpaper);
+        else
+        {
+            // Use black for the background:
+            painter.setPen(QColor(Qt::black));
+            painter.drawRect( 0, 0, width(), height() );
+        }
     }
 
+    // This code will, with each iteraction, draw the previous image with increasing transparency, and draw
+    // the current image with increasing opacity; making a smooth transition:
+    double curr_opacity = acounter[0] / 255.0;
+    double prev_opacity = 1.0 - curr_opacity;
+
+    // Draw the previous image into the window, at decreasing opacity:
+    painter.setOpacity(prev_opacity);
+    painter.drawPixmap(0, 0, previous_image_pixmap);
+
+    // Draw the output_image into the window, at increasing opacity:
+    painter.setOpacity(curr_opacity);
+    painter.drawImage(0, 0, output_image);
+
+    // Reset the opacity to default opaque:
+    painter.setOpacity(1.0);
 }
+
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 void Display1::fastbluralpha(QImage &img, int radius)

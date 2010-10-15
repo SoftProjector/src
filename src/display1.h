@@ -46,7 +46,6 @@ public slots:
     QString getPassiveWallpaper();
 
     void fastbluralpha(QImage &img, int radius);
-    void alphaImage(QImage &img, int alpha);
 
 signals:
     void requestTextDrawing(QPainter *painter, int width, int height);
@@ -66,6 +65,7 @@ private:
 
     QPixmap previous_image_pixmap;
     QImage output_image;
+    bool use_active_background;
     int acounter[2];
     QImage m_blurred;
     QTimer *timer;
