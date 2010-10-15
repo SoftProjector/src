@@ -47,7 +47,7 @@ void AddSongbookDialog::changeEvent(QEvent *e)
 void AddSongbookDialog::on_buttonBox_accepted()
 {
     title = ui->songbook_title_box->text().trimmed();
-    info = ui->songbook_info_box->text().trimmed();
+    info = ui->songbook_info_box->toPlainText().trimmed();
     close();
 }
 
@@ -59,5 +59,5 @@ void AddSongbookDialog::on_buttonBox_rejected()
 void AddSongbookDialog::setSongbook(QString tit, QString inf)
 {
     ui->songbook_title_box->setText(tit);
-    ui->songbook_info_box->setText(inf);
+    ui->songbook_info_box->setPlainText(inf);
 }
