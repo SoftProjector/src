@@ -191,10 +191,17 @@ void ManageDataDialog::importSongbook(QString path)
             line.remove("#");
             title = line.trimmed();
 
-            // Set Sbortnik Information
+            // Set Songbook Information
             line = QString::fromUtf8(file.readLine());
             line.remove("#");
             info = line.trimmed();
+            // Convert songbook information from single line to multiple line
+            QStringList info_list = info.split("@%");
+            info.clear();
+            for(int i(0); i<info_list.size();++i)
+            {
+                info += info_list[i] + "\n";
+            }
 
 //            line = QString::fromUtf8(file.readLine());
         }
@@ -206,7 +213,7 @@ void ManageDataDialog::importSongbook(QString path)
 
         // Create songbook
         SongDatabase sdb;
-        sdb.addSongbook(title, info);
+        sdb.addSongbook(title, info.trimmed());
 
         // Set Songbook Code
         code = "0";
@@ -293,6 +300,14 @@ void ManageDataDialog::exportSongbook(QString path)
     title = sq.value(0).toString().trimmed();
     info = sq.value(1).toString().trimmed();
     sq.clear();
+
+    // Convert songbook information from multiline to single line
+    QStringList info_list = info.split("\n");
+    info = info_list[0];
+    for(int i(1); i<info_list.size();++i)
+    {
+        info += "@%" + info_list[i];
+    }
 
     songs = "##" + songbook_id + "\n##"
             + title + "\n##"
@@ -396,6 +411,7 @@ void ManageDataDialog::deleteSongbook(Songbook songbook)
     sq.exec("DELETE FROM SongLink WHERE songbook_id like '" + id +"'");
 
     load_songbooks();
+    updateSongbookButtons();
     setArrowCursor();
 }
 
