@@ -47,10 +47,12 @@ private:
     QFont new_font;
     QString new_wallpaper_path;
     QString new_passive_wallpaper_path;
+    QColor new_foreground_color;
     QStringList bible_id_list;
     QStringList second_id_list;
 
 private slots:
+    void on_choose_color_button_clicked();
     void on_remove_passive_wallpaper_button_clicked();
     void on_primary_bible_menu_activated(QString );
     void on_remove_wallpaper_button_clicked();

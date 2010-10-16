@@ -23,7 +23,7 @@
 #include "display1.h"
 #define MARGIN 20
 #define	BORDER 3
-#define TEXT_COLOR "RED" // "WHITE"
+
 //#define SHADOW_COLOR "BLACK"
 #define BLUR_RADIUS 15
 
@@ -198,7 +198,7 @@ void Display1::renderText(bool text_present)
     setFont(main_font);
 
     // Set the pen to black (will draw shadow first):
-    text_painter.setPen(QColor(TEXT_COLOR));
+    text_painter.setPen(foreground_color);
     text_painter.setFont(font());
 
     // Request SoftProjector to write its text to the QPainter:
@@ -210,7 +210,7 @@ void Display1::renderText(bool text_present)
     //shadow_image.invertPixels();
 
     // Create the shadow image:
-    const QPixmap shadow_mask = QPixmap::fromImage(text_image).createMaskFromColor(QColor(TEXT_COLOR));
+    const QPixmap shadow_mask = QPixmap::fromImage(text_image).createMaskFromColor(foreground_color);
 
     // Make the shadow pixmap same size as the text image, and fill it with black:
     QPixmap shadow_pixmap = QPixmap::fromImage(text_image);
@@ -335,6 +335,14 @@ void Display1::setNewPassiveWallpaper(QString path)
     }
 }
 
+QColor Display1::getForegroundColor()
+{
+    return foreground_color;
+}
+void Display1::setForegroundColor(QColor new_color)
+{
+    foreground_color = new_color;
+}
 
 void Display1::paintEvent(QPaintEvent *event )
 {

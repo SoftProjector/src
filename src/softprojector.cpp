@@ -157,6 +157,7 @@ void SoftProjector::applyDefaults()
     display_on_top = false;
     display->setFading(false);
     display->setBlur(false);
+    display->setForegroundColor( QColor("WHITE") );
     show_stanza_title = false;
     show_song_number = false;
     show_song_key = false;
@@ -179,6 +180,9 @@ void SoftProjector::writeXMLConfigurationFile()
 
     QString font_string = display->getFont().toString();
     xml.writeTextElement("font", font_string);
+
+    unsigned int foreground_color_int = (unsigned int)(display->getForegroundColor().rgb());
+    xml.writeTextElement("foreground_color", QString::number(foreground_color_int) );
 
     QString wallpaper_path = display->getWallpaper();
     QString passive_wallpaper_path = display->getPassiveWallpaper();
@@ -259,6 +263,8 @@ void SoftProjector::applySetting(QString name, QString value)
         new_font.fromString(value);
         display->setNewFont(new_font);
     }
+    else if( name == "foreground_color" )
+        display->setForegroundColor( QColor::fromRgb(value.toUInt()));
     else if( name == "wallpaper" )
         display->setNewWallpaper(value);
     else if( name == "passive_wallpaper" )

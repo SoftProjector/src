@@ -94,6 +94,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->song_key_checkBox->setChecked(softProjector->show_song_key);
     ui->song_number_checkBox->setChecked(softProjector->show_song_number);
 
+    // Set the foreground color
+    new_foreground_color = softProjector->display->getForegroundColor();
+
+    // Initialize the "font color" widget:
+    // FIXME this creates a memory leak:
+    QGraphicsScene *scene = new QGraphicsScene();
+    ui->text_color_view->setScene(scene);
+    ui->text_color_view->show();
+
+    ui->text_color_view->setBackgroundBrush(QBrush(new_foreground_color));
 }
 
 void SettingsDialog::updateSecondaryBibleMenu()
@@ -171,6 +181,7 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setNewPassiveWallpaper(new_passive_wallpaper_path);
     softProjector->display->setFading(use_fading);
     softProjector->display->setBlur(use_blur);
+    softProjector->display->setForegroundColor(new_foreground_color);
     softProjector->writeXMLConfigurationFile();
 
 
@@ -239,3 +250,11 @@ void SettingsDialog::on_remove_passive_wallpaper_button_clicked()
     ui->remove_passive_wallpaper_button->setEnabled(false);
 }
 
+
+void SettingsDialog::on_choose_color_button_clicked()
+{
+    new_foreground_color = QColorDialog::getColor(new_foreground_color, this);
+    ui->text_color_view->setBackgroundBrush(QBrush(new_foreground_color));
+    //ui->text_color_view->show();
+    //ui->text_color_view->update();
+}

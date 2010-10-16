@@ -44,7 +44,8 @@ public slots:
     void setNewFont(QFont newFont);
     QString getWallpaper();
     QString getPassiveWallpaper();
-
+    QColor getForegroundColor();
+    void setForegroundColor(QColor new_color);
     void fastbluralpha(QImage &img, int radius);
 
 signals:
@@ -62,6 +63,7 @@ private:
     QImage wallpaper; // Wallpaper image
     QString passive_wallpaper_path;
     QImage passive_wallpaper;
+    QColor foreground_color;
 
     QPixmap previous_image_pixmap;
     QImage output_image;
