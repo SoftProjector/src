@@ -23,11 +23,55 @@
 #include "display1.h"
 #define MARGIN 20
 #define	BORDER 3
-#define INVERTED_TEXT_COLOR "BLACK" // Inverse of the actual text color (see the code below)
-#define SHADOW_COLOR "BLACK"
+#define TEXT_COLOR "RED" // "WHITE"
+//#define SHADOW_COLOR "BLACK"
 #define BLUR_RADIUS 15
 
 
+
+/*
+shadow_effect.setBlurRadius(15.0);
+
+r = self.boundingRect()
+sz = QSize(r.width(), r.height())
+tmp = QImage(sz, QImage.Format_ARGB32_Premultiplied)
+self.tmp = tmp
+new_painter = QPainter(tmp)
+QGraphicsDropShadowEffect.drawSource(self, new_painter)
+
+pixmap, offset = self.sourcePixmap()
+painter.setCompositionMode(QPainter.CompositionMode_SourceOver)
+painter.drawPixmap(0,0, QPixmap.fromImage(tmp))
+new_painter.end()
+del self.tmp
+
+
+
+
+class ShadowAndAlphaEffect(QGraphicsDropShadowEffect):
+    def __init__(self, blur, transparency, parent=None):
+        QGraphicsEffect.__init__(self, parent)
+        self.opacity = QGraphicsOpacityEffect(self)
+        self.setBlurRadius(15.0)
+        self.opacity.setOpacity(0.9)
+
+    def draw(self, painter):
+        r = self.boundingRect()
+        sz = QSize(r.width(), r.height())
+        tmp = QImage(sz, QImage.Format_ARGB32_Premultiplied)
+        self.tmp = tmp
+        new_painter = QPainter(tmp)
+        QGraphicsDropShadowEffect.drawSource(self, new_painter)
+
+        painter.setOpacity(self.opacity.opacity())
+        pixmap, offset = self.sourcePixmap()
+        painter.setCompositionMode(QPainter.CompositionMode_SourceOver)
+        painter.drawPixmap(0,0, QPixmap.fromImage(tmp))
+        new_painter.end()
+        del self.tmp
+
+
+*/
 
 Display1::Display1(QWidget *parent)
         : QWidget(parent)
@@ -130,13 +174,13 @@ void Display1::renderText(bool text_present)
     text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
     text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
+    text_image.fill(qRgba(255, 255, 255, 0)); //transparent background
 
     output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
 
     // Painter for drawing the foreground (text):
     QPainter text_painter(&text_image);
-
     // FIXME Is this needed?
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint( QPainter::Antialiasing);
@@ -148,31 +192,74 @@ void Display1::renderText(bool text_present)
 
     // Painter for drawing the final image:
     QPainter output_painter(&output_image);
+    //output_painter.setRenderHint(QPainter::TextAntialiasing);
+    //output_painter.setRenderHint( QPainter::Antialiasing);
 
     setFont(main_font);
 
     // Set the pen to black (will draw shadow first):
-    text_painter.setPen(QColor(INVERTED_TEXT_COLOR));
+    text_painter.setPen(QColor(TEXT_COLOR));
     text_painter.setFont(font());
 
     // Request SoftProjector to write its text to the QPainter:
     emit requestTextDrawing(&text_painter, width(), height());
 
+    text_painter.end();
+
+    //QImage shadow_image = prev_shadow_image;
+    //shadow_image.invertPixels();
+
+    // Create the shadow image:
+    const QPixmap shadow_mask = QPixmap::fromImage(text_image).createMaskFromColor(QColor(TEXT_COLOR));
+
+    // Make the shadow pixmap same size as the text image, and fill it with black:
+    QPixmap shadow_pixmap = QPixmap::fromImage(text_image);
+    shadow_pixmap.fill(Qt::black);
+
+    // Set everything other then the text to be transparent:
+    shadow_pixmap.setAlphaChannel(shadow_mask);
+
+    QImage shadow_image = shadow_pixmap.toImage();
 
     // Set the blured image to the produced text image:
-    m_blurred = text_image;
     if(use_blur)
-        // If using blur, actually blur the blur copy of the text image:
-        fastbluralpha(m_blurred,BLUR_RADIUS);
+    {
+        /*
+        Produces a text with a blurred drop shadow using QGraphicsView.
+        This experiment failed, though, as the quality was a little unsatisfactory.
 
-    // Draw the blurred shadow (or not-blurred black shadow, if blur is off) to the background image:
-    output_painter.drawImage(BORDER, BORDER, m_blurred);
+        QPixmap shadow_pixmap = QPixmap::fromImage(text_image);
 
-    // Change the black pixles in the image to white:
-    text_image.invertPixels();
+        QGraphicsPixmapItem *shadow_pixmap_item;
+        shadow_pixmap_item = new QGraphicsPixmapItem(shadow_pixmap);
 
-    // Draw the actual white text to the image:
+        QGraphicsDropShadowEffect *shadow_effect;
+        shadow_effect = new QGraphicsDropShadowEffect();
+        shadow_effect->setColor(QColor(20, 20, 20, 240));//qRgba(0, 0, 0, 90));//Qt::black);
+        shadow_effect->setOffset(4.0);
+        shadow_effect->setBlurRadius(10.0);
+        shadow_pixmap_item->setGraphicsEffect( shadow_effect );
+
+        QGraphicsScene scene;
+        // The scene will take owndership of the item:
+        scene.addItem(shadow_pixmap_item);
+
+        QGraphicsView view(&scene);
+        view.show();
+        view.render(&output_painter);
+        */
+
+        // Blur the shadow:
+        fastbluralpha(shadow_image, BLUR_RADIUS);
+    }
+
+    // Draw the shadow:
+    output_painter.drawImage(BORDER, BORDER, shadow_image);
+
+    // Draw the text:
     output_painter.drawImage(0, 0, text_image);
+
+    output_painter.end();
 
     if(use_fading)
         timer->start(33); // 1/24 sec = ~42miliseconds

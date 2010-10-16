@@ -68,7 +68,6 @@ private:
     bool use_active_background;
     bool background_needs_transition;
     int acounter[2];
-    QImage m_blurred;
     QTimer *timer;
     QTimer *timer_out;
 };
