@@ -26,7 +26,8 @@ bool connect()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("spData.sqlite");
-    if (!db.open()){
+    if (!db.open())
+    {
         QMessageBox mb;
         mb.setText("spData Error"
                    "Could not connect to the database spData.sqlite!\n\n"
@@ -60,8 +61,25 @@ int main(int argc, char *argv[])
 
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
-    bool fileExist = QFile::exists("spData.sqlite");
-    if (!fileExist)
+
+    // Look for the database in all the same places that the QSql module will look,
+    // and display a friendly error if it was not found:
+    QString database_file;
+    bool database_exists = false;
+    foreach (QString path, a.libraryPaths())
+    {
+        QString tmp_db_file = QString(path);
+        tmp_db_file.append("/spData.sqlite");
+        qDebug() << "Looking for database:" << tmp_db_file;
+        if( QFile::exists(tmp_db_file) )
+        {
+            database_file = tmp_db_file;
+            database_exists = true;
+            qDebug() << "  exists";
+            break;
+        }
+    }
+    if (!database_exists)
     {
         QMessageBox mb;
         mb.setText("Database file 'spData.sqlite' cannot be found.\nThe program will Terminate!");
