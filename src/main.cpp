@@ -22,10 +22,10 @@
 #include <QtSql>
 #include "softprojector.h"
 
-bool connect(QString db_dir)
+bool connect(QString database_file)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(db_dir + "/spData.sqlite");
+    db.setDatabaseName(database_file);
     if (!db.open())
     {
         QMessageBox mb;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
     // Look for the database in all the same places that the QSql module will look,
     // and display a friendly error if it was not found:
-    QString database_file, db_dir;
+    QString database_file;
     bool database_exists = false;
     foreach (QString path, a.libraryPaths())
     {
@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
         qDebug() << "Looking for database:" << tmp_db_file;
         if( QFile::exists(tmp_db_file) )
         {
-            db_dir = path;
             database_file = tmp_db_file;
             database_exists = true;
             qDebug() << "  exists";
@@ -89,7 +88,7 @@ int main(int argc, char *argv[])
         mb.exec();
         return 1;
     }
-    if( !connect(db_dir) )
+    if( !connect(database_file) )
     {
         QMessageBox mb;
         mb.setText("Failed to connect to database 'spData.sqlite'");
