@@ -64,21 +64,11 @@ int main(int argc, char *argv[])
 
     // Look for the database in all the same places that the QSql module will look,
     // and display a friendly error if it was not found:
-    QString database_file;
-    bool database_exists = false;
-    foreach (QString path, a.libraryPaths())
-    {
-        QString tmp_db_file = QString(path);
-        tmp_db_file.append("/spData.sqlite");
-        qDebug() << "Looking for database:" << tmp_db_file;
-        if( QFile::exists(tmp_db_file) )
-        {
-            database_file = tmp_db_file;
-            database_exists = true;
-            qDebug() << "  exists";
-            break;
-        }
-    }
+    QString database_file = a.applicationDirPath() + QDir::separator() + "spData.sqlite";
+
+    qDebug() << "Looking for database:" << database_file;
+    bool database_exists = ( QFile::exists(database_file) );
+
     if (!database_exists)
     {
         QMessageBox mb;
