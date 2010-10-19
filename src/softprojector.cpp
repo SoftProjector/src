@@ -153,7 +153,10 @@ void SoftProjector::applyDefaults()
     QSqlQuery sq;
     sq.exec("SELECT id FROM BibleVersions");
     sq.first();
+
+    qDebug() << "sq value:" << sq.value(0).toString();
     bibleWidget->loadBibles(QString(sq.value(0).toString()), QString("none"));
+    //bibleWidget->loadBibles(value, bibleWidget->bible.secondaryId);
     display_on_top = false;
     display->setFading(false);
     display->setBlur(false);
@@ -169,7 +172,8 @@ void SoftProjector::writeXMLConfigurationFile()
 {
     // Method for writing the settings to XML format
 
-    QFile fh("settings.xml");
+    QString settings_file = QApplication::instance()->applicationDirPath() + QDir::separator() + "settings.xml";
+    QFile fh(settings_file);
     fh.open(QIODevice::WriteOnly);
     QXmlStreamWriter xml(&fh);
     xml.setAutoFormatting(true);
@@ -325,13 +329,13 @@ void SoftProjector::readXMLConfigurationFile()
 {
     // Method for reading XML settings format
 
-    QFile fh("settings.xml");
-    if( ! fh.exists() )
+    QString settings_file = QApplication::instance()->applicationDirPath() + QDir::separator() + "settings.xml";
+    if( ! QFile::exists(settings_file) )
     {
         // Defaults were already applied ealier
         return;
     }
-
+    QFile fh(settings_file);
 
     fh.open(QIODevice::ReadOnly);
     QXmlStreamReader xml(&fh);
