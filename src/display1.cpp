@@ -21,11 +21,8 @@
 #include <QDebug>
 
 #include "display1.h"
-#define MARGIN 20
-#define	BORDER 3
 
-//#define SHADOW_COLOR "BLACK"
-#define BLUR_RADIUS 15
+#define BLUR_RADIUS 5
 
 
 
@@ -169,57 +166,41 @@ void Display1::renderText(bool text_present)
         previous_image_pixmap = QPixmap::fromImage(output_image);
     }
 
-    // Render the text
-    QImage text_image;
-    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
-    // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
-    text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
-    text_image.fill(qRgba(255, 255, 255, 0)); //transparent background
-
-    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
-    output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
-
-    // Painter for drawing the foreground (text):
-    QPainter text_painter(&text_image);
-    // FIXME Is this needed?
-    //text_painter.setRenderHint(QPainter::TextAntialiasing);
-    //text_painter.setRenderHint( QPainter::Antialiasing);
 
     // For later determening which background to draw, and whether to transition to it:
     background_needs_transition = ( use_active_background != text_present );
     use_active_background = text_present;
 
-
-    // Painter for drawing the final image:
-    QPainter output_painter(&output_image);
-    //output_painter.setRenderHint(QPainter::TextAntialiasing);
-    //output_painter.setRenderHint( QPainter::Antialiasing);
-
     setFont(main_font);
 
-    // Set the pen to black (will draw shadow first):
+
+    // Render the foreground text:
+    QImage text_image;
+    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
+    text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
+
+    QPainter text_painter(&text_image);
+    //text_painter.setRenderHint(QPainter::TextAntialiasing);
+    //text_painter.setRenderHint( QPainter::Antialiasing);
+
     text_painter.setPen(foreground_color);
     text_painter.setFont(font());
 
     // Request SoftProjector to write its text to the QPainter:
     emit requestTextDrawing(&text_painter, width(), height());
-
     text_painter.end();
 
-    //QImage shadow_image = prev_shadow_image;
-    //shadow_image.invertPixels();
 
-    // Create the shadow image:
-    const QPixmap shadow_mask = QPixmap::fromImage(text_image).createMaskFromColor(foreground_color);
-
-    // Make the shadow pixmap same size as the text image, and fill it with black:
-    QPixmap shadow_pixmap = QPixmap::fromImage(text_image);
-    shadow_pixmap.fill(Qt::black);
-
-    // Set everything other then the text to be transparent:
-    shadow_pixmap.setAlphaChannel(shadow_mask);
-
-    QImage shadow_image = shadow_pixmap.toImage();
+    // Draw the shadow image:
+    QImage shadow_image;
+    shadow_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    shadow_image.fill(qRgba(0, 0, 0, 0)); //transparent background
+    QPainter shadow_painter(&shadow_image);
+    shadow_painter.setPen(QColor(Qt::black));
+    shadow_painter.setFont(font());
+    emit requestTextDrawing(&shadow_painter, width(), height());
+    shadow_painter.end();
 
     // Set the blured image to the produced text image:
     if(use_blur)
@@ -253,8 +234,19 @@ void Display1::renderText(bool text_present)
         fastbluralpha(shadow_image, BLUR_RADIUS);
     }
 
+
+    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
+    // Painter for drawing the final image:
+    QPainter output_painter(&output_image);
+    //output_painter.setRenderHint(QPainter::TextAntialiasing);
+    //output_painter.setRenderHint( QPainter::Antialiasing);
+
+    // Offset the shadow by a fraction of the font size:
+    int shadow_offset = ( font().pointSize() / 15 );
+
     // Draw the shadow:
-    output_painter.drawImage(BORDER, BORDER, shadow_image);
+    output_painter.drawImage(shadow_offset, shadow_offset, shadow_image);
 
     // Draw the text:
     output_painter.drawImage(0, 0, text_image);
@@ -311,8 +303,7 @@ void Display1::setNewWallpaper(QString path)
 {
     wallpaper_path = path;
     if( path.isEmpty() ) {
-        QImage null_wallpaper;
-        wallpaper = null_wallpaper;
+        wallpaper = QImage();
     }
     else
     {
@@ -325,8 +316,7 @@ void Display1::setNewPassiveWallpaper(QString path)
 {
     passive_wallpaper_path = path;
     if( path.isEmpty() ) {
-        QImage null_wallpaper;
-        passive_wallpaper = null_wallpaper;
+        passive_wallpaper = QImage();
     }
     else
     {

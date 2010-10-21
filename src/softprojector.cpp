@@ -154,7 +154,6 @@ void SoftProjector::applyDefaults()
     sq.exec("SELECT id FROM BibleVersions");
     sq.first();
 
-    qDebug() << "sq value:" << sq.value(0).toString();
     bibleWidget->loadBibles(QString(sq.value(0).toString()), QString("none"));
     //bibleWidget->loadBibles(value, bibleWidget->bible.secondaryId);
     display_on_top = false;
