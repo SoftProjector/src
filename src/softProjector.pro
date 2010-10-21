@@ -21,6 +21,8 @@
 QT += sql
 TARGET = softProjector
 TEMPLATE = app
+//CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
+
 SOURCES += main.cpp \
     softprojector.cpp \
     songwidget.cpp \
