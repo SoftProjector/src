@@ -209,6 +209,10 @@ void SongWidget::sendToProjector(Song song, int row)
 {
     // Display the specified song text in the right-most column of softProjector:
     emit sendSong(song, row);
+
+    // Add a count to a song
+    SongCounter counter;
+    counter.addSongCount(song);
 }
 
 

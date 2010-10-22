@@ -22,6 +22,7 @@
 
 #include <QtGui/QWidget>
 #include "song.h"
+#include "songcounter.h"
 //#include "softprojector.h"
 
 namespace Ui {

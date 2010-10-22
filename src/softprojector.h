@@ -28,6 +28,7 @@
 #include "editwidget.h"
 #include "bible.h"
 #include "managedatadialog.h"
+#include "songcounter.h"
 
 class QActionGroup;
 
@@ -86,6 +87,7 @@ private:
     QTranslator translator;
 
 private slots:
+    void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();
     void on_actionUkrainian_triggered();

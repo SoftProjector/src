@@ -1032,6 +1032,9 @@ void SoftProjector::retranslateUis()
     songWidget->retranslateUis();
 }
 
-
-
-
+void SoftProjector::on_actionSong_Counter_triggered()
+{
+    SongCounter *songCounter;
+    songCounter = new SongCounter();
+    songCounter->exec();
+}

@@ -139,10 +139,6 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="actionNewSong"/>
-    <addaction name="actionEditSong"/>
-    <addaction name="actionCopy_Song"/>
-    <addaction name="actionDeleteSong"/>
     <addaction name="separator"/>
     <addaction name="actionManage_Database"/>
     <addaction name="separator"/>
@@ -164,8 +160,20 @@
     <addaction name="actionRussian"/>
     <addaction name="actionUkrainian"/>
    </widget>
+   <widget class="QMenu" name="menuSongs">
+    <property name="title">
+     <string>Songs</string>
+    </property>
+    <addaction name="actionNewSong"/>
+    <addaction name="actionEditSong"/>
+    <addaction name="actionCopy_Song"/>
+    <addaction name="actionDeleteSong"/>
+    <addaction name="separator"/>
+    <addaction name="actionSong_Counter"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuSongs"/>
    <addaction name="menuLanguage"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -303,6 +311,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionSong_Counter">
+   <property name="text">
+    <string>Song Counter</string>
    </property>
   </action>
  </widget>

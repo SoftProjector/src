@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     managedatadialog.cpp \
     managedata.cpp \
     announcewidget.cpp \
-    helpdialog.cpp
+    helpdialog.cpp \
+    songcounter.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -53,7 +54,8 @@ HEADERS += softprojector.h \
     managedatadialog.h \
     managedata.h \
     announcewidget.h \
-    helpdialog.h
+    helpdialog.h \
+    songcounter.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -63,7 +65,8 @@ FORMS += softprojector.ui \
     addsongbookdialog.ui \
     managedatadialog.ui \
     announcewidget.ui \
-    helpdialog.ui
+    helpdialog.ui \
+    songcounter.ui
 TRANSLATIONS += sotftpro_de.ts\
     sotftpro_ru.ts\
     sotftpro_ua.ts
