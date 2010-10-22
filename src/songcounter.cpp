@@ -27,8 +27,6 @@ SongCounter::SongCounter(QWidget *parent) :
     ui->setupUi(this);
     load_counts();
 
-
-
     // Modify the column widths:
     ui->countTable->setColumnWidth(0, 250);
     ui->countTable->setColumnWidth(1, 100);
@@ -49,7 +47,16 @@ void SongCounter::on_closeButton_clicked()
 
 void SongCounter::on_resetButton_clicked()
 {
+    // Code to reset counter to 0
+    QSqlQuery sq, sqr;
+    sq.exec("SELECT id FROM Songs WHERE count > 0");
+    while (sq.next())
+    {
+        QString id = sq.value(0).toString();
+        sqr.exec("UPDATE Songs SET count = 0 WHERE id = " + id);
+    }
 
+    load_counts();
 }
 
 void SongCounter::addSongCount(Song song)
