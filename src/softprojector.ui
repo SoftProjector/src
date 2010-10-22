@@ -314,6 +314,10 @@
    </property>
   </action>
   <action name="actionSong_Counter">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/song_count.png</normaloff>:/icons/icons/song_count.png</iconset>
+   </property>
    <property name="text">
     <string>Song Counter</string>
    </property>

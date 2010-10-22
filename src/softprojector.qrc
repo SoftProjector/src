@@ -28,6 +28,7 @@
         <file>icons/announce.png</file>
         <file>icons/splash.png</file>
         <file>icons/softprojector_cloud.png</file>
+        <file>icons/song_count.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
