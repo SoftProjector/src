@@ -48,13 +48,8 @@ void SongCounter::on_closeButton_clicked()
 void SongCounter::on_resetButton_clicked()
 {
     // Code to reset counter to 0
-    QSqlQuery sq, sqr;
-    sq.exec("SELECT id FROM Songs WHERE count > 0");
-    while (sq.next())
-    {
-        QString id = sq.value(0).toString();
-        sqr.exec("UPDATE Songs SET count = 0 WHERE id = " + id);
-    }
+    QSqlQuery sq;
+    sq.exec("UPDATE Songs SET count = 0 WHERE count > 0");
 
     load_counts();
 }
