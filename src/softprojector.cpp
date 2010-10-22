@@ -1035,6 +1035,6 @@ void SoftProjector::retranslateUis()
 void SoftProjector::on_actionSong_Counter_triggered()
 {
     SongCounter *songCounter;
-    songCounter = new SongCounter();
+    songCounter = new SongCounter(this);
     songCounter->exec();
 }
