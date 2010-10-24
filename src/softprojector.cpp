@@ -1036,5 +1036,6 @@ void SoftProjector::on_actionSong_Counter_triggered()
 {
     SongCounter *songCounter;
     songCounter = new SongCounter(this);
+    songCounter->load_counts();
     songCounter->exec();
 }

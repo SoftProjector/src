@@ -25,14 +25,6 @@ SongCounter::SongCounter(QWidget *parent) :
     ui(new Ui::SongCounter)
 {
     ui->setupUi(this);
-    load_counts();
-
-    // Modify the column widths:
-    ui->countTable->setColumnWidth(0, 250);
-    ui->countTable->setColumnWidth(1, 100);
-    // Decrease the row height:
-    ui->countTable->resizeRowsToContents();
-
 }
 
 SongCounter::~SongCounter()
@@ -77,6 +69,12 @@ void SongCounter::load_counts()
     songCounterModel = new SongCounterModel;
     songCounterModel->setCounter(song_counts);
     ui->countTable->setModel(songCounterModel);
+
+    // Modify the column widths:
+    ui->countTable->setColumnWidth(0, 250);
+    ui->countTable->setColumnWidth(1, 100);
+    // Decrease the row height:
+    ui->countTable->resizeRowsToContents();
 }
 
 

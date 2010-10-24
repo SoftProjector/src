@@ -76,9 +76,9 @@ private:
 
 public slots:
     void addSongCount(Song song);
+    void load_counts();
 
 private slots:
-    void load_counts();
     void on_resetButton_clicked();
     void on_closeButton_clicked();
     QList<Counter> getSongCounts();
