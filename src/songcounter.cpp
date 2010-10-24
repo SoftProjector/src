@@ -25,6 +25,7 @@ SongCounter::SongCounter(QWidget *parent) :
     ui(new Ui::SongCounter)
 {
     ui->setupUi(this);
+    ui->closeButton->setFocus();
 }
 
 SongCounter::~SongCounter()
