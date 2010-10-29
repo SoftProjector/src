@@ -374,15 +374,12 @@ void SongWidget::on_btnUpInPlaylist_clicked()
     updateButtonStates();
 }
 
-
-
-
 void SongWidget::on_lineEditSearch_textEdited(QString text)
+
 {
     // These two options are mutually exclusive:
     bool match_beginning = ui->begins_rbutton->isChecked();
     bool exact_match = ui->exact_match_rbutton->isChecked();
-
     proxy_model->setFilterString(text, match_beginning, exact_match);
     songs_model->emitLayoutChanged(); // forces the view to redraw
 
@@ -390,6 +387,14 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     ui->songs_view->selectRow(0);
     ui->songs_view->scrollToTop();
 
+    // Load Preview on song changes
+    int row = proxy_model->mapToSource(ui->songs_view->currentIndex()).row();
+    if( row>=0)
+    {
+        Song song = songs_model->getSong(row);
+        sendToPreview(song);
+        focusInPlaylistTable = false;
+    }
     updateButtonStates();
 }
 
