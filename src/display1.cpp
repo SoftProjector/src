@@ -175,8 +175,7 @@ void Display1::renderText(bool text_present)
 
 
     // Render the foreground text:
-    QImage text_image;
-    text_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    QImage text_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
     text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
 
@@ -193,8 +192,7 @@ void Display1::renderText(bool text_present)
 
 
     // Draw the shadow image:
-    QImage shadow_image;
-    shadow_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    QImage shadow_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     shadow_image.fill(qRgba(0, 0, 0, 0)); //transparent background
     QPainter shadow_painter(&shadow_image);
     shadow_painter.setPen(QColor(Qt::black));
@@ -234,8 +232,8 @@ void Display1::renderText(bool text_present)
         fastbluralpha(shadow_image, BLUR_RADIUS);
     }
 
-
-    output_image = QImage::QImage(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    QImage temp_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    output_image = temp_image;
     output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
     // Painter for drawing the final image:
     QPainter output_painter(&output_image);
