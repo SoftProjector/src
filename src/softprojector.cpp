@@ -675,7 +675,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
            {
                // No secondary bible:
                // Figure out how much space the drawing will take at the current font size:
-               font.setPointSize(original_size);
+               font.setPointSize(current_size);
                painter->setFont(font);
                trect1 = painter->boundingRect(left, top, w, h, tflags, v.primary_text);
 
