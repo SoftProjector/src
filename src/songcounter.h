@@ -33,7 +33,9 @@ class Counter
 {
 public:
     Counter();
+    QString id;
     QString title;
+    QString songbook;
     int count;
 };
 
@@ -70,15 +72,15 @@ public:
     ~SongCounter();
 
 private:
-    QList<Counter> song_counts;
+    QList<Counter> song_count_list;
     SongCounterModel *songCounterModel;
     Ui::SongCounter *ui;
 
 public slots:
     void addSongCount(Song song);
-    void load_counts();
 
 private slots:
+    void on_resetOneButton_clicked();
     void on_resetButton_clicked();
     void on_closeButton_clicked();
     QList<Counter> getSongCounts();

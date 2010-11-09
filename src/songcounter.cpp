@@ -26,6 +26,18 @@ SongCounter::SongCounter(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->closeButton->setFocus();
+
+    song_count_list = getSongCounts();
+    songCounterModel = new SongCounterModel;
+    songCounterModel->setCounter(song_count_list);
+    ui->countTable->setModel(songCounterModel);
+
+    // Modify the column widths:
+    ui->countTable->setColumnWidth(0, 299);
+    ui->countTable->setColumnWidth(1, 75);
+    ui->countTable->setColumnWidth(2, 200);
+    // Decrease the row height:
+    ui->countTable->resizeRowsToContents();
 }
 
 SongCounter::~SongCounter()
@@ -40,11 +52,27 @@ void SongCounter::on_closeButton_clicked()
 
 void SongCounter::on_resetButton_clicked()
 {
-    // Code to reset counter to 0
+    // Code to reset counters to 0
     QSqlQuery sq;
     sq.exec("UPDATE Songs SET count = 0 WHERE count > 0");
 
-    load_counts();
+    song_count_list = getSongCounts();
+    songCounterModel->setCounter(song_count_list);
+    ui->countTable->setModel(songCounterModel);
+}
+
+
+void SongCounter::on_resetOneButton_clicked()
+{
+    // reset curently selected to 0
+    int row = ui->countTable->currentIndex().row();
+    Counter count_to_remove = songCounterModel->getSongCount(row);
+
+    QSqlQuery sq;
+    sq.exec("UPDATE Songs SET count = 0 WHERE id = " + count_to_remove.id);
+    song_count_list = getSongCounts();
+    songCounterModel->setCounter(song_count_list);
+    ui->countTable->setModel(songCounterModel);
 }
 
 void SongCounter::addSongCount(Song song)
@@ -64,34 +92,32 @@ void SongCounter::addSongCount(Song song)
     sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
 }
 
-void SongCounter::load_counts()
-{
-    song_counts = getSongCounts();
-    songCounterModel = new SongCounterModel;
-    songCounterModel->setCounter(song_counts);
-    ui->countTable->setModel(songCounterModel);
-
-    // Modify the column widths:
-    ui->countTable->setColumnWidth(0, 250);
-    ui->countTable->setColumnWidth(1, 100);
-    // Decrease the row height:
-    ui->countTable->resizeRowsToContents();
-}
-
-
-
 //***********************************
 //***********************************
 QList<Counter> SongCounter::getSongCounts()
 {
+    qDebug() << "song counter";
     QList<Counter> song_counts;
     Counter song_count;
-    QSqlQuery sq;
-    sq.exec("SELECT title, count FROM Songs WHERE count > 0");
+    QSqlQuery sq, sq1;
+
+    // Get counts
+    sq.exec("SELECT id, title, count FROM Songs WHERE count > 0");
     while (sq.next())
     {
-        song_count.title = sq.value(0).toString();
-        song_count.count = sq.value(1).toInt();
+        QString id = sq.value(0).toString();
+        song_count.id = id;
+        song_count.title = sq.value(1).toString();
+        song_count.count = sq.value(2).toInt();
+        // get songbook id
+        sq1.exec("SELECT songbook_id FROM SongLink WHERE song_id = " + id);
+        sq1.first();
+        id = sq1.value(0).toString();
+        sq1.clear();
+        // get songbook name
+        sq1.exec("SELECT name FROM Songbooks WHERE id = " + id);
+        sq1.first();
+        song_count.songbook = sq1.value(0).toString();
         song_counts.append(song_count);
     }
     return song_counts;
@@ -138,7 +164,7 @@ int SongCounterModel::rowCount(const QModelIndex &parent) const
 
 int SongCounterModel::columnCount(const QModelIndex &parent) const
 {
-    return 2;
+    return 3;
 }
 
 QVariant SongCounterModel::data(const QModelIndex &index, int role) const
@@ -150,6 +176,8 @@ QVariant SongCounterModel::data(const QModelIndex &index, int role) const
             return QVariant(song_count.title);
         else if( index.column() == 1 )
             return QVariant(song_count.count);
+        else if (index.column() == 2)
+            return QVariant(song_count.songbook);
     }
     return QVariant();
 }
@@ -164,7 +192,9 @@ QVariant SongCounterModel::headerData(int section,
         case 0:
             return QVariant(tr("Song Title"));
         case 1:
-            return QVariant(tr("Times showed"));
+            return QVariant(tr("Count"));
+        case 2:
+            return QVariant(tr("Songbook"));
         }
     }
     return QVariant();

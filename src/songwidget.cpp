@@ -211,7 +211,6 @@ void SongWidget::sendToProjector(Song song, int row)
     emit sendSong(song, row);
 
     // Add a count to a song
-    SongCounter counter;
     counter.addSongCount(song);
 }
 

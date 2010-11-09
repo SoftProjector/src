@@ -95,6 +95,7 @@ private:
     bool focusInPlaylistTable;
     bool allSongs;
     Song preview_song;
+    SongCounter counter;
 public:
     SongsModel *songs_model;
 
