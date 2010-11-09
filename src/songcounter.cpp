@@ -29,8 +29,10 @@ SongCounter::SongCounter(QWidget *parent) :
 
     song_count_list = getSongCounts();
     songCounterModel = new SongCounterModel;
+    songCounterProxyModel = new QSortFilterProxyModel;
+    songCounterProxyModel->setSourceModel(songCounterModel);
     songCounterModel->setCounter(song_count_list);
-    ui->countTable->setModel(songCounterModel);
+    ui->countTable->setModel(songCounterProxyModel);
 
     // Modify the column widths:
     ui->countTable->setColumnWidth(0, 299);

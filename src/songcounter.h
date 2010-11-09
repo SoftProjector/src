@@ -74,6 +74,7 @@ public:
 private:
     QList<Counter> song_count_list;
     SongCounterModel *songCounterModel;
+    QSortFilterProxyModel *songCounterProxyModel;
     Ui::SongCounter *ui;
 
 public slots:
