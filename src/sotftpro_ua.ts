@@ -63,12 +63,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="addsongbookdialog.ui" line="24"/>
+        <location filename="addsongbookdialog.ui" line="26"/>
         <source>Songbook Title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="addsongbookdialog.ui" line="37"/>
+        <location filename="addsongbookdialog.ui" line="41"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -107,19 +107,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="93"/>
-        <location filename="announcewidget.cpp" line="106"/>
+        <location filename="announcewidget.cpp" line="125"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="98"/>
-        <location filename="announcewidget.cpp" line="110"/>
+        <location filename="announcewidget.cpp" line="129"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="103"/>
-        <location filename="announcewidget.cpp" line="108"/>
+        <location filename="announcewidget.cpp" line="127"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,19 +130,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="122"/>
-        <location filename="announcewidget.cpp" line="115"/>
+        <location filename="announcewidget.cpp" line="134"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="127"/>
-        <location filename="announcewidget.cpp" line="119"/>
+        <location filename="announcewidget.cpp" line="138"/>
         <source>Middle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="132"/>
-        <location filename="announcewidget.cpp" line="117"/>
+        <location filename="announcewidget.cpp" line="136"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
@@ -371,27 +371,27 @@ Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="352"/>
+        <location filename="biblewidget.cpp" line="371"/>
         <source>Total of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="352"/>
+        <location filename="biblewidget.cpp" line="371"/>
         <source> search results returned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="354"/>
+        <location filename="biblewidget.cpp" line="373"/>
         <source>Total of 281 or more results. &lt;font color=red&gt;Only 281 results can be returned.&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="363"/>
+        <location filename="biblewidget.cpp" line="382"/>
         <source>No search results have retrieved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="364"/>
+        <location filename="biblewidget.cpp" line="383"/>
         <source>No search results</source>
         <translation type="unfinished"></translation>
     </message>
@@ -399,7 +399,7 @@ Results</source>
 <context>
     <name>BiblesModel</name>
     <message>
-        <location filename="managedata.cpp" line="74"/>
+        <location filename="managedata.cpp" line="93"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -510,43 +510,43 @@ Results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="265"/>
+        <location filename="editwidget.cpp" line="284"/>
         <source>Add a new Songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="291"/>
+        <location filename="editwidget.cpp" line="310"/>
         <source>Select Songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="265"/>
+        <location filename="editwidget.cpp" line="284"/>
         <source>Select a Songbook to which you want to add a song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="71"/>
+        <location filename="editwidget.cpp" line="90"/>
         <source>Song title cannot be left empty.
 Please enter song title.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="72"/>
+        <location filename="editwidget.cpp" line="91"/>
         <source>Song title is missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="257"/>
+        <location filename="editwidget.cpp" line="276"/>
         <source>Copy to a new Songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="257"/>
+        <location filename="editwidget.cpp" line="276"/>
         <source>Select a Songbook to which you want to copy this song to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="263"/>
+        <location filename="editwidget.cpp" line="282"/>
         <source>Verse 1
  - words of verse go here
 
@@ -559,12 +559,12 @@ Verse 2
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="317"/>
+        <location filename="editwidget.cpp" line="336"/>
         <source>Add a Songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="353"/>
+        <location filename="editwidget.cpp" line="372"/>
         <source>Select a picture for the wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
@@ -606,257 +606,257 @@ Verse 2
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="40"/>
+        <location filename="managedatadialog.ui" line="47"/>
         <source>Import a new Bible into your database</source>
         <oldsource>Import a new Bible into your database/</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="43"/>
-        <location filename="managedatadialog.ui" line="127"/>
+        <location filename="managedatadialog.ui" line="50"/>
+        <location filename="managedatadialog.ui" line="138"/>
         <source>&amp;Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="46"/>
-        <location filename="managedatadialog.ui" line="130"/>
+        <location filename="managedatadialog.ui" line="53"/>
+        <location filename="managedatadialog.ui" line="141"/>
         <source>Ctrl+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="56"/>
+        <location filename="managedatadialog.ui" line="63"/>
         <source>Edit Bible title of currently selected Bible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="59"/>
-        <location filename="managedatadialog.ui" line="140"/>
+        <location filename="managedatadialog.ui" line="66"/>
+        <location filename="managedatadialog.ui" line="151"/>
         <source>&amp;Edit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="62"/>
-        <location filename="managedatadialog.ui" line="143"/>
+        <location filename="managedatadialog.ui" line="69"/>
+        <location filename="managedatadialog.ui" line="154"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="69"/>
+        <location filename="managedatadialog.ui" line="76"/>
         <source>Export currently selected Bible to share with others.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="72"/>
-        <location filename="managedatadialog.ui" line="153"/>
+        <location filename="managedatadialog.ui" line="79"/>
+        <location filename="managedatadialog.ui" line="164"/>
         <source>E&amp;xport...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="75"/>
-        <location filename="managedatadialog.ui" line="156"/>
+        <location filename="managedatadialog.ui" line="82"/>
+        <location filename="managedatadialog.ui" line="167"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="82"/>
+        <location filename="managedatadialog.ui" line="89"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="85"/>
-        <location filename="managedatadialog.ui" line="166"/>
+        <location filename="managedatadialog.ui" line="92"/>
+        <location filename="managedatadialog.ui" line="177"/>
         <source>&amp;Delete...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="88"/>
-        <location filename="managedatadialog.ui" line="169"/>
+        <location filename="managedatadialog.ui" line="95"/>
+        <location filename="managedatadialog.ui" line="180"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="113"/>
+        <location filename="managedatadialog.ui" line="120"/>
         <source>Songbooks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="124"/>
+        <location filename="managedatadialog.ui" line="135"/>
         <source>Import a new Songbook into database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="137"/>
+        <location filename="managedatadialog.ui" line="148"/>
         <source>Edit the title and information about the Songbook.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="150"/>
+        <location filename="managedatadialog.ui" line="161"/>
         <source>Export currently selected Songbook to be able to share with others and for backup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="163"/>
+        <location filename="managedatadialog.ui" line="174"/>
         <source>Delete currently selected Songbook from database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="208"/>
+        <location filename="managedatadialog.ui" line="219"/>
         <source>Close Manage Database Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="211"/>
+        <location filename="managedatadialog.ui" line="222"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="214"/>
+        <location filename="managedatadialog.ui" line="225"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="130"/>
+        <location filename="managedatadialog.cpp" line="149"/>
         <source>Select a songbook to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="132"/>
+        <location filename="managedatadialog.cpp" line="151"/>
         <source>softProjector songbook file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="159"/>
-        <location filename="managedatadialog.cpp" line="419"/>
-        <location filename="managedatadialog.cpp" line="526"/>
+        <location filename="managedatadialog.cpp" line="178"/>
+        <location filename="managedatadialog.cpp" line="454"/>
+        <location filename="managedatadialog.cpp" line="561"/>
         <source>Importing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="159"/>
-        <location filename="managedatadialog.cpp" line="419"/>
-        <location filename="managedatadialog.cpp" line="526"/>
+        <location filename="managedatadialog.cpp" line="178"/>
+        <location filename="managedatadialog.cpp" line="454"/>
+        <location filename="managedatadialog.cpp" line="561"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="184"/>
+        <location filename="managedatadialog.cpp" line="210"/>
         <source>User songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="185"/>
+        <location filename="managedatadialog.cpp" line="211"/>
         <source>Songbook imported by the user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="256"/>
+        <location filename="managedatadialog.cpp" line="282"/>
         <source>Save the songbook as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="257"/>
+        <location filename="managedatadialog.cpp" line="283"/>
         <source>softProjector songbook file (*.sps)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="316"/>
+        <location filename="managedatadialog.cpp" line="350"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="317"/>
+        <location filename="managedatadialog.cpp" line="351"/>
         <source>The songbook &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="317"/>
+        <location filename="managedatadialog.cpp" line="351"/>
         <source>&quot;
 Has been saved to:
      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="329"/>
+        <location filename="managedatadialog.cpp" line="363"/>
         <source>Delete songbook?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="330"/>
-        <location filename="managedatadialog.cpp" line="707"/>
+        <location filename="managedatadialog.cpp" line="364"/>
+        <location filename="managedatadialog.cpp" line="742"/>
         <source>Are you sure that you want to delete: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="331"/>
+        <location filename="managedatadialog.cpp" line="365"/>
         <source>This action will permanentrly delete this songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="391"/>
+        <location filename="managedatadialog.cpp" line="426"/>
         <source>Select Bible file to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="393"/>
+        <location filename="managedatadialog.cpp" line="428"/>
         <source>All supported Bible files </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="394"/>
-        <location filename="managedatadialog.cpp" line="645"/>
+        <location filename="managedatadialog.cpp" line="429"/>
+        <location filename="managedatadialog.cpp" line="680"/>
         <source>softProjector Bible file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="395"/>
+        <location filename="managedatadialog.cpp" line="430"/>
         <source>Unbound Bible file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="644"/>
+        <location filename="managedatadialog.cpp" line="679"/>
         <source>Save exported Bible as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="693"/>
+        <location filename="managedatadialog.cpp" line="728"/>
         <source>Bible has been exported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="694"/>
+        <location filename="managedatadialog.cpp" line="729"/>
         <source>Bible:
      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="694"/>
+        <location filename="managedatadialog.cpp" line="729"/>
         <source>
 Has been saved to:
      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="706"/>
+        <location filename="managedatadialog.cpp" line="741"/>
         <source>Delete Bible?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="708"/>
+        <location filename="managedatadialog.cpp" line="743"/>
         <source>This action will permanentrly delete this Bible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="763"/>
+        <location filename="managedatadialog.cpp" line="798"/>
         <source>Edit Songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="792"/>
+        <location filename="managedatadialog.cpp" line="827"/>
         <source>Edit Bible name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="793"/>
+        <location filename="managedatadialog.cpp" line="828"/>
         <source>Bible title:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -914,64 +914,74 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="124"/>
-        <source>Active wallpaper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingsdialog.ui" line="142"/>
-        <location filename="settingsdialog.ui" line="192"/>
-        <source>Browse...</source>
+        <location filename="settingsdialog.ui" line="126"/>
+        <source>Text color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="149"/>
-        <location filename="settingsdialog.ui" line="199"/>
+        <source>Choose color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="171"/>
+        <source>Active wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="189"/>
+        <location filename="settingsdialog.ui" line="239"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="196"/>
+        <location filename="settingsdialog.ui" line="246"/>
         <source>Remove wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="174"/>
+        <location filename="settingsdialog.ui" line="221"/>
         <source>Passive wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="224"/>
+        <location filename="settingsdialog.ui" line="271"/>
         <source>Songs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="230"/>
+        <location filename="settingsdialog.ui" line="277"/>
         <source>Show song number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="237"/>
+        <location filename="settingsdialog.ui" line="284"/>
         <source>Show song key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.ui" line="244"/>
+        <location filename="settingsdialog.ui" line="291"/>
         <source>Show stanza title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="26"/>
-        <location filename="settingsdialog.cpp" line="59"/>
-        <location filename="settingsdialog.cpp" line="67"/>
-        <location filename="settingsdialog.cpp" line="90"/>
-        <location filename="settingsdialog.cpp" line="207"/>
-        <location filename="settingsdialog.cpp" line="219"/>
+        <location filename="settingsdialog.cpp" line="45"/>
+        <location filename="settingsdialog.cpp" line="78"/>
+        <location filename="settingsdialog.cpp" line="86"/>
+        <location filename="settingsdialog.cpp" line="119"/>
+        <location filename="settingsdialog.cpp" line="237"/>
+        <location filename="settingsdialog.cpp" line="249"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="178"/>
+        <location filename="settingsdialog.cpp" line="208"/>
         <source>Select a picture for the wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="180"/>
+        <location filename="settingsdialog.cpp" line="210"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -979,85 +989,85 @@ Has been saved to:
 <context>
     <name>SoftProjector</name>
     <message>
-        <location filename="softprojector.cpp" line="37"/>
+        <location filename="softprojector.cpp" line="56"/>
         <source>This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net</source>
         <oldsource>This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="73"/>
-        <location filename="softprojector.cpp" line="1001"/>
+        <location filename="softprojector.cpp" line="92"/>
+        <location filename="softprojector.cpp" line="1029"/>
         <source>Bible (F6)</source>
         <translation type="unfinished">Біблія (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="74"/>
-        <location filename="softprojector.cpp" line="1002"/>
+        <location filename="softprojector.cpp" line="93"/>
+        <location filename="softprojector.cpp" line="1030"/>
         <source>Songs (F7)</source>
         <translation type="unfinished">Пісні (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="75"/>
-        <location filename="softprojector.cpp" line="1003"/>
+        <location filename="softprojector.cpp" line="94"/>
+        <location filename="softprojector.cpp" line="1031"/>
         <source>Announcements (F8)</source>
         <translation type="unfinished">Оголошення (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="370"/>
+        <location filename="softprojector.cpp" line="398"/>
         <source>Announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="792"/>
-        <location filename="softprojector.cpp" line="818"/>
-        <location filename="softprojector.cpp" line="857"/>
+        <location filename="softprojector.cpp" line="820"/>
+        <location filename="softprojector.cpp" line="846"/>
+        <location filename="softprojector.cpp" line="885"/>
         <source>No song selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="793"/>
+        <location filename="softprojector.cpp" line="821"/>
         <source>No song has been selected to be edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="794"/>
+        <location filename="softprojector.cpp" line="822"/>
         <source>Please select a song to be edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="819"/>
+        <location filename="softprojector.cpp" line="847"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="820"/>
+        <location filename="softprojector.cpp" line="848"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="832"/>
+        <location filename="softprojector.cpp" line="860"/>
         <source>Delete song?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="833"/>
+        <location filename="softprojector.cpp" line="861"/>
         <source>Delete song &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="858"/>
+        <location filename="softprojector.cpp" line="886"/>
         <source>No song has been selected to be deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="859"/>
+        <location filename="softprojector.cpp" line="887"/>
         <source>Please select a song to be deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="834"/>
+        <location filename="softprojector.cpp" line="862"/>
         <source>This action will permanentrly delete this song</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1110,104 +1120,155 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="153"/>
-        <location filename="softprojector.ui" line="255"/>
+        <location filename="softprojector.ui" line="149"/>
+        <location filename="softprojector.ui" line="263"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="160"/>
+        <location filename="softprojector.ui" line="156"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="175"/>
+        <location filename="softprojector.ui" line="165"/>
+        <source>Songs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="183"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="184"/>
+        <location filename="softprojector.ui" line="192"/>
         <source>&amp;Settings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="187"/>
+        <location filename="softprojector.ui" line="195"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="196"/>
+        <location filename="softprojector.ui" line="204"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="199"/>
+        <location filename="softprojector.ui" line="207"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="208"/>
+        <location filename="softprojector.ui" line="216"/>
         <source>&amp;Edit Current Song...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="211"/>
+        <location filename="softprojector.ui" line="219"/>
         <source>Ctrl+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="220"/>
+        <location filename="softprojector.ui" line="228"/>
         <source>&amp;New Song...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="223"/>
+        <location filename="softprojector.ui" line="231"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="232"/>
+        <location filename="softprojector.ui" line="240"/>
         <source>&amp;Manage Database...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="235"/>
+        <location filename="softprojector.ui" line="243"/>
         <source>Import and export song collections and Bibles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="238"/>
+        <location filename="softprojector.ui" line="246"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="247"/>
+        <location filename="softprojector.ui" line="255"/>
         <source>&amp;Delete Current Song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="250"/>
+        <location filename="softprojector.ui" line="258"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="258"/>
+        <location filename="softprojector.ui" line="266"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="299"/>
+        <location filename="softprojector.ui" line="307"/>
         <source>Copy Current Song...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="302"/>
+        <location filename="softprojector.ui" line="310"/>
         <source>Copy current song into a new songbook</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="305"/>
+        <location filename="softprojector.ui" line="313"/>
         <source>Ctrl+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="322"/>
+        <source>Song Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SongCounter</name>
+    <message>
+        <location filename="songcounter.ui" line="14"/>
+        <source>Song Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="songcounter.ui" line="45"/>
+        <source>Reset Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="songcounter.ui" line="52"/>
+        <source>Reset All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="songcounter.ui" line="72"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SongCounterModel</name>
+    <message>
+        <location filename="songcounter.cpp" line="193"/>
+        <source>Song Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="195"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="197"/>
+        <source>Songbook</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1274,75 +1335,75 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="191"/>
+        <location filename="songwidget.ui" line="185"/>
         <source>Add the selected song to the playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="194"/>
+        <location filename="songwidget.ui" line="188"/>
         <source>Add (F2)</source>
         <oldsource>Add to playlist (F2)</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="201"/>
+        <location filename="songwidget.ui" line="195"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="211"/>
+        <location filename="songwidget.ui" line="205"/>
         <source>Remove the selected song from the playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="214"/>
+        <location filename="songwidget.ui" line="208"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from playlist</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="221"/>
+        <location filename="songwidget.ui" line="215"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="328"/>
+        <location filename="songwidget.ui" line="313"/>
         <source>Song preview: None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="309"/>
+        <location filename="songwidget.ui" line="294"/>
         <source>Quickly display the selected song on the screen without adding it to playlist first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="312"/>
+        <location filename="songwidget.ui" line="297"/>
         <source>Go Live (F5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="319"/>
+        <location filename="songwidget.ui" line="304"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="136"/>
-        <location filename="songwidget.cpp" line="493"/>
+        <location filename="songwidget.cpp" line="155"/>
+        <location filename="songwidget.cpp" line="520"/>
         <source>All songbooks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="185"/>
+        <location filename="songwidget.cpp" line="204"/>
         <source>Song Preview: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="264"/>
+        <location filename="songwidget.cpp" line="286"/>
         <source>Could not find song with number </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="265"/>
+        <location filename="songwidget.cpp" line="287"/>
         <source>No such song</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1350,12 +1411,12 @@ Has been saved to:
 <context>
     <name>SongbooksModel</name>
     <message>
-        <location filename="managedata.cpp" line="173"/>
+        <location filename="managedata.cpp" line="192"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedata.cpp" line="175"/>
+        <location filename="managedata.cpp" line="194"/>
         <source>Information</source>
         <oldsource>Infomation</oldsource>
         <translation type="unfinished"></translation>
@@ -1364,17 +1425,17 @@ Has been saved to:
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="song.cpp" line="320"/>
+        <location filename="song.cpp" line="341"/>
         <source>Num</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="song.cpp" line="322"/>
+        <location filename="song.cpp" line="343"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="song.cpp" line="324"/>
+        <location filename="song.cpp" line="345"/>
         <source>Songbook</source>
         <translation type="unfinished"></translation>
     </message>
