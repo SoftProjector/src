@@ -81,6 +81,7 @@ public slots:
     void addSongCount(Song song);
 
 private slots:
+    void loadCounts();
     void on_resetOneButton_clicked();
     void on_resetButton_clicked();
     void on_closeButton_clicked();

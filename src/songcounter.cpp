@@ -29,10 +29,7 @@ SongCounter::SongCounter(QWidget *parent) :
 
     song_count_list = getSongCounts();
     songCounterModel = new SongCounterModel;
-    songCounterProxyModel = new QSortFilterProxyModel;
-    songCounterProxyModel->setSourceModel(songCounterModel);
-    songCounterModel->setCounter(song_count_list);
-    ui->countTable->setModel(songCounterProxyModel);
+    loadCounts();
 
     // Modify the column widths:
     ui->countTable->setColumnWidth(0, 299);
@@ -59,22 +56,32 @@ void SongCounter::on_resetButton_clicked()
     sq.exec("UPDATE Songs SET count = 0 WHERE count > 0");
 
     song_count_list = getSongCounts();
-    songCounterModel->setCounter(song_count_list);
-    ui->countTable->setModel(songCounterModel);
+    loadCounts();
 }
 
 
 void SongCounter::on_resetOneButton_clicked()
 {
     // reset curently selected to 0
-    int row = ui->countTable->currentIndex().row();
-    Counter count_to_remove = songCounterModel->getSongCount(row);
+    int row = songCounterProxyModel->mapToSource(ui->countTable->currentIndex()).row();
 
-    QSqlQuery sq;
-    sq.exec("UPDATE Songs SET count = 0 WHERE id = " + count_to_remove.id);
-    song_count_list = getSongCounts();
+    if(row>=0)
+    {
+        Counter count_to_remove = songCounterModel->getSongCount(row);
+
+        QSqlQuery sq;
+        sq.exec("UPDATE Songs SET count = 0 WHERE id = " + count_to_remove.id);
+        song_count_list = getSongCounts();
+        loadCounts();
+    }
+}
+
+void SongCounter::loadCounts()
+{
+    songCounterProxyModel = new QSortFilterProxyModel;
+    songCounterProxyModel->setSourceModel(songCounterModel);
     songCounterModel->setCounter(song_count_list);
-    ui->countTable->setModel(songCounterModel);
+    ui->countTable->setModel(songCounterProxyModel);
 }
 
 void SongCounter::addSongCount(Song song)
@@ -98,7 +105,6 @@ void SongCounter::addSongCount(Song song)
 //***********************************
 QList<Counter> SongCounter::getSongCounts()
 {
-    qDebug() << "song counter";
     QList<Counter> song_counts;
     Counter song_count;
     QSqlQuery sq, sq1;
