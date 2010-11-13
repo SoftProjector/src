@@ -429,7 +429,7 @@ ausblenden</translation>
     <message>
         <location filename="editwidget.ui" line="20"/>
         <source>Edit and/or Add New songs</source>
-        <translation>Neue Lieder ändern und/oder hinzufügen</translation>
+        <translation>Neue Lieder bearbeiten und/oder hinzufügen</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="32"/>
@@ -663,7 +663,7 @@ Verse 2
         <location filename="managedatadialog.ui" line="69"/>
         <location filename="managedatadialog.ui" line="154"/>
         <source>Ctrl+E</source>
-        <translation>Ctrl+B</translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="76"/>
@@ -697,7 +697,7 @@ Verse 2
         <location filename="managedatadialog.ui" line="95"/>
         <location filename="managedatadialog.ui" line="180"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+L</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="120"/>
@@ -946,12 +946,12 @@ Gespeichert als:
     <message>
         <location filename="settingsdialog.ui" line="126"/>
         <source>Text color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Textfarbe:</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="149"/>
         <source>Choose color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe wählen...</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="171"/>
@@ -1151,7 +1151,7 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="140"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Ändern</translation>
+        <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="149"/>
@@ -1167,7 +1167,7 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="165"/>
         <source>Songs</source>
-        <translation type="unfinished">Lieder</translation>
+        <translation>Lieder</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="183"/>
@@ -1197,12 +1197,12 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="216"/>
         <source>&amp;Edit Current Song...</source>
-        <translation>&amp;Aktuelles Lied ändern...</translation>
+        <translation>&amp;Aktuelles Lied bearbeiten...</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="219"/>
         <source>Ctrl+E</source>
-        <translation>Ctrl+A</translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="228"/>
@@ -1227,7 +1227,7 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="246"/>
         <source>Ctrl+M</source>
-        <translation>Ctrl+D</translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="255"/>
@@ -1237,7 +1237,7 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="258"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+K</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="266"/>
@@ -1262,7 +1262,7 @@ Gespeichert als:
     <message>
         <location filename="softprojector.ui" line="322"/>
         <source>Song Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Lied-Zähler</translation>
     </message>
 </context>
 <context>
@@ -1270,40 +1270,40 @@ Gespeichert als:
     <message>
         <location filename="songcounter.ui" line="14"/>
         <source>Song Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Lied-Zähler</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="45"/>
+        <location filename="songcounter.ui" line="48"/>
         <source>Reset Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="52"/>
+        <location filename="songcounter.ui" line="55"/>
         <source>Reset All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="72"/>
+        <location filename="songcounter.ui" line="75"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
     <name>SongCounterModel</name>
     <message>
-        <location filename="songcounter.cpp" line="193"/>
+        <location filename="songcounter.cpp" line="201"/>
         <source>Song Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des Liedes</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="195"/>
+        <location filename="songcounter.cpp" line="203"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Zähler</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="197"/>
+        <location filename="songcounter.cpp" line="205"/>
         <source>Songbook</source>
-        <translation type="unfinished">Gesangbuch</translation>
+        <translation>Gesangbuch</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1465,7 @@ Gespeichert als:
     <message>
         <location filename="song.cpp" line="341"/>
         <source>Num</source>
-        <translation type="unfinished">Nr.</translation>
+        <translation>Nr.</translation>
     </message>
     <message>
         <location filename="song.cpp" line="343"/>

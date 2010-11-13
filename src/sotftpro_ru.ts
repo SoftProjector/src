@@ -945,12 +945,12 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="126"/>
         <source>Text color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет шрифта:</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="149"/>
         <source>Choose color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить цвеи...</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="189"/>
@@ -1171,7 +1171,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="165"/>
         <source>Songs</source>
-        <translation type="unfinished">Песни</translation>
+        <translation>Песни</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="183"/>
@@ -1266,7 +1266,7 @@ Has been saved to:
     <message>
         <location filename="softprojector.ui" line="322"/>
         <source>Song Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Счетчик Песен</translation>
     </message>
     <message>
         <source>Russian</source>
@@ -1282,40 +1282,40 @@ Has been saved to:
     <message>
         <location filename="songcounter.ui" line="14"/>
         <source>Song Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Счетчик Песен</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="45"/>
+        <location filename="songcounter.ui" line="48"/>
         <source>Reset Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить Выбраную</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="52"/>
+        <location filename="songcounter.ui" line="55"/>
         <source>Reset All</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить Все</translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="72"/>
+        <location filename="songcounter.ui" line="75"/>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
     <name>SongCounterModel</name>
     <message>
-        <location filename="songcounter.cpp" line="193"/>
+        <location filename="songcounter.cpp" line="201"/>
         <source>Song Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Название Песни</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="195"/>
+        <location filename="songcounter.cpp" line="203"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Счет</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="197"/>
+        <location filename="songcounter.cpp" line="205"/>
         <source>Songbook</source>
-        <translation type="unfinished">Сборник</translation>
+        <translation>Сборник</translation>
     </message>
 </context>
 <context>

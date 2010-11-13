@@ -1239,17 +1239,17 @@ Has been saved to:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="45"/>
+        <location filename="songcounter.ui" line="48"/>
         <source>Reset Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="52"/>
+        <location filename="songcounter.ui" line="55"/>
         <source>Reset All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songcounter.ui" line="72"/>
+        <location filename="songcounter.ui" line="75"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1257,17 +1257,17 @@ Has been saved to:
 <context>
     <name>SongCounterModel</name>
     <message>
-        <location filename="songcounter.cpp" line="193"/>
+        <location filename="songcounter.cpp" line="201"/>
         <source>Song Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="195"/>
+        <location filename="songcounter.cpp" line="203"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="197"/>
+        <location filename="songcounter.cpp" line="205"/>
         <source>Songbook</source>
         <translation type="unfinished"></translation>
     </message>
