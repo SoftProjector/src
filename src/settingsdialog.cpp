@@ -53,7 +53,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     updateSecondaryBibleMenu();
 
     // Set current item for secondary Bible
-    qDebug() << softProjector->bibleWidget->getSecondary();
     if (softProjector->bibleWidget->getSecondary() == "none")
         ui->secondary_bible_menu->setCurrentIndex(0);
     else {
@@ -123,8 +122,6 @@ void SettingsDialog::updateSecondaryBibleMenu()
     if( i != -1 )
         // The same secondary bible is still available
         ui->secondary_bible_menu->setCurrentIndex(i);
-
-
 }
 
 SettingsDialog::~SettingsDialog()
@@ -184,7 +181,6 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->display->setForegroundColor(new_foreground_color);
     softProjector->writeXMLConfigurationFile();
 
-
     // Redraw the screen:
     softProjector->updateScreen();
     close();
@@ -220,9 +216,9 @@ void SettingsDialog::on_set_passive_wallpaper_clicked()
 {
         // Change background
     QString filename1 = QFileDialog::getOpenFileName(this,
-                         "Select a picture for the wallpaper",
+                         tr("Select a picture for the wallpaper"),
                          ".",
-                         "Images (*.png *.jpg *.jpeg)");
+                         tr("Images (*.png *.jpg *.jpeg)"));
 
     if( !filename1.isNull() ) {
         new_passive_wallpaper_path = filename1;

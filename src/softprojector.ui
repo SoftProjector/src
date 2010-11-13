@@ -319,7 +319,7 @@
      <normaloff>:/icons/icons/song_count.png</normaloff>:/icons/icons/song_count.png</iconset>
    </property>
    <property name="text">
-    <string>Song Counter</string>
+    <string>Song Counter...</string>
    </property>
   </action>
  </widget>

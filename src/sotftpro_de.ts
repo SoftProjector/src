@@ -627,115 +627,115 @@ Verse 2
         <translation>Datenbank verwalten</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="27"/>
+        <location filename="managedatadialog.ui" line="31"/>
         <source>Bibles</source>
         <translation>Bibeln</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="47"/>
+        <location filename="managedatadialog.ui" line="51"/>
         <source>Import a new Bible into your database</source>
         <translation>Eine neue Bibel in die Datenbank importieren</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="50"/>
-        <location filename="managedatadialog.ui" line="138"/>
+        <location filename="managedatadialog.ui" line="54"/>
+        <location filename="managedatadialog.ui" line="142"/>
         <source>&amp;Import...</source>
         <translation>&amp;Import...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="53"/>
-        <location filename="managedatadialog.ui" line="141"/>
+        <location filename="managedatadialog.ui" line="57"/>
+        <location filename="managedatadialog.ui" line="145"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="63"/>
+        <location filename="managedatadialog.ui" line="67"/>
         <source>Edit Bible title of currently selected Bible.</source>
         <translation>Bearbeiten eines Bibel-Titels der aktuell ausgewählten Bibel.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="66"/>
-        <location filename="managedatadialog.ui" line="151"/>
+        <location filename="managedatadialog.ui" line="70"/>
+        <location filename="managedatadialog.ui" line="155"/>
         <source>&amp;Edit...</source>
         <translation>&amp;Bearbeiten...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="69"/>
-        <location filename="managedatadialog.ui" line="154"/>
+        <location filename="managedatadialog.ui" line="73"/>
+        <location filename="managedatadialog.ui" line="158"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="76"/>
+        <location filename="managedatadialog.ui" line="80"/>
         <source>Export currently selected Bible to share with others.</source>
         <translation>Die aktuell ausgewählte Bibel exportieren, um mit anderen zu teilen.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="79"/>
-        <location filename="managedatadialog.ui" line="164"/>
+        <location filename="managedatadialog.ui" line="83"/>
+        <location filename="managedatadialog.ui" line="168"/>
         <source>E&amp;xport...</source>
         <translation>E&amp;xport...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="82"/>
-        <location filename="managedatadialog.ui" line="167"/>
+        <location filename="managedatadialog.ui" line="86"/>
+        <location filename="managedatadialog.ui" line="171"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="89"/>
+        <location filename="managedatadialog.ui" line="93"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
         <translation>Löschen einer Bibel, dass Sie in diesem Programm nicht mehr benutzen möchten.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="92"/>
-        <location filename="managedatadialog.ui" line="177"/>
+        <location filename="managedatadialog.ui" line="96"/>
+        <location filename="managedatadialog.ui" line="181"/>
         <source>&amp;Delete...</source>
         <translation>&amp;Löschen...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="95"/>
-        <location filename="managedatadialog.ui" line="180"/>
+        <location filename="managedatadialog.ui" line="99"/>
+        <location filename="managedatadialog.ui" line="184"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="120"/>
+        <location filename="managedatadialog.ui" line="124"/>
         <source>Songbooks</source>
         <translation>Gesangbücher</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="135"/>
+        <location filename="managedatadialog.ui" line="139"/>
         <source>Import a new Songbook into database.</source>
         <translation>Import eines neuen Gesangbuches in die Datenbank.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="148"/>
+        <location filename="managedatadialog.ui" line="152"/>
         <source>Edit the title and information about the Songbook.</source>
         <translation>Bearbeiten Sie den Titel und die Informationen von dem Gesangbuch.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="161"/>
+        <location filename="managedatadialog.ui" line="165"/>
         <source>Export currently selected Songbook to be able to share with others and for backup.</source>
         <translation>Export des aktuell ausgewählten Gesangbuches, um in der Lage zu sein, mit Anderen zu teilen und für die Datensicherung.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="174"/>
+        <location filename="managedatadialog.ui" line="178"/>
         <source>Delete currently selected Songbook from database.</source>
         <translation>Das aktuell ausgewählte Gesangbuch aus der Datenbank löschen.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="219"/>
+        <location filename="managedatadialog.ui" line="223"/>
         <source>Close Manage Database Dialog</source>
         <translation>“Datenbank verwalten”-Dialogfeld schließen</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="222"/>
+        <location filename="managedatadialog.ui" line="226"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="225"/>
+        <location filename="managedatadialog.ui" line="229"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -997,21 +997,23 @@ Gespeichert als:
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="45"/>
-        <location filename="settingsdialog.cpp" line="78"/>
-        <location filename="settingsdialog.cpp" line="86"/>
-        <location filename="settingsdialog.cpp" line="119"/>
-        <location filename="settingsdialog.cpp" line="237"/>
-        <location filename="settingsdialog.cpp" line="249"/>
+        <location filename="settingsdialog.cpp" line="77"/>
+        <location filename="settingsdialog.cpp" line="85"/>
+        <location filename="settingsdialog.cpp" line="118"/>
+        <location filename="settingsdialog.cpp" line="233"/>
+        <location filename="settingsdialog.cpp" line="245"/>
         <source>None</source>
         <translation>Keine</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="208"/>
+        <location filename="settingsdialog.cpp" line="204"/>
+        <location filename="settingsdialog.cpp" line="219"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Ein Bild für den Hintergrund auswählen</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="210"/>
+        <location filename="settingsdialog.cpp" line="206"/>
+        <location filename="settingsdialog.cpp" line="221"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Bilder (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1261,8 +1263,9 @@ Gespeichert als:
     </message>
     <message>
         <location filename="softprojector.ui" line="322"/>
-        <source>Song Counter</source>
-        <translation>Lied-Zähler</translation>
+        <source>Song Counter...</source>
+        <oldsource>Song Counter</oldsource>
+        <translation>Lied-Zähler...</translation>
     </message>
 </context>
 <context>

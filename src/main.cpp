@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
     // and display a friendly error if it was not found:
     QString database_file = a.applicationDirPath() + QDir::separator() + "spData.sqlite";
 
-    qDebug() << "Looking for database:" << database_file;
     bool database_exists = ( QFile::exists(database_file) );
 
     if (!database_exists)

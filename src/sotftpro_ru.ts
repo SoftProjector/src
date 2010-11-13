@@ -629,117 +629,117 @@ Verse 2
         <translation>Управление базой данных</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="27"/>
+        <location filename="managedatadialog.ui" line="31"/>
         <source>Bibles</source>
         <translation>Библии</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="47"/>
+        <location filename="managedatadialog.ui" line="51"/>
         <source>Import a new Bible into your database</source>
         <oldsource>Import a new Bible into your database/</oldsource>
         <translation>Добавить в базу данных новый модуль Библии</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="50"/>
-        <location filename="managedatadialog.ui" line="138"/>
+        <location filename="managedatadialog.ui" line="54"/>
+        <location filename="managedatadialog.ui" line="142"/>
         <source>&amp;Import...</source>
         <translatorcomment>Импортирование модуля Библии</translatorcomment>
         <translation>&amp;Импорт...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="53"/>
-        <location filename="managedatadialog.ui" line="141"/>
+        <location filename="managedatadialog.ui" line="57"/>
+        <location filename="managedatadialog.ui" line="145"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="63"/>
+        <location filename="managedatadialog.ui" line="67"/>
         <source>Edit Bible title of currently selected Bible.</source>
         <translation>Редактировать название выбранного модуля Библии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="66"/>
-        <location filename="managedatadialog.ui" line="151"/>
+        <location filename="managedatadialog.ui" line="70"/>
+        <location filename="managedatadialog.ui" line="155"/>
         <source>&amp;Edit...</source>
         <translation>&amp;Правка...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="69"/>
-        <location filename="managedatadialog.ui" line="154"/>
+        <location filename="managedatadialog.ui" line="73"/>
+        <location filename="managedatadialog.ui" line="158"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="76"/>
+        <location filename="managedatadialog.ui" line="80"/>
         <source>Export currently selected Bible to share with others.</source>
         <translation>Экспортировать выбранный модуль Библии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="79"/>
-        <location filename="managedatadialog.ui" line="164"/>
+        <location filename="managedatadialog.ui" line="83"/>
+        <location filename="managedatadialog.ui" line="168"/>
         <source>E&amp;xport...</source>
         <translation>&amp;Экспорт...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="82"/>
-        <location filename="managedatadialog.ui" line="167"/>
+        <location filename="managedatadialog.ui" line="86"/>
+        <location filename="managedatadialog.ui" line="171"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="89"/>
+        <location filename="managedatadialog.ui" line="93"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
         <translation>Удалить модуль Библии который не будет использоваться в этой программе.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="92"/>
-        <location filename="managedatadialog.ui" line="177"/>
+        <location filename="managedatadialog.ui" line="96"/>
+        <location filename="managedatadialog.ui" line="181"/>
         <source>&amp;Delete...</source>
         <translation>&amp;Удаление...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="95"/>
-        <location filename="managedatadialog.ui" line="180"/>
+        <location filename="managedatadialog.ui" line="99"/>
+        <location filename="managedatadialog.ui" line="184"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="120"/>
+        <location filename="managedatadialog.ui" line="124"/>
         <source>Songbooks</source>
         <translation>Сборники</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="135"/>
+        <location filename="managedatadialog.ui" line="139"/>
         <source>Import a new Songbook into database.</source>
         <translation>Добавить в базу данных новый сборник.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="148"/>
+        <location filename="managedatadialog.ui" line="152"/>
         <source>Edit the title and information about the Songbook.</source>
         <translation>Редактировать название сборника и информацию о нем.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="161"/>
+        <location filename="managedatadialog.ui" line="165"/>
         <source>Export currently selected Songbook to be able to share with others and for backup.</source>
         <translation>Экспортировать выбранный сборник для других пользователей и для резервной копии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="174"/>
+        <location filename="managedatadialog.ui" line="178"/>
         <source>Delete currently selected Songbook from database.</source>
         <translation>Удалить выбранный сборник из базы данных.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="219"/>
+        <location filename="managedatadialog.ui" line="223"/>
         <source>Close Manage Database Dialog</source>
         <translation>Закрыть диалоговое окно управления базой данных</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="222"/>
+        <location filename="managedatadialog.ui" line="226"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="225"/>
+        <location filename="managedatadialog.ui" line="229"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
@@ -950,7 +950,7 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="149"/>
         <source>Choose color...</source>
-        <translation>Изменить цвеи...</translation>
+        <translation>Изменить цвет...</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="189"/>
@@ -1001,21 +1001,23 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="45"/>
-        <location filename="settingsdialog.cpp" line="78"/>
-        <location filename="settingsdialog.cpp" line="86"/>
-        <location filename="settingsdialog.cpp" line="119"/>
-        <location filename="settingsdialog.cpp" line="237"/>
-        <location filename="settingsdialog.cpp" line="249"/>
+        <location filename="settingsdialog.cpp" line="77"/>
+        <location filename="settingsdialog.cpp" line="85"/>
+        <location filename="settingsdialog.cpp" line="118"/>
+        <location filename="settingsdialog.cpp" line="233"/>
+        <location filename="settingsdialog.cpp" line="245"/>
         <source>None</source>
         <translation>Не выбрана</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="208"/>
+        <location filename="settingsdialog.cpp" line="204"/>
+        <location filename="settingsdialog.cpp" line="219"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Выберите изображение для фонового рисунка</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="210"/>
+        <location filename="settingsdialog.cpp" line="206"/>
+        <location filename="settingsdialog.cpp" line="221"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1265,8 +1267,9 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.ui" line="322"/>
-        <source>Song Counter</source>
-        <translation>Счетчик Песен</translation>
+        <source>Song Counter...</source>
+        <oldsource>Song Counter</oldsource>
+        <translation>Счетчик Песен...</translation>
     </message>
     <message>
         <source>Russian</source>
