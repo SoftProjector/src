@@ -90,7 +90,7 @@ private slots:
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();
-    void on_actionUkrainian_triggered();
+    void on_actionCzech_triggered();
     void on_actionGerman_triggered();
     void retranslateUis();
     void on_actionEnglish_triggered();

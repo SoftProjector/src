@@ -158,7 +158,7 @@
     <addaction name="actionEnglish"/>
     <addaction name="actionGerman"/>
     <addaction name="actionRussian"/>
-    <addaction name="actionUkrainian"/>
+    <addaction name="actionCzech"/>
    </widget>
    <widget class="QMenu" name="menuSongs">
     <property name="title">
@@ -290,12 +290,12 @@
     <string notr="true">Deutsch</string>
    </property>
   </action>
-  <action name="actionUkrainian">
+  <action name="actionCzech">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string notr="true">Український</string>
+    <string notr="true">Český</string>
    </property>
   </action>
   <action name="actionCopy_Song">

@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/language">
-        <file>sotftpro_ru.qm</file>
-        <file>sotftpro_ua.qm</file>
-        <file>sotftpro_de.qm</file>
+        <file>softpro_cs.qm</file>
+        <file>softpro_de.qm</file>
+        <file>softpro_ru.qm</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icons/base-22x22-actions-application-exit.png</file>

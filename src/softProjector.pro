@@ -67,9 +67,9 @@ FORMS += softprojector.ui \
     announcewidget.ui \
     helpdialog.ui \
     songcounter.ui
-TRANSLATIONS += sotftpro_de.ts\
-    sotftpro_ru.ts\
-    sotftpro_ua.ts
+TRANSLATIONS += softpro_de.ts\
+    softpro_ru.ts\
+    softpro_cs.ts
 CODECFORTR = UTF-8
 RESOURCES += softprojector.qrc
 

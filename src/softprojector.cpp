@@ -60,8 +60,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     languageGroup->addAction(ui->actionRussian);
     languageGroup->addAction(ui->actionEnglish);
     languageGroup->addAction(ui->actionGerman);
-    languageGroup->addAction(ui->actionUkrainian);
-    ui->actionUkrainian->setVisible(false);
+    languageGroup->addAction(ui->actionCzech);
 
     // Apply default settings, in case configuration file does not exist
     // or is out of date:
@@ -246,7 +245,7 @@ void SoftProjector::writeXMLConfigurationFile()
         xml.writeTextElement("translate", "en");
     else if (ui->actionGerman->isChecked())
         xml.writeTextElement("translate", "de");
-    else if (ui->actionUkrainian->isChecked())
+    else if (ui->actionCzech->isChecked())
         xml.writeTextElement("translate", "ua");
 
     xml.writeEndElement(); // settings
@@ -317,7 +316,7 @@ void SoftProjector::applySetting(QString name, QString value)
         else if(value == "de")
             ui->actionGerman->setChecked(true);
         else if(value == "ua")
-            ui->actionUkrainian->setChecked(true);
+            ui->actionCzech->setChecked(true);
 
         retranslateUis();
     }
@@ -999,7 +998,7 @@ void SoftProjector::on_actionGerman_triggered()
     retranslateUis();
 }
 
-void SoftProjector::on_actionUkrainian_triggered()
+void SoftProjector::on_actionCzech_triggered()
 {
     retranslateUis();
 }
@@ -1012,17 +1011,17 @@ void SoftProjector::retranslateUis()
     }
     else if(ui->actionRussian->isChecked()) // Set Russian language
     {
-        translator.load(":/language/sotftpro_ru");
+        translator.load(":/language/softpro_ru");
         qApp->installTranslator(&translator);
     }
     else if(ui->actionGerman->isChecked()) // Set Russian language
     {
-        translator.load(":/language/sotftpro_de");
+        translator.load(":/language/softpro_de");
         qApp->installTranslator(&translator);
     }
-    else if(ui->actionUkrainian->isChecked()) // Set Russian language
+    else if(ui->actionCzech->isChecked()) // Set Russian language
     {
-        translator.load(":/language/sotftpro_ua");
+        translator.load(":/language/softpro_cs");
         qApp->installTranslator(&translator);
     }
     ui->retranslateUi(this);
