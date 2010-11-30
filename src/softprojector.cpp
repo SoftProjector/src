@@ -73,10 +73,16 @@ SoftProjector::SoftProjector(QWidget *parent)
     if (display_on_top)
         display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
+
     if( desktop->numScreens() > 1 )
     {
         if (desktop->isVirtualDesktop())
-            display->setGeometry(desktop->screen(0)->width()-100,200,100,100);
+        {
+            if (desktop->screen(0)->x() < 0) // show display screen on the left if primary is to the right
+                display->setGeometry(desktop->screen(0)->x()+100,200,100,100);
+            else // show display screen on the right primary is to the left
+                display->setGeometry(desktop->screen(0)->width()-100,200,100,100);
+        }
         display->showFullScreen();
     }
     else
