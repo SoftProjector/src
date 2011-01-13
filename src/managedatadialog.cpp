@@ -509,19 +509,6 @@ void ManageDataDialog::importBible(QString path)
             sq.addBindValue(split.at(4));
             sq.exec();
 
-            // Create duplticate verse for bible search
-            sq.addBindValue(split.at(0));
-            sq.addBindValue(id+"_");
-            sq.addBindValue(split.at(1));
-            sq.addBindValue(split.at(2));
-            sq.addBindValue(split.at(3));
-            v=split.at(4);
-            v = v.toLower();    // Convert to all to lower case
-            v = clean(v);       // Remove all non alphanumeric charecters
-            v = v.simplified(); // Leave only single white space between each word
-            sq.addBindValue(v);
-            sq.exec();
-
             row++;
             progress.setValue(row);
         }
@@ -645,18 +632,6 @@ void ManageDataDialog::importBibleUnbound(QString path)
                 sq.addBindValue(v);  // Verse Text
                 sq.exec();
 
-                // Create duplticate verse for bible search
-                sq.addBindValue(getVerseId(getBibleIdUnbound(split.at(c_book)),split.at(c_chap),split.at(c_verse)));       // Verse Id
-                sq.addBindValue(id+"_");
-                sq.addBindValue(getBibleIdUnbound(split.at(c_book)));  // Book
-                sq.addBindValue(split.at(c_chap));  // Chapter
-                sq.addBindValue(split.at(c_verse)); // Verse
-                v = v.toLower();    // Convert to all to lower case
-                v = clean(v);       // Remove all non alphanumeric charecters
-                v = v.simplified(); // Leave only single white space between each word
-                sq.addBindValue(v);
-                sq.exec();
-
                 row++;
                 progress.setValue(row);
             }
@@ -776,8 +751,8 @@ void ManageDataDialog::deleteBible(Bibles bible)
     sq.clear();
 
     // Delete form BibleVerse Table
-    sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"_'");
-    sq.clear();
+    //sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"_'");
+    //sq.clear();
 
     // Delete from BibleVersions Table
     sq.clear();

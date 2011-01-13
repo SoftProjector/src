@@ -204,10 +204,10 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString sear
 
     // Search for text and return verse ids
     if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
-        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
     // Prepare verse ids for search for matching real text verses
@@ -258,12 +258,12 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
     // Search for text and return verse ids
     if (begins) // Search verses that begin with searchText
         sq.exec("SELECT verse_id FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "_' "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
         sq.exec("SELECT verse_id FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "_' "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
@@ -312,12 +312,12 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
 
     if (begins) // Search verses that begin with searchText
         sq.exec("SELECT verse_id, book, chapter, verse "
-                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' AND chapter = '" + chapter + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
         sq.exec("SELECT verse_id, book, chapter, verse "
-                "FROM BibleVerse WHERE bible_id = '" + bibleId + "_' "
+                "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' AND chapter = '" + chapter + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
