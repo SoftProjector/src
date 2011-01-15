@@ -420,7 +420,7 @@ Results</string>
           <widget class="QLabel" name="lblChapter">
            <property name="maximumSize">
             <size>
-             <width>50</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -448,7 +448,7 @@ Results</string>
            </property>
            <property name="maximumSize">
             <size>
-             <width>50</width>
+             <width>60</width>
              <height>16777215</height>
             </size>
            </property>
@@ -467,7 +467,7 @@ Results</string>
            </property>
            <property name="maximumSize">
             <size>
-             <width>50</width>
+             <width>60</width>
              <height>16777215</height>
             </size>
            </property>
