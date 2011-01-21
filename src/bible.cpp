@@ -119,8 +119,9 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
         ids = id.split(",");
         for (int i(0); i<ids.count(); ++i)
         {
-            sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
-                    +ids.at(i)+"%' AND bible_id = " + bibleId);
+            sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id = '"
+                    + ids.at(i) +"' AND bible_id = " + bibleId);
+
             sq.first();
             verse = sq.value(3).toString().trimmed();
 
@@ -155,8 +156,9 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
     }
     else // Run as standard single verse item from database
     {
-        sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id like '"
-                +id+"%' AND bible_id = " + bibleId);
+        sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id = '"
+                +id+"' AND bible_id = " + bibleId);
+
         sq.first();
         verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
         //qDebug() << "VERSE: '" << verse << "'";

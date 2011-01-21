@@ -509,11 +509,6 @@ void ManageDataDialog::importBible(QString path)
             sq.addBindValue(split.at(4));
             sq.exec();
 
-<<<<<<< .mine
-
-=======
->>>>>>> .r461
-
             row++;
             progress.setValue(row);
         }
@@ -637,10 +632,7 @@ void ManageDataDialog::importBibleUnbound(QString path)
                 sq.addBindValue(v);  // Verse Text
                 sq.exec();
 
-<<<<<<< .mine
 
-=======
->>>>>>> .r461
 
                 row++;
                 progress.setValue(row);
@@ -760,12 +752,7 @@ void ManageDataDialog::deleteBible(Bibles bible)
     sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"'");
     sq.clear();
 
-<<<<<<< .mine
-=======
-    // Delete form BibleVerse Table
-    //sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"_'");
-    //sq.clear();
->>>>>>> .r461
+
 
 
     // Delete from BibleVersions Table

@@ -547,7 +547,7 @@ void SongDatabase::deleteSong(int song_id)
 QString SongDatabase::getSongbookIdStringFromName(QString songbook_name)
 {
     QSqlQuery sq;
-    sq.exec("SELECT id FROM Songbooks WHERE name like '" + songbook_name +"'");
+    sq.exec("SELECT id FROM Songbooks WHERE name = '" + songbook_name +"'"); //ilya
     sq.first();
     return sq.value(0).toString();
 }
