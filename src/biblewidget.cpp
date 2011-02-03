@@ -328,9 +328,7 @@ void BibleWidget::on_search_button_clicked()
 {
     emit setWaitCursor();
     
-    // Always search lower-case, because in order for searches to be case-insensitive, all
-    // bible verses are stored in lower case:
-    QString search_text = ui->search_ef->text().toLower();
+    QString search_text = ui->search_ef->text();
     search_text = clean(search_text); // remove all none alphanumeric charecters
     search_text = search_text.simplified(); // remove all extra spaces
     highlight->highlighter->setHighlightText(search_text); // set highlighting rule
@@ -367,10 +365,8 @@ void BibleWidget::on_search_button_clicked()
         QStringList verse_list;
         int count = search_results.count();
 
-        if (count <= 280)
-            ui->result_count_label->setText(tr("Total of ") + QString::number(count) + tr(" search results returned."));
-        else
-            ui->result_count_label->setText(tr("Total of 281 or more results. <font color=red>Only 281 results can be returned.</font>"));
+        ui->result_count_label->setText(tr("Total\n") + QString::number(count) + tr("\nresults"));
+//          ui->result_count_label->setText(tr("Total of ") + QString::number(count) + tr(" search results returned."));
 
         for(int i(0);i<count;i++)
             verse_list.append(search_results.at(i).verse_text);

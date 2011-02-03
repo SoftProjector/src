@@ -197,35 +197,26 @@ int Bible::maxChapters(QString book, QString bibleId)
 }
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString searchText)
-{
-    QString s_id, s_book,s_chapter,verse,verse_text,n;
+{   ///////// Search entire Bible //////////
+
+    QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
-    int max(280), count(0);
 
     // Search for text and return verse ids
     if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
-        sq.exec("SELECT verse_id FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
-    // Prepare verse ids for search for matching real text verses
-    while (sq.next() && (count<=max))
-    {
-        s_id.append(sq.value(0).toString().trimmed() + "' OR verse_id = '");
-        ++count;
-    }
-    s_id.chop(16);
-    sq.clear();
-
-    // Get search results based on ids
-    sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-            "WHERE bible_id = '" + bibleId + "' AND (verse_id = '" + s_id + " )");
     while (sq.next())
-    {   s_book = sq.value(0).toString().trimmed();
+    {
+        s_book = sq.value(0).toString().trimmed();
         s_chapter = sq.value(1).toString().trimmed();
         verse = sq.value(2).toString().trimmed();
         verse_text = sq.value(3).toString().trimmed();
@@ -243,44 +234,30 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString sear
         results.verse = verse;
         return_results.append(results);
     }
-
     return return_results;//*/
-
 }
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
-{
-    QString s_id, s_book,s_chapter,verse,verse_text;
+{   ///////// Search in selected book //////////
+
+    QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
     book = book_ids.at(books.indexOf(book,0));
-    int max(280), count(0);
 
     // Search for text and return verse ids
     if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT verse_id FROM BibleVerse "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
                 "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
-        sq.exec("SELECT verse_id FROM BibleVerse "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
                 "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
-    // Prepare verse ids for search for matching real text verses
-    while (sq.next() && (count<=max))
-    {
-        s_id.append(sq.value(0).toString().trimmed() + "' OR verse_id = '");
-        ++count;
-    }
-    s_id.chop(16);
-    sq.clear();
-
-    // Get search results based on ids
-    sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-            "WHERE bible_id = '" + bibleId + "' AND (verse_id = '" + s_id + " )");
     while (sq.next())
     {   s_book = sq.value(0).toString().trimmed();
         s_chapter = sq.value(1).toString().trimmed();
@@ -304,37 +281,25 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
 }
 
 QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
-{
-    QString s_id, s_book,s_chapter,verse,verse_text;
+{   ///////// Search in selected chapter //////////
+
+    QString s_book,s_chapter,verse,verse_text;
     BibleSearch results;
     QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
     book = book_ids.at(books.indexOf(book,0));
-    int max(280), count(0);
 
     if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT verse_id, book, chapter, verse "
-                "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' AND chapter = '" + chapter + "' "
                 "AND verse_text like '" + searchText.trimmed() + "%'");
     else        // Search verses that contain searchText
-        sq.exec("SELECT verse_id, book, chapter, verse "
-                "FROM BibleVerse WHERE bible_id = '" + bibleId + "' "
+        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
+                "WHERE bible_id = '" + bibleId + "' "
                 "AND book = '" + book + "' AND chapter = '" + chapter + "' "
                 "AND verse_text like '%" + searchText.trimmed() + "%'");
 
-    // Prepare verse ids for search for matching real text verses
-    while (sq.next() && (count<=max))
-    {
-        s_id.append(sq.value(0).toString().trimmed() + "' OR verse_id = '");
-        ++count;
-    }
-    s_id.chop(16);
-    sq.clear();
-
-    // Get search results based on ids
-    sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-            "WHERE bible_id = '" + bibleId + "' AND (verse_id = '" + s_id + " )");
     while (sq.next())
     {   s_book = sq.value(0).toString().trimmed();
         s_chapter = sq.value(1).toString().trimmed();
