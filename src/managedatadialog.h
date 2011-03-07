@@ -27,6 +27,7 @@
 #include "managedata.h"
 #include "song.h"
 #include "addsongbookdialog.h"
+#include "bibleinformationdialog.h"
 
 namespace Ui {
     class ManageDataDialog;
@@ -79,9 +80,8 @@ private slots:
     void on_export_songbook_pushButton_clicked();
     void on_import_songbook_pushButton_clicked();
     void deleteBible(Bibles bilbe);
-    void importBible(QString path);
-    void importBibleUnbound(QString path);
-    void exportBible(QString path);
+    void importBible(QString path, QString version);
+    void exportBible(QString path, Bibles bible);
     void deleteSongbook(Songbook songbook);
     void importSongbook(QString path);
     void exportSongbook(QString path);

@@ -101,11 +101,11 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
     int s = ui->listBook->currentRow();
     if( s != -1 )
     {
-        int maxVerse = bible.maxChapters(currentText, bible.primaryId);
+        int max_chapter = bible.books.at(bible.getCurrentBookRow(currentText)).chapterCount;
         ui->listChapterNum->clear();
-        for(int i=0; i<maxVerse; ++i)
+        for(int i=0; i<max_chapter; ++i)
             ui->listChapterNum->addItem(QString::number(i+1));
-        chapter_validator->setTop(maxVerse);
+        chapter_validator->setTop(max_chapter);
         if( ui->listChapterNum->currentRow() != 0 )
             ui->listChapterNum->setCurrentRow(0);
     }
@@ -128,7 +128,7 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
         {
             currentBook = getCurrentBook();
             currentChapter = currentText.toInt();
-            currentChapterList = bible.getChapter(currentBook, currentChapter);
+            currentChapterList = bible.getChapter(bible.books.at(bible.getCurrentBookRow(currentBook)).bookId, currentChapter);
         }
 
         ui->chapter_preview_list->clear();
@@ -340,12 +340,14 @@ void BibleWidget::on_search_button_clicked()
     else if (ui->current_book_radioButton->isChecked()) // Search current book only
     {
         search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
-                                           ui->listBook->currentItem()->text(),search_text);
+                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
+                                           search_text);
     }
     else if (ui->current_chapter_radioButton->isChecked()) // Search current chapter only
     {
         search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
-                                           ui->listBook->currentItem()->text(),ui->listChapterNum->currentItem()->text(),search_text);
+                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
+                                           ui->listChapterNum->currentItem()->text(),search_text);
     }
     ui->search_results_list->clear();
 

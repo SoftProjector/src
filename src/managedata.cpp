@@ -235,11 +235,18 @@ QList<Bibles> Database::getBibles()
     QList<Bibles> bibles;
     Bibles bible;
         QSqlQuery sq;
-    sq.exec("SELECT bible_name, id FROM BibleVersions");
+    sq.exec("SELECT bible_name, id, abbreviation, information, right_to_left FROM BibleVersions");
     while (sq.next())
     {
         bible.title = sq.value(0).toString();
         bible.bibleId = sq.value(1).toString();
+        bible.abbr = sq.value(2).toString();
+        bible.info = sq.value(3).toString();
+        int r = sq.value(4).toInt();
+        if (r==0)
+            bible.isRtoL = false;
+        else if (r==1)
+            bible.isRtoL = true;
         bibles.append(bible);
     }
     return bibles;

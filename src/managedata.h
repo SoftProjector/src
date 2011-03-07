@@ -38,6 +38,9 @@ public:
     Bibles();
     QString bibleId;
     QString title;
+    QString abbr;
+    QString info;
+    bool isRtoL;
 };
 
 ///////////////////////

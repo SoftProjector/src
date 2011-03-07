@@ -32,24 +32,30 @@ void Bible::setBibles(QString pId, QString sId)
 
 void Bible::retrieveBooks()
 {
-    //    QStringList books;
+    BibleBook book;
     QSqlQuery sq;
     books.clear();
-    book_ids.clear();
-
-    sq.exec("SELECT book_name, id FROM BibleBooks WHERE bible_id = "+ primaryId );
+    sq.exec("SELECT book_name, id, chapter_count FROM BibleBooks WHERE bible_id = "+ primaryId );
     while (sq.next())
     {
-        books << sq.value(0).toString();
-        book_ids << sq.value(1).toString();
+        book.book = sq.value(0).toString().trimmed();
+        book.bookId = sq.value(1).toString();
+        book.chapterCount = sq.value(2).toInt();
+        books.append(book);
     }
 }
 
 QStringList Bible::getBooks()
 {
+    QStringList book_list;
     if( books.count() == 0 )
         retrieveBooks();
-    return books;
+    for(int i(0); books.count()>i;++i)
+    {
+        book_list.append(books.at(i).book);
+//        qDebug()<< books.at(i).book;
+    }
+    return book_list;
 }
 
 QStringList Bible::getChapter(QString book, int chapter)
@@ -58,7 +64,6 @@ QStringList Bible::getChapter(QString book, int chapter)
     QSqlQuery sq;
     previewIdList.clear();
     verseList.clear();
-    book = book_ids.at(books.indexOf(book,0));
     sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id = "
             + primaryId + " AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
     while (sq.next())
@@ -180,19 +185,17 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 }
 
 
-int Bible::maxChapters(QString book, QString bibleId)
+int Bible::getCurrentBookRow(QString book)
 {
     int chapters(0);
-    QString book_id;
-    QSqlQuery sq;
-    int k = books.indexOf(book,0);
-    book_id = book_ids[k];
-
-    sq.exec("SELECT count FROM ChapterCount WHERE id = "+book_id);
-    sq.first();
-    chapters = sq.value(0).toInt();
-    sq.clear();
-
+    for(int i(0); books.count()>i;++i)
+    {
+        if(books.at(i).book==book)
+        {
+            chapters = i;
+            break;
+        }
+    }
     return chapters;
 }
 
@@ -244,7 +247,6 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
     BibleSearch results;
     QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
-    book = book_ids.at(books.indexOf(book,0));
 
     // Search for text and return verse ids
     if (begins) // Search verses that begin with searchText
@@ -287,7 +289,6 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
     BibleSearch results;
     QList<BibleSearch> return_results;
     QSqlQuery sq,sq1;
-    book = book_ids.at(books.indexOf(book,0));
 
     if (begins) // Search verses that begin with searchText
         sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "

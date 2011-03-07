@@ -43,6 +43,15 @@ public:
     QString verse_text;
 };
 
+class BibleBook
+{
+    // For Holding Bible book infromation
+public:
+    QString book;
+    QString bookId;
+    int chapterCount;
+};
+
 class Bible
 {
 public:
@@ -53,7 +62,7 @@ public:
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);
-    int maxChapters(QString book, QString bibleName);
+    int getCurrentBookRow(QString book);
     Verse getCurrentVerseAndCaption(int currentRow);
     QStringList verseList;
     QStringList previewIdList; // Verses that are in the preview (chapter) list
@@ -61,10 +70,9 @@ public:
     QString primaryId;
     QString secondaryId;
     void setBibles(QString primaryId, QString secondaryId);
+    QList<BibleBook> books;
 
 private:
-    QStringList books;
-    QStringList book_ids;
     void retrieveBooks();
 
 private slots:

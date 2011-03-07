@@ -424,40 +424,102 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
                                                      tr("Select Bible file to import"),
-                                                     ".",
-                                                     tr("All supported Bible files ") + "(*.spb *.txt);;" +
-                                                        tr("softProjector Bible file ") + "(*.spb);;"+
-                                                        tr("Unbound Bible file ") +"(*.txt)");
+                                                     ".",tr("SoftProjector Bible file ") + "(*.spb)");
+
 
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
     {
-        if(file_path.endsWith("spb",Qt::CaseSensitive))
-            importBible(file_path);
-        else if (file_path.endsWith("txt",Qt::CaseSensitive))
-            importBibleUnbound(file_path);
+        QFile file;
+        QString line, version;
+        QStringList split;
+        file.setFileName(file_path);
+
+        if (file.open(QIODevice::ReadOnly))
+        {
+            line = QString::fromUtf8(file.readLine());
+            // check file format and version
+            if (!line.startsWith("##spData")) // Old bible format verison
+            {
+                QMessageBox mb;
+                mb.setWindowTitle(tr("Old Bible file format"));
+                mb.setText(tr("The Bible format you are importing is of an old version.\n"
+                              "Your current SoftProjector does not support this format.\n"
+                              "Please download lattest Bibles and import them"));
+                mb.setIcon(QMessageBox::Critical);
+                mb.exec();
+            }
+            else if (line.startsWith("##spData")) //New bible format version
+            {
+                split = line.split("\t");
+                version = split.at(1);
+                if (version.trimmed() == "1") // Version 1
+                {
+                    importBible(file_path, version.trimmed());
+                }
+                else // Other than version 1
+                {
+                    QMessageBox mb;
+                    mb.setWindowTitle(tr("New Bible file format"));
+                    mb.setText(tr("The Bible format you are importing is of an new version.\n"
+                                  "Your current SoftProjector does not support this format.\n"
+                                  "Please upgrade SoftProjector to latest version."));
+                    mb.setIcon(QMessageBox::Critical);
+                    mb.exec();
+                }
+            }
+            file.close();
+        }
     }
 }
 
-void ManageDataDialog::importBible(QString path)
+void ManageDataDialog::importBible(QString path, QString version)
 {
     setWaitCursor();
     QFile file;
     file.setFileName(path);
-    QString line, title, id;
+    QString line , title, abbr, info, rtol, id;
     QStringList split;
     QSqlQuery sq;
     int row(0);
 
     if (file.open(QIODevice::ReadOnly))
     {
+        line = QString::fromUtf8(file.readLine()); // read version
+
+        line = QString::fromUtf8(file.readLine()); // read title
+        split = line.split("\t");
+        title = split.at(1);
+        line = QString::fromUtf8(file.readLine()); // read abbreviation
+        split = line.split("\t");
+        abbr = split.at(1);
+        line = QString::fromUtf8(file.readLine()); // read info
+        split = line.split("\t");
+        info = split.at(1);
+        // Convert bible information from single line to multiple line
+        QStringList info_list = info.split("@%");
+        info.clear();
+        for(int i(0); i<info_list.size();++i)
+        {
+            info += info_list[i] + "\n";
+        }
+        line = QString::fromUtf8(file.readLine()); // read right to left
+        split = line.split("\t");
+        rtol = split.at(1);
+
+
         QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, 31200, this);
         progress.setValue(row);
 
-        // add Bible Name
-        title = QString::fromUtf8(file.readLine());
-        sq.exec("INSERT INTO BibleVersions (bible_name)"
-                "VALUES ('" + title.trimmed()+"')");
+        // add Bible Name and information
+        QSqlDatabase::database().transaction();
+        sq.prepare("INSERT INTO BibleVersions (bible_name, abbreviation, information, right_to_left) VALUES (?,?,?,?)");
+        sq.addBindValue(title.trimmed());
+        sq.addBindValue(abbr.trimmed());
+        sq.addBindValue(info.trimmed());
+        sq.addBindValue(rtol.trimmed());
+        sq.exec();
+        QSqlDatabase::database().commit();
         sq.clear();
 
         // get Bible id of newly added Bible
@@ -466,24 +528,30 @@ void ManageDataDialog::importBible(QString path)
         id = sq.value(0).toString();
         sq.clear();
 
+        // If this bible is the first bible, reload bibles
+        if (id.trimmed() == "1")
+            reload_bible = true;
+
         // add Bible book names
         line = QString::fromUtf8(file.readLine());
         QSqlDatabase::database().transaction();
-        sq.prepare("INSERT INTO BibleBooks (id, book_name, bible_id) VALUES (?,?,?)");
+        sq.prepare("INSERT INTO BibleBooks (bible_id, id, book_name, chapter_count) VALUES (?,?,?,?)");
         while (!line.startsWith("---"))
         {
-            QString bk_id, bk_name;
+            QString bk_id, bk_name, ch_count;
             split = line.split("\t");
-            bk_id = split[0];
-            bk_name = split[1];
+            bk_id = split.at(0);
+            bk_name = split.at(1);
+            ch_count = split.at(2);
 
+            sq.addBindValue(id);
             sq.addBindValue(bk_id.trimmed());
             sq.addBindValue(bk_name.trimmed());
-            sq.addBindValue(id);
+            sq.addBindValue(ch_count.trimmed());
             sq.exec();
 
             line = QString::fromUtf8(file.readLine());
-            row++;
+            ++row;
             progress.setValue(row);
         }
         QSqlDatabase::database().commit();
@@ -493,7 +561,6 @@ void ManageDataDialog::importBible(QString path)
         QSqlDatabase::database().transaction();
         sq.prepare("INSERT INTO BibleVerse (verse_id, bible_id, book, chapter, verse, verse_text)"
                    "VALUES (?,?,?,?,?,?)");
-        QString v="";
         while (!file.atEnd())
         {
             if (progress.wasCanceled())
@@ -509,141 +576,11 @@ void ManageDataDialog::importBible(QString path)
             sq.addBindValue(split.at(4));
             sq.exec();
 
-            row++;
+            ++row;
             progress.setValue(row);
         }
         QSqlDatabase::database().commit();
-        file.close();
-    }
 
-    load_bibles();
-    setArrowCursor();
-}
-
-void ManageDataDialog::importBibleUnbound(QString path)
-{
-    setWaitCursor();
-    QFile file;
-    file.setFileName(path);
-    QString line, title, id, book_id;
-    QStringList split, book_names;
-    book_names << "Genesis" << "Exodus" << "Leviticus" << "Numbers" << "Deuteronomy" << "Joshua"
-            << "Judges" << "Ruth" << "1 Samuel" << "2 Samuel" << "1 Kings" << "2 Kings" << "1 Chronicles"
-            << "2 Chronicles" << "Ezra" << "Nehemiah" << "Esther" << "Job" << "Psalms" << "Proverbs"
-            << "Ecclesiastes" << "Song of Solomon" << "Isaiah" << "Jeremiah" << "Lamentations" << "Ezekiel"
-            << "Daniel" << "Hosea" << "Joel" << "Amos" << "Obadiah" << "Jonah" << "Micah" << "Nahum"
-            << "Habakkuk" << "Zephaniah" << "Haggai" << "Zechariah" << "Malachi" << "Matthew" << "Mark"
-            << "Luke" << "John" << "Acts of the Apostles" << "Romans" << "1 Corinthians" << "2 Corinthians"
-            << "Galatians" << "Ephesians" << "Philippians" << "Colossians" << "1 Thessalonians"
-            << "2 Thessalonians" << "1 Timothy" << "2 Timothy" << "Titus" << "Philemon" << "Hebrews"
-            << "James" << "1 Peter" << "2 Peter" << "1 John" << "2 John" << "3 John" << "Jude" << "Revelation";
-    QSqlQuery sq;
-    int row(0), c_book(0), c_chap(0), c_verse(0), c_text(0);
-
-    if (file.open(QIODevice::ReadOnly))
-    {
-        line = QString::fromUtf8(file.readLine());
-        if(line.startsWith("#THE UNBOUND BIBLE"))
-        {
-            QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, 31200, this);
-            progress.setValue(row);
-
-            // Prepare Bible
-            line = QString::fromUtf8(file.readLine());
-            while(line.startsWith("#"))
-            {
-                if(line.startsWith("#name"))// add Bible Name
-                {
-                    split = line.split("\t");
-                    title = split.at(1);
-                    sq.exec("INSERT INTO BibleVersions (bible_name)"
-                            "VALUES ('" + title.trimmed()+"')");
-                    sq.clear();
-                }
-                else if(line.startsWith("#columns"))// Prepare column indicies
-                {
-                    split = line.split("\t");
-                    QString col;
-                    for(int i(0); i<split.count(); ++i)
-                    {
-                        col = split.at(i);
-                        col = col.trimmed();
-                        if(col=="orig_book_index")
-                            c_book = i-1;
-                        else if(col=="orig_chapter")
-                            c_chap = i-1;
-                        else if(col=="orig_verse")
-                            c_verse = i-1;
-                        else if(col=="text")
-                            c_text = i-1;
-                    }
-                    break;
-                }
-                line = QString::fromUtf8(file.readLine());
-            }
-
-            // get Bible id of newly added Bible
-            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'BibleVersions'");
-            sq.first() ;
-            id = sq.value(0).toString();
-            sq.clear();
-
-            // add Bible book names
-            QSqlDatabase::database().transaction();
-            sq.prepare("INSERT INTO BibleBooks (id, book_name, bible_id) VALUES (?,?,?)");
-            QString bk_id, bk_name;
-            for(int i(0); i<book_names.count(); ++i)
-            {
-
-                bk_id = QString::number(i+1);
-                bk_name = book_names.at(i);
-
-                sq.addBindValue(bk_id.trimmed());
-                sq.addBindValue(bk_name.trimmed());
-                sq.addBindValue(id);
-                sq.exec();
-
-                row++;
-                progress.setValue(row);
-            }
-            QSqlDatabase::database().commit();
-            sq.clear();
-
-            // add bible verses
-            QSqlDatabase::database().transaction();
-            sq.prepare("INSERT INTO BibleVerse (verse_id, bible_id, book, chapter, verse, verse_text)"
-                       "VALUES (?,?,?,?,?,?)");
-            QString v="";
-            while (!file.atEnd())
-            {
-                if (progress.wasCanceled())
-                    break;
-
-                line = QString::fromUtf8(file.readLine());
-
-                split = line.split("\t");
-                v=split.at(c_text);
-                v=v.trimmed() + "\n";
-                sq.addBindValue(getVerseId(getBibleIdUnbound(split.at(c_book)),split.at(c_chap),split.at(c_verse)));       // Verse Id
-                sq.addBindValue(id);                // Bible Id
-                sq.addBindValue(getBibleIdUnbound(split.at(c_book)));  // Book
-                sq.addBindValue(split.at(c_chap));  // Chapter
-                sq.addBindValue(split.at(c_verse)); // Verse
-                sq.addBindValue(v);  // Verse Text
-                sq.exec();
-
-
-
-                row++;
-                progress.setValue(row);
-            }
-            QSqlDatabase::database().commit();
-            progress.close();
-        }
-        else
-        {
-            //TODO: Message box with wrong file type
-        }
         file.close();
     }
 
@@ -653,42 +590,79 @@ void ManageDataDialog::importBibleUnbound(QString path)
 
 void ManageDataDialog::on_export_bible_pushButton_clicked()
 {
-    QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported Bible as:"),
-                                             ".",tr("softProjector Bible file ") + "(*.spb)");
-    if( !file_path.isNull() )
-        exportBible(file_path);
-}
-
-void ManageDataDialog::exportBible(QString path)
-{
-    setWaitCursor();
     int row = ui->bibleTableView->currentIndex().row();
     Bibles bible = bible_model->getBible(row);
+
+    QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported Bible as:"),
+                                             clean(bible.title),
+                                             tr("softProjector Bible file ") + "(*.spb)");
+    if( !file_path.isNull() )
+        exportBible(file_path,bible);
+}
+
+void ManageDataDialog::exportBible(QString path, Bibles bible)
+{
+    setWaitCursor();
+    QProgressDialog progress(tr("Exporting..."), tr("Cancel"), 0, 31000, this);
+    int p(1);
+    progress.setValue(p);
+
     QSqlQuery sq;
     QString id = bible.bibleId;
-    QString to_file;
+    QString to_file = "##spDataVersion:\t1\n"; // SoftProjector bible file version number is 1 as of 2/26/2011
+
+    QString title, abbr, info, rtol;
 
     // get Bible version information
-    sq.exec("SELECT bible_name FROM BibleVersions WHERE id = " + id );
+    sq.exec("SELECT bible_name, abbreviation, information, right_to_left FROM BibleVersions WHERE id = " + id );
     sq.first();
-    to_file = sq.value(0).toString().trimmed() + "\n";
+    title = sq.value(0).toString().trimmed();
+    abbr = sq.value(1).toString().trimmed();
+    info = sq.value(2).toString().trimmed();
+    rtol = sq.value(3).toString().trimmed();
     sq.clear();
 
+    // Convert bible information from multiline to single line
+    QStringList info_list = info.split("\n");
+    info = info_list[0];
+    qDebug()<< QString::number(info_list.size());
+    for(int i(1); i<info_list.size();++i)
+    {
+        info += "@%" + info_list[i];
+    }
+
+    to_file += "##Title:\t" + title + "\n" +
+               "##Abbreviation:\t" + abbr + "\n" +
+               "##Information:\t" + info.trimmed() + "\n" +
+               "##RightToLeft:\t" + rtol + "\n";
+
+
     // get Bible books information
-    sq.exec("SELECT id, book_name FROM BibleBooks WHERE bible_id = " + id );
+    sq.exec("SELECT id, book_name, chapter_count FROM BibleBooks WHERE bible_id = " + id );
     while (sq.next())
-        to_file += sq.value(0).toString().trimmed() + "\t" + //book id
-                   sq.value(1).toString().trimmed() + "\n"; //book name
+    {
+        ++p;
+        progress.setValue(p);
+
+        to_file += sq.value(0).toString().trimmed() + "\t" +    //book id
+                   sq.value(1).toString().trimmed() + "\t" +    //book name
+                   sq.value(2).toString().trimmed() + "\n";     //chapter count
+    }
 
     // get Bible verses
     to_file += "-----";
     sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = " + id );
     while (sq.next())
+    {
+        ++p;
+        progress.setValue(p);
+
         to_file += "\n" + sq.value(0).toString().trimmed() + "\t" + //verse id
-                   sq.value(1).toString().trimmed() + "\t" + //book
-                   sq.value(2).toString().trimmed() + "\t" + //chapter
-                   sq.value(3).toString().trimmed() + "\t" + //verse
-                   sq.value(4).toString().trimmed(); //verse text
+                   sq.value(1).toString().trimmed() + "\t" +        //book
+                   sq.value(2).toString().trimmed() + "\t" +        //chapter
+                   sq.value(3).toString().trimmed() + "\t" +        //verse
+                   sq.value(4).toString().trimmed();                //verse text
+    }
 
     QFile ofile;
     ofile.setFileName(path);
@@ -752,9 +726,6 @@ void ManageDataDialog::deleteBible(Bibles bible)
     sq.exec("DELETE FROM BibleVerse WHERE bible_id = '" + id +"'");
     sq.clear();
 
-
-
-
     // Delete from BibleVersions Table
     sq.clear();
     sq.exec("DELETE FROM BibleVersions WHERE id = '" + id +"'");
@@ -781,14 +752,13 @@ void ManageDataDialog::on_edit_songbook_pushButton_clicked()
         sq.setTable("Songbooks");
         sq.setFilter("id = " + songbook.songbookId);
         sq.select();
-                sr = sq.record(0);
+        sr = sq.record(0);
         sr.setValue(1,songbook_dialog.title.trimmed());
         sr.setValue(2,songbook_dialog.info.trimmed());
         sq.setRecord(0,sr);
         sq.submitAll();
         break;
     case AddSongbookDialog::Rejected:
-//        close();
         break;
     }
 
@@ -799,22 +769,36 @@ void ManageDataDialog::on_edit_bible_pushButton_clicked()
 {
     int row = ui->bibleTableView->currentIndex().row();
     Bibles bible = bible_model->getBible(row);
-    bool ok;
-    QString name = QInputDialog::getText(this,tr("Edit Bible name"),
-                                         tr("Bible title:"),QLineEdit::Normal,
-                                         bible.title, &ok);
-    if(ok)
+    QSqlTableModel sq;
+    QSqlRecord sr;
+    int r(0);
+
+    BibleInformationDialog bible_info;
+    bible_info.setBibleIformation(bible.title,bible.abbr,bible.info,bible.isRtoL);
+
+    int ret = bible_info.exec();
+    switch(ret)
     {
-        QSqlTableModel sq;
-        QSqlRecord sr;
+    case BibleInformationDialog::Accepted:
         sq.setTable("BibleVersions");
-        sq.setFilter("id = " + bible.bibleId);
+        sq.setFilter("id = " + bible.bibleId.trimmed());
         sq.select();
         sr = sq.record(0);
-        sr.setValue(1,name.trimmed());
+        sr.setValue(1,bible_info.title.trimmed());
+        sr.setValue(2,bible_info.abbr.trimmed());
+        sr.setValue(3,bible_info.info.trimmed());
+        if(!bible_info.isRtoL)
+            r = 0;
+        else if (bible_info.isRtoL)
+            r = 1;
+        sr.setValue(4,r);
         sq.setRecord(0,sr);
         sq.submitAll();
+        break;
+    case BibleInformationDialog::Rejected:
+        break;
     }
+
     load_bibles();
 }
 
@@ -844,6 +828,7 @@ QString ManageDataDialog::getBibleIdUnbound(QString id)
 {
     id.remove("O");
     id.remove("N");
+    id.remove("A");
     int n_id(0);
     n_id = id.toInt();
     id = QString::number(n_id);
