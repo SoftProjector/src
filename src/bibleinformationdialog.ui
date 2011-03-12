@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Bible Information</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/book.png</normaloff>:/icons/icons/book.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label">
@@ -86,7 +90,9 @@ Copyright:</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

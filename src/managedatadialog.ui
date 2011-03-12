@@ -27,6 +27,10 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
+      <attribute name="icon">
+       <iconset resource="softprojector.qrc">
+        <normaloff>:/icons/icons/book.png</normaloff>:/icons/icons/book.png</iconset>
+      </attribute>
       <attribute name="title">
        <string>Bibles</string>
       </attribute>
@@ -120,6 +124,10 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset resource="softprojector.qrc">
+        <normaloff>:/icons/icons/song_tab.png</normaloff>:/icons/icons/song_tab.png</iconset>
+      </attribute>
       <attribute name="title">
        <string>Songbooks</string>
       </attribute>

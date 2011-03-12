@@ -259,6 +259,10 @@
    </property>
   </action>
   <action name="action_Help">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Help</string>
    </property>

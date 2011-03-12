@@ -11,7 +11,6 @@
         <file>icons/song_edit.png</file>
         <file>icons/song_tab.png</file>
         <file>icons/database.png</file>
-        <file>icons/book.png</file>
         <file>icons/go_live.png</file>
         <file>icons/remove.png</file>
         <file>icons/search.png</file>
@@ -29,6 +28,8 @@
         <file>icons/splash.png</file>
         <file>icons/softprojector_cloud.png</file>
         <file>icons/song_count.png</file>
+        <file>icons/help.png</file>
+        <file>icons/book.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
