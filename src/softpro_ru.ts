@@ -25,12 +25,24 @@
         <translation>Разработчики:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="261"/>
+        <location filename="aboutdialog.ui" line="262"/>
         <source>Special thanks to:</source>
         <translation>Особая благодарность:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="327"/>
+        <location filename="aboutdialog.ui" line="334"/>
+        <source>If you would like to help developing this program&lt;br&gt;
+or would like to contribute data, please visit:&lt;br&gt;
+&lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
+&lt;br&gt;
+&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/a&gt;</source>
+        <translation>Если вы хотите помочь в разроботке или желаете&lt;br&gt;
+внести свой вклад данных, пожалуйста, посетите:&lt;br&gt;
+&lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
+&lt;br&gt;
+&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/a&gt;</translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -47,7 +59,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;or would like to contribute data, please visit:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://softprojector.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://softprojector.com/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -57,7 +69,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="354"/>
+        <location filename="aboutdialog.ui" line="358"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -208,6 +220,35 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>BibleInformationDialog</name>
+    <message>
+        <location filename="bibleinformationdialog.ui" line="14"/>
+        <source>Bible Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="bibleinformationdialog.ui" line="24"/>
+        <source>Bible Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="bibleinformationdialog.ui" line="37"/>
+        <source>Abbreviation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="bibleinformationdialog.ui" line="50"/>
+        <source>Information\
+Copyright:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="bibleinformationdialog.ui" line="77"/>
+        <source>Right to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BibleWidget</name>
     <message>
         <location filename="biblewidget.ui" line="20"/>
@@ -290,27 +331,27 @@ p, li { white-space: pre-wrap; }
         <translation>Выбранной главе</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="597"/>
+        <location filename="biblewidget.ui" line="637"/>
         <source>Add (F2)</source>
         <translation>Добавить (F2)</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="604"/>
+        <location filename="biblewidget.ui" line="644"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="628"/>
+        <location filename="biblewidget.ui" line="668"/>
         <source>F3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="648"/>
+        <location filename="biblewidget.ui" line="688"/>
         <source>Clear all history items</source>
         <translation>Очистить список истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="651"/>
+        <location filename="biblewidget.ui" line="691"/>
         <source>Clear</source>
         <oldsource>Clear History</oldsource>
         <translation>Очистить</translation>
@@ -321,52 +362,52 @@ p, li { white-space: pre-wrap; }
         <translation>Найдено:</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="358"/>
+        <location filename="biblewidget.ui" line="398"/>
         <source>Book:</source>
         <translation>Книга:</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="383"/>
-        <location filename="biblewidget.ui" line="456"/>
-        <location filename="biblewidget.ui" line="521"/>
+        <location filename="biblewidget.ui" line="423"/>
+        <location filename="biblewidget.ui" line="496"/>
+        <location filename="biblewidget.ui" line="561"/>
         <source>Filter criteria for the bible list. If the first character of the filter is a number, then only books starting with this number are matched. Example filters: &quot;Deuter&quot;, &quot;1Thes&quot;.</source>
         <translation>Критерии поиска по  книгам Библии. Если вначале ставится цифра, то подбираются только книги начинающиеся с этой цифры. Примеры задания критериев: &quot;Втор&quot;, &quot;1Тим&quot;.</translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="120"/>
-        <location filename="biblewidget.ui" line="549"/>
+        <location filename="biblewidget.ui" line="589"/>
         <source>Quickly display  the selected Bible verse on the screen</source>
         <translation>Вывести выбранный текст на экран</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="299"/>
+        <location filename="biblewidget.ui" line="339"/>
         <source>Hide
 Results</source>
         <translation>Скрыть
 найденное</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="428"/>
+        <location filename="biblewidget.ui" line="468"/>
         <source>Chapter: </source>
         <translation>Глава:</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="496"/>
+        <location filename="biblewidget.ui" line="536"/>
         <source>Verse: </source>
         <translation>Стих:</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="552"/>
+        <location filename="biblewidget.ui" line="592"/>
         <source>Go Live (F5)</source>
         <translation>На экран (F5)</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="559"/>
+        <location filename="biblewidget.ui" line="599"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="594"/>
+        <location filename="biblewidget.ui" line="634"/>
         <source>Add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</source>
         <oldsource>add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</oldsource>
         <translation>Добавить выбранный текст к истории. Автоматически добавляется при нажатии F5</translation>
@@ -376,43 +417,52 @@ Results</source>
         <translation type="obsolete">Добавить к истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="611"/>
+        <location filename="biblewidget.ui" line="651"/>
         <source>This list contains verses that were sent to be shown</source>
         <translation>В этом списке находятся стихи для вывода на экран</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="618"/>
+        <location filename="biblewidget.ui" line="658"/>
         <source>Remove current selected verse in the history list</source>
         <translation>Удалить данный стих из списка истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="621"/>
+        <location filename="biblewidget.ui" line="661"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from history</oldsource>
         <translation>Удалить (F3)</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="371"/>
         <source>Total of </source>
-        <translation>Всего </translation>
+        <translation type="obsolete">Всего </translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="371"/>
         <source> search results returned.</source>
-        <translation> результаты поиска.</translation>
+        <translation type="obsolete"> результаты поиска.</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="373"/>
         <source>Total of 281 or more results. &lt;font color=red&gt;Only 281 results can be returned.&lt;/font&gt;</source>
-        <translation>Найдено 281 или больше записей. &lt;font color=red&gt;Выводится только 281 записей.&lt;/font&gt;</translation>
+        <translation type="obsolete">Найдено 281 или больше записей. &lt;font color=red&gt;Выводится только 281 записей.&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="382"/>
+        <location filename="biblewidget.cpp" line="370"/>
+        <source>Total
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="biblewidget.cpp" line="370"/>
+        <source>
+results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="biblewidget.cpp" line="380"/>
         <source>No search results have retrieved</source>
         <translation>Не найдено ничего</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="383"/>
+        <location filename="biblewidget.cpp" line="381"/>
         <source>No search results</source>
         <translation>Не найдено ничего</translation>
     </message>
@@ -629,117 +679,117 @@ Verse 2
         <translation>Управление базой данных</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="31"/>
+        <location filename="managedatadialog.ui" line="35"/>
         <source>Bibles</source>
         <translation>Библии</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="51"/>
+        <location filename="managedatadialog.ui" line="55"/>
         <source>Import a new Bible into your database</source>
         <oldsource>Import a new Bible into your database/</oldsource>
         <translation>Добавить в базу данных новый модуль Библии</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="54"/>
-        <location filename="managedatadialog.ui" line="142"/>
+        <location filename="managedatadialog.ui" line="58"/>
+        <location filename="managedatadialog.ui" line="150"/>
         <source>&amp;Import...</source>
         <translatorcomment>Импортирование модуля Библии</translatorcomment>
         <translation>&amp;Импорт...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="57"/>
-        <location filename="managedatadialog.ui" line="145"/>
+        <location filename="managedatadialog.ui" line="61"/>
+        <location filename="managedatadialog.ui" line="153"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="67"/>
+        <location filename="managedatadialog.ui" line="71"/>
         <source>Edit Bible title of currently selected Bible.</source>
         <translation>Редактировать название выбранного модуля Библии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="70"/>
-        <location filename="managedatadialog.ui" line="155"/>
+        <location filename="managedatadialog.ui" line="74"/>
+        <location filename="managedatadialog.ui" line="163"/>
         <source>&amp;Edit...</source>
         <translation>&amp;Правка...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="73"/>
-        <location filename="managedatadialog.ui" line="158"/>
+        <location filename="managedatadialog.ui" line="77"/>
+        <location filename="managedatadialog.ui" line="166"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="80"/>
+        <location filename="managedatadialog.ui" line="84"/>
         <source>Export currently selected Bible to share with others.</source>
         <translation>Экспортировать выбранный модуль Библии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="83"/>
-        <location filename="managedatadialog.ui" line="168"/>
+        <location filename="managedatadialog.ui" line="87"/>
+        <location filename="managedatadialog.ui" line="176"/>
         <source>E&amp;xport...</source>
         <translation>&amp;Экспорт...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="86"/>
-        <location filename="managedatadialog.ui" line="171"/>
+        <location filename="managedatadialog.ui" line="90"/>
+        <location filename="managedatadialog.ui" line="179"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="93"/>
+        <location filename="managedatadialog.ui" line="97"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
         <translation>Удалить модуль Библии который не будет использоваться в этой программе.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="96"/>
-        <location filename="managedatadialog.ui" line="181"/>
+        <location filename="managedatadialog.ui" line="100"/>
+        <location filename="managedatadialog.ui" line="189"/>
         <source>&amp;Delete...</source>
         <translation>&amp;Удаление...</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="99"/>
-        <location filename="managedatadialog.ui" line="184"/>
+        <location filename="managedatadialog.ui" line="103"/>
+        <location filename="managedatadialog.ui" line="192"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="124"/>
+        <location filename="managedatadialog.ui" line="132"/>
         <source>Songbooks</source>
         <translation>Сборники</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="139"/>
+        <location filename="managedatadialog.ui" line="147"/>
         <source>Import a new Songbook into database.</source>
         <translation>Добавить в базу данных новый сборник.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="152"/>
+        <location filename="managedatadialog.ui" line="160"/>
         <source>Edit the title and information about the Songbook.</source>
         <translation>Редактировать название сборника и информацию о нем.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="165"/>
+        <location filename="managedatadialog.ui" line="173"/>
         <source>Export currently selected Songbook to be able to share with others and for backup.</source>
         <translation>Экспортировать выбранный сборник для других пользователей и для резервной копии.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="178"/>
+        <location filename="managedatadialog.ui" line="186"/>
         <source>Delete currently selected Songbook from database.</source>
         <translation>Удалить выбранный сборник из базы данных.</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="223"/>
+        <location filename="managedatadialog.ui" line="231"/>
         <source>Close Manage Database Dialog</source>
         <translation>Закрыть диалоговое окно управления базой данных</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="226"/>
+        <location filename="managedatadialog.ui" line="234"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="managedatadialog.ui" line="229"/>
+        <location filename="managedatadialog.ui" line="237"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
@@ -755,15 +805,14 @@ Verse 2
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="178"/>
-        <location filename="managedatadialog.cpp" line="454"/>
-        <location filename="managedatadialog.cpp" line="561"/>
+        <location filename="managedatadialog.cpp" line="511"/>
         <source>Importing...</source>
         <translation>Импортируется...</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="178"/>
-        <location filename="managedatadialog.cpp" line="454"/>
-        <location filename="managedatadialog.cpp" line="561"/>
+        <location filename="managedatadialog.cpp" line="511"/>
+        <location filename="managedatadialog.cpp" line="606"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -813,7 +862,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="364"/>
-        <location filename="managedatadialog.cpp" line="742"/>
+        <location filename="managedatadialog.cpp" line="693"/>
         <source>Are you sure that you want to delete: </source>
         <translation>Вы уверены, что хотите удалить:</translation>
     </message>
@@ -828,40 +877,71 @@ Has been saved to:
         <translation>Выбор модуля Библии для импортирования</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="428"/>
-        <source>All supported Bible files </source>
-        <translation>Все поддерживаемые модули Библий </translation>
+        <location filename="managedatadialog.cpp" line="427"/>
+        <source>SoftProjector Bible file </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="429"/>
-        <location filename="managedatadialog.cpp" line="680"/>
+        <location filename="managedatadialog.cpp" line="445"/>
+        <source>Old Bible file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="446"/>
+        <source>The Bible format you are importing is of an old version.
+Your current SoftProjector does not support this format.
+Please download lattest Bibles and import them</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="463"/>
+        <source>New Bible file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="464"/>
+        <source>The Bible format you are importing is of an new version.
+Your current SoftProjector does not support this format.
+Please upgrade SoftProjector to latest version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All supported Bible files </source>
+        <translation type="obsolete">Все поддерживаемые модули Библий </translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="598"/>
         <source>softProjector Bible file </source>
         <translation>модуль Библии в формате softProjector </translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="430"/>
         <source>Unbound Bible file </source>
-        <translation>Библия в формате Unbound Bible </translation>
+        <translation type="obsolete">Библия в формате Unbound Bible </translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="679"/>
+        <location filename="managedatadialog.cpp" line="596"/>
         <source>Save exported Bible as:</source>
         <translation>Сохранить экспортируемую Библию как:</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="728"/>
+        <location filename="managedatadialog.cpp" line="606"/>
+        <source>Exporting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="managedatadialog.cpp" line="679"/>
         <source>Bible has been exported</source>
         <translation>Экспорт Библии завершен</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="729"/>
+        <location filename="managedatadialog.cpp" line="680"/>
         <source>Bible:
      </source>
         <translation>Библия:
      </translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="729"/>
+        <location filename="managedatadialog.cpp" line="680"/>
         <source>
 Has been saved to:
      </source>
@@ -870,29 +950,27 @@ Has been saved to:
      </translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="741"/>
+        <location filename="managedatadialog.cpp" line="692"/>
         <source>Delete Bible?</source>
         <translation>Удалить Библию?</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="743"/>
+        <location filename="managedatadialog.cpp" line="694"/>
         <source>This action will permanentrly delete this Bible</source>
         <translation>Библия будет удалена навсегда</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="798"/>
+        <location filename="managedatadialog.cpp" line="745"/>
         <source>Edit Songbook</source>
         <translation>Редактировать сборник</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="827"/>
         <source>Edit Bible name</source>
-        <translation>Редактировать название Библии</translation>
+        <translation type="obsolete">Редактировать название Библии</translation>
     </message>
     <message>
-        <location filename="managedatadialog.cpp" line="828"/>
         <source>Bible title:</source>
-        <translation>Название Библии:</translation>
+        <translation type="obsolete">Название Библии:</translation>
     </message>
 </context>
 <context>
@@ -1031,74 +1109,74 @@ Has been saved to:
         <translation>Эта программа бесплатная, с открытым исходным кодом. Если вы можете помочь в улучшении этой программы посетите sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="92"/>
-        <location filename="softprojector.cpp" line="1029"/>
+        <location filename="softprojector.cpp" line="97"/>
+        <location filename="softprojector.cpp" line="1034"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="93"/>
-        <location filename="softprojector.cpp" line="1030"/>
+        <location filename="softprojector.cpp" line="98"/>
+        <location filename="softprojector.cpp" line="1035"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="94"/>
-        <location filename="softprojector.cpp" line="1031"/>
+        <location filename="softprojector.cpp" line="99"/>
+        <location filename="softprojector.cpp" line="1036"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="398"/>
+        <location filename="softprojector.cpp" line="403"/>
         <source>Announcement</source>
         <translation>Объявление</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="820"/>
-        <location filename="softprojector.cpp" line="846"/>
-        <location filename="softprojector.cpp" line="885"/>
+        <location filename="softprojector.cpp" line="825"/>
+        <location filename="softprojector.cpp" line="851"/>
+        <location filename="softprojector.cpp" line="890"/>
         <source>No song selected</source>
         <translation>Песня не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="821"/>
+        <location filename="softprojector.cpp" line="826"/>
         <source>No song has been selected to be edited</source>
         <translation>Песня для правки не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="822"/>
+        <location filename="softprojector.cpp" line="827"/>
         <source>Please select a song to be edited</source>
         <translation>Выберите песню для правки</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="847"/>
+        <location filename="softprojector.cpp" line="852"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Песня для копирования не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="848"/>
+        <location filename="softprojector.cpp" line="853"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Выберите песню для копирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="860"/>
+        <location filename="softprojector.cpp" line="865"/>
         <source>Delete song?</source>
         <translation>Удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="861"/>
+        <location filename="softprojector.cpp" line="866"/>
         <source>Delete song &quot;</source>
         <translation>Удаление песни &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="886"/>
+        <location filename="softprojector.cpp" line="891"/>
         <source>No song has been selected to be deleted</source>
         <translation>Песня для удаления не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="887"/>
+        <location filename="softprojector.cpp" line="892"/>
         <source>Please select a song to be deleted</source>
         <translation>Выберите песню для удаления</translation>
     </message>
@@ -1107,7 +1185,7 @@ Has been saved to:
         <translation type="obsolete">Вы уверены что хотите удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="862"/>
+        <location filename="softprojector.cpp" line="867"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Песня будет удалена навсегда</translation>
     </message>
@@ -1161,7 +1239,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.ui" line="149"/>
-        <location filename="softprojector.ui" line="263"/>
+        <location filename="softprojector.ui" line="267"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
@@ -1246,27 +1324,27 @@ Has been saved to:
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="266"/>
+        <location filename="softprojector.ui" line="270"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="307"/>
+        <location filename="softprojector.ui" line="311"/>
         <source>Copy Current Song...</source>
         <translation>Копировать песню...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="310"/>
+        <location filename="softprojector.ui" line="314"/>
         <source>Copy current song into a new songbook</source>
         <translation>Копировать песню в новый сборник</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="313"/>
+        <location filename="softprojector.ui" line="317"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="322"/>
+        <location filename="softprojector.ui" line="326"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Счетчик Песен...</translation>
