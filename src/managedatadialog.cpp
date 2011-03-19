@@ -445,7 +445,7 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
                 mb.setWindowTitle(tr("Old Bible file format"));
                 mb.setText(tr("The Bible format you are importing is of an old version.\n"
                               "Your current SoftProjector does not support this format.\n"
-                              "Please download lattest Bibles and import them"));
+                              "Please download lattest Bibles and import them."));
                 mb.setIcon(QMessageBox::Critical);
                 mb.exec();
             }

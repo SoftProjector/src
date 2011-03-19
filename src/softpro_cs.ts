@@ -223,28 +223,29 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="bibleinformationdialog.ui" line="14"/>
         <source>Bible Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace o Bibli</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="24"/>
         <source>Bible Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Název Bible:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="37"/>
         <source>Abbreviation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zkratka:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="50"/>
         <source>Information\
 Copyright:</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace/
+Autorské právo:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="77"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Zprava doleva</translation>
     </message>
 </context>
 <context>
@@ -447,13 +448,15 @@ výsledky</translation>
         <location filename="biblewidget.cpp" line="370"/>
         <source>Total
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Celkem
+</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="370"/>
         <source>
 results</source>
-        <translation type="unfinished"></translation>
+        <translation>
+výsledků</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="380"/>
@@ -870,36 +873,40 @@ Uložen jako:
     <message>
         <location filename="managedatadialog.cpp" line="426"/>
         <source>Select Bible file to import</source>
-        <translation>Vybrat soubor s Biblí k vyvedení</translation>
+        <translation>Vybrat soubor s Biblí k zavedení</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="427"/>
         <source>SoftProjector Bible file </source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor s Biblí pro softProjector </translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="445"/>
         <source>Old Bible file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Starý formát souboru s Biblí</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="446"/>
         <source>The Bible format you are importing is of an old version.
 Your current SoftProjector does not support this format.
 Please download lattest Bibles and import them</source>
-        <translation type="unfinished"></translation>
+        <translation>Formát Bible, který zavádíte, je ve staré verzi.
+SoftProjector, který používáte nyní, tento formát nepodporuje.
+Stáhněte si, prosím, Bible v posledním formátu a zaveďte je.</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="463"/>
         <source>New Bible file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový formát souboru s Biblí</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="464"/>
         <source>The Bible format you are importing is of an new version.
 Your current SoftProjector does not support this format.
 Please upgrade SoftProjector to latest version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Formát Bible, který zavádíte, je v nové verzi.
+SoftProjector, který používáte nyní, tento formát nepodporuje.
+Povyšte, prosím, SoftProjector na poslední verzi.</translation>
     </message>
     <message>
         <source>All supported Bible files </source>
@@ -908,7 +915,7 @@ Please upgrade SoftProjector to latest version.</source>
     <message>
         <location filename="managedatadialog.cpp" line="598"/>
         <source>softProjector Bible file </source>
-        <translation>Soubor s Biblí softProjectoru </translation>
+        <translation>Soubor s Biblí pro softProjector </translation>
     </message>
     <message>
         <source>Unbound Bible file </source>
@@ -922,7 +929,7 @@ Please upgrade SoftProjector to latest version.</source>
     <message>
         <location filename="managedatadialog.cpp" line="606"/>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyvádí se...</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="679"/>

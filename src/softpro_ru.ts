@@ -224,28 +224,29 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="bibleinformationdialog.ui" line="14"/>
         <source>Bible Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация о Библии</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="24"/>
         <source>Bible Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия Библии:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="37"/>
         <source>Abbreviation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Аббревиатура:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="50"/>
         <source>Information\
 Copyright:</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация/
+Копирайт:</translation>
     </message>
     <message>
         <location filename="bibleinformationdialog.ui" line="77"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтение справа налево</translation>
     </message>
 </context>
 <context>
@@ -448,13 +449,15 @@ Results</source>
         <location filename="biblewidget.cpp" line="370"/>
         <source>Total
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Всего
+</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="370"/>
         <source>
 results</source>
-        <translation type="unfinished"></translation>
+        <translation>
+результатов</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="380"/>
@@ -879,31 +882,35 @@ Has been saved to:
     <message>
         <location filename="managedatadialog.cpp" line="427"/>
         <source>SoftProjector Bible file </source>
-        <translation type="unfinished"></translation>
+        <translation>Библия в формате Софт Прожектора</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="445"/>
         <source>Old Bible file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Библия в старом формате Софт Прожектора</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="446"/>
         <source>The Bible format you are importing is of an old version.
 Your current SoftProjector does not support this format.
 Please download lattest Bibles and import them</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы пытаетесь импортировать Библию в старом формате.
+Данная версия Софт Прожектора не поддерживает этот формат.
+Пожалуйста загрузите и импортируйте новую версию Библии.</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="463"/>
         <source>New Bible file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый формат Библии</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="464"/>
         <source>The Bible format you are importing is of an new version.
 Your current SoftProjector does not support this format.
 Please upgrade SoftProjector to latest version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы импортируете Библию в новом формате.
+Ваша версия Софт Прожектора не поддерживает этот формат.
+Пожалуйста установите новейшую версию Софт Прожектора.</translation>
     </message>
     <message>
         <source>All supported Bible files </source>
@@ -926,7 +933,7 @@ Please upgrade SoftProjector to latest version.</source>
     <message>
         <location filename="managedatadialog.cpp" line="606"/>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт...</translation>
     </message>
     <message>
         <location filename="managedatadialog.cpp" line="679"/>
