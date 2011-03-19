@@ -98,8 +98,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
 
-//    editWidget->setWindowTitle(tr("Edit and/or Add New songs"));
-
     connect(songWidget, SIGNAL(sendSong(Song, int)),
             this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
@@ -128,7 +126,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    version_string = "1.03";
+    version_string = "1.04";
     this->setWindowTitle("softProjector " + version_string);
 
 }
