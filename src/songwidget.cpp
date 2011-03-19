@@ -379,6 +379,8 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     // These two options are mutually exclusive:
     bool match_beginning = ui->begins_rbutton->isChecked();
     bool exact_match = ui->exact_match_rbutton->isChecked();
+
+    songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
     proxy_model->setFilterString(text, match_beginning, exact_match);
     songs_model->emitLayoutChanged(); // forces the view to redraw
 

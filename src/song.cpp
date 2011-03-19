@@ -353,7 +353,10 @@ void SongsModel::emitLayoutChanged()
     emit layoutChanged();
 }
 
-
+void SongsModel::emitLayoutAboutToBeChanged()
+{
+    emit layoutAboutToBeChanged();
+}
 
 SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
