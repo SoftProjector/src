@@ -144,6 +144,7 @@ SongCounterModel::SongCounterModel()
 
 void SongCounterModel::setCounter(QList<Counter> song_counts)
 {
+    emit layoutAboutToBeChanged();
     song_count_list.clear();
     for (int i(0); i < song_counts.size(); i++)
     {
