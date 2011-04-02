@@ -262,6 +262,7 @@ Song SongsModel::getSong(QModelIndex index)
 
 void SongsModel::setSongs(QList<Song> songs)
 {
+    emit layoutAboutToBeChanged();
     song_list.clear();
     for (int i = 0; i < songs.size(); i++) {
         Song song = songs.at(i);
@@ -272,13 +273,13 @@ void SongsModel::setSongs(QList<Song> songs)
 
 void SongsModel::updateSongFromDatabase(int songid)
 {
+    emit layoutAboutToBeChanged();
     for( int i=0; i < song_list.size(); i++) {
         Song *song = (Song*)&(song_list.at(i));
         if( song->songID == songid )
         {
-            //qDebug() << "found song. updating data...";
             song->readData();
-            emitLayoutChanged(); // To redraw the table
+            emit layoutChanged(); // To redraw the table
             return;
         }
     }
