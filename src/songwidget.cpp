@@ -219,6 +219,7 @@ void SongWidget::on_songbook_menu_currentIndexChanged(int index)
 {
     // Called when a different songbook is selected from the pull-down menu
 
+    songs_model->emitLayoutAboutToBeChanged(); //prepeare to chage layout
     if( index == 0 )
     {
         proxy_model->setSongbookFilter("ALL");
@@ -351,6 +352,7 @@ void SongWidget::on_btnRemoveFromPlaylist_clicked()
 
 void SongWidget::on_btnDownInPlaylist_clicked()
 {
+    playlist_model->emitLayoutAboutToBeChanged();
     int row = ui->playlist_view->currentIndex().row();
     Song song = playlist_model->song_list.takeAt(row);
     playlist_model->song_list.insert(row+1, song);
@@ -363,6 +365,7 @@ void SongWidget::on_btnDownInPlaylist_clicked()
 
 void SongWidget::on_btnUpInPlaylist_clicked()
 {
+    playlist_model->emitLayoutAboutToBeChanged();
     int row = ui->playlist_view->currentIndex().row();
     Song song = playlist_model->song_list.takeAt(row);
     playlist_model->song_list.insert(row-1, song);
