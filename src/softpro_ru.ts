@@ -1004,8 +1004,8 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="69"/>
-        <source>Display screen always on top (requires program restart)</source>
-        <translation>Окно экрана сверху (требуется перезапуск программы)</translation>
+        <source>Display window always on top</source>
+        <translation>Окно экрана всегда сверху</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="78"/>

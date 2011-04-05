@@ -1000,8 +1000,8 @@ Byla uložena jako:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="69"/>
-        <source>Display screen always on top (requires program restart)</source>
-        <translation>Promítací plochu ukazovat vždy v popředí (vyžaduje nové spuštění programu)</translation>
+        <source>Display window always on top</source>
+        <translation>Promítací plochu ukazovat vždy v popředí</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="78"/>

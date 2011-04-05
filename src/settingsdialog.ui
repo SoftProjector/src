@@ -66,7 +66,7 @@
       <string>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector's screen.</string>
      </property>
      <property name="text">
-      <string>Display screen always on top (requires program restart)</string>
+      <string>Display window always on top</string>
      </property>
     </widget>
    </item>

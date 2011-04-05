@@ -1000,8 +1000,8 @@ Gespeichert als:
     </message>
     <message>
         <location filename="settingsdialog.ui" line="69"/>
-        <source>Display screen always on top (requires program restart)</source>
-        <translation>Bildschirm immer im Vordergrund anzeigen (erfordert Neustart des Programms)</translation>
+        <source>Display window always on top</source>
+        <translation>Bildschirm immer im Vordergrund anzeigen</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="78"/>
