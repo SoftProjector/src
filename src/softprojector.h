@@ -73,7 +73,6 @@ public:
 public slots:
     void setWaitCursor();
     void setArrowCursor();
-    void screenCountChanged(int);
 
 private:
     Ui::SoftProjectorClass *ui;

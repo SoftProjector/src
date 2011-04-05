@@ -116,8 +116,6 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()),
             this, SLOT(setWaitCursor()));
-    //connect(desktop, SIGNAL(screenCountChanged(int)),
-    //        this, SLOT(screenCountChanged(int)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -147,13 +145,7 @@ void SoftProjector::positionDisplayWindow()
     if (display_on_top)
         display->setWindowFlags(Qt::WindowStaysOnTopHint);
     else
-        display->setWindowFlags(0); //flags & ! Qt::WindowStaysOnTopHint);
-    
-    // Set up the dimentions of the display window:
-    display->setGeometry(10, 50, 800, 600);
-    // The above dimensions will be used only on single-screen (or mirror) setups,
-    // when not running in full screen mode
-    // NOTE the y-coordinate of 50 is so that the window does not overwrite the menu bar on Mac OS X
+        display->setWindowFlags(0); // Do not show always on top
     
     if( desktop->numScreens() > 1 )
     {
@@ -167,14 +159,12 @@ void SoftProjector::positionDisplayWindow()
         display->showFullScreen();
     }
     else
+    {
         // Single monitor only, show normal (not full screen):
         display->showNormal();
-}
-
-void SoftProjector::screenCountChanged(int)
-{
-    // This method is currently not used
-    positionDisplayWindow();
+        display->setGeometry(10, 50, 800, 600);
+        // NOTE the y-coordinate of 50 is so that the window does not overwrite the menu bar on Mac OS X
+    }
 }
 
 void SoftProjector::applyDefaults()
