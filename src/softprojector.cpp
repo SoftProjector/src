@@ -42,8 +42,12 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     //Setting up the Display Screen
     desktop = new QDesktopWidget();
-    display = new Display1(desktop->screen(3));
-    display->setGeometry(10, 10, 800, 600);
+
+    // NOTE: With virtual desktop, desktop->screen() will always return the main screen,
+    // so this will initialize the Display1 widget on the main screen:
+    display = new Display1(desktop->screen(0));
+    // Don't worry, we'll move it later
+
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 
     bibleWidget = new BibleWidget;
@@ -74,20 +78,25 @@ SoftProjector::SoftProjector(QWidget *parent)
         display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
 //    display->setWindowFlags(Qt::ToolTip); // no
 
+
+    // Set up the dimentions of the display window:
+    display->setGeometry(10, 10, 800, 600);
+    // The above dimensions will be used only on single-screen (or mirror) setups
+
     if( desktop->numScreens() > 1 )
     {
         if (desktop->isVirtualDesktop())
         {
-            if (desktop->screen(0)->x() < 0) // show display screen on the left if primary is to the right
-                display->setGeometry(desktop->screen(0)->x()+100,200,100,100);
-            else // show display screen on the right primary is to the left
-                display->setGeometry(desktop->screen(0)->width()-100,200,100,100);
+            // Move the display widget to screen 1 (secondary screen):
+            // FIXME what if more than 2 screens are available??
+            QPoint bottom_left = desktop->screenGeometry(1).bottomLeft();
+            display->move(bottom_left);
         }
         display->showFullScreen();
     }
     else
+        // Single monitor only
         display->show();
-
 
     display->renderText(false);
 
