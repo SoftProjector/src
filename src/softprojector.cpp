@@ -66,6 +66,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     languageGroup->addAction(ui->actionGerman);
     languageGroup->addAction(ui->actionCzech);
 
+    // Always place the "Settings" menu item under the application
+    // menu, even if the item is translated (Mac OS X):
+    ui->actionSettings->setMenuRole(QAction::PreferencesRole);
+    // FIXME Make the Preferences menu appear in the menu bar even for the
+    // display window (Mac OS X)
+
     // Apply default settings, in case configuration file does not exist
     // or is out of date:
     applyDefaults();
@@ -74,29 +80,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     readXMLConfigurationFile();
 
     display->setWindowIcon(QIcon(":icons/icons/display.png"));
-    if (display_on_top)
-        display->setWindowFlags(Qt::WindowStaysOnTopHint); // Always on top
-//    display->setWindowFlags(Qt::ToolTip); // no
 
-
-    // Set up the dimentions of the display window:
-    display->setGeometry(10, 10, 800, 600);
-    // The above dimensions will be used only on single-screen (or mirror) setups
-
-    if( desktop->numScreens() > 1 )
-    {
-        if (desktop->isVirtualDesktop())
-        {
-            // Move the display widget to screen 1 (secondary screen):
-            // FIXME what if more than 2 screens are available??
-            QPoint bottom_left = desktop->screenGeometry(1).bottomLeft();
-            display->move(bottom_left);
-        }
-        display->showFullScreen();
-    }
-    else
-        // Single monitor only
-        display->show();
+    positionDisplayWindow();
 
     display->renderText(false);
 
@@ -131,6 +116,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()),
             this, SLOT(setWaitCursor()));
+    //connect(desktop, SIGNAL(screenCountChanged(int)),
+    //        this, SLOT(screenCountChanged(int)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -150,6 +137,44 @@ SoftProjector::~SoftProjector()
     delete announceWidget;
     delete display;
     delete desktop;
+}
+
+void SoftProjector::positionDisplayWindow()
+{
+    // Position the display window as needed (including setting "always on top" flag,
+    // showing full screen / normal mode, and positioning it on the right screen)
+
+    if (display_on_top)
+        display->setWindowFlags(Qt::WindowStaysOnTopHint);
+    else
+        display->setWindowFlags(0); //flags & ! Qt::WindowStaysOnTopHint);
+    
+    // Set up the dimentions of the display window:
+    display->setGeometry(10, 50, 800, 600);
+    // The above dimensions will be used only on single-screen (or mirror) setups,
+    // when not running in full screen mode
+    // NOTE the y-coordinate of 50 is so that the window does not overwrite the menu bar on Mac OS X
+    
+    if( desktop->numScreens() > 1 )
+    {
+        if (desktop->isVirtualDesktop())
+        {
+            // Move the display widget to screen 1 (secondary screen):
+            // FIXME what if more than 2 screens are available??
+            QPoint bottom_left = desktop->screenGeometry(1).bottomLeft();
+            display->move(bottom_left);
+        }
+        display->showFullScreen();
+    }
+    else
+        // Single monitor only, show normal (not full screen):
+        display->showNormal();
+}
+
+void SoftProjector::screenCountChanged(int)
+{
+    // This method is currently not used
+    positionDisplayWindow();
 }
 
 void SoftProjector::applyDefaults()

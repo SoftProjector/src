@@ -68,11 +68,12 @@ public:
     void applyDefaults();
     void readXMLConfigurationFile();
     void writeXMLConfigurationFile();
+    void positionDisplayWindow();
 
 public slots:
     void setWaitCursor();
     void setArrowCursor();
-
+    void screenCountChanged(int);
 
 private:
     Ui::SoftProjectorClass *ui;

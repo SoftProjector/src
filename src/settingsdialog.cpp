@@ -60,7 +60,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         ui->secondary_bible_menu->setCurrentIndex(secondary_index+1);
     }
 
-    // Set Display screen alway on top or not
+    // Set Display window always on top or not
     if (softProjector->display_on_top)
         ui->display_on_top_box->setChecked(true);
 
@@ -148,15 +148,26 @@ void SettingsDialog::on_buttonBox_rejected()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
-   // bool show_black = ui->black_screen_rbutton->isChecked();
+    int primaryBibleInd = ui->primary_bible_menu->currentIndex();
+    QString primaryBible, secondaryBible;
+    if( primaryBibleInd != -1 )
+    {
+        // If there are bibles in the database
+        primaryBible = bible_id_list[primaryBibleInd];
+        int secondaryBibleInd = ui->secondary_bible_menu->currentIndex();
 
-    QString primaryBible = bible_id_list[ui->primary_bible_menu->currentIndex()];
-    int secondaryBibleInd = ui->secondary_bible_menu->currentIndex();
-    QString secondaryBible;
-    if (secondaryBibleInd <= 0)
-        secondaryBible = "none";
+        if (secondaryBibleInd <= 0)
+            secondaryBible = "none";
+        else
+            secondaryBible = second_id_list[ui->secondary_bible_menu->currentIndex()-1];
+    }
     else
-        secondaryBible = second_id_list[ui->secondary_bible_menu->currentIndex()-1];
+    {
+        // There are no bibles in the database
+        primaryBible = "none";
+        secondaryBible = "none";
+    }
+
 
     bool use_fading = ui->use_fading_effects_box->isChecked();
     bool display_on_top = ui->display_on_top_box->isChecked();
@@ -183,6 +194,8 @@ void SettingsDialog::on_buttonBox_accepted()
 
     // Redraw the screen:
     softProjector->updateScreen();
+    // Update <display_on_top>:
+    softProjector->positionDisplayWindow();
     close();
 }
 
