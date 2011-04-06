@@ -889,7 +889,10 @@ Uložen jako:
         <location filename="managedatadialog.cpp" line="446"/>
         <source>The Bible format you are importing is of an old version.
 Your current SoftProjector does not support this format.
-Please download lattest Bibles and import them</source>
+Please download lattest Bibles and import them.</source>
+        <oldsource>The Bible format you are importing is of an old version.
+Your current SoftProjector does not support this format.
+Please download lattest Bibles and import them</oldsource>
         <translation>Formát Bible, který zavádíte, je ve staré verzi.
 SoftProjector, který používáte nyní, tento formát nepodporuje.
 Stáhněte si, prosím, Bible v posledním formátu a zaveďte je.</translation>
@@ -1085,20 +1088,20 @@ Byla uložena jako:
         <location filename="settingsdialog.cpp" line="77"/>
         <location filename="settingsdialog.cpp" line="85"/>
         <location filename="settingsdialog.cpp" line="118"/>
-        <location filename="settingsdialog.cpp" line="233"/>
-        <location filename="settingsdialog.cpp" line="245"/>
+        <location filename="settingsdialog.cpp" line="246"/>
+        <location filename="settingsdialog.cpp" line="258"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="204"/>
-        <location filename="settingsdialog.cpp" line="219"/>
+        <location filename="settingsdialog.cpp" line="217"/>
+        <location filename="settingsdialog.cpp" line="232"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Vybrat obrázek pro pozadí</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="206"/>
-        <location filename="settingsdialog.cpp" line="221"/>
+        <location filename="settingsdialog.cpp" line="219"/>
+        <location filename="settingsdialog.cpp" line="234"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1106,80 +1109,80 @@ Byla uložena jako:
 <context>
     <name>SoftProjector</name>
     <message>
-        <location filename="softprojector.cpp" line="56"/>
+        <location filename="softprojector.cpp" line="60"/>
         <source>This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net</source>
         <oldsource>This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/</oldsource>
         <translation>Tento program je zdarma a jeho kód je otevřen. Pokud můžete a chcete pomoci při zlepšování tohoto programu, navštivte, prosím, stránky na adrese sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="97"/>
-        <location filename="softprojector.cpp" line="1034"/>
+        <location filename="softprojector.cpp" line="91"/>
+        <location filename="softprojector.cpp" line="1056"/>
         <source>Bible (F6)</source>
         <translation>Bible (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="98"/>
-        <location filename="softprojector.cpp" line="1035"/>
+        <location filename="softprojector.cpp" line="92"/>
+        <location filename="softprojector.cpp" line="1057"/>
         <source>Songs (F7)</source>
         <translation>Písně (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="99"/>
-        <location filename="softprojector.cpp" line="1036"/>
+        <location filename="softprojector.cpp" line="93"/>
+        <location filename="softprojector.cpp" line="1058"/>
         <source>Announcements (F8)</source>
         <translation>Oznámení (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="403"/>
+        <location filename="softprojector.cpp" line="425"/>
         <source>Announcement</source>
         <translation>Oznámení</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="825"/>
-        <location filename="softprojector.cpp" line="851"/>
-        <location filename="softprojector.cpp" line="890"/>
+        <location filename="softprojector.cpp" line="847"/>
+        <location filename="softprojector.cpp" line="873"/>
+        <location filename="softprojector.cpp" line="912"/>
         <source>No song selected</source>
         <translation>Nebyla vybrána žádná píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="826"/>
+        <location filename="softprojector.cpp" line="848"/>
         <source>No song has been selected to be edited</source>
         <translation>Nebyla vybrána žádná píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="827"/>
+        <location filename="softprojector.cpp" line="849"/>
         <source>Please select a song to be edited</source>
         <translation>Vyberte, prosím, píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="852"/>
+        <location filename="softprojector.cpp" line="874"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Nebyla vybrána žádná píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="853"/>
+        <location filename="softprojector.cpp" line="875"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="865"/>
+        <location filename="softprojector.cpp" line="887"/>
         <source>Delete song?</source>
         <translation>Smazat píseň?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="866"/>
+        <location filename="softprojector.cpp" line="888"/>
         <source>Delete song &quot;</source>
         <translation>Smazat píseň &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="891"/>
+        <location filename="softprojector.cpp" line="913"/>
         <source>No song has been selected to be deleted</source>
         <translation>Nebyla vybrána žádná píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="892"/>
+        <location filename="softprojector.cpp" line="914"/>
         <source>Please select a song to be deleted</source>
         <translation>Vyberte, prosím, píseň ke smazání</translation>
     </message>
@@ -1188,7 +1191,7 @@ Byla uložena jako:
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="867"/>
+        <location filename="softprojector.cpp" line="889"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Tímto krokem bude tato píseň neodvolatelně smazána</translation>
     </message>
@@ -1379,17 +1382,17 @@ Byla uložena jako:
 <context>
     <name>SongCounterModel</name>
     <message>
-        <location filename="songcounter.cpp" line="201"/>
+        <location filename="songcounter.cpp" line="202"/>
         <source>Song Title</source>
         <translation>Název písně</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="203"/>
+        <location filename="songcounter.cpp" line="204"/>
         <source>Count</source>
         <translation>Počet</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="205"/>
+        <location filename="songcounter.cpp" line="206"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
     </message>
@@ -1514,7 +1517,7 @@ Byla uložena jako:
     </message>
     <message>
         <location filename="songwidget.cpp" line="155"/>
-        <location filename="songwidget.cpp" line="520"/>
+        <location filename="songwidget.cpp" line="525"/>
         <source>All songbooks</source>
         <translation>Všechny zpěvníky</translation>
     </message>
@@ -1524,12 +1527,12 @@ Byla uložena jako:
         <translation>Náhled na píseň:</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="286"/>
+        <location filename="songwidget.cpp" line="287"/>
         <source>Could not find song with number </source>
         <translation>Číslo písně se nepodařilo najít</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="287"/>
+        <location filename="songwidget.cpp" line="288"/>
         <source>No such song</source>
         <translation>Není žádná taková píseň</translation>
     </message>
@@ -1551,17 +1554,17 @@ Byla uložena jako:
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="song.cpp" line="341"/>
+        <location filename="song.cpp" line="342"/>
         <source>Num</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="343"/>
+        <location filename="song.cpp" line="344"/>
         <source>Title</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="345"/>
+        <location filename="song.cpp" line="346"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
     </message>

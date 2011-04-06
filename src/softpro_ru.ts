@@ -893,7 +893,10 @@ Has been saved to:
         <location filename="managedatadialog.cpp" line="446"/>
         <source>The Bible format you are importing is of an old version.
 Your current SoftProjector does not support this format.
-Please download lattest Bibles and import them</source>
+Please download lattest Bibles and import them.</source>
+        <oldsource>The Bible format you are importing is of an old version.
+Your current SoftProjector does not support this format.
+Please download lattest Bibles and import them</oldsource>
         <translation>Вы пытаетесь импортировать Библию в старом формате.
 Данная версия Софт Прожектора не поддерживает этот формат.
 Пожалуйста загрузите и импортируйте новую версию Библии.</translation>
@@ -1089,20 +1092,20 @@ Has been saved to:
         <location filename="settingsdialog.cpp" line="77"/>
         <location filename="settingsdialog.cpp" line="85"/>
         <location filename="settingsdialog.cpp" line="118"/>
-        <location filename="settingsdialog.cpp" line="233"/>
-        <location filename="settingsdialog.cpp" line="245"/>
+        <location filename="settingsdialog.cpp" line="246"/>
+        <location filename="settingsdialog.cpp" line="258"/>
         <source>None</source>
         <translation>Не выбрана</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="204"/>
-        <location filename="settingsdialog.cpp" line="219"/>
+        <location filename="settingsdialog.cpp" line="217"/>
+        <location filename="settingsdialog.cpp" line="232"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Выберите изображение для фонового рисунка</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="206"/>
-        <location filename="settingsdialog.cpp" line="221"/>
+        <location filename="settingsdialog.cpp" line="219"/>
+        <location filename="settingsdialog.cpp" line="234"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1110,80 +1113,80 @@ Has been saved to:
 <context>
     <name>SoftProjector</name>
     <message>
-        <location filename="softprojector.cpp" line="56"/>
+        <location filename="softprojector.cpp" line="60"/>
         <source>This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net</source>
         <oldsource>This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/</oldsource>
         <translation>Эта программа бесплатная, с открытым исходным кодом. Если вы можете помочь в улучшении этой программы посетите sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="97"/>
-        <location filename="softprojector.cpp" line="1034"/>
+        <location filename="softprojector.cpp" line="91"/>
+        <location filename="softprojector.cpp" line="1056"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="98"/>
-        <location filename="softprojector.cpp" line="1035"/>
+        <location filename="softprojector.cpp" line="92"/>
+        <location filename="softprojector.cpp" line="1057"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="99"/>
-        <location filename="softprojector.cpp" line="1036"/>
+        <location filename="softprojector.cpp" line="93"/>
+        <location filename="softprojector.cpp" line="1058"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="403"/>
+        <location filename="softprojector.cpp" line="425"/>
         <source>Announcement</source>
         <translation>Объявление</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="825"/>
-        <location filename="softprojector.cpp" line="851"/>
-        <location filename="softprojector.cpp" line="890"/>
+        <location filename="softprojector.cpp" line="847"/>
+        <location filename="softprojector.cpp" line="873"/>
+        <location filename="softprojector.cpp" line="912"/>
         <source>No song selected</source>
         <translation>Песня не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="826"/>
+        <location filename="softprojector.cpp" line="848"/>
         <source>No song has been selected to be edited</source>
         <translation>Песня для правки не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="827"/>
+        <location filename="softprojector.cpp" line="849"/>
         <source>Please select a song to be edited</source>
         <translation>Выберите песню для правки</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="852"/>
+        <location filename="softprojector.cpp" line="874"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Песня для копирования не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="853"/>
+        <location filename="softprojector.cpp" line="875"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Выберите песню для копирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="865"/>
+        <location filename="softprojector.cpp" line="887"/>
         <source>Delete song?</source>
         <translation>Удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="866"/>
+        <location filename="softprojector.cpp" line="888"/>
         <source>Delete song &quot;</source>
         <translation>Удаление песни &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="891"/>
+        <location filename="softprojector.cpp" line="913"/>
         <source>No song has been selected to be deleted</source>
         <translation>Песня для удаления не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="892"/>
+        <location filename="softprojector.cpp" line="914"/>
         <source>Please select a song to be deleted</source>
         <translation>Выберите песню для удаления</translation>
     </message>
@@ -1192,7 +1195,7 @@ Has been saved to:
         <translation type="obsolete">Вы уверены что хотите удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="867"/>
+        <location filename="softprojector.cpp" line="889"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Песня будет удалена навсегда</translation>
     </message>
@@ -1391,17 +1394,17 @@ Has been saved to:
 <context>
     <name>SongCounterModel</name>
     <message>
-        <location filename="songcounter.cpp" line="201"/>
+        <location filename="songcounter.cpp" line="202"/>
         <source>Song Title</source>
         <translation>Название Песни</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="203"/>
+        <location filename="songcounter.cpp" line="204"/>
         <source>Count</source>
         <translation>Счет</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="205"/>
+        <location filename="songcounter.cpp" line="206"/>
         <source>Songbook</source>
         <translation>Сборник</translation>
     </message>
@@ -1425,7 +1428,7 @@ Has been saved to:
     </message>
     <message>
         <location filename="songwidget.cpp" line="155"/>
-        <location filename="songwidget.cpp" line="520"/>
+        <location filename="songwidget.cpp" line="525"/>
         <source>All songbooks</source>
         <translation>Все сборники</translation>
     </message>
@@ -1536,12 +1539,12 @@ Has been saved to:
         <translation>Предосмотр песни:</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="286"/>
+        <location filename="songwidget.cpp" line="287"/>
         <source>Could not find song with number </source>
         <translation>Песня с указанным номером не найдена</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="287"/>
+        <location filename="songwidget.cpp" line="288"/>
         <source>No such song</source>
         <translation>Песня отсутствует</translation>
     </message>
@@ -1563,17 +1566,17 @@ Has been saved to:
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="song.cpp" line="341"/>
+        <location filename="song.cpp" line="342"/>
         <source>Num</source>
         <translation>Номер</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="343"/>
+        <location filename="song.cpp" line="344"/>
         <source>Title</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="345"/>
+        <location filename="song.cpp" line="346"/>
         <source>Songbook</source>
         <translation>Сборник</translation>
     </message>
