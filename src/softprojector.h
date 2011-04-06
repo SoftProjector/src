@@ -69,6 +69,7 @@ public:
     void readXMLConfigurationFile();
     void writeXMLConfigurationFile();
     void positionDisplayWindow();
+    void updateScreen();
 
 public slots:
     void setWaitCursor();
@@ -111,9 +112,6 @@ private slots:
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, int verse, QString caption);
     void drawText(QPainter *painter, int width, int height);
-
-public:
-    void updateScreen();
 
 protected:
     void closeEvent(QCloseEvent *event);

@@ -146,15 +146,15 @@ void SoftProjector::positionDisplayWindow()
         display->setWindowFlags(Qt::WindowStaysOnTopHint);
     else
         display->setWindowFlags(0); // Do not show always on top
-    
+
     if( desktop->numScreens() > 1 )
     {
         if (desktop->isVirtualDesktop())
         {
             // Move the display widget to screen 1 (secondary screen):
             // FIXME what if more than 2 screens are available??
-            QPoint bottom_left = desktop->screenGeometry(1).bottomLeft();
-            display->move(bottom_left);
+            QPoint top_left = desktop->screenGeometry(1).topLeft();
+            display->move(top_left);
         }
         display->showFullScreen();
     }
