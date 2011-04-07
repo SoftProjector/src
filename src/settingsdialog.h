@@ -50,6 +50,7 @@ private:
     QColor new_foreground_color;
     QStringList bible_id_list;
     QStringList second_id_list;
+    bool is_always_on_top;
 
 private slots:
     void on_choose_color_button_clicked();

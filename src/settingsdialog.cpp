@@ -62,7 +62,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Set Display window always on top or not
     if (softProjector->display_on_top)
-        ui->display_on_top_box->setChecked(true);
+        is_always_on_top = true;
+    else
+        is_always_on_top = false;
+    ui->display_on_top_box->setChecked(is_always_on_top);
 
     // Set to use or not to use fading
     ui->use_fading_effects_box->setChecked(softProjector->display->useFading());
@@ -194,8 +197,10 @@ void SettingsDialog::on_buttonBox_accepted()
 
     // Redraw the screen:
     softProjector->updateScreen();
-    // Update <display_on_top>:
-    softProjector->positionDisplayWindow();
+    // Update <display_on_top> only when changed:
+    if(is_always_on_top!=display_on_top)
+        softProjector->positionDisplayWindow();
+
     close();
 }
 
