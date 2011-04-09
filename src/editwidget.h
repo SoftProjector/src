@@ -41,6 +41,8 @@ public slots:
     void setCopy(Song copy);
     void setEdit(Song sEdit);
     void setNew();
+    QStringList categories();
+    void retranslateUis();
 
 signals:
     // For communicating with SongsModel

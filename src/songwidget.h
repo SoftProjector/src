@@ -23,6 +23,7 @@
 #include <QtGui/QWidget>
 #include "song.h"
 #include "songcounter.h"
+#include "editwidget.h"
 //#include "softprojector.h"
 
 namespace Ui {
@@ -58,6 +59,7 @@ signals:
     void sendSong(Song song, int currentItem);
 
 private slots:
+    void on_comboBoxCategory_currentIndexChanged(int index);
     void on_btnDownInPlaylist_clicked();
     void on_btnUpInPlaylist_clicked();
     void on_exact_match_rbutton_clicked();
@@ -81,6 +83,7 @@ private slots:
     void loadSongbooks();
     void updateButtonStates();
     void filterModeChanged();
+    void loadCategories();
 
 private:
     Ui::SongWidget *ui;

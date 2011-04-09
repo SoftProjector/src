@@ -29,6 +29,9 @@ EditWidget::EditWidget(QWidget *parent) :
     ui->setupUi(this);
     highlight = new Highlight(ui->textEditSong->document());
 
+    //Add caterories to the list
+    ui->comboBoxCategory->addItems(categories());
+
     // Allow only positive values for the song number:
     song_num_validator = new QIntValidator(1,10000000,ui->song_number_lineEdit);
     ui->song_number_lineEdit->setValidator(song_num_validator);
@@ -381,3 +384,33 @@ void EditWidget::on_wall_default_button_clicked()
     ui->wall_textbox->clear();
 }
 
+QStringList EditWidget::categories()
+{
+    QStringList cat;
+    cat<<tr("Other")<<tr("Bible Stories")<<tr("Gospel")<<tr("God, His love and greatness")
+            <<tr("The Resurrection of Christ")<<tr("Time")<<tr("The second coming of Christ and the judgement")
+            <<tr("Children and Family")<<tr("For new converts")<<tr("Spiritual struggle and victory")
+            <<tr("Harvest")<<tr("Jesus Christ")<<tr("Love")<<tr("Mom")<<tr("Prayer")<<tr("Youth")
+            <<tr("Wedding")<<tr("Sunset / dawn")<<tr("Baptism")
+            <<tr("New Years")<<tr("Funeral")<<tr("At the ordination")
+            <<tr("On the Lord\'s Supper")<<tr("Heavenly abode")<<tr("Instruction and self-test")
+            <<tr("Holy Ghost")<<tr("Church")<<tr("Before church meeting")
+            <<tr("Last Days")<<tr("Practical life with God")<<tr("At the end of church meeting")
+            <<tr("Welcome and farewell")<<tr("The call to work")<<tr("Call to repentance")
+            <<tr("Journey of faith, faith and hope")<<tr("Various Christian holidays")
+            <<tr("Determination and faithfulness")<<tr("Christmas")<<tr("Following Christ")
+            <<tr("The Word of God")<<tr("Salvation")<<tr("Suffering and death of Christ")
+            <<tr("Consolation and encouragement")<<tr("Praise and thanksgiving")<<tr("Christian Joy");
+
+    return cat;
+}
+
+void EditWidget::retranslateUis()
+{
+    QStringList cat_list;
+    cat_list = categories();
+    for(int i(0); i<= ui->comboBoxCategory->count();++i)
+    {
+        ui->comboBoxCategory->setItemText(i,cat_list.at(i));
+    }
+}

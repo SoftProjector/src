@@ -92,10 +92,11 @@ public:
     SongProxyModel(QObject *parent = 0);
     void setFilterString(QString new_string, bool new_match_beginning, bool new_exact_match);
     void setSongbookFilter(QString new_songbook);
+    void setCategoryFilter(int category);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
-    QString filter_string, songbook_filter;
+    QString filter_string, songbook_filter, category_filter;
     bool match_beginning, exact_match;
 };
 

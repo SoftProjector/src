@@ -26,6 +26,7 @@ SongWidget::SongWidget(QWidget *parent) :
     ui(new Ui::SongWidget)
 {
     ui->setupUi(this);
+
     songs_model = new SongsModel;
     proxy_model = new SongProxyModel(this);
     proxy_model->setSourceModel(songs_model);
@@ -46,15 +47,19 @@ SongWidget::SongWidget(QWidget *parent) :
     // IS this needed?
 
     // Modify the column widths:
-    ui->songs_view->setColumnWidth(0, 55);
-    ui->songs_view->setColumnWidth(1, 150);
-    ui->songs_view->setColumnWidth(2, 70);
-    ui->playlist_view->setColumnWidth(0, 55);
-    ui->playlist_view->setColumnWidth(1, 150);
-    ui->playlist_view->setColumnWidth(2, 70);
+    ui->songs_view->setColumnWidth(0, 0);//Category
+    ui->songs_view->setColumnWidth(1, 60);//Song Number
+    ui->songs_view->setColumnWidth(2, 150);//Song Title
+    ui->songs_view->setColumnWidth(3, 70);//Songbook
+    ui->playlist_view->setColumnWidth(0, 0);//Category
+    ui->playlist_view->setColumnWidth(1, 60);//Song Number
+    ui->playlist_view->setColumnWidth(2, 150);//Song Title
+    ui->playlist_view->setColumnWidth(3, 70);//Songbook
 
     proxy_model->setSongbookFilter("ALL");
+    proxy_model->setCategoryFilter(-1);
     loadSongbooks();
+    loadCategories();
 
     isSpinboxEditing = false;
 }
@@ -523,9 +528,37 @@ void SongWidget::setSplitterState(QString state)
 void SongWidget::retranslateUis()
 {
     ui->songbook_menu->setItemText(0,tr("All songbooks"));
+    ui->comboBoxCategory->setItemText(0,tr("All song categories"));
+
+    EditWidget e;
+    QStringList cat_list;
+    cat_list = e.categories();
+    for(int i(1); i<= ui->comboBoxCategory->count();++i)
+    {
+        ui->comboBoxCategory->setItemText(i,cat_list.at(i-1));
+    }
 }
 
 bool SongWidget::isSongSelected()
 {
     return ui->songs_view->currentIndex().isValid();
+}
+
+void SongWidget::loadCategories()
+{
+    EditWidget e;
+
+    ui->comboBoxCategory->addItem(tr("All song categories"));
+    ui->comboBoxCategory->addItems(e.categories());
+
+}
+
+void SongWidget::on_comboBoxCategory_currentIndexChanged(int index)
+{
+    if(index!=-1)
+    {
+        songs_model->emitLayoutAboutToBeChanged(); //prepeare to chage layout
+        proxy_model->setCategoryFilter(index-1);
+        songs_model->emitLayoutChanged();
+    }
 }

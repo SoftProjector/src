@@ -516,111 +516,111 @@ results</source>
         <translation>Категория:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="159"/>
+        <location filename="editwidget.cpp" line="390"/>
         <source>Other</source>
         <translation>Дополнительно</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="435"/>
+        <location filename="editwidget.ui" line="170"/>
         <source>Text Alingment</source>
         <translation>Выравнивание текста</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="441"/>
+        <location filename="editwidget.ui" line="176"/>
         <source>Left</source>
         <translation>По левому краю</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="451"/>
+        <location filename="editwidget.ui" line="186"/>
         <source>Center</source>
         <translation>По центру</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="458"/>
+        <location filename="editwidget.ui" line="193"/>
         <source>Right</source>
         <translation>По правому краю</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="480"/>
-        <location filename="editwidget.ui" line="522"/>
+        <location filename="editwidget.ui" line="215"/>
+        <location filename="editwidget.ui" line="257"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="487"/>
-        <location filename="editwidget.ui" line="529"/>
+        <location filename="editwidget.ui" line="222"/>
+        <location filename="editwidget.ui" line="264"/>
         <source>Use default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="494"/>
+        <location filename="editwidget.ui" line="229"/>
         <source>Text font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="505"/>
+        <location filename="editwidget.ui" line="240"/>
         <source>Background:</source>
         <translation>Фоновый рисунок:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="560"/>
+        <location filename="editwidget.ui" line="295"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="563"/>
+        <location filename="editwidget.ui" line="298"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="570"/>
+        <location filename="editwidget.ui" line="305"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="573"/>
+        <location filename="editwidget.ui" line="308"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="284"/>
+        <location filename="editwidget.cpp" line="287"/>
         <source>Add a new Songbook</source>
         <translation>Добавить новый сборник</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="310"/>
+        <location filename="editwidget.cpp" line="313"/>
         <source>Select Songbook</source>
         <translation>Выбрать сборник</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="284"/>
+        <location filename="editwidget.cpp" line="287"/>
         <source>Select a Songbook to which you want to add a song</source>
         <translation>Выбрать сборник в который вы хотите добавить песню</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="90"/>
+        <location filename="editwidget.cpp" line="93"/>
         <source>Song title cannot be left empty.
 Please enter song title.</source>
         <translation>Названия песни на может остаться не заполненным.
 Пожалуйста в ведите названия песни.</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="91"/>
+        <location filename="editwidget.cpp" line="94"/>
         <source>Song title is missing</source>
         <translation>Название песни отсутствует</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="276"/>
+        <location filename="editwidget.cpp" line="279"/>
         <source>Copy to a new Songbook</source>
         <translation>Копировать песню в новый сборник</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="276"/>
+        <location filename="editwidget.cpp" line="279"/>
         <source>Select a Songbook to which you want to copy this song to</source>
         <translation>Выбрать сборник в который вы хотите добавить песню</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="282"/>
+        <location filename="editwidget.cpp" line="285"/>
         <source>Verse 1
  - words of verse go here
 
@@ -640,14 +640,234 @@ Verse 2
  - слова куплета здесь</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="336"/>
+        <location filename="editwidget.cpp" line="339"/>
         <source>Add a Songbook</source>
         <translation>Добавить сборник</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="372"/>
+        <location filename="editwidget.cpp" line="375"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Выбрать фоновый рисунок</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="390"/>
+        <source>Bible Stories</source>
+        <translation>Библейские истории</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="390"/>
+        <source>Gospel</source>
+        <translation>Благовествование</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="390"/>
+        <source>God, His love and greatness</source>
+        <translation>Бог, Его любовь и величие</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="391"/>
+        <source>The Resurrection of Christ</source>
+        <translation>Воскресение Христово</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="391"/>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="391"/>
+        <source>The second coming of Christ and the judgement</source>
+        <translation>Второе пришествие Христа и суд</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="392"/>
+        <source>Children and Family</source>
+        <translation>Детские и семейные </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="392"/>
+        <source>For new converts</source>
+        <translation>Для новообращённых </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="392"/>
+        <source>Spiritual struggle and victory</source>
+        <translation>Духовная борьба и победа </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Harvest</source>
+        <translation>Жатвенные </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Jesus Christ</source>
+        <translation>Иисус Христос </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Love</source>
+        <translation>Любовь</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Mom</source>
+        <translation>Мама</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Prayer</source>
+        <translation>Молитвенные - Молитва</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="393"/>
+        <source>Youth</source>
+        <translation>Молодёжные</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="394"/>
+        <source>Wedding</source>
+        <translation>На бракосочетание</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="394"/>
+        <source>Sunset / dawn</source>
+        <translation>На закате / рассвете</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="394"/>
+        <source>Baptism</source>
+        <translation>На крещение</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="395"/>
+        <source>New Years</source>
+        <translation>На новый год</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="395"/>
+        <source>Funeral</source>
+        <translation>На погребение</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="395"/>
+        <source>At the ordination</source>
+        <translation>На рукоположение</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="396"/>
+        <source>On the Lord&apos;s Supper</source>
+        <translation>На хлебопреломление</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="396"/>
+        <source>Heavenly abode</source>
+        <translation>Небесные обители</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="396"/>
+        <source>Instruction and self-test</source>
+        <translation>Наставление и самоиспытание </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="397"/>
+        <source>Holy Ghost</source>
+        <translation>О Духе Святом </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="397"/>
+        <source>Church</source>
+        <translation>О Церкви </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="397"/>
+        <source>Before church meeting</source>
+        <translation>Перед началом собрания </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="398"/>
+        <source>Last Days</source>
+        <translation>Последнее время </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="398"/>
+        <source>Practical life with God</source>
+        <translation>Практическая жизнь с Богом</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="398"/>
+        <source>At the end of church meeting</source>
+        <translation>При заключении собрания</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="399"/>
+        <source>Welcome and farewell</source>
+        <translation>Приветственные и прощальные </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="399"/>
+        <source>The call to work</source>
+        <translation>Призыв к труду </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="399"/>
+        <source>Call to repentance</source>
+        <translation>Призыв к покаянию </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="400"/>
+        <source>Journey of faith, faith and hope</source>
+        <translation>Путь веры, вера и упование</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="400"/>
+        <source>Various Christian holidays</source>
+        <translation>Радость спасения во Христе </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="401"/>
+        <source>Determination and faithfulness</source>
+        <translation>Решительность и верность </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="401"/>
+        <source>Christmas</source>
+        <translation>Рождество Христово </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="401"/>
+        <source>Following Christ</source>
+        <translation>Следование за Христом </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="402"/>
+        <source>The Word of God</source>
+        <translation>Слово Божье</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="402"/>
+        <source>Salvation</source>
+        <translation>Спасение </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="402"/>
+        <source>Suffering and death of Christ</source>
+        <translation>Страдание и смерть Христа </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="403"/>
+        <source>Consolation and encouragement</source>
+        <translation>Утешение и ободрение </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="403"/>
+        <source>Praise and thanksgiving</source>
+        <translation>Хвала и благодарение </translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="403"/>
+        <source>Christian Joy</source>
+        <translation>Христианская радость </translation>
     </message>
 </context>
 <context>
@@ -1089,23 +1309,23 @@ Has been saved to:
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="45"/>
-        <location filename="settingsdialog.cpp" line="77"/>
-        <location filename="settingsdialog.cpp" line="85"/>
-        <location filename="settingsdialog.cpp" line="118"/>
-        <location filename="settingsdialog.cpp" line="246"/>
-        <location filename="settingsdialog.cpp" line="258"/>
+        <location filename="settingsdialog.cpp" line="80"/>
+        <location filename="settingsdialog.cpp" line="88"/>
+        <location filename="settingsdialog.cpp" line="121"/>
+        <location filename="settingsdialog.cpp" line="251"/>
+        <location filename="settingsdialog.cpp" line="263"/>
         <source>None</source>
         <translation>Не выбрана</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="217"/>
-        <location filename="settingsdialog.cpp" line="232"/>
+        <location filename="settingsdialog.cpp" line="222"/>
+        <location filename="settingsdialog.cpp" line="237"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Выберите изображение для фонового рисунка</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="219"/>
-        <location filename="settingsdialog.cpp" line="234"/>
+        <location filename="settingsdialog.cpp" line="224"/>
+        <location filename="settingsdialog.cpp" line="239"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1427,8 +1647,8 @@ Has been saved to:
         <translation>Выбрать рабочий сборник</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="155"/>
-        <location filename="songwidget.cpp" line="525"/>
+        <location filename="songwidget.cpp" line="160"/>
+        <location filename="songwidget.cpp" line="530"/>
         <source>All songbooks</source>
         <translation>Все сборники</translation>
     </message>
@@ -1438,79 +1658,79 @@ Has been saved to:
         <translation>Выбор песни из данного сборника по номеру</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="80"/>
+        <location filename="songwidget.ui" line="83"/>
         <source>Filter:</source>
         <translation>Фильтр:</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="99"/>
+        <location filename="songwidget.ui" line="102"/>
         <source>Use this field to limit the display of the songs to only the ones that contain the specified text in the song title or song number</source>
         <translation>Выбор песен по критериям</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="110"/>
+        <location filename="songwidget.ui" line="113"/>
         <source>Matches only songs the song number or title of which contains the entered string.</source>
         <translation>Выбираются песни по номеру или названию.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="113"/>
+        <location filename="songwidget.ui" line="116"/>
         <source>Contains</source>
         <translation>Содержит</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="123"/>
+        <location filename="songwidget.ui" line="126"/>
         <source>Matches only songs the song number or title of which begins with the entered string.</source>
         <translation>Выбираются песни по номеру или по первой строчке.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="126"/>
+        <location filename="songwidget.ui" line="129"/>
         <source>Begins</source>
         <translation>Начинается</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="133"/>
+        <location filename="songwidget.ui" line="136"/>
         <source>Matches only songs the song number or title of which exactly matches the entered string.</source>
         <translation>Выбираются песни в точном соответствии с заданными критериями.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="136"/>
+        <location filename="songwidget.ui" line="139"/>
         <source>Exact match</source>
         <translation>Точное соответствие</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="185"/>
+        <location filename="songwidget.ui" line="188"/>
         <source>Add the selected song to the playlist</source>
         <translation>Добавить песню в список воспроизведения</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="188"/>
+        <location filename="songwidget.ui" line="191"/>
         <source>Add (F2)</source>
         <oldsource>Add to playlist (F2)</oldsource>
         <translation>Добавить (F2)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="195"/>
+        <location filename="songwidget.ui" line="198"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="205"/>
+        <location filename="songwidget.ui" line="208"/>
         <source>Remove the selected song from the playlist</source>
         <translation>Удалить песню из списка воспроизведения</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="208"/>
+        <location filename="songwidget.ui" line="211"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from playlist</oldsource>
         <translation>Удалить (F3)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="215"/>
+        <location filename="songwidget.ui" line="218"/>
         <source>F3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="313"/>
+        <location filename="songwidget.ui" line="316"/>
         <source>Song preview: None</source>
         <translation>Предосмотр: Песня отсутствует</translation>
     </message>
@@ -1519,34 +1739,40 @@ Has been saved to:
         <translation type="obsolete">Предварительный просмотр</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="294"/>
+        <location filename="songwidget.ui" line="297"/>
         <source>Quickly display the selected song on the screen without adding it to playlist first</source>
         <translation>Вывод на экран без занесения в список воспроизведения</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="297"/>
+        <location filename="songwidget.ui" line="300"/>
         <source>Go Live (F5)</source>
         <translation>На экран (F5)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="304"/>
+        <location filename="songwidget.ui" line="307"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="204"/>
+        <location filename="songwidget.cpp" line="209"/>
         <source>Song Preview: </source>
         <translation>Предосмотр песни:</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="287"/>
+        <location filename="songwidget.cpp" line="292"/>
         <source>Could not find song with number </source>
         <translation>Песня с указанным номером не найдена</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="288"/>
+        <location filename="songwidget.cpp" line="293"/>
         <source>No such song</source>
         <translation>Песня отсутствует</translation>
+    </message>
+    <message>
+        <location filename="songwidget.cpp" line="531"/>
+        <location filename="songwidget.cpp" line="551"/>
+        <source>All song categories</source>
+        <translation>Все категории</translation>
     </message>
 </context>
 <context>

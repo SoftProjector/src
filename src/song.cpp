@@ -310,7 +310,7 @@ int SongsModel::rowCount(const QModelIndex &parent) const
 
 int SongsModel::columnCount(const QModelIndex &parent) const
 {
-    return 3;
+    return 4;
 }
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
@@ -321,28 +321,28 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
     if( role == Qt::DisplayRole )
     {
         Song song = song_list.at(index.row());
-        if( index.column() == 0 )
+        if( index.column() == 0 )//Category
+            return QVariant(song.category);
+        else if( index.column() == 1 )//Song Number
             return QVariant(song.num);
-        else if( index.column() == 1 )
+        else if( index.column() == 2)//Song Title
             return QVariant(song.title);
-        else
+        else                        //Songbook
             return QVariant(song.getSongbookName());
     }
     return QVariant();
 }
 
-QVariant SongsModel::headerData(int section,
-                                Qt::Orientation orientation,
-                                int role) const
+QVariant SongsModel::headerData(int section, Qt::Orientation orientation,int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
     {
         switch(section) {
-        case 0:
-            return QVariant(tr("Num"));
         case 1:
-            return QVariant(tr("Title"));
+            return QVariant(tr("Num"));
         case 2:
+            return QVariant(tr("Title"));
+        case 3:
             return QVariant(tr("Songbook"));
         }
     }
@@ -375,22 +375,33 @@ void SongProxyModel::setSongbookFilter(QString new_songbook)
     songbook_filter = new_songbook;
 }
 
+void SongProxyModel::setCategoryFilter(int category)
+{
+    category_filter = QString::number(category);
+}
 
 bool SongProxyModel::filterAcceptsRow(int sourceRow,
                                       const QModelIndex &sourceParent) const
 {
-    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
-    QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
-    QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
+    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);//Category
+    QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);//Song Number
+    QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);//Song Title
+    QModelIndex index3 = sourceModel()->index(sourceRow, 3, sourceParent);//Songbook
 
-    QString str0 = sourceModel()->data(index0).toString();
-    QString str1 = sourceModel()->data(index1).toString();
-    QString str2 = sourceModel()->data(index2).toString();
+    QString str0 = sourceModel()->data(index0).toString();//Category
+    QString str1 = sourceModel()->data(index1).toString();//Song Number
+    QString str2 = sourceModel()->data(index2).toString();//Song Title
+    QString str3 = sourceModel()->data(index3).toString();//Songbook
 
 
     // Exclude rows that are not part of the selected songbook:
     if( songbook_filter != "ALL" )
-        if( str2 != songbook_filter )
+        if( str3 != songbook_filter )
+            return false;
+
+    // Exclude rows that are not part of selected category
+    if(category_filter != "-1")
+        if( str0 != category_filter)
             return false;
 
     if( filter_string.isEmpty() )
@@ -398,14 +409,14 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
         return true;
 
     if(exact_match)
-        return ( str0.compare(filter_string, Qt::CaseInsensitive) == 0
-                 || str1.compare(filter_string, Qt::CaseInsensitive) == 0 );
+        return ( str1.compare(filter_string, Qt::CaseInsensitive) == 0
+                 || str2.compare(filter_string, Qt::CaseInsensitive) == 0 );
     else if(match_beginning)
-        return (str0.startsWith(filter_string)
-                || str1.startsWith(filter_string, Qt::CaseInsensitive) );
+        return (str1.startsWith(filter_string)
+                || str2.startsWith(filter_string, Qt::CaseInsensitive) );
     else
-        return (str0.contains(filter_string)
-                || str1.contains(filter_string, Qt::CaseInsensitive) );
+        return (str1.contains(filter_string)
+                || str2.contains(filter_string, Qt::CaseInsensitive) );
 
 }
 

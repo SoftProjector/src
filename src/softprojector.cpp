@@ -1057,6 +1057,7 @@ void SoftProjector::retranslateUis()
     ui->projectTab->setTabText(1, tr("Songs (F7)"));
     ui->projectTab->setTabText(2, tr("Announcements (F8)"));
     songWidget->retranslateUis();
+    editWidget->retranslateUis();
 }
 
 void SoftProjector::on_actionSong_Counter_triggered()
