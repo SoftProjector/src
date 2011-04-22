@@ -173,7 +173,11 @@ Song SongWidget::currentSong()
     // Returns the selected song
     QModelIndex current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
     int current_row = current_index.row();
-    return songs_model->getSong(current_row);
+    Song return_song;
+    if(current_row>=0)
+        return_song = songs_model->getSong(current_row);
+//    else
+    return return_song;
 }
 
 void SongWidget::selectMatchingSong(QString text)
