@@ -30,7 +30,8 @@ EditWidget::EditWidget(QWidget *parent) :
     highlight = new Highlight(ui->textEditSong->document());
 
     //Add caterories to the list
-    ui->comboBoxCategory->addItems(categories());
+    loadCategories(false);
+//    ui->comboBoxCategory->addItems(categories());
 
     // Allow only positive values for the song number:
     song_num_validator = new QIntValidator(1,10000000,ui->song_number_lineEdit);
@@ -166,7 +167,7 @@ void EditWidget::resetUiItems()
     ui->lineEditMusicBy->clear();
     ui->lineEditWordsBy->clear();
     ui->lineEditKey->clear();
-    ui->comboBoxCategory->setCurrentIndex(0);
+    ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(0));
     ui->textEditSong->clear();
     ui->font_textbox->clear();
     ui->wall_textbox->clear();
@@ -180,7 +181,7 @@ void EditWidget::setUiItems()
     ui->lineEditMusicBy->setText(editSong.musicBy);
     ui->lineEditWordsBy->setText(editSong.wordsBy);
     ui->lineEditKey->setText(editSong.tune);
-    ui->comboBoxCategory->setCurrentIndex(editSong.category);
+    ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(editSong.category));
     setSongbook(editSong.songID);
     ui->font_textbox->setText(editSong.font);
     ui->wall_textbox->setText(editSong.background);
@@ -201,7 +202,7 @@ void EditWidget::setSave(){
     newSong.num = ui->song_number_lineEdit->text().toInt();
     newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
     newSong.title = ui->lineEditTitle->text();
-    newSong.category = ui->comboBoxCategory->currentIndex();
+    newSong.category = cat_ids.at(ui->comboBoxCategory->currentIndex());
     newSong.tune = ui->lineEditKey->text();
     newSong.wordsBy = ui->lineEditWordsBy->text();
     newSong.musicBy = ui->lineEditMusicBy->text();
@@ -407,10 +408,44 @@ QStringList EditWidget::categories()
 
 void EditWidget::retranslateUis()
 {
+    loadCategories(true);
+}
+
+void EditWidget::loadCategories(bool ui_update)
+{
+    // retrieve current category id
+    int cur_cat_id(-1);
+    int cur_index = ui->comboBoxCategory->currentIndex();
+    if(cur_index>=0)
+        cur_cat_id = cat_ids.at(cur_index);
+
+    // get categories
     QStringList cat_list;
     cat_list = categories();
-    for(int i(0); i<= ui->comboBoxCategory->count();++i)
+
+    // create sorting by name and refrance categories id
+    QMap<QString,int> cmap;
+    for(int i(0); i< cat_list.count(); ++i)
+        cmap.insert(cat_list.at(i),i);
+    cat_ids.clear();
+    cat_list.clear();
+    cat_ids.append(cmap.values());
+    cat_list.append(cmap.keys());
+
+    if(ui_update)// update ui translations
     {
-        ui->comboBoxCategory->setItemText(i,cat_list.at(i));
+        for(int i(0); i<= ui->comboBoxCategory->count()-1;++i)
+        {
+            ui->comboBoxCategory->setItemText(i,cat_list.at(i));
+        }
+
+        // reset to selected category
+        if(cur_cat_id>=0)
+            cur_index = cat_ids.indexOf(cur_cat_id);
+        ui->comboBoxCategory->setCurrentIndex(cur_index);
+    }
+    else if(!ui_update)// initialize
+    {
+        ui->comboBoxCategory->addItems(cat_list);
     }
 }

@@ -1043,12 +1043,12 @@ void SoftProjector::retranslateUis()
         translator.load(":/language/softpro_ru");
         qApp->installTranslator(&translator);
     }
-    else if(ui->actionGerman->isChecked()) // Set Russian language
+    else if(ui->actionGerman->isChecked()) // Set German language
     {
         translator.load(":/language/softpro_de");
         qApp->installTranslator(&translator);
     }
-    else if(ui->actionCzech->isChecked()) // Set Russian language
+    else if(ui->actionCzech->isChecked()) // Set Czech language
     {
         translator.load(":/language/softpro_cs");
         qApp->installTranslator(&translator);

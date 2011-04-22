@@ -59,7 +59,7 @@ SongWidget::SongWidget(QWidget *parent) :
     proxy_model->setSongbookFilter("ALL");
     proxy_model->setCategoryFilter(-1);
     loadSongbooks();
-    loadCategories();
+    loadCategories(false);
 
     isSpinboxEditing = false;
 }
@@ -528,15 +528,7 @@ void SongWidget::setSplitterState(QString state)
 void SongWidget::retranslateUis()
 {
     ui->songbook_menu->setItemText(0,tr("All songbooks"));
-    ui->comboBoxCategory->setItemText(0,tr("All song categories"));
-
-    EditWidget e;
-    QStringList cat_list;
-    cat_list = e.categories();
-    for(int i(1); i<= ui->comboBoxCategory->count();++i)
-    {
-        ui->comboBoxCategory->setItemText(i,cat_list.at(i-1));
-    }
+    loadCategories(true);
 }
 
 bool SongWidget::isSongSelected()
@@ -544,13 +536,49 @@ bool SongWidget::isSongSelected()
     return ui->songs_view->currentIndex().isValid();
 }
 
-void SongWidget::loadCategories()
+void SongWidget::loadCategories(bool ui_update)
 {
     EditWidget e;
 
-    ui->comboBoxCategory->addItem(tr("All song categories"));
-    ui->comboBoxCategory->addItems(e.categories());
+    // retrieve current category id
+    int cur_cat_id(-1);
+    int cur_index = ui->comboBoxCategory->currentIndex();
+    if(cur_index>0)
+        cur_cat_id = cat_ids.at(cur_index-1);
 
+    // get categories
+    QStringList cat_list;
+    cat_list = e.categories();
+
+    // create sorting by name and refrance categories id
+    QMap<QString,int> cmap;
+    for(int i(0); i< cat_list.count(); ++i)
+        cmap.insert(cat_list.at(i),i);
+    cat_ids.clear();
+    cat_list.clear();
+    cat_ids.append(cmap.values());
+    cat_list.append(cmap.keys());
+
+    if(ui_update) // update categories to retranslate
+    {
+        ui->comboBoxCategory->setItemText(0,tr("All song categories"));
+        for(int i(1); i <= ui->comboBoxCategory->count()-1;++i)
+        {
+            ui->comboBoxCategory->setItemText(i,cat_list.at(i-1));
+        }
+
+        // reset to selected category
+        if(cur_cat_id==-1)
+            cur_index=0;
+        else
+            cur_index= cat_ids.indexOf(cur_cat_id)+1;
+        ui->comboBoxCategory->setCurrentIndex(cur_index);
+    }
+    else if(!ui_update) // initialize categories
+    {
+        ui->comboBoxCategory->addItem(tr("All song categories"));
+        ui->comboBoxCategory->addItems(cat_list);
+    }
 }
 
 void SongWidget::on_comboBoxCategory_currentIndexChanged(int index)
@@ -558,7 +586,10 @@ void SongWidget::on_comboBoxCategory_currentIndexChanged(int index)
     if(index!=-1)
     {
         songs_model->emitLayoutAboutToBeChanged(); //prepeare to chage layout
-        proxy_model->setCategoryFilter(index-1);
+        if(index==0)
+            proxy_model->setCategoryFilter(index-1);
+        else
+            proxy_model->setCategoryFilter(cat_ids.at(index-1));
         songs_model->emitLayoutChanged();
     }
 }

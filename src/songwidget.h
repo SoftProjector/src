@@ -83,7 +83,7 @@ private slots:
     void loadSongbooks();
     void updateButtonStates();
     void filterModeChanged();
-    void loadCategories();
+    void loadCategories(bool ui_update);
 
 private:
     Ui::SongWidget *ui;
@@ -99,6 +99,7 @@ private:
     bool allSongs;
     Song preview_song;
     SongCounter counter;
+    QList<int> cat_ids;
 public:
     SongsModel *songs_model;
 

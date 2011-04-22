@@ -62,6 +62,7 @@ private:
     void setWaitCursor();
     void setArrowCursor();
     QString add_to_songbook;
+    QList<int> cat_ids;
 
 
 private slots:
@@ -77,6 +78,7 @@ private slots:
     void setUiItems();
     void setSave();
     void setSongbook(int id);
+    void loadCategories(bool ui_update);
     QString resetLyric(QString lyric);
     QString setSongText(QString text);
 };
