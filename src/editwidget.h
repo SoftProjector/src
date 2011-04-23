@@ -47,7 +47,7 @@ public slots:
 signals:
     // For communicating with SongsModel
     void updateSongFromDatabase(int songid);
-    void addedNew();
+    void addedNew(Song song);
 
 protected:
     virtual void changeEvent(QEvent *e);

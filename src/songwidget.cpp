@@ -429,14 +429,12 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
     sendToPreview(song);
 }
 
-
 void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
 {
     Song song = playlist_model->getSong(index.row());
     //sendToProjector(song, ui->listPreview->currentRow());
     sendToProjector(song, 0); // Send the first verse
 }
-
 
 void SongWidget::on_playlist_view_clicked(QModelIndex index)
 {
@@ -493,7 +491,17 @@ void SongWidget::updateSongFromDatabase(int songid)
 void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
-    updateSongbooks();
+    int row = ui->songs_view->currentIndex().row();
+    qDebug()<<"row: "+ QString::number(row);
+    proxy_model->removeRow(row);
+}
+
+void SongWidget::addNewSong(Song song)
+{
+    songs_model->addSong(song);
+    ui->songs_view->selectRow(songs_model->rowCount()-1);
+    sendToPreview(song);
+
 }
 
 void SongWidget::filterModeChanged()

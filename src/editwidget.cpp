@@ -104,7 +104,7 @@ void EditWidget::on_btnSave_clicked()
     if (is_new)
     {
         newSong.saveNew();
-        emit addedNew();
+        emit addedNew(newSong);
     }
     else
     {

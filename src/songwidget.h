@@ -46,6 +46,7 @@ public slots:
     bool isSongSelected();
     // will be called by the edit widget:
     void updateSongFromDatabase(int songid);
+    void addNewSong(Song song);
     QByteArray getSplitterState();
     void setSplitterState(QString state);
 

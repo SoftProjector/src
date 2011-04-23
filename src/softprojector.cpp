@@ -102,8 +102,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(drawText(QPainter*, int, int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
             songWidget, SLOT(updateSongFromDatabase(int)));
-    connect(editWidget, SIGNAL(addedNew()),
-            songWidget,SLOT(updateSongbooks()));
+    connect(editWidget, SIGNAL(addedNew(Song)),
+            songWidget,SLOT(addNewSong(Song)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()),
