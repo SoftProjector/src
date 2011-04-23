@@ -104,6 +104,12 @@ void EditWidget::on_btnSave_clicked()
     if (is_new)
     {
         newSong.saveNew();
+        // Get new songs ID
+        QSqlQuery sq;
+        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
+        sq.last();
+        newSong.songID = sq.value(0).toInt();
+
         emit addedNew(newSong);
     }
     else
@@ -201,6 +207,7 @@ void EditWidget::setSave(){
     newSong.songID = editSong.songID;
     newSong.num = ui->song_number_lineEdit->text().toInt();
     newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
+    newSong.songbook_name = ui->songbook_label->text();
     newSong.title = ui->lineEditTitle->text();
     newSong.category = cat_ids.at(ui->comboBoxCategory->currentIndex());
     newSong.tune = ui->lineEditKey->text();

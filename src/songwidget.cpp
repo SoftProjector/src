@@ -492,7 +492,6 @@ void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
     int row = ui->songs_view->currentIndex().row();
-    qDebug()<<"row: "+ QString::number(row);
     proxy_model->removeRow(row);
 }
 
@@ -501,7 +500,6 @@ void SongWidget::addNewSong(Song song)
     songs_model->addSong(song);
     ui->songs_view->selectRow(songs_model->rowCount()-1);
     sendToPreview(song);
-
 }
 
 void SongWidget::filterModeChanged()
