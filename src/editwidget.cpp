@@ -225,14 +225,7 @@ QString EditWidget::resetLyric(QString lyric)
     lyric = lSong[0];
     while (i<lSong.size()){
         fSong = lSong[i];
-        if(fSong.startsWith("Verse") || fSong.startsWith(QString::fromUtf8("Куплет"))
-            || fSong.startsWith("&Verse") || fSong.startsWith(QString::fromUtf8("&Куплет"))
-            || fSong.startsWith("Chorus") || fSong.startsWith(QString::fromUtf8("Припев"))
-            || fSong.startsWith("&Chorus") || fSong.startsWith(QString::fromUtf8("&Припев"))
-            || fSong.startsWith("Refrain") || fSong.startsWith("&Refrain") || fSong.startsWith("Slide")
-            || fSong.startsWith("Insert") || fSong.startsWith(QString::fromUtf8("Вставка"))
-            || fSong.startsWith("Intro") || fSong.startsWith(QString::fromUtf8("Вступление"))
-            || fSong.startsWith("Ending") || fSong.startsWith(QString::fromUtf8("Окончание")))
+        if(isStanzaTitle(fSong))
         {
             lyric += "@$" + lSong[i];
         }
@@ -284,7 +277,6 @@ void EditWidget::setNew()
 {
     Song new_song;
     new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
-//    new_song.songText = QString::fromUtf8("Куплет 1\n - слова куплета сдесь\n\nПрипев\n - слова припева сдесь\n\nКуплет 2\n - слова куплета сдесь");
     addNewSong(new_song,tr("Add a new Songbook"),tr("Select a Songbook to which you want to add a song"));
 }
 

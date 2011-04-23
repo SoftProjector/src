@@ -24,11 +24,98 @@
 
 QString clean(QString str)
 {
+    // Removes all none alphanumeric characters from the string
     //str.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\\[\\\]\\\\]")));
     // NOTE: Modified this string to make it work on Mac OS X:
     str.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\[]")));
     str = str.simplified();
     return str;
+}
+
+bool isStanzaTitle(QString string)
+{
+    // Checks if the line is stanza title line
+    if(isStanzaVerseTitle(string))
+        return true;
+    else if (isStanzaAndVerseTitle(string))
+        return true;
+    else if (isStanzaRefrainTitle(string))
+        return true;
+    else if (isStanzaAndRefrainTitle(string))
+        return true;
+    else if (isStanzaSlideTitle(string))
+        return true;
+    else
+        return false;
+}
+
+bool isStanzaVerseTitle(QString string)
+{
+    // Check if the line is verse title line
+    if(string.startsWith("Verse"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Куплет")))
+        return true;
+    else
+        return false;
+}
+
+bool isStanzaAndVerseTitle(QString string)
+{
+    // Check if the line is additional verse title line
+    if(string.startsWith("&Verse"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("&Куплет")))
+        return true;
+    else
+        return false;
+}
+
+bool isStanzaRefrainTitle(QString string)
+{
+    // Check if line is refrain title line
+    if(string.startsWith("Chorus"))
+        return true;
+    else if (string.startsWith("Refrain"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Припев")))
+        return true;
+    else
+        return false;
+}
+
+bool isStanzaAndRefrainTitle(QString string)
+{
+    // Check if line is additional refrain title line
+    if(string.startsWith("&Chorus"))
+        return true;
+    else if (string.startsWith("&Refrain"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("&Припев")))
+        return true;
+    else
+        return false;
+}
+
+bool isStanzaSlideTitle(QString string)
+{
+    // Check if line is slide or other stanza title line
+    if(string.startsWith("Slide"))
+        return true;
+    else if (string.startsWith("Insert"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Вставка")))
+        return true;
+    else if (string.startsWith("Intro"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Вступление")))
+        return true;
+    else if (string.startsWith("Ending"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Окончание")))
+        return true;
+    else
+        return false;
 }
 
 Song::Song()
@@ -96,8 +183,8 @@ QStringList Song::getSongTextList()
         int j = 0;
         text2 = split[0];
 
-        // From here on, the program will determine what each stasa it: Verse, Chorus or Insert
-        if (text2.startsWith("Verse") || text2.startsWith(QString::fromUtf8("Куплет")))
+        // From here on, the program will determine what each stasa it: Verse, Chorus or Slide
+        if(isStanzaVerseTitle(text2))
         {// Fill Verse
             while (j<split_size) // convert form list to string
             {
@@ -113,7 +200,7 @@ QStringList Song::getSongTextList()
             }
             has_vstavka=false;
         }
-        else if (text2.startsWith("&Verse") || text2.startsWith(QString::fromUtf8("&Куплет")))
+        else if(isStanzaAndVerseTitle(text2))
         {// Fill Additional parts of the verse
             text2.remove("&"); // remove '&' from stansa title
             text += text2 + "\n";
@@ -143,9 +230,7 @@ QStringList Song::getSongTextList()
             }
             has_vstavka=false;
         }
-        else if (text2.startsWith("Slide") || text2.startsWith("Insert") || text2.startsWith(QString::fromUtf8("Вставка"))
-            || text2.startsWith("Intro") || text2.startsWith(QString::fromUtf8("Вступление"))
-            || text2.startsWith("Ending") || text2.startsWith(QString::fromUtf8("Окончание")))
+        else if (isStanzaSlideTitle(text2))
         {// Fill Insert
             while (j < split_size) // convert form list to string
             {
@@ -161,7 +246,7 @@ QStringList Song::getSongTextList()
                                             // there is no difirence between Veres and Insert
             has_vstavka=true;
         }
-        else if (text2.startsWith("Chorus") || text2.startsWith("Refrain") || text2.startsWith(QString::fromUtf8("Припев")))
+        else if (isStanzaRefrainTitle(text2))
         { // Fill Chorus
 
             while (j<split_size)  // convert form list to string
@@ -205,7 +290,7 @@ QStringList Song::getSongTextList()
             chorus_block_count=1; // set chorus_block_count to 1 because its the first chorus item count
             has_vstavka=false;
         }
-        else if (text2.startsWith("&Chorus") || text2.startsWith("&Refrain") || text2.startsWith(QString::fromUtf8("&Припев")))
+        else if(isStanzaAndRefrainTitle(text2))
         { // Fill other chorus parts to Chorus block
             ++chorus_block_count; // increase chorus block count
             text2.remove("&");  // remove '&' from stansa title

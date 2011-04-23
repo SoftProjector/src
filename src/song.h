@@ -23,6 +23,12 @@
 #include <QtSql>
 
 QString clean(QString str);
+bool isStanzaTitle(QString string);
+bool isStanzaVerseTitle(QString string);
+bool isStanzaAndVerseTitle(QString string);
+bool isStanzaRefrainTitle(QString string);
+bool isStanzaAndRefrainTitle(QString string);
+bool isStanzaSlideTitle(QString string);
 
 class Song
 // Class for storing song information: number, name, songbook
