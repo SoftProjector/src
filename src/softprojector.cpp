@@ -1338,12 +1338,12 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
 }
 
 void SoftProjector::updateWindowTest()
-{
-    QString file = project_file_path;
+{    
+    QFileInfo fi(project_file_path);
+    QString file = fi.fileName();
+
     if(!file.isEmpty())
     {
-        QStringList l = file.split(QDir::separator());
-        file = l.last();
         file.remove(".spp");
         this->setWindowTitle(file + " - softProjector " + version_string);
     }
