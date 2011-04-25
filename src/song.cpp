@@ -56,6 +56,10 @@ bool isStanzaVerseTitle(QString string)
         return true;
     else if (string.startsWith(QString::fromUtf8("Куплет")))
         return true;
+    else if (string.startsWith(QString::fromUtf8("Strophe")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Verš")))
+        return true;
     else
         return false;
 }
@@ -67,6 +71,10 @@ bool isStanzaAndVerseTitle(QString string)
         return true;
     else if (string.startsWith(QString::fromUtf8("&Куплет")))
         return true;
+    else if (string.startsWith(QString::fromUtf8("&Strophe")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("&Verš")))
+        return true;
     else
         return false;
 }
@@ -76,9 +84,15 @@ bool isStanzaRefrainTitle(QString string)
     // Check if line is refrain title line
     if(string.startsWith("Chorus"))
         return true;
+    else if (string.startsWith(QString::fromUtf8("Sbor")))
+        return true;
     else if (string.startsWith("Refrain"))
         return true;
     else if (string.startsWith(QString::fromUtf8("Припев")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Приспів")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Refrén")))
         return true;
     else
         return false;
@@ -89,9 +103,15 @@ bool isStanzaAndRefrainTitle(QString string)
     // Check if line is additional refrain title line
     if(string.startsWith("&Chorus"))
         return true;
+    else if (string.startsWith(QString::fromUtf8("&Sbor")))
+        return true;
     else if (string.startsWith("&Refrain"))
         return true;
     else if (string.startsWith(QString::fromUtf8("&Припев")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("&Приспів")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("&Refrén")))
         return true;
     else
         return false;
@@ -102,17 +122,35 @@ bool isStanzaSlideTitle(QString string)
     // Check if line is slide or other stanza title line
     if(string.startsWith("Slide"))
         return true;
+    else if (string.startsWith(QString::fromUtf8("Слайд")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Dia")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Snímek")))
+        return true;
     else if (string.startsWith("Insert"))
         return true;
     else if (string.startsWith(QString::fromUtf8("Вставка")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Einfügung")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Vložka")))
         return true;
     else if (string.startsWith("Intro"))
         return true;
     else if (string.startsWith(QString::fromUtf8("Вступление")))
         return true;
+    else if (string.startsWith(QString::fromUtf8("Einleitung")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Úvod")))
+        return true;
     else if (string.startsWith("Ending"))
         return true;
     else if (string.startsWith(QString::fromUtf8("Окончание")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Ende")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Závěr")))
         return true;
     else
         return false;
