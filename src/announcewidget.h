@@ -70,6 +70,8 @@ private:
     QList<Announcement> history_items;
 
 public slots:
+    QList<Announcement> getAnnouncements();
+    void loadFromFile(QList<Announcement> anns);
 };
 
 #endif // ANNOUNCEWIDGET_H

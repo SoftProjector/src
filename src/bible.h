@@ -41,6 +41,7 @@ public:
     QString chapter;
     QString verse;
     QString verse_text;
+    QString verse_id;
 };
 
 class BibleBook

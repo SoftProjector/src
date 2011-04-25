@@ -87,7 +87,21 @@ private:
     void drawAnnounceText(QPainter *painter, int width, int height);
     QTranslator translator;
 
+    //For saving and opening softProjector project files
+    QString project_file_path;
+    void updateWindowTest();
+
 private slots:
+    //For saving and opening softProjector project files
+    void saveProject();
+    void openProject();
+    void readBibleHistoryFromSavedProject(QXmlStreamReader *xml);
+    void readSongsFromSavedProject(QXmlStreamReader *xml);
+    void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);
+
+    void on_actionSave_Project_As_triggered();
+    void on_actionSave_Project_triggered();
+    void on_actionOpen_triggered();
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();

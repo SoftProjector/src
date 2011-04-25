@@ -57,7 +57,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     manageDialog = new ManageDataDialog(this);
 
     ui->setupUi(this);
-    ui->statusBar->showMessage(tr("This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net"));
 
     // Create action group for language slections
     languageGroup = new QActionGroup(this);
@@ -1061,4 +1060,295 @@ void SoftProjector::on_actionSong_Counter_triggered()
     SongCounter *songCounter;
     songCounter = new SongCounter(this);
     songCounter->exec();
+}
+
+void SoftProjector::on_actionOpen_triggered()
+{
+    project_file_path = QFileDialog::getOpenFileName(this,tr("Ope softProjector project"),".",
+                                                     tr("softProjector project file ") + "(*.spp)");
+    if(!project_file_path.isEmpty())
+        openProject();
+
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionSave_Project_triggered()
+{
+    if(project_file_path.isEmpty())
+    {
+        project_file_path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
+                                                         tr("softProjector project file ") + "(*.spp)");
+    }
+
+    if(!project_file_path.isEmpty())
+        saveProject();
+
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionSave_Project_As_triggered()
+{
+    project_file_path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
+                                                     tr("softProjector project file ") + "(*.spp)");
+    if(!project_file_path.isEmpty())
+        saveProject();
+
+    updateWindowTest();
+}
+
+void SoftProjector::saveProject()
+{
+    QList<Song> songs = songWidget->getPlaylistSongs();
+    Song s;
+    QList<BibleSearch> histories = bibleWidget->getHistoryList();
+    BibleSearch h;
+    QList<Announcement> announcements = announceWidget->getAnnouncements();
+    Announcement a;
+
+    QFile file(project_file_path);
+    file.open(QIODevice::WriteOnly);
+    QXmlStreamWriter xml(&file);
+    xml.setAutoFormatting(true);
+    xml.setCodec("UTF8");
+
+    xml.writeStartDocument();
+    xml.writeStartElement("spProject");
+    xml.writeAttribute("version","1.0");
+
+    //Write Bible History
+    xml.writeStartElement("BibleHistory");
+    for(int i(0); i<histories.count(); ++i)
+    {
+        h = histories.at(i);
+        xml.writeStartElement("verse");
+        xml.writeCharacters(h.verse_id);
+        xml.writeEndElement();
+    }
+    xml.writeEndElement(); // End Bible Histories
+
+    //Write songs
+    xml.writeStartElement("Songs");
+    for(int i(0); i<songs.count(); ++i)
+    {
+        xml.writeStartElement("song"); // start song
+        s = songs.at(i);
+        QXmlStreamAttributes atrs;
+        atrs.append("num",QString::number(s.num));
+        atrs.append("category",QString::number(s.category));
+        xml.writeAttributes(atrs);
+
+        // write song items
+        xml.writeTextElement("title",s.title);
+        xml.writeTextElement("text",s.songText);
+        xml.writeTextElement("songbook",s.songbook_name);
+        xml.writeTextElement("tune",s.tune);
+        xml.writeTextElement("words",s.wordsBy);
+        xml.writeTextElement("music",s.musicBy);
+        xml.writeTextElement("font",s.font);
+        xml.writeTextElement("aling",s.alingment);
+        xml.writeTextElement("back",s.background.trimmed());
+
+        xml.writeEndElement(); // enst song
+    }
+    xml.writeEndElement(); // End Songs
+
+    //Write Announcements
+    xml.writeStartElement("Announcements");
+    for(int i(0); i<announcements.count();++i)
+    {
+        a = announcements.at(i);
+        xml.writeStartElement("announce");
+        xml.writeAttribute("aling_flag",QString::number(a.align_flags));
+        xml.writeCharacters(a.text);
+        xml.writeEndElement();
+    }
+    xml.writeEndElement(); // End Announcements
+
+    xml.writeEndElement(); // softProjector Project
+    xml.writeEndDocument();
+
+    file.close();
+}
+
+void SoftProjector::openProject()
+{
+    QFile file(project_file_path);
+    file.open(QIODevice::ReadOnly);
+    QXmlStreamReader xml(&file);
+
+    while(!xml.atEnd())
+    {
+        xml.readNext();
+        if(xml.StartElement && xml.name() == "spProject")
+        {
+            if(xml.attributes().value("version").toString() == "1.0")
+            {
+                xml.readNext();
+                while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
+                {
+                    xml.readNext();
+                    if(xml.StartElement && xml.name() == "BibleHistory")
+                    {
+                        // Read saved bible history
+                        readBibleHistoryFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "Songs")
+                    {
+                        // Read save versionsongs
+                        readSongsFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "Announcements")
+                    {
+                        // Read saved announcements
+                        readAnnouncementsFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                }
+            }
+            else
+            {
+                //User friednly box for incorrect file version
+                QMessageBox mb;
+                mb.setWindowTitle(tr("Incorrect project file format"));
+                mb.setText(tr("The softProjector project file you are opening,\n"
+                              "is not supported by your version of softProjector.\n"
+                              "You may try upgrading your version of softProjector."));
+                mb.setIcon(QMessageBox::Information);
+                mb.exec();
+
+                // remove any file paths
+                project_file_path.clear();
+                updateWindowTest();
+                return;
+            }
+        }
+    }
+    file.close();
+}
+
+void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
+{
+    QList<Announcement> announcements;
+    Announcement a;
+    QXmlStreamAttributes atrs;
+    while(xml->tokenString() != "EndElement")
+    {
+        xml->readNext();
+        if(xml->StartElement && xml->name() == "announce")
+        {
+            atrs = xml->attributes();
+            QString f = atrs.value("aling_flag").toString();
+            a.align_flags = f.toInt();
+            a.text = xml->readElementText();
+            announcements.append(a);
+            xml->readNext();
+        }
+    }
+    announceWidget->loadFromFile(announcements);
+}
+
+void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
+{
+    QStringList histories;
+    while(xml->tokenString() != "EndElement")
+    {
+        xml->readNext();
+        if(xml->StartElement && xml->name() == "verse")
+        {
+            histories.append(xml->readElementText());
+            xml->readNext();
+        }
+    }
+    bibleWidget->loadHistoriesFromFile(histories);
+}
+
+void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
+{
+    QList<Song> songs;
+    Song s;
+    QXmlStreamAttributes atrs;
+    while(xml->tokenString() != "EndElement")
+    {
+        xml->readNext();
+        if(xml->StartElement && xml->name() == "song")
+        {
+            atrs = xml->attributes();
+            QString a = atrs.value("num").toString();
+            s.num = a.toInt();
+            a = atrs.value("category").toString();
+            s.category = a.toInt();
+
+            xml->readNext();
+            while(xml->tokenString() != "EndElement")
+            {
+                xml->readNext();
+                if(xml->StartElement && xml->name() == "title")
+                {
+                    s.title = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "text")
+                {
+                    s.songText = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "songbook")
+                {
+                    s.songbook_name = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "tune")
+                {
+                    s.tune = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "words")
+                {
+                    s.wordsBy = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "music")
+                {
+                    s.musicBy = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "font")
+                {
+                    s.font = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "aling")
+                {
+                    s.alingment = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "back")
+                {
+                    s.background = xml->readElementText();
+                    xml->readNext();
+                }
+            }
+            songs.append(s);
+            xml->readNext();
+        }
+    }
+    songWidget->loadPlaylistFromFile(songs);
+}
+
+void SoftProjector::updateWindowTest()
+{
+    QString file = project_file_path;
+    if(!file.isEmpty())
+    {
+        QStringList l = file.split(QDir::separator());
+        file = l.last();
+        file.remove(".spp");
+        this->setWindowTitle(file + " - softProjector " + version_string);
+    }
+    else
+    {
+        this->setWindowTitle("softProjector " + version_string);
+    }
 }

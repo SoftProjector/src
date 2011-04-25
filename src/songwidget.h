@@ -39,6 +39,8 @@ public:
     Song currentSong();
 
 public slots:
+    void loadPlaylistFromFile(QList<Song> savedSongs);
+    QList<Song> getPlaylistSongs();
     void retranslateUis();
     void deleteSong();
     Song getSongToEdit();

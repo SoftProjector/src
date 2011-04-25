@@ -433,6 +433,7 @@ void BibleWidget::addToHistory()
     b.chapter = ui->chapter_ef->text();
     b.verse = ui->verse_ef->text();
     b.verse_text = ui->chapter_preview_list->currentItem()->text().trimmed();
+    b.verse_id = bible.previewIdList.at(ui->chapter_preview_list->currentIndex().row());
     history_items.append(b);
 
     ui->history_listWidget->addItem(b.book + " " + b.chapter + ":" + b.verse_text);
@@ -511,6 +512,57 @@ void BibleWidget::setShownSplitterState(QString state)
     shown_splitter_state.clear();
     shown_splitter_state.insert(0,state);
     shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
+}
+
+QList<BibleSearch> BibleWidget::getHistoryList()
+{
+    return history_items;
+}
+
+void BibleWidget::loadHistoriesFromFile(QStringList histories)
+{
+    BibleSearch h;
+    QSqlQuery sq,sq1;
+    QString sql_str;
+    QStringList history_list;
+
+    history_items.clear();
+    ui->history_listWidget->clear();
+
+    // Prepare look verse id up
+    for(int i(0); i<histories.count(); ++i)
+    {
+        sql_str.append("verse_id = '" + histories.at(i) + "' OR ");
+    }
+    sql_str.chop(4);
+
+    sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = " + bible.primaryId +
+            " AND(" + sql_str + ")");
+
+    // Retrieve results
+    while(sq.next())
+    {
+        h.verse_id = sq.value(0).toString().trimmed();
+        h.book = sq.value(1).toString().trimmed();
+        h.chapter = sq.value(2).toString().trimmed();
+        h.verse = sq.value(3).toString().trimmed();
+        h.verse_text = h.verse + ". " + sq.value(4).toString().trimmed();
+
+        // Get Book name instead of number
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + h.book + " AND bible_id = " + bible.primaryId);
+        sq1.first();
+        h.book = sq1.value(0).toString().trimmed();
+
+        // Prepare history line to show
+        QString s = h.book + " " + h.chapter + ":" + h.verse_text;
+        history_list.append(s);
+
+        history_items.append(h);
+    }
+
+    // show items from file
+    ui->history_listWidget->addItems(history_list);
 }
 
 /**********************************************/

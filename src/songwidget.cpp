@@ -603,3 +603,29 @@ void SongWidget::on_comboBoxCategory_currentIndexChanged(int index)
         songs_model->emitLayoutChanged();
     }
 }
+
+QList<Song> SongWidget::getPlaylistSongs()
+{
+    QList<Song> playlist_songs;
+
+    for(int i(0); i<playlist_model->rowCount(); ++i)
+    {
+        playlist_songs.append(playlist_model->getSong(i));
+    }
+
+    return playlist_songs;
+}
+
+void SongWidget::loadPlaylistFromFile(QList<Song> songs)
+{
+    // remove all songs in playlist
+//    for(int i(0); i<playlist_model->rowCount();++i)
+//        playlist_model->removeRow(0);
+
+    playlist_model->removeRows(0,playlist_model->rowCount());
+
+    for(int i(0); i<songs.count(); ++i)
+        playlist_model->addSong(songs.at(i));
+
+    updateButtonStates();
+}

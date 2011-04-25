@@ -63,6 +63,8 @@ public:
     QString getCaption();
 
 public slots:
+    void loadHistoriesFromFile(QStringList history_ids);
+    QList<BibleSearch> getHistoryList();
     QString getPrimary();
     QString getSecondary();
     QByteArray getHiddenSplitterState();

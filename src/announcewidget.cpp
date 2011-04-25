@@ -191,3 +191,20 @@ void AnnounceWidget::set_align_boxes(int flags)
         ui->vertical_comboBox->setCurrentIndex(2);
     }
 }
+
+QList<Announcement> AnnounceWidget::getAnnouncements()
+{
+    return history_items;
+}
+
+void AnnounceWidget::loadFromFile(QList<Announcement> anns)
+{
+    QStringList a_list;
+    history_items = anns;
+    for(int i(0); i<anns.count(); ++i)
+    {
+        a_list.append(anns.at(i).text);
+    }
+    ui->history_listWidget->clear();
+    ui->history_listWidget->addItems(a_list);
+}
