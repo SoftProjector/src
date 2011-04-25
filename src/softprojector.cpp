@@ -115,6 +115,12 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()),
             this, SLOT(setWaitCursor()));
+    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)),
+            this, SLOT(setProjectChanged(bool)));
+    connect(announceWidget, SIGNAL(annouceListChanged(bool)),
+            this, SLOT(setProjectChanged(bool)));
+    connect(bibleWidget, SIGNAL(historyListChanged(bool)),
+            this, SLOT(setProjectChanged(bool)));
 
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
@@ -1168,6 +1174,7 @@ void SoftProjector::saveProject()
     xml.writeEndDocument();
 
     file.close();
+    is_project_saved = true;
 }
 
 void SoftProjector::openProject()
@@ -1345,10 +1352,23 @@ void SoftProjector::updateWindowTest()
     if(!file.isEmpty())
     {
         file.remove(".spp");
-        this->setWindowTitle(file + " - softProjector " + version_string);
+        if(is_project_saved)
+            this->setWindowTitle(file + " - softProjector " + version_string);
+        else
+            this->setWindowTitle(file + "* - softProjector " + version_string);
     }
     else
     {
         this->setWindowTitle("softProjector " + version_string);
     }
+}
+
+void SoftProjector::setProjectChanged(bool changed)
+{
+    if(changed)
+        is_project_saved = false;
+    else
+        is_project_saved = true;
+
+    updateWindowTest();
 }

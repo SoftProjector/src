@@ -59,6 +59,7 @@ signals:
     void setWaitCursor();
     void setArrowCursor();
     // To be used ONLY by SongWidget::sendToProjector():
+    void sendPlaylistChanged(bool changed);
     void sendSong(Song song, int currentItem);
 
 private slots:

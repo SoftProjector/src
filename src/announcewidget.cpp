@@ -90,6 +90,7 @@ void AnnounceWidget::on_add_to_history_pushButton_clicked()
     a.align_flags = get_align_flags();
     history_items.append(a);
     ui->history_listWidget->addItem(a.text);
+    emit annouceListChanged(true);
 }
 
 void AnnounceWidget::on_remove_from_history_pushButton_clicked()
@@ -100,6 +101,7 @@ void AnnounceWidget::on_remove_from_history_pushButton_clicked()
     {
         ui->history_listWidget->takeItem(current_row);
         history_items.takeAt(current_row);
+        emit annouceListChanged(true);
     }
 }
 void AnnounceWidget::on_history_listWidget_currentRowChanged(int currentRow)

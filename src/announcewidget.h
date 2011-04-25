@@ -63,6 +63,7 @@ private slots:
 signals:
     // To be used ONLY by SongWidget::sendToProjector():
     void sendText(Announcement text);
+    void annouceListChanged(bool changed);
 
 private:
     Ui::AnnounceWidget *ui;

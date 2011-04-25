@@ -74,6 +74,7 @@ public:
 public slots:
     void setWaitCursor();
     void setArrowCursor();
+    void setProjectChanged(bool isChanged);
 
 private:
     Ui::SoftProjectorClass *ui;
@@ -90,6 +91,7 @@ private:
     //For saving and opening softProjector project files
     QString project_file_path;
     void updateWindowTest();
+    bool is_project_saved;
 
 private slots:
     //For saving and opening softProjector project files

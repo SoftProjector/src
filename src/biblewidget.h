@@ -82,6 +82,7 @@ signals:
     void setWaitCursor();
     void setArrowCursor();
     void goLive(QStringList chapter_list, int verse, QString caption);
+    void historyListChanged(bool changed);
 
 private slots:
     void on_clear_history_pushButton_clicked();

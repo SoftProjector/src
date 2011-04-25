@@ -437,6 +437,7 @@ void BibleWidget::addToHistory()
     history_items.append(b);
 
     ui->history_listWidget->addItem(b.book + " " + b.chapter + ":" + b.verse_text);
+    emit historyListChanged(true);
 }
 
 void BibleWidget::on_add_to_history_pushButton_clicked()
@@ -451,9 +452,7 @@ void BibleWidget::on_remove_from_history_pushButton_clicked()
     {
         ui->history_listWidget->takeItem(current_row);
         history_items.takeAt(current_row);
-//        history_items.chapter.takeAt(current_row);
-//        history_items.verse.takeAt(current_row);
-//        history_items.verse_text.takeAt(current_row);
+        emit historyListChanged(true);
     }
 }
 
@@ -461,6 +460,7 @@ void BibleWidget::on_clear_history_pushButton_clicked()
 {
     ui->history_listWidget->clear();
     history_items.clear();
+    emit historyListChanged(true);
 }
 
 void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
