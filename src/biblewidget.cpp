@@ -521,10 +521,17 @@ QList<BibleSearch> BibleWidget::getHistoryList()
 
 void BibleWidget::loadHistoriesFromFile(QStringList histories)
 {
+    // Reloads history list with saves verses
+    // It will reload in the same order as saves
+    // Will reload with current primary bible,
+    // in case primary Bible has been changed
     BibleSearch h;
     QSqlQuery sq,sq1;
     QString sql_str;
     QStringList history_list;
+    QList<BibleSearch> h_list;
+    QMap<QString, int> map;
+    QList<int> order_list;
 
     history_items.clear();
     ui->history_listWidget->clear();
@@ -532,6 +539,7 @@ void BibleWidget::loadHistoriesFromFile(QStringList histories)
     // Prepare look verse id up
     for(int i(0); i<histories.count(); ++i)
     {
+        map.insert(histories.at(i),i);
         sql_str.append("verse_id = '" + histories.at(i) + "' OR ");
     }
     sql_str.chop(4);
@@ -553,11 +561,22 @@ void BibleWidget::loadHistoriesFromFile(QStringList histories)
                  + h.book + " AND bible_id = " + bible.primaryId);
         sq1.first();
         h.book = sq1.value(0).toString().trimmed();
+        h_list.append(h);
+    }
 
+    // Order items the way they were saved
+    order_list = map.values();
+    QMap<int,int> map2; // A nessasery step to proper ordering
+    for(int i(0); i<order_list.count(); ++i)
+        map2.insert(order_list.at(i),i);
+
+    order_list = map2.values();
+    for(int i(0); i<order_list.count(); ++i)
+    {
+        h = h_list.at(order_list.at(i));
         // Prepare history line to show
         QString s = h.book + " " + h.chapter + ":" + h.verse_text;
         history_list.append(s);
-
         history_items.append(h);
     }
 
