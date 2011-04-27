@@ -1233,6 +1233,7 @@ void SoftProjector::openProject()
         }
     }
     file.close();
+    is_project_saved = true;
 }
 
 void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
