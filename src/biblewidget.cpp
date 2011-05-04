@@ -527,7 +527,7 @@ void BibleWidget::loadHistoriesFromFile(QStringList histories)
     // in case primary Bible has been changed
     BibleSearch h;
     QSqlQuery sq,sq1;
-    QString sql_str;
+    QString sql_str, cur_item;
     QStringList history_list;
     QList<BibleSearch> h_list;
     QMap<QString, int> map;
@@ -536,11 +536,18 @@ void BibleWidget::loadHistoriesFromFile(QStringList histories)
     history_items.clear();
     ui->history_listWidget->clear();
 
-    // Prepare look verse id up
+    // Prepare look verse id up with double verse support
     for(int i(0); i<histories.count(); ++i)
     {
-        map.insert(histories.at(i),i);
-        sql_str.append("verse_id = '" + histories.at(i) + "' OR ");
+        cur_item = histories.at(i);
+        if(cur_item.contains(","))
+        {
+            QStringList l = cur_item.split(",");
+            cur_item = l.at(0);
+            cur_item = cur_item.trimmed();
+        }
+        map.insert(cur_item,i);
+        sql_str.append("verse_id = '" + cur_item + "' OR ");
     }
     sql_str.chop(4);
 
