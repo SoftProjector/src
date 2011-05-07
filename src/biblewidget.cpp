@@ -578,13 +578,27 @@ void BibleWidget::loadHistoriesFromFile(QStringList histories)
         map2.insert(order_list.at(i),i);
 
     order_list = map2.values();
-    for(int i(0); i<order_list.count(); ++i)
-    {
-        h = h_list.at(order_list.at(i));
-        // Prepare history line to show
-        QString s = h.book + " " + h.chapter + ":" + h.verse_text;
-        history_list.append(s);
-        history_items.append(h);
+
+    if(order_list.count()==h_list.count())
+    {   // Check if opened items and retrieved items from primary bible match in count
+        for(int i(0); i<order_list.count(); ++i)
+        {
+            h = h_list.at(order_list.at(i));
+            // Prepare history line to show
+            QString s = h.book + " " + h.chapter + ":" + h.verse_text;
+            history_list.append(s);
+            history_items.append(h);
+        }
+    }
+    else
+    {   // let user know that opened history items do not match retrieved amound trom primary bible
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Error opening Bible histories"));
+        mb.setInformativeText(tr("Cound not find any or all Bible verses from file withing current primary Bible."
+                                 "\nTry changing primary Bible and reopen project file."));
+        mb.setIcon(QMessageBox::Information);
+        mb.exec();
+        return;
     }
 
     // show items from file
