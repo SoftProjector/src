@@ -1139,6 +1139,7 @@ void SoftProjector::saveProject()
         xml.writeStartElement("song"); // start song
         s = songs.at(i);
         QXmlStreamAttributes atrs;
+        atrs.append("id",QString::number(s.songID));
         atrs.append("num",QString::number(s.num));
         atrs.append("category",QString::number(s.category));
         xml.writeAttributes(atrs);
@@ -1283,7 +1284,9 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
         if(xml->StartElement && xml->name() == "song")
         {
             atrs = xml->attributes();
-            QString a = atrs.value("num").toString();
+            QString a = atrs.value("id").toString();
+            s.songID = a.toInt();
+            a = atrs.value("num").toString();
             s.num = a.toInt();
             a = atrs.value("category").toString();
             s.category = a.toInt();

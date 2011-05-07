@@ -158,6 +158,8 @@ bool isStanzaSlideTitle(QString string)
 
 Song::Song()
 {
+    // initialize songId to be zero at start;
+    songID = 0;
 }
 
 Song::Song(int id)
@@ -656,6 +658,15 @@ QList<Song> SongDatabase::getSongs(QString songbook_id)
         }
     } // end of not all songbooks
     return songs;
+}
+
+bool Song::isValid()
+{
+    // Check if song is valid by song id
+    if(songID>0)
+        return true;
+    else
+        return false;
 }
 
 int SongDatabase::lastUser(QString songbook_id)

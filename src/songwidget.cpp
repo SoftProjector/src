@@ -548,7 +548,8 @@ void SongWidget::retranslateUis()
 
 bool SongWidget::isSongSelected()
 {
-    return ui->songs_view->currentIndex().isValid();
+    preview_song.isValid();
+//    return ui->songs_view->currentIndex().isValid();
 }
 
 void SongWidget::loadCategories(bool ui_update)

@@ -48,6 +48,7 @@ class Song
     void saveNew();
     QStringList getSongTextList();
     QString getSongbookName();
+    bool isValid();
 
 //private:
     int songID; // Database ID of this song
