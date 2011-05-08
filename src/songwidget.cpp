@@ -62,6 +62,7 @@ SongWidget::SongWidget(QWidget *parent) :
     loadCategories(false);
 
     isSpinboxEditing = false;
+    playlistSongWasEdited = false;
 }
 
 SongWidget::~SongWidget()
@@ -171,12 +172,23 @@ void SongWidget::loadSongbooks()
 Song SongWidget::currentSong()
 {
     // Returns the selected song
-    QModelIndex current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
-    int current_row = current_index.row();
+    QModelIndex current_index;
+    int current_row;
+    if (focusInPlaylistTable)
+        current_row = ui->playlist_view->currentIndex().row();
+    else
+    {
+        current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
+        current_row = current_index.row();
+    }
     Song return_song;
     if(current_row>=0)
-        return_song = songs_model->getSong(current_row);
-//    else
+    {
+        if(focusInPlaylistTable)
+            return_song = playlist_model->getSong(current_row);
+        else
+            return_song = songs_model->getSong(current_row);
+    }
     return return_song;
 }
 
@@ -417,6 +429,7 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 
 Song SongWidget::getSongToEdit()
 {
+    playlistSongWasEdited = focusInPlaylistTable;
     return preview_song;
 }
 
@@ -485,10 +498,14 @@ void SongWidget::updateSongbooks()
     emit setArrowCursor();
 }
 
-void SongWidget::updateSongFromDatabase(int songid)
+void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
 {
-    //qDebug() << "update song from database:" << songid;
     songs_model->updateSongFromDatabase(songid);
+
+    // Updated playlist song if song was edited comes from playlist table
+    if (playlistSongWasEdited)
+        playlist_model->updateSongFromDatabase(songid, initial_sid);
+
     // Update the preview table:
     sendToPreview( currentSong() );
 }
@@ -500,10 +517,15 @@ void SongWidget::deleteSong()
     proxy_model->removeRow(row);
 }
 
-void SongWidget::addNewSong(Song song)
+void SongWidget::addNewSong(Song song, int initial_sid)
 {
     songs_model->addSong(song);
     ui->songs_view->selectRow(songs_model->rowCount()-1);
+
+    // Updated playlist song if song was edited comes from playlist table
+    if (playlistSongWasEdited)
+        playlist_model->updateSongFromDatabase(song.songID,initial_sid);
+
     sendToPreview(song);
 }
 

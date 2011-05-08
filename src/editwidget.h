@@ -46,8 +46,8 @@ public slots:
 
 signals:
     // For communicating with SongsModel
-    void updateSongFromDatabase(int songid);
-    void addedNew(Song song);
+    void updateSongFromDatabase(int songid, int initial_song_id);
+    void addedNew(Song song, int initial_song_id);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -63,6 +63,7 @@ private:
     void setArrowCursor();
     QString add_to_songbook;
     QList<int> cat_ids;
+    int song_to_edit_id;
 
 
 private slots:
@@ -81,6 +82,7 @@ private slots:
     void loadCategories(bool ui_update);
     QString resetLyric(QString lyric);
     QString setSongText(QString text);
+    int isInDatabase(Song *song);
 };
 
 #endif // EDITWIDGET_H

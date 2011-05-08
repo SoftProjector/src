@@ -47,8 +47,8 @@ public slots:
     void updateSongbooks();
     bool isSongSelected();
     // will be called by the edit widget:
-    void updateSongFromDatabase(int songid);
-    void addNewSong(Song song);
+    void updateSongFromDatabase(int songid, int initial_sid);
+    void addNewSong(Song song, int initial_sid);
     QByteArray getSplitterState();
     void setSplitterState(QString state);
 
@@ -100,6 +100,7 @@ private:
     SongProxyModel *proxy_model;
     bool isSpinboxEditing;
     bool focusInPlaylistTable;
+    bool playlistSongWasEdited;
     bool allSongs;
     Song preview_song;
     SongCounter counter;

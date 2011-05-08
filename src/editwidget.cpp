@@ -110,12 +110,12 @@ void EditWidget::on_btnSave_clicked()
         sq.last();
         newSong.songID = sq.value(0).toInt();
 
-        emit addedNew(newSong);
+        emit addedNew(newSong,song_to_edit_id);
     }
     else
     {
         newSong.saveUpdate();
-        emit updateSongFromDatabase(newSong.songID);
+        emit updateSongFromDatabase(newSong.songID,song_to_edit_id);
     }
     setArrowCursor();
     
@@ -269,10 +269,22 @@ void EditWidget::setSongbook(int id)
 
 void EditWidget::setEdit(Song sEdit)
 {
+    song_to_edit_id = sEdit.songID;
+    int songInDB_id = isInDatabase(&sEdit);
+    if(songInDB_id!=0)
+    {
     editSong = sEdit;
-//    editSong = song_database.getSong(sEdit.songID);
+    editSong.songID = songInDB_id;
     setUiItems();
     is_new = false;
+    }
+    else
+    {
+        sEdit.songbook_id="0";//initialize no to be empty
+        addNewSong(sEdit,tr("Copy to a new Songbook"),tr("The song you are editing was not found in database.\n"
+                                                         "In order to edit this song, you need to add it to database.\n\n"
+                                                         "Please select a Songbook to which you want to copy this song to:"));
+    }
 }
 
 void EditWidget::setCopy(Song copy)
@@ -447,4 +459,36 @@ void EditWidget::loadCategories(bool ui_update)
     {
         ui->comboBoxCategory->addItems(cat_list);
     }
+}
+
+int EditWidget::isInDatabase(Song *song)
+{
+    QString s_title(""), s_id("0"), sb_id("0");
+    QSqlQuery sq;
+
+    // check if song is part of songbook
+    sq.exec("SELECT id FROM Songbooks WHERE name = '" + song->songbook_name + "'");
+    while(sq.next())
+        sb_id = sq.value(0).toString().trimmed();
+    sq.clear();
+    if(sb_id == "0")
+        return 0; // no such songbook in database
+
+    // get song id
+    sq.exec("SELECT song_id from SongLink WHERE songbook_id = '" + sb_id +"' AND song_number = '" + QString::number(song->num) +"'");
+    while(sq.next())
+        s_id = sq.value(0).toString().trimmed();
+    sq.clear();
+    if(s_id == "0")
+        return 0; // no matching song
+    song->songID = s_id.toInt();
+
+    // get song title
+    sq.exec("SELECT title FROM Songs WHERE id = '"+ s_id +"'");
+    while(sq.next())
+        s_title = sq.value(0).toString().trimmed();
+    if(s_title!=song->title)
+        return 0;
+    else
+        return s_id.toInt();
 }

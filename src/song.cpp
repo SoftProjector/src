@@ -189,6 +189,13 @@ void Song::readData()
     alingment = sq.value(7).toString();
     background = sq.value(8).toString();
 
+    // get song number and songbook id
+    sq.clear();
+    sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(songID));
+    sq.first();
+    num = sq.value(0).toInt();
+    songbook_id = sq.value(1).toString().trimmed();
+
     if( !songbook_id.isEmpty() )
     {
         sq.exec("SELECT name FROM Songbooks WHERE id = " + songbook_id );
@@ -410,6 +417,20 @@ void SongsModel::updateSongFromDatabase(int songid)
     }
 }
 
+void SongsModel::updateSongFromDatabase(int newSongId, int oldSongId)
+{
+    emit layoutAboutToBeChanged();
+    for( int i=0; i < song_list.size(); i++) {
+        Song *song = (Song*)&(song_list.at(i));
+        if( song->songID == oldSongId )
+        {
+            song->songID = newSongId;
+            song->readData();
+            emit layoutChanged(); // To redraw the table
+            return;
+        }
+    }
+}
 
 void SongsModel::addSong(Song song)
 {

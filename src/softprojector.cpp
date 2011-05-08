@@ -99,10 +99,10 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setAnnounceText(Announcement)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
             this, SLOT(drawText(QPainter*, int, int)));
-    connect(editWidget, SIGNAL(updateSongFromDatabase(int)),
-            songWidget, SLOT(updateSongFromDatabase(int)));
-    connect(editWidget, SIGNAL(addedNew(Song)),
-            songWidget,SLOT(addNewSong(Song)));
+    connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)),
+            songWidget, SLOT(updateSongFromDatabase(int,int)));
+    connect(editWidget, SIGNAL(addedNew(Song,int)),
+            songWidget,SLOT(addNewSong(Song,int)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()),
@@ -838,8 +838,8 @@ void SoftProjector::on_actionEditSong_triggered()
 {
     if (songWidget->isSongSelected())
     {
-        editWidget->setEdit(songWidget->getSongToEdit());
         editWidget->show();
+        editWidget->setEdit(songWidget->getSongToEdit());
         editWidget->activateWindow();
     }
     else
