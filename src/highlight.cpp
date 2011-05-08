@@ -68,6 +68,7 @@ Highlight::Highlight(QTextDocument *parent)
             << "^Intro[^\n]*" << "^Ending[^\n]*"
             << QString::fromUtf8("^Слайд[^\n]*") << QString::fromUtf8("^Вставка[^\n]*")
             << QString::fromUtf8("^Вступление[^\n]*") << QString::fromUtf8("^Окончание[^\n]*")
+            << QString::fromUtf8("^Вступ[^\n]*") << QString::fromUtf8("^Закінчення[^\n]*")
             << QString::fromUtf8("^Dia[^\n]*") << QString::fromUtf8("^Einfügung[^\n]*")
             << QString::fromUtf8("^Einleitung[^\n]*") << QString::fromUtf8("^Ende[^\n]*")
             << QString::fromUtf8("^Snímek[^\n]*") << QString::fromUtf8("^Vložka[^\n]*")

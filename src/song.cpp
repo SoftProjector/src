@@ -140,6 +140,8 @@ bool isStanzaSlideTitle(QString string)
         return true;
     else if (string.startsWith(QString::fromUtf8("Вступление")))
         return true;
+    else if (string.startsWith(QString::fromUtf8("Вступ")))
+        return true;
     else if (string.startsWith(QString::fromUtf8("Einleitung")))
         return true;
     else if (string.startsWith(QString::fromUtf8("Úvod")))
@@ -147,6 +149,8 @@ bool isStanzaSlideTitle(QString string)
     else if (string.startsWith("Ending"))
         return true;
     else if (string.startsWith(QString::fromUtf8("Окончание")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Закінчення")))
         return true;
     else if (string.startsWith(QString::fromUtf8("Ende")))
         return true;
