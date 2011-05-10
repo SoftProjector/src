@@ -411,7 +411,8 @@ void SoftProjector::closeEvent(QCloseEvent *event)
         mb.setDefaultButton(QMessageBox::Save);
         int ret = mb.exec();
 
-        switch (ret) {
+        switch (ret)
+        {
         case QMessageBox::Save:
             // Save Project and close
             on_actionSave_Project_triggered();
@@ -1099,7 +1100,31 @@ void SoftProjector::on_actionSong_Counter_triggered()
 
 void SoftProjector::on_actionOpen_triggered()
 {
-    project_file_path = QFileDialog::getOpenFileName(this,tr("Ope softProjector project"),".",
+    if(!is_project_saved)
+    {
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Current project not saved","project as in document file"));
+        mb.setText(tr("Do you want to save current project before opening other?","project as in document file"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
+
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Save Project and continuew opening next
+            on_actionSave_Project_triggered();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked, do nothing
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+    project_file_path = QFileDialog::getOpenFileName(this,tr("Open softProjector project"),".",
                                                      tr("softProjector project file ") + "(*.spp)");
     if(!project_file_path.isEmpty())
         openProject();
