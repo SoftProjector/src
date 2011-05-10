@@ -160,7 +160,7 @@ void SongWidget::loadSongbooks()
     }
     ui->songbook_menu->addItem(tr("All songbooks"));
     ui->songbook_menu->addItems(sbor);
-    QList<Song> song_list = song_database.getSongs("ALL");
+    QList<Song> song_list = song_database.getSongs();
 
     //ui->song_num_spinbox->setEnabled(false);
     songs_model->setSongs(song_list);
@@ -234,7 +234,6 @@ void SongWidget::sendToProjector(Song song, int row)
     // Add a count to a song
     counter.addSongCount(song);
 }
-
 
 void SongWidget::on_songbook_menu_currentIndexChanged(int index)
 {
@@ -312,7 +311,6 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
 
 }
 
-
 void SongWidget::on_song_num_spinbox_editingFinished()
 {
     // Called when the user presses enter after editing the song number
@@ -323,14 +321,10 @@ void SongWidget::on_song_num_spinbox_editingFinished()
     isSpinboxEditing = false;
 }
 
-
-
 void SongWidget::on_btnLive_clicked()
 {
     sendToProjector(preview_song, ui->listPreview->currentRow()); // Send current selected
 }
-
-
 
 void SongWidget::on_btnAddToPlaylist_clicked()
 {
@@ -504,7 +498,10 @@ void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
 
     // Updated playlist song if song was edited comes from playlist table
     if (playlistSongWasEdited)
+    {
         playlist_model->updateSongFromDatabase(songid, initial_sid);
+        emit sendPlaylistChanged(true);
+    }
 
     // Update the preview table:
     sendToPreview( currentSong() );
@@ -524,7 +521,10 @@ void SongWidget::addNewSong(Song song, int initial_sid)
 
     // Updated playlist song if song was edited comes from playlist table
     if (playlistSongWasEdited)
+    {
         playlist_model->updateSongFromDatabase(song.songID,initial_sid);
+        emit sendPlaylistChanged(true);
+    }
 
     sendToPreview(song);
 }

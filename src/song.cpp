@@ -20,8 +20,6 @@
 #include "song.h"
 #include <QDebug>
 
-
-
 QString clean(QString str)
 {
     // Removes all none alphanumeric characters from the string
@@ -171,11 +169,12 @@ Song::Song(int id)
     songID = id;
 }
 
-Song::Song(int song_id, int song_num, QString song_songbook)
+Song::Song(int song_id, int song_num, QString song_songbook_id, QString song_songbook_name)
 {
     songID = song_id;
     num = song_num;
-    songbook_id = song_songbook;
+    songbook_id = song_songbook_id;
+    songbook_name = song_songbook_name;
 }
 
 void Song::readData()
@@ -192,20 +191,6 @@ void Song::readData()
     font = sq.value(6).toString();
     alingment = sq.value(7).toString();
     background = sq.value(8).toString();
-
-    // get song number and songbook id
-    sq.clear();
-    sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(songID));
-    sq.first();
-    num = sq.value(0).toInt();
-    songbook_id = sq.value(1).toString().trimmed();
-
-    if( !songbook_id.isEmpty() )
-    {
-        sq.exec("SELECT name FROM Songbooks WHERE id = " + songbook_id );
-        sq.first();
-        songbook_name = sq.value(0).toString();
-    }
 }
 
 QStringList Song::getSongTextList()
@@ -429,6 +414,18 @@ void SongsModel::updateSongFromDatabase(int newSongId, int oldSongId)
         if( song->songID == oldSongId )
         {
             song->songID = newSongId;
+            // get song number and songbook id
+            QSqlQuery sq;
+            sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(newSongId));
+            sq.first();
+            song->num = sq.value(0).toInt();
+            song->songbook_id = sq.value(1).toString().trimmed();
+            sq.clear();
+            // get songbook name
+            sq.exec("SELECT name FROM Songbooks WHERE id = " + song->songbook_id );
+            sq.first();
+            song->songbook_name = sq.value(0).toString();
+
             song->readData();
             emit layoutChanged(); // To redraw the table
             return;
@@ -642,46 +639,34 @@ Song SongDatabase::getSong(int id)
     return song;
 }
 
-
-
-
-QList<Song> SongDatabase::getSongs(QString songbook_id)
+QList<Song> SongDatabase::getSongs()
 {
     QList<Song> songs;
+    QSqlQuery sq;
+    QStringList sb_ids, sb_names;
 
-    if( songbook_id == QString("ALL") ) {
-        // Loads all titles in database
-        QSqlQuery sq, sq2;
-
-        sq.exec("SELECT song_id, song_number, songbook_id FROM SongLink");
-        while(sq.next())
-        {
-            int song_id = sq.value(0).toInt();
-            int song_num = sq.value(1).toInt();
-            QString songbook_id = sq.value(2).toString();
-            QString song_title;
-            sq2.exec("SELECT title FROM Songs WHERE id = " + QString::number(song_id));
-            sq2.first();
-            song_title = sq2.value(0).toString();
-            Song song = Song(song_id, song_num, songbook_id);
-            song.readData();
-            songs.append(song);
-        }
-    }
-    else
+    // get songbook names and ids
+    sq.exec("SELECT id, name FROM Songbooks");
+    while (sq.next())
     {
-        QSqlQuery sq, sq1;
+        sb_ids << sq.value(0).toString();
+        sb_names << sq.value(1).toString();
+    }
+    sq.clear();
 
-        sq.exec("SELECT song_id, song_number FROM SongLink WHERE songbook_id = "+songbook_id);
-        while(sq.next())
-        {
-            int song_id = sq.value(0).toInt();
-            int song_num = sq.value(1).toInt();
-            Song song = Song(song_id, song_num, songbook_id);
-            song.readData();
-            songs.append(song);
-        }
-    } // end of not all songbooks
+    // get songs
+    sq.exec("SELECT song_id, song_number, songbook_id FROM SongLink");
+    while(sq.next())
+    {
+        int song_id = sq.value(0).toInt();
+        int song_num = sq.value(1).toInt();
+        QString songbook_id = sq.value(2).toString();
+        QString songbook_name = sb_names.at(sb_ids.indexOf(songbook_id));
+
+        Song song = Song(song_id, song_num, songbook_id, songbook_name);
+        song.readData();
+        songs.append(song);
+    }
     return songs;
 }
 
@@ -736,4 +721,3 @@ void SongDatabase::addSongbook(QString name, QString info)
     sqt.setData(sqt.index(0,3),1);
     sqt.submitAll();
 }
-

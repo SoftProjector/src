@@ -37,7 +37,7 @@ class Song
  public:
     Song();
     Song(int id);
-    Song(int id, int num, QString songbook_id);
+    Song(int id, int num, QString songbook_id, QString songbook_name);
     void readData();
     int num; // Number of the song in the specified songbook
     QString title;
@@ -119,7 +119,7 @@ public:
     void deleteSong(int songId);
     QString getSongbookIdStringFromName(QString songbook_name);
     Song getSong(int id);
-    QList<Song> getSongs(QString songbook_id);
+    QList<Song> getSongs();
     int lastUser(QString songbook_id);
 //private:
 };
