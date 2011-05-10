@@ -199,7 +199,6 @@ void SoftProjector::applyDefaults()
     ui->actionEnglish->setChecked(true);
 }
 
-
 void SoftProjector::writeXMLConfigurationFile()
 {
     // Method for writing the settings to XML format
@@ -395,12 +394,44 @@ void SoftProjector::readXMLConfigurationFile()
     fh.close();
 }
 
-
-
 void SoftProjector::closeEvent(QCloseEvent *event)
 {
-    QCoreApplication::exit(0);
-    event->accept();
+    if(is_project_saved)
+    {
+        QCoreApplication::exit(0);
+        event->accept();
+    }
+    else
+    {
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Project not saved","project as in document file"));
+        mb.setText(tr("Do you want to save current project?","project as in document file"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Discard);
+        mb.setDefaultButton(QMessageBox::Save);
+        int ret = mb.exec();
+
+        switch (ret) {
+        case QMessageBox::Save:
+            // Save Project and close
+            on_actionSave_Project_triggered();
+            QCoreApplication::exit(0);
+            event->accept();
+            break;
+        case QMessageBox::Cancel:
+            // Cancel was clicked, do nothing
+            event->ignore();
+            break;
+        case QMessageBox::Discard:
+            // Close without saving
+            QCoreApplication::exit(0);
+            event->accept();
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
 }
 
 void SoftProjector::keyPressEvent( QKeyEvent * event )
@@ -460,7 +491,6 @@ void SoftProjector::setSongList(Song song, int row)
     updateScreen();
 }
 
-
 QRect SoftProjector::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)
 {
     // If draw is false, calculate the rectangle that the specified text would be
@@ -512,7 +542,6 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     out_rect.setRect(left, top, width, height);
     return out_rect;
 }
-
 
 void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
 {
