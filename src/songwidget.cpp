@@ -396,7 +396,6 @@ void SongWidget::on_btnUpInPlaylist_clicked()
 }
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
-
 {
     // These two options are mutually exclusive:
     bool match_beginning = ui->begins_rbutton->isChecked();
@@ -540,10 +539,12 @@ void SongWidget::on_contains_rbutton_clicked()
 {
     filterModeChanged();
 }
+
 void SongWidget::on_begins_rbutton_clicked()
 {
     filterModeChanged();
 }
+
 void SongWidget::on_exact_match_rbutton_clicked()
 {
     filterModeChanged();

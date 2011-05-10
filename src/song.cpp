@@ -380,7 +380,6 @@ Song SongsModel::getSong(QModelIndex index)
     return song_list.at(index.row());
 }
 
-
 void SongsModel::setSongs(QList<Song> songs)
 {
     emit layoutAboutToBeChanged();
@@ -566,7 +565,6 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
                 || str2.contains(filter_string, Qt::CaseInsensitive) );
 
 }
-
 
 SongDatabase::SongDatabase()
 {
