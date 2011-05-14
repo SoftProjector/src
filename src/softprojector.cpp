@@ -122,6 +122,20 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(bibleWidget, SIGNAL(historyListChanged(bool)),
             this, SLOT(setProjectChanged(bool)));
 
+    ui->toolBar->addAction(ui->actionOpen);
+    ui->toolBar->addAction(ui->actionSave_Project);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionSettings);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionNewSong);
+    ui->toolBar->addAction(ui->actionEditSong);
+    ui->toolBar->addAction(ui->actionCopy_Song);
+    ui->toolBar->addAction(ui->actionDeleteSong);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionSong_Counter);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->action_Help);
+
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
