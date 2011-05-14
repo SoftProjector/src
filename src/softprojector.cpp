@@ -1124,10 +1124,15 @@ void SoftProjector::on_actionOpen_triggered()
             break;
         }
     }
-    project_file_path = QFileDialog::getOpenFileName(this,tr("Open softProjector project"),".",
+    QString path = QFileDialog::getOpenFileName(this,tr("Open softProjector project"),".",
                                                      tr("softProjector project file ") + "(*.spp)");
-    if(!project_file_path.isEmpty())
+    if(!path.isEmpty())
+    {
+        // reset project file path only when path is valid and then open
+
+        project_file_path = path;
         openProject();
+    }
 
     updateWindowTest();
 }
@@ -1135,12 +1140,8 @@ void SoftProjector::on_actionOpen_triggered()
 void SoftProjector::on_actionSave_Project_triggered()
 {
     if(project_file_path.isEmpty())
-    {
-        project_file_path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
-                                                         tr("softProjector project file ") + "(*.spp)");
-    }
-
-    if(!project_file_path.isEmpty())
+        on_actionSave_Project_As_triggered();
+    else
         saveProject();
 
     updateWindowTest();
@@ -1148,10 +1149,13 @@ void SoftProjector::on_actionSave_Project_triggered()
 
 void SoftProjector::on_actionSave_Project_As_triggered()
 {
-    project_file_path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
+    QString path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
                                                      tr("softProjector project file ") + "(*.spp)");
-    if(!project_file_path.isEmpty())
+    if(!path.isEmpty())
+    {
+        project_file_path = path;
         saveProject();
+    }
 
     updateWindowTest();
 }
