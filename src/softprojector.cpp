@@ -396,7 +396,7 @@ void SoftProjector::readXMLConfigurationFile()
 
 void SoftProjector::closeEvent(QCloseEvent *event)
 {
-    if(is_project_saved)
+    if(is_project_saved || project_file_path.isEmpty())
     {
         QCoreApplication::exit(0);
         event->accept();
@@ -1100,7 +1100,7 @@ void SoftProjector::on_actionSong_Counter_triggered()
 
 void SoftProjector::on_actionOpen_triggered()
 {
-    if(!is_project_saved)
+    if(!is_project_saved && !project_file_path.isEmpty())
     {
         QMessageBox mb;
         mb.setWindowTitle(tr("Current project not saved","project as in document file"));
