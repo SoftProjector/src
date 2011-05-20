@@ -122,6 +122,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(bibleWidget, SIGNAL(historyListChanged(bool)),
             this, SLOT(setProjectChanged(bool)));
 
+    ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
     ui->toolBar->addAction(ui->actionSave_Project);
     ui->toolBar->addSeparator();
@@ -139,8 +140,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    //version_string = "1.04"; // to be used only for official release
-    version_string = "1.04_dev"; // to be used between official releases
+//    version_string = "1.05"; // to be used only for official release
+    version_string = "1.05_Beta"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
 }
