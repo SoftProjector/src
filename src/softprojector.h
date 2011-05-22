@@ -95,8 +95,11 @@ private:
 
 private slots:
     //For saving and opening softProjector project files
+    void on_actionClose_Project_triggered();
+    void on_actionNew_Project_triggered();
     void saveProject();
     void openProject();
+    void clearProject();
     void readBibleHistoryFromSavedProject(QXmlStreamReader *xml);
     void readSongsFromSavedProject(QXmlStreamReader *xml);
     void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);

@@ -1118,7 +1118,7 @@ void SoftProjector::on_actionOpen_triggered()
     if(!is_project_saved && !project_file_path.isEmpty())
     {
         QMessageBox mb;
-        mb.setWindowTitle(tr("Current project not saved","project as in document file"));
+        mb.setWindowTitle(tr("Save Project?","project as in document file"));
         mb.setText(tr("Do you want to save current project before opening other?","project as in document file"));
         mb.setIcon(QMessageBox::Question);
         mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -1148,13 +1148,12 @@ void SoftProjector::on_actionOpen_triggered()
         project_file_path = path;
         openProject();
     }
-
     updateWindowTest();
 }
 
 void SoftProjector::on_actionSave_Project_triggered()
 {
-    if(project_file_path.isEmpty())
+    if(project_file_path.isEmpty() || project_file_path.startsWith("untitled"))
         on_actionSave_Project_As_triggered();
     else
         saveProject();
@@ -1172,6 +1171,69 @@ void SoftProjector::on_actionSave_Project_As_triggered()
         saveProject();
     }
 
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionNew_Project_triggered()
+{
+    QMessageBox mb;
+    if(!is_project_saved && !project_file_path.isEmpty())
+    {
+        mb.setWindowTitle(tr("Save Project?"));
+        mb.setText(tr("Do you want to save current project before creating a new project?"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
+
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Save Project and continuew opening next
+            on_actionSave_Project_triggered();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked, do nothing
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+
+    project_file_path = "untitled.spp";
+    clearProject();
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionClose_Project_triggered()
+{
+    QMessageBox mb;
+    if(!is_project_saved && !project_file_path.isEmpty())
+    {
+        mb.setWindowTitle(tr("Save Project?"));
+        mb.setText(tr("Do you want to save current project before closing it?"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
+
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Save Project and continuew opening next
+            on_actionSave_Project_triggered();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked, do nothing
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+    project_file_path.clear();
+    clearProject();
     updateWindowTest();
 }
 
@@ -1308,6 +1370,17 @@ void SoftProjector::openProject()
     }
     file.close();
     is_project_saved = true;
+}
+
+void SoftProjector::clearProject()
+{
+    QList<Announcement> announcements;
+    QStringList histories;
+    QList<Song> songs;
+
+    announceWidget->loadFromFile(announcements);
+    bibleWidget->loadHistoriesFromFile(histories);
+    songWidget->loadPlaylistFromFile(songs);
 }
 
 void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
