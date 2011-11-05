@@ -493,7 +493,7 @@ void SongWidget::updateSongbooks()
 
 void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
 {
-    songs_model->updateSongFromDatabase(songid);
+    songs_model->updateSongFromDatabase(songid, initial_sid);
 
     // Updated playlist song if song was edited comes from playlist table
     if (playlistSongWasEdited)
