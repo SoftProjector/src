@@ -48,9 +48,11 @@ signals:
     // For communicating with SongsModel
     void updateSongFromDatabase(int songid, int initial_song_id);
     void addedNew(Song song, int initial_song_id);
+    void setSongEditStatus(bool isEdited);
 
 protected:
     virtual void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent *e);
 
 private:
     Ui::EditWidget *ui;

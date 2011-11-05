@@ -103,6 +103,8 @@ SoftProjector::SoftProjector(QWidget *parent)
             songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)),
             songWidget,SLOT(addNewSong(Song,int)));
+    connect(editWidget, SIGNAL(setSongEditStatus(bool)),
+            this, SLOT(setSongEditStatus(bool)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()),
@@ -144,6 +146,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     version_string = "1.05_Beta"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
+    // Initialize bool variables
+    setSongEditStatus(false);
 }
 
 SoftProjector::~SoftProjector()
@@ -883,19 +887,37 @@ void SoftProjector::on_actionEditSong_triggered()
 {
     if (songWidget->isSongSelected())
     {
-        editWidget->show();
-        editWidget->setEdit(songWidget->getSongToEdit());
-        editWidget->activateWindow();
+        if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("Cannot start new edit"));
+            ms.setText(tr("Another song is already beeb edited."));
+            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
+        else
+        {
+            editWidget->show();
+            editWidget->setEdit(songWidget->getSongToEdit());
+            editWidget->activateWindow();
+            setSongEditStatus(true);
+        }
     }
     else
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be edited"));
-        ms.setInformativeText(tr("Please select a song to be edited"));
+        ms.setText(tr("No song has been selected to be edited."));
+        ms.setInformativeText(tr("Please select a song to be edited."));
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
+}
+
+void SoftProjector::setSongEditStatus(bool isEdited)
+{
+    is_song_in_edit = isEdited;
 }
 
 void SoftProjector::on_actionNewSong_triggered()

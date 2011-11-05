@@ -75,6 +75,7 @@ public slots:
     void setWaitCursor();
     void setArrowCursor();
     void setProjectChanged(bool isChanged);
+    void setSongEditStatus(bool isEdited);
 
 private:
     Ui::SoftProjectorClass *ui;
@@ -92,6 +93,7 @@ private:
     QString project_file_path;
     void updateWindowTest();
     bool is_project_saved;
+    bool is_song_in_edit;
 
 private slots:
     //For saving and opening softProjector project files

@@ -56,6 +56,11 @@ EditWidget::~EditWidget()
     delete ui;
 }
 
+void EditWidget::closeEvent(QCloseEvent *e)
+{
+    emit setSongEditStatus(false);
+}
+
 void EditWidget::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
@@ -273,10 +278,10 @@ void EditWidget::setEdit(Song sEdit)
     int songInDB_id = isInDatabase(&sEdit);
     if(songInDB_id!=0)
     {
-    editSong = sEdit;
-    editSong.songID = songInDB_id;
-    setUiItems();
-    is_new = false;
+        editSong = sEdit;
+        editSong.songID = songInDB_id;
+        setUiItems();
+        is_new = false;
     }
     else
     {
