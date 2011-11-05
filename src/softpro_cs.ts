@@ -136,19 +136,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="93"/>
-        <location filename="announcewidget.cpp" line="125"/>
+        <location filename="announcewidget.cpp" line="127"/>
         <source>Left</source>
         <translation>Zarovnat vlevo</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="98"/>
-        <location filename="announcewidget.cpp" line="129"/>
+        <location filename="announcewidget.cpp" line="131"/>
         <source>Center</source>
         <translation>Zarovnat na střed</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="103"/>
-        <location filename="announcewidget.cpp" line="127"/>
+        <location filename="announcewidget.cpp" line="129"/>
         <source>Right</source>
         <translation>Zarovnat vpravo</translation>
     </message>
@@ -159,19 +159,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="announcewidget.ui" line="122"/>
-        <location filename="announcewidget.cpp" line="134"/>
+        <location filename="announcewidget.cpp" line="136"/>
         <source>Top</source>
         <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="127"/>
-        <location filename="announcewidget.cpp" line="138"/>
+        <location filename="announcewidget.cpp" line="140"/>
         <source>Middle</source>
         <translation>Na střed</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="132"/>
-        <location filename="announcewidget.cpp" line="136"/>
+        <location filename="announcewidget.cpp" line="138"/>
         <source>Bottom</source>
         <translation>Dole</translation>
     </message>
@@ -468,6 +468,17 @@ výsledků</translation>
         <source>No search results</source>
         <translation>Žádné výsledky hledání</translation>
     </message>
+    <message>
+        <location filename="biblewidget.cpp" line="596"/>
+        <source>Error opening Bible histories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="biblewidget.cpp" line="597"/>
+        <source>Cound not find any or all Bible verses from file withing current primary Bible.
+Try changing primary Bible and reopen project file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BiblesModel</name>
@@ -515,111 +526,124 @@ výsledků</translation>
         <translation>Skupina:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="159"/>
+        <location filename="editwidget.cpp" line="407"/>
         <source>Other</source>
         <translation>Jiné</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="435"/>
+        <location filename="editwidget.ui" line="170"/>
         <source>Text Alingment</source>
         <translation>Zarovnání textu</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="441"/>
+        <location filename="editwidget.ui" line="176"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="451"/>
+        <location filename="editwidget.ui" line="186"/>
         <source>Center</source>
         <translation>Na střed</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="458"/>
+        <location filename="editwidget.ui" line="193"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="480"/>
-        <location filename="editwidget.ui" line="522"/>
+        <location filename="editwidget.ui" line="215"/>
+        <location filename="editwidget.ui" line="257"/>
         <source>Browse...</source>
         <translation>Procházet...</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="487"/>
-        <location filename="editwidget.ui" line="529"/>
+        <location filename="editwidget.ui" line="222"/>
+        <location filename="editwidget.ui" line="264"/>
         <source>Use default</source>
         <translation>Použít výchozí</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="494"/>
+        <location filename="editwidget.ui" line="229"/>
         <source>Text font:</source>
         <translation>Písmo textu:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="505"/>
+        <location filename="editwidget.ui" line="240"/>
         <source>Background:</source>
         <translation>Pozadí:</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="560"/>
+        <location filename="editwidget.ui" line="295"/>
         <source>Save</source>
         <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="563"/>
+        <location filename="editwidget.ui" line="298"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="570"/>
+        <location filename="editwidget.ui" line="305"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="editwidget.ui" line="573"/>
+        <location filename="editwidget.ui" line="308"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="284"/>
+        <location filename="editwidget.cpp" line="304"/>
         <source>Add a new Songbook</source>
         <translation>Přidat nový zpěvník</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="310"/>
+        <location filename="editwidget.cpp" line="330"/>
         <source>Select Songbook</source>
         <translation>Vybrat zpěvník</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="284"/>
+        <location filename="editwidget.cpp" line="304"/>
         <source>Select a Songbook to which you want to add a song</source>
         <translation>Vyberte zpěvník, do kterého chcete přidat píseň</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="90"/>
+        <location filename="editwidget.cpp" line="99"/>
         <source>Song title cannot be left empty.
 Please enter song title.</source>
         <translation>Název písně nemůže zůstat nevyplněn.
 Zadejte, prosím, název písně.</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="91"/>
+        <location filename="editwidget.cpp" line="100"/>
         <source>Song title is missing</source>
         <translation>Název písně chybí</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="276"/>
+        <location filename="editwidget.cpp" line="289"/>
+        <source>Cannot find exact match in database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="289"/>
+        <source>The exact match of a song you are editing was not found in database.
+In order to edit this song, you need to add it to database.
+
+Please select a Songbook to which you want to copy this song to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="297"/>
         <source>Copy to a new Songbook</source>
         <translation>Kopírovat do nového zpěvníku</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="276"/>
+        <location filename="editwidget.cpp" line="297"/>
         <source>Select a Songbook to which you want to copy this song to</source>
         <translation>Vybrat zpěvník, do kterého chcete píseň kopírovat</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="282"/>
+        <location filename="editwidget.cpp" line="303"/>
         <source>Verse 1
  - words of verse go here
 
@@ -639,14 +663,234 @@ Verš 2
  -  Slova verše zde</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="336"/>
+        <location filename="editwidget.cpp" line="356"/>
         <source>Add a Songbook</source>
         <translation>Přidat zpěvník</translation>
     </message>
     <message>
-        <location filename="editwidget.cpp" line="372"/>
+        <location filename="editwidget.cpp" line="392"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Vyberte obrázek pro pozadí</translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="407"/>
+        <source>Bible Stories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="407"/>
+        <source>Gospel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="407"/>
+        <source>God, His love and greatness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="408"/>
+        <source>The Resurrection of Christ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="408"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="408"/>
+        <source>The second coming of Christ and the judgement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="409"/>
+        <source>Children and Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="409"/>
+        <source>For new converts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="409"/>
+        <source>Spiritual struggle and victory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Harvest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Jesus Christ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Love</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Prayer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Youth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="410"/>
+        <source>Mother</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="411"/>
+        <source>Wedding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="411"/>
+        <source>Baptism</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="411"/>
+        <source>Sunset / Sunrise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="412"/>
+        <source>New Years</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="412"/>
+        <source>Funeral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="412"/>
+        <source>At the ordination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="413"/>
+        <source>On the Lord&apos;s Supper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="413"/>
+        <source>Heavenly abode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="413"/>
+        <source>Instruction and self-test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="414"/>
+        <source>Holy Ghost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="414"/>
+        <source>Church</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="414"/>
+        <source>Before church meeting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="415"/>
+        <source>Last Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="415"/>
+        <source>Practical life with God</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="415"/>
+        <source>At the end of church meeting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="416"/>
+        <source>Welcome and farewell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="416"/>
+        <source>The call to work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="416"/>
+        <source>Call to repentance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="417"/>
+        <source>Journey of faith, faith and hope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="417"/>
+        <source>Various Christian holidays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="418"/>
+        <source>Determination and faithfulness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="418"/>
+        <source>Christmas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="418"/>
+        <source>Following Christ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="419"/>
+        <source>The Word of God</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="419"/>
+        <source>Salvation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="419"/>
+        <source>Suffering and death of Christ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="420"/>
+        <source>Consolation and encouragement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="420"/>
+        <source>Praise and thanksgiving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="editwidget.cpp" line="420"/>
+        <source>Christian Joy</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1085,23 +1329,23 @@ Byla uložena jako:
     </message>
     <message>
         <location filename="settingsdialog.cpp" line="45"/>
-        <location filename="settingsdialog.cpp" line="77"/>
-        <location filename="settingsdialog.cpp" line="85"/>
-        <location filename="settingsdialog.cpp" line="118"/>
-        <location filename="settingsdialog.cpp" line="246"/>
-        <location filename="settingsdialog.cpp" line="258"/>
+        <location filename="settingsdialog.cpp" line="80"/>
+        <location filename="settingsdialog.cpp" line="88"/>
+        <location filename="settingsdialog.cpp" line="121"/>
+        <location filename="settingsdialog.cpp" line="251"/>
+        <location filename="settingsdialog.cpp" line="263"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="217"/>
-        <location filename="settingsdialog.cpp" line="232"/>
+        <location filename="settingsdialog.cpp" line="222"/>
+        <location filename="settingsdialog.cpp" line="237"/>
         <source>Select a picture for the wallpaper</source>
         <translation>Vybrat obrázek pro pozadí</translation>
     </message>
     <message>
-        <location filename="settingsdialog.cpp" line="219"/>
-        <location filename="settingsdialog.cpp" line="234"/>
+        <location filename="settingsdialog.cpp" line="224"/>
+        <location filename="settingsdialog.cpp" line="239"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
@@ -1109,80 +1353,170 @@ Byla uložena jako:
 <context>
     <name>SoftProjector</name>
     <message>
-        <location filename="softprojector.cpp" line="60"/>
         <source>This software is free and Open Source. If you can help in improving this program please visit softprojector.sourceforge.net</source>
         <oldsource>This software is free and Open Source. If you can help in improving this program please visit sourceforge.net/projects/softprojector/</oldsource>
-        <translation>Tento program je zdarma a jeho kód je otevřen. Pokud můžete a chcete pomoci při zlepšování tohoto programu, navštivte, prosím, stránky na adrese sourceforge.net/projects/softprojector/</translation>
+        <translation type="obsolete">Tento program je zdarma a jeho kód je otevřen. Pokud můžete a chcete pomoci při zlepšování tohoto programu, navštivte, prosím, stránky na adrese sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="91"/>
-        <location filename="softprojector.cpp" line="1056"/>
+        <location filename="softprojector.cpp" line="90"/>
+        <location filename="softprojector.cpp" line="1124"/>
         <source>Bible (F6)</source>
         <translation>Bible (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="92"/>
-        <location filename="softprojector.cpp" line="1057"/>
+        <location filename="softprojector.cpp" line="91"/>
+        <location filename="softprojector.cpp" line="1125"/>
         <source>Songs (F7)</source>
         <translation>Písně (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="93"/>
-        <location filename="softprojector.cpp" line="1058"/>
+        <location filename="softprojector.cpp" line="92"/>
+        <location filename="softprojector.cpp" line="1126"/>
         <source>Announcements (F8)</source>
         <translation>Oznámení (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="425"/>
+        <location filename="softprojector.cpp" line="426"/>
+        <source>Project not saved</source>
+        <comment>project as in document file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="427"/>
+        <source>Do you want to save current project?</source>
+        <comment>project as in document file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="482"/>
         <source>Announcement</source>
         <translation>Oznámení</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="847"/>
-        <location filename="softprojector.cpp" line="873"/>
-        <location filename="softprojector.cpp" line="912"/>
+        <location filename="softprojector.cpp" line="893"/>
+        <source>Cannot start new edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="894"/>
+        <source>Another song is already beeb edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="895"/>
+        <source>Please save and/or close current edited song before edited a different song.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="910"/>
+        <location filename="softprojector.cpp" line="941"/>
+        <location filename="softprojector.cpp" line="980"/>
         <source>No song selected</source>
         <translation>Nebyla vybrána žádná píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="848"/>
+        <location filename="softprojector.cpp" line="911"/>
+        <source>No song has been selected to be edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="912"/>
+        <source>Please select a song to be edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1143"/>
+        <source>Save Project?</source>
+        <comment>project as in document file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1144"/>
+        <source>Do you want to save current project before opening other?</source>
+        <comment>project as in document file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1164"/>
+        <source>Open softProjector project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1165"/>
+        <location filename="softprojector.cpp" line="1189"/>
+        <source>softProjector project file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1188"/>
+        <source>Save softProjector project as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1204"/>
+        <location filename="softprojector.cpp" line="1236"/>
+        <source>Save Project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1205"/>
+        <source>Do you want to save current project before creating a new project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1237"/>
+        <source>Do you want to save current project before closing it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1379"/>
+        <source>Incorrect project file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1380"/>
+        <source>The softProjector project file you are opening,
+is not supported by your version of softProjector.
+You may try upgrading your version of softProjector.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>No song has been selected to be edited</source>
-        <translation>Nebyla vybrána žádná píseň pro úpravy</translation>
+        <translation type="obsolete">Nebyla vybrána žádná píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="849"/>
         <source>Please select a song to be edited</source>
-        <translation>Vyberte, prosím, píseň pro úpravy</translation>
+        <translation type="obsolete">Vyberte, prosím, píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="874"/>
+        <location filename="softprojector.cpp" line="942"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Nebyla vybrána žádná píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="875"/>
+        <location filename="softprojector.cpp" line="943"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="887"/>
+        <location filename="softprojector.cpp" line="955"/>
         <source>Delete song?</source>
         <translation>Smazat píseň?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="888"/>
+        <location filename="softprojector.cpp" line="956"/>
         <source>Delete song &quot;</source>
         <translation>Smazat píseň &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="913"/>
+        <location filename="softprojector.cpp" line="981"/>
         <source>No song has been selected to be deleted</source>
         <translation>Nebyla vybrána žádná píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="914"/>
+        <location filename="softprojector.cpp" line="982"/>
         <source>Please select a song to be deleted</source>
         <translation>Vyberte, prosím, píseň ke smazání</translation>
     </message>
@@ -1191,7 +1525,7 @@ Byla uložena jako:
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="889"/>
+        <location filename="softprojector.cpp" line="957"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Tímto krokem bude tato píseň neodvolatelně smazána</translation>
     </message>
@@ -1199,161 +1533,202 @@ Byla uložena jako:
 <context>
     <name>SoftProjectorClass</name>
     <message>
-        <location filename="softprojector.ui" line="54"/>
+        <location filename="softprojector.ui" line="57"/>
         <source>Tab</source>
         <translation>Karta</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="64"/>
+        <location filename="softprojector.ui" line="67"/>
         <source>Stop displaying text to the screen (display black screen or wallpaper). Sortcut for this button is the Escape key.</source>
         <translation>Zastavit zobrazování textu na promítací ploše (ukazovat černou promítací plochu nebo pozadí). Klávesovou zkratkou pro to je klávesa Esc.</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="67"/>
+        <location filename="softprojector.ui" line="70"/>
         <source>Hide (Esc)</source>
         <translation>Skrýt (Esc)</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="70"/>
+        <location filename="softprojector.ui" line="73"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="77"/>
+        <location filename="softprojector.ui" line="80"/>
         <source>If Clear was pressed earlier, this will re-display the text to the screen</source>
         <translation>Pokud bylo dříve stisknuto Smazat,bude text znovu zobrazen na promítací ploše</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="80"/>
+        <location filename="softprojector.ui" line="83"/>
         <source>Show (F4)</source>
         <translation>Ukázat (F4)</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="83"/>
+        <location filename="softprojector.ui" line="86"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="134"/>
+        <location filename="softprojector.ui" line="137"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="140"/>
+        <location filename="softprojector.ui" line="149"/>
         <source>&amp;Edit</source>
         <translation>&amp;Úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="149"/>
-        <location filename="softprojector.ui" line="267"/>
+        <location filename="softprojector.ui" line="158"/>
+        <location filename="softprojector.ui" line="289"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="156"/>
+        <location filename="softprojector.ui" line="165"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="165"/>
+        <location filename="softprojector.ui" line="174"/>
         <source>Songs</source>
         <translation>Písně</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="183"/>
+        <location filename="softprojector.ui" line="191"/>
+        <source>toolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="205"/>
         <source>&amp;About</source>
         <translation>&amp;O programu</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="192"/>
+        <location filename="softprojector.ui" line="214"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Nastavení...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="195"/>
+        <location filename="softprojector.ui" line="217"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="204"/>
+        <location filename="softprojector.ui" line="226"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="207"/>
+        <location filename="softprojector.ui" line="229"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="216"/>
+        <location filename="softprojector.ui" line="238"/>
         <source>&amp;Edit Current Song...</source>
         <translation>&amp;Upravit nynější píseň...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="219"/>
+        <location filename="softprojector.ui" line="241"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="228"/>
+        <location filename="softprojector.ui" line="250"/>
         <source>&amp;New Song...</source>
         <translation>&amp;Nová píseň...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="231"/>
+        <location filename="softprojector.ui" line="253"/>
+        <location filename="softprojector.ui" line="389"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="240"/>
+        <location filename="softprojector.ui" line="262"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Spravovat databázi...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="243"/>
+        <location filename="softprojector.ui" line="265"/>
         <source>Import and export song collections and Bibles</source>
         <translation>Zavést a vyvést sbírky písní a Biblí</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="246"/>
+        <location filename="softprojector.ui" line="268"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="255"/>
+        <location filename="softprojector.ui" line="277"/>
         <source>&amp;Delete Current Song</source>
         <translation>&amp;Smazat nynější píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="258"/>
+        <location filename="softprojector.ui" line="280"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="270"/>
+        <location filename="softprojector.ui" line="292"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="311"/>
+        <location filename="softprojector.ui" line="333"/>
         <source>Copy Current Song...</source>
         <translation>Kopírovat nynější píseň...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="314"/>
+        <location filename="softprojector.ui" line="336"/>
         <source>Copy current song into a new songbook</source>
         <translation>Kopírovat nynější píseň do nového zpěvníku</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="317"/>
+        <location filename="softprojector.ui" line="339"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="326"/>
+        <location filename="softprojector.ui" line="348"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Počítadlo písní...</translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="357"/>
+        <source>&amp;Open Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="360"/>
+        <source>Ctrl+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="369"/>
+        <source>&amp;Save Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="372"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished">Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="377"/>
+        <source>Save Project &amp;As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="386"/>
+        <source>New Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="394"/>
+        <source>Close Project</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1420,79 +1795,79 @@ Byla uložena jako:
         <translation>Vyberte píseň podle čísla ve vybraném zpěvníku</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="80"/>
+        <location filename="songwidget.ui" line="83"/>
         <source>Filter:</source>
         <translation>Filtr:</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="99"/>
+        <location filename="songwidget.ui" line="102"/>
         <source>Use this field to limit the display of the songs to only the ones that contain the specified text in the song title or song number</source>
         <translation>Použijte toto pole, abyste omezil zobrazování písní jen na ty, které obsahují určitý text v názvu písně nebo v čísle písně</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="110"/>
+        <location filename="songwidget.ui" line="113"/>
         <source>Matches only songs the song number or title of which contains the entered string.</source>
         <translation>Spojí jen písně, jejichž číslo písně nebo název obsahuje zadaný pojem.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="113"/>
+        <location filename="songwidget.ui" line="116"/>
         <source>Contains</source>
         <translation>Obsahuje</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="123"/>
+        <location filename="songwidget.ui" line="126"/>
         <source>Matches only songs the song number or title of which begins with the entered string.</source>
         <translation>Spojí jen písně, jejichž číslo písně nebo název začíná zadaným pojmem.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="126"/>
+        <location filename="songwidget.ui" line="129"/>
         <source>Begins</source>
         <translation>Začíná</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="133"/>
+        <location filename="songwidget.ui" line="136"/>
         <source>Matches only songs the song number or title of which exactly matches the entered string.</source>
         <translation>Spojí jen písně, jejichž číslo písně nebo název přesně odpovídá zadanému pojmu.</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="136"/>
+        <location filename="songwidget.ui" line="139"/>
         <source>Exact match</source>
         <translation>Přesná shoda</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="185"/>
+        <location filename="songwidget.ui" line="188"/>
         <source>Add the selected song to the playlist</source>
         <translation>Přidat vybranou píseň do seznamu skladeb</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="188"/>
+        <location filename="songwidget.ui" line="191"/>
         <source>Add (F2)</source>
         <oldsource>Add to playlist (F2)</oldsource>
         <translation>Přidat (F2)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="195"/>
+        <location filename="songwidget.ui" line="198"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="205"/>
+        <location filename="songwidget.ui" line="208"/>
         <source>Remove the selected song from the playlist</source>
         <translation>Odstranit vybranou píseň ze seznamu skladeb</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="208"/>
+        <location filename="songwidget.ui" line="211"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from playlist</oldsource>
         <translation>Odstranit (F3)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="215"/>
+        <location filename="songwidget.ui" line="218"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="313"/>
+        <location filename="songwidget.ui" line="316"/>
         <source>Song preview: None</source>
         <translation>Náhled: Píseň chybí</translation>
     </message>
@@ -1501,40 +1876,46 @@ Byla uložena jako:
         <translation type="obsolete">Lied-Vorschau</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="294"/>
+        <location filename="songwidget.ui" line="297"/>
         <source>Quickly display the selected song on the screen without adding it to playlist first</source>
         <translation>Rychlé zobrazení vybrané písně na promítací ploše bez toho, že by byla nejprve přidána do seznamu skladeb</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="297"/>
+        <location filename="songwidget.ui" line="300"/>
         <source>Go Live (F5)</source>
         <translation>Ukázat (F5)</translation>
     </message>
     <message>
-        <location filename="songwidget.ui" line="304"/>
+        <location filename="songwidget.ui" line="307"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="155"/>
-        <location filename="songwidget.cpp" line="525"/>
+        <location filename="songwidget.cpp" line="161"/>
+        <location filename="songwidget.cpp" line="573"/>
         <source>All songbooks</source>
         <translation>Všechny zpěvníky</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="204"/>
+        <location filename="songwidget.cpp" line="225"/>
         <source>Song Preview: </source>
         <translation>Náhled na píseň:</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="287"/>
+        <location filename="songwidget.cpp" line="307"/>
         <source>Could not find song with number </source>
         <translation>Číslo písně se nepodařilo najít</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="288"/>
+        <location filename="songwidget.cpp" line="308"/>
         <source>No such song</source>
         <translation>Není žádná taková píseň</translation>
+    </message>
+    <message>
+        <location filename="songwidget.cpp" line="607"/>
+        <location filename="songwidget.cpp" line="622"/>
+        <source>All song categories</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1554,17 +1935,17 @@ Byla uložena jako:
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="song.cpp" line="342"/>
+        <location filename="song.cpp" line="488"/>
         <source>Num</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="344"/>
+        <location filename="song.cpp" line="490"/>
         <source>Title</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="song.cpp" line="346"/>
+        <location filename="song.cpp" line="492"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
     </message>
