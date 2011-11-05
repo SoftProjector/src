@@ -505,6 +505,17 @@ void SongsModel::emitLayoutAboutToBeChanged()
     emit layoutAboutToBeChanged();
 }
 
+bool SongsModel::isInTable(int songid)
+{
+    for( int i=0; i < song_list.size(); i++) {
+        Song *song = (Song*)&(song_list.at(i));
+        if( song->songID == songid )
+        {
+                return true;
+        }
+    }
+}
+
 SongProxyModel::SongProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }

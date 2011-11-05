@@ -423,6 +423,11 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 Song SongWidget::getSongToEdit()
 {
     playlistSongWasEdited = focusInPlaylistTable;
+
+    // Check if edited song is also in the playlist table (exact match)
+    if (playlist_model->isInTable(preview_song.songID))
+            playlistSongWasEdited = true;
+
     return preview_song;
 }
 

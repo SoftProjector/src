@@ -286,7 +286,7 @@ void EditWidget::setEdit(Song sEdit)
     else
     {
         sEdit.songbook_id="0";//initialize no to be empty
-        addNewSong(sEdit,tr("Copy to a new Songbook"),tr("The song you are editing was not found in database.\n"
+        addNewSong(sEdit,tr("Cannot find exact match in database"),tr("The exact match of a song you are editing was not found in database.\n"
                                                          "In order to edit this song, you need to add it to database.\n\n"
                                                          "Please select a Songbook to which you want to copy this song to:"));
     }

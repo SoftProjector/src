@@ -89,6 +89,7 @@ public:
     void emitLayoutAboutToBeChanged();
     void updateSongFromDatabase(int songid);
     void updateSongFromDatabase(int newSongId, int oldSongId);
+    bool isInTable(int songid);
 };
 
 
