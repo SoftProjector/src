@@ -471,13 +471,14 @@ Ergebnisse</translation>
     <message>
         <location filename="biblewidget.cpp" line="596"/>
         <source>Error opening Bible histories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fehler beim öffnen der Bibelgeschichten</translation>
     </message>
     <message>
         <location filename="biblewidget.cpp" line="597"/>
         <source>Cound not find any or all Bible verses from file withing current primary Bible.
 Try changing primary Bible and reopen project file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht finden einen oder alle Bibelvers(e) aus einer Datei in der laufenden primären Bibel.
+Ändern Sie die primäre Bibel und öffnen Sie die Projekt-Datei wieder.</translation>
     </message>
 </context>
 <context>
@@ -622,7 +623,7 @@ Fügen Sie bitte den Namen des Liedes ein.</translation>
     <message>
         <location filename="editwidget.cpp" line="289"/>
         <source>Cannot find exact match in database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht die exakte Übereinstimmung in der Datenbank finden</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="289"/>
@@ -630,7 +631,10 @@ Fügen Sie bitte den Namen des Liedes ein.</translation>
 In order to edit this song, you need to add it to database.
 
 Please select a Songbook to which you want to copy this song to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Die exakte Übereinstimmung eines Liedes, das Sie bearbeiten, ist in der Datenbank nicht gefunden worden.
+Um dieses Lied zu erstellen, müssen Sie es zur Datenbank hinzuzufügen.
+
+Wählen Sie bitte ein Gesangbuch, zu dem Sie dieses Lied kopieren möchten:</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="297"/>
@@ -675,222 +679,223 @@ Verse 2
     <message>
         <location filename="editwidget.cpp" line="407"/>
         <source>Bible Stories</source>
-        <translation type="unfinished"></translation>
+        <translation>Biblische Geschichten</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="407"/>
         <source>Gospel</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Verkündigung</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="407"/>
         <source>God, His love and greatness</source>
-        <translation type="unfinished"></translation>
+        <translation>Gott, Seine Liebe und Herrlichkeit</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="408"/>
         <source>The Resurrection of Christ</source>
-        <translation type="unfinished"></translation>
+        <translation>Christi Auferstehung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="408"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="408"/>
         <source>The second coming of Christ and the judgement</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Wiederkunft Christi und das Gericht</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="409"/>
         <source>Children and Family</source>
-        <translation type="unfinished"></translation>
+        <translation>Christliche Familie und Kindererziehung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="409"/>
         <source>For new converts</source>
-        <translation type="unfinished"></translation>
+        <translation>Für Neubekehrte</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="409"/>
         <source>Spiritual struggle and victory</source>
-        <translation type="unfinished"></translation>
+        <translation>Geistlicher Kampf und Sieg</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Harvest</source>
-        <translation type="unfinished"></translation>
+        <translation>Erntedankfest</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Jesus Christ</source>
-        <translation type="unfinished"></translation>
+        <translation>Jesus Christus</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Love</source>
-        <translation type="unfinished"></translation>
+        <translation>Liebe</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Prayer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebet</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Youth</source>
-        <translation type="unfinished"></translation>
+        <translation>Jugend</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Mother</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutter</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="411"/>
         <source>Wedding</source>
-        <translation type="unfinished"></translation>
+        <translation>Hochzeit</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="411"/>
         <source>Baptism</source>
-        <translation type="unfinished"></translation>
+        <translation>Wassertaufe</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="411"/>
         <source>Sunset / Sunrise</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonnenauf- und niedergang</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="412"/>
         <source>New Years</source>
-        <translation type="unfinished"></translation>
+        <translation>Neujahr</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="412"/>
         <source>Funeral</source>
-        <translation type="unfinished"></translation>
+        <translation>Beerdigung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="412"/>
         <source>At the ordination</source>
-        <translation type="unfinished"></translation>
+        <translation>Einsegnung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="413"/>
         <source>On the Lord&apos;s Supper</source>
-        <translation type="unfinished"></translation>
+        <translation>Abendmahl</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="413"/>
         <source>Heavenly abode</source>
-        <translation type="unfinished"></translation>
+        <translation>Himmlische Heimat</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="413"/>
         <source>Instruction and self-test</source>
-        <translation type="unfinished"></translation>
+        <translation>Belehrung und Selbstprüfung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="414"/>
         <source>Holy Ghost</source>
-        <translation type="unfinished"></translation>
+        <translation>Heiliger Geist</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="414"/>
         <source>Church</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemeinde</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="414"/>
         <source>Before church meeting</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor dem Gottesdienst</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="415"/>
         <source>Last Days</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Zeit</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="415"/>
         <source>Practical life with God</source>
-        <translation type="unfinished"></translation>
+        <translation>Praktisches Leben mit Gott</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="415"/>
         <source>At the end of church meeting</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlußlieder</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="416"/>
         <source>Welcome and farewell</source>
-        <translation type="unfinished"></translation>
+        <translation>Begrüßung und Abschied</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="416"/>
         <source>The call to work</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeit für den Herrn</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="416"/>
         <source>Call to repentance</source>
-        <translation type="unfinished"></translation>
+        <translation>Einladung zum Heil</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="417"/>
         <source>Journey of faith, faith and hope</source>
-        <translation type="unfinished"></translation>
+        <translation>Gnadenstand und Heilsgewißheit</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="417"/>
         <source>Various Christian holidays</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Erlösungsfreude in Christus</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="418"/>
         <source>Determination and faithfulness</source>
-        <translation type="unfinished"></translation>
+        <translation>Entschlossenheit und Treue</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="418"/>
         <source>Christmas</source>
-        <translation type="unfinished"></translation>
+        <translation>Geburt Christi</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="418"/>
         <source>Following Christ</source>
-        <translation type="unfinished"></translation>
+        <translation>Christi Nachfolge</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="419"/>
         <source>The Word of God</source>
-        <translation type="unfinished"></translation>
+        <translation>Wort Gottes</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="419"/>
         <source>Salvation</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlösung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="419"/>
         <source>Suffering and death of Christ</source>
-        <translation type="unfinished"></translation>
+        <translation>Passion und Auferstehung Christi</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="420"/>
         <source>Consolation and encouragement</source>
-        <translation type="unfinished"></translation>
+        <translation>Trost und Ermunterung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="420"/>
         <source>Praise and thanksgiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Lob und Danksagung</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="420"/>
         <source>Christian Joy</source>
-        <translation type="unfinished"></translation>
+        <translation>Christliche Freude</translation>
     </message>
 </context>
 <context>
@@ -1379,13 +1384,13 @@ Gespeichert als:
         <location filename="softprojector.cpp" line="426"/>
         <source>Project not saved</source>
         <comment>project as in document file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Projekt nicht gespeichert</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="427"/>
         <source>Do you want to save current project?</source>
         <comment>project as in document file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie aktuelles Projekt speichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="482"/>
@@ -1395,17 +1400,17 @@ Gespeichert als:
     <message>
         <location filename="softprojector.cpp" line="893"/>
         <source>Cannot start new edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht strarten neue Bearbeitung</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="894"/>
         <source>Another song is already beeb edited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein weiteres Lied ist bereits bearbeitet</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="895"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte speichern und/oder schließen Sie das aktuell bearbeitete Lied vor einer neuen Liedbearbeitung.</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="910"/>
@@ -1417,68 +1422,70 @@ Gespeichert als:
     <message>
         <location filename="softprojector.cpp" line="911"/>
         <source>No song has been selected to be edited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Bearbeiten wurde kein Lied ausgewählt</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="912"/>
         <source>Please select a song to be edited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Bearbeiten wählen Sie bitte ein Lied.</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1143"/>
         <source>Save Project?</source>
         <comment>project as in document file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Projekt speichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1144"/>
         <source>Do you want to save current project before opening other?</source>
         <comment>project as in document file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bevor Sie ein anderes Projekt öffnen, möchten Sie dieses spreichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1164"/>
         <source>Open softProjector project</source>
-        <translation type="unfinished"></translation>
+        <translation>softProjector Projekt öffnen.</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1165"/>
         <location filename="softprojector.cpp" line="1189"/>
         <source>softProjector project file </source>
-        <translation type="unfinished"></translation>
+        <translation>softProjector Projekt-Datei</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1188"/>
         <source>Save softProjector project as:</source>
-        <translation type="unfinished"></translation>
+        <translation>softProjector Projekt speichern als:</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1204"/>
         <location filename="softprojector.cpp" line="1236"/>
         <source>Save Project?</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt speichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1205"/>
         <source>Do you want to save current project before creating a new project?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie vor dem Erstellen eines neuen Projekts das aktuelle speichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1237"/>
         <source>Do you want to save current project before closing it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie vor dem Schließen speichern?</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1379"/>
         <source>Incorrect project file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Falsches Projekt Dateiformat</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="1380"/>
         <source>The softProjector project file you are opening,
 is not supported by your version of softProjector.
 You may try upgrading your version of softProjector.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die softProjector Projekt-Datei, die Sie öffnen,
+wird nicht von Ihrer Version von softProjector unterstützt.
+Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</translation>
     </message>
     <message>
         <source>No song has been selected to be edited</source>
@@ -1596,7 +1603,7 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="softprojector.ui" line="191"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolleiste</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="205"/>
@@ -1698,37 +1705,37 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="softprojector.ui" line="357"/>
         <source>&amp;Open Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Öffnen Projekt</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="360"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Strg+Ö</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="369"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Speichern Projekt</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="372"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrg+S</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="377"/>
         <source>Save Project &amp;As</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern Projekt &amp;unter</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="386"/>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Projekt</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="394"/>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen Projekt</translation>
     </message>
 </context>
 <context>
@@ -1915,7 +1922,7 @@ You may try upgrading your version of softProjector.</source>
         <location filename="songwidget.cpp" line="607"/>
         <location filename="songwidget.cpp" line="622"/>
         <source>All song categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Kategorien</translation>
     </message>
 </context>
 <context>
