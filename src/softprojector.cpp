@@ -891,7 +891,7 @@ void SoftProjector::on_actionEditSong_triggered()
         {
             QMessageBox ms;
             ms.setWindowTitle(tr("Cannot start new edit"));
-            ms.setText(tr("Another song is already beeb edited."));
+            ms.setText(tr("Another song is already been edited."));
             ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
             ms.setIcon(QMessageBox::Information);
             ms.exec();
@@ -922,18 +922,41 @@ void SoftProjector::setSongEditStatus(bool isEdited)
 
 void SoftProjector::on_actionNewSong_triggered()
 {
-    editWidget->show();
-    editWidget->setNew();
-    editWidget->activateWindow();
+    if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Cannot create a new song"));
+        ms.setText(tr("Another song is already been edited."));
+        ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+    else
+    {
+        editWidget->show();
+        editWidget->setNew();
+        editWidget->activateWindow();
+    }
 }
 
 void SoftProjector::on_actionCopy_Song_triggered()
 {
     if (songWidget->isSongSelected())
-    {
-        editWidget->show();
-        editWidget->setCopy(songWidget->getSongToEdit());
-        editWidget->activateWindow();
+    {if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("Cannot copy this song"));
+            ms.setText(tr("Another song is already been edited."));
+            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
+        else
+        {
+            editWidget->show();
+            editWidget->setCopy(songWidget->getSongToEdit());
+            editWidget->activateWindow();
+        }
     }
     else
     {
