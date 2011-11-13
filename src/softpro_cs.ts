@@ -34,16 +34,16 @@ Vladislav Kobzar</source>
     <message>
         <location filename="aboutdialog.ui" line="262"/>
         <source>Translators:</source>
-        <translation type="unfinished">Překladatelé:</translation>
+        <translation>Překladatelé:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="269"/>
         <source>Russian:
 German:
 Czech:</source>
-        <translation type="unfinished">Rus:
-Německy:
-České:</translation>
+        <translation>Ruština:
+Němčina:
+Čeština:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="286"/>
