@@ -10,34 +10,34 @@
         <translation>Über softProjector</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="109"/>
+        <location filename="aboutdialog.ui" line="111"/>
         <source>Version:</source>
         <translation>Version:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="183"/>
+        <location filename="aboutdialog.ui" line="204"/>
         <source>an open souce media projection software</source>
         <translation>Freigegebenes Programm softProjector</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="218"/>
+        <location filename="aboutdialog.ui" line="252"/>
         <source>Developers:</source>
         <translation>Entwickler:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="230"/>
+        <location filename="aboutdialog.ui" line="264"/>
         <source>Ilya Spivakov
 Matvey Adzhigirey
 Vladislav Kobzar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="262"/>
+        <location filename="aboutdialog.ui" line="296"/>
         <source>Translators:</source>
         <translation>Übersetzer:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="269"/>
+        <location filename="aboutdialog.ui" line="308"/>
         <source>Russian:
 German:
 Czech:</source>
@@ -46,7 +46,7 @@ Deutsch:
 Tschechisch:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="286"/>
+        <location filename="aboutdialog.ui" line="325"/>
         <source>Vladimir Zinchenko
 Eduard Schlak
 Pavel Fric</source>
@@ -57,7 +57,7 @@ Pavel Fric</source>
         <translation type="obsolete">Ein besonderer Dank für:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="346"/>
+        <location filename="aboutdialog.ui" line="385"/>
         <source>If you would like to help developing this program&lt;br&gt;
 or would like to contribute data, please visit:&lt;br&gt;
 &lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
@@ -96,7 +96,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="370"/>
+        <location filename="aboutdialog.ui" line="409"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -684,13 +684,13 @@ go here
 
 Verse 2
  - words of verse go here</source>
-        <translation>Verse 1
+        <translation type="unfinished">Strophe 1
  - Worte des Verses hier
 
 Chorus
  - Worte des Chores hier
 
-Verse 2
+Strophe 2
  - Worte des Verses hier</translation>
     </message>
     <message>
@@ -1688,7 +1688,6 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
     </message>
     <message>
         <location filename="softprojector.ui" line="253"/>
-        <location filename="softprojector.ui" line="389"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>

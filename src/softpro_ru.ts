@@ -10,22 +10,22 @@
         <translation>О программе softProjector</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="109"/>
+        <location filename="aboutdialog.ui" line="111"/>
         <source>Version:</source>
         <translation>Версия:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="183"/>
+        <location filename="aboutdialog.ui" line="204"/>
         <source>an open souce media projection software</source>
         <translation>Открытая программа Софт Проектор</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="218"/>
+        <location filename="aboutdialog.ui" line="252"/>
         <source>Developers:</source>
         <translation>Разработчики:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="230"/>
+        <location filename="aboutdialog.ui" line="264"/>
         <source>Ilya Spivakov
 Matvey Adzhigirey
 Vladislav Kobzar</source>
@@ -34,12 +34,12 @@ Vladislav Kobzar</source>
 Владислав Кобзарь</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="262"/>
+        <location filename="aboutdialog.ui" line="296"/>
         <source>Translators:</source>
         <translation>Переводчики:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="269"/>
+        <location filename="aboutdialog.ui" line="308"/>
         <source>Russian:
 German:
 Czech:</source>
@@ -48,7 +48,7 @@ Czech:</source>
 Чешский:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="286"/>
+        <location filename="aboutdialog.ui" line="325"/>
         <source>Vladimir Zinchenko
 Eduard Schlak
 Pavel Fric</source>
@@ -61,7 +61,7 @@ Pavel Fric</source>
         <translation type="obsolete">Особая благодарность:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="346"/>
+        <location filename="aboutdialog.ui" line="385"/>
         <source>If you would like to help developing this program&lt;br&gt;
 or would like to contribute data, please visit:&lt;br&gt;
 &lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
@@ -100,7 +100,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="370"/>
+        <location filename="aboutdialog.ui" line="409"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -1704,7 +1704,6 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="softprojector.ui" line="253"/>
-        <location filename="softprojector.ui" line="389"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
