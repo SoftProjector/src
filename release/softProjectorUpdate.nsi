@@ -11,8 +11,8 @@
 ;General
 
   ;Name and file
-  Name "SoftProjector 1.04"
-  OutFile "SoftProjector-1.04-upgrade.exe"
+  Name "SoftProjector 1.05"
+  OutFile "SoftProjector-1.05-upgrade.exe"
   
   XPStyle on
 

@@ -1,3 +1,15 @@
+SoftProjector 1.05 - November 23, 2011
+    New:
+        Song categories
+        Added Toolbar
+        Save and open SoftProjector projects (Bible history items, playlist songs, and announcements)
+        Added Ukrainian, German, And Czech song stanza titles
+    Bug Fix:
+        Faster song table refresh when adding/deleting/copping songs.
+        Only one song at a time can be edited. Previously you could start a new song edit/create new song/copy a song, when another song was been edited.
+        Properly update song information in the playlist after song has been edited.
+
+
 SoftProjector 1.04 - April 7, 2011
 
     New:
