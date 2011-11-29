@@ -64,7 +64,7 @@ public:
     QStringList getChapter(QString book, int chapter);
     QStringList getVerseAndCaption(QString id, QString bibleId);
     int getCurrentBookRow(QString book);
-    Verse getCurrentVerseAndCaption(int currentRow);
+    Verse getCurrentVerseAndCaption(QList<int> currentRows);
     QStringList verseList;
     QStringList previewIdList; // Verses that are in the preview (chapter) list
     QStringList currentIdList; // Verses that are in the show list
@@ -77,7 +77,7 @@ private:
     void retrieveBooks();
 
 private slots:
-    
+
 
 
 };

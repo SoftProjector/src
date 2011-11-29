@@ -88,10 +88,15 @@ QStringList Bible::getChapter(QString book, int chapter)
     return verseList;
 }
 
-
-Verse Bible::getCurrentVerseAndCaption(int currentRow)
+Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows)
 {
-    QString id = currentIdList.at(currentRow);
+    QString id;
+    for(int i(0);i<currentRows.count();++i)
+    {
+        id += currentIdList.at(currentRows.at(i)) + ",";
+    }
+    id.chop(1);
+
     QStringList list = getVerseAndCaption(id, primaryId);
     Verse v;
     v.primary_text = list[0];
@@ -110,54 +115,77 @@ Verse Bible::getCurrentVerseAndCaption(int currentRow)
 
 }
 
-
 QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 {
-    QString verse, verse_old, verse_n, verse_nold;
+    QString verse, verse_old, verse_show, verse_n, verse_nold, verse_nfirst, chapter;
     QString caption;
     QString book;
     QStringList ids;
-    QSqlQuery sq;
+    QSqlQuery sq, sq1;
 
     if (id.contains(","))// Run if more than one database verse items exist or show muliple verses
     {
         ids = id.split(",");
-        for (int i(0); i<ids.count(); ++i)
+        id.replace(",", "' OR verse_id = '");
+        sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE ( verse_id = '"
+                + id +"' ) AND bible_id = " + bibleId);        
+        while (sq.next())
         {
-            sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id = '"
-                    + ids.at(i) +"' AND bible_id = " + bibleId);
-
-            sq.first();
+            book = sq.value(0).toString();
+            chapter = sq.value(1).toString();
+            verse_n = sq.value(2).toString();
             verse = sq.value(3).toString().trimmed();
 
-            book = sq.value(0).toString();
-            verse_n = sq.value(2).toString();
+            // Set first verse number
+            if (verse_nfirst.isEmpty())
+                verse_nfirst = verse_n;
 
-            if (verse_n==verse_nold  ||  verse_nold.isEmpty())
-                // If second(nold) verse number is the same or it is empty, then create a regular sigle verse
-                // Else create a single display of muliple verses
+            // If second(nold) verse number is the same or it is empty, then create a regular sigle verse
+            // Else create a single display of muliple verses
+            if (verse_n==verse_nold)
             {
-                caption =" " + sq.value(1).toString() + ":" + verse_n;
-                verse = verse_old + " " + verse;
+                // If current verse number is same as first verse number,
+                // then remove verse number from verse text and caption
+                // shows only current verse number
+                if(verse_n == verse_nfirst)
+                {
+                    int j(0);
+                    for(int i(0);i<verse_show.count(); ++i)
+                    {
+                        j = 1 + i;
+                        QString p =verse_show.at(i);
+                        if(p==(")"))
+                            break;
+                    }
+                    verse_show = verse_show.remove(0,j);
+
+                    caption = " " + chapter + ":" + verse_n;
+                }
+                else
+                    // Else if current verse number does match first verse number,
+                    // then show bigening and eding verse numbers in caption
+                    caption = " " + chapter + ":" + verse_nfirst + "-" + verse_n;
+
+                verse_show += " " + verse;
             }
             else
             {
-                caption =" " + sq.value(1).toString() + ":" + verse_nold + "," + verse_n;
-                verse = "(" + verse_nold + ") " + verse_old + " (" + verse_n + ") " + verse;
+                caption =" " + chapter + ":" + verse_nfirst + "-" + verse_n;
+                verse = " (" + verse_n + ") " + verse;
+                verse_show += verse;
+                if(!verse_show.startsWith(" ("))
+                    verse_show = " ("+ verse_nfirst + ") " + verse_show;
             }
-
             verse_old = verse;
             verse_nold = verse_n;
-            verse = verse.simplified();
-            sq.clear();
-
-            sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                    + book + " AND bible_id = " + bibleId);
-            sq.first();
-            caption = sq.value(0).toString() + caption;
-            sq.clear();
-
         }
+        verse = verse_show.simplified();
+
+        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
+                 + book + " AND bible_id = " + bibleId);
+        sq1.first();
+        caption = sq1.value(0).toString() + caption;
+        sq1.clear();
     }
     else // Run as standard single verse item from database
     {
@@ -166,7 +194,6 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
 
         sq.first();
         verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
-        //qDebug() << "VERSE: '" << verse << "'";
 
         book = sq.value(0).toString();
         caption =" " + sq.value(1).toString() + ":" + sq.value(2).toString();

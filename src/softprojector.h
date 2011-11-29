@@ -134,6 +134,10 @@ private slots:
     void setChapterList(QStringList chapter_list, int verse, QString caption);
     void drawText(QPainter *painter, int width, int height);
 
+    void on_listShow_itemSelectionChanged();
+
+    void on_rbMultiVerse_toggled(bool checked);
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent( QKeyEvent * event );

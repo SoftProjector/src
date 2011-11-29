@@ -477,6 +477,8 @@ void SoftProjector::setAnnounceText(Announcement text)
 {
     announcement_text = text;
     type = "announce";
+    ui->rbMultiVerse->setEnabled(false);
+    ui->rbMultiVerse->setChecked(false);
     showing = true;
     new_list = true;
     ui->labelShow->setText(tr("Announcement"));
@@ -498,6 +500,8 @@ void SoftProjector::setSongList(Song song, int row)
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
+    ui->rbMultiVerse->setEnabled(false);
+    ui->rbMultiVerse->setChecked(false);
     showing = true;
     new_list = true;
     ui->labelShow->setText(song.title);
@@ -826,6 +830,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     // Called to show a bible verse from a chapter in the preview list
 
     type = "bible";
+    ui->rbMultiVerse->setEnabled(true);
     showing = true;
     new_list = true;
     ui->labelShow->setText(caption);
@@ -842,6 +847,11 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the show (right-most) list.
+//    updateScreen();
+}
+void SoftProjector::on_listShow_itemSelectionChanged()
+{
+    // Called when the user selects a different row in the show (right-most) list.
     updateScreen();
 }
 
@@ -850,6 +860,7 @@ void SoftProjector::updateScreen()
     // Display the specified row of the show (rightmost) table to
     // the display
     int currentRow = ui->listShow->currentRow();
+
     if( showing == false )
     {
         // Do not display any text:
@@ -862,7 +873,19 @@ void SoftProjector::updateScreen()
         if(type=="song")
             current_song_verse = currentRow;
         else if(type=="bible")
-            current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRow);
+        {
+            int srows(ui->listShow->count());
+            QList<int> currentRows;
+            for(int i(0); i<srows; ++i)
+            {
+                if(ui->listShow->item(i)->isSelected())
+//                    qDebug() << QString::number(i);
+                    currentRows.append(i);
+            }
+//            qDebug()<< "--";
+            current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRows);
+
+        }
         else if( type == "announce" )
             announcement_text.text = announceWidget->getText();
         display->renderText(true);
@@ -1540,7 +1563,7 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
 }
 
 void SoftProjector::updateWindowTest()
-{    
+{
     QFileInfo fi(project_file_path);
     QString file = fi.fileName();
 
@@ -1566,4 +1589,12 @@ void SoftProjector::setProjectChanged(bool changed)
         is_project_saved = true;
 
     updateWindowTest();
+}
+
+void SoftProjector::on_rbMultiVerse_toggled(bool checked)
+{
+    if(checked)
+        ui->listShow->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    else
+        ui->listShow->setSelectionMode(QAbstractItemView::SingleSelection);
 }
