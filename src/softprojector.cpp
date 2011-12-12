@@ -93,8 +93,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     connect(songWidget, SIGNAL(sendSong(Song, int)),
             this, SLOT(setSongList(Song, int)));
-    connect(bibleWidget, SIGNAL(goLive(QStringList, int, QString)),
-            this, SLOT(setChapterList(QStringList, int, QString)));
+    connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
+            this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
     connect(announceWidget,SIGNAL(sendText(Announcement)),
             this, SLOT(setAnnounceText(Announcement)));
     connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
@@ -142,8 +142,11 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    version_string = "1.05"; // to be used only for official release
-//    version_string = "1.05_Beta"; // to be used between official releases
+    // Hide Multi verse selection, only visibel to be when showing bible
+    ui->rbMultiVerse->setVisible(false);
+
+//    version_string = "1.06"; // to be used only for official release
+    version_string = "1.06_Alpha"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
     // Initialize bool variables
@@ -477,7 +480,7 @@ void SoftProjector::setAnnounceText(Announcement text)
 {
     announcement_text = text;
     type = "announce";
-    ui->rbMultiVerse->setEnabled(false);
+    ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     showing = true;
     new_list = true;
@@ -500,7 +503,7 @@ void SoftProjector::setSongList(Song song, int row)
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
-    ui->rbMultiVerse->setEnabled(false);
+    ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     showing = true;
     new_list = true;
@@ -825,12 +828,12 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
         drawAnnounceText(painter, width, height);
 }
 
-void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString caption)
+void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems)
 {
     // Called to show a bible verse from a chapter in the preview list
 
     type = "bible";
-    ui->rbMultiVerse->setEnabled(true);
+    ui->rbMultiVerse->setVisible(true);
     showing = true;
     new_list = true;
     ui->labelShow->setText(caption);
@@ -838,7 +841,13 @@ void SoftProjector::setChapterList(QStringList chapter_list, int verse, QString 
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
-    ui->listShow->setCurrentRow(verse);
+
+    if(selectedItems.count()>1)
+        ui->rbMultiVerse->setChecked(true);
+    else
+        ui->rbMultiVerse->setChecked(false);
+    ui->listShow->selectionModel()->select(selectedItems,QItemSelectionModel::Select);
+
     ui->listShow->setFocus();
     new_list = false;
     updateScreen();
@@ -852,7 +861,12 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 void SoftProjector::on_listShow_itemSelectionChanged()
 {
     // Called when the user selects a different row in the show (right-most) list.
-    updateScreen();
+    // First check if ratio button "Multi Verse" is check. If so, make button "Show"
+    // enable and update screen only after show_botton is clicked.
+    if(ui->rbMultiVerse->isChecked())
+        ui->show_button->setEnabled(true);
+    else
+        updateScreen();
 }
 
 void SoftProjector::updateScreen()
@@ -870,6 +884,9 @@ void SoftProjector::updateScreen()
     }
     else if (currentRow >=0 && !new_list)
     {
+        ui->show_button->setEnabled(false);
+        ui->clear_button->setEnabled(true);
+
         if(type=="song")
             current_song_verse = currentRow;
         else if(type=="bible")
@@ -879,18 +896,13 @@ void SoftProjector::updateScreen()
             for(int i(0); i<srows; ++i)
             {
                 if(ui->listShow->item(i)->isSelected())
-//                    qDebug() << QString::number(i);
                     currentRows.append(i);
             }
-//            qDebug()<< "--";
             current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRows);
-
         }
         else if( type == "announce" )
             announcement_text.text = announceWidget->getText();
         display->renderText(true);
-        ui->show_button->setEnabled(false);
-        ui->clear_button->setEnabled(true);
     }
 }
 

@@ -131,7 +131,7 @@ private slots:
     void on_actionClose_triggered();
     void setSongList(Song song, int row);
     void setAnnounceText(Announcement text);
-    void setChapterList(QStringList chapter_list, int verse, QString caption);
+    void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
     void drawText(QPainter *painter, int width, int height);
 
     void on_listShow_itemSelectionChanged();

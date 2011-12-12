@@ -72,7 +72,7 @@ public slots:
     void setHiddenSplitterState(QString state);
     void setShownSplitterState(QString state);
     void loadBibles(QString primaryId, QString secondaryId);
-    void sendToProjector(int verse, bool add_to_history);
+    void sendToProjector(bool add_to_history);
     //bool eventFilter(QObject *object, QEvent *event);
 
 protected:
@@ -81,7 +81,7 @@ protected:
 signals:
     void setWaitCursor();
     void setArrowCursor();
-    void goLive(QStringList chapter_list, int verse, QString caption);
+    void goLive(QStringList chapter_list, QString caption, QItemSelection selectItems);
     void historyListChanged(bool changed);
 
 private slots:
