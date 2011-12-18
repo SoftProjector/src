@@ -156,13 +156,13 @@ SoftProjector::SoftProjector(QWidget *parent)
 SoftProjector::~SoftProjector()
 {
     writeXMLConfigurationFile();
-    delete ui;
     delete songWidget;
     delete editWidget;
     delete bibleWidget;
     delete announceWidget;
     delete display;
     delete desktop;
+    delete ui;
 }
 
 void SoftProjector::positionDisplayWindow()
