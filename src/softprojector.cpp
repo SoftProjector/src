@@ -842,12 +842,13 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
 
-    if(selectedItems.count()>1)
+    if(selectedItems.indexes().count()>1)
         ui->rbMultiVerse->setChecked(true);
     else
         ui->rbMultiVerse->setChecked(false);
-    ui->listShow->selectionModel()->select(selectedItems,QItemSelectionModel::Select);
 
+    ui->listShow->setCurrentRow(selectedItems.first().top());
+    ui->listShow->selectionModel()->select(selectedItems,QItemSelectionModel::Select);
     ui->listShow->setFocus();
     new_list = false;
     updateScreen();

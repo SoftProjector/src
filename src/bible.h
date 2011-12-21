@@ -42,6 +42,9 @@ public:
     QString verse;
     QString verse_text;
     QString verse_id;
+    QString display_text;
+    int first_v;
+    int last_v;
 };
 
 class BibleBook

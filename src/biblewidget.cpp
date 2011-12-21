@@ -428,16 +428,46 @@ void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
 void BibleWidget::addToHistory()
 {
     BibleSearch b;
+    QString selected_ids;
 
     b.book = ui->listBook->currentItem()->text();
     b.chapter = ui->chapter_ef->text();
     b.verse = ui->verse_ef->text();
-    b.verse_text = ui->chapter_preview_list->currentItem()->text().trimmed();
-    b.verse_id = bible.previewIdList.at(ui->chapter_preview_list->currentIndex().row());
-    history_items.append(b);
 
-    ui->history_listWidget->addItem(b.book + " " + b.chapter + ":" + b.verse_text);
+    int first_selected(-1),last_selected(-1);
+    for(int i(0);i<ui->chapter_preview_list->count();++i)
+    {
+        if(ui->chapter_preview_list->item(i)->isSelected())
+        {
+            if(first_selected == -1)
+                first_selected = i;
+            last_selected = i;
+            selected_ids += bible.previewIdList.at(i) + ",";
+        }
+    }
+    selected_ids.chop(1);
+
+    b.verse_text = ui->chapter_preview_list->item(first_selected)->text().trimmed();
+    b.verse_id = selected_ids;
+    b.first_v = first_selected;
+    b.last_v = last_selected;
+
+    if(first_selected==last_selected)
+        b.display_text = b.book + " " + b.chapter + ":" + b.verse_text;
+    else
+    {   // Create multi verse caption for display
+        int f(first_selected+1), l(last_selected+1),j(0);
+        QString v=b.verse_text,p=".";
+        while(v.at(j)!=p.at(0))
+            ++j;
+        v = v.remove(0,j);
+
+        b.display_text = b.book + " " + b.chapter + ":" + QString::number(f) + "-" + QString::number(l) + v + "...";
+    }
+    history_items.append(b);
+    ui->history_listWidget->addItem(b.display_text);
     emit historyListChanged(true);
+
 }
 
 void BibleWidget::on_add_to_history_pushButton_clicked()
@@ -475,7 +505,11 @@ void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
         ui->listBook->setCurrentRow(row);
 
         ui->chapter_ef->setText(history_items.at(currentRow).chapter);
-        ui->verse_ef->setText(history_items.at(currentRow).verse);
+        QItemSelection sel;
+        sel.select(ui->chapter_preview_list->model()->index(history_items.at(currentRow).first_v,0,QModelIndex()),
+                   ui->chapter_preview_list->model()->index(history_items.at(currentRow).last_v,0,QModelIndex()));
+        ui->verse_ef->setText(QString::number(history_items.at(currentRow).first_v+1));
+        ui->chapter_preview_list->selectionModel()->select(sel,QItemSelectionModel::Select);
     }
 }
 
