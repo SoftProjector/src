@@ -145,8 +145,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Hide Multi verse selection, only visibel to be when showing bible
     ui->rbMultiVerse->setVisible(false);
 
-//    version_string = "1.06"; // to be used only for official release
-    version_string = "1.06_Alpha"; // to be used between official releases
+    version_string = "1.06"; // to be used only for official release
+//    version_string = "1.06_Alpha"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
     // Initialize bool variables
