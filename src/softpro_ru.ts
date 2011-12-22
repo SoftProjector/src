@@ -325,7 +325,7 @@ Copyright:</source>
     <message>
         <location filename="biblewidget.ui" line="130"/>
         <source>Return</source>
-        <translation type="unfinished">Результат</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="biblewidget.ui" line="159"/>
@@ -363,27 +363,27 @@ Copyright:</source>
         <translation>Выбранной главе</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="637"/>
+        <location filename="biblewidget.ui" line="640"/>
         <source>Add (F2)</source>
         <translation>Добавить (F2)</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="644"/>
+        <location filename="biblewidget.ui" line="647"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="668"/>
+        <location filename="biblewidget.ui" line="671"/>
         <source>F3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="688"/>
+        <location filename="biblewidget.ui" line="691"/>
         <source>Clear all history items</source>
         <translation>Очистить список истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="691"/>
+        <location filename="biblewidget.ui" line="694"/>
         <source>Clear</source>
         <oldsource>Clear History</oldsource>
         <translation>Очистить</translation>
@@ -439,7 +439,7 @@ Results</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="634"/>
+        <location filename="biblewidget.ui" line="637"/>
         <source>Add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</source>
         <oldsource>add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</oldsource>
         <translation>Добавить выбранный текст к истории. Автоматически добавляется при нажатии F5</translation>
@@ -449,17 +449,17 @@ Results</source>
         <translation type="obsolete">Добавить к истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="651"/>
+        <location filename="biblewidget.ui" line="654"/>
         <source>This list contains verses that were sent to be shown</source>
         <translation>В этом списке находятся стихи для вывода на экран</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="658"/>
+        <location filename="biblewidget.ui" line="661"/>
         <source>Remove current selected verse in the history list</source>
         <translation>Удалить данный стих из списка истории</translation>
     </message>
     <message>
-        <location filename="biblewidget.ui" line="661"/>
+        <location filename="biblewidget.ui" line="664"/>
         <source>Remove (F3)</source>
         <oldsource>Remove from history</oldsource>
         <translation>Удалить (F3)</translation>
@@ -501,12 +501,12 @@ results</source>
         <translation>Не найдено ничего</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="596"/>
+        <location filename="biblewidget.cpp" line="651"/>
         <source>Error opening Bible histories</source>
-        <translation type="unfinished">Ошибка при открытии Библейских историй</translation>
+        <translation>Ошибка при открытии Библейских историй</translation>
     </message>
     <message>
-        <location filename="biblewidget.cpp" line="597"/>
+        <location filename="biblewidget.cpp" line="652"/>
         <source>Cound not find any or all Bible verses from file withing current primary Bible.
 Try changing primary Bible and reopen project file.</source>
         <translation>Не найдено ничего в первой версии Библии
@@ -598,7 +598,7 @@ Try changing primary Bible and reopen project file.</source>
     <message>
         <location filename="editwidget.ui" line="229"/>
         <source>Text font:</source>
-        <translation type="unfinished">Шрифт текста:</translation>
+        <translation>Шрифт текста:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="240"/>
@@ -644,7 +644,7 @@ Try changing primary Bible and reopen project file.</source>
         <location filename="editwidget.cpp" line="99"/>
         <source>Song title cannot be left empty.
 Please enter song title.</source>
-        <translation type="unfinished">Название песни не может остаться незаполненным.
+        <translation>Название песни не может остаться незаполненным.
 Пожалуйста введите название песни.</translation>
     </message>
     <message>
@@ -721,7 +721,7 @@ Verse 2
     <message>
         <location filename="editwidget.cpp" line="407"/>
         <source>God, His love and greatness</source>
-        <translation type="unfinished">Божья любовь и величие</translation>
+        <translation>Божья любовь и величие</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="408"/>
@@ -775,7 +775,7 @@ Verse 2
     <message>
         <location filename="editwidget.cpp" line="410"/>
         <source>Prayer</source>
-        <translation type="unfinished">Молитвенные</translation>
+        <translation>Молитвенные</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="410"/>
@@ -804,7 +804,7 @@ Verse 2
     <message>
         <location filename="editwidget.cpp" line="411"/>
         <source>Sunset / Sunrise</source>
-        <translation type="unfinished">Утренние и вечерние</translation>
+        <translation>Утренние и вечерние</translation>
     </message>
     <message>
         <location filename="editwidget.cpp" line="412"/>
@@ -1029,7 +1029,7 @@ Verse 2
     <message>
         <location filename="managedatadialog.ui" line="97"/>
         <source>Delete a Bible that you will no longer want to use in this program.</source>
-        <translation type="unfinished">Удалить модуль Библии который вы больше не будет использовать в этой программе.</translation>
+        <translation>Удалить модуль Библии который вы больше не будет использовать в этой программе.</translation>
     </message>
     <message>
         <location filename="managedatadialog.ui" line="100"/>
@@ -1280,12 +1280,12 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="26"/>
         <source>Primary Bible:</source>
-        <translation type="unfinished">Первая Библия:</translation>
+        <translation>Первая Библия:</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="47"/>
         <source>Secondary Bible:</source>
-        <translation type="unfinished">Вторая Библия:</translation>
+        <translation>Вторая Библия:</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="66"/>
@@ -1406,137 +1406,137 @@ Has been saved to:
     </message>
     <message>
         <location filename="softprojector.cpp" line="90"/>
-        <location filename="softprojector.cpp" line="1147"/>
+        <location filename="softprojector.cpp" line="1183"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="91"/>
-        <location filename="softprojector.cpp" line="1148"/>
+        <location filename="softprojector.cpp" line="1184"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
         <location filename="softprojector.cpp" line="92"/>
-        <location filename="softprojector.cpp" line="1149"/>
+        <location filename="softprojector.cpp" line="1185"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="426"/>
+        <location filename="softprojector.cpp" line="429"/>
         <source>Project not saved</source>
         <comment>project as in document file</comment>
         <translation>Проект не сохранен</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="427"/>
+        <location filename="softprojector.cpp" line="430"/>
         <source>Do you want to save current project?</source>
         <comment>project as in document file</comment>
         <translation>Вы желаете сохранить данный проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="482"/>
+        <location filename="softprojector.cpp" line="487"/>
         <source>Announcement</source>
         <translation>Объявление</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="893"/>
+        <location filename="softprojector.cpp" line="929"/>
         <source>Cannot start new edit</source>
         <translation>Невозможно начать новое редактирование</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="894"/>
-        <location filename="softprojector.cpp" line="929"/>
-        <location filename="softprojector.cpp" line="949"/>
+        <location filename="softprojector.cpp" line="930"/>
+        <location filename="softprojector.cpp" line="965"/>
+        <location filename="softprojector.cpp" line="985"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Уже редактируется другая песня.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="895"/>
-        <location filename="softprojector.cpp" line="930"/>
-        <location filename="softprojector.cpp" line="950"/>
+        <location filename="softprojector.cpp" line="931"/>
+        <location filename="softprojector.cpp" line="966"/>
+        <location filename="softprojector.cpp" line="986"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Пожалуйста сохраните и (или) закройте данную песню прежде чем редактировать другую.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="910"/>
-        <location filename="softprojector.cpp" line="964"/>
-        <location filename="softprojector.cpp" line="1003"/>
+        <location filename="softprojector.cpp" line="946"/>
+        <location filename="softprojector.cpp" line="1000"/>
+        <location filename="softprojector.cpp" line="1039"/>
         <source>No song selected</source>
         <translation>Ни одна песня не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="911"/>
+        <location filename="softprojector.cpp" line="947"/>
         <source>No song has been selected to be edited.</source>
         <translation>Ни одна песня не выбрана для редактирования.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="912"/>
+        <location filename="softprojector.cpp" line="948"/>
         <source>Please select a song to be edited.</source>
         <translation>Пожалуйста выберите песню для редактирования.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="928"/>
+        <location filename="softprojector.cpp" line="964"/>
         <source>Cannot create a new song</source>
         <translation>Невозможно создать новую песню</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="948"/>
+        <location filename="softprojector.cpp" line="984"/>
         <source>Cannot copy this song</source>
         <translation>Невозможно скопировать песню</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1166"/>
+        <location filename="softprojector.cpp" line="1202"/>
         <source>Save Project?</source>
         <comment>project as in document file</comment>
         <translation>Сохранить проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1167"/>
+        <location filename="softprojector.cpp" line="1203"/>
         <source>Do you want to save current project before opening other?</source>
         <comment>project as in document file</comment>
         <translation>Вы желаете сохранить данный проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1187"/>
+        <location filename="softprojector.cpp" line="1223"/>
         <source>Open softProjector project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1188"/>
-        <location filename="softprojector.cpp" line="1212"/>
+        <location filename="softprojector.cpp" line="1224"/>
+        <location filename="softprojector.cpp" line="1248"/>
         <source>softProjector project file </source>
         <translation>Файл проекта</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1211"/>
+        <location filename="softprojector.cpp" line="1247"/>
         <source>Save softProjector project as:</source>
         <translation>Сохранить проект как:</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1227"/>
-        <location filename="softprojector.cpp" line="1259"/>
+        <location filename="softprojector.cpp" line="1263"/>
+        <location filename="softprojector.cpp" line="1295"/>
         <source>Save Project?</source>
         <translation>Сохранить проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1228"/>
+        <location filename="softprojector.cpp" line="1264"/>
         <source>Do you want to save current project before creating a new project?</source>
         <translation>Вы желаете сохранить текущий проект прежде чем создать новый?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1260"/>
+        <location filename="softprojector.cpp" line="1296"/>
         <source>Do you want to save current project before closing it?</source>
         <translation>Вы желаете сохранить текущий проект прежде чем закрыть его?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1402"/>
+        <location filename="softprojector.cpp" line="1454"/>
         <source>Incorrect project file format</source>
         <translation>Неправильный формат файла проекта</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1403"/>
+        <location filename="softprojector.cpp" line="1455"/>
         <source>The softProjector project file you are opening,
 is not supported by your version of softProjector.
 You may try upgrading your version of softProjector.</source>
@@ -1553,34 +1553,34 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Выберите песню для редактирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="965"/>
+        <location filename="softprojector.cpp" line="1001"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Песня для копирования не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="966"/>
+        <location filename="softprojector.cpp" line="1002"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Выберите песню для копирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="978"/>
+        <location filename="softprojector.cpp" line="1014"/>
         <source>Delete song?</source>
         <translation>Удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="979"/>
+        <location filename="softprojector.cpp" line="1015"/>
         <source>Delete song &quot;</source>
         <translation>Удаление песни &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1004"/>
+        <location filename="softprojector.cpp" line="1040"/>
         <source>No song has been selected to be deleted</source>
         <translation>Песня для удаления не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1005"/>
+        <location filename="softprojector.cpp" line="1041"/>
         <source>Please select a song to be deleted</source>
         <translation>Выберите песню для удаления</translation>
     </message>
@@ -1589,7 +1589,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Вы уверены что хотите удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="980"/>
+        <location filename="softprojector.cpp" line="1016"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Песня будет удалена навсегда</translation>
     </message>
@@ -1632,164 +1632,174 @@ You may try upgrading your version of softProjector.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="137"/>
+        <location filename="softprojector.ui" line="123"/>
+        <source>Use Multi Verse</source>
+        <translation>Показать несколько стихов</translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="144"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="149"/>
+        <location filename="softprojector.ui" line="156"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="158"/>
-        <location filename="softprojector.ui" line="289"/>
+        <location filename="softprojector.ui" line="165"/>
+        <location filename="softprojector.ui" line="296"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="165"/>
+        <location filename="softprojector.ui" line="172"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="174"/>
+        <location filename="softprojector.ui" line="181"/>
         <source>Songs</source>
         <translation>Песни</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="191"/>
+        <location filename="softprojector.ui" line="198"/>
         <source>toolBar</source>
-        <translation type="unfinished">Панель инструментов</translation>
+        <translation>Панель инструментов</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="205"/>
+        <location filename="softprojector.ui" line="212"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="214"/>
+        <location filename="softprojector.ui" line="221"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="217"/>
+        <location filename="softprojector.ui" line="224"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="226"/>
+        <location filename="softprojector.ui" line="233"/>
         <source>E&amp;xit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="229"/>
+        <location filename="softprojector.ui" line="236"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="238"/>
+        <location filename="softprojector.ui" line="245"/>
         <source>&amp;Edit Current Song...</source>
         <translation>&amp;Редактировать песню...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="241"/>
+        <location filename="softprojector.ui" line="248"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="250"/>
+        <location filename="softprojector.ui" line="257"/>
         <source>&amp;New Song...</source>
         <translation>&amp;Новая песня...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="253"/>
+        <location filename="softprojector.ui" line="260"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="262"/>
+        <location filename="softprojector.ui" line="269"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Управление базой данных...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="265"/>
+        <location filename="softprojector.ui" line="272"/>
         <source>Import and export song collections and Bibles</source>
         <translation>Импортирование и экспортирование сборников и Библий</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="268"/>
+        <location filename="softprojector.ui" line="275"/>
         <source>Ctrl+M</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="277"/>
+        <location filename="softprojector.ui" line="284"/>
         <source>&amp;Delete Current Song</source>
         <translation>&amp;Удалить песню</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="280"/>
+        <location filename="softprojector.ui" line="287"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="292"/>
+        <location filename="softprojector.ui" line="299"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="333"/>
+        <location filename="softprojector.ui" line="340"/>
         <source>Copy Current Song...</source>
         <translation>Копировать песню...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="336"/>
+        <location filename="softprojector.ui" line="343"/>
         <source>Copy current song into a new songbook</source>
         <translation>Копировать песню в новый сборник</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="339"/>
+        <location filename="softprojector.ui" line="346"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="348"/>
+        <location filename="softprojector.ui" line="355"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Счетчик Песен...</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="357"/>
+        <location filename="softprojector.ui" line="364"/>
         <source>&amp;Open Project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="360"/>
+        <location filename="softprojector.ui" line="367"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="369"/>
+        <location filename="softprojector.ui" line="376"/>
         <source>&amp;Save Project</source>
         <translation>Сохранить проект</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="372"/>
+        <location filename="softprojector.ui" line="379"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="377"/>
+        <location filename="softprojector.ui" line="384"/>
         <source>Save Project &amp;As</source>
         <translation>Сохранить проект как</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="386"/>
+        <location filename="softprojector.ui" line="393"/>
         <source>New Project</source>
         <translation>Новый проект</translation>
     </message>
     <message>
-        <location filename="softprojector.ui" line="394"/>
+        <location filename="softprojector.ui" line="396"/>
+        <source>Ctrl+Shift+N</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="softprojector.ui" line="401"/>
         <source>Close Project</source>
         <translation>Закрыть проект</translation>
     </message>
