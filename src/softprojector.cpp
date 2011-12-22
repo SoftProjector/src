@@ -1335,16 +1335,25 @@ void SoftProjector::saveProject()
 
     xml.writeStartDocument();
     xml.writeStartElement("spProject");
-    xml.writeAttribute("version","1.0");
+    xml.writeAttribute("version","1.5");
 
     //Write Bible History
     xml.writeStartElement("BibleHistory");
     for(int i(0); i<histories.count(); ++i)
     {
+        QXmlStreamAttributes atrs;
         h = histories.at(i);
-        xml.writeStartElement("verse");
-        xml.writeCharacters(h.verse_id);
-        xml.writeEndElement();
+        atrs.append("first",QString::number(h.first_v));
+        atrs.append("last",QString::number(h.last_v));
+        xml.writeStartElement("history"); // Start verse
+        xml.writeAttributes(atrs);
+        xml.writeTextElement("ids",h.verse_id);
+        xml.writeTextElement("book",h.book);
+        xml.writeTextElement("chapter",h.chapter);
+        xml.writeTextElement("display_txt",h.display_text);
+        xml.writeTextElement("verse",h.verse);
+        xml.writeTextElement("verse_txt",h.verse_text);
+        xml.writeEndElement(); //End verse
     }
     xml.writeEndElement(); // End Bible Histories
 
@@ -1405,16 +1414,23 @@ void SoftProjector::openProject()
         xml.readNext();
         if(xml.StartElement && xml.name() == "spProject")
         {
-            if(xml.attributes().value("version").toString() == "1.0")
+            double p_version = xml.attributes().value("version").toString().toDouble();
+            if(1.0<p_version<=1.5)
             {
                 xml.readNext();
                 while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
                 {
                     xml.readNext();
-                    if(xml.StartElement && xml.name() == "BibleHistory")
+                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.5)
                     {
                         // Read saved bible history
                         readBibleHistoryFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.0)
+                    {
+                        // Read saved bible history
+                        readBibleHistoryFromSavedProject1_0(&xml);
                         xml.readNext();
                     }
                     else if(xml.StartElement && xml.name() == "Songs")
@@ -1456,7 +1472,7 @@ void SoftProjector::openProject()
 void SoftProjector::clearProject()
 {
     QList<Announcement> announcements;
-    QStringList histories;
+    QList<BibleSearch> histories;
     QList<Song> songs;
 
     announceWidget->loadFromFile(announcements);
@@ -1487,6 +1503,64 @@ void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
 
 void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
 {
+    BibleSearch h;
+    QList<BibleSearch> histories;
+    QXmlStreamAttributes atrs;
+    while(xml->tokenString() != "EndElement")
+    {
+        xml->readNext();
+        if(xml->StartElement && xml->name() == "history")
+        {
+            atrs = xml->attributes();
+            QString a = atrs.value("first").toString();
+            h.first_v = a.toInt();
+            a = atrs.value("last").toString();
+            h.last_v = a.toInt();
+
+            xml->readNext();
+            while(xml->tokenString() != "EndElement")
+            {
+                xml->readNext();
+                if(xml->StartElement && xml->name() == "ids")
+                {
+                    h.verse_id = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "book")
+                {
+                    h.book = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "chapter")
+                {
+                    h.chapter = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "display_txt")
+                {
+                    h.display_text = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "verse")
+                {
+                    h.verse = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "verse_txt")
+                {
+                    h.verse_text = xml->readElementText();
+                    xml->readNext();
+                }
+            }
+            histories.append(h);
+            xml->readNext();
+        }
+    }
+    bibleWidget->loadHistoriesFromFile(histories);
+}
+
+void SoftProjector::readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml)
+{
     QStringList histories;
     while(xml->tokenString() != "EndElement")
     {
@@ -1497,7 +1571,7 @@ void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
             xml->readNext();
         }
     }
-    bibleWidget->loadHistoriesFromFile(histories);
+    bibleWidget->loadHistoriesFromFile1_0(histories);
 }
 
 void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)

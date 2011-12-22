@@ -103,6 +103,7 @@ private slots:
     void openProject();
     void clearProject();
     void readBibleHistoryFromSavedProject(QXmlStreamReader *xml);
+    void readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml);
     void readSongsFromSavedProject(QXmlStreamReader *xml);
     void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);
 

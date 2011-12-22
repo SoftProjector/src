@@ -508,7 +508,10 @@ void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
         QItemSelection sel;
         sel.select(ui->chapter_preview_list->model()->index(history_items.at(currentRow).first_v,0,QModelIndex()),
                    ui->chapter_preview_list->model()->index(history_items.at(currentRow).last_v,0,QModelIndex()));
-        ui->verse_ef->setText(QString::number(history_items.at(currentRow).first_v+1));
+        if(history_items.at(currentRow).first_v>=0)
+            ui->verse_ef->setText(QString::number(history_items.at(currentRow).first_v+1));
+        else
+            ui->verse_ef->setText(history_items.at(currentRow).verse);
         ui->chapter_preview_list->selectionModel()->select(sel,QItemSelectionModel::Select);
     }
 }
@@ -552,8 +555,27 @@ QList<BibleSearch> BibleWidget::getHistoryList()
     return history_items;
 }
 
-void BibleWidget::loadHistoriesFromFile(QStringList histories)
+void BibleWidget::loadHistoriesFromFile(QList<BibleSearch> histories)
 {
+    // ******* SoftProjector Project File version 1.5 *****************
+
+    history_items.clear();
+    history_items = histories;
+    QStringList disp_list;
+
+    for(int i(0);i<histories.count();++i)
+    {
+        disp_list.append(histories.at(i).display_text);
+    }
+
+    ui->history_listWidget->clear();
+    ui->history_listWidget->addItems(disp_list);
+}
+
+void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)
+{
+    // *************** 1.05 and before code ***************************
+    // ******* SoftProjector Project File version 1.0 *****************
     // Reloads history list with saves verses
     // It will reload in the same order as saves
     // Will reload with current primary bible,
