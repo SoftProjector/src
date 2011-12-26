@@ -1,3 +1,7 @@
+SoftProjector 1.06 - December 30, 2011
+	New:
+		Added ability to display multiple Bible verses.
+
 SoftProjector 1.05 - November 23, 2011
     New:
         Song categories
