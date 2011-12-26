@@ -640,8 +640,8 @@ void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)
         {
             h = h_list.at(order_list.at(i));
             // Prepare history line to show
-            QString s = h.book + " " + h.chapter + ":" + h.verse_text;
-            history_list.append(s);
+            h.display_text = h.book + " " + h.chapter + ":" + h.verse_text;
+            history_list.append(h.display_text);
             history_items.append(h);
         }
     }
