@@ -11,8 +11,8 @@
 ;General
 
   ;Name and file
-  Name "SoftProjector 1.05"
-  OutFile "SoftProjector-1.05.exe"
+  Name "SoftProjector 1.06"
+  OutFile "SoftProjector-1.06.exe"
   
   XPStyle on
 
