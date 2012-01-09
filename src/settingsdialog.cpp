@@ -272,3 +272,8 @@ void SettingsDialog::on_choose_color_button_clicked()
     //ui->text_color_view->show();
     //ui->text_color_view->update();
 }
+
+void SettingsDialog::on_listWidget_currentRowChanged(int currentRow)
+{
+    ui->stackedWidget->setCurrentIndex(currentRow);
+}

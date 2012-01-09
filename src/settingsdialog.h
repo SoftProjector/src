@@ -62,6 +62,7 @@ private slots:
     void on_change_font_button_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+    void on_listWidget_currentRowChanged(int currentRow);
 };
 
 #endif // SETTINGSDIALOG_H
