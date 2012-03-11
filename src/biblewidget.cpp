@@ -85,6 +85,7 @@ void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
     QString initial_primary_id = bible.primaryId;
     bible.setBibles(primaryId, secondaryId);
 
+
     // Check if primary bible is different that what has been loaded already
     // If it is different, then reload the bible list
     if(initial_primary_id!=primaryId)

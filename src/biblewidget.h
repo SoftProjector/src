@@ -24,6 +24,8 @@
 #include <QtGui>
 #include "bible.h"
 #include "highlight.h"
+#include "settings.h"
+#include "test.h"
 
 namespace Ui {
     class BibleWidget;
@@ -74,6 +76,7 @@ public slots:
     void setShownSplitterState(QString state);
     void loadBibles(QString primaryId, QString secondaryId);
     void sendToProjector(bool add_to_history);
+
     //bool eventFilter(QObject *object, QEvent *event);
 
 protected:
@@ -116,6 +119,7 @@ private:
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;
+
 };
 //class HighlightSearch;
 //class QTextDocument;

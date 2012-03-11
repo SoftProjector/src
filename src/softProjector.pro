@@ -40,7 +40,12 @@ SOURCES += main.cpp \
     announcewidget.cpp \
     helpdialog.cpp \
     songcounter.cpp \
-    bibleinformationdialog.cpp
+    bibleinformationdialog.cpp \
+    settings.cpp \
+    generalsettingwidget.cpp \
+    biblesettingwidget.cpp \
+    songsettingwidget.cpp \
+    announcementsettingwidget.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -57,7 +62,12 @@ HEADERS += softprojector.h \
     announcewidget.h \
     helpdialog.h \
     songcounter.h \
-    bibleinformationdialog.h
+    bibleinformationdialog.h \
+    settings.h \
+    generalsettingwidget.h \
+    biblesettingwidget.h \
+    songsettingwidget.h \
+    announcementsettingwidget.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -69,7 +79,11 @@ FORMS += softprojector.ui \
     announcewidget.ui \
     helpdialog.ui \
     songcounter.ui \
-    bibleinformationdialog.ui
+    bibleinformationdialog.ui \
+    generalsettingwidget.ui \
+    biblesettingwidget.ui \
+    songsettingwidget.ui \
+    announcementsettingwidget.ui
 TRANSLATIONS += softpro_de.ts\
     softpro_ru.ts\
     softpro_cs.ts
@@ -79,3 +93,33 @@ RESOURCES += softprojector.qrc
 win32 {
     RC_FILE = softprojector.rc
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,6 +25,11 @@
 #include <QtGui/QFileDialog>
 #include "softprojector.h"
 
+#include "generalsettingwidget.h"
+#include "biblesettingwidget.h"
+#include "songsettingwidget.h"
+#include "announcementsettingwidget.h"
+
 namespace Ui {
     class SettingsDialog;
 }
@@ -51,6 +56,11 @@ private:
     QStringList bible_id_list;
     QStringList second_id_list;
     bool is_always_on_top;
+
+    GeneralSettingWidget *generalSettings;
+    BibleSettingWidget *bibleSettings;
+    SongSettingWidget *songSettings;
+    AnnouncementSettingWidget *announcementSettings;
 
 private slots:
     void on_choose_color_button_clicked();

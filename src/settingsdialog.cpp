@@ -30,6 +30,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     softProjector = (SoftProjector*)parent;
+    generalSettings = new GeneralSettingWidget;
+    bibleSettings = new BibleSettingWidget;
+    songSettings = new SongSettingWidget;
+    announcementSettings = new AnnouncementSettingWidget;
+
+    ui->scrollAreaGeneralSettings->setWidget(generalSettings);
+    ui->scrollAreaBibleSettings->setWidget(bibleSettings);
+    ui->scrollAreaSongSettings->setWidget(songSettings);
+    ui->scrollAreaAnnouncementSettings->setWidget(announcementSettings);
 
     // Get Bibles that exist in the database
     QSqlQuery sq;
