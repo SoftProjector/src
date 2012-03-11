@@ -29,7 +29,6 @@
 #include "bible.h"
 #include "managedatadialog.h"
 #include "songcounter.h"
-#include "settings.h"
 
 class QActionGroup;
 
@@ -52,8 +51,6 @@ public:
     QDesktopWidget *desktop;
     Display1 *display;
     EditWidget *editWidget;
-
-    BibleSettings *bibleSettings;
 
     bool showing; // whether we are currently showing to the projector
     bool display_on_top; // whether display screen is alway on top on not

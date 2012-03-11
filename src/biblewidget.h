@@ -24,8 +24,6 @@
 #include <QtGui>
 #include "bible.h"
 #include "highlight.h"
-#include "settings.h"
-#include "test.h"
 
 namespace Ui {
     class BibleWidget;

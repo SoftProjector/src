@@ -50,8 +50,6 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 
-    bibleSettings = new BibleSettings;
-
     bibleWidget = new BibleWidget;
     songWidget = new SongWidget;
     editWidget = new EditWidget;
