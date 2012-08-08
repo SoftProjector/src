@@ -91,8 +91,8 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="general">
-      <layout class="QGridLayout" name="gridLayout_12">
-       <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0" colspan="4">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QLabel" name="label_4">
@@ -117,41 +117,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="display_on_top_box">
-         <property name="toolTip">
-          <string>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector's screen.</string>
-         </property>
-         <property name="text">
-          <string>Display window always on top</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="use_fading_effects_box">
-           <property name="toolTip">
-            <string>If checked, when switching displayed text, fades the old text out and fades the new text in .</string>
-           </property>
-           <property name="text">
-            <string>Use fading effects</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="use_blur_check_box">
-           <property name="toolTip">
-            <string>Useful when using a wallpaper image. Displays a fancy shadow effect.</string>
-           </property>
-           <property name="text">
-            <string>Use blurred shadow</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0">
+       <item row="1" column="0" colspan="4">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QPushButton" name="change_font_button">
@@ -175,57 +141,53 @@
          </item>
         </layout>
        </item>
-       <item row="4" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Text color:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGraphicsView" name="text_color_view">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="choose_color_button">
-           <property name="text">
-            <string>Choose color...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Text color:</string>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="0">
+       <item row="2" column="1">
+        <widget class="QGraphicsView" name="text_color_view">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="choose_color_button">
+         <property name="text">
+          <string>Choose color...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>148</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="0" colspan="4">
         <widget class="QScrollArea" name="scrollAreaGeneralSettings">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -236,13 +198,13 @@
             <x>0</x>
             <y>0</y>
             <width>406</width>
-            <height>82</height>
+            <height>262</height>
            </rect>
           </property>
          </widget>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="4" column="0" colspan="4">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string>Active wallpaper</string>
@@ -276,59 +238,6 @@
             </item>
             <item>
              <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QGroupBox" name="gBox_PassiveBack">
-         <property name="title">
-          <string>Passive wallpaper</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLineEdit" name="passive_wallpaper_ef">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <item>
-             <widget class="QPushButton" name="set_passive_wallpaper">
-              <property name="text">
-               <string>Browse...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="remove_passive_wallpaper_button">
-              <property name="text">
-               <string>Remove wallpaper</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_10">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -503,8 +412,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>406</width>
-            <height>384</height>
+            <width>80</width>
+            <height>16</height>
            </rect>
           </property>
          </widget>
@@ -552,8 +461,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>406</width>
-            <height>450</height>
+            <width>62</width>
+            <height>16</height>
            </rect>
           </property>
          </widget>

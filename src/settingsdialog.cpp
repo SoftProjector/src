@@ -28,17 +28,21 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
+//    setDefaults();
+
     ui->setupUi(this);
     softProjector = (SoftProjector*)parent;
-    generalSettings = new GeneralSettingWidget;
-    bibleSettings = new BibleSettingWidget;
-    songSettings = new SongSettingWidget;
-    announcementSettings = new AnnouncementSettingWidget;
+    generalSettingswidget = new GeneralSettingWidget;
+    bibleSettingswidget = new BibleSettingWidget;
+    songSettingswidget = new SongSettingWidget;
+    announcementSettingswidget = new AnnouncementSettingWidget;
 
-    ui->scrollAreaGeneralSettings->setWidget(generalSettings);
-    ui->scrollAreaBibleSettings->setWidget(bibleSettings);
-    ui->scrollAreaSongSettings->setWidget(songSettings);
-    ui->scrollAreaAnnouncementSettings->setWidget(announcementSettings);
+    loadSettings();
+
+    ui->scrollAreaGeneralSettings->setWidget(generalSettingswidget);
+    ui->scrollAreaBibleSettings->setWidget(bibleSettingswidget);
+    ui->scrollAreaSongSettings->setWidget(songSettingswidget);
+    ui->scrollAreaAnnouncementSettings->setWidget(announcementSettingswidget);
 
     // Get Bibles that exist in the database
     QSqlQuery sq;
@@ -69,18 +73,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         ui->secondary_bible_menu->setCurrentIndex(secondary_index+1);
     }
 
-    // Set Display window always on top or not
-    if (softProjector->display_on_top)
-        is_always_on_top = true;
-    else
-        is_always_on_top = false;
-    ui->display_on_top_box->setChecked(is_always_on_top);
-
-    // Set to use or not to use fading
-    ui->use_fading_effects_box->setChecked(softProjector->display->useFading());
-
-    // Set to use blured shadow or not
-    ui->use_blur_check_box->setChecked(softProjector->display->useBlur());
+    is_always_on_top = allSettings.generalSettings.displayIsOnTop;
 
     new_font = softProjector->display->getFont();
 
@@ -93,12 +86,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
         ui->wallpaper_ef->setText(new_wallpaper_path);
 
     new_passive_wallpaper_path = softProjector->display->getPassiveWallpaper();
-    if(new_passive_wallpaper_path == "") {
-        ui->passive_wallpaper_ef->setText(tr("None"));
-        ui->remove_passive_wallpaper_button->setEnabled(false);
-    }
-    else
-        ui->passive_wallpaper_ef->setText(new_passive_wallpaper_path);
+
 
     // Set Song Items
     ui->stanza_title_checkBox->setChecked(softProjector->show_stanza_title);
@@ -115,6 +103,98 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->text_color_view->show();
 
     ui->text_color_view->setBackgroundBrush(QBrush(new_foreground_color));
+}
+
+void SettingsDialog::setDefaults()
+{
+    QSqlQuery sq;
+
+    // Set General defauls
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'displayIsOnTop', 'false')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useShadow', 'true')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useFading', 'true')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useBlurShadow', 'false')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useBackground', 'false')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'backgroundPath', ' ')");
+
+    // Set Bible defaults
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'primaryBible', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'secondaryBible', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'trinaryBible', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'operatorBible', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleBackground', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleTextColor', 'white')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleTextFont', 'none')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'versionAbbriviation', '0')");
+    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleAlingment', '4129')");
+
+}
+
+void SettingsDialog::loadSettings()
+{
+    QString n,v,dv;
+    QSqlQuery sq;
+    sq.exec("SELECT name, value, default_value FROM Settings WHERE type = 'general'");
+    while (sq.next())
+    {
+        n = sq.value(0).toString();
+        v = sq.value(1).toString();
+        dv = sq.value(2).toString();
+
+        if (v.isNull() || v.isEmpty()) //check if value is null, if it is, use default value.
+            v = dv;
+
+        if(n == "displayIsOnTop")
+            allSettings.generalSettings.displayIsOnTop = (v=="true");
+        else if (n == "useShadow")
+            allSettings.generalSettings.useShadow = (v=="true");
+        else if (n == "useFading")
+            allSettings.generalSettings.useFading = (v=="true");
+        else if (n == "useBlurShadow")
+            allSettings.generalSettings.useBlurShadow = (v=="true");
+        else if (n == "useBackground")
+            allSettings.generalSettings.useBackground = (v=="true");
+        else if (n == "backgroundPath")
+            allSettings.generalSettings.backgroundPath = v;
+//        else if (n == "bibleTextFont")
+//            settings.textFont.fromString(v);
+//        else if (n == "versionAbbriviation")
+//            settings.abbriviations = v.toInt();
+//        else if (n == "bibleAlingment")
+//            settings.textFlags = v.toInt();
+    }
+
+    generalSettingswidget->setSettings(allSettings.generalSettings);
+
+}
+
+void SettingsDialog::saveSettings()
+{
+    QSqlQuery sq;
+
+    QSqlDatabase::database().transaction();
+    if(allSettings.generalSettings.displayIsOnTop)
+        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'displayIsOnTop'");
+    else
+        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'displayIsOnTop'");
+    if(allSettings.generalSettings.useShadow)
+        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useShadow'");
+    else
+        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useShadow'");
+    if(allSettings.generalSettings.useFading)
+        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useFading'");
+    else
+        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useFading'");
+    if(allSettings.generalSettings.useBlurShadow)
+        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useBlurShadow'");
+    else
+        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useBlurShadow'");
+    if(allSettings.generalSettings.useBackground)
+        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useBackground'");
+    else
+        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useBackground'");
+    sq.exec("UPDATE Settings SET value = '"+ allSettings.generalSettings.backgroundPath +"' WHERE type = 'general' AND name = 'backgroundPath'");
+    QSqlDatabase::database().commit();
 }
 
 void SettingsDialog::updateSecondaryBibleMenu()
@@ -160,6 +240,9 @@ void SettingsDialog::on_buttonBox_rejected()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
+    allSettings.generalSettings = generalSettingswidget->getSettings();
+    saveSettings();
+
     int primaryBibleInd = ui->primary_bible_menu->currentIndex();
     QString primaryBible, secondaryBible;
     if( primaryBibleInd != -1 )
@@ -180,15 +263,11 @@ void SettingsDialog::on_buttonBox_accepted()
         secondaryBible = "none";
     }
 
-
-    bool use_fading = ui->use_fading_effects_box->isChecked();
-    bool display_on_top = ui->display_on_top_box->isChecked();
-    bool use_blur = ui->use_blur_check_box->isChecked();
     bool show_stanza_title = ui->stanza_title_checkBox->isChecked();
     bool show_song_number = ui->song_number_checkBox->isChecked();
     bool show_song_key = ui->song_key_checkBox->isChecked();
 
-    softProjector->display_on_top = display_on_top;
+    softProjector->display_on_top = allSettings.generalSettings.displayIsOnTop;
 
     softProjector->show_stanza_title = show_stanza_title;
     softProjector->show_song_number = show_song_number;
@@ -198,16 +277,19 @@ void SettingsDialog::on_buttonBox_accepted()
 
     softProjector->display->setNewFont(new_font);
     softProjector->display->setNewWallpaper(new_wallpaper_path);
-    softProjector->display->setNewPassiveWallpaper(new_passive_wallpaper_path);
-    softProjector->display->setFading(use_fading);
-    softProjector->display->setBlur(use_blur);
+    if(allSettings.generalSettings.useBackground)
+        softProjector->display->setNewPassiveWallpaper(allSettings.generalSettings.backgroundPath);
+    else
+        softProjector->display->setNewPassiveWallpaper("");
+    softProjector->display->setFading(allSettings.generalSettings.useFading);
+    softProjector->display->setBlur(allSettings.generalSettings.useBlurShadow);
     softProjector->display->setForegroundColor(new_foreground_color);
     softProjector->writeXMLConfigurationFile();
 
     // Redraw the screen:
     softProjector->updateScreen();
     // Update <display_on_top> only when changed:
-    if(is_always_on_top!=display_on_top)
+    if(is_always_on_top!=allSettings.generalSettings.displayIsOnTop)
         softProjector->positionDisplayWindow();
 
     close();
@@ -239,21 +321,6 @@ void SettingsDialog::on_set_wallpaper_button_clicked()
     }
 }
 
-void SettingsDialog::on_set_passive_wallpaper_clicked()
-{
-        // Change background
-    QString filename1 = QFileDialog::getOpenFileName(this,
-                         tr("Select a picture for the wallpaper"),
-                         ".",
-                         tr("Images (*.png *.jpg *.jpeg)"));
-
-    if( !filename1.isNull() ) {
-        new_passive_wallpaper_path = filename1;
-        ui->passive_wallpaper_ef->setText(filename1);
-        ui->remove_passive_wallpaper_button->setEnabled(true);
-    }
-}
-
 void SettingsDialog::on_remove_wallpaper_button_clicked()
 {
     new_wallpaper_path = "";
@@ -264,13 +331,6 @@ void SettingsDialog::on_remove_wallpaper_button_clicked()
 void SettingsDialog::on_primary_bible_menu_activated(QString )
 {
     updateSecondaryBibleMenu();
-}
-
-void SettingsDialog::on_remove_passive_wallpaper_button_clicked()
-{
-    new_passive_wallpaper_path = "";
-    ui->passive_wallpaper_ef->setText(tr("None"));
-    ui->remove_passive_wallpaper_button->setEnabled(false);
 }
 
 

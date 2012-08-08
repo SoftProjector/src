@@ -2,6 +2,7 @@
 #define GENERALSETTINGWIDGET_H
 
 #include <QWidget>
+#include "settings.h"
 
 namespace Ui {
     class GeneralSettingWidget;
@@ -17,6 +18,18 @@ public:
 
 private:
     Ui::GeneralSettingWidget *ui;
+    GeneralSettings mySettings;
+    Settings allSetings;
+
+public slots:
+    void setSettings(GeneralSettings settings);
+    GeneralSettings getSettings();
+
+private slots:
+    void on_button_BrowseBack_clicked();
+    void on_pushButton_default_clicked();
+
+    void applySettings();
 };
 
 #endif // GENERALSETTINGWIDGET_H

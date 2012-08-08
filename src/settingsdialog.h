@@ -25,6 +25,7 @@
 #include <QtGui/QFileDialog>
 #include "softprojector.h"
 
+#include "settings.h"
 #include "generalsettingwidget.h"
 #include "biblesettingwidget.h"
 #include "songsettingwidget.h"
@@ -57,22 +58,28 @@ private:
     QStringList second_id_list;
     bool is_always_on_top;
 
-    GeneralSettingWidget *generalSettings;
-    BibleSettingWidget *bibleSettings;
-    SongSettingWidget *songSettings;
-    AnnouncementSettingWidget *announcementSettings;
+    Settings allSettings;
+    GeneralSettingWidget *generalSettingswidget;
+    BibleSettingWidget *bibleSettingswidget;
+    SongSettingWidget *songSettingswidget;
+    AnnouncementSettingWidget *announcementSettingswidget;
 
 private slots:
     void on_choose_color_button_clicked();
-    void on_remove_passive_wallpaper_button_clicked();
+//    void on_remove_passive_wallpaper_button_clicked();
     void on_primary_bible_menu_activated(QString );
     void on_remove_wallpaper_button_clicked();
-    void on_set_passive_wallpaper_clicked();
+//    void on_set_passive_wallpaper_clicked();
     void on_set_wallpaper_button_clicked();
     void on_change_font_button_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
     void on_listWidget_currentRowChanged(int currentRow);
+
+public slots:
+    void setDefaults();
+    void loadSettings();
+    void saveSettings();
 };
 
 #endif // SETTINGSDIALOG_H
