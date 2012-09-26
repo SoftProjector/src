@@ -46,32 +46,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Get Bibles that exist in the database
     QSqlQuery sq;
-    sq.exec("SELECT bible_name, id FROM BibleVersions");
-    while(sq.next()){
-        bibles << sq.value(0).toString();
-        bible_id_list << sq.value(1).toString();
-    }
-    sq.clear();
 
-    // Fill primary and secondary Bible comboboxes
-    ui->primary_bible_menu->addItems(bibles);
-    ui->secondary_bible_menu->addItem(tr("None"));
-    ui->secondary_bible_menu->addItems(bibles);
+
 
     // Set current item for primary Bible
-    int primary_index = bible_id_list.indexOf(softProjector->bibleWidget->getPrimary());
-    ui->primary_bible_menu->setCurrentIndex(primary_index);
+    allSettings.bibleSettings.primaryBible = softProjector->bibleWidget->getPrimary();
 
-    // Remove the primary bible from the secondary list:
-    updateSecondaryBibleMenu();
 
     // Set current item for secondary Bible
-    if (softProjector->bibleWidget->getSecondary() == "none")
-        ui->secondary_bible_menu->setCurrentIndex(0);
-    else {
-        int secondary_index = second_id_list.indexOf(softProjector->bibleWidget->getSecondary());
-        ui->secondary_bible_menu->setCurrentIndex(secondary_index+1);
-    }
+    allSettings.bibleSettings.secondaryBible = softProjector->bibleWidget->getSecondary();
 
     is_always_on_top = allSettings.generalSettings.displayIsOnTop;
 
@@ -101,119 +84,144 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     QGraphicsScene *scene = new QGraphicsScene();
     ui->text_color_view->setScene(scene);
     ui->text_color_view->show();
-
     ui->text_color_view->setBackgroundBrush(QBrush(new_foreground_color));
 }
 
 void SettingsDialog::setDefaults()
 {
     QSqlQuery sq;
+    QString gset, bset, sset, aset;
+
+    // Clean existing data
 
     // Set General defauls
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'displayIsOnTop', 'false')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useShadow', 'true')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useFading', 'true')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useBlurShadow', 'false')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'useBackground', 'false')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('general', 'backgroundPath', ' ')");
+    gset = "displayIsOnTop = false\n"
+            "useShadow = true\n"
+            "useFading = true\n"
+            "useBlurShadow = false\n"
+            "useBackground = false\n"
+            "backgroundPath = ";
+    sq.exec("INSERT INTO Settings (user, type, sets) VALUES ('0', 'general', '" +gset+"')");
 
     // Set Bible defaults
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'primaryBible', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'secondaryBible', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'trinaryBible', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'operatorBible', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleBackground', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleTextColor', 'white')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleTextFont', 'none')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'versionAbbriviation', '0')");
-    sq.exec("INSERT INTO Settings (type, name, default_value) VALUES ('bible', 'bibleAlingment', '4129')");
+    bset ="primaryBible = none\n"
+            "secondaryBible = none\n"
+            "trinaryBible = none\n"
+            "operatorBible = same\n"
+            "bibleBackground = none\n"
+            "bibleTextColor = white\n"
+            "bibleTextFont = none\n"
+            "versionAbbriviation = 0\n"
+            "bibleAlingment = 4129";
+    sq.exec("INSERT INTO Settings (user, type, sets) VALUES ('0', 'bible', '" +bset+"')");
 
 }
 
 void SettingsDialog::loadSettings()
 {
-    QString n,v,dv;
+    QString t,n,v,s,sets; // type, name, value, userValues
+    QStringList set,values;
     QSqlQuery sq;
-    sq.exec("SELECT name, value, default_value FROM Settings WHERE type = 'general'");
+    sq.exec("SELECT type, sets FROM Settings WHERE user = 0");
     while (sq.next())
     {
-        n = sq.value(0).toString();
-        v = sq.value(1).toString();
-        dv = sq.value(2).toString();
+        t = sq.value(0).toString();
+        sets = sq.value(1).toString();
 
-        if (v.isNull() || v.isEmpty()) //check if value is null, if it is, use default value.
-            v = dv;
+        if(t == "general") // set general setting values
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n == "displayIsOnTop")
+                    allSettings.generalSettings.displayIsOnTop = (v=="true");
+                else if (n == "useShadow")
+                    allSettings.generalSettings.useShadow = (v=="true");
+                else if (n == "useFading")
+                    allSettings.generalSettings.useFading = (v=="true");
+                else if (n == "useBlurShadow")
+                    allSettings.generalSettings.useBlurShadow = (v=="true");
+                else if (n == "useBackground")
+                    allSettings.generalSettings.useBackground = (v=="true");
+                else if (n == "backgroundPath")
+                    allSettings.generalSettings.backgroundPath = v;
+            }
+        }
+        else if(t == "bible")
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
 
-        if(n == "displayIsOnTop")
-            allSettings.generalSettings.displayIsOnTop = (v=="true");
-        else if (n == "useShadow")
-            allSettings.generalSettings.useShadow = (v=="true");
-        else if (n == "useFading")
-            allSettings.generalSettings.useFading = (v=="true");
-        else if (n == "useBlurShadow")
-            allSettings.generalSettings.useBlurShadow = (v=="true");
-        else if (n == "useBackground")
-            allSettings.generalSettings.useBackground = (v=="true");
-        else if (n == "backgroundPath")
-            allSettings.generalSettings.backgroundPath = v;
-//        else if (n == "bibleTextFont")
-//            settings.textFont.fromString(v);
-//        else if (n == "versionAbbriviation")
-//            settings.abbriviations = v.toInt();
-//        else if (n == "bibleAlingment")
-//            settings.textFlags = v.toInt();
+                if(n=="primaryBible")
+                    allSettings.bibleSettings.primaryBible = v;
+                else if(n=="secondaryBible")
+                    allSettings.bibleSettings.secondaryBible = v;
+                else if(n=="trinaryBible")
+                    allSettings.bibleSettings.trinaryBible = v;
+                else if(n=="operatorBible")
+                    allSettings.bibleSettings.operatorBible = v;
+            }
+        }
+
     }
 
     generalSettingswidget->setSettings(allSettings.generalSettings);
+    bibleSettingswidget->setSettings(allSettings.bibleSettings);
 
 }
 
 void SettingsDialog::saveSettings()
 {
     QSqlQuery sq;
+    QString gset,bset,sset,aset;
 
-    QSqlDatabase::database().transaction();
+    // Prepare general settings
     if(allSettings.generalSettings.displayIsOnTop)
-        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'displayIsOnTop'");
+        gset = "displayIsOnTop = true\n";
     else
-        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'displayIsOnTop'");
+        gset = "displayIsOnTop = false\n";
     if(allSettings.generalSettings.useShadow)
-        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useShadow'");
+        gset += "useShadow = true\n";
     else
-        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useShadow'");
+        gset += "useShadow = fasle'";
     if(allSettings.generalSettings.useFading)
-        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useFading'");
+        gset += "useFading = true\n";
     else
-        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useFading'");
+        gset += "useFading = false\n";
     if(allSettings.generalSettings.useBlurShadow)
-        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useBlurShadow'");
+        gset += "useBlurShadow = true\n";
     else
-        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useBlurShadow'");
+        gset += "useBlurShadow = false\n";
     if(allSettings.generalSettings.useBackground)
-        sq.exec("UPDATE Settings SET value = 'true' WHERE type = 'general' AND name = 'useBackground'");
+        gset += "useBackground = true\n";
     else
-        sq.exec("UPDATE Settings SET value = 'false' WHERE type = 'general' AND name = 'useBackground'");
-    sq.exec("UPDATE Settings SET value = '"+ allSettings.generalSettings.backgroundPath +"' WHERE type = 'general' AND name = 'backgroundPath'");
-    QSqlDatabase::database().commit();
+        gset += "useBackground = fasle\n";
+    gset += "backgroundPath = " + allSettings.generalSettings.backgroundPath;
+
+    // Prepare bible settings
+    bset = "primaryBible = " + allSettings.bibleSettings.primaryBible;
+    bset += "\nsecondaryBible = " + allSettings.bibleSettings.secondaryBible;
+    bset += "\ntrinaryBible = " + allSettings.bibleSettings.trinaryBible;
+    bset += "\noperatorBible = " + allSettings.bibleSettings.operatorBible;
+
+//    QSqlDatabase::database().transaction();
+    sq.exec("UPDATE Settings SET sets = '"+ gset +"' WHERE type = 'general' AND user = '0'");
+    sq.exec("UPDATE Settings SET sets = '"+ bset +"' WHERE type = 'bible' AND user = '0'");
+//    QSqlDatabase::database().commit();
 }
 
 void SettingsDialog::updateSecondaryBibleMenu()
 {
-    QString pbible = ui->primary_bible_menu->currentText();
-    QString sbible = ui->secondary_bible_menu->currentText();
-    QStringList secondary_bibles = bibles;
-    secondary_bibles.removeOne(pbible);
 
-    second_id_list = bible_id_list;
-    second_id_list.removeAt(ui->primary_bible_menu->currentIndex());
-    ui->secondary_bible_menu->clear();
-    ui->secondary_bible_menu->addItem(tr("None"));
-    ui->secondary_bible_menu->addItems(secondary_bibles);
-
-    int i = ui->secondary_bible_menu->findText(sbible);
-    if( i != -1 )
-        // The same secondary bible is still available
-        ui->secondary_bible_menu->setCurrentIndex(i);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -241,27 +249,11 @@ void SettingsDialog::on_buttonBox_rejected()
 void SettingsDialog::on_buttonBox_accepted()
 {
     allSettings.generalSettings = generalSettingswidget->getSettings();
+    allSettings.bibleSettings = bibleSettingswidget->getSettings();
     saveSettings();
 
-    int primaryBibleInd = ui->primary_bible_menu->currentIndex();
-    QString primaryBible, secondaryBible;
-    if( primaryBibleInd != -1 )
-    {
-        // If there are bibles in the database
-        primaryBible = bible_id_list[primaryBibleInd];
-        int secondaryBibleInd = ui->secondary_bible_menu->currentIndex();
-
-        if (secondaryBibleInd <= 0)
-            secondaryBible = "none";
-        else
-            secondaryBible = second_id_list[ui->secondary_bible_menu->currentIndex()-1];
-    }
-    else
-    {
-        // There are no bibles in the database
-        primaryBible = "none";
-        secondaryBible = "none";
-    }
+    QString primaryBible = allSettings.bibleSettings.primaryBible;
+    QString secondaryBible = allSettings.bibleSettings.secondaryBible;
 
     bool show_stanza_title = ui->stanza_title_checkBox->isChecked();
     bool show_song_number = ui->song_number_checkBox->isChecked();
@@ -328,10 +320,7 @@ void SettingsDialog::on_remove_wallpaper_button_clicked()
     ui->remove_wallpaper_button->setEnabled(false);
 }
 
-void SettingsDialog::on_primary_bible_menu_activated(QString )
-{
-    updateSecondaryBibleMenu();
-}
+
 
 
 void SettingsDialog::on_choose_color_button_clicked()

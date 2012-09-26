@@ -88,7 +88,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="general">
       <layout class="QGridLayout" name="gridLayout">
@@ -284,51 +284,9 @@
         </layout>
        </item>
        <item row="1" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Primary Bible:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="primary_bible_menu">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Secondary Bible:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="secondary_bible_menu">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0">
         <widget class="QScrollArea" name="scrollAreaBibleSettings">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -339,7 +297,7 @@
             <x>0</x>
             <y>0</y>
             <width>406</width>
-            <height>372</height>
+            <height>450</height>
            </rect>
           </property>
          </widget>
@@ -402,7 +360,7 @@
        <item row="2" column="0">
         <widget class="QScrollArea" name="scrollAreaSongSettings">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -412,8 +370,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>80</width>
-            <height>16</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>
@@ -451,7 +409,7 @@
        <item row="1" column="0">
         <widget class="QScrollArea" name="scrollAreaAnnouncementSettings">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -461,8 +419,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>62</width>
-            <height>16</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>

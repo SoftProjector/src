@@ -18,14 +18,25 @@ public:
     ~BibleSettingWidget();
 
 public slots:
-    void setDefaults();
+    void setSettings(BibleSettings settings);
     BibleSettings getSettings();
 
 private slots:
     void loadSettings();
+    void updateSecondaryBibleMenu();
+    void updateTrinaryBibleMenu();
+    void updateOperatorBibleMenu();
+
+    void on_comboBox_primaryBible_activated(const QString &arg1);
+
+    void on_comboBox_secondaryBible_activated(const QString &arg1);
+
+    void on_comboBox_trinaryBible_activated(const QString &arg1);
 
 private:
-    BibleSettings settings;
+    QStringList bibles, secondary_bibles;
+    QStringList bible_id_list,secondary_id_list,trinary_id_list,operator_id_list;
+    BibleSettings mySettings;
     Ui::BibleSettingWidget *ui;
 };
 

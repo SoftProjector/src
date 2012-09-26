@@ -16,10 +16,10 @@ GeneralSettingWidget::~GeneralSettingWidget()
 void GeneralSettingWidget::setSettings(GeneralSettings settings)
 {
     mySettings = settings;
-    applySettings();
+    loadSettings();
 }
 
-void GeneralSettingWidget::applySettings()
+void GeneralSettingWidget::loadSettings()
 {
     ui->checkBox_displayOnTop->setChecked(mySettings.displayIsOnTop);
     ui->checkBox_useShadow->setChecked(mySettings.useShadow);
@@ -62,5 +62,5 @@ void GeneralSettingWidget::on_pushButton_default_clicked()
     mySettings.useBlurShadow = false;
     mySettings.useBackground = false;
     mySettings.backgroundPath.clear();
-    applySettings();
+    loadSettings();
 }

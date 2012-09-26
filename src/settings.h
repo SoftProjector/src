@@ -24,7 +24,7 @@ public:
     QString primaryBible;
     QString secondaryBible;
     QString trinaryBible;
-    QString controlBible;
+    QString operatorBible;
 
     bool useBackground;
     QString backgroundPath; // file path for background image

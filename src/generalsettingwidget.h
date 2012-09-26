@@ -29,7 +29,7 @@ private slots:
     void on_button_BrowseBack_clicked();
     void on_pushButton_default_clicked();
 
-    void applySettings();
+    void loadSettings();
 };
 
 #endif // GENERALSETTINGWIDGET_H
