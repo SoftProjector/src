@@ -73,6 +73,7 @@ private:
 public slots:
     QList<Announcement> getAnnouncements();
     void loadFromFile(QList<Announcement> anns);
+    void setAlingment(int v, int h);
 };
 
 #endif // ANNOUNCEWIDGET_H

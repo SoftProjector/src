@@ -33,6 +33,14 @@ private slots:
 
     void on_comboBox_trinaryBible_activated(const QString &arg1);
 
+    void on_button_BrowseBackground_clicked();
+
+    void on_button_textColor_clicked();
+
+    void on_button_font_clicked();
+
+    void on_pushButton_default_clicked();
+
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list,secondary_id_list,trinary_id_list,operator_id_list;

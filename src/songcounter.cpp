@@ -32,9 +32,10 @@ SongCounter::SongCounter(QWidget *parent) :
     loadCounts();
 
     // Modify the column widths:
-    ui->countTable->setColumnWidth(0, 299);
-    ui->countTable->setColumnWidth(1, 75);
-    ui->countTable->setColumnWidth(2, 200);
+    ui->countTable->setColumnWidth(0, 150);//t - 299//s
+    ui->countTable->setColumnWidth(1, 275);//c - 75//t
+    ui->countTable->setColumnWidth(2, 75);//s - 200//c
+    ui->countTable->setColumnWidth(3, 100);
     // Decrease the row height:
     ui->countTable->resizeRowsToContents();
 }
@@ -53,7 +54,7 @@ void SongCounter::on_resetButton_clicked()
 {
     // Code to reset counters to 0
     QSqlQuery sq;
-    sq.exec("UPDATE Songs SET count = 0 WHERE count > 0");
+    sq.exec("UPDATE Songs SET count = 0 , date = '' WHERE count > 0");
 
     song_count_list = getSongCounts();
     loadCounts();
@@ -70,7 +71,7 @@ void SongCounter::on_resetOneButton_clicked()
         Counter count_to_remove = songCounterModel->getSongCount(row);
 
         QSqlQuery sq;
-        sq.exec("UPDATE Songs SET count = 0 WHERE id = " + count_to_remove.id);
+        sq.exec("UPDATE Songs SET count = 0, date = '' WHERE id = " + count_to_remove.id);
         song_count_list = getSongCounts();
         loadCounts();
     }
@@ -98,7 +99,12 @@ void SongCounter::addSongCount(Song song)
 
     // add one count to song
     ++current_count;
-    sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
+
+    // set todays date
+    QDate d(QDate::currentDate());
+
+    sq.exec(QString("UPDATE Songs SET count = %1 , date = '%2' WHERE id = %3").arg(QString::number(current_count)).arg(d.toString("MMMM dd, yyyy")).arg(QString::number(id)));
+//    sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
 }
 
 //***********************************
@@ -110,13 +116,14 @@ QList<Counter> SongCounter::getSongCounts()
     QSqlQuery sq, sq1;
 
     // Get counts
-    sq.exec("SELECT id, title, count FROM Songs WHERE count > 0");
+    sq.exec("SELECT id, title, count, date FROM Songs WHERE count > 0");
     while (sq.next())
     {
         QString id = sq.value(0).toString();
         song_count.id = id;
         song_count.title = sq.value(1).toString();
         song_count.count = sq.value(2).toInt();
+        song_count.date = sq.value(3).toString();
         // get songbook id
         sq1.exec("SELECT songbook_id FROM SongLink WHERE song_id = " + id);
         sq1.first();
@@ -173,7 +180,7 @@ int SongCounterModel::rowCount(const QModelIndex &parent) const
 
 int SongCounterModel::columnCount(const QModelIndex &parent) const
 {
-    return 3;
+    return 4;
 }
 
 QVariant SongCounterModel::data(const QModelIndex &index, int role) const
@@ -182,11 +189,13 @@ QVariant SongCounterModel::data(const QModelIndex &index, int role) const
     {
         Counter song_count = song_count_list.at(index.row());
         if( index.column() == 0 )
-            return QVariant(song_count.title);
-        else if( index.column() == 1 )
-            return QVariant(song_count.count);
-        else if (index.column() == 2)
             return QVariant(song_count.songbook);
+        else if(index.column() == 1 )
+            return QVariant(song_count.title);
+        else if(index.column() == 2)
+            return QVariant(song_count.count);
+        else if(index.column() == 3)
+            return QVariant(song_count.date);
     }
     return QVariant();
 }
@@ -199,11 +208,13 @@ QVariant SongCounterModel::headerData(int section,
     {
         switch(section) {
         case 0:
-            return QVariant(tr("Song Title"));
-        case 1:
-            return QVariant(tr("Count"));
-        case 2:
             return QVariant(tr("Songbook"));
+        case 1:
+            return QVariant(tr("Song Title"));
+        case 2:
+            return QVariant(tr("Count"));
+        case 3:
+            return QVariant(tr("Date"));
         }
     }
     return QVariant();

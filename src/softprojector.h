@@ -29,6 +29,7 @@
 #include "bible.h"
 #include "managedatadialog.h"
 #include "songcounter.h"
+#include "settings.h"
 
 class QActionGroup;
 
@@ -53,39 +54,36 @@ public:
     EditWidget *editWidget;
 
     bool showing; // whether we are currently showing to the projector
-    bool display_on_top; // whether display screen is alway on top on not
-    bool show_stanza_title; // whether to display song stanza title "Verse, Chorus, Insert"
-    bool show_song_number; // whether to show song numbers
-    bool show_song_key; // whether to show song key
     Song current_song;
     int current_song_verse;
     Verse current_verse;
     Announcement announcement_text;
     QString version_string;
+    Settings allsettings;
 
     SoftProjector *softProjector;
 
-    void applySetting(QString name, QString value);
-    void applyDefaults();
-    void readXMLConfigurationFile();
-    void writeXMLConfigurationFile();
+public slots:
+    void updateSetting(Settings& allsets);
+    void saveSettings();
     void positionDisplayWindow();
     void updateScreen();
 
-public slots:
     void setWaitCursor();
     void setArrowCursor();
     void setProjectChanged(bool isChanged);
     void setSongEditStatus(bool isEdited);
 
 private:
+    DisplaySettings dispSettings;
     Ui::SoftProjectorClass *ui;
     QString type;
     bool new_list;
     QActionGroup *languageGroup;
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
-    QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str);
+    QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
+    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
     void drawCurrentBibleText(QPainter *painter, int width, int height);
     void drawAnnounceText(QPainter *painter, int width, int height);
     QTranslator translator;
@@ -108,6 +106,7 @@ private slots:
     void readSongsFromSavedProject(QXmlStreamReader *xml);
     void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);
 
+    void applySetting(Settings& allsets);
     void on_actionSave_Project_As_triggered();
     void on_actionSave_Project_triggered();
     void on_actionOpen_triggered();

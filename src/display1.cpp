@@ -71,7 +71,7 @@ class ShadowAndAlphaEffect(QGraphicsDropShadowEffect):
 */
 
 Display1::Display1(QWidget *parent)
-        : QWidget(parent)
+    : QWidget(parent)
 {
     setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
 
@@ -79,7 +79,7 @@ Display1::Display1(QWidget *parent)
     timer_out = new QTimer(this);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(fadeIn()));
-//    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
+    //    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
 
     acounter[0]=255;
 
@@ -99,10 +99,10 @@ void Display1::fadeIn()
 
 void Display1::fadeOut() // For future
 {
-//    acounter[0]-=24;
-//    if (acounter[0]<0)acounter[0]=0;
-//    if (acounter[0]<1){timer_out->stop();}
-//    update();
+    //    acounter[0]-=24;
+    //    if (acounter[0]<0)acounter[0]=0;
+    //    if (acounter[0]<1){timer_out->stop();}
+    //    update();
 }
 
 int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
@@ -197,8 +197,11 @@ void Display1::renderText(bool text_present)
     QPainter shadow_painter(&shadow_image);
     shadow_painter.setPen(QColor(Qt::black));
     shadow_painter.setFont(font());
-    emit requestTextDrawing(&shadow_painter, width(), height());
-    shadow_painter.end();
+    if(use_shadow)
+    {
+        emit requestTextDrawing(&shadow_painter, width(), height());
+        shadow_painter.end();
+    }
 
     // Set the blured image to the produced text image:
     if(use_blur)
@@ -257,19 +260,14 @@ void Display1::renderText(bool text_present)
         update();
 }
 
-bool Display1::useBlur()
-{
-    return use_blur;
-}
-
 void Display1::setBlur(bool blur)
 {
     use_blur = blur;
 }
 
-bool Display1::useFading()
+void Display1::setUseShadow(bool useShadow)
 {
-    return use_fading;
+    use_shadow = useShadow;
 }
 
 void Display1::setFading(bool fade)
@@ -277,9 +275,9 @@ void Display1::setFading(bool fade)
     use_fading = fade;
 }
 
-QFont Display1::getFont()
+void Display1::setDisplaySettings(DisplaySettings sets)
 {
-    return main_font;
+    mySettings = sets;
 }
 
 void Display1::setNewFont(QFont new_font)
@@ -287,22 +285,15 @@ void Display1::setNewFont(QFont new_font)
     main_font = new_font;
 }
 
-QString Display1::getWallpaper()
+void Display1::setNewWallpaper(QString path, bool isToUse)
 {
-    return wallpaper_path;
-}
+    if(isToUse)
+        wallpaper_path = path;
+    else
+        wallpaper_path.clear();
 
-QString Display1::getPassiveWallpaper()
-{
-    return passive_wallpaper_path;
-}
-
-void Display1::setNewWallpaper(QString path)
-{
-    wallpaper_path = path;
-    if( path.isEmpty() ) {
+    if( wallpaper_path.isEmpty() )
         wallpaper = QImage();
-    }
     else
     {
         wallpaper.load(wallpaper_path);
@@ -310,12 +301,15 @@ void Display1::setNewWallpaper(QString path)
     }
 }
 
-void Display1::setNewPassiveWallpaper(QString path)
+void Display1::setNewPassiveWallpaper(QString path, bool isToUse)
 {
-    passive_wallpaper_path = path;
-    if( path.isEmpty() ) {
+    if(isToUse)
+        passive_wallpaper_path = path;
+    else
+        passive_wallpaper_path.clear();
+
+    if( passive_wallpaper_path.isEmpty() )
         passive_wallpaper = QImage();
-    }
     else
     {
         passive_wallpaper.load(passive_wallpaper_path);
@@ -323,10 +317,6 @@ void Display1::setNewPassiveWallpaper(QString path)
     }
 }
 
-QColor Display1::getForegroundColor()
-{
-    return foreground_color;
-}
 void Display1::setForegroundColor(QColor new_color)
 {
     foreground_color = new_color;
@@ -448,8 +438,8 @@ void Display1::fastbluralpha(QImage &img, int radius)
 
     for (y = 0; y < h; ++y){
         rinsum = ginsum = binsum = ainsum
-                                   = routsum = goutsum = boutsum = aoutsum
-                                                                   = rsum = gsum = bsum = asum = 0;
+                = routsum = goutsum = boutsum = aoutsum
+                = rsum = gsum = bsum = asum = 0;
         for (i =- radius; i <= radius; ++i) {
             p = pix[yi+qMin(wm,qMax(i,0))];
             sir = stack[i+radius];
@@ -537,8 +527,8 @@ void Display1::fastbluralpha(QImage &img, int radius)
     }
     for (x=0; x < w; ++x){
         rinsum = ginsum = binsum = ainsum
-                                   = routsum = goutsum = boutsum = aoutsum
-                                                                   = rsum = gsum = bsum = asum = 0;
+                = routsum = goutsum = boutsum = aoutsum
+                = rsum = gsum = bsum = asum = 0;
 
         yp =- radius * w;
 

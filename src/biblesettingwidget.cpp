@@ -27,6 +27,7 @@ BibleSettings BibleSettingWidget::getSettings()
     int obx = ui->comboBox_operatorBible->currentIndex();
 //    QString pb,sb,tb,ob;
 
+    // Get Bible version settings
     if(pbx != -1)
     {
         // Primary
@@ -57,11 +58,32 @@ BibleSettings BibleSettingWidget::getSettings()
         mySettings.operatorBible = "same";
     }
 
+    // Backgroud
+    mySettings.useBackground = ui->groupBox_Background->isChecked();
+    mySettings.backgroundPath = ui->lineEdit_BackPath->text();
+
+    //Alingment
+    mySettings.textAlingmentV = ui->comboBox_verticalAling->currentIndex();
+    mySettings.textAlingmentH = ui->comboBox_horizontalAling->currentIndex();
+
+    mySettings.useAbbriviations = ui->checkBox_abbiviations->isChecked();
+
+    // Max screen use
+    mySettings.maxScreen = ui->spinBox_maxScreen->value();
+    if(ui->radioButton_maxTop->isChecked())
+        mySettings.maxScreenFrom = "top";
+    if(ui->radioButton_maxButtom->isChecked())
+        mySettings.maxScreenFrom = "buttom";
+
     return mySettings;
 }
 
 void BibleSettingWidget::loadSettings()
 {
+    // Clear items if exitst
+    bibles.clear();
+    bible_id_list.clear();
+
     // Get Bibles that exist in the database
     QSqlQuery sq;
     sq.exec("SELECT bible_name, id FROM BibleVersions");
@@ -72,6 +94,7 @@ void BibleSettingWidget::loadSettings()
     sq.clear();
 
     // Fill bibles comboboxes
+    ui->comboBox_primaryBible->clear();
     ui->comboBox_primaryBible->addItems(bibles);
     ui->comboBox_secondaryBible->addItem(tr("None"));
     ui->comboBox_secondaryBible->addItems(bibles);
@@ -91,14 +114,12 @@ void BibleSettingWidget::loadSettings()
         ui->comboBox_secondaryBible->setCurrentIndex(0);
     else
         ui->comboBox_secondaryBible->setCurrentIndex(bible_id_list.indexOf(mySettings.secondaryBible)+1);
-//    updateSecondaryBibleMenu();
 
     // Set current trinaty bibile
     if(mySettings.trinaryBible == "none")
         ui->comboBox_trinaryBible->setCurrentIndex(0);
     else
         ui->comboBox_trinaryBible->setCurrentIndex(bible_id_list.indexOf(mySettings.trinaryBible)+1);
-//    updateTrinaryBibleMenu();
     updateSecondaryBibleMenu();
 
     // Set current operator bibile
@@ -107,6 +128,29 @@ void BibleSettingWidget::loadSettings()
     else
         ui->comboBox_operatorBible->setCurrentIndex(bible_id_list.indexOf(mySettings.operatorBible)+1);
     updateOperatorBibleMenu();
+
+    // Set background use
+    ui->groupBox_Background->setChecked(mySettings.useBackground);
+    ui->lineEdit_BackPath->setText(mySettings.backgroundPath);
+
+    // Set alingment
+    ui->comboBox_verticalAling->setCurrentIndex(mySettings.textAlingmentV);
+    ui->comboBox_horizontalAling->setCurrentIndex(mySettings.textAlingmentH);
+
+    // Set text color
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings.textColor);
+    ui->graphicView_textColor->setPalette(p);
+
+    // Set abbriviations use
+    ui->checkBox_abbiviations->setChecked(mySettings.useAbbriviations);
+
+    // Set max screen use
+    ui->spinBox_maxScreen->setValue(mySettings.maxScreen);
+    if(mySettings.maxScreenFrom == "top")
+        ui->radioButton_maxTop->setChecked(true);
+    else if(mySettings.maxScreenFrom == "buttom")
+        ui->radioButton_maxButtom->setChecked(true);
 
 }
 
@@ -138,9 +182,11 @@ void BibleSettingWidget::updateTrinaryBibleMenu()
     {
         ui->comboBox_trinaryBible->setCurrentIndex(0);
         ui->comboBox_trinaryBible->setEnabled(false);
+        ui->groupBox_maxScreen->setEnabled(true);
     }
     else
     {
+        ui->groupBox_maxScreen->setEnabled(false);
         ui->comboBox_trinaryBible->setEnabled(true);
         QString sbible = ui->comboBox_secondaryBible->currentText();
         QString tbible = ui->comboBox_trinaryBible->currentText();
@@ -171,7 +217,7 @@ void BibleSettingWidget::updateOperatorBibleMenu()
     operator_id_list = bible_id_list;
     operator_id_list.removeAt(ui->comboBox_primaryBible->currentIndex());
     ui->comboBox_operatorBible->clear();
-    ui->comboBox_operatorBible->addItem(tr("Same as primary bible"));
+    ui->comboBox_operatorBible->addItem(tr("Same as primary Bible"));
     ui->comboBox_operatorBible->addItems(operator_bibles);
 
     int i = ui->comboBox_operatorBible->findText(obible);
@@ -195,4 +241,35 @@ void BibleSettingWidget::on_comboBox_secondaryBible_activated(const QString &arg
 void BibleSettingWidget::on_comboBox_trinaryBible_activated(const QString &arg1)
 {
 //    qDebug()<< trinary_id_list.at(ui->comboBox_trinaryBible->currentIndex()-1);
+}
+
+void BibleSettingWidget::on_button_BrowseBackground_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
+                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+    if(!filename.isNull())
+        ui->lineEdit_BackPath->setText(filename);
+}
+
+void BibleSettingWidget::on_button_textColor_clicked()
+{
+    mySettings.textColor = QColorDialog::getColor(mySettings.textColor,this);
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings.textColor);
+    ui->graphicView_textColor->setPalette(p);
+}
+
+void BibleSettingWidget::on_button_font_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
+    if(ok)
+        mySettings.textFont = font;
+}
+
+void BibleSettingWidget::on_pushButton_default_clicked()
+{
+    BibleSettings b;
+    mySettings = b;
+    loadSettings();
 }

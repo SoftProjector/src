@@ -32,7 +32,7 @@
 #include "announcementsettingwidget.h"
 
 namespace Ui {
-    class SettingsDialog;
+class SettingsDialog;
 }
 
 class SettingsDialog : public QDialog {
@@ -49,13 +49,8 @@ protected:
 private:
     Ui::SettingsDialog *ui;
     SoftProjector *softProjector;
-    QStringList bibles;
-    QFont new_font;
-    QString new_wallpaper_path;
-    QString new_passive_wallpaper_path;
-    QColor new_foreground_color;
-    QStringList bible_id_list;
-    QStringList second_id_list;
+
+    int current_display_screen;
     bool is_always_on_top;
 
     Settings allSettings;
@@ -65,21 +60,12 @@ private:
     AnnouncementSettingWidget *announcementSettingswidget;
 
 private slots:
-    void on_choose_color_button_clicked();
-//    void on_remove_passive_wallpaper_button_clicked();
-//    void on_primary_bible_menu_activated(QString );
-    void on_remove_wallpaper_button_clicked();
-//    void on_set_passive_wallpaper_clicked();
-    void on_set_wallpaper_button_clicked();
-    void on_change_font_button_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
     void on_listWidget_currentRowChanged(int currentRow);
 
 public slots:
-    void setDefaults();
-    void loadSettings();
-    void saveSettings();
+    void loadSettings(Settings& sets);
 };
 
 #endif // SETTINGSDIALOG_H

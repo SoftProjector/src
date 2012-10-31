@@ -560,12 +560,12 @@ QByteArray SongWidget::getSplitterState()
     return ui->splitter->saveState();
 }
 
-void SongWidget::setSplitterState(QString state)
+void SongWidget::setSplitterState(QByteArray& state)
 {
-    QByteArray b;
-    b.insert(0,state);
-    b = b.fromHex(b);
-    ui->splitter->restoreState(b);
+//    QByteArray b;
+//    b.insert(0,state);
+//    b = b.fromHex(b);
+    ui->splitter->restoreState(state);
 }
 
 void SongWidget::retranslateUis()

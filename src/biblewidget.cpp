@@ -69,27 +69,25 @@ void BibleWidget::changeEvent(QEvent *e)
     }
 }
 
-QString BibleWidget::getPrimary()
+void BibleWidget::setSettings(BibleSettings& sets)
 {
-    return bible.primaryId;
+    QString initial_bible = mySettings.operatorBible;
+    mySettings = sets;
+    loadBibles(initial_bible);
 }
 
-QString BibleWidget::getSecondary()
+void BibleWidget::loadBibles(QString initialId)
 {
-    return bible.secondaryId;
-}
-
-void BibleWidget::loadBibles(QString primaryId, QString secondaryId)
-{
-    // secondaryId may be "none"
-    QString initial_primary_id = bible.primaryId;
-    bible.setBibles(primaryId, secondaryId);
+    // if operator bible = "same", then set it to primary bible
+    if(mySettings.operatorBible=="same")
+        mySettings.operatorBible = mySettings.primaryBible;
 
 
     // Check if primary bible is different that what has been loaded already
     // If it is different, then reload the bible list
-    if(initial_primary_id!=primaryId)
+    if(initialId!=mySettings.operatorBible)
     {
+        bible.setBiblesId(mySettings.operatorBible);
         ui->listBook->clear();
         ui->listBook->addItems(bible.getBooks());
         ui->listBook->setCurrentRow(0);
@@ -157,9 +155,11 @@ QString BibleWidget::getCaption()
 {
     // Get the caption string to show above the show list (right-most list)
     QString id = bible.currentIdList.at(0);
-    QStringList temp = bible.getVerseAndCaption(id, bible.primaryId);
+    QString vr,cap;
+//    QStringList temp = bible.getVerseAndCaption(id, mySettings.operatorBible,false);
+    bible.getVerseAndCaption(vr,cap,id, mySettings.operatorBible,false);
     QStringList temp1;
-    temp1 = temp[1].split(":");
+    temp1 = cap.split(":");
     return temp1[0];
 }
 /*
@@ -336,17 +336,17 @@ void BibleWidget::on_search_button_clicked()
 
     if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),search_text);
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),search_text);
     }
     else if (ui->current_book_radioButton->isChecked()) // Search current book only
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),
                                            bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
                                            search_text);
     }
     else if (ui->current_chapter_radioButton->isChecked()) // Search current chapter only
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),getPrimary(),
+        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),
                                            bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
                                            ui->listChapterNum->currentItem()->text(),search_text);
     }
@@ -536,19 +536,21 @@ QByteArray BibleWidget::getShownSplitterState()
     return shown_splitter_state;
 }
 
-void BibleWidget::setHiddenSplitterState(QString state)
+void BibleWidget::setHiddenSplitterState(QByteArray& state)
 {
-    hidden_splitter_state.clear();
-    hidden_splitter_state.insert(0,state);
-    hidden_splitter_state = hidden_splitter_state.fromHex(hidden_splitter_state);
+//    hidden_splitter_state.clear();
+//    hidden_splitter_state.insert(0,state);
+//    hidden_splitter_state = hidden_splitter_state.fromHex(hidden_splitter_state);
+    hidden_splitter_state = state;
     ui->results_splitter->restoreState(hidden_splitter_state);
 }
 
-void BibleWidget::setShownSplitterState(QString state)
+void BibleWidget::setShownSplitterState(QByteArray& state)
 {
-    shown_splitter_state.clear();
-    shown_splitter_state.insert(0,state);
-    shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
+//    shown_splitter_state.clear();
+//    shown_splitter_state.insert(0,state);
+//    shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
+    shown_splitter_state = state;
 }
 
 QList<BibleSearch> BibleWidget::getHistoryList()
@@ -607,7 +609,7 @@ void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)
     }
     sql_str.chop(4);
 
-    sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = " + bible.primaryId +
+    sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = " + mySettings.operatorBible +
             " AND(" + sql_str + ")");
 
     // Retrieve results
@@ -621,7 +623,7 @@ void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)
 
         // Get Book name instead of number
         sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + h.book + " AND bible_id = " + bible.primaryId);
+                 + h.book + " AND bible_id = " + mySettings.operatorBible);
         sq1.first();
         h.book = sq1.value(0).toString().trimmed();
         h_list.append(h);

@@ -23,10 +23,9 @@ Bible::Bible()
 {
 }
 
-void Bible::setBibles(QString pId, QString sId)
+void Bible::setBiblesId(QString& id)
 {
-    primaryId = pId;
-    secondaryId = sId;
+    bibleId = id;
     retrieveBooks();
 }
 
@@ -35,7 +34,7 @@ void Bible::retrieveBooks()
     BibleBook book;
     QSqlQuery sq;
     books.clear();
-    sq.exec("SELECT book_name, id, chapter_count FROM BibleBooks WHERE bible_id = "+ primaryId );
+    sq.exec("SELECT book_name, id, chapter_count FROM BibleBooks WHERE bible_id = "+ bibleId );
     while (sq.next())
     {
         book.book = sq.value(0).toString().trimmed();
@@ -58,14 +57,27 @@ QStringList Bible::getBooks()
     return book_list;
 }
 
+int Bible::getCurrentBookRow(QString book)
+{
+    int chapters(0);
+    for(int i(0); books.count()>i;++i)
+    {
+        if(books.at(i).book==book)
+        {
+            chapters = i;
+            break;
+        }
+    }
+    return chapters;
+}
+
 QStringList Bible::getChapter(QString book, int chapter)
 {
     QString verse, verseText, id, verse_old;
     QSqlQuery sq;
     previewIdList.clear();
     verseList.clear();
-    sq.exec("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id = "
-            + primaryId + " AND book = '" + book + "' AND chapter = " + QString::number(chapter) );
+    sq.exec(QString("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id = %1 AND book = '%2' AND chapter = %3").arg(bibleId).arg(book).arg(QString::number(chapter)));
     while (sq.next())
     {
         verse  = sq.value(1).toString();
@@ -88,47 +100,48 @@ QStringList Bible::getChapter(QString book, int chapter)
     return verseList;
 }
 
-Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows)
+Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& sets)
 {
-    QString id;
+    QString verse_id;
     for(int i(0);i<currentRows.count();++i)
     {
-        id += currentIdList.at(currentRows.at(i)) + ",";
+        verse_id += currentIdList.at(currentRows.at(i)) + ",";
     }
-    id.chop(1);
+    verse_id.chop(1);
 
-    QStringList list = getVerseAndCaption(id, primaryId);
     Verse v;
-    v.primary_text = list[0];
-    v.primary_caption = list[1];
+    // get primary verse
+    getVerseAndCaption(v.primary_text,v.primary_caption,verse_id,sets.primaryBible,sets.useAbbriviations);
 
-    if( primaryId==secondaryId || secondaryId=="none" )
-    {
-    }
-    else
-    {
-        list = getVerseAndCaption(id, secondaryId);
-        v.secondary_text = list[0];
-        v.secondary_caption = list[1];
-    }
+    // get secondary verse
+    if(sets.primaryBible!=sets.secondaryBible && sets.secondaryBible!="none")
+        getVerseAndCaption(v.secondary_text,v.secondary_caption,verse_id,sets.secondaryBible,sets.useAbbriviations);
+
+    // get trinary versse
+    if(sets.trinaryBible!=sets.primaryBible && sets.trinaryBible!=sets.secondaryBible && sets.trinaryBible!="none")
+        getVerseAndCaption(v.trinary_text,v.trinary_caption,verse_id,sets.trinaryBible,sets.useAbbriviations);
+
     return v;
 
 }
 
-QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
+void Bible::getVerseAndCaption(QString& verse, QString& caption, QString& verId, QString& bibId, bool useAbbr)
 {
-    QString verse, verse_old, verse_show, verse_n, verse_nold, verse_nfirst, chapter;
-    QString caption;
+    QString verse_old, verse_show, verse_n, verse_nold, verse_nfirst, chapter;
     QString book;
     QStringList ids;
-    QSqlQuery sq, sq1;
+    QSqlQuery sq;
 
-    if (id.contains(","))// Run if more than one database verse items exist or show muliple verses
+    // clean old verses
+    verse.clear();
+    caption.clear();
+
+    if (verId.contains(","))// Run if more than one database verse items exist or show muliple verses
     {
-        ids = id.split(",");
-        id.replace(",", "' OR verse_id = '");
+        ids = verId.split(",");
+        verId.replace(",", "' OR verse_id = '");
         sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE ( verse_id = '"
-                + id +"' ) AND bible_id = " + bibleId);        
+                + verId +"' ) AND bible_id = " + bibId);
         while (sq.next())
         {
             book = sq.value(0).toString();
@@ -180,17 +193,11 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
             verse_nold = verse_n;
         }
         verse = verse_show.simplified();
-
-        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + book + " AND bible_id = " + bibleId);
-        sq1.first();
-        caption = sq1.value(0).toString() + caption;
-        sq1.clear();
     }
     else // Run as standard single verse item from database
     {
         sq.exec("SELECT book,chapter,verse,verse_text FROM BibleVerse WHERE verse_id = '"
-                +id+"' AND bible_id = " + bibleId);
+                +verId+"' AND bible_id = " + bibId);
 
         sq.first();
         verse = sq.value(3).toString().trimmed();// Remove the empty line at the end using .trimmed()
@@ -198,35 +205,30 @@ QStringList Bible::getVerseAndCaption(QString id, QString bibleId)
         book = sq.value(0).toString();
         caption =" " + sq.value(1).toString() + ":" + sq.value(2).toString();
         sq.clear();
-
-        sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                + book + " AND bible_id = " + bibleId);
-        sq.first();
-        caption = sq.value(0).toString() + caption;
     }
 
-    QStringList list;
-    list.append(verse.simplified());
-    list.append(caption.simplified());
-    return list;
-}
+    // Add book name to caption
+    sq.exec("SELECT book_name FROM BibleBooks WHERE id = "
+            + book + " AND bible_id = " + bibId);
+    sq.first();
+    caption = sq.value(0).toString() + caption;
+    sq.clear();
 
-
-int Bible::getCurrentBookRow(QString book)
-{
-    int chapters(0);
-    for(int i(0); books.count()>i;++i)
+    // Add bible abbreveation if to to use it
+    if(useAbbr)
     {
-        if(books.at(i).book==book)
-        {
-            chapters = i;
-            break;
-        }
+        sq.exec("SELECT abbreviation FROM BibleVersions WHERE id = " + bibId);
+        sq.first();
+        QString abr = sq.value(0).toString().trimmed();
+        if (!abr.isEmpty())
+            caption = QString("%1 (%2)").arg(caption).arg(abr);
     }
-    return chapters;
+
+    verse = verse.simplified();
+    caption = caption.simplified();
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString searchText)
 {   ///////// Search entire Bible //////////
 
     QString s_book,s_chapter,verse,verse_text;
@@ -267,7 +269,7 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString sear
     return return_results;//*/
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString book, QString searchText)
 {   ///////// Search in selected book //////////
 
     QString s_book,s_chapter,verse,verse_text;
@@ -309,7 +311,7 @@ QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book
     return return_results;
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool begins, QString book, QString chapter, QString searchText)
 {   ///////// Search in selected chapter //////////
 
     QString s_book,s_chapter,verse,verse_text;

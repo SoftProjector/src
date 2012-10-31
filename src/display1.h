@@ -21,6 +21,7 @@
 #define DISPLAY1_H
 
 #include <QtGui>
+#include "settings.h"
 
 class Display1 : public QWidget
 {
@@ -29,22 +30,18 @@ public:
     Display1(QWidget *parent = 0);
 //    QTextCodec *codec;
     int paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
-    void setNewWallpaper(QString path);
-    void setNewPassiveWallpaper(QString path);
+    void setNewWallpaper(QString path, bool isToUse);
+    void setNewPassiveWallpaper(QString path, bool isToUse);
 
 public slots:
     void fadeIn();
     void fadeOut();
-    bool useBlur();
     void setBlur(bool blur);
-    bool useFading();
+    void setUseShadow(bool useShadow);
+    void setDisplaySettings(DisplaySettings sets);
     void setFading(bool fade);
     void renderText(bool text_present);
-    QFont getFont();
     void setNewFont(QFont newFont);
-    QString getWallpaper();
-    QString getPassiveWallpaper();
-    QColor getForegroundColor();
     void setForegroundColor(QColor new_color);
     void fastbluralpha(QImage &img, int radius);
 
@@ -56,7 +53,9 @@ protected:
 
 
 private:
+    DisplaySettings mySettings;
     bool use_fading;
+    bool use_shadow;
     bool use_blur;
     QFont main_font;
     QString wallpaper_path; // Wallpaper image file path

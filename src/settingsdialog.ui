@@ -88,11 +88,11 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="general">
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0" colspan="4">
+       <item row="0" column="0" colspan="2">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QLabel" name="label_4">
@@ -117,74 +117,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0" colspan="4">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="change_font_button">
-           <property name="text">
-            <string>Change Font...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Text color:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGraphicsView" name="text_color_view">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>20</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="choose_color_button">
-         <property name="text">
-          <string>Choose color...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>148</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="0" colspan="4">
+       <item row="1" column="0" colspan="2">
         <widget class="QScrollArea" name="scrollAreaGeneralSettings">
          <property name="enabled">
           <bool>true</bool>
@@ -198,60 +131,10 @@
             <x>0</x>
             <y>0</y>
             <width>406</width>
-            <height>262</height>
+            <height>461</height>
            </rect>
           </property>
          </widget>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="4">
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Active wallpaper</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLineEdit" name="wallpaper_ef">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QPushButton" name="set_wallpaper_button">
-              <property name="text">
-               <string>Browse...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="remove_wallpaper_button">
-              <property name="text">
-               <string>Remove wallpaper</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
@@ -297,7 +180,7 @@
             <x>0</x>
             <y>0</y>
             <width>406</width>
-            <height>450</height>
+            <height>461</height>
            </rect>
           </property>
          </widget>
@@ -333,31 +216,6 @@
         </layout>
        </item>
        <item row="1" column="0">
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="stanza_title_checkBox">
-           <property name="text">
-            <string>Show stanza title</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="song_key_checkBox">
-           <property name="text">
-            <string>Show song key</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QCheckBox" name="song_number_checkBox">
-           <property name="text">
-            <string>Show song number</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
         <widget class="QScrollArea" name="scrollAreaSongSettings">
          <property name="enabled">
           <bool>true</bool>
@@ -370,8 +228,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>406</width>
+            <height>461</height>
            </rect>
           </property>
          </widget>
@@ -419,8 +277,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>406</width>
+            <height>461</height>
            </rect>
           </property>
          </widget>

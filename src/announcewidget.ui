@@ -77,35 +77,6 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Horizontal alignment:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="horizontal_comboBox">
-        <property name="currentIndex">
-         <number>1</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>Left</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Center</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Right</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
          <string>Vertical alignment:</string>
@@ -114,9 +85,6 @@
       </item>
       <item>
        <widget class="QComboBox" name="vertical_comboBox">
-        <property name="currentIndex">
-         <number>1</number>
-        </property>
         <item>
          <property name="text">
           <string>Top</string>
@@ -130,6 +98,32 @@
         <item>
          <property name="text">
           <string>Bottom</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Horizontal alignment:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="horizontal_comboBox">
+        <item>
+         <property name="text">
+          <string>Left</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Center</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Right</string>
          </property>
         </item>
        </widget>

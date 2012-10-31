@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox_AnnounceBack">
+    <widget class="QGroupBox" name="groupBox_Background">
      <property name="title">
       <string>Use Background Image</string>
      </property>
@@ -24,14 +24,14 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_7">
       <item row="0" column="0" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_AnnounceBack">
+       <widget class="QLineEdit" name="lineEdit_Background">
         <property name="readOnly">
          <bool>true</bool>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QPushButton" name="button_AnnounceBack">
+       <widget class="QPushButton" name="button_Background">
         <property name="text">
          <string>Browse...</string>
         </property>
@@ -59,27 +59,7 @@
       <string>Text Alingment</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_horizontal">
-        <property name="text">
-         <string>Horizontal:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox_horizontalAling"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_vertical">
-        <property name="text">
-         <string>Vertical:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="comboBox_verticalAling"/>
-      </item>
-      <item row="0" column="4">
+      <item row="0" column="6">
        <spacer name="horizontalSpacer_14">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -91,6 +71,58 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_vertical">
+        <property name="text">
+         <string>Vertical:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="label_horizontal">
+        <property name="text">
+         <string>Horizontal:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QComboBox" name="comboBox_verticalAling">
+        <item>
+         <property name="text">
+          <string>Top</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Middle</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bottom</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QComboBox" name="comboBox_horizontalAling">
+        <item>
+         <property name="text">
+          <string>Left</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Center</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Right</string>
+         </property>
+        </item>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -166,6 +198,30 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="4" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_default">
+       <property name="text">
+        <string>Reset All To Default</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

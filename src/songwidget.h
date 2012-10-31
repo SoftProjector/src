@@ -50,7 +50,7 @@ public slots:
     void updateSongFromDatabase(int songid, int initial_sid);
     void addNewSong(Song song, int initial_sid);
     QByteArray getSplitterState();
-    void setSplitterState(QString state);
+    void setSplitterState(QByteArray& state);
 
 protected:
     virtual void changeEvent(QEvent *e);

@@ -24,6 +24,7 @@
 #include <QtGui>
 #include "bible.h"
 #include "highlight.h"
+#include "settings.h"
 
 namespace Ui {
     class BibleWidget;
@@ -66,14 +67,13 @@ public slots:
     void loadHistoriesFromFile(QList<BibleSearch> history_ids);
     void loadHistoriesFromFile1_0(QStringList histories);
     QList<BibleSearch> getHistoryList();
-    QString getPrimary();
-    QString getSecondary();
     QByteArray getHiddenSplitterState();
     QByteArray getShownSplitterState();
-    void setHiddenSplitterState(QString state);
-    void setShownSplitterState(QString state);
-    void loadBibles(QString primaryId, QString secondaryId);
+    void setHiddenSplitterState(QByteArray& state);
+    void setShownSplitterState(QByteArray& state);
+    void loadBibles(QString initialId);
     void sendToProjector(bool add_to_history);
+    void setSettings(BibleSettings& sets);
 
     //bool eventFilter(QObject *object, QEvent *event);
 
@@ -110,6 +110,7 @@ private slots:
 
 
 private:
+    BibleSettings mySettings;
     Ui::BibleWidget *ui;
     HihghlighterDelegate *highlight;
     QList<BibleSearch> search_results;

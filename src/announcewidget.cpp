@@ -210,3 +210,9 @@ void AnnounceWidget::loadFromFile(QList<Announcement> anns)
     ui->history_listWidget->clear();
     ui->history_listWidget->addItems(a_list);
 }
+
+void AnnounceWidget::setAlingment(int v, int h)
+{
+    ui->vertical_comboBox->setCurrentIndex(v);
+    ui->horizontal_comboBox->setCurrentIndex(h);
+}

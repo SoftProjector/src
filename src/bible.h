@@ -21,6 +21,7 @@
 #define BIBLE_H
 
 #include <QtSql>
+#include "settings.h"
 
 class Verse
 {
@@ -31,6 +32,8 @@ public:
     QString secondary_text;
     QString primary_caption;
     QString secondary_caption;
+    QString trinary_text;
+    QString trinary_caption;
 };
 
 class BibleSearch
@@ -60,28 +63,25 @@ class Bible
 {
 public:
     Bible();
-    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString searchText);
-    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString book, QString searchText);
-    QList<BibleSearch> searchBible(bool begins, QString bibleId, QString book, QString chapter, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString book, QString searchText);
+    QList<BibleSearch> searchBible(bool begins, QString book, QString chapter, QString searchText);
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
-    QStringList getVerseAndCaption(QString id, QString bibleId);
+    void getVerseAndCaption(QString &verse, QString &caption, QString &verId, QString &bibId, bool useAbbr);
     int getCurrentBookRow(QString book);
-    Verse getCurrentVerseAndCaption(QList<int> currentRows);
+    Verse getCurrentVerseAndCaption(QList<int> currentRows, BibleSettings& sets);
     QStringList verseList;
     QStringList previewIdList; // Verses that are in the preview (chapter) list
     QStringList currentIdList; // Verses that are in the show list
-    QString primaryId;
-    QString secondaryId;
-    void setBibles(QString primaryId, QString secondaryId);
+    void setBiblesId(QString& id);
     QList<BibleBook> books;
 
 private:
+    QString bibleId;
     void retrieveBooks();
 
 private slots:
-
-
 
 };
 

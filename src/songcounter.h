@@ -37,6 +37,7 @@ public:
     QString title;
     QString songbook;
     int count;
+    QString date;
 };
 
 class SongCounterModel : public QAbstractTableModel

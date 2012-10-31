@@ -1,240 +1,377 @@
 #include "settings.h"
 
-/************************************
-          MAIN SETTING BLOCK
-************************************/
-//Settings::Settings()
-//{
-//    loadSettings();
+GeneralSettings::GeneralSettings()
+{
+    // Apply General Defauls
+    displayIsOnTop = false;
+    useShadow = true;
+    useFading = true;
+    useBlurShadow = false;
+    useBackground = false;
+    backgroundPath = "";
+    displayScreen = 0;
+}
 
-//}
+BibleSettings::BibleSettings()
+{
+    // Apply Bible Defaults
+    primaryBible = "none";
+    secondaryBible = "none";
+    trinaryBible = "none";
+    operatorBible = "same";
+    useBackground = false;
+    backgroundPath = "";
+    textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    textColor = QColor(Qt::white);
+    textAlingmentV = 0;
+    textAlingmentH = 0;
+    useAbbriviations = false;
+    maxScreen = 100;
+    maxScreenFrom = "buttom";
+}
 
-//void Settings::loadSettings()
-//{
-//    QString settings_file_path = QApplication::instance()->applicationDirPath() + QDir::separator() + "spSettings.xml";
-//    QFile file(settings_file_path);
-//    file.open(QIODevice::ReadOnly);
-//    QXmlStreamReader xml(&file);
+SongSettings::SongSettings()
+{
+    // Apply song defauls
+    showStanzaTitle = false;
+    showSongKey = false;
+    showSongNumber = false;
+    showSongEnding = true;
+    songEndingType = 0;
+    useBackground = false;
+    backgroundPath = "";
+    textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    textColor = QColor(Qt::white);
+    textAlingmentV = 1;
+    textAlingmentH = 1;
+}
 
-//    while(!xml.atEnd())
-//    {
-//        xml.readNext();
-//        if(xml.StartElement && xml.name() == "spSettings")
-//        {
-//            QString s_version = xml.attributes().value("version").toString().simplified().trimmed();
-//            qDebug()<<s_version +"fd";
-//            if(s_version=="1.0")
-//            {
-//                xml.readNext();
-//                while(xml.tokenString() != "EndElement" && xml.name() != "spSettings")
-//                {
-//                    xml.readNext();
-//                    if(xml.StartElement && xml.name() == "GeneralSettings")
-//                    {
-//                        // Read General settings from file
-//                        while(xml.tokenString() != "EndElement")
-//                        {
-//                            xml.readNext();
-//                            if(xml.StartElement)
-//                                readGeneralSettings(xml.name().toString(),xml.readElementText());
-//                        }
-//                    }
-//                }
+AnnounceSettings::AnnounceSettings()
+{
+    // Apply annouce defaults
+    useBackground = false;
+    backgroundPath = "";
+    textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    textColor = QColor(Qt::white);
+    textAlingmentV = 0;
+    textAlingmentH = 1;
+}
 
-//            }
-//            else
-//            {
-//                //User friednly box for incorrect file version
-//                QMessageBox mb;
-//                mb.setWindowTitle(tr("Incorrect setting file format"));
-//                mb.setText(tr("ERROR: Wrong Setting File Format"));
-//                mb.setIcon(QMessageBox::Information);
-//                mb.exec();
+SpSettings::SpSettings()
+{
+    // Apply main window defaults
+    isWindowMaximized = false;
+    uiTranslation = "en";
+}
 
-//                // remove any file paths
+Settings::Settings()
+{
 
-//                return;
-//            }
-//        }
-//    }
-//    file.close();
-//}
+}
 
-//void Settings::readGeneralSettings(QString name, QString value)
-//{
-//    if(name == "displayIsOnTop")
-//        gsettings.displayIsOnTop = (value == "true");
-//    else if (name == "useShadow")
-//        gsettings.useShadow = (value == "true");
-//    else if (name == "useFading")
-//        gsettings.useFading = (value == "true");
-//    else if (name == "useBlurShadow")
-//        gsettings.useBlurShadow = (value == "true");
-//    else if (name == "useBackground")
-//        gsettings.useBackground = (value == "true");
-//    else if (name == "backgroundPath")
-//        gsettings.backgroundPath == value;
-//}
+void Settings::loadSettings(QString user)
+{
+    QString t,n,v,s,sets; // type, name, value, userValues
+    QStringList set,values;
+    QSqlQuery sq;
+    sq.exec(QString("SELECT type, sets FROM Settings WHERE user = %1").arg(user));
+    while (sq.next())
+    {
+        t = sq.value(0).toString();
+        sets = sq.value(1).toString();
 
-//void Settings::setSave()
-//{
-//    saveSettings();
-//}
+        if(t == "general") // set general setting values
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n == "displayIsOnTop")
+                    general.displayIsOnTop = (v=="true");
+                else if (n == "useShadow")
+                    general.useShadow = (v=="true");
+                else if (n == "useFading")
+                    general.useFading = (v=="true");
+                else if (n == "useBlurShadow")
+                    general.useBlurShadow = (v=="true");
+                else if (n == "useBackground")
+                    general.useBackground = (v=="true");
+                else if (n == "backgroundPath")
+                    general.backgroundPath = v;
+                else if (n == "displayScreen")
+                    general.displayScreen = v.toInt();
+            }
+        }
+        else if(t == "bible")
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
 
-//void Settings::saveSettings()
-//{
-//    QString settings_file_path = QApplication::instance()->applicationDirPath() + QDir::separator() + "spSettings.xml";
-//    QFile file(settings_file_path);
-//    file.open(QIODevice::WriteOnly);
-//    QXmlStreamWriter xml(&file);
-//    xml.setAutoFormatting(true);
-//    xml.setCodec("UTF8");
+                if(n=="primaryBible")
+                    bible.primaryBible = v;
+                else if(n=="secondaryBible")
+                    bible.secondaryBible = v;
+                else if(n=="trinaryBible")
+                    bible.trinaryBible = v;
+                else if(n=="operatorBible")
+                    bible.operatorBible = v;
+                else if(n=="useBackground")
+                    bible.useBackground = (v=="true");
+                else if(n=="backgroundPath")
+                    bible.backgroundPath = v;
+                else if(n=="textAlingment")
+                {
+                    QStringList alinglist = v.split(",");
+                    bible.textAlingmentV = alinglist.at(0).toInt();
+                    bible.textAlingmentH = alinglist.at(1).toInt();
+                }
+                else if(n=="textColor")
+                    bible.textColor = QColor::fromRgb(v.toUInt());
+                else if(n=="textFont")
+                    bible.textFont.fromString(v);
+                else if(n=="useAbbriviations")
+                    bible.useAbbriviations = (v=="true");
+                else if(n=="maxScreen")
+                    bible.maxScreen = v.toInt();
+                else if(n=="maxScreenFrom")
+                    bible.maxScreenFrom = v;
+            }
+        }
+        else if(t == "song")
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n=="showStanzaTitle")
+                    song.showStanzaTitle = (v=="true");
+                else if(n=="showSongKey")
+                    song.showSongKey = (v=="true");
+                else if(n=="showSongNumber")
+                    song.showSongNumber = (v=="true");
+                else if(n=="showSongEnding")
+                    song.showSongEnding = (v=="true");
+                else if(n=="songEndingType")
+                    song.songEndingType = v.toInt();
+                else if(n=="useBackground")
+                    song.useBackground = (v=="true");
+                else if(n=="backgroundPath")
+                    song.backgroundPath = v;
+                else if(n=="textAlingment")
+                {
+                    QStringList alinglist = v.split(",");
+                    song.textAlingmentV = alinglist.at(0).toInt();
+                    song.textAlingmentH = alinglist.at(1).toInt();
+                }
+                else if(n=="textColor")
+                    song.textColor = QColor::fromRgb(v.toUInt());
+                else if(n=="textFont")
+                    song.textFont.fromString(v);
 
-//    xml.writeStartDocument();
-//    xml.writeStartElement("spSettings");
-//    xml.writeAttribute("version","1.0");
+            }
+        }
+        else if(t == "announce")
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n=="useBackground")
+                    announce.useBackground = (v=="true");
+                else if(n=="backgroundPath")
+                    announce.backgroundPath = v;
+                else if(n=="textAlingment")
+                {
+                    QStringList alinglist = v.split(",");
+                    announce.textAlingmentV = alinglist.at(0).toInt();
+                    announce.textAlingmentH = alinglist.at(1).toInt();
+                }
+                else if(n=="textColor")
+                    announce.textColor = QColor::fromRgb(v.toUInt());
+                else if(n=="textFont")
+                    announce.textFont.fromString(v);
+            }
+        }
+        else if(t == "spmain")
+        {
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n=="spSplitter")
+                    spmain.spSplitter = textToByt(v);
+                else if(n=="bibleHiddenSplitter")
+                    spmain.bibleHiddenSplitter = textToByt(v);
+                else if(n=="bibleShowSplitter")
+                    spmain.bibleShowSplitter = textToByt(v);
+                else if(n=="songSplitter")
+                    spmain.songSplitter = textToByt(v);
+                else if(n=="uiTranslation")
+                    spmain.uiTranslation = v;
+                else if(n=="isWindowMaximized")
+                    spmain.isWindowMaximized = (v=="true");
+            }
+        }
+    }
+}
 
-//    // Write General Settings
-//    xml.writeStartElement("GeneralSettings");
-//    if(gsettings.displayIsOnTop)
-//        xml.writeTextElement("displayIsOnTop","true");
-//    else
-//        xml.writeTextElement("displayIsOnTop","fale");
-//    if(gsettings.useShadow)
-//        xml.writeTextElement("useShadow","true");
-//    else
-//        xml.writeTextElement("useShadow","fale");
-//    if(gsettings.useFading)
-//        xml.writeTextElement("useFading","true");
-//    else
-//        xml.writeTextElement("useFading","fale");
-//    if(gsettings.useBlurShadow)
-//        xml.writeTextElement("useBlurShadow","true");
-//    else
-//        xml.writeTextElement("useBlurShadow","fale");
-//    if(gsettings.useBackground)
-//        xml.writeTextElement("useBackground","true");
-//    else
-//        xml.writeTextElement("useBackground","fale");
-//    xml.writeTextElement("backgroundPath",gsettings.backgroundPath);
-//    xml.writeEndElement();
+void Settings::saveSettings(QString user)
+{
+    QSqlQuery sq;
+    QString gset,bset,sset,aset,spset;//general,bible,song,annouce,spmain
 
-//    xml.writeEndElement();// softProjector Settings
-//    xml.writeEndDocument();
+    // **** Prepare general settings ***************************************
+    if(general.displayIsOnTop)
+        gset = "displayIsOnTop = true\n";
+    else
+        gset = "displayIsOnTop = false\n";
+    if(general.useShadow)
+        gset += "useShadow = true\n";
+    else
+        gset += "useShadow = false\n";
+    if(general.useFading)
+        gset += "useFading = true\n";
+    else
+        gset += "useFading = false\n";
+    if(general.useBlurShadow)
+        gset += "useBlurShadow = true\n";
+    else
+        gset += "useBlurShadow = false\n";
+    if(general.useBackground)
+        gset += "useBackground = true\n";
+    else
+        gset += "useBackground = fasle\n";
+    gset += "backgroundPath = " + general.backgroundPath;
+    gset += "\ndisplayScreen = " + QString::number(general.displayScreen);
 
-//    file.close();
-//}
+    // **** Prepare bible settings *********************************************************
+    bset = "primaryBible = " + bible.primaryBible;
+    bset += "\nsecondaryBible = " + bible.secondaryBible;
+    bset += "\ntrinaryBible = " + bible.trinaryBible;
+    bset += "\noperatorBible = " + bible.operatorBible;
 
-//GeneralSettings Settings::getGeneralSettings()
-//{
-//    return gsettings;
-//}
+    // Background
+    if(bible.useBackground)
+        bset += "\nuseBackground = true";
+    else
+        bset += "\nuseBackground = false";
 
-//void Settings::setGeneralSettings(GeneralSettings g)
-//{
-//    gsettings = g;
-//}
+    bset += "\nbackgroundPath = " + bible.backgroundPath;
 
-/************************************
-          GENERAL SETTING BLOCK
-************************************/
+    // Text alingment
+    bset += "\ntextAlingment = " + QString::number(bible.textAlingmentV) +
+            "," + QString::number(bible.textAlingmentH);
 
+    // Text color
+    unsigned int textColorInt = (unsigned int)(bible.textColor.rgb());
+    bset += "\ntextColor = " + QString::number(textColorInt);
 
-/************************************
-          BIBLE SETTING BLOCK
-************************************/
-//BibleSettings::BibleSettings(QObject *parent) :
-//    QObject(parent)
-//{
-//}
+    // Text font
+    bset += "\ntextFont = " + bible.textFont.toString();
 
-//void BibleSettings::setPrimaryBible(QString bible)
-//{
-//    qDebug()<<bible;
-//    primaryBible = bible;
-//}
+    // Version abbriviations
+    if(bible.useAbbriviations)
+        bset += "\nuseAbbriviations = true";
+    else
+        bset += "\nuseAbbriviations = false";
 
-//void BibleSettings::setSecondaryBible(QString bible)
-//{
-//    secondaryBible = bible;
-//}
+    // Max screen
+    bset += "\nmaxScreen = " + QString::number(bible.maxScreen);
+    bset += "\nmaxScreenFrom = " + bible.maxScreenFrom;
 
-//void BibleSettings::setTrinatyBible(QString bible)
-//{
-//    trinaryBible = bible;
-//}
+    // **** Prepare song settings ************************************************
+    if(song.showStanzaTitle)
+        sset = "showStanzaTitle = true\n";
+    else
+        sset = "showStanzaTitle = false\n";
+    if(song.showSongKey)
+        sset += "showSongKey = true\n";
+    else
+        sset += "showSongKey = false\n";
+    if(song.showSongNumber)
+        sset += "showSongNumber = true\n";
+    else
+        sset += "showSongNumber = false\n";
+    if(song.showSongEnding)
+        sset += "showSongEnding = true\n";
+    else
+        sset += "showSongEnding = false\n";
+    sset += "songEndingType = " + QString::number(song.songEndingType);
 
-//void BibleSettings::setControlBible(QString bible)
-//{
-//    controlBible = bible;
-//}
+    if(song.useBackground)
+        sset += "\nuseBackground = true";
+    else
+        sset += "\nuseBackground = false";
 
-//void BibleSettings::setBackground(QString path)
-//{
-//    backgroundPath = path;
-//}
+    sset += "\nbackgroundPath = " + song.backgroundPath;
 
-//void BibleSettings::setFont(QFont font)
-//{
-//    textFont = font;
-//}
+    // Text alingment
+    sset += "\ntextAlingment = " + QString::number(song.textAlingmentV) +
+            "," + QString::number(song.textAlingmentH);
 
-//void BibleSettings::setFontColor(QColor color)
-//{
-//    textColor = color;
-//}
+    // Text color
+    textColorInt = (unsigned int)(song.textColor.rgb());
+    sset += "\ntextColor = " + QString::number(textColorInt);
 
-//void BibleSettings::setFlags(int flags)
-//{
-//    textFlags = flags;
-//}
+    // Text font
+    sset += "\ntextFont = " + song.textFont.toString();
 
-//QString BibleSettings::getPrimaryBible()
-//{
-//    return primaryBible;
-//}
+    // **** prepare announcement settings ************************************
+    // background
+    (announce.useBackground)? aset = "useBackground = true" : aset = "useBackground = false";
+    aset += "\nbackgroundPath = " + announce.backgroundPath;
 
-//QString BibleSettings::getSecondaryBible()
-//{
-//    return secondaryBible;
-//}
+    // Text alingment
+    aset += "\ntextAlingment = " + QString::number(announce.textAlingmentV) +
+            "," + QString::number(announce.textAlingmentH);
 
-//QString BibleSettings::getTrinatyBible()
-//{
-//    return trinaryBible;
-//}
+    // Text color
+    textColorInt = (unsigned int)(announce.textColor.rgb());
+    aset += "\ntextColor = " + QString::number(textColorInt);
 
-//QString BibleSettings::getControlBible()
-//{
-//    return controlBible;
-//}
+    // Text font
+    aset += "\ntextFont = " + announce.textFont.toString();
 
-//QString BibleSettings::getBackground()
-//{
-//    return backgroundPath;
-//}
+    // **** prepare SpMain settings *****************************************
+    spset = "spSplitter = " + spmain.spSplitter.toHex();
+    spset += "\nbibleHiddenSplitter = " + spmain.bibleHiddenSplitter.toHex();
+    spset += "\nbibleShowSplitter = " + spmain.bibleShowSplitter.toHex();
+    spset += "\nsongSplitter = " + spmain.songSplitter.toHex();
+    spset += "\nuiTranslation = " + spmain.uiTranslation;
+    if(spmain.isWindowMaximized)
+        spset += "\nisWindowMaximized = true";
+    else
+        spset += "\nisWindowMaximized = false";
 
-//QFont BibleSettings::getFont()
-//{
-//    return textFont;
-//}
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general' AND user = '%2'").arg(gset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible' AND user = '%2'").arg(bset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song' AND user = '%2'").arg(sset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce' AND user = '%2'").arg(aset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spmain' AND user = '%2'").arg(spset).arg(user));
 
-//QColor BibleSettings::getColor()
-//{
-//    return textColor;
-//}
+}
 
-//int BibleSettings::getFlags()
-//{
-//    return textFlags;
-//}
-
-/************************************
-          SONG SETTING BLOCK
-************************************/
-
-
-/************************************
-          ANNOUNCEMENT SETTING BLOCK
-************************************/
-
+QByteArray Settings::textToByt(QString text)
+{
+    QByteArray b;
+    b.insert(0,text);
+    b = b.fromHex(b);
+    return b;
+}
