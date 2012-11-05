@@ -23,6 +23,18 @@ TARGET = softProjector
 TEMPLATE = app
 //CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
 
+RES_DIR = $${PWD}/unknownsys_bild
+win32: RES_DIR = $${PWD}/win32_bild
+unix:  RES_DIR = $${PWD}/unix_bild
+macx: RES_DIR = $${PWD}/mac_bild
+
+DESTDIR = $${RES_DIR}/bin
+OBJECTS_DIR = $${RES_DIR}/obj
+MOC_DIR = $${RES_DIR}/moc
+UI_DIR = $${RES_DIR}/ui
+RCC_DIR = $${RES_DIR}/rcc
+OUT_PWD = $${RES_DIR}/bin
+
 SOURCES += main.cpp \
     softprojector.cpp \
     songwidget.cpp \
@@ -86,7 +98,8 @@ FORMS += softprojector.ui \
     announcementsettingwidget.ui
 TRANSLATIONS += softpro_de.ts\
     softpro_ru.ts\
-    softpro_cs.ts
+    softpro_cs.ts\
+    softpro_ua.ts
 CODECFORTR = UTF-8
 RESOURCES += softprojector.qrc
 

@@ -50,7 +50,6 @@ class Song
     QString getSongbookName();
     bool isValid();
 
-//private:
     int songID; // Database ID of this song
     int category;
     int language;
@@ -62,6 +61,7 @@ class Song
     QString font;
     QString alingment;
     QString background;
+    QString comments;
 };
 
 

@@ -32,10 +32,11 @@ SongCounter::SongCounter(QWidget *parent) :
     loadCounts();
 
     // Modify the column widths:
-    ui->countTable->setColumnWidth(0, 150);//t - 299//s
-    ui->countTable->setColumnWidth(1, 275);//c - 75//t
-    ui->countTable->setColumnWidth(2, 75);//s - 200//c
-    ui->countTable->setColumnWidth(3, 100);
+    ui->countTable->setColumnWidth(0, 150);//songbook
+    ui->countTable->setColumnWidth(1, 70);//number
+    ui->countTable->setColumnWidth(2, 250);//title
+    ui->countTable->setColumnWidth(3, 65);////count
+    ui->countTable->setColumnWidth(4, 100);//date
     // Decrease the row height:
     ui->countTable->resizeRowsToContents();
 }
@@ -125,9 +126,10 @@ QList<Counter> SongCounter::getSongCounts()
         song_count.count = sq.value(2).toInt();
         song_count.date = sq.value(3).toString();
         // get songbook id
-        sq1.exec("SELECT songbook_id FROM SongLink WHERE song_id = " + id);
+        sq1.exec("SELECT songbook_id, song_number FROM SongLink WHERE song_id = " + id);
         sq1.first();
         id = sq1.value(0).toString();
+        song_count.number = sq1.value(1).toString();
         sq1.clear();
         // get songbook name
         sq1.exec("SELECT name FROM Songbooks WHERE id = " + id);
@@ -180,7 +182,7 @@ int SongCounterModel::rowCount(const QModelIndex &parent) const
 
 int SongCounterModel::columnCount(const QModelIndex &parent) const
 {
-    return 4;
+    return 5;
 }
 
 QVariant SongCounterModel::data(const QModelIndex &index, int role) const
@@ -191,10 +193,12 @@ QVariant SongCounterModel::data(const QModelIndex &index, int role) const
         if( index.column() == 0 )
             return QVariant(song_count.songbook);
         else if(index.column() == 1 )
-            return QVariant(song_count.title);
+            return QVariant(song_count.number);
         else if(index.column() == 2)
-            return QVariant(song_count.count);
+            return QVariant(song_count.title);
         else if(index.column() == 3)
+            return QVariant(song_count.count);
+        else if(index.column() == 4)
             return QVariant(song_count.date);
     }
     return QVariant();
@@ -210,10 +214,12 @@ QVariant SongCounterModel::headerData(int section,
         case 0:
             return QVariant(tr("Songbook"));
         case 1:
-            return QVariant(tr("Song Title"));
+            return QVariant(tr("Number"));
         case 2:
-            return QVariant(tr("Count"));
+            return QVariant(tr("Title"));
         case 3:
+            return QVariant(tr("Count"));
+        case 4:
             return QVariant(tr("Date"));
         }
     }

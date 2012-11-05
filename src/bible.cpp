@@ -125,7 +125,7 @@ Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& s
 
 }
 
-void Bible::getVerseAndCaption(QString& verse, QString& caption, QString& verId, QString& bibId, bool useAbbr)
+void Bible::getVerseAndCaption(QString& verse, QString& caption, QString verId, QString& bibId, bool useAbbr)
 {
     QString verse_old, verse_show, verse_n, verse_nold, verse_nfirst, chapter;
     QString book;

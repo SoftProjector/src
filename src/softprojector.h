@@ -80,6 +80,7 @@ private:
     QString type;
     bool new_list;
     QActionGroup *languageGroup;
+    QString languagePath;
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     void drawCurrentSongText(QPainter *painter, int width, int height);
@@ -113,11 +114,10 @@ private slots:
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();
-    void on_actionCzech_triggered();
-    void on_actionGerman_triggered();
-    void retranslateUis();
-    void on_actionEnglish_triggered();
-    void on_actionRussian_triggered();
+    void retranslateUis(QString locale);
+    void createLanguageActions();
+    void switchLanguage(QAction *action);
+
     void on_action_Help_triggered();
     void on_actionDeleteSong_triggered();
     void on_actionManage_Database_triggered();

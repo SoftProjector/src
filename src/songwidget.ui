@@ -274,7 +274,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget1">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
@@ -311,11 +311,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="preview_label">
-         <property name="text">
-          <string>Song preview: None</string>
-         </property>
-        </widget>
+        <widget class="QLabel" name="preview_label"/>
        </item>
        <item>
         <widget class="QListWidget" name="listPreview">
@@ -330,6 +326,16 @@
          </property>
          <property name="spacing">
           <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_comments">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

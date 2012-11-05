@@ -116,7 +116,11 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox_displayScreen"/>
+         <widget class="QComboBox" name="comboBox_displayScreen">
+          <property name="toolTip">
+           <string>Select onto which screen to dispaly</string>
+          </property>
+         </widget>
         </item>
         <item row="0" column="2">
          <spacer name="horizontalSpacer_2">

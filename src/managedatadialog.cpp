@@ -195,13 +195,9 @@ void ManageDataDialog::importSongbook(QString path)
             line = QString::fromUtf8(file.readLine());
             line.remove("#");
             info = line.trimmed();
+
             // Convert songbook information from single line to multiple line
-            QStringList info_list = info.split("@%");
-            info.clear();
-            for(int i(0); i<info_list.size();++i)
-            {
-                info += info_list[i] + "\n";
-            }
+            toMultiLine(info);
 
 //            line = QString::fromUtf8(file.readLine());
         }
@@ -224,8 +220,8 @@ void ManageDataDialog::importSongbook(QString path)
 
         // Import Songs
         QSqlDatabase::database().transaction();
-        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background)"
-                   "VALUES (?,?,?,?,?,?,?,?,?)");
+        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background, comments)"
+                   "VALUES (?,?,?,?,?,?,?,?,?,?)");
         while (!file.atEnd())
         {
             if (progress.wasCanceled())
@@ -247,12 +243,21 @@ void ManageDataDialog::importSongbook(QString path)
                 sq1.addBindValue(split[7]);//font
                 sq1.addBindValue(split[8]);//alignment
                 sq1.addBindValue(split[9]);//background
+                if(split.count()>10)
+                {
+                    QString comment = split[10];
+                    toMultiLine(comment);
+                    sq1.addBindValue(comment);//comments
+                }
+                else
+                    sq1.addBindValue("");//comments
             }
             else
             {
                 sq1.addBindValue("");//font
                 sq1.addBindValue("");//alignment
                 sq1.addBindValue("");//background
+                sq1.addBindValue("");//comments
             }
             sq1.exec();
 
@@ -281,8 +286,13 @@ void ManageDataDialog::on_export_songbook_pushButton_clicked()
 {
     QString file_path = QFileDialog::getSaveFileName(this,tr("Save the songbook as:"),
                                              ".",tr("softProjector songbook file (*.sps)"));
-    if( !file_path.isNull() )
+     if(!file_path.isEmpty())
+    {
+         qDebug()<<"path:"<<file_path;
+        if(!file_path.endsWith(".sps"))
+            file_path = file_path + ".sps";
         exportSongbook(file_path);
+    }
 }
 
 void ManageDataDialog::exportSongbook(QString path)
@@ -292,8 +302,7 @@ void ManageDataDialog::exportSongbook(QString path)
     Songbook songbook = songbook_model->getSongbook(row);
     QSqlQuery sq,sq1;
     QString songbook_id = songbook.songbookId;
-    QString songs,song,num,id,title,info;
-//    QFileDialog file;
+    QString songs,song,num,id,title,info, comment;
 
     sq.exec("SELECT name, info FROM Songbooks WHERE id = '" + songbook_id + "'");
     sq.first();
@@ -302,12 +311,7 @@ void ManageDataDialog::exportSongbook(QString path)
     sq.clear();
 
     // Convert songbook information from multiline to single line
-    QStringList info_list = info.split("\n");
-    info = info_list[0];
-    for(int i(1); i<info_list.size();++i)
-    {
-        info += "@%" + info_list[i];
-    }
+    toSingleLine(info);
 
     songs = "##" + songbook_id + "\n##"
             + title + "\n##"
@@ -318,19 +322,21 @@ void ManageDataDialog::exportSongbook(QString path)
     {
         id = sq.value(0).toString();
         num = sq.value(1).toString();
-        sq1.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background FROM Songs WHERE id = "+id);
+        sq1.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, comments FROM Songs WHERE id = "+id);
         while (sq1.next())
         {
-
+            comment = sq1.value(9).toString().trimmed();
+            toSingleLine(comment);
             song = sq1.value(0).toString().trimmed() + "#$#" + //title
-                     sq1.value(1).toString().trimmed() + "#$#" + //category
-                     sq1.value(2).toString().trimmed() + "#$#" + //tune
-                     sq1.value(3).toString().trimmed() + "#$#" + //words
-                     sq1.value(4).toString().trimmed() + "#$#" + //music
-                     sq1.value(5).toString().trimmed() + "#$#" + //song_text
-                     sq1.value(6).toString().trimmed() + "#$#" + //font
-                     sq1.value(7).toString().trimmed() + "#$#" + //alignment
-                     sq1.value(8).toString().trimmed(); //background
+                    sq1.value(1).toString().trimmed() + "#$#" + //category
+                    sq1.value(2).toString().trimmed() + "#$#" + //tune
+                    sq1.value(3).toString().trimmed() + "#$#" + //words
+                    sq1.value(4).toString().trimmed() + "#$#" + //music
+                    sq1.value(5).toString().trimmed() + "#$#" + //song_text
+                    sq1.value(6).toString().trimmed() + "#$#" + //font
+                    sq1.value(7).toString().trimmed() + "#$#" + //alignment
+                    sq1.value(8).toString().trimmed() + "#$#" + //background
+                    comment; //comments
         }
         songs += "\n" + num + "#$#"+ song;
     }
@@ -596,8 +602,14 @@ void ManageDataDialog::on_export_bible_pushButton_clicked()
     QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported Bible as:"),
                                              clean(bible.title),
                                              tr("softProjector Bible file ") + "(*.spb)");
-    if( !file_path.isNull() )
-        exportBible(file_path,bible);
+    if(!file_path.isEmpty())
+   {
+        qDebug()<<"path:"<<file_path;
+       if(!file_path.endsWith(".spb"))
+           file_path = file_path + ".spb";
+       exportBible(file_path,bible);
+   }
+
 }
 
 void ManageDataDialog::exportBible(QString path, Bibles bible)
@@ -858,4 +870,26 @@ QString ManageDataDialog::get3(int i)
         st = "00" + st.number(i);
     }
     return st;
+}
+
+void ManageDataDialog::toMultiLine(QString &mline)
+{
+    QStringList line_list = mline.split("@%");
+    mline.clear();
+    for(int i(0); i<line_list.size();++i)
+    {
+        mline += line_list[i] + "\n";
+    }
+    mline = mline.trimmed();
+}
+
+void ManageDataDialog::toSingleLine(QString &sline)
+{
+    QStringList line_list = sline.split("\n");
+    sline = line_list[0];
+    for(int i(1); i<line_list.size();++i)
+    {
+        sline += "@%" + line_list[i];
+    }
+    sline = sline.trimmed();
 }

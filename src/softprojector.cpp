@@ -46,11 +46,13 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->setupUi(this);
 
     // Create action group for language slections
-    languageGroup = new QActionGroup(this);
-    languageGroup->addAction(ui->actionRussian);
-    languageGroup->addAction(ui->actionEnglish);
-    languageGroup->addAction(ui->actionGerman);
-    languageGroup->addAction(ui->actionCzech);
+//    languageGroup = new QActionGroup(this);
+//    languageGroup->addAction(ui->actionRussian);
+//    languageGroup->addAction(ui->actionEnglish);
+//    languageGroup->addAction(ui->actionGerman);
+//    languageGroup->addAction(ui->actionCzech);
+    languagePath = "."+QString(QDir::separator())+"translations"+QString(QDir::separator());
+    createLanguageActions();
 
     // Always place the "Settings" menu item under the application
     // menu, even if the item is translated (Mac OS X):
@@ -107,6 +109,7 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setProjectChanged(bool)));
     connect(bibleWidget, SIGNAL(historyListChanged(bool)),
             this, SLOT(setProjectChanged(bool)));
+    connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
 
     ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
@@ -129,8 +132,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Hide Multi verse selection, only visibel to be when showing bible
     ui->rbMultiVerse->setVisible(false);
 
-    //    version_string = "1.07"; // to be used only for official release
-    version_string = "1.07_Beta"; // to be used between official releases
+        version_string = "1.07"; // to be used only for official release
+//    version_string = "1.07_Beta2"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
     // Initialize bool variables
@@ -191,14 +194,18 @@ void SoftProjector::saveSettings()
     allsettings.spmain.isWindowMaximized = this->isMaximized();
 
     // save translation settings
-    if (ui->actionRussian->isChecked())
-        allsettings.spmain.uiTranslation = "ru";
-    else if (ui->actionEnglish->isChecked())
-        allsettings.spmain.uiTranslation = "en";
-    else if (ui->actionGerman->isChecked())
-        allsettings.spmain.uiTranslation = "de";
-    else if (ui->actionCzech->isChecked())
-        allsettings.spmain.uiTranslation = "cs";
+    QList<QAction*> languageActions = ui->menuLanguage->actions();
+
+    for(int i(0);i < languageActions.count();++i)
+    {
+        if(languageActions.at(i)->isChecked())
+        {
+            if(i < languageActions.count())
+                allsettings.spmain.uiTranslation = languageActions.at(i)->data().toString();
+            else
+                allsettings.spmain.uiTranslation = "en";
+        }
+    }
 
     // save settings
     allsettings.saveSettings("0");
@@ -240,16 +247,25 @@ void SoftProjector::applySetting(Settings &allsets)
         this->setWindowState(Qt::WindowMaximized);
 
     // Apply current translation
-    if(allsettings.spmain.uiTranslation == "en")
-        ui->actionEnglish->setChecked(true);
-    else if(allsettings.spmain.uiTranslation == "ru")
-        ui->actionRussian->setChecked(true);
-    else if(allsettings.spmain.uiTranslation == "de")
-        ui->actionGerman->setChecked(true);
-    else if(allsettings.spmain.uiTranslation == "cs")
-        ui->actionCzech->setChecked(true);
-
-    retranslateUis();
+    QList<QAction*> la = ui->menuLanguage->actions();
+    QString locale;
+    for(int i(0);i < la.count(); ++i)
+    {
+        if(la.at(i)->data().toString() == allsettings.spmain.uiTranslation)
+        {
+            if(i < la.count())
+            {
+                ui->menuLanguage->actions().at(i)->setChecked(true);
+                locale = allsettings.spmain.uiTranslation;
+            }
+            else
+            {
+                ui->menuLanguage->actions().at(0)->setChecked(true);//default
+                locale = "en";
+            }
+        }
+    }
+    retranslateUis(locale);
 }
 
 void SoftProjector::closeEvent(QCloseEvent *event)
@@ -378,7 +394,7 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     int top = bound_rect.top();
     int width = bound_rect.width();
     int height = bound_rect.height();
-    int main_flags;
+    int main_flags(0);
 
     if(wrap)
     {
@@ -461,7 +477,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
 {
     // Draw the text of the current song verse to the specified painter; making
     // sure that the output rect is narrower than <width> and shorter than <height>.
-    SongDatabase song_database;
     QStringList song_list = current_song.getSongTextList();
 
     QString main_text;
@@ -471,7 +486,6 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool last_verse = ( current_song_verse == song_list.count()-1 );
 
     QStringList lines_list = song_list.at(current_song_verse).split("\n");
-    QString songbook_str = current_song.songbook_name;
     QString song_num_str = QString::number(current_song.num);
     QString song_key_str = current_song.tune;
 
@@ -515,6 +529,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
         num_lines++;
     }
 
+    // Prepare Song ending string
     if( last_verse )
     {
         // first check if to show ending
@@ -523,15 +538,18 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
             if(allsettings.song.songEndingType == 0)
                 song_ending = "*    *    *";
             else if(allsettings.song.songEndingType == 1)
-                song_ending = QString(tr("Words by: %1, Music by: %2")).arg(current_song.musicBy).arg(current_song.wordsBy);
-            // If the last vers is very large, do not put extra blank lines:
-            // FIXME use better logic here. Instead of number of lines, analyze the
-            // height vs width ratio.
-            //        if( num_lines > 8 )
-            //            main_text += "\n" + song_ending;
-            //        else
-            //            // The extra blank lines make the display cleaner:
-            //            main_text = "\n" + main_text + "\n\n" + song_ending;
+            {
+                // First check if copyrigth info exist. If it does show it.
+                // If some exist, then show what exist. If nothing exist, then show '* * *'
+                if(!current_song.wordsBy.isEmpty() && !current_song.musicBy.isEmpty())
+                    song_ending = QString(tr("Words by: %1, Music by: %2")).arg(current_song.wordsBy).arg(current_song.musicBy);
+                else if(!current_song.wordsBy.isEmpty() && current_song.musicBy.isEmpty())
+                    song_ending = QString(tr("Words by: %1")).arg(current_song.wordsBy);
+                else if(current_song.wordsBy.isEmpty() && !current_song.musicBy.isEmpty())
+                    song_ending = QString(tr("Music by: %1")).arg(current_song.musicBy);
+                else if(current_song.wordsBy.isEmpty() && current_song.musicBy.isEmpty())
+                    song_ending = "*    *    *";
+            }
         }
     }
     // Margins:
@@ -550,12 +568,10 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool exit = false;
     while( !exit )
     {
-        //qDebug() << "Trying to draw song using font " << font.pointSize();
         out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str, song_ending);
         exit = ( out_rect.width() <= w && out_rect.height() <= h );
         if( !exit )
         {
-            //qDebug() << "  not fitting, decreasing font size";
             // Decrease font size by one point and try again
             font.setPointSize( font.pointSize()-1 );
             painter->setFont(font);
@@ -566,26 +582,22 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     // (Do not allow font to be shrinked less than a 4/5 of the desired font)
     if( font.pointSize() < (orig_font_size*4/5) )
     {
-        //qDebug() << "Font size is less than 4/5 of the original; attempting to wrap";
         font.setPointSize(orig_font_size);
         painter->setFont(font);
         exit = false;
         wrap = true;
         while( !exit )
         {
-            //qDebug() << "WRAP: Trying to draw song using font " << font.pointSize();
             out_rect = drawSongTextToRect(painter, rect, false, true, main_text, top_caption_str, song_num_str, song_ending);
             exit = ( out_rect.width() <= w && out_rect.height() <= h );
             if( !exit )
             {
-                //qDebug() << "  WRAP: not fitting, decreasing font size";
                 // Decrease font size by one point and try again
                 font.setPointSize( font.pointSize()-1 );
                 painter->setFont(font);
             }
         }
     }
-    //qDebug() << "Drawing with wrap set to " << wrap;
     // At this point we picked correct font size and flags; so it's safe to draw:
     drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str, song_ending);
 }
@@ -616,8 +628,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     // Margins:
     int left = 30;
     int top = 20;
-    int bottom = height - top;
-    //       qDebug()<<"bottom: "+ QString::number(bottom);
+
     //int right = width - left;
     int w = width - left - left;
     int h = height - top - top;
@@ -627,8 +638,12 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     int maxtop; // top of max screen
     if(allsettings.bible.maxScreenFrom=="top")
         maxtop  = top;
-    if(allsettings.bible.maxScreenFrom=="buttom")
+    if(allsettings.bible.maxScreenFrom=="bottom")
         maxtop = top+h-maxh;
+
+    // apply max screen use settings
+    h=maxh;
+    top=maxtop;
 
     //       QFont font = painter->font();
     QFont font = painter->font();
@@ -665,10 +680,6 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
         if(v.secondary_text.isEmpty() && v.trinary_text.isEmpty())
         {
             // Prepare primary version only, 2nd and 3rd do not exist
-            // apply max screen use settings
-            h=maxh;
-            top=maxtop;
-
             // Figure out how much space the drawing will take at the current font size:
             drawBibleTextToRect(painter,trect1,crect1,v.primary_text,v.primary_caption,tflags,cflags,top,left,w,h, current_size);
 
@@ -685,8 +696,8 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
             // set new top for secondary
             int top2 = crect1.bottom();
-            if(top2<height/2)
-                top2=height/2;
+            if(top2<h/2+top)
+                top2=h/2+top;
 
             // Figure out how much space the drawing will take at the current font size for secondary:
             drawBibleTextToRect(painter,trect2,crect2,v.secondary_text,v.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
@@ -709,16 +720,16 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
 
             // set new top for secondary
             int top2 = crect1.bottom();
-            if(top2<height*1/3)
-                top2=height*1/3;
+            if(top2<h*1/3+top)
+                top2=h*1/3+top;
 
             // Figure out how much space the drawing will take at the current font size for secondary:
             drawBibleTextToRect(painter,trect2,crect2,v.secondary_text,v.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
 
             // set new top for trinaty
             top2 = crect2.bottom();
-            if(top2<height*2/3)
-                top2 = height*2/3;
+            if(top2<h*2/3+top)
+                top2 = h*2/3+top;
 
             // Figure out how much space the drawing will take at the current font size for trinary:
             drawBibleTextToRect(painter,trect3,crect3,v.trinary_text,v.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
@@ -1130,47 +1141,110 @@ void SoftProjector::setWaitCursor()
     this->setCursor(Qt::WaitCursor);
 }
 
-void SoftProjector::on_actionRussian_triggered()
+//void SoftProjector::on_actionRussian_triggered()
+//{
+//    retranslateUis();
+//}
+
+//void SoftProjector::on_actionEnglish_triggered()
+//{
+//    retranslateUis();
+//}
+
+//void SoftProjector::on_actionGerman_triggered()
+//{
+//    retranslateUis();
+//}
+
+//void SoftProjector::on_actionCzech_triggered()
+//{
+//    retranslateUis();
+//}
+
+void SoftProjector::createLanguageActions()
 {
-    retranslateUis();
+    // find all *.qm files at language folder
+     // and create coresponding action in language menu
+
+        languageGroup = new QActionGroup(this);
+        //default language and flag
+        QAction *englishAction = new QAction(QIcon(":/icons/icons/flag_uk.png"), "English", this);
+        englishAction->setCheckable(true);
+        englishAction->setChecked(true);
+        englishAction->setIconVisibleInMenu(true);
+        languageGroup->addAction(englishAction);
+        ui->menuLanguage->addAction(englishAction);
+
+        QDir languageDir(languagePath);
+        //all available languages
+        QStringList languagesList = languageDir.entryList(QStringList("softpro_*.qm"), QDir::Files);
+        //all available flags
+        QStringList flagsList = languageDir.entryList(QStringList("flag_*.png"), QDir::Files);
+
+        foreach(QString agent, languagesList)
+        {
+            // local translator for taken original language's name
+            QTranslator tmpTranslator;
+            tmpTranslator.load(agent, languageDir.absolutePath());
+            // this string are used for detection language' name
+            // this is one of translated strings
+
+            QString fullLanguageName = tmpTranslator.translate("SoftProjector", "English");
+            QAction *tmpAction = new QAction(fullLanguageName, this);
+
+            QString locale = agent.remove(0, agent.indexOf('_')+1);
+            locale.chop(3);
+            // flag's file name
+            QString flagFileName = "flag_"+locale+".png";
+            if(flagsList.contains(flagFileName))//  if flag is available
+            {
+                tmpAction->setIcon(QIcon(languageDir.absolutePath() + QDir::separator() + flagFileName));
+                tmpAction->setIconVisibleInMenu(true);
+            }
+
+            tmpAction->setData(locale);// information abount localization
+            tmpAction->setCheckable(true);
+            languageGroup->addAction(tmpAction);
+            ui->menuLanguage->addAction(tmpAction);
+        }
+
+//        connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
+}
+void SoftProjector::switchLanguage(QAction *action)
+{
+    QString locale = action->data().toString();
+    retranslateUis(locale);
 }
 
-void SoftProjector::on_actionEnglish_triggered()
+void SoftProjector::retranslateUis(QString locale)
 {
-    retranslateUis();
-}
-
-void SoftProjector::on_actionGerman_triggered()
-{
-    retranslateUis();
-}
-
-void SoftProjector::on_actionCzech_triggered()
-{
-    retranslateUis();
-}
-
-void SoftProjector::retranslateUis()
-{
-    if(ui->actionEnglish->isChecked()) // Set English language
+    qApp->removeTranslator(&translator);
+    if(locale != "en")
     {
-        qApp->removeTranslator(&translator);
-    }
-    else if(ui->actionRussian->isChecked()) // Set Russian language
-    {
-        translator.load(":/language/softpro_ru");
+        translator.load("softpro_"+locale+".qm", QDir(languagePath).absolutePath());
+        // qt libs translator must be add there,
+        // but where are qt_locale.qm files?
         qApp->installTranslator(&translator);
     }
-    else if(ui->actionGerman->isChecked()) // Set German language
-    {
-        translator.load(":/language/softpro_de");
-        qApp->installTranslator(&translator);
-    }
-    else if(ui->actionCzech->isChecked()) // Set Czech language
-    {
-        translator.load(":/language/softpro_cs");
-        qApp->installTranslator(&translator);
-    }
+//    if(ui->actionEnglish->isChecked()) // Set English language
+//    {
+//        qApp->removeTranslator(&translator);
+//    }
+//    else if(ui->actionRussian->isChecked()) // Set Russian language
+//    {
+//        translator.load(":/language/softpro_ru");
+//        qApp->installTranslator(&translator);
+//    }
+//    else if(ui->actionGerman->isChecked()) // Set German language
+//    {
+//        translator.load(":/language/softpro_de");
+//        qApp->installTranslator(&translator);
+//    }
+//    else if(ui->actionCzech->isChecked()) // Set Czech language
+//    {
+//        translator.load(":/language/softpro_cs");
+//        qApp->installTranslator(&translator);
+//    }
     ui->retranslateUi(this);
     ui->projectTab->setTabText(0, tr("Bible (F6)"));
     ui->projectTab->setTabText(1, tr("Songs (F7)"));
@@ -1240,7 +1314,13 @@ void SoftProjector::on_actionSave_Project_As_triggered()
                                                 tr("softProjector project file ") + "(*.spp)");
     if(!path.isEmpty())
     {
-        project_file_path = path;
+//        qDebug()<<"path:"<<path;
+        if(path.endsWith(".spp"))
+            project_file_path = path;
+        else
+//            qDebug()<<"file with no .spp";
+            project_file_path = path + ".spp";
+//        qDebug()<<"project path:"<<project_file_path;
         saveProject();
     }
 
@@ -1327,7 +1407,7 @@ void SoftProjector::saveProject()
 
     xml.writeStartDocument();
     xml.writeStartElement("spProject");
-    xml.writeAttribute("version","1.5");
+    xml.writeAttribute("version","1.7");
 
     //Write Bible History
     xml.writeStartElement("BibleHistory");
@@ -1371,6 +1451,7 @@ void SoftProjector::saveProject()
         xml.writeTextElement("font",s.font);
         xml.writeTextElement("aling",s.alingment);
         xml.writeTextElement("back",s.background.trimmed());
+        xml.writeTextElement("comments",s.comments);
 
         xml.writeEndElement(); // enst song
     }
@@ -1407,13 +1488,13 @@ void SoftProjector::openProject()
         if(xml.StartElement && xml.name() == "spProject")
         {
             double p_version = xml.attributes().value("version").toString().toDouble();
-            if(1.0<p_version<=1.5)
+            if(1.0 < p_version && p_version <= 1.7)
             {
                 xml.readNext();
                 while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
                 {
                     xml.readNext();
-                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.5)
+                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version >= 1.5)
                     {
                         // Read saved bible history
                         readBibleHistoryFromSavedProject(&xml);
@@ -1631,6 +1712,11 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
                 else if(xml->StartElement && xml->name() == "back")
                 {
                     s.background = xml->readElementText();
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "comments")
+                {
+                    s.comments = xml->readElementText();
                     xml->readNext();
                 }
             }

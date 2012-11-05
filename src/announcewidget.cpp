@@ -203,12 +203,14 @@ void AnnounceWidget::loadFromFile(QList<Announcement> anns)
 {
     QStringList a_list;
     history_items = anns;
-    for(int i(0); i<anns.count(); ++i)
-    {
-        a_list.append(anns.at(i).text);
-    }
+    int count = anns.count();
     ui->history_listWidget->clear();
-    ui->history_listWidget->addItems(a_list);
+    if(count>0)
+    {
+        for(int i(0); i<count; ++i)
+            a_list.append(anns.at(i).text);
+        ui->history_listWidget->addItems(a_list);
+    }
 }
 
 void AnnounceWidget::setAlingment(int v, int h)

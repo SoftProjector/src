@@ -94,6 +94,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>This bible version will be used for the operator to select verses and search bible</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -305,7 +308,7 @@
    <item row="5" column="0">
     <widget class="QGroupBox" name="groupBox_maxScreen">
      <property name="title">
-      <string>Amount Of Sceen To Use (Primary Bible Only)</string>
+      <string>Amount Of Sceen To Use</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
@@ -347,21 +350,27 @@
         <item>
          <widget class="QLabel" name="label_maxTopButtom">
           <property name="text">
-           <string>From:</string>
+           <string>Aling to:</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QRadioButton" name="radioButton_maxTop">
+          <property name="toolTip">
+           <string>Select &quot;Top&quot; to use top portion of the display screen</string>
+          </property>
           <property name="text">
            <string>Top</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButton_maxButtom">
+         <widget class="QRadioButton" name="radioButton_maxBottom">
+          <property name="toolTip">
+           <string>Select &quot;Bottom&quot; to use bottom portion of the display screen</string>
+          </property>
           <property name="text">
-           <string>Buttom</string>
+           <string>Bottom</string>
           </property>
          </widget>
         </item>

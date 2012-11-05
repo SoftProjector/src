@@ -68,7 +68,7 @@ public:
     QList<BibleSearch> searchBible(bool begins, QString book, QString chapter, QString searchText);
     QStringList getBooks();
     QStringList getChapter(QString book, int chapter);
-    void getVerseAndCaption(QString &verse, QString &caption, QString &verId, QString &bibId, bool useAbbr);
+    void getVerseAndCaption(QString &verse, QString &caption, QString verId, QString &bibId, bool useAbbr);
     int getCurrentBookRow(QString book);
     Verse getCurrentVerseAndCaption(QList<int> currentRows, BibleSettings& sets);
     QStringList verseList;

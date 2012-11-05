@@ -72,8 +72,8 @@ BibleSettings BibleSettingWidget::getSettings()
     mySettings.maxScreen = ui->spinBox_maxScreen->value();
     if(ui->radioButton_maxTop->isChecked())
         mySettings.maxScreenFrom = "top";
-    if(ui->radioButton_maxButtom->isChecked())
-        mySettings.maxScreenFrom = "buttom";
+    if(ui->radioButton_maxBottom->isChecked())
+        mySettings.maxScreenFrom = "bottom";
 
     return mySettings;
 }
@@ -149,8 +149,8 @@ void BibleSettingWidget::loadSettings()
     ui->spinBox_maxScreen->setValue(mySettings.maxScreen);
     if(mySettings.maxScreenFrom == "top")
         ui->radioButton_maxTop->setChecked(true);
-    else if(mySettings.maxScreenFrom == "buttom")
-        ui->radioButton_maxButtom->setChecked(true);
+    else if(mySettings.maxScreenFrom == "bottom")
+        ui->radioButton_maxBottom->setChecked(true);
 
 }
 
@@ -178,15 +178,13 @@ void BibleSettingWidget::updateSecondaryBibleMenu()
 void BibleSettingWidget::updateTrinaryBibleMenu()
 {
 
-    if (/*mySettings.secondaryBible == "none" ||*/ ui->comboBox_secondaryBible->currentIndex() == 0)
+    if (ui->comboBox_secondaryBible->currentIndex() == 0)
     {
         ui->comboBox_trinaryBible->setCurrentIndex(0);
         ui->comboBox_trinaryBible->setEnabled(false);
-        ui->groupBox_maxScreen->setEnabled(true);
     }
     else
     {
-        ui->groupBox_maxScreen->setEnabled(false);
         ui->comboBox_trinaryBible->setEnabled(true);
         QString sbible = ui->comboBox_secondaryBible->currentText();
         QString tbible = ui->comboBox_trinaryBible->currentText();

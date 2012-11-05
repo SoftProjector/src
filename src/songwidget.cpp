@@ -222,7 +222,14 @@ void SongWidget::sendToPreview(Song song)
     ui->listPreview->clear();
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
-    ui->preview_label->setText(tr("Song Preview: ") + song.title);
+    ui->preview_label->setText(song.title);
+    if(song.comments.isEmpty())
+        ui->label_comments->setVisible(false);
+    else
+    {
+        ui->label_comments->setText(QString("%1\n%2").arg(tr("Comments:","Comments to songs")).arg(song.comments));
+         ui->label_comments->setVisible(true);
+    }
     preview_song = song;
 }
 
@@ -651,14 +658,15 @@ QList<Song> SongWidget::getPlaylistSongs()
 
 void SongWidget::loadPlaylistFromFile(QList<Song> songs)
 {
-    // remove all songs in playlist
-//    for(int i(0); i<playlist_model->rowCount();++i)
-//        playlist_model->removeRow(0);
+    if(playlist_model->rowCount()>0)
+        playlist_model->removeRows(0,playlist_model->rowCount());
 
-    playlist_model->removeRows(0,playlist_model->rowCount());
-
-    for(int i(0); i<songs.count(); ++i)
-        playlist_model->addSong(songs.at(i));
+    int count = songs.count();
+    if(count>0)
+    {
+        for(int i(0); i<count; ++i)
+            playlist_model->addSong(songs.at(i));
+    }
 
     updateButtonStates();
 }

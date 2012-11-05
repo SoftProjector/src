@@ -27,7 +27,7 @@ BibleSettings::BibleSettings()
     textAlingmentH = 0;
     useAbbriviations = false;
     maxScreen = 100;
-    maxScreenFrom = "buttom";
+    maxScreenFrom = "bottom";
 }
 
 SongSettings::SongSettings()

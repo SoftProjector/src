@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>435</width>
-    <height>497</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -238,7 +238,7 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="0">
+   <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_4">
@@ -261,9 +261,10 @@
         </font>
        </property>
        <property name="text">
-        <string>Ilya Spivakov
-Matvey Adzhigirey
-Vladislav Kobzar</string>
+        <string>Vladislav Kobzar
+-------------------
+Ilya Spivakov
+Matvey Adzhigirey</string>
        </property>
       </widget>
      </item>
@@ -280,9 +281,64 @@ Vladislav Kobzar</string>
        </property>
       </spacer>
      </item>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
    <item row="3" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Special Thanks To:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Vitaliy Zhaborovskyy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label_6">
@@ -307,7 +363,8 @@ Vladislav Kobzar</string>
        <property name="text">
         <string>Russian:
 German:
-Czech:</string>
+Czech:
+Ukranian:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -324,7 +381,8 @@ Czech:</string>
        <property name="text">
         <string>Vladimir Zinchenko
 Eduard Schlak
-Pavel Fric</string>
+Pavel Fric
+Vitaliy Zhaborovskyy</string>
        </property>
       </widget>
      </item>
@@ -356,7 +414,7 @@ Pavel Fric</string>
      </item>
     </layout>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <spacer name="verticalSpacer_6">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -372,7 +430,7 @@ Pavel Fric</string>
      </property>
     </spacer>
    </item>
-   <item row="5" column="0" colspan="2">
+   <item row="6" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0" rowspan="2">
       <widget class="QLabel" name="label_9">
@@ -412,7 +470,7 @@ or would like to contribute data, please visit:&lt;br&gt;
      </item>
     </layout>
    </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

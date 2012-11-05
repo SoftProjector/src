@@ -86,6 +86,8 @@ private slots:
     void importSongbook(QString path);
     void exportSongbook(QString path);
     void load_bibles();
+    void toMultiLine(QString& mline);
+    void toSingleLine(QString& sline);
 };
 
 

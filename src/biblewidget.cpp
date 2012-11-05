@@ -78,10 +78,22 @@ void BibleWidget::setSettings(BibleSettings& sets)
 
 void BibleWidget::loadBibles(QString initialId)
 {
+
     // if operator bible = "same", then set it to primary bible
     if(mySettings.operatorBible=="same")
         mySettings.operatorBible = mySettings.primaryBible;
 
+    // make sure that program does not drop if no bible is present
+    if(mySettings.operatorBible=="none")
+    {
+        ui->add_to_history_pushButton->setEnabled(false);
+        ui->btnLive->setEnabled(false);
+    }
+    else
+    {
+        ui->btnLive->setEnabled(true);
+        ui->add_to_history_pushButton->setEnabled(true);
+    }
 
     // Check if primary bible is different that what has been loaded already
     // If it is different, then reload the bible list
@@ -415,7 +427,7 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
 
 void BibleWidget::on_search_ef_textChanged(QString text)
 {
-    if(text.size()>3)
+    if(text.size()>3 && mySettings.operatorBible!="none")
         ui->search_button->setEnabled(true);
     else
         ui->search_button->setEnabled(false);
@@ -565,14 +577,14 @@ void BibleWidget::loadHistoriesFromFile(QList<BibleSearch> histories)
     history_items.clear();
     history_items = histories;
     QStringList disp_list;
-
-    for(int i(0);i<histories.count();++i)
-    {
-        disp_list.append(histories.at(i).display_text);
-    }
-
     ui->history_listWidget->clear();
-    ui->history_listWidget->addItems(disp_list);
+    int count = histories.count();
+    if(count>0)
+    {
+        for(int i(0);i<count;++i)
+            disp_list.append(histories.at(i).display_text);
+        ui->history_listWidget->addItems(disp_list);
+    }
 }
 
 void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)

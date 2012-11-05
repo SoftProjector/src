@@ -184,6 +184,7 @@ void EditWidget::resetUiItems()
     ui->wall_textbox->clear();
     ui->left_radioButton->setChecked(true);
     ui->song_number_lineEdit->setText("");
+    ui->plainTextEdit_comments->clear();
 }
 
 void EditWidget::setUiItems()
@@ -206,6 +207,7 @@ void EditWidget::setUiItems()
         ui->left_radioButton->setChecked(true);
     else
         ui->left_radioButton->setChecked(true);
+    ui->plainTextEdit_comments->setPlainText(editSong.comments);
 }
 
 void EditWidget::setSave(){
@@ -227,6 +229,7 @@ void EditWidget::setSave(){
         newSong.alingment = "center";
     else if (ui->left_radioButton->isCheckable())
         newSong.alingment = "left";
+    newSong.comments = ui->plainTextEdit_comments->toPlainText();
 }
 
 QString EditWidget::resetLyric(QString lyric)

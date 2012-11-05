@@ -1,9 +1,4 @@
 <RCC>
-    <qresource prefix="/language">
-        <file>softpro_cs.qm</file>
-        <file>softpro_de.qm</file>
-        <file>softpro_ru.qm</file>
-    </qresource>
     <qresource prefix="/icons">
         <file>icons/base-22x22-actions-application-exit.png</file>
         <file>icons/song_new.png</file>
@@ -33,6 +28,7 @@
         <file>icons/open.png</file>
         <file>icons/save.png</file>
         <file>icons/new.png</file>
+        <file>icons/flag_uk.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
