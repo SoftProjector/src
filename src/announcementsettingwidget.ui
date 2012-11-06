@@ -179,7 +179,7 @@
       <item row="1" column="0" colspan="2">
        <widget class="QPushButton" name="button_font">
         <property name="text">
-         <string>Font</string>
+         <string>Font...</string>
         </property>
        </widget>
       </item>

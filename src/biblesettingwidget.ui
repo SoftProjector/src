@@ -276,7 +276,7 @@
         <item>
          <widget class="QPushButton" name="button_font">
           <property name="text">
-           <string>Font</string>
+           <string>Font...</string>
           </property>
          </widget>
         </item>
@@ -308,7 +308,7 @@
    <item row="5" column="0">
     <widget class="QGroupBox" name="groupBox_maxScreen">
      <property name="title">
-      <string>Amount Of Sceen To Use</string>
+      <string>Amount Of Screen To Use</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
@@ -350,7 +350,7 @@
         <item>
          <widget class="QLabel" name="label_maxTopButtom">
           <property name="text">
-           <string>Aling to:</string>
+           <string>Align to:</string>
           </property>
          </widget>
         </item>

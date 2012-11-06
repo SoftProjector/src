@@ -94,6 +94,7 @@ private:
     void updateWindowTest();
     bool is_project_saved;
     bool is_song_in_edit;
+    QString cur_locale;
 
 private slots:
     //For saving and opening softProjector project files
@@ -114,7 +115,7 @@ private slots:
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void on_actionCopy_Song_triggered();
-    void retranslateUis(QString locale);
+    void retranslateUis();
     void createLanguageActions();
     void switchLanguage(QAction *action);
 

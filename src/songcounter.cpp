@@ -20,12 +20,14 @@
 #include "songcounter.h"
 #include "ui_songcounter.h"
 
-SongCounter::SongCounter(QWidget *parent) :
+SongCounter::SongCounter(QWidget *parent, QString loc) :
     QDialog(parent),
     ui(new Ui::SongCounter)
 {
     ui->setupUi(this);
     ui->closeButton->setFocus();
+
+    splocale = loc;
 
     song_count_list = getSongCounts();
     songCounterModel = new SongCounterModel;
@@ -33,9 +35,9 @@ SongCounter::SongCounter(QWidget *parent) :
 
     // Modify the column widths:
     ui->countTable->setColumnWidth(0, 150);//songbook
-    ui->countTable->setColumnWidth(1, 70);//number
+    ui->countTable->setColumnWidth(1, 65);//number
     ui->countTable->setColumnWidth(2, 250);//title
-    ui->countTable->setColumnWidth(3, 65);////count
+    ui->countTable->setColumnWidth(3, 60);////count
     ui->countTable->setColumnWidth(4, 100);//date
     // Decrease the row height:
     ui->countTable->resizeRowsToContents();
@@ -104,12 +106,13 @@ void SongCounter::addSongCount(Song song)
     // set todays date
     QDate d(QDate::currentDate());
 
-    sq.exec(QString("UPDATE Songs SET count = %1 , date = '%2' WHERE id = %3").arg(QString::number(current_count)).arg(d.toString("MMMM dd, yyyy")).arg(QString::number(id)));
+    sq.exec(QString("UPDATE Songs SET count = %1 , date = '%2' WHERE id = %3").arg(QString::number(current_count)).arg(d.toString("MM:dd:yyyy")).arg(QString::number(id)));
 //    sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
 }
 
 //***********************************
 //***********************************
+
 QList<Counter> SongCounter::getSongCounts()
 {
     QList<Counter> song_counts;
@@ -125,6 +128,7 @@ QList<Counter> SongCounter::getSongCounts()
         song_count.title = sq.value(1).toString();
         song_count.count = sq.value(2).toInt();
         song_count.date = sq.value(3).toString();
+        updateMonth(song_count.date);
         // get songbook id
         sq1.exec("SELECT songbook_id, song_number FROM SongLink WHERE song_id = " + id);
         sq1.first();
@@ -138,6 +142,70 @@ QList<Counter> SongCounter::getSongCounts()
         song_counts.append(song_count);
     }
     return song_counts;
+}
+
+void SongCounter::updateMonth(QString &date)
+{
+    // need to use this function because Qt does not provide locale translations for all languages.
+    QStringList dl = date.split(":");
+
+    if(splocale == "en" || splocale.isEmpty())
+    {
+        // If current translation is English, use standard English date format
+        if(dl.at(0)=="01")
+            date = QString("%1 %2, %3").arg(tr("January")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="02")
+            date = QString("%1 %2, %3").arg(tr("February")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="03")
+            date = QString("%1 %2, %3").arg(tr("March")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="04")
+            date = QString("%1 %2, %3").arg(tr("April")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="05")
+            date = QString("%1 %2, %3").arg(tr("May")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="06")
+            date = QString("%1 %2, %3").arg(tr("June")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="07")
+            date = QString("%1 %2, %3").arg(tr("July")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="08")
+            date = QString("%1 %2, %3").arg(tr("August")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="09")
+            date = QString("%1 %2, %3").arg(tr("September")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="10")
+            date = QString("%1 %2, %3").arg(tr("October")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="11")
+            date = QString("%1 %2, %3").arg(tr("November")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="12")
+            date = QString("%1 %2, %3").arg(tr("December")).arg(dl.at(1)).arg(dl.at(2));
+    }
+    else
+    {
+        // If current translation is NOT English, then use standart Europe date format
+        if(dl.at(0)=="01")
+            date = QString("%2 %1 %3").arg(tr("January")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="02")
+            date = QString("%2 %1 %3").arg(tr("February")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="03")
+            date = QString("%2 %1 %3").arg(tr("March")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="04")
+            date = QString("%2 %1 %3").arg(tr("April")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="05")
+            date = QString("%2 %1 %3").arg(tr("May")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="06")
+            date = QString("%2 %1 %3").arg(tr("June")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="07")
+            date = QString("%2 %1 %3").arg(tr("July")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="08")
+            date = QString("%2 %1 %3").arg(tr("August")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="09")
+            date = QString("%2 %1 %3").arg(tr("September")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="10")
+            date = QString("%2 %1 %3").arg(tr("October")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="11")
+            date = QString("%2 %1 %3").arg(tr("November")).arg(dl.at(1)).arg(dl.at(2));
+        else if(dl.at(0)=="12")
+            date = QString("%2 %1 %3").arg(tr("December")).arg(dl.at(1)).arg(dl.at(2));
+    }
+
 }
 
 //***************************************

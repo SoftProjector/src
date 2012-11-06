@@ -46,11 +46,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->setupUi(this);
 
     // Create action group for language slections
-//    languageGroup = new QActionGroup(this);
-//    languageGroup->addAction(ui->actionRussian);
-//    languageGroup->addAction(ui->actionEnglish);
-//    languageGroup->addAction(ui->actionGerman);
-//    languageGroup->addAction(ui->actionCzech);
     languagePath = "."+QString(QDir::separator())+"translations"+QString(QDir::separator());
     createLanguageActions();
 
@@ -248,7 +243,7 @@ void SoftProjector::applySetting(Settings &allsets)
 
     // Apply current translation
     QList<QAction*> la = ui->menuLanguage->actions();
-    QString locale;
+    QString splocale;
     for(int i(0);i < la.count(); ++i)
     {
         if(la.at(i)->data().toString() == allsettings.spmain.uiTranslation)
@@ -256,16 +251,17 @@ void SoftProjector::applySetting(Settings &allsets)
             if(i < la.count())
             {
                 ui->menuLanguage->actions().at(i)->setChecked(true);
-                locale = allsettings.spmain.uiTranslation;
+                splocale = allsettings.spmain.uiTranslation;
             }
             else
             {
                 ui->menuLanguage->actions().at(0)->setChecked(true);//default
-                locale = "en";
+                splocale = "en";
             }
         }
     }
-    retranslateUis(locale);
+    cur_locale = splocale;
+    retranslateUis();
 }
 
 void SoftProjector::closeEvent(QCloseEvent *event)
@@ -1141,26 +1137,6 @@ void SoftProjector::setWaitCursor()
     this->setCursor(Qt::WaitCursor);
 }
 
-//void SoftProjector::on_actionRussian_triggered()
-//{
-//    retranslateUis();
-//}
-
-//void SoftProjector::on_actionEnglish_triggered()
-//{
-//    retranslateUis();
-//}
-
-//void SoftProjector::on_actionGerman_triggered()
-//{
-//    retranslateUis();
-//}
-
-//void SoftProjector::on_actionCzech_triggered()
-//{
-//    retranslateUis();
-//}
-
 void SoftProjector::createLanguageActions()
 {
     // find all *.qm files at language folder
@@ -1189,20 +1165,20 @@ void SoftProjector::createLanguageActions()
             // this string are used for detection language' name
             // this is one of translated strings
 
-            QString fullLanguageName = tmpTranslator.translate("SoftProjector", "English");
+            QString fullLanguageName = tmpTranslator.translate("Native language name", "English","Do not change");
             QAction *tmpAction = new QAction(fullLanguageName, this);
 
-            QString locale = agent.remove(0, agent.indexOf('_')+1);
-            locale.chop(3);
+            QString splocale = agent.remove(0, agent.indexOf('_')+1);
+            splocale.chop(3);
             // flag's file name
-            QString flagFileName = "flag_"+locale+".png";
+            QString flagFileName = "flag_"+splocale+".png";
             if(flagsList.contains(flagFileName))//  if flag is available
             {
                 tmpAction->setIcon(QIcon(languageDir.absolutePath() + QDir::separator() + flagFileName));
                 tmpAction->setIconVisibleInMenu(true);
             }
 
-            tmpAction->setData(locale);// information abount localization
+            tmpAction->setData(splocale);// information abount localization
             tmpAction->setCheckable(true);
             languageGroup->addAction(tmpAction);
             ui->menuLanguage->addAction(tmpAction);
@@ -1212,39 +1188,21 @@ void SoftProjector::createLanguageActions()
 }
 void SoftProjector::switchLanguage(QAction *action)
 {
-    QString locale = action->data().toString();
-    retranslateUis(locale);
+    cur_locale = action->data().toString();
+    retranslateUis();
 }
 
-void SoftProjector::retranslateUis(QString locale)
+void SoftProjector::retranslateUis()
 {
     qApp->removeTranslator(&translator);
-    if(locale != "en")
+    if(cur_locale != "en")
     {
-        translator.load("softpro_"+locale+".qm", QDir(languagePath).absolutePath());
+        translator.load("softpro_"+cur_locale+".qm", QDir(languagePath).absolutePath());
         // qt libs translator must be add there,
         // but where are qt_locale.qm files?
         qApp->installTranslator(&translator);
     }
-//    if(ui->actionEnglish->isChecked()) // Set English language
-//    {
-//        qApp->removeTranslator(&translator);
-//    }
-//    else if(ui->actionRussian->isChecked()) // Set Russian language
-//    {
-//        translator.load(":/language/softpro_ru");
-//        qApp->installTranslator(&translator);
-//    }
-//    else if(ui->actionGerman->isChecked()) // Set German language
-//    {
-//        translator.load(":/language/softpro_de");
-//        qApp->installTranslator(&translator);
-//    }
-//    else if(ui->actionCzech->isChecked()) // Set Czech language
-//    {
-//        translator.load(":/language/softpro_cs");
-//        qApp->installTranslator(&translator);
-//    }
+
     ui->retranslateUi(this);
     ui->projectTab->setTabText(0, tr("Bible (F6)"));
     ui->projectTab->setTabText(1, tr("Songs (F7)"));
@@ -1256,7 +1214,7 @@ void SoftProjector::retranslateUis(QString locale)
 void SoftProjector::on_actionSong_Counter_triggered()
 {
     SongCounter *songCounter;
-    songCounter = new SongCounter(this);
+    songCounter = new SongCounter(this, cur_locale);
     songCounter->exec();
 }
 

@@ -33,17 +33,20 @@ Matvey Adzhigirey</source>
         <oldsource>Ilya Spivakov
 Matvey Adzhigirey
 Vladislav Kobzar</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Vladislav Kobzar
+-------------------
+Ilya Spivakov
+Matvey Adzhigirey</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="310"/>
         <source>Special Thanks To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poděkování:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="322"/>
         <source>Vitaliy Zhaborovskyy</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitaliy Zhaborovskyy</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="352"/>
@@ -56,7 +59,10 @@ Vladislav Kobzar</oldsource>
 German:
 Czech:
 Ukranian:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruština:
+Němčina:
+Čeština:
+Ukrajinština:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="382"/>
@@ -64,7 +70,10 @@ Ukranian:</source>
 Eduard Schlak
 Pavel Fric
 Vitaliy Zhaborovskyy</source>
-        <translation type="unfinished"></translation>
+        <translation>Vladimir Zinchenko
+Eduard Schlak
+Pavel Fric
+Vitaliy Zhaborovskyy</translation>
     </message>
     <message>
         <source>Russian:
@@ -272,97 +281,98 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcementsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="20"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít  obrázek pozadí</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="36"/>
         <source>Browse...</source>
-        <translation type="unfinished">Procházet...</translation>
+        <translation>Procházet...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="59"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Zarovnání textu</translation>
+        <translation>Zarovnání textu</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="78"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="85"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodorovné:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="93"/>
         <source>Top</source>
-        <translation type="unfinished">Nahoře</translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="98"/>
         <source>Middle</source>
-        <translation type="unfinished">Na střed</translation>
+        <translation>Uprostřed</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="103"/>
         <source>Bottom</source>
-        <translation type="unfinished">Dole</translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="112"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="117"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Na střed</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="122"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="133"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti textu</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="139"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="162"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat barvu...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="182"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Písmo...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="207"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.cpp" line="53"/>
         <source>Select a image for announcement wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte obrázek pro obrázek na pozadí s oznámením</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.cpp" line="54"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Obrázky (*.png *.jpg *.jpeg)</translation>
+        <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -400,144 +410,147 @@ Autorské právo:</translation>
     <message>
         <location filename="biblesettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="22"/>
         <source>Primary Bible:</source>
-        <translation type="unfinished">Hlavní Bible:</translation>
+        <translation>Hlavní Bible:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="42"/>
         <source>Secondary Bible:</source>
-        <translation type="unfinished">Vedlejší Bible:</translation>
+        <translation>Vedlejší Bible:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="62"/>
         <source>Trinary Bible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Třetí Bible:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="82"/>
         <source>Operator Screen Bible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bible na obrazovce operátora:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="98"/>
         <source>This bible version will be used for the operator to select verses and search bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Tato verze Bible bude použita pro výběr veršů a vyhledávání v Bibli operátorem</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="107"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít  obrázek pozadí</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="125"/>
         <source>Browse...</source>
-        <translation type="unfinished">Procházet...</translation>
+        <translation>Procházet...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="150"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Zarovnání textu</translation>
+        <translation>Zarovnání textu</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="156"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="164"/>
         <location filename="biblesettingwidget.ui" line="363"/>
         <source>Top</source>
-        <translation type="unfinished">Nahoře</translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="169"/>
         <source>Middle</source>
-        <translation type="unfinished">Na střed</translation>
+        <translation>Uprostřed</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="174"/>
         <location filename="biblesettingwidget.ui" line="373"/>
         <source>Bottom</source>
-        <translation type="unfinished">Dole</translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="182"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodorovné:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="190"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="195"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Na střed</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="200"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="224"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti textu</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="232"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="255"/>
         <source>Choose color...</source>
-        <translation type="unfinished">Vybrat barvu...</translation>
+        <translation>Vybrat barvu...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="279"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Písmo...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="304"/>
         <source>Show Bible Version Abbriviation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat zkratku verze Bible</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="311"/>
-        <source>Amount Of Sceen To Use</source>
-        <translation type="unfinished"></translation>
+        <source>Amount Of Screen To Use</source>
+        <oldsource>Amount Of Sceen To Use</oldsource>
+        <translation>Množství z plochy obrazovky, která se použije</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="360"/>
         <source>Select &quot;Top&quot; to use top portion of the display screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte Nohoře, aby se použila horní část zobrazovací obrazovky</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="370"/>
         <source>Select &quot;Bottom&quot; to use bottom portion of the display screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte Dole, aby se použila dolní část zobrazovací obrazovky</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="319"/>
         <source>Use this much of the screen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít tak velkou část obrazovky:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="353"/>
-        <source>Aling to:</source>
-        <translation type="unfinished"></translation>
+        <source>Align to:</source>
+        <oldsource>Aling to:</oldsource>
+        <translation>Zarovnat k:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="413"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="99"/>
@@ -545,23 +558,23 @@ Autorské právo:</translation>
         <location filename="biblesettingwidget.cpp" line="167"/>
         <location filename="biblesettingwidget.cpp" line="198"/>
         <source>None</source>
-        <translation type="unfinished">Žádné</translation>
+        <translation>Žádné</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="103"/>
         <location filename="biblesettingwidget.cpp" line="218"/>
         <source>Same as primary Bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Stejný jako hlavní Bible</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="246"/>
         <source>Select a image for Bible wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte obrázek pro pozadí Bible</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="247"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Obrázky (*.png *.jpg *.jpeg)</translation>
+        <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -892,7 +905,7 @@ Zkuste změnit hlavní Bibli a otevřete soubor s projektem znovu.</translation>
     <message>
         <location filename="editwidget.ui" line="289"/>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poznámky:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="336"/>
@@ -1223,68 +1236,68 @@ Verš 2
     <message>
         <location filename="generalsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="22"/>
         <source>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector&apos;s screen.</source>
-        <translation type="unfinished">Je-li vybráno, je &quot;okno&quot; pro promítací plochu ukazováno vždy v popředí. Tím se zamezuje tomu, aby se na promítací ploše promítacího stroje ukazovala další okna.</translation>
+        <translation>Je-li vybráno, je &quot;okno&quot; pro promítací plochu ukazováno vždy v popředí. Tím se zamezuje tomu, aby se na promítací ploše promítacího stroje ukazovala další okna.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="25"/>
         <source>Display window always on top</source>
-        <translation type="unfinished">Promítací plochu ukazovat vždy v popředí</translation>
+        <translation>Promítací plochu ukazovat vždy v popředí</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="32"/>
         <location filename="generalsettingwidget.ui" line="55"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
-        <translation type="unfinished">Užitečné, když používáte obrázek na pozadí. Zobrazuje zvláštní stínový účinek.</translation>
+        <translation>Užitečné, když používáte obrázek na pozadí. Zobrazuje zvláštní stínový účinek.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="35"/>
         <source>Use shadow</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít stín</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="42"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
-        <translation type="unfinished">Je-li vybráno, při přepínání zobrazovaného textu starý text pozvolna mizí a nový text se zvolna objevuje.</translation>
+        <translation>Je-li vybráno, při přepínání zobrazovaného textu starý text pozvolna mizí a nový text se zvolna objevuje.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="45"/>
         <source>Use fading effects</source>
-        <translation type="unfinished">Použít prolínací účinek</translation>
+        <translation>Použít prolínací účinek</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="58"/>
         <source>Use blurred shadow</source>
-        <translation type="unfinished">Použít rozmazané stíny</translation>
+        <translation>Použít rozmazaný stín</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="67"/>
         <source>Use Passive Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít nečinný obrázek pozadí</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="83"/>
         <source>Browse...</source>
-        <translation type="unfinished">Procházet...</translation>
+        <translation>Procházet...</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="106"/>
         <source>Display Screen Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Volba zobrazovací obrazovky</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="114"/>
         <source>Display Screen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazovací obrazovka:</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="121"/>
         <source>Select onto which screen to dispaly</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat, na které obrazovce se má zobrazovat</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="143"/>
@@ -1292,23 +1305,32 @@ Verš 2
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, oder is from right-to-left.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, order is from left-to-right.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, oder is from right-to-left.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;POZNÁMKA:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Volba zobrazovací obrazovky se v současnosti vyvíjí. Změna čísla obrazovky změní obrazovku, na které se promítání zobrazí.&lt;br /&gt;U Windows je pořadí zleva doprava.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="178"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.cpp" line="59"/>
         <source>Select a image for main wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte obrázek pro hlavní pozadí</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.cpp" line="60"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Obrázky (*.png *.jpg *.jpeg)</translation>
+        <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -1642,6 +1664,19 @@ Byla uložena jako:
     </message>
 </context>
 <context>
+    <name>Native language name</name>
+    <message>
+        <source>English</source>
+        <translation type="obsolete">Český</translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1168"/>
+        <source>English</source>
+        <comment>Do not change</comment>
+        <translation>Český</translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="settingsdialog.ui" line="14"/>
@@ -1651,37 +1686,37 @@ Byla uložena jako:
     <message>
         <location filename="settingsdialog.ui" line="49"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecné</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="58"/>
         <source>Bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Bible</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="76"/>
         <source>Announcements</source>
-        <translation type="unfinished"></translation>
+        <translation>Oznámení</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="107"/>
         <source>General SoftProjector Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecné nastavení softProjectoru</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="156"/>
         <source>Bible Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení Bible</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="205"/>
         <source>Song Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení písně</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="254"/>
         <source>Announcement Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení oznámení</translation>
     </message>
     <message>
         <source>Primary Bible:</source>
@@ -1781,158 +1816,157 @@ Byla uložena jako:
         <translation type="obsolete">Tento program je zdarma a jeho kód je otevřen. Pokud můžete a chcete pomoci při zlepšování tohoto programu, navštivte, prosím, stránky na adrese sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="76"/>
-        <location filename="softprojector.cpp" line="1249"/>
+        <location filename="softprojector.cpp" line="71"/>
+        <location filename="softprojector.cpp" line="1207"/>
         <source>Bible (F6)</source>
         <translation>Bible (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="77"/>
-        <location filename="softprojector.cpp" line="1250"/>
+        <location filename="softprojector.cpp" line="72"/>
+        <location filename="softprojector.cpp" line="1208"/>
         <source>Songs (F7)</source>
         <translation>Písně (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="78"/>
-        <location filename="softprojector.cpp" line="1251"/>
+        <location filename="softprojector.cpp" line="73"/>
+        <location filename="softprojector.cpp" line="1209"/>
         <source>Announcements (F8)</source>
         <translation>Oznámení (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="281"/>
+        <location filename="softprojector.cpp" line="277"/>
         <source>Project not saved</source>
         <comment>project as in document file</comment>
         <translation>Projekt neuložen</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="282"/>
+        <location filename="softprojector.cpp" line="278"/>
         <source>Do you want to save current project?</source>
         <comment>project as in document file</comment>
         <translation>Chcete uložit nynější projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="339"/>
+        <location filename="softprojector.cpp" line="335"/>
         <source>Announcement</source>
         <translation>Oznámení</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="545"/>
+        <location filename="softprojector.cpp" line="541"/>
         <source>Words by: %1, Music by: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Slova od: %1, Hudba od: %2</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="547"/>
+        <location filename="softprojector.cpp" line="543"/>
         <source>Words by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Slova od: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="549"/>
+        <location filename="softprojector.cpp" line="545"/>
         <source>Music by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hudba od: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="921"/>
+        <location filename="softprojector.cpp" line="917"/>
         <source>Cannot start new edit</source>
         <translation>Nelze začít novou úpravu</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="922"/>
-        <location filename="softprojector.cpp" line="957"/>
-        <location filename="softprojector.cpp" line="977"/>
+        <location filename="softprojector.cpp" line="918"/>
+        <location filename="softprojector.cpp" line="953"/>
+        <location filename="softprojector.cpp" line="973"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Již je upravována jiná píseň.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="923"/>
-        <location filename="softprojector.cpp" line="958"/>
-        <location filename="softprojector.cpp" line="978"/>
+        <location filename="softprojector.cpp" line="919"/>
+        <location filename="softprojector.cpp" line="954"/>
+        <location filename="softprojector.cpp" line="974"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Uložte, prosím, a/nebo zavřete nyní upravovanou píseň, předtím než začnete upravovat jinou píseň.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="938"/>
-        <location filename="softprojector.cpp" line="992"/>
-        <location filename="softprojector.cpp" line="1031"/>
+        <location filename="softprojector.cpp" line="934"/>
+        <location filename="softprojector.cpp" line="988"/>
+        <location filename="softprojector.cpp" line="1027"/>
         <source>No song selected</source>
         <translation>Nebyla vybrána žádná píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="939"/>
+        <location filename="softprojector.cpp" line="935"/>
         <source>No song has been selected to be edited.</source>
         <translation>Nebyla vybrána žádná píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="940"/>
+        <location filename="softprojector.cpp" line="936"/>
         <source>Please select a song to be edited.</source>
         <translation>Vyberte, prosím, píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="956"/>
+        <location filename="softprojector.cpp" line="952"/>
         <source>Cannot create a new song</source>
         <translation>Nelze vytvořit novou píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="976"/>
+        <location filename="softprojector.cpp" line="972"/>
         <source>Cannot copy this song</source>
         <translation>Nelze kopírovat tento píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1192"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Angličtina</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1268"/>
+        <location filename="softprojector.cpp" line="1226"/>
         <source>Save Project?</source>
         <comment>project as in document file</comment>
         <translation>Uložit projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1269"/>
+        <location filename="softprojector.cpp" line="1227"/>
         <source>Do you want to save current project before opening other?</source>
         <comment>project as in document file</comment>
         <translation>Chcete uložit nynější projekt před otevřením jiného?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1289"/>
+        <location filename="softprojector.cpp" line="1247"/>
         <source>Open softProjector project</source>
         <translation>Otevřít projekt softProjectoru</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1290"/>
-        <location filename="softprojector.cpp" line="1314"/>
+        <location filename="softprojector.cpp" line="1248"/>
+        <location filename="softprojector.cpp" line="1272"/>
         <source>softProjector project file </source>
         <translation>Soubor s projektem pro softProjector </translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1313"/>
+        <location filename="softprojector.cpp" line="1271"/>
         <source>Save softProjector project as:</source>
         <translation>Uložit projekt softProjectoru jako:</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1335"/>
-        <location filename="softprojector.cpp" line="1367"/>
+        <location filename="softprojector.cpp" line="1293"/>
+        <location filename="softprojector.cpp" line="1325"/>
         <source>Save Project?</source>
         <translation>Uložit projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1336"/>
+        <location filename="softprojector.cpp" line="1294"/>
         <source>Do you want to save current project before creating a new project?</source>
         <translation>Chcete uložit nynější projekt před vytvořením nového projektu?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1368"/>
+        <location filename="softprojector.cpp" line="1326"/>
         <source>Do you want to save current project before closing it?</source>
         <translation>Chcete uložit nynější projekt před jeho zavřením?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1527"/>
+        <location filename="softprojector.cpp" line="1485"/>
         <source>Incorrect project file format</source>
         <translation>Nesprávný formát souboru s projektem</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1528"/>
+        <location filename="softprojector.cpp" line="1486"/>
         <source>The softProjector project file you are opening,
 is not supported by your version of softProjector.
 You may try upgrading your version of softProjector.</source>
@@ -1949,34 +1983,34 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Vyberte, prosím, píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="993"/>
+        <location filename="softprojector.cpp" line="989"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Nebyla vybrána žádná píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="994"/>
+        <location filename="softprojector.cpp" line="990"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1006"/>
+        <location filename="softprojector.cpp" line="1002"/>
         <source>Delete song?</source>
         <translation>Smazat píseň?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1007"/>
+        <location filename="softprojector.cpp" line="1003"/>
         <source>Delete song &quot;</source>
         <translation>Smazat píseň &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1032"/>
+        <location filename="softprojector.cpp" line="1028"/>
         <source>No song has been selected to be deleted</source>
         <translation>Nebyla vybrána žádná píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1033"/>
+        <location filename="softprojector.cpp" line="1029"/>
         <source>Please select a song to be deleted</source>
         <translation>Vyberte, prosím, píseň ke smazání</translation>
     </message>
@@ -1985,7 +2019,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1008"/>
+        <location filename="softprojector.cpp" line="1004"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Tímto krokem bude tato píseň neodvolatelně smazána</translation>
     </message>
@@ -2222,6 +2256,89 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
+    <message>
+        <location filename="songcounter.cpp" line="156"/>
+        <location filename="songcounter.cpp" line="184"/>
+        <source>January</source>
+        <oldsource>January %1, %2</oldsource>
+        <translation>ledna</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="158"/>
+        <location filename="songcounter.cpp" line="186"/>
+        <source>February</source>
+        <oldsource>February %1, %2</oldsource>
+        <translation>února</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="160"/>
+        <location filename="songcounter.cpp" line="188"/>
+        <source>March</source>
+        <oldsource>March %1, %2</oldsource>
+        <translation>března</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="162"/>
+        <location filename="songcounter.cpp" line="190"/>
+        <source>April</source>
+        <oldsource>April %1, %2</oldsource>
+        <translation>dubna</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="164"/>
+        <location filename="songcounter.cpp" line="192"/>
+        <source>May</source>
+        <translation>května</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="166"/>
+        <location filename="songcounter.cpp" line="194"/>
+        <source>June</source>
+        <oldsource>June %1, %2</oldsource>
+        <translation>června</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="168"/>
+        <location filename="songcounter.cpp" line="196"/>
+        <source>July</source>
+        <oldsource>July %1, %2</oldsource>
+        <translation>července</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="170"/>
+        <location filename="songcounter.cpp" line="198"/>
+        <source>August</source>
+        <oldsource>August %1, %2</oldsource>
+        <translation>srpna</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="172"/>
+        <location filename="songcounter.cpp" line="200"/>
+        <source>September</source>
+        <oldsource>September %1, %2</oldsource>
+        <translation>září</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="174"/>
+        <location filename="songcounter.cpp" line="202"/>
+        <source>October</source>
+        <oldsource>October %1, %2</oldsource>
+        <translation>října</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="176"/>
+        <location filename="songcounter.cpp" line="204"/>
+        <source>November</source>
+        <oldsource>November %1, %2</oldsource>
+        <translation>listopadu</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="178"/>
+        <location filename="songcounter.cpp" line="206"/>
+        <source>December</source>
+        <oldsource>December %1, %2</oldsource>
+        <translation>prosince</translation>
+    </message>
 </context>
 <context>
     <name>SongCounterModel</name>
@@ -2230,27 +2347,27 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Název písně</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="217"/>
+        <location filename="songcounter.cpp" line="285"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="219"/>
+        <location filename="songcounter.cpp" line="287"/>
         <source>Title</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="221"/>
+        <location filename="songcounter.cpp" line="289"/>
         <source>Count</source>
         <translation>Počet</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="223"/>
+        <location filename="songcounter.cpp" line="291"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="215"/>
+        <location filename="songcounter.cpp" line="283"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
     </message>
@@ -2260,132 +2377,133 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
     <message>
         <location filename="songsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="22"/>
         <source>Show Stanza Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat název sloky</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="29"/>
         <source>Show Song Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat tóninu písně</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="36"/>
         <source>Show Song Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat číslo písně</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="45"/>
         <source>Show Song Ending</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat zakončení písně</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="54"/>
         <source>***</source>
-        <translation type="unfinished"></translation>
+        <translation>***</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="64"/>
         <source>This will show WordsBy and MusicBy as song ending</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto ukáže Slova od a Hudba od jako zakončení písně</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="67"/>
         <source>Song Copyright Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace o autorském právu</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="90"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít  obrázek pozadí</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="106"/>
         <source>Browse...</source>
-        <translation type="unfinished">Procházet...</translation>
+        <translation>Procházet...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="129"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Zarovnání textu</translation>
+        <translation>Zarovnání textu</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="148"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Svislé:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="155"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodorovné:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="163"/>
         <source>Top</source>
-        <translation type="unfinished">Nahoře</translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="168"/>
         <source>Middle</source>
-        <translation type="unfinished">Na střed</translation>
+        <translation>Uprostřed</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="173"/>
         <source>Bottom</source>
-        <translation type="unfinished">Dole</translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="182"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="187"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Na střed</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="192"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="203"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti textu</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="209"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="232"/>
         <source>Choose color...</source>
-        <translation type="unfinished">Vybrat barvu...</translation>
+        <translation>Vybrat barvu...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="252"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Písmo...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="277"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
         <location filename="songsettingwidget.cpp" line="80"/>
         <source>Select a image for song wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte obrázek pro pozadí písně</translation>
     </message>
     <message>
         <location filename="songsettingwidget.cpp" line="81"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Obrázky (*.png *.jpg *.jpeg)</translation>
+        <translation>Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -2519,7 +2637,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <location filename="songwidget.cpp" line="230"/>
         <source>Comments:</source>
         <comment>Comments to songs</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poznámky:</translation>
     </message>
     <message>
         <location filename="songwidget.cpp" line="314"/>

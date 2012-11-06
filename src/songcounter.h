@@ -70,10 +70,11 @@ class SongCounter : public QDialog
     Q_OBJECT
 
 public:
-    explicit SongCounter(QWidget *parent = 0);
+    explicit SongCounter(QWidget *parent = 0,QString loc = "en");
     ~SongCounter();
 
 private:
+    QString splocale;
     QList<Counter> song_count_list;
     SongCounterModel *songCounterModel;
     QSortFilterProxyModel *songCounterProxyModel;
@@ -83,6 +84,7 @@ public slots:
     void addSongCount(Song song);
 
 private slots:
+    void updateMonth(QString& date);
     void loadCounts();
     void on_resetOneButton_clicked();
     void on_resetButton_clicked();

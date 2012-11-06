@@ -33,19 +33,19 @@ Matvey Adzhigirey</source>
         <oldsource>Ilya Spivakov
 Matvey Adzhigirey
 Vladislav Kobzar</oldsource>
-        <translation type="unfinished">Илия Спиваков
+        <translation>Илия Спиваков
 Матфей Аджигирей
 Владислав Кобзарь</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="310"/>
         <source>Special Thanks To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Особая благодарность:</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="322"/>
         <source>Vitaliy Zhaborovskyy</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="352"/>
@@ -58,7 +58,7 @@ Vladislav Kobzar</oldsource>
 German:
 Czech:
 Ukranian:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="382"/>
@@ -66,7 +66,7 @@ Ukranian:</source>
 Eduard Schlak
 Pavel Fric
 Vitaliy Zhaborovskyy</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Russian:
@@ -198,19 +198,19 @@ p, li { white-space: pre-wrap; }
         <location filename="announcewidget.ui" line="116"/>
         <location filename="announcewidget.cpp" line="127"/>
         <source>Left</source>
-        <translation>По левому краю</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="121"/>
         <location filename="announcewidget.cpp" line="131"/>
         <source>Center</source>
-        <translation>По центру</translation>
+        <translation>Центр</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="126"/>
         <location filename="announcewidget.cpp" line="129"/>
         <source>Right</source>
-        <translation>По правому краю</translation>
+        <translation>Право</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="82"/>
@@ -221,19 +221,19 @@ p, li { white-space: pre-wrap; }
         <location filename="announcewidget.ui" line="90"/>
         <location filename="announcewidget.cpp" line="136"/>
         <source>Top</source>
-        <translation>По верхнему краю</translation>
+        <translation>Верх</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="95"/>
         <location filename="announcewidget.cpp" line="140"/>
         <source>Middle</source>
-        <translation>По середине</translation>
+        <translation>Середина</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="100"/>
         <location filename="announcewidget.cpp" line="138"/>
         <source>Bottom</source>
-        <translation>По нижнему краю</translation>
+        <translation>Нижний</translation>
     </message>
     <message>
         <location filename="announcewidget.ui" line="155"/>
@@ -283,97 +283,98 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="announcementsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="20"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать рисунок фона</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="36"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="59"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Выравнивание текста</translation>
+        <translation>Выравнивание текста</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="78"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальное:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="85"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальное:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="93"/>
         <source>Top</source>
-        <translation type="unfinished">По верхнему краю</translation>
+        <translation>Верх</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="98"/>
         <source>Middle</source>
-        <translation type="unfinished">По середине</translation>
+        <translation>Середина</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="103"/>
         <source>Bottom</source>
-        <translation type="unfinished">По нижнему краю</translation>
+        <translation>Нижний</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="112"/>
         <source>Left</source>
-        <translation type="unfinished">По левому краю</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="117"/>
         <source>Center</source>
-        <translation type="unfinished">По центру</translation>
+        <translation>Центр</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="122"/>
         <source>Right</source>
-        <translation type="unfinished">По правому краю</translation>
+        <translation>Право</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="133"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Свойства текста</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="139"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет:</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="162"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать цвет...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="182"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Шрифт...</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.ui" line="207"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить на умолчания</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.cpp" line="53"/>
         <source>Select a image for announcement wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор рисунка</translation>
     </message>
     <message>
         <location filename="announcementsettingwidget.cpp" line="54"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg *.jpeg)</translation>
+        <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -411,144 +412,156 @@ Copyright:</source>
     <message>
         <location filename="biblesettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="22"/>
         <source>Primary Bible:</source>
-        <translation type="unfinished">Первая Библия:</translation>
+        <translation>Первая Библия:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="42"/>
         <source>Secondary Bible:</source>
-        <translation type="unfinished">Вторая Библия:</translation>
+        <translation>Вторая Библия:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="62"/>
         <source>Trinary Bible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Третья Библия:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="82"/>
         <source>Operator Screen Bible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Библия оператора:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="98"/>
         <source>This bible version will be used for the operator to select verses and search bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта версия Библии используется оператором для выбора и поиска стихов</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="107"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать рисунок фона</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="125"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="150"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Выравнивание текста</translation>
+        <translation>Выравнивание текста</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="156"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальное:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="164"/>
         <location filename="biblesettingwidget.ui" line="363"/>
         <source>Top</source>
-        <translation type="unfinished">По верхнему краю</translation>
+        <translation>Верх</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="169"/>
         <source>Middle</source>
-        <translation type="unfinished">По середине</translation>
+        <translation>Середина</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="174"/>
         <location filename="biblesettingwidget.ui" line="373"/>
         <source>Bottom</source>
-        <translation type="unfinished">По нижнему краю</translation>
+        <translation>Нижний</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="182"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальное:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="190"/>
         <source>Left</source>
-        <translation type="unfinished">По левому краю</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="195"/>
         <source>Center</source>
-        <translation type="unfinished">По центру</translation>
+        <translation>Центр</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="200"/>
         <source>Right</source>
-        <translation type="unfinished">По правому краю</translation>
+        <translation>Право</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="224"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Свойства текста</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="232"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="255"/>
         <source>Choose color...</source>
-        <translation type="unfinished">Изменить цвет...</translation>
+        <translation>Изменить цвет...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="279"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Шрифт...</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="304"/>
         <source>Show Bible Version Abbriviation</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать абревиатуру Библии</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="311"/>
-        <source>Amount Of Sceen To Use</source>
-        <translation type="unfinished"></translation>
+        <source>Amount Of Screen To Use</source>
+        <oldsource>Amount Of Sceen To Use</oldsource>
+        <translation>Размер используемого экрана</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="360"/>
         <source>Select &quot;Top&quot; to use top portion of the display screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберете &quot;Верх&quot; для использования верхней части экрана</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="370"/>
         <source>Select &quot;Bottom&quot; to use bottom portion of the display screen</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>можна и не переводить, смотри украинский перевод, там кеп подписался</translatorcomment>
+        <translation>Выберете &quot;Нижний&quot; для использования нижний части экрана</translation>
+    </message>
+    <message>
+        <source>Amount Of Sceen To Use (Primary Bible Only)</source>
+        <translation type="obsolete">Размер используемого экрана (только для первой Библии)</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="319"/>
         <source>Use this much of the screen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать экрана:</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="353"/>
-        <source>Aling to:</source>
-        <translation type="unfinished"></translation>
+        <source>Align to:</source>
+        <oldsource>Aling to:</oldsource>
+        <translation>Выровнять к:</translation>
+    </message>
+    <message>
+        <source>Buttom</source>
+        <translation type="obsolete">По нижнему краю</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.ui" line="413"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить на умолчания</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="99"/>
@@ -556,23 +569,23 @@ Copyright:</source>
         <location filename="biblesettingwidget.cpp" line="167"/>
         <location filename="biblesettingwidget.cpp" line="198"/>
         <source>None</source>
-        <translation type="unfinished">Не выбрана</translation>
+        <translation>Не выбрана</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="103"/>
         <location filename="biblesettingwidget.cpp" line="218"/>
         <source>Same as primary Bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Такая же, как первая Библия</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="246"/>
         <source>Select a image for Bible wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор рисунка</translation>
     </message>
     <message>
         <location filename="biblesettingwidget.cpp" line="247"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg *.jpeg)</translation>
+        <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -903,7 +916,7 @@ Try changing primary Bible and reopen project file.</source>
     <message>
         <location filename="editwidget.ui" line="289"/>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Коментарии:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="336"/>
@@ -1242,68 +1255,68 @@ Verse 2
     <message>
         <location filename="generalsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="22"/>
         <source>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector&apos;s screen.</source>
-        <translation type="unfinished">Окно экрана сверху других окон (требуется перезапуск программы). Эта опция предохраняет от случайного вывода информации на экран.</translation>
+        <translation>Окно экрана сверху других окон (требуется перезапуск программы). Эта опция предохраняет от случайного вывода информации на экран.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="25"/>
         <source>Display window always on top</source>
-        <translation type="unfinished">Окно экрана всегда сверху</translation>
+        <translation>Окно экрана всегда сверху</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="32"/>
         <location filename="generalsettingwidget.ui" line="55"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
-        <translation type="unfinished">Полезно при использовании фоновых рисунков. Получаются интересные теневые эффекты.</translation>
+        <translation>Полезно при использовании фоновых рисунков. Получаются интересные теневые эффекты.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="35"/>
         <source>Use shadow</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать тени</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="42"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
-        <translation type="unfinished">Плавное затухание при переходе с одного стиха на другой.</translation>
+        <translation>Плавное затухание при переходе с одного стиха на другой.</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="45"/>
         <source>Use fading effects</source>
-        <translation type="unfinished">Эффект затухания</translation>
+        <translation>Эффект затухания</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="58"/>
         <source>Use blurred shadow</source>
-        <translation type="unfinished">Размытая тень</translation>
+        <translation>Размытая тень</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="67"/>
         <source>Use Passive Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать пасивный фон</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="83"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="106"/>
         <source>Display Screen Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать экран</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="114"/>
         <source>Display Screen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Экран:</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="121"/>
         <source>Select onto which screen to dispaly</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор экрана для отображения</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="143"/>
@@ -1311,23 +1324,32 @@ Verse 2
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, oder is from right-to-left.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, order is from left-to-right.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;NOTE:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt; Display screen selection is currenly under development. Changing the screen number, will change on which screen projection will be displayed.&lt;br /&gt;On Windows, oder is from right-to-left.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;ОБРАТИТЕ ВНИМАНИЕ:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Опция выбора экрана в разработке.&lt;br /&gt;Смена номер экрана позволяет задать рабочий стол,&lt;br /&gt;на который будет выводиться изображение&lt;br /&gt;В Windows рабочие столы в порядке слева направо&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.ui" line="178"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить все на умолчания</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.cpp" line="59"/>
         <source>Select a image for main wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать фоновый рисунок</translation>
     </message>
     <message>
         <location filename="generalsettingwidget.cpp" line="60"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg *.jpeg)</translation>
+        <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -1664,6 +1686,19 @@ Has been saved to:
     </message>
 </context>
 <context>
+    <name>Native language name</name>
+    <message>
+        <source>English</source>
+        <translation type="obsolete">Русский</translation>
+    </message>
+    <message>
+        <location filename="softprojector.cpp" line="1168"/>
+        <source>English</source>
+        <comment>Do not change</comment>
+        <translation>Русский</translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="settingsdialog.ui" line="14"/>
@@ -1673,37 +1708,37 @@ Has been saved to:
     <message>
         <location filename="settingsdialog.ui" line="49"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="58"/>
         <source>Bible</source>
-        <translation type="unfinished"></translation>
+        <translation>Библия</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="76"/>
         <source>Announcements</source>
-        <translation type="unfinished"></translation>
+        <translation>Объявление</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="107"/>
         <source>General SoftProjector Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Общие настройки SoftProjector</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="156"/>
         <source>Bible Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки отображения Библии</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="205"/>
         <source>Song Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки отображения песен</translation>
     </message>
     <message>
         <location filename="settingsdialog.ui" line="254"/>
         <source>Announcement Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки отображения объявлений</translation>
     </message>
     <message>
         <source>Primary Bible:</source>
@@ -1803,158 +1838,157 @@ Has been saved to:
         <translation type="obsolete">Эта программа бесплатная, с открытым исходным кодом. Если вы можете помочь в улучшении этой программы посетите sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="76"/>
-        <location filename="softprojector.cpp" line="1249"/>
+        <location filename="softprojector.cpp" line="71"/>
+        <location filename="softprojector.cpp" line="1207"/>
         <source>Bible (F6)</source>
         <translation>Библия (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="77"/>
-        <location filename="softprojector.cpp" line="1250"/>
+        <location filename="softprojector.cpp" line="72"/>
+        <location filename="softprojector.cpp" line="1208"/>
         <source>Songs (F7)</source>
         <translation>Песни (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="78"/>
-        <location filename="softprojector.cpp" line="1251"/>
+        <location filename="softprojector.cpp" line="73"/>
+        <location filename="softprojector.cpp" line="1209"/>
         <source>Announcements (F8)</source>
         <translation>Объявления (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="281"/>
+        <location filename="softprojector.cpp" line="277"/>
         <source>Project not saved</source>
         <comment>project as in document file</comment>
         <translation>Проект не сохранен</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="282"/>
+        <location filename="softprojector.cpp" line="278"/>
         <source>Do you want to save current project?</source>
         <comment>project as in document file</comment>
         <translation>Вы желаете сохранить данный проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="339"/>
+        <location filename="softprojector.cpp" line="335"/>
         <source>Announcement</source>
         <translation>Объявление</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="545"/>
+        <location filename="softprojector.cpp" line="541"/>
         <source>Words by: %1, Music by: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Слова: %1, Музыка: %2</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="547"/>
+        <location filename="softprojector.cpp" line="543"/>
         <source>Words by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Слова: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="549"/>
+        <location filename="softprojector.cpp" line="545"/>
         <source>Music by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Музыка: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="921"/>
+        <location filename="softprojector.cpp" line="917"/>
         <source>Cannot start new edit</source>
         <translation>Невозможно начать новое редактирование</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="922"/>
-        <location filename="softprojector.cpp" line="957"/>
-        <location filename="softprojector.cpp" line="977"/>
+        <location filename="softprojector.cpp" line="918"/>
+        <location filename="softprojector.cpp" line="953"/>
+        <location filename="softprojector.cpp" line="973"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Уже редактируется другая песня.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="923"/>
-        <location filename="softprojector.cpp" line="958"/>
-        <location filename="softprojector.cpp" line="978"/>
+        <location filename="softprojector.cpp" line="919"/>
+        <location filename="softprojector.cpp" line="954"/>
+        <location filename="softprojector.cpp" line="974"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Пожалуйста сохраните и (или) закройте данную песню прежде чем редактировать другую.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="938"/>
-        <location filename="softprojector.cpp" line="992"/>
-        <location filename="softprojector.cpp" line="1031"/>
+        <location filename="softprojector.cpp" line="934"/>
+        <location filename="softprojector.cpp" line="988"/>
+        <location filename="softprojector.cpp" line="1027"/>
         <source>No song selected</source>
         <translation>Ни одна песня не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="939"/>
+        <location filename="softprojector.cpp" line="935"/>
         <source>No song has been selected to be edited.</source>
         <translation>Ни одна песня не выбрана для редактирования.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="940"/>
+        <location filename="softprojector.cpp" line="936"/>
         <source>Please select a song to be edited.</source>
         <translation>Пожалуйста выберите песню для редактирования.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="956"/>
+        <location filename="softprojector.cpp" line="952"/>
         <source>Cannot create a new song</source>
         <translation>Невозможно создать новую песню</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="976"/>
+        <location filename="softprojector.cpp" line="972"/>
         <source>Cannot copy this song</source>
         <translation>Невозможно скопировать песню</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1192"/>
         <source>English</source>
-        <translation type="unfinished">Английский</translation>
+        <translation type="obsolete">Русский</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1268"/>
+        <location filename="softprojector.cpp" line="1226"/>
         <source>Save Project?</source>
         <comment>project as in document file</comment>
         <translation>Сохранить проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1269"/>
+        <location filename="softprojector.cpp" line="1227"/>
         <source>Do you want to save current project before opening other?</source>
         <comment>project as in document file</comment>
         <translation>Вы желаете сохранить данный проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1289"/>
+        <location filename="softprojector.cpp" line="1247"/>
         <source>Open softProjector project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1290"/>
-        <location filename="softprojector.cpp" line="1314"/>
+        <location filename="softprojector.cpp" line="1248"/>
+        <location filename="softprojector.cpp" line="1272"/>
         <source>softProjector project file </source>
         <translation>Файл проекта</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1313"/>
+        <location filename="softprojector.cpp" line="1271"/>
         <source>Save softProjector project as:</source>
         <translation>Сохранить проект как:</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1335"/>
-        <location filename="softprojector.cpp" line="1367"/>
+        <location filename="softprojector.cpp" line="1293"/>
+        <location filename="softprojector.cpp" line="1325"/>
         <source>Save Project?</source>
         <translation>Сохранить проект?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1336"/>
+        <location filename="softprojector.cpp" line="1294"/>
         <source>Do you want to save current project before creating a new project?</source>
         <translation>Вы желаете сохранить текущий проект прежде чем создать новый?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1368"/>
+        <location filename="softprojector.cpp" line="1326"/>
         <source>Do you want to save current project before closing it?</source>
         <translation>Вы желаете сохранить текущий проект прежде чем закрыть его?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1527"/>
+        <location filename="softprojector.cpp" line="1485"/>
         <source>Incorrect project file format</source>
         <translation>Неправильный формат файла проекта</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1528"/>
+        <location filename="softprojector.cpp" line="1486"/>
         <source>The softProjector project file you are opening,
 is not supported by your version of softProjector.
 You may try upgrading your version of softProjector.</source>
@@ -1971,34 +2005,34 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Выберите песню для редактирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="993"/>
+        <location filename="softprojector.cpp" line="989"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Песня для копирования не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="994"/>
+        <location filename="softprojector.cpp" line="990"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Выберите песню для копирования</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1006"/>
+        <location filename="softprojector.cpp" line="1002"/>
         <source>Delete song?</source>
         <translation>Удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1007"/>
+        <location filename="softprojector.cpp" line="1003"/>
         <source>Delete song &quot;</source>
         <translation>Удаление песни &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1032"/>
+        <location filename="softprojector.cpp" line="1028"/>
         <source>No song has been selected to be deleted</source>
         <translation>Песня для удаления не выбрана</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1033"/>
+        <location filename="softprojector.cpp" line="1029"/>
         <source>Please select a song to be deleted</source>
         <translation>Выберите песню для удаления</translation>
     </message>
@@ -2007,7 +2041,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Вы уверены что хотите удалить песню?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1008"/>
+        <location filename="softprojector.cpp" line="1004"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Песня будет удалена навсегда</translation>
     </message>
@@ -2184,7 +2218,7 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="softprojector.ui" line="328"/>
         <source>&amp;Open Project</source>
-        <translation>Открыть проект</translation>
+        <translation>&amp;Открыть проект</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="331"/>
@@ -2194,7 +2228,7 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="softprojector.ui" line="340"/>
         <source>&amp;Save Project</source>
-        <translation>Сохранить проект</translation>
+        <translation>&amp;Сохранить проект</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="343"/>
@@ -2204,7 +2238,7 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="softprojector.ui" line="348"/>
         <source>Save Project &amp;As</source>
-        <translation>Сохранить проект как</translation>
+        <translation>Сохранить проект &amp;как</translation>
     </message>
     <message>
         <location filename="softprojector.ui" line="357"/>
@@ -2252,6 +2286,89 @@ You may try upgrading your version of softProjector.</source>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
+    <message>
+        <location filename="songcounter.cpp" line="156"/>
+        <location filename="songcounter.cpp" line="184"/>
+        <source>January</source>
+        <oldsource>January %1, %2</oldsource>
+        <translation>января</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="158"/>
+        <location filename="songcounter.cpp" line="186"/>
+        <source>February</source>
+        <oldsource>February %1, %2</oldsource>
+        <translation>февраля</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="160"/>
+        <location filename="songcounter.cpp" line="188"/>
+        <source>March</source>
+        <oldsource>March %1, %2</oldsource>
+        <translation>марта</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="162"/>
+        <location filename="songcounter.cpp" line="190"/>
+        <source>April</source>
+        <oldsource>April %1, %2</oldsource>
+        <translation>апреля</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="164"/>
+        <location filename="songcounter.cpp" line="192"/>
+        <source>May</source>
+        <translation>мая</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="166"/>
+        <location filename="songcounter.cpp" line="194"/>
+        <source>June</source>
+        <oldsource>June %1, %2</oldsource>
+        <translation>июня</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="168"/>
+        <location filename="songcounter.cpp" line="196"/>
+        <source>July</source>
+        <oldsource>July %1, %2</oldsource>
+        <translation>июля</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="170"/>
+        <location filename="songcounter.cpp" line="198"/>
+        <source>August</source>
+        <oldsource>August %1, %2</oldsource>
+        <translation>августа</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="172"/>
+        <location filename="songcounter.cpp" line="200"/>
+        <source>September</source>
+        <oldsource>September %1, %2</oldsource>
+        <translation>сентября</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="174"/>
+        <location filename="songcounter.cpp" line="202"/>
+        <source>October</source>
+        <oldsource>October %1, %2</oldsource>
+        <translation>октября</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="176"/>
+        <location filename="songcounter.cpp" line="204"/>
+        <source>November</source>
+        <oldsource>November %1, %2</oldsource>
+        <translation>ноября</translation>
+    </message>
+    <message>
+        <location filename="songcounter.cpp" line="178"/>
+        <location filename="songcounter.cpp" line="206"/>
+        <source>December</source>
+        <oldsource>December %1, %2</oldsource>
+        <translation>декабря</translation>
+    </message>
 </context>
 <context>
     <name>SongCounterModel</name>
@@ -2260,27 +2377,27 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Название песни</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="217"/>
+        <location filename="songcounter.cpp" line="285"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="219"/>
+        <location filename="songcounter.cpp" line="287"/>
         <source>Title</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="221"/>
+        <location filename="songcounter.cpp" line="289"/>
         <source>Count</source>
         <translation>Счет</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="223"/>
+        <location filename="songcounter.cpp" line="291"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата</translation>
     </message>
     <message>
-        <location filename="songcounter.cpp" line="215"/>
+        <location filename="songcounter.cpp" line="283"/>
         <source>Songbook</source>
         <translation>Сборник</translation>
     </message>
@@ -2290,132 +2407,133 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="songsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="22"/>
         <source>Show Stanza Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать номер куплета</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="29"/>
         <source>Show Song Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать тональность песни</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="36"/>
         <source>Show Song Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать номер песни</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="45"/>
         <source>Show Song Ending</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать конец песни</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="54"/>
         <source>***</source>
-        <translation type="unfinished"></translation>
+        <translation>***</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="64"/>
         <source>This will show WordsBy and MusicBy as song ending</source>
-        <translation type="unfinished"></translation>
+        <translation>Будет отображаться информация о авторах слов и музыки</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="67"/>
         <source>Song Copyright Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирайт песни</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="90"/>
         <source>Use Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать рисунок фона</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="106"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="129"/>
         <source>Text Alingment</source>
-        <translation type="unfinished">Выравнивание текста</translation>
+        <translation>Выравнивание текста</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="148"/>
         <source>Vertical:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальное:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="155"/>
         <source>Horizontal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальное:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="163"/>
         <source>Top</source>
-        <translation type="unfinished">По верхнему краю</translation>
+        <translation>Верх</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="168"/>
         <source>Middle</source>
-        <translation type="unfinished">По середине</translation>
+        <translation>Середина</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="173"/>
         <source>Bottom</source>
-        <translation type="unfinished">По нижнему краю</translation>
+        <translation>Нижний</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="182"/>
         <source>Left</source>
-        <translation type="unfinished">По левому краю</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="187"/>
         <source>Center</source>
-        <translation type="unfinished">По центру</translation>
+        <translation>Центр</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="192"/>
         <source>Right</source>
-        <translation type="unfinished">По правому краю</translation>
+        <translation>Право</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="203"/>
         <source>Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Свойства текста</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="209"/>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет:</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="232"/>
         <source>Choose color...</source>
-        <translation type="unfinished">Изменить цвет...</translation>
+        <translation>Изменить цвет...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="252"/>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
+        <source>Font...</source>
+        <oldsource>Font</oldsource>
+        <translation>Шрифт...</translation>
     </message>
     <message>
         <location filename="songsettingwidget.ui" line="277"/>
         <source>Reset All To Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить все на умолчания</translation>
     </message>
     <message>
         <location filename="songsettingwidget.cpp" line="80"/>
         <source>Select a image for song wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор рисунка</translation>
     </message>
     <message>
         <location filename="songsettingwidget.cpp" line="81"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg *.jpeg)</translation>
+        <translation>Изображения (*.png *.jpg *.jpeg)</translation>
     </message>
 </context>
 <context>
@@ -2549,7 +2667,7 @@ You may try upgrading your version of softProjector.</source>
         <location filename="songwidget.cpp" line="230"/>
         <source>Comments:</source>
         <comment>Comments to songs</comment>
-        <translation type="unfinished"></translation>
+        <translation>Коментарии:</translation>
     </message>
     <message>
         <location filename="songwidget.cpp" line="314"/>
