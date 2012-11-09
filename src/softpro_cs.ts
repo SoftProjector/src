@@ -904,8 +904,12 @@ Zkuste změnit hlavní Bibli a otevřete soubor s projektem znovu.</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="289"/>
+        <source>Notes:</source>
+        <translation>Bere na vědomí:</translation>
+    </message>
+    <message>
         <source>Comments:</source>
-        <translation>Poznámky:</translation>
+        <translation type="obsolete">Poznámky:</translation>
     </message>
     <message>
         <location filename="editwidget.ui" line="336"/>
@@ -1670,7 +1674,7 @@ Byla uložena jako:
         <translation type="obsolete">Český</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1168"/>
+        <location filename="softprojector.cpp" line="1172"/>
         <source>English</source>
         <comment>Do not change</comment>
         <translation>Český</translation>
@@ -1816,99 +1820,99 @@ Byla uložena jako:
         <translation type="obsolete">Tento program je zdarma a jeho kód je otevřen. Pokud můžete a chcete pomoci při zlepšování tohoto programu, navštivte, prosím, stránky na adrese sourceforge.net/projects/softprojector/</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="71"/>
-        <location filename="softprojector.cpp" line="1207"/>
+        <location filename="softprojector.cpp" line="73"/>
+        <location filename="softprojector.cpp" line="1211"/>
         <source>Bible (F6)</source>
         <translation>Bible (F6)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="72"/>
-        <location filename="softprojector.cpp" line="1208"/>
+        <location filename="softprojector.cpp" line="74"/>
+        <location filename="softprojector.cpp" line="1212"/>
         <source>Songs (F7)</source>
         <translation>Písně (F7)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="73"/>
-        <location filename="softprojector.cpp" line="1209"/>
+        <location filename="softprojector.cpp" line="75"/>
+        <location filename="softprojector.cpp" line="1213"/>
         <source>Announcements (F8)</source>
         <translation>Oznámení (F8)</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="277"/>
+        <location filename="softprojector.cpp" line="279"/>
         <source>Project not saved</source>
         <comment>project as in document file</comment>
         <translation>Projekt neuložen</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="278"/>
+        <location filename="softprojector.cpp" line="280"/>
         <source>Do you want to save current project?</source>
         <comment>project as in document file</comment>
         <translation>Chcete uložit nynější projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="335"/>
+        <location filename="softprojector.cpp" line="337"/>
         <source>Announcement</source>
         <translation>Oznámení</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="541"/>
+        <location filename="softprojector.cpp" line="543"/>
         <source>Words by: %1, Music by: %2</source>
         <translation>Slova od: %1, Hudba od: %2</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="543"/>
+        <location filename="softprojector.cpp" line="545"/>
         <source>Words by: %1</source>
         <translation>Slova od: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="545"/>
+        <location filename="softprojector.cpp" line="547"/>
         <source>Music by: %1</source>
         <translation>Hudba od: %1</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="917"/>
+        <location filename="softprojector.cpp" line="921"/>
         <source>Cannot start new edit</source>
         <translation>Nelze začít novou úpravu</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="918"/>
-        <location filename="softprojector.cpp" line="953"/>
-        <location filename="softprojector.cpp" line="973"/>
+        <location filename="softprojector.cpp" line="922"/>
+        <location filename="softprojector.cpp" line="957"/>
+        <location filename="softprojector.cpp" line="977"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Již je upravována jiná píseň.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="919"/>
-        <location filename="softprojector.cpp" line="954"/>
-        <location filename="softprojector.cpp" line="974"/>
+        <location filename="softprojector.cpp" line="923"/>
+        <location filename="softprojector.cpp" line="958"/>
+        <location filename="softprojector.cpp" line="978"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Uložte, prosím, a/nebo zavřete nyní upravovanou píseň, předtím než začnete upravovat jinou píseň.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="934"/>
-        <location filename="softprojector.cpp" line="988"/>
-        <location filename="softprojector.cpp" line="1027"/>
+        <location filename="softprojector.cpp" line="938"/>
+        <location filename="softprojector.cpp" line="992"/>
+        <location filename="softprojector.cpp" line="1031"/>
         <source>No song selected</source>
         <translation>Nebyla vybrána žádná píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="935"/>
+        <location filename="softprojector.cpp" line="939"/>
         <source>No song has been selected to be edited.</source>
         <translation>Nebyla vybrána žádná píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="936"/>
+        <location filename="softprojector.cpp" line="940"/>
         <source>Please select a song to be edited.</source>
         <translation>Vyberte, prosím, píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="952"/>
+        <location filename="softprojector.cpp" line="956"/>
         <source>Cannot create a new song</source>
         <translation>Nelze vytvořit novou píseň</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="972"/>
+        <location filename="softprojector.cpp" line="976"/>
         <source>Cannot copy this song</source>
         <translation>Nelze kopírovat tento píseň</translation>
     </message>
@@ -1917,56 +1921,56 @@ Byla uložena jako:
         <translation type="obsolete">Angličtina</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1226"/>
+        <location filename="softprojector.cpp" line="1230"/>
         <source>Save Project?</source>
         <comment>project as in document file</comment>
         <translation>Uložit projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1227"/>
+        <location filename="softprojector.cpp" line="1231"/>
         <source>Do you want to save current project before opening other?</source>
         <comment>project as in document file</comment>
         <translation>Chcete uložit nynější projekt před otevřením jiného?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1247"/>
+        <location filename="softprojector.cpp" line="1251"/>
         <source>Open softProjector project</source>
         <translation>Otevřít projekt softProjectoru</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1248"/>
-        <location filename="softprojector.cpp" line="1272"/>
+        <location filename="softprojector.cpp" line="1252"/>
+        <location filename="softprojector.cpp" line="1276"/>
         <source>softProjector project file </source>
         <translation>Soubor s projektem pro softProjector </translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1271"/>
+        <location filename="softprojector.cpp" line="1275"/>
         <source>Save softProjector project as:</source>
         <translation>Uložit projekt softProjectoru jako:</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1293"/>
-        <location filename="softprojector.cpp" line="1325"/>
+        <location filename="softprojector.cpp" line="1297"/>
+        <location filename="softprojector.cpp" line="1329"/>
         <source>Save Project?</source>
         <translation>Uložit projekt?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1294"/>
+        <location filename="softprojector.cpp" line="1298"/>
         <source>Do you want to save current project before creating a new project?</source>
         <translation>Chcete uložit nynější projekt před vytvořením nového projektu?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1326"/>
+        <location filename="softprojector.cpp" line="1330"/>
         <source>Do you want to save current project before closing it?</source>
         <translation>Chcete uložit nynější projekt před jeho zavřením?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1485"/>
+        <location filename="softprojector.cpp" line="1489"/>
         <source>Incorrect project file format</source>
         <translation>Nesprávný formát souboru s projektem</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1486"/>
+        <location filename="softprojector.cpp" line="1490"/>
         <source>The softProjector project file you are opening,
 is not supported by your version of softProjector.
 You may try upgrading your version of softProjector.</source>
@@ -1983,34 +1987,34 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Vyberte, prosím, píseň pro úpravy</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="989"/>
+        <location filename="softprojector.cpp" line="993"/>
         <source>No song has been selected to be copied</source>
         <oldsource>No song has been selected to be coppied</oldsource>
         <translation>Nebyla vybrána žádná píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="990"/>
+        <location filename="softprojector.cpp" line="994"/>
         <source>Please select a song to be copied</source>
         <oldsource>Please select a song to be coppied</oldsource>
         <translation>Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1002"/>
+        <location filename="softprojector.cpp" line="1006"/>
         <source>Delete song?</source>
         <translation>Smazat píseň?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1003"/>
+        <location filename="softprojector.cpp" line="1007"/>
         <source>Delete song &quot;</source>
         <translation>Smazat píseň &quot;</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1028"/>
+        <location filename="softprojector.cpp" line="1032"/>
         <source>No song has been selected to be deleted</source>
         <translation>Nebyla vybrána žádná píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1029"/>
+        <location filename="softprojector.cpp" line="1033"/>
         <source>Please select a song to be deleted</source>
         <translation>Vyberte, prosím, píseň ke smazání</translation>
     </message>
@@ -2019,7 +2023,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="softprojector.cpp" line="1004"/>
+        <location filename="softprojector.cpp" line="1008"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Tímto krokem bude tato píseň neodvolatelně smazána</translation>
     </message>
@@ -2634,10 +2638,15 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Náhled na píseň:</translation>
     </message>
     <message>
-        <location filename="songwidget.cpp" line="230"/>
         <source>Comments:</source>
         <comment>Comments to songs</comment>
-        <translation>Poznámky:</translation>
+        <translation type="obsolete">Poznámky:</translation>
+    </message>
+    <message>
+        <location filename="songwidget.cpp" line="230"/>
+        <source>Notes:</source>
+        <comment>Notes to songs</comment>
+        <translation>Bere na vědomí:</translation>
     </message>
     <message>
         <location filename="songwidget.cpp" line="314"/>

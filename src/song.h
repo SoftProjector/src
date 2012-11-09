@@ -61,7 +61,7 @@ class Song
     QString font;
     QString alingment;
     QString background;
-    QString comments;
+    QString notes;
 };
 
 

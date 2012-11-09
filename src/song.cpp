@@ -180,7 +180,7 @@ Song::Song(int song_id, int song_num, QString song_songbook_id, QString song_son
 void Song::readData()
 {
     QSqlQuery sq;
-    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, comments FROM Songs WHERE id = " + QString::number(songID));
+    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, notes FROM Songs WHERE id = " + QString::number(songID));
     sq.first();
     title = sq.value(0).toString();
     category = sq.value(1).toInt();
@@ -191,7 +191,7 @@ void Song::readData()
     font = sq.value(6).toString();
     alingment = sq.value(7).toString();
     background = sq.value(8).toString();
-    comments = sq.value(9).toString().trimmed();
+    notes = sq.value(9).toString().trimmed();
 }
 
 QStringList Song::getSongTextList()
@@ -598,7 +598,7 @@ void Song::saveUpdate()
     sr.setValue(7,font);
     sr.setValue(8,alingment);
     sr.setValue(9,background);
-    sr.setValue(12,comments);
+    sr.setValue(12,notes);
     sq.setRecord(0,sr);
     sq.submitAll();
 
@@ -624,7 +624,7 @@ void Song::saveNew()
     sqt.setData(sqt.index(0,7),font);
     sqt.setData(sqt.index(0,8),alingment);
     sqt.setData(sqt.index(0,9),background);
-    sqt.setData(sqt.index(0,12),comments);
+    sqt.setData(sqt.index(0,12),notes);
     sqt.submitAll();
 
     // Connect song with songbook

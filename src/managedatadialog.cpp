@@ -220,7 +220,7 @@ void ManageDataDialog::importSongbook(QString path)
 
         // Import Songs
         QSqlDatabase::database().transaction();
-        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background, comments)"
+        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background, notes)"
                    "VALUES (?,?,?,?,?,?,?,?,?,?)");
         while (!file.atEnd())
         {
@@ -245,19 +245,19 @@ void ManageDataDialog::importSongbook(QString path)
                 sq1.addBindValue(split[9]);//background
                 if(split.count()>10)
                 {
-                    QString comment = split[10];
-                    toMultiLine(comment);
-                    sq1.addBindValue(comment);//comments
+                    QString note = split[10];
+                    toMultiLine(note);
+                    sq1.addBindValue(note);//notes
                 }
                 else
-                    sq1.addBindValue("");//comments
+                    sq1.addBindValue("");//notes
             }
             else
             {
                 sq1.addBindValue("");//font
                 sq1.addBindValue("");//alignment
                 sq1.addBindValue("");//background
-                sq1.addBindValue("");//comments
+                sq1.addBindValue("");//notes
             }
             sq1.exec();
 
@@ -302,7 +302,7 @@ void ManageDataDialog::exportSongbook(QString path)
     Songbook songbook = songbook_model->getSongbook(row);
     QSqlQuery sq,sq1;
     QString songbook_id = songbook.songbookId;
-    QString songs,song,num,id,title,info, comment;
+    QString songs,song,num,id,title,info, note;
 
     sq.exec("SELECT name, info FROM Songbooks WHERE id = '" + songbook_id + "'");
     sq.first();
@@ -322,11 +322,11 @@ void ManageDataDialog::exportSongbook(QString path)
     {
         id = sq.value(0).toString();
         num = sq.value(1).toString();
-        sq1.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, comments FROM Songs WHERE id = "+id);
+        sq1.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, notes FROM Songs WHERE id = "+id);
         while (sq1.next())
         {
-            comment = sq1.value(9).toString().trimmed();
-            toSingleLine(comment);
+            note = sq1.value(9).toString().trimmed();
+            toSingleLine(note);
             song = sq1.value(0).toString().trimmed() + "#$#" + //title
                     sq1.value(1).toString().trimmed() + "#$#" + //category
                     sq1.value(2).toString().trimmed() + "#$#" + //tune
@@ -336,7 +336,7 @@ void ManageDataDialog::exportSongbook(QString path)
                     sq1.value(6).toString().trimmed() + "#$#" + //font
                     sq1.value(7).toString().trimmed() + "#$#" + //alignment
                     sq1.value(8).toString().trimmed() + "#$#" + //background
-                    comment; //comments
+                    note; //notes
         }
         songs += "\n" + num + "#$#"+ song;
     }

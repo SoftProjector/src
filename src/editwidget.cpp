@@ -207,7 +207,7 @@ void EditWidget::setUiItems()
         ui->left_radioButton->setChecked(true);
     else
         ui->left_radioButton->setChecked(true);
-    ui->plainTextEdit_comments->setPlainText(editSong.comments);
+    ui->plainTextEdit_comments->setPlainText(editSong.notes);
 }
 
 void EditWidget::setSave(){
@@ -229,7 +229,7 @@ void EditWidget::setSave(){
         newSong.alingment = "center";
     else if (ui->left_radioButton->isCheckable())
         newSong.alingment = "left";
-    newSong.comments = ui->plainTextEdit_comments->toPlainText();
+    newSong.notes = ui->plainTextEdit_comments->toPlainText();
 }
 
 QString EditWidget::resetLyric(QString lyric)

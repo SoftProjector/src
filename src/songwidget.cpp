@@ -223,12 +223,12 @@ void SongWidget::sendToPreview(Song song)
     ui->listPreview->addItems(song_list);
     ui->listPreview->setCurrentRow(0);
     ui->preview_label->setText(song.title);
-    if(song.comments.isEmpty())
-        ui->label_comments->setVisible(false);
+    if(song.notes.isEmpty())
+        ui->label_notes->setVisible(false);
     else
     {
-        ui->label_comments->setText(QString("%1\n%2").arg(tr("Comments:","Comments to songs")).arg(song.comments));
-         ui->label_comments->setVisible(true);
+        ui->label_notes->setText(QString("%1\n%2").arg(tr("Notes:","Notes to songs")).arg(song.notes));
+         ui->label_notes->setVisible(true);
     }
     preview_song = song;
 }

@@ -43,7 +43,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     announceWidget = new AnnounceWidget;
     manageDialog = new ManageDataDialog(this);
 
+//    this->setLayoutDirection(Qt::RightToLeft);
     ui->setupUi(this);
+
 
     // Create action group for language slections
     languagePath = "."+QString(QDir::separator())+"translations"+QString(QDir::separator());
@@ -753,6 +755,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     font.setPointSize(current_size);
     painter->setFont(font);
     painter->drawText(trect1, tflags, v.primary_text);
+//    tflags += Qt::RightToLeft;
     if(!v.secondary_text.isNull())
         painter->drawText(trect2, tflags, v.secondary_text);
     if(!v.trinary_text.isNull())
@@ -762,6 +765,7 @@ void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int heigh
     font.setPointSize(current_size*3/4);
     painter->setFont(font);
     painter->drawText(crect1, cflags, v.primary_caption);
+//    cflags += Qt::RightToLeft;
     if(!v.secondary_text.isNull())
         painter->drawText(crect2, cflags, v.secondary_caption);
     if(!v.trinary_caption.isNull())
@@ -1409,7 +1413,7 @@ void SoftProjector::saveProject()
         xml.writeTextElement("font",s.font);
         xml.writeTextElement("aling",s.alingment);
         xml.writeTextElement("back",s.background.trimmed());
-        xml.writeTextElement("comments",s.comments);
+        xml.writeTextElement("comments",s.notes);
 
         xml.writeEndElement(); // enst song
     }
@@ -1674,7 +1678,7 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
                 }
                 else if(xml->StartElement && xml->name() == "comments")
                 {
-                    s.comments = xml->readElementText();
+                    s.notes = xml->readElementText();
                     xml->readNext();
                 }
             }
