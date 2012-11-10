@@ -904,14 +904,14 @@ go here
 
 Verse 2
  - words of verse go here</source>
-        <translation>Перший куплет
+        <translation>Куплет 1
 
  -- тут слова першого куплету
 
 Приспів
  --тут слова приспіву
 
-Другий куплет
+Куплет 2
 
  --тут слова другого куплету</translation>
     </message>

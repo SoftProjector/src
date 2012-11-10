@@ -11,8 +11,8 @@
 ;General
 
   ;Name and file
-  Name "SoftProjector 1.06"
-  OutFile "SoftProjector-1.06-upgrade.exe"
+  Name "SoftProjector 1.07"
+  OutFile "SoftProjector-1.07-upgrade.exe"
   
   XPStyle on
 
@@ -73,7 +73,7 @@
  
   !insertmacro MUI_LANGUAGE "English"
   !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "Romanian"
+  !insertmacro MUI_LANGUAGE "Czech"
   !insertmacro MUI_LANGUAGE "Russian"
   !insertmacro MUI_LANGUAGE "Ukrainian"
 
@@ -98,6 +98,16 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR\sqldrivers"
   File sqldrivers\qsqlite4.dll
   File sqldrivers\qsqlodbc4.dll
+  
+  SetOutPath "$INSTDIR\translations"
+  File translations\flag_cs.png
+  File translations\flag_de.png
+  File translations\flag_ru.png
+  File translations\flag_ua.png
+  File translations\softpro_cs.qm
+  File translations\softpro_de.qm
+  File translations\softpro_ru.qm
+  File translations\softpro_ua.qm
   
   SetOutPath "$INSTDIR\"
   File libgcc_s_dw2-1.dll
@@ -149,7 +159,7 @@ FunctionEnd
   ;Language strings
   LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
   LangString DESC_SecDummy ${LANG_GERMAN} "A test section."  
-  LangString DESC_SecDummy ${LANG_ROMANIAN} "A test section."
+  LangString DESC_SecDummy ${LANG_CZECH} "A test section."
   LangString DESC_SecDummy ${LANG_RUSSIAN} "A test section."
   LangString DESC_SecDummy ${LANG_UKRAINIAN} "A test section."
 
@@ -172,6 +182,14 @@ Section "Uninstall"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\sqldrivers\qsqlite4.dll"
   Delete "$INSTDIR\sqldrivers\qsqlodbc4.dll"
+  Delete "$INSTDIR\translations\flag_cs.png"
+  Delete "$INSTDIR\translations\flag_de.png"
+  Delete "$INSTDIR\translations\flag_ru.png"
+  Delete "$INSTDIR\translations\flag_ua.png"
+  Delete "$INSTDIR\translations\softpro_cs.qm"
+  Delete "$INSTDIR\translations\softpro_de.qm"
+  Delete "$INSTDIR\translations\softpro_ru.qm"
+  Delete "$INSTDIR\translations\softpro_ua.qm"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\License.txt"
   Delete "$INSTDIR\mingwm10.dll"

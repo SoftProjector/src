@@ -1,36 +1,27 @@
-SoftProjector 1.06 - December 30, 2011
-	New:
-		Added ability to display multiple Bible verses.
-
-SoftProjector 1.05 - November 23, 2011
-    New:
-        Song categories
-        Added Toolbar
-        Save and open SoftProjector projects (Bible history items, playlist songs, and announcements)
-        Added Ukrainian, German, And Czech song stanza titles
-    Bug Fix:
-        Faster song table refresh when adding/deleting/copping songs.
-        Only one song at a time can be edited. Previously you could start a new song edit/create new song/copy a song, when another song was been edited.
-        Properly update song information in the playlist after song has been edited.
-
-
-SoftProjector 1.04 - April 7, 2011
-
-    New:
-        Bible information dialog that includes additional Bible information besides the name
-        Display screen can be shown either to the right or left of the primary monitor (previously only to the right)
-    Bug Fix:
-        Program crash when table information changed (applies to songs table, playlist table, and song counter table)
-        Program crash when exiting with no Bibles
-        Cleaner layout on Mac OS X
-    Improvements
-        Faster bible search
-        Unlimited search results (previously only 280)
-        Smaller database size
-        Added ability to set 'Desktop window always on top' without restarting
+SoftProjector 1.07 - November 9, 2012
+New: 
+	New Setting dialog:Separate background, font, font color, text alignment settings for bible, songs and announcement
+		Ability to display up to 3 versions
+		Ability to have separate version for the operator
+		Ability to set how much of screen to use 
+		Ability to show bible version abbreviations
+		Ability to select which screen to use for display
+		Ability to show song copyright information as song ending
+	Song number and date to song counter
+	Ability to add comments to songs
+Improvements:
+	Ability to remove all shadowing
+	Ability to remove showing of song ending
+	Dynamic UI translations
+Bug Fixes:
+	Song text overlapping song key/number 
+	Excessive song shrinking when using song ending "* * *"
+	Program crash when creating/opening project 
+	Automatic file extension if not already exist when saving files (know to Linux systems)
 
 -----
 NOTE:
+If upgrading from version 1.06 or earlier, you need to udate the database too.
 A note about upgrading to softProjector 1.04 from earlier versions. This release will not import any Bible that were exported or provided by our developers and it will not import any Bibles download form http://www.unboundbible.org/. There was a data format changed and all Bibles including from http://www.unboundbible.org/ are available from our Bible module download page.
 
 All songbooks exported from previous releases of softProjector will be imported by softProjector 1.04
