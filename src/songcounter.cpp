@@ -120,23 +120,20 @@ QList<Counter> SongCounter::getSongCounts()
     QSqlQuery sq, sq1;
 
     // Get counts
-    sq.exec("SELECT id, title, count, date FROM Songs WHERE count > 0");
+    //              0   1               2       3   4       5
+    sq.exec("SELECT id, songbook_id, number, title, count, date FROM Songs WHERE count > 0");
     while (sq.next())
     {
-        QString id = sq.value(0).toString();
-        song_count.id = id;
-        song_count.title = sq.value(1).toString();
-        song_count.count = sq.value(2).toInt();
-        song_count.date = sq.value(3).toString();
+        song_count.id = sq.value(0).toString();
+        QString sbid = sq.value(1).toString();
+        song_count.number = sq.value(2).toString();
+        song_count.title = sq.value(3).toString();
+        song_count.count = sq.value(4).toInt();
+        song_count.date = sq.value(5).toString();
         updateMonth(song_count.date);
-        // get songbook id
-        sq1.exec("SELECT songbook_id, song_number FROM SongLink WHERE song_id = " + id);
-        sq1.first();
-        id = sq1.value(0).toString();
-        song_count.number = sq1.value(1).toString();
-        sq1.clear();
+
         // get songbook name
-        sq1.exec("SELECT name FROM Songbooks WHERE id = " + id);
+        sq1.exec("SELECT name FROM Songbooks WHERE id = " + sbid);
         sq1.first();
         song_count.songbook = sq1.value(0).toString();
         song_counts.append(song_count);

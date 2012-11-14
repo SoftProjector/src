@@ -281,7 +281,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
         Song s = songs_model->song_list.at(i);
-        if( s.num == value && s.songbook_name == ui->songbook_menu->currentText() )
+        if( s.number == value && s.songbook_name == ui->songbook_menu->currentText() )
         {
             // Found a song with this song number
             QModelIndex source_index = songs_model->index(i, 0);
@@ -342,7 +342,7 @@ void SongWidget::on_btnAddToPlaylist_clicked()
         for (int i = 0; i < songs_model->song_list.size(); i++)
         {
             Song s = songs_model->song_list.at(i);
-            if( s.num == value )
+            if( s.number == value )
             {
                 song = s;
                 break;

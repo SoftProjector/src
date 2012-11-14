@@ -161,37 +161,73 @@ bool isStanzaSlideTitle(QString string)
 Song::Song()
 {
     // initialize songId to be zero at start;
+    setDefaults();
     songID = 0;
 }
 
 Song::Song(int id)
 {
+    setDefaults();
     songID = id;
 }
 
 Song::Song(int song_id, int song_num, QString song_songbook_id, QString song_songbook_name)
 {
+    setDefaults();
     songID = song_id;
-    num = song_num;
+    number = song_num;
     songbook_id = song_songbook_id;
     songbook_name = song_songbook_name;
+}
+
+void Song::setDefaults()
+{
+    number = 1;
+    title = "";
+    tune = "";
+    wordsBy = "";
+    musicBy = "";
+    songText = "";
+    category = 0;
+    usePrivateSettings = false;
+    alignmentV = 1;
+    alignmentH = 1;
+    color = QColor(Qt::white);
+    font.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    backgroundPath = "";
+    notes = "";
 }
 
 void Song::readData()
 {
     QSqlQuery sq;
-    sq.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, notes FROM Songs WHERE id = " + QString::number(songID));
+    //              0               1       2   3           4   5       6       7           8   9               10      11      12      13
+    sq.exec("SELECT songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background FROM Songs WHERE id = " + QString::number(songID));
     sq.first();
-    title = sq.value(0).toString();
-    category = sq.value(1).toInt();
-    tune = sq.value(2).toString();
-    wordsBy = sq.value(3).toString();
-    musicBy = sq.value(4).toString();
-    songText = sq.value(5).toString();
-    font = sq.value(6).toString();
-    alingment = sq.value(7).toString();
-    background = sq.value(8).toString();
-    notes = sq.value(9).toString().trimmed();
+    songbook_id = sq.value(0).toString();
+    number = sq.value(1).toInt();
+    title = sq.value(2).toString();
+    category = sq.value(3).toInt();
+    tune = sq.value(4).toString();
+    wordsBy = sq.value(5).toString();
+    musicBy = sq.value(6).toString();
+    songText = sq.value(7).toString();
+    notes = sq.value(8).toString();
+    usePrivateSettings = (sq.value(9).toString() == "true");
+    QString str = sq.value(10).toString();
+    QStringList l = str.split(",");
+    if(l.count()>1)
+    {
+        alignmentV = l.at(0).toInt();
+        alignmentH = l.at(1).toInt();
+    }
+    str = sq.value(11).toString();
+    if(!str.isEmpty())
+        color = QColor::fromRgb(str.toUInt());
+    str = sq.value(12).toString();
+    if(!str.isEmpty())
+        font.fromString(str);
+    backgroundPath = sq.value(13).toString();
 }
 
 QStringList Song::getSongTextList()
@@ -199,7 +235,7 @@ QStringList Song::getSongTextList()
     // This function prepares a song list that will be shown in the song preview and show list.
     // It will it will automatically prepare correct sining order of verses and choruses.
     QStringList formatedSong; // List container for correctely ordered item. This item will be returned.
-    QString text, text2, codec;
+    QString text, text2;
     QStringList split, songlist;
     QStringList chorus;
     bool has_chorus=false;
@@ -415,18 +451,19 @@ void SongsModel::updateSongFromDatabase(int newSongId, int oldSongId)
         {
             song->songID = newSongId;
             // get song number and songbook id
+            song->readData();
             QSqlQuery sq;
-            sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(newSongId));
-            sq.first();
-            song->num = sq.value(0).toInt();
-            song->songbook_id = sq.value(1).toString().trimmed();
-            sq.clear();
+//            sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(newSongId));
+//            sq.first();
+//            song->number = sq.value(0).toInt();
+//            song->songbook_id = sq.value(1).toString().trimmed();
+//            sq.clear();
             // get songbook name
             sq.exec("SELECT name FROM Songbooks WHERE id = " + song->songbook_id );
             sq.first();
             song->songbook_name = sq.value(0).toString();
 
-            song->readData();
+//            song->readData();
             emit layoutChanged(); // To redraw the table
             return;
         }
@@ -471,7 +508,7 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
         if( index.column() == 0 )//Category
             return QVariant(song.category);
         else if( index.column() == 1 )//Song Number
-            return QVariant(song.num);
+            return QVariant(song.number);
         else if( index.column() == 2)//Song Title
             return QVariant(song.title);
         else                        //Songbook
@@ -584,61 +621,81 @@ void Song::saveUpdate()
     // Update song information
     QSqlTableModel sq;
     QSqlRecord sr;
+
     sq.setTable("Songs");
     sq.setFilter("id = " + QString::number(songID));
     sq.select();
 
     sr = sq.record(0);
-    sr.setValue(1,clean(title));
-    sr.setValue(2,category);
-    sr.setValue(3,tune);
-    sr.setValue(4,wordsBy);
-    sr.setValue(5,musicBy);
-    sr.setValue(6,songText);
-    sr.setValue(7,font);
-    sr.setValue(8,alingment);
-    sr.setValue(9,background);
-    sr.setValue(12,notes);
+    sr.setValue(1,songbook_id);
+    sr.setValue(2,number);
+    sr.setValue(3,clean(title));
+    sr.setValue(4,category);
+    sr.setValue(5,tune);
+    sr.setValue(6,wordsBy);
+    sr.setValue(7,musicBy);
+    sr.setValue(8,songText);
+    sr.setValue(9,notes);
+    if(usePrivateSettings)
+        sr.setValue(10,"true");
+    else
+        sr.setValue(10,"false");
+    QString alingment = QString("%1,%2").arg(QString::number(alignmentV)).arg(QString::number(alignmentH));
+    sr.setValue(11,alingment);
+    unsigned int textColorInt = (unsigned int)(color.rgb());
+    sr.setValue(12,QString::number(textColorInt));
+    sr.setValue(13,font.toString());
+    sr.setValue(14,backgroundPath);
     sq.setRecord(0,sr);
     sq.submitAll();
 
     // Update SongLink information
-    QSqlQuery sqq;
-    sqq.exec("UPDATE SongLink SET song_number = "
-             + QString::number(num) + " WHERE songbook_id = "
-             + songbook_id + " AND song_id = " + QString::number(songID));
+//    QSqlQuery sqq;
+//    sqq.exec("UPDATE SongLink SET song_number = "
+//             + QString::number(number) + " WHERE songbook_id = "
+//             + songbook_id + " AND song_id = " + QString::number(songID));
 }
 
 void Song::saveNew()
 {
     // Add a new song
     QSqlTableModel sqt;
+
     sqt.setTable("Songs");
     sqt.insertRows(0,1);
-    sqt.setData(sqt.index(0,1),clean(title));
-    sqt.setData(sqt.index(0,2),category);
-    sqt.setData(sqt.index(0,3),tune);
-    sqt.setData(sqt.index(0,4),wordsBy);
-    sqt.setData(sqt.index(0,5),musicBy);
-    sqt.setData(sqt.index(0,6),songText);
-    sqt.setData(sqt.index(0,7),font);
-    sqt.setData(sqt.index(0,8),alingment);
-    sqt.setData(sqt.index(0,9),background);
-    sqt.setData(sqt.index(0,12),notes);
+    sqt.setData(sqt.index(0,1),songbook_id);
+    sqt.setData(sqt.index(0,2),number);
+    sqt.setData(sqt.index(0,3),clean(title));
+    sqt.setData(sqt.index(0,4),category);
+    sqt.setData(sqt.index(0,5),tune);
+    sqt.setData(sqt.index(0,6),wordsBy);
+    sqt.setData(sqt.index(0,7),musicBy);
+    sqt.setData(sqt.index(0,8),songText);
+    sqt.setData(sqt.index(0,9),notes);
+    if(usePrivateSettings)
+        sqt.setData(sqt.index(0,10),"true");
+    else
+        sqt.setData(sqt.index(0,10),"false");
+    QString alingment = QString("%1,%2").arg(QString::number(alignmentV)).arg(QString::number(alignmentH));
+    sqt.setData(sqt.index(0,11),alingment);
+    unsigned int textColorInt = (unsigned int)(color.rgb());
+    sqt.setData(sqt.index(0,12),QString::number(textColorInt));
+    sqt.setData(sqt.index(0,13),font.toString());
+    sqt.setData(sqt.index(0,14),backgroundPath);
     sqt.submitAll();
 
     // Connect song with songbook
-    QSqlQuery sq;
-    QString sid = "";
-    sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
-    while (sq.next())
-        sid = sq.value(0).toString();
-    sq.clear();
+//    QSqlQuery sq;
+//    QString sid = "";
+//    sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
+//    while (sq.next())
+//        sid = sq.value(0).toString();
+//    sq.clear();
 
-    sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ('"
-            + songbook_id.trimmed() + "',"
-            + sid + ","
-            + QString::number(num) + ")");
+//    sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ('"
+//            + songbook_id.trimmed() + "',"
+//            + sid + ","
+//            + QString::number(number) + ")");
 }
 
 Song SongDatabase::getSong(int id)
@@ -651,6 +708,7 @@ Song SongDatabase::getSong(int id)
 QList<Song> SongDatabase::getSongs()
 {
     QList<Song> songs;
+
     QSqlQuery sq;
     QStringList sb_ids, sb_names;
 
@@ -664,18 +722,41 @@ QList<Song> SongDatabase::getSongs()
     sq.clear();
 
     // get songs
-    sq.exec("SELECT song_id, song_number, songbook_id FROM SongLink");
+    //              0   1               2       3       4       5   6       7       8           9   10              11      12      13      14
+    sq.exec("SELECT id, songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background FROM Songs");
     while(sq.next())
     {
-        int song_id = sq.value(0).toInt();
-        int song_num = sq.value(1).toInt();
-        QString songbook_id = sq.value(2).toString();
-        QString songbook_name = sb_names.at(sb_ids.indexOf(songbook_id));
+        Song song;
+        song.songID = sq.value(0).toInt();
+        song.songbook_id = sq.value(1).toString();
+        song.songbook_name = sb_names.at(sb_ids.indexOf(song.songbook_id));
+        song.number = sq.value(2).toInt();
+        song.title = sq.value(3).toString();
+        song.category = sq.value(4).toInt();
+        song.tune = sq.value(5).toString();
+        song.wordsBy = sq.value(6).toString();
+        song.musicBy = sq.value(7).toString();
+        song.songText = sq.value(8).toString();
+        song.notes = sq.value(9).toString();
+        song.usePrivateSettings = (sq.value(10).toString() == "true");
+        QString str = sq.value(11).toString();
+        QStringList l = str.split(",");
+        if(l.count()>1)
+        {
+            song.alignmentV = l.at(0).toInt();
+            song.alignmentH = l.at(1).toInt();
+        }
+        str = sq.value(12).toString();
+        if(!str.isEmpty())
+            song.color = QColor::fromRgb(str.toUInt());
+        str = sq.value(13).toString();
+        if(!str.isEmpty())
+            song.font.fromString(str);
+        song.backgroundPath = sq.value(14).toString();
 
-        Song song = Song(song_id, song_num, songbook_id, songbook_name);
-        song.readData();
         songs.append(song);
     }
+
     return songs;
 }
 
@@ -693,7 +774,7 @@ int SongDatabase::lastUser(QString songbook_id)
     int last;
     QList <int> lastInt;
     QSqlQuery sq;
-    sq.exec("SELECT song_number FROM SongLink WHERE songbook_id = " +songbook_id);
+    sq.exec("SELECT number FROM Songs WHERE songbook_id = " +songbook_id);
     while (sq.next())
         lastInt << sq.value(0).toInt();
     qSort(lastInt);
@@ -708,8 +789,8 @@ void SongDatabase::deleteSong(int song_id)
 {
     QSqlQuery sq;
     sq.exec("DELETE FROM Songs WHERE id = " + QString::number(song_id) );
-    sq.clear();
-    sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
+//    sq.clear();
+//    sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
 }
 
 QString SongDatabase::getSongbookIdStringFromName(QString songbook_name)

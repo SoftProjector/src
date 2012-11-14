@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>426</width>
-    <height>597</height>
+    <height>686</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -47,7 +47,7 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLineEdit" name="song_number_lineEdit">
+      <widget class="QLineEdit" name="lineEditSongNumber">
        <property name="maximumSize">
         <size>
          <width>75</width>
@@ -159,132 +159,248 @@
     </layout>
    </item>
    <item row="4" column="0">
-    <widget class="QGroupBox" name="aling_groupBox">
-     <property name="minimumSize">
-      <size>
-       <width>85</width>
-       <height>0</height>
-      </size>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QCheckBox" name="checkBoxSongSettings">
+       <property name="text">
+        <string>Use Private Song Settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0">
+    <widget class="QGroupBox" name="groupBoxSettings">
      <property name="title">
-      <string>Text Alingment</string>
+      <string/>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item row="0" column="0">
-       <widget class="QRadioButton" name="left_radioButton">
-        <property name="text">
-         <string>Left</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="labelVAlign">
+          <property name="text">
+           <string>Align Vertical:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxVAlignment">
+          <item>
+           <property name="text">
+            <string>Top</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Middle</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bottom</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelHAlign">
+          <property name="text">
+           <string>Align Horizontal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxHAlignment">
+          <item>
+           <property name="text">
+            <string>Left</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Right</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>98</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="center_radioButton">
-        <property name="text">
-         <string>Center</string>
-        </property>
-       </widget>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="pushButtonTextColor">
+          <property name="text">
+           <string>Text Color...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGraphicsView" name="graphicsViewTextColor">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonTextFont">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Text Font...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelTextFont"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>148</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="2">
-       <widget class="QRadioButton" name="rihgt_radioButton">
-        <property name="text">
-         <string>Right</string>
-        </property>
-       </widget>
+      <item row="2" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="labelBackground">
+          <property name="text">
+           <string>Background:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEditBackgroundPath">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonBackgroundPath">
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonRemoveBackground">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="softprojector.qrc">
+            <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="5" column="0">
-    <layout class="QGridLayout" name="font_gridLayout">
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="font_textbox">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="font_button">
-       <property name="text">
-        <string>Browse...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="font_default_button">
-       <property name="text">
-        <string>Use default</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="font_label">
-       <property name="text">
-        <string>Text font:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="6" column="0">
-    <layout class="QGridLayout" name="wall_gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="wall_label">
-       <property name="text">
-        <string>Background:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="wall_textbox">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="wall_button">
-       <property name="text">
-        <string>Browse...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="wall_default_button">
-       <property name="text">
-        <string>Use default</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="7" column="0">
     <widget class="QTextEdit" name="textEditSong">
      <property name="acceptRichText">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="7" column="0">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="8" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="labelNotes">
        <property name="text">
         <string>Notes:</string>
        </property>
@@ -305,8 +421,8 @@
      </item>
     </layout>
    </item>
-   <item row="10" column="0">
-    <widget class="QPlainTextEdit" name="plainTextEdit_comments">
+   <item row="9" column="0">
+    <widget class="QPlainTextEdit" name="plainTextEditNotes">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -315,7 +431,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="10" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <spacer name="horizontalSpacer">

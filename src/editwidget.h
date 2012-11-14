@@ -48,11 +48,9 @@ signals:
     // For communicating with SongsModel
     void updateSongFromDatabase(int songid, int initial_song_id);
     void addedNew(Song song, int initial_song_id);
-    void setSongEditStatus(bool isEdited);
 
 protected:
     virtual void changeEvent(QEvent *e);
-    void closeEvent(QCloseEvent *e);
 
 private:
     Ui::EditWidget *ui;
@@ -71,10 +69,6 @@ private:
 private slots:
     void addNewSong(Song song, QString msgNewSongbook, QString msgCaption);
     void addSongbook();
-    void on_wall_default_button_clicked();
-    void on_wall_button_clicked();
-    void on_font_default_button_clicked();
-    void on_font_button_clicked();
     void on_btnCancel_clicked();
     void on_btnSave_clicked();
     void resetUiItems();
@@ -85,6 +79,12 @@ private slots:
     QString resetLyric(QString lyric);
     QString setSongText(QString text);
     int isInDatabase(Song *song);
+    void on_checkBoxSongSettings_toggled(bool checked);
+    void updateColor();
+    void on_pushButtonTextColor_clicked();
+    void on_pushButtonTextFont_clicked();
+    void on_pushButtonBackgroundPath_clicked();
+    void on_pushButtonRemoveBackground_clicked();
 };
 
 #endif // EDITWIDGET_H

@@ -86,8 +86,6 @@ SoftProjector::SoftProjector(QWidget *parent)
             songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)),
             songWidget,SLOT(addNewSong(Song,int)));
-    connect(editWidget, SIGNAL(setSongEditStatus(bool)),
-            this, SLOT(setSongEditStatus(bool)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()),
             this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()),
@@ -132,9 +130,6 @@ SoftProjector::SoftProjector(QWidget *parent)
         version_string = "1.07"; // to be used only for official release
 //    version_string = "1.07_Beta2"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
-
-    // Initialize bool variables
-    setSongEditStatus(false);
 }
 
 SoftProjector::~SoftProjector()
@@ -395,30 +390,31 @@ QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, boo
     int main_flags(0);
 
     if(wrap)
+        main_flags += Qt::TextWordWrap;
+
+    if(current_song.usePrivateSettings)
     {
-        main_flags = Qt::TextWordWrap;
+        if(current_song.alignmentV==0)
+            main_flags += Qt::AlignTop;
+        else if(current_song.alignmentV==1)
+            main_flags += Qt::AlignVCenter;
+        else if(current_song.alignmentV==2)
+            main_flags += Qt::AlignBottom;
+        if(current_song.alignmentH==0)
+            main_flags += Qt::AlignLeft;
+        else if(current_song.alignmentH==1)
+            main_flags += Qt::AlignHCenter;
+        else if(current_song.alignmentH==2)
+            main_flags += Qt::AlignRight;
+    }
+    else
+    {
         if(allsettings.song.textAlingmentV==0)
             main_flags += Qt::AlignTop;
         else if(allsettings.song.textAlingmentV==1)
             main_flags += Qt::AlignVCenter;
         else if(allsettings.song.textAlingmentV==2)
             main_flags += Qt::AlignBottom;
-        if(allsettings.song.textAlingmentH==0)
-            main_flags += Qt::AlignLeft;
-        else if(allsettings.song.textAlingmentH==1)
-            main_flags += Qt::AlignHCenter;
-        else if(allsettings.song.textAlingmentH==2)
-            main_flags += Qt::AlignRight;
-
-    }
-    else
-    {
-        if(allsettings.song.textAlingmentV==0)
-            main_flags = Qt::AlignTop;
-        else if(allsettings.song.textAlingmentV==1)
-            main_flags = Qt::AlignVCenter;
-        else if(allsettings.song.textAlingmentV==2)
-            main_flags = Qt::AlignBottom;
         if(allsettings.song.textAlingmentH==0)
             main_flags += Qt::AlignLeft;
         else if(allsettings.song.textAlingmentH==1)
@@ -484,7 +480,7 @@ void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height
     bool last_verse = ( current_song_verse == song_list.count()-1 );
 
     QStringList lines_list = song_list.at(current_song_verse).split("\n");
-    QString song_num_str = QString::number(current_song.num);
+    QString song_num_str = QString::number(current_song.number);
     QString song_key_str = current_song.tune;
 
     // Remove the first line if it starts with "Kuplet" or "Pripev" or "Vstavka":
@@ -803,7 +799,7 @@ void SoftProjector::drawText(QPainter *painter, int width, int height)
         drawCurrentSongText(painter, width, height);
     else if(type=="bible")
         drawCurrentBibleText(painter, width, height);
-    else if( type == "announce" )
+    else if(type == "announce")
         drawAnnounceText(painter, width, height);
 }
 
@@ -820,7 +816,6 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     ui->listShow->setSpacing(0);
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
-
     if(selectedItems.indexes().count()>1)
         ui->rbMultiVerse->setChecked(true);
     else
@@ -869,9 +864,19 @@ void SoftProjector::updateScreen()
 
         if(type=="song")
         {
-            display->setNewWallpaper(allsettings.song.backgroundPath,allsettings.song.useBackground);
-            display->setForegroundColor(allsettings.song.textColor);
-            display->setNewFont(allsettings.song.textFont);
+            if(current_song.usePrivateSettings)
+            {
+                bool useBack = !current_song.backgroundPath.trimmed().isEmpty();
+                display->setNewWallpaper(current_song.backgroundPath,useBack);
+                display->setForegroundColor(current_song.color);
+                display->setNewFont(current_song.font);
+            }
+            else
+            {
+                display->setNewWallpaper(allsettings.song.backgroundPath,allsettings.song.useBackground);
+                display->setForegroundColor(allsettings.song.textColor);
+                display->setNewFont(allsettings.song.textFont);
+            }
             current_song_verse = currentRow;
         }
         else if(type=="bible")
@@ -915,7 +920,7 @@ void SoftProjector::on_actionEditSong_triggered()
 {
     if (songWidget->isSongSelected())
     {
-        if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+        if(!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
         {
             QMessageBox ms;
             ms.setWindowTitle(tr("Cannot start new edit"));
@@ -929,7 +934,6 @@ void SoftProjector::on_actionEditSong_triggered()
             editWidget->show();
             editWidget->setEdit(songWidget->getSongToEdit());
             editWidget->activateWindow();
-            setSongEditStatus(true);
         }
     }
     else
@@ -943,14 +947,9 @@ void SoftProjector::on_actionEditSong_triggered()
     }
 }
 
-void SoftProjector::setSongEditStatus(bool isEdited)
-{
-    is_song_in_edit = isEdited;
-}
-
 void SoftProjector::on_actionNewSong_triggered()
 {
-    if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+    if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("Cannot create a new song"));
@@ -970,7 +969,7 @@ void SoftProjector::on_actionNewSong_triggered()
 void SoftProjector::on_actionCopy_Song_triggered()
 {
     if (songWidget->isSongSelected())
-    {if (is_song_in_edit) //Prohibits editing a song when a different song already been edited.
+    {if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
         {
             QMessageBox ms;
             ms.setWindowTitle(tr("Cannot copy this song"));
@@ -1369,7 +1368,7 @@ void SoftProjector::saveProject()
 
     xml.writeStartDocument();
     xml.writeStartElement("spProject");
-    xml.writeAttribute("version","1.7");
+    xml.writeAttribute("version","2.0");
 
     //Write Bible History
     xml.writeStartElement("BibleHistory");
@@ -1399,7 +1398,7 @@ void SoftProjector::saveProject()
         s = songs.at(i);
         QXmlStreamAttributes atrs;
         atrs.append("id",QString::number(s.songID));
-        atrs.append("num",QString::number(s.num));
+        atrs.append("num",QString::number(s.number));
         atrs.append("category",QString::number(s.category));
         xml.writeAttributes(atrs);
 
@@ -1410,10 +1409,16 @@ void SoftProjector::saveProject()
         xml.writeTextElement("tune",s.tune);
         xml.writeTextElement("words",s.wordsBy);
         xml.writeTextElement("music",s.musicBy);
-        xml.writeTextElement("font",s.font);
-        xml.writeTextElement("aling",s.alingment);
-        xml.writeTextElement("back",s.background.trimmed());
-        xml.writeTextElement("comments",s.notes);
+        xml.writeTextElement("notes",s.notes);
+        if(s.usePrivateSettings)
+            xml.writeTextElement("use_private","true");
+        else
+            xml.writeTextElement("use_private","false");
+        xml.writeTextElement("align",QString("%1,%2").arg(QString::number(s.alignmentV)).arg(QString::number(s.alignmentH)));
+        unsigned int textColorInt = (unsigned int)(s.color.rgb());
+        xml.writeTextElement("color",QString::number(textColorInt));
+        xml.writeTextElement("font",s.font.toString());
+        xml.writeTextElement("back",s.backgroundPath.trimmed());
 
         xml.writeEndElement(); // enst song
     }
@@ -1450,7 +1455,7 @@ void SoftProjector::openProject()
         if(xml.StartElement && xml.name() == "spProject")
         {
             double p_version = xml.attributes().value("version").toString().toDouble();
-            if(1.0 < p_version && p_version <= 1.7)
+            if(1.0 < p_version && p_version <= 2.0)
             {
                 xml.readNext();
                 while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
@@ -1623,7 +1628,7 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
             QString a = atrs.value("id").toString();
             s.songID = a.toInt();
             a = atrs.value("num").toString();
-            s.num = a.toInt();
+            s.number = a.toInt();
             a = atrs.value("category").toString();
             s.category = a.toInt();
 
@@ -1661,26 +1666,46 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
                     s.musicBy = xml->readElementText();
                     xml->readNext();
                 }
-                else if(xml->StartElement && xml->name() == "font")
-                {
-                    s.font = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "aling")
-                {
-                    s.alingment = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "back")
-                {
-                    s.background = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "comments")
+                else if(xml->StartElement && (xml->name() == "notes" || xml->name() == "comments"))
                 {
                     s.notes = xml->readElementText();
                     xml->readNext();
                 }
+                else if(xml->StartElement && xml->name() == "use_private")
+                {
+                    s.usePrivateSettings = (xml->readElementText() == "true");
+                    xml->readNext();
+                }
+                else if(xml->StartElement && (xml->name() == "aling" || xml->name() == "align"))
+                {
+                    QString str = xml->readElementText();
+                    QStringList l = str.split(",");
+                    if(l.count()>1)
+                    {
+                    s.alignmentV = l.at(0).toInt();
+                    s.alignmentH = l.at(1).toInt();
+                    }
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "color")
+                {
+                    s.color = QColor::fromRgb(xml->readElementText().toUInt());
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "font")
+                {
+                    s.font.fromString(xml->readElementText());
+                    xml->readNext();
+                }
+                else if(xml->StartElement && xml->name() == "back")
+                {
+                    s.backgroundPath = xml->readElementText();
+                    xml->readNext();
+                }
+//                else if(xml->StartElement)
+//                {
+//                   xml->readNext();
+//                }
             }
             songs.append(s);
             xml->readNext();

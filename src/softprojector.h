@@ -72,7 +72,6 @@ public slots:
     void setWaitCursor();
     void setArrowCursor();
     void setProjectChanged(bool isChanged);
-    void setSongEditStatus(bool isEdited);
 
 private:
     DisplaySettings dispSettings;
@@ -93,7 +92,6 @@ private:
     QString project_file_path;
     void updateWindowTest();
     bool is_project_saved;
-    bool is_song_in_edit;
     QString cur_locale;
 
 private slots:

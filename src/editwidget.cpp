@@ -34,31 +34,14 @@ EditWidget::EditWidget(QWidget *parent) :
 //    ui->comboBoxCategory->addItems(categories());
 
     // Allow only positive values for the song number:
-    song_num_validator = new QIntValidator(1,10000000,ui->song_number_lineEdit);
-    ui->song_number_lineEdit->setValidator(song_num_validator);
+    song_num_validator = new QIntValidator(1,10000000,ui->lineEditSongNumber);
+    ui->lineEditSongNumber->setValidator(song_num_validator);
 
-    // Hide font setting options until program will be compatable
-    ui->font_button->hide();
-    ui->font_default_button->hide();
-    ui->font_textbox->hide();
-    ui->font_label->hide();
-    // Hide background setting options until program will be compatable
-    ui->wall_button->hide();
-    ui->wall_default_button->hide();
-    ui->wall_textbox->hide();
-    ui->wall_label->hide();
-    // Hide alingment setting options until program will be compatable
-    ui->aling_groupBox->hide();
 }
 
 EditWidget::~EditWidget()
 {
     delete ui;
-}
-
-void EditWidget::closeEvent(QCloseEvent *e)
-{
-    emit setSongEditStatus(false);
 }
 
 void EditWidget::changeEvent(QEvent *e)
@@ -77,7 +60,7 @@ void EditWidget::on_btnSave_clicked()
 {
     /* This will never happen, because song number is automatically
        set when a songbook is chosen:
-    if( ui->song_number_lineEdit->text().isEmpty() )
+    if( ui->lineEditSongNumber->text().isEmpty() )
     {
 
         QMessageBox mb;
@@ -174,17 +157,24 @@ QString EditWidget::setSongText(QString song)
 
 void EditWidget::resetUiItems()
 {
-    ui->lineEditTitle->clear();
-    ui->lineEditMusicBy->clear();
-    ui->lineEditWordsBy->clear();
-    ui->lineEditKey->clear();
-    ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(0));
-    ui->textEditSong->clear();
-    ui->font_textbox->clear();
-    ui->wall_textbox->clear();
-    ui->left_radioButton->setChecked(true);
-    ui->song_number_lineEdit->setText("");
-    ui->plainTextEdit_comments->clear();
+    Song ss;
+    ui->lineEditTitle->setText(ss.title);
+    ui->lineEditMusicBy->setText(ss.musicBy);
+    ui->lineEditWordsBy->setText(ss.wordsBy);
+    ui->lineEditKey->setText(ss.tune);
+    ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(ss.category));
+//    setSongbook(editSong.songID);
+    ui->checkBoxSongSettings->setChecked(ss.usePrivateSettings);
+    ui->groupBoxSettings->setVisible(ss.usePrivateSettings);
+    ui->comboBoxVAlignment->setCurrentIndex(ss.alignmentV);
+    ui->comboBoxHAlignment->setCurrentIndex(ss.alignmentH);
+    QPalette p;
+    p.setColor(QPalette::Base,ss.color);
+    ui->graphicsViewTextColor->setPalette(p);
+    ui->labelTextFont->clear();
+    ui->lineEditBackgroundPath->setText(ss.backgroundPath);
+    ui->textEditSong->setPlainText(setSongText(ss.songText));
+    ui->plainTextEditNotes->setPlainText(ss.notes);
 }
 
 void EditWidget::setUiItems()
@@ -195,24 +185,22 @@ void EditWidget::setUiItems()
     ui->lineEditKey->setText(editSong.tune);
     ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(editSong.category));
     setSongbook(editSong.songID);
-    ui->font_textbox->setText(editSong.font);
-    ui->wall_textbox->setText(editSong.background);
+    ui->checkBoxSongSettings->setChecked(editSong.usePrivateSettings);
+    ui->groupBoxSettings->setVisible(editSong.usePrivateSettings);
+    ui->comboBoxVAlignment->setCurrentIndex(editSong.alignmentV);
+    ui->comboBoxHAlignment->setCurrentIndex(editSong.alignmentH);
+    updateColor();
+    ui->labelTextFont->setText(QString("%1 %2").arg(editSong.font.rawName()).arg(QString::number(editSong.font.pointSize())));
+    ui->lineEditBackgroundPath->setText(editSong.backgroundPath);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
-    QString aling = editSong.alingment;
-    if(aling=="right")
-        ui->rihgt_radioButton->setChecked(true);
-    else if (aling=="center")
-        ui->center_radioButton->setChecked(true);
-    else if (aling=="left")
-        ui->left_radioButton->setChecked(true);
-    else
-        ui->left_radioButton->setChecked(true);
-    ui->plainTextEdit_comments->setPlainText(editSong.notes);
+    ui->plainTextEditNotes->setPlainText(editSong.notes);
+
 }
 
 void EditWidget::setSave(){
-    newSong.songID = editSong.songID;
-    newSong.num = ui->song_number_lineEdit->text().toInt();
+//    newSong.songID = editSong.songID;
+    newSong = editSong;
+    newSong.number = ui->lineEditSongNumber->text().toInt();
     newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
     newSong.songbook_name = ui->songbook_label->text();
     newSong.title = clean(ui->lineEditTitle->text());
@@ -221,15 +209,11 @@ void EditWidget::setSave(){
     newSong.wordsBy = ui->lineEditWordsBy->text();
     newSong.musicBy = ui->lineEditMusicBy->text();
     newSong.songText = resetLyric(ui->textEditSong->toPlainText());
-    newSong.font = ui->font_textbox->text();
-    newSong.background = ui->wall_textbox->text();
-    if (ui->rihgt_radioButton->isChecked())
-        newSong.alingment = "right";
-    else if (ui->center_radioButton->isChecked())
-        newSong.alingment = "center";
-    else if (ui->left_radioButton->isCheckable())
-        newSong.alingment = "left";
-    newSong.notes = ui->plainTextEdit_comments->toPlainText();
+    newSong.alignmentV = ui->comboBoxVAlignment->currentIndex();
+    newSong.alignmentH = ui->comboBoxHAlignment->currentIndex();
+    newSong.usePrivateSettings = ui->checkBoxSongSettings->isChecked();
+    newSong.backgroundPath = ui->lineEditBackgroundPath->text();
+    newSong.notes = ui->plainTextEditNotes->toPlainText();
 }
 
 QString EditWidget::resetLyric(QString lyric)
@@ -260,7 +244,7 @@ void EditWidget::setSongbook(int id)
     QSqlQuery sq;
     QString songbook, song_num;
 
-    sq.exec("SELECT songbook_id, song_number FROM SongLink WHERE song_id = "+QString::number(id));
+    sq.exec("SELECT songbook_id, number FROM Songs WHERE id = "+QString::number(id));
     sq.first();
         songbook = sq.value(0).toString();
         song_num = sq.value(1).toString();
@@ -272,7 +256,7 @@ void EditWidget::setSongbook(int id)
     sq.clear();
 
     ui->songbook_label->setText(songbook);
-    ui->song_number_lineEdit->setText(song_num);
+    ui->lineEditSongNumber->setText(song_num);
 }
 
 void EditWidget::setEdit(Song sEdit)
@@ -303,6 +287,7 @@ void EditWidget::setCopy(Song copy)
 void EditWidget::setNew()
 {
     Song new_song;
+    resetUiItems();
     new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
     addNewSong(new_song,tr("Add a new Songbook"),tr("Select a Songbook to which you want to add a song"));
 }
@@ -344,7 +329,7 @@ void EditWidget::addNewSong(Song song, QString msgNewSongbook, QString msgCaptio
         {
             int last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_to_songbook));
             ui->songbook_label->setText(add_to_songbook);
-            ui->song_number_lineEdit->setText(QString::number(last));
+            ui->lineEditSongNumber->setText(QString::number(last));
         }
     }
     else
@@ -365,43 +350,13 @@ void EditWidget::addSongbook()
         song_database.addSongbook(add_sbor.title,add_sbor.info);
         last = song_database.lastUser(song_database.getSongbookIdStringFromName(add_sbor.title));
         ui->songbook_label->setText(add_sbor.title);
-        ui->song_number_lineEdit->setText(QString::number(last));
+        ui->lineEditSongNumber->setText(QString::number(last));
         add_to_songbook = add_sbor.title;
         break;
     case AddSongbookDialog::Rejected:
         close();
         break;
     }
-}
-
-void EditWidget::on_font_button_clicked()
-{
-    QFont old_font;
-    old_font.fromString(ui->font_textbox->text());
-    bool ok;
-    QFont font = QFontDialog::getFont(&ok, old_font, this);
-    if (ok)
-        ui->font_textbox->setText(font.toString());
-}
-
-void EditWidget::on_font_default_button_clicked()
-{
-    ui->font_textbox->clear();
-}
-
-void EditWidget::on_wall_button_clicked()
-{
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Select a picture for the wallpaper"),
-                                                    ".", "Images (*.png *.jpg *.jpeg)");
-
-    if( !filename.isNull() )
-        ui->wall_textbox->setText(filename);
-}
-
-void EditWidget::on_wall_default_button_clicked()
-{
-    ui->wall_textbox->clear();
 }
 
 QStringList EditWidget::categories()
@@ -483,20 +438,65 @@ int EditWidget::isInDatabase(Song *song)
         return 0; // no such songbook in database
 
     // get song id
-    sq.exec("SELECT song_id from SongLink WHERE songbook_id = '" + sb_id +"' AND song_number = '" + QString::number(song->num) +"'");
+    sq.exec("SELECT id, title from Songs WHERE songbook_id = '" + sb_id +"' AND number = '" + QString::number(song->number) +"'");
     while(sq.next())
+    {
         s_id = sq.value(0).toString().trimmed();
+        s_title = sq.value(1).toString().trimmed();
+    }
     sq.clear();
     if(s_id == "0")
         return 0; // no matching song
     song->songID = s_id.toInt();
 
     // get song title
-    sq.exec("SELECT title FROM Songs WHERE id = '"+ s_id +"'");
-    while(sq.next())
-        s_title = sq.value(0).toString().trimmed();
+//    sq.exec("SELECT title FROM Songs WHERE id = '"+ s_id +"'");
+//    while(sq.next())
+//        s_title = sq.value(0).toString().trimmed();
     if(s_title!=song->title)
         return 0;
     else
         return s_id.toInt();
+}
+
+void EditWidget::on_checkBoxSongSettings_toggled(bool checked)
+{
+    ui->groupBoxSettings->setVisible(checked);
+}
+
+void EditWidget::updateColor()
+{
+    QPalette p;
+    p.setColor(QPalette::Base,editSong.color);
+    ui->graphicsViewTextColor->setPalette(p);
+}
+
+void EditWidget::on_pushButtonTextColor_clicked()
+{
+    editSong.color = QColorDialog::getColor(editSong.color,this);
+    updateColor();
+}
+
+void EditWidget::on_pushButtonTextFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,editSong.font,this);
+    if(ok)
+        editSong.font = font;
+    ui->labelTextFont->setText(QString("%1 %2").arg(editSong.font.rawName()).arg(QString::number(editSong.font.pointSize())));
+}
+
+void EditWidget::on_pushButtonBackgroundPath_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Select an image for the wallpaper"),
+                                                    ".", "Images (*.png *.jpg *.jpeg)");
+
+    if( !filename.isNull() )
+        ui->lineEditBackgroundPath->setText(filename);
+}
+
+void EditWidget::on_pushButtonRemoveBackground_clicked()
+{
+    ui->lineEditBackgroundPath->clear();
 }

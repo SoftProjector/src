@@ -35,33 +35,40 @@ class Song
 // The instance of this class is specific to a song & songbook.
 {
  public:
+    //functions
     Song();
     Song(int id);
     Song(int id, int num, QString songbook_id, QString songbook_name);
     void readData();
-    int num; // Number of the song in the specified songbook
-    QString title;
-    QString songbook_id;
-    QString songbook_name;
-
     void saveUpdate();
     void saveNew();
     QStringList getSongTextList();
     QString getSongbookName();
     bool isValid();
 
+    //members
     int songID; // Database ID of this song
+    QString songbook_id;
+    QString songbook_name;
+    int number; // Number of the song in the specified songbook
+    QString title;
     int category;
-    int language;
-    int favorite;
+//    int language;
+//    int favorite;
     QString tune;
     QString wordsBy;
     QString musicBy;
     QString songText;
-    QString font;
-    QString alingment;
-    QString background;
     QString notes;
+    bool usePrivateSettings;
+    int alignmentV;
+    int alignmentH;
+    QColor color;
+    QFont font;
+    QString backgroundPath;
+
+private:
+    void setDefaults();
 };
 
 

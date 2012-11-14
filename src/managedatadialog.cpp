@@ -158,12 +158,12 @@ void ManageDataDialog::on_import_songbook_pushButton_clicked()
 void ManageDataDialog::importSongbook(QString path)
 {
     setWaitCursor();
-    int row(1),max(0);
-    QFile file(path), file2(path);
+    int row(1), max(0);
+    QFile file(path), file2(path), fileXml(path);
     QString line, code, title, info, num;
     QStringList split;
     QSqlQuery sq, sq1;
-    QMessageBox mb;
+    SongDatabase sdb;
 
     // get max number for progress bar
     if (file2.open(QIODevice::ReadOnly))
@@ -171,10 +171,12 @@ void ManageDataDialog::importSongbook(QString path)
         while (!file2.atEnd())
         {
             line = QString::fromUtf8(file2.readLine());
-            max++;
+            ++max;
         }
     }
+    file2.close();
 
+    // Start Importing
     QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, max, this);
     progress.setValue(row);
 
@@ -184,7 +186,7 @@ void ManageDataDialog::importSongbook(QString path)
         reload_songbook = true;
         //Set Songbook Title and Information
         line = QString::fromUtf8(file.readLine());
-        if (line.startsWith("##"))
+        if (line.startsWith("##")) // Files format before vertion 2.0
         {
             // Set Songbook Title
             line = QString::fromUtf8(file.readLine());
@@ -199,85 +201,242 @@ void ManageDataDialog::importSongbook(QString path)
             // Convert songbook information from single line to multiple line
             toMultiLine(info);
 
-//            line = QString::fromUtf8(file.readLine());
-        }
-        else
-        {
-            title = tr("User songbook");
-            info = tr("Songbook imported by the user");
-        }
+            // Create songbook
+            sdb.addSongbook(title, info.trimmed());
 
-        // Create songbook
-        SongDatabase sdb;
-        sdb.addSongbook(title, info.trimmed());
-
-        // Set Songbook Code
-        code = "0";
-        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
-        while (sq.next())
-            code = sq.value(0).toString();
-        sq.clear();
-
-        // Import Songs
-        QSqlDatabase::database().transaction();
-        sq1.prepare("INSERT INTO Songs (title, category, tune, words, music, song_text, font, alingment, background, notes)"
-                   "VALUES (?,?,?,?,?,?,?,?,?,?)");
-        while (!file.atEnd())
-        {
-            if (progress.wasCanceled())
-                break;
-            line = QString::fromUtf8(file.readLine());
-            split = line.split("#$#");
-
-            num = split[0];
-
-            // Add song to Songs table
-            sq1.addBindValue(split[1]);//title
-            sq1.addBindValue(split[2]);//cat
-            sq1.addBindValue(split[3]);//tune
-            sq1.addBindValue(split[4]);//words
-            sq1.addBindValue(split[5]);//music
-            sq1.addBindValue(split[6]);//song text
-            if (split.count() > 7)
-            {
-                sq1.addBindValue(split[7]);//font
-                sq1.addBindValue(split[8]);//alignment
-                sq1.addBindValue(split[9]);//background
-                if(split.count()>10)
-                {
-                    QString note = split[10];
-                    toMultiLine(note);
-                    sq1.addBindValue(note);//notes
-                }
-                else
-                    sq1.addBindValue("");//notes
-            }
-            else
-            {
-                sq1.addBindValue("");//font
-                sq1.addBindValue("");//alignment
-                sq1.addBindValue("");//background
-                sq1.addBindValue("");//notes
-            }
-            sq1.exec();
-
-            // Get song id for the last song added
-            QString sid = "";
-            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
-            while (sq.next()) sid = sq.value(0).toString();
+            // Set Songbook Code
+            code = "0";
+            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
+            while (sq.next())
+                code = sq.value(0).toString();
             sq.clear();
 
-            // Connect newly added song with its songbook
-            sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ("
-                    + code + ","
-                    + sid + ","
-                    + num + ")");
+            // Import Songs
+            QSqlDatabase::database().transaction();
+            sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, song_text, font, alignment, background, notes)"
+                       "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            while (!file.atEnd())
+            {
+                if (progress.wasCanceled())
+                    break;
+                line = QString::fromUtf8(file.readLine());
+                split = line.split("#$#");
 
-            row++;
-            progress.setValue(row);
+                num = split[0];
+
+                // Add song to Songs table
+                sq.addBindValue(code);//songbook id
+                sq.addBindValue(num);//number
+                sq.addBindValue(split[1]);//title
+                sq.addBindValue(split[2]);//cat
+                sq.addBindValue(split[3]);//tune
+                sq.addBindValue(split[4]);//words
+                sq.addBindValue(split[5]);//music
+                sq.addBindValue(split[6]);//song text
+                if (split.count() > 7)
+                {
+                    sq.addBindValue(split[7]);//font
+                    sq.addBindValue(split[8]);//alignment
+                    sq.addBindValue(split[9]);//background
+                    if(split.count()>10)
+                    {
+                        QString note = split[10];
+                        toMultiLine(note);
+                        sq.addBindValue(note);//notes
+                    }
+                    else
+                        sq.addBindValue("");//notes
+                }
+                else
+                {
+                    sq.addBindValue("");//font
+                    sq.addBindValue("");//alignment
+                    sq.addBindValue("");//background
+                    sq.addBindValue("");//notes
+                }
+                sq.exec();
+
+                ++row;
+                progress.setValue(row);
+            }
+            QSqlDatabase::database().commit();
         }
-        QSqlDatabase::database().commit();
+        else if(line.startsWith("<?xml")) // XML file format
+        {
+            fileXml.open(QIODevice::ReadOnly);
+            QXmlStreamReader xml (&fileXml);
+            while(!xml.atEnd())
+            {
+                xml.readNext();
+                if(xml.StartElement && xml.name() == "spSongBook")
+                {
+                    double sb_version = xml.attributes().value("version").toString().toDouble();
+                    if(sb_version == 2.0) // check supported songbook version
+                    {
+                        xml.readNext();
+                        // Prepare to import Songs
+                        QSqlDatabase::database().transaction();
+                        sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background, count, date)"
+                                   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+                        while(xml.tokenString() != "EndElement" && xml.name() != "spSongBook")
+                        {
+                           xml.readNext();
+                           if(xml.StartElement && xml.name() == "SongBook")
+                           {
+                               QString xtitle,xinfo;
+                               // Read songbook data
+                               xml.readNext();
+                               while(xml.tokenString() != "EndElement")
+                               {
+                                   xml.readNext();
+                                   if(xml.StartElement && xml.name() == "title")
+                                   {
+                                       xtitle = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "info")
+                                   {
+                                       xinfo = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   ++row;
+                                   progress.setValue(row);
+                               }
+                               // Save songbook
+                               sdb.addSongbook(xtitle,xinfo);
+
+                               // Set Songbook Code
+                               code = "0";
+                               sq1.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
+                               sq1.first();
+                               code = sq1.value(0).toString();
+
+                               xml.readNext();
+                           }
+                           else if (xml.StartElement && xml.name() == "Song")
+                           {
+                               QString xnum,xtitle,xcat,xtune,xwords,xmusic,xtext,xnotes,xuse,xalign,xcolor,xfont,xback,xcount,xdate;
+                               // Read song data
+                               xnum = xml.attributes().value("number").toString();
+                               xml.readNext();
+                               while(xml.tokenString() != "EndElement")
+                               {
+                                   xml.readNext();
+                                   if(xml.StartElement && xml.name() == "title")
+                                   {
+                                       xtitle = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "category")
+                                   {
+                                       xcat = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "tune")
+                                   {
+                                       xtune = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "words")
+                                   {
+                                       xwords = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "music")
+                                   {
+                                       xmusic = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "song_text")
+                                   {
+                                       xtext = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "notes")
+                                   {
+                                       xnotes = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "use_private")
+                                   {
+                                       xuse = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "alignment")
+                                   {
+                                       xalign = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "color")
+                                   {
+                                       xcolor = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "font")
+                                   {
+                                       xfont = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "background")
+                                   {
+                                       xback = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "count")
+                                   {
+                                       xcount = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                                   else if(xml.StartElement && xml.name() == "date")
+                                   {
+                                       xdate = xml.readElementText();
+                                       xml.readNext();
+                                   }
+                               }
+
+                               // Save song
+                               sq.addBindValue(code);
+                               sq.addBindValue(xnum);
+                               sq.addBindValue(xtitle);
+                               sq.addBindValue(xcat);
+                               sq.addBindValue(xtune);
+                               sq.addBindValue(xwords);
+                               sq.addBindValue(xmusic);
+                               sq.addBindValue(xtext);
+                               sq.addBindValue(xnotes);
+                               sq.addBindValue(xuse);
+                               sq.addBindValue(xalign);
+                               sq.addBindValue(xcolor);
+                               sq.addBindValue(xfont);
+                               sq.addBindValue(xback);
+                               sq.addBindValue(xcount);
+                               sq.addBindValue(xdate);
+                               sq.exec();
+
+                               row += 16;
+                               progress.setValue(row);
+                               xml.readNext();
+                           }
+                        }// end while xml.tokenString() != "EndElement" && xml.name() != "spSongBook"
+                        QSqlDatabase::database().commit();
+                    }// end correct version
+                } // end if xml name is spSongBook
+            }
+        }
+        else // too old file format.
+        {
+            //User friednly box for incorrect file version
+            QMessageBox mb;
+            mb.setWindowTitle(tr("Too old SongBook file format"));
+            mb.setText(tr("The SongBook file you are opening, is in very old format\n"
+                          "and is no longer supported by current version of softProjector.\n"
+                          "You may try to import it with version 1.07 and then export it, and import it again."));
+            mb.setIcon(QMessageBox::Information);
+            mb.exec();
+        }
     }
+
     load_songbooks();
     setArrowCursor();
 }
@@ -288,7 +447,6 @@ void ManageDataDialog::on_export_songbook_pushButton_clicked()
                                              ".",tr("softProjector songbook file (*.sps)"));
      if(!file_path.isEmpty())
     {
-         qDebug()<<"path:"<<file_path;
         if(!file_path.endsWith(".sps"))
             file_path = file_path + ".sps";
         exportSongbook(file_path);
@@ -299,57 +457,60 @@ void ManageDataDialog::exportSongbook(QString path)
 {
     setWaitCursor();
     int row = ui->songbookTableView->currentIndex().row();
-    Songbook songbook = songbook_model->getSongbook(row);
-    QSqlQuery sq,sq1;
-    QString songbook_id = songbook.songbookId;
-    QString songs,song,num,id,title,info, note;
+    QString songbook_id = songbook_model->getSongbook(row).songbookId;
+    QSqlQuery sq;
+    QString title;
 
+    QFile file(path);
+    file.open(QIODevice::WriteOnly);
+    QXmlStreamWriter xml(&file);
+    xml.setAutoFormatting(true);
+    xml.setCodec("UTF8");
+
+    xml.writeStartDocument();
+    xml.writeStartElement("spSongBook");
+    xml.writeAttribute("version","2.0");
+
+    // Get SongBook information
     sq.exec("SELECT name, info FROM Songbooks WHERE id = '" + songbook_id + "'");
     sq.first();
+    // Write SongBook
+    xml.writeStartElement("SongBook");
     title = sq.value(0).toString().trimmed();
-    info = sq.value(1).toString().trimmed();
+    xml.writeTextElement("title",title);
+    xml.writeTextElement("info",sq.value(1).toString().trimmed());
+    xml.writeEndElement();
     sq.clear();
 
-    // Convert songbook information from multiline to single line
-    toSingleLine(info);
-
-    songs = "##" + songbook_id + "\n##"
-            + title + "\n##"
-            + info;
-
-    sq.exec("SELECT song_id, song_number FROM SongLink WHERE songbook_id like '" + songbook_id +"'");
-    while (sq.next())
+    // Get Songs
+    //              0       1      2         3     4      5      6          7      8            9          10     11    12          13     14
+    sq.exec("SELECT number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background, count, date FROM Songs WHERE songbook_id = "+songbook_id);
+    while(sq.next())
     {
-        id = sq.value(0).toString();
-        num = sq.value(1).toString();
-        sq1.exec("SELECT title, category, tune, words, music, song_text, font, alingment, background, notes FROM Songs WHERE id = "+id);
-        while (sq1.next())
-        {
-            note = sq1.value(9).toString().trimmed();
-            toSingleLine(note);
-            song = sq1.value(0).toString().trimmed() + "#$#" + //title
-                    sq1.value(1).toString().trimmed() + "#$#" + //category
-                    sq1.value(2).toString().trimmed() + "#$#" + //tune
-                    sq1.value(3).toString().trimmed() + "#$#" + //words
-                    sq1.value(4).toString().trimmed() + "#$#" + //music
-                    sq1.value(5).toString().trimmed() + "#$#" + //song_text
-                    sq1.value(6).toString().trimmed() + "#$#" + //font
-                    sq1.value(7).toString().trimmed() + "#$#" + //alignment
-                    sq1.value(8).toString().trimmed() + "#$#" + //background
-                    note; //notes
-        }
-        songs += "\n" + num + "#$#"+ song;
+        // Write Song
+        xml.writeStartElement("Song");
+        xml.writeAttribute("number",sq.value(0).toString().trimmed());
+        xml.writeTextElement("title",sq.value(1).toString().trimmed());
+        xml.writeTextElement("category",sq.value(2).toString().trimmed());
+        xml.writeTextElement("tune",sq.value(3).toString().trimmed());
+        xml.writeTextElement("words",sq.value(4).toString().trimmed());
+        xml.writeTextElement("music",sq.value(5).toString().trimmed());
+        xml.writeTextElement("song_text",sq.value(6).toString().trimmed());
+        xml.writeTextElement("notes",sq.value(7).toString().trimmed());
+        xml.writeTextElement("use_private",sq.value(8).toString().trimmed());
+        xml.writeTextElement("alignment",sq.value(9).toString().trimmed());
+        xml.writeTextElement("color",sq.value(10).toString().trimmed());
+        xml.writeTextElement("font",sq.value(11).toString().trimmed());
+        xml.writeTextElement("background",sq.value(12).toString().trimmed());
+        xml.writeTextElement("count",sq.value(13).toString().trimmed());
+        xml.writeTextElement("date",sq.value(14).toString().trimmed());
+        xml.writeEndElement();
     }
 
-    QFile ofile;
-    ofile.setFileName(path);
-    if (ofile.open(QIODevice::WriteOnly))
-    {
-        QTextStream out(&ofile);
-        out.setCodec("UTF8");
-        out << songs;
-    }
-    ofile.close();
+    xml.writeEndElement(); // End spSongBook
+    xml.writeEndDocument();
+    file.close();
+
     setArrowCursor();
 
     QMessageBox mb;
@@ -392,29 +553,15 @@ void ManageDataDialog::deleteSongbook(Songbook songbook)
 {
     setWaitCursor();
     reload_songbook = true;
-    QSqlQuery sq,sq1;
+    QSqlQuery sq;
     QString id = songbook.songbookId.trimmed();
 
     // Delete from Songbook Table
     sq.exec("DELETE FROM Songbooks WHERE id = '" + id + "'");
     sq.clear();
 
-    // Delete form Songs Table
-    sq.exec("SELECT song_id FROM SongLink WHERE songbook_id like '" + id +"'");
-    QString s;
-    QSqlDatabase::database().transaction();
-    sq1.prepare("DELETE FROM Songs WHERE id = :id");
-    while (sq.next())
-    {
-        s = sq.value(0).toString().trimmed();
-        sq1.bindValue(":id",s);
-        sq1.exec();
-    }
-    QSqlDatabase::database().commit();
-
-    // Delete from SongLink Table
-    sq.clear();
-    sq.exec("DELETE FROM SongLink WHERE songbook_id like '" + id +"'");
+    // Delete from Songs Table
+    sq.exec("DELETE FROM Songs WHERE songbook_id = '" + id +"'");
 
     load_songbooks();
     updateSongbookButtons();
@@ -604,7 +751,6 @@ void ManageDataDialog::on_export_bible_pushButton_clicked()
                                              tr("softProjector Bible file ") + "(*.spb)");
     if(!file_path.isEmpty())
    {
-        qDebug()<<"path:"<<file_path;
        if(!file_path.endsWith(".spb"))
            file_path = file_path + ".spb";
        exportBible(file_path,bible);
