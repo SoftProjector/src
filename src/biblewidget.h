@@ -30,22 +30,6 @@ namespace Ui {
     class BibleWidget;
 }
 
-class HihghlighterDelegate: public QItemDelegate
-{
-    Q_OBJECT
-
-public:
-    HihghlighterDelegate(QObject *parent = 0);
-    HighlightSearch *highlighter;
-
-protected:
-    void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const;
-
-private:
-    QTextDocument *textDocument;
-
-};
-
 class BibleWidget : public QWidget {
     Q_OBJECT
     Q_DISABLE_COPY(BibleWidget)
@@ -112,7 +96,7 @@ private slots:
 private:
     BibleSettings mySettings;
     Ui::BibleWidget *ui;
-    HihghlighterDelegate *highlight;
+    HighlighterDelegate *highlight;
     QList<BibleSearch> search_results;
     QList<BibleSearch> history_items;
     QIntValidator *chapter_validator, *verse_validator;

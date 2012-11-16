@@ -68,4 +68,20 @@ private:
     QTextCharFormat resultFormat;
 };
 
+class HighlighterDelegate: public QItemDelegate
+{
+    Q_OBJECT
+
+public:
+    HighlighterDelegate(QObject *parent = 0);
+    HighlightSearch *highlighter;
+
+protected:
+    void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const;
+
+private:
+    QTextDocument *textDocument;
+
+};
+
 #endif // HIGHLIGHT_H

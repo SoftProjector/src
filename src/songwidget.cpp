@@ -63,6 +63,10 @@ SongWidget::SongWidget(QWidget *parent) :
 
     isSpinboxEditing = false;
     playlistSongWasEdited = false;
+
+    // set highligher
+    highlight = new HighlighterDelegate(ui->listPreview);
+    ui->listWidgetDummy->setVisible(false);
 }
 
 SongWidget::~SongWidget()
@@ -160,10 +164,16 @@ void SongWidget::loadSongbooks()
     }
     ui->songbook_menu->addItem(tr("All songbooks"));
     ui->songbook_menu->addItems(sbor);
-    QList<Song> song_list = song_database.getSongs();
+//    QList<Song> song_list = song_database.getSongs();
+    allSongs = song_database.getSongs();
 
     //ui->song_num_spinbox->setEnabled(false);
-    songs_model->setSongs(song_list);
+    songs_model->setSongs(allSongs);
+
+    // Hide clear result button
+    if(ui->pushButtonClearResults->isVisible())
+        ui->listPreview->setItemDelegate(ui->listWidgetDummy->itemDelegate());
+    ui->pushButtonClearResults->setVisible(false);
 
     // update the song spin box and redraw the table:
     on_songbook_menu_currentIndexChanged( ui->songbook_menu->currentIndex() );
@@ -404,25 +414,30 @@ void SongWidget::on_btnUpInPlaylist_clicked()
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
-    // These two options are mutually exclusive:
-    bool match_beginning = ui->begins_rbutton->isChecked();
-    bool exact_match = ui->exact_match_rbutton->isChecked();
-
-    songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
-    proxy_model->setFilterString(text, match_beginning, exact_match);
-    songs_model->emitLayoutChanged(); // forces the view to redraw
-
-    // Select the first row that matches the new filter:
-    ui->songs_view->selectRow(0);
-    ui->songs_view->scrollToTop();
-
-    // Load Preview on song changes
-    int row = proxy_model->mapToSource(ui->songs_view->currentIndex()).row();
-    if( row>=0)
+    // Check if full-text search is in progress
+    // If no full-text search is in progress, then filter
+    if(!ui->pushButtonClearResults->isVisible())
     {
-        Song song = songs_model->getSong(row);
-        sendToPreview(song);
-        focusInPlaylistTable = false;
+        // These two options are mutually exclusive:
+        bool match_beginning = ui->begins_rbutton->isChecked();
+        bool exact_match = ui->exact_match_rbutton->isChecked();
+
+        songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
+        proxy_model->setFilterString(text, match_beginning, exact_match);
+        songs_model->emitLayoutChanged(); // forces the view to redraw
+
+        // Select the first row that matches the new filter:
+        ui->songs_view->selectRow(0);
+        ui->songs_view->scrollToTop();
+
+        // Load Preview on song changes
+        int row = proxy_model->mapToSource(ui->songs_view->currentIndex()).row();
+        if( row>=0)
+        {
+            Song song = songs_model->getSong(row);
+            sendToPreview(song);
+            focusInPlaylistTable = false;
+        }
     }
     updateButtonStates();
 }
@@ -668,5 +683,86 @@ void SongWidget::loadPlaylistFromFile(QList<Song> songs)
             playlist_model->addSong(songs.at(i));
     }
 
+    updateButtonStates();
+}
+
+void SongWidget::on_pushButtonSearch_clicked()
+{
+    QString search_text = ui->lineEditSearch->text();
+    QList<Song> search_results;
+
+    // Make sure that there is some text to do a search for, if non, then return
+    if(search_text.count()<1)
+    {
+        ui->lineEditSearch->setPlaceholderText(tr("Please enter search text"));
+        return;
+    }
+
+    for(int i(0);i<allSongs.count();++i)
+    {
+        if(ui->begins_rbutton->isChecked())
+        {
+            // Search begining of every line
+            if(allSongs.at(i).songText.contains("@%"+search_text,Qt::CaseInsensitive))
+                search_results.append(allSongs.at(i));
+        }
+        else if(ui->exact_match_rbutton->isChecked())
+        {
+            // Search whole words only
+            QRegExp rx("\\b"+search_text+"\\b",Qt::CaseInsensitive);
+            if(allSongs.at(i).songText.contains(rx))
+                search_results.append(allSongs.at(i));
+        }
+        else
+        {
+            // Search all text
+            if(allSongs.at(i).songText.contains(search_text,Qt::CaseInsensitive))
+                search_results.append(allSongs.at(i));
+        }
+    }
+
+
+    ui->pushButtonClearResults->setVisible(true);
+    // set new songs_model with search relusts
+    songs_model->setSongs(search_results);
+
+    // setup higligher
+    ui->listPreview->setItemDelegate(highlight);
+    highlight->highlighter->setHighlightText(search_text);
+    // reset filter on song table to show all results
+    songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
+    proxy_model->setFilterString("", false, false);
+    songs_model->emitLayoutChanged(); // forces the view to redraw
+
+    ui->songs_view->selectRow(0);
+    ui->songs_view->scrollToTop();
+
+    int row = proxy_model->mapToSource(ui->songs_view->currentIndex()).row();
+    qDebug()<<"songs:"<<row;
+    if( row>=0)
+    {
+        sendToPreview(songs_model->getSong(row));
+    }
+    else
+    {
+        Song s;
+        sendToPreview(s);
+    }
+
+    updateButtonStates();
+}
+
+void SongWidget::on_pushButtonClearResults_clicked()
+{
+    // try to reset highliting settings on preview list
+    ui->listPreview->setItemDelegate(ui->listWidgetDummy->itemDelegate());
+
+    ui->lineEditSearch->setPlaceholderText("");
+    ui->pushButtonClearResults->setVisible(false);
+    songs_model->setSongs(allSongs);
+    ui->lineEditSearch->clear();
+    Song s;
+    sendToPreview(s);
+//    ui->listPreview->clear();
     updateButtonStates();
 }

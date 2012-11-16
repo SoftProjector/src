@@ -89,6 +89,10 @@ private slots:
     void filterModeChanged();
     void loadCategories(bool ui_update);
 
+    void on_pushButtonSearch_clicked();
+
+    void on_pushButtonClearResults_clicked();
+
 private:
     Ui::SongWidget *ui;
     QString songbook;
@@ -101,10 +105,13 @@ private:
     bool isSpinboxEditing;
     bool focusInPlaylistTable;
     bool playlistSongWasEdited;
-    bool allSongs;
+//    bool allSongs;
     Song preview_song;
     SongCounter counter;
     QList<int> cat_ids;
+//    QStringList searchResults;
+    QList<Song> allSongs;
+    HighlighterDelegate *highlight;
 public:
     SongsModel *songs_model;
 

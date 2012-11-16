@@ -128,3 +128,28 @@ void HighlightSearch::setHighlightText(QString text)
     rule.format = resultFormat;
     highlightingRules.append(rule);
 }
+
+/**********************************************/
+/**** Class for higlighting search results ****/
+/**********************************************/
+HighlighterDelegate::HighlighterDelegate(QObject *parent)
+    : QItemDelegate(parent)
+{
+    textDocument = new QTextDocument(this);
+    highlighter = new HighlightSearch(textDocument);
+}
+
+void HighlighterDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
+{
+    Q_UNUSED(option);
+    textDocument->setDocumentMargin(0);
+    textDocument->setPlainText(text);
+
+    QPixmap pixmap(rect.size());
+    pixmap.fill(Qt::transparent);
+    QPainter p(&pixmap);
+
+    textDocument->drawContents(&p);
+
+    painter->drawPixmap(rect, pixmap);
+}
