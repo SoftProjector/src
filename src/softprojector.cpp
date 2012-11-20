@@ -110,6 +110,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBar->addAction(ui->actionOpen);
     ui->toolBar->addAction(ui->actionSave_Project);
     ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionPrint);
+    ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionSettings);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionNewSong);
@@ -1066,6 +1068,7 @@ void SoftProjector::on_projectTab_currentChanged(int index)
         ui->actionNewSong->setEnabled(true);
         ui->actionCopy_Song->setEnabled(true);
         ui->actionDeleteSong->setEnabled(true);
+        ui->actionPrint->setEnabled(true);
     }
     else
     {
@@ -1074,6 +1077,7 @@ void SoftProjector::on_projectTab_currentChanged(int index)
         ui->actionNewSong->setEnabled(false);
         ui->actionCopy_Song->setEnabled(false);
         ui->actionDeleteSong->setEnabled(false);
+        ui->actionPrint->setEnabled(false);
     }
 }
 
@@ -1749,4 +1753,26 @@ void SoftProjector::on_rbMultiVerse_toggled(bool checked)
         ui->listShow->setSelectionMode(QAbstractItemView::ContiguousSelection);
     else
         ui->listShow->setSelectionMode(QAbstractItemView::SingleSelection);
+}
+
+void SoftProjector::on_actionPrint_triggered()
+{
+    PrintPreviewDialog* p;
+    p = new PrintPreviewDialog(this);
+    if (songWidget->isSongSelected())
+    {
+        p->setText(songWidget->getSongToEdit());
+        p->exec();
+
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be printed."));
+        ms.setInformativeText(tr("Please select a song to be printed."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+
 }

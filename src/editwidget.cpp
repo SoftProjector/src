@@ -500,3 +500,12 @@ void EditWidget::on_pushButtonRemoveBackground_clicked()
 {
     ui->lineEditBackgroundPath->clear();
 }
+
+void EditWidget::on_pushButtonPrint_clicked()
+{
+    setSave();
+    PrintPreviewDialog* p;
+    p = new PrintPreviewDialog(this);
+    p->setText(newSong);
+    p->exec();
+}

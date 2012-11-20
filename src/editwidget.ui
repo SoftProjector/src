@@ -56,6 +56,17 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pushButtonPrint">
+       <property name="text">
+        <string>Print</string>
+       </property>
+       <property name="icon">
+        <iconset resource="softprojector.qrc">
+         <normaloff>:/icons/icons/print.png</normaloff>:/icons/icons/print.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="3">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">

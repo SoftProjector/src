@@ -30,6 +30,7 @@
 #include "managedatadialog.h"
 #include "songcounter.h"
 #include "settings.h"
+#include "printpreviewdialog.h"
 
 class QActionGroup;
 
@@ -137,6 +138,8 @@ private slots:
     void on_listShow_itemSelectionChanged();
 
     void on_rbMultiVerse_toggled(bool checked);
+
+    void on_actionPrint_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);

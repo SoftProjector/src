@@ -25,6 +25,7 @@
 #include "song.h"
 #include "addsongbookdialog.h"
 #include "highlight.h"
+#include "printpreviewdialog.h"
 
 namespace Ui {
     class EditWidget;
@@ -85,6 +86,7 @@ private slots:
     void on_pushButtonTextFont_clicked();
     void on_pushButtonBackgroundPath_clicked();
     void on_pushButtonRemoveBackground_clicked();
+    void on_pushButtonPrint_clicked();
 };
 
 #endif // EDITWIDGET_H
