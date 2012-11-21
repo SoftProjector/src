@@ -76,7 +76,7 @@ public:
     QStringList currentIdList; // Verses that are in the show list
     void setBiblesId(QString& id);
     QList<BibleBook> books;
-
+    QString getBibleName();
 private:
     QString bibleId;
     void retrieveBooks();

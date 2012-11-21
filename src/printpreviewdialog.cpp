@@ -11,16 +11,17 @@ PrintPreviewDialog::PrintPreviewDialog(QWidget *parent) :
     ui->spinBoxFontSize->setValue(ui->textEdit->font().pointSize());
 
     // set default margins
-    ui->comboBox->setCurrentIndex(0);//Inches
-    ui->doubleSpinBoxLeft->setValue(0.75);
-    ui->doubleSpinBoxTop->setValue(0.75);
-    ui->doubleSpinBoxRight->setValue(0.75);
-    ui->doubleSpinBoxBottom->setValue(0.75);
+//    ui->comboBox->setCurrentIndex(0);//Inches
+    on_comboBox_currentIndexChanged("Inch");
+    ui->doubleSpinBoxLeft->setValue(0.5);
+    ui->doubleSpinBoxTop->setValue(0.5);
+    ui->doubleSpinBoxRight->setValue(0.5);
+    ui->doubleSpinBoxBottom->setValue(0.5);
     updateMargins();
 
     // set default font
     QFont f;
-    f.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    f.fromString("Arial,12,-1,5,50,0,0,0,0,0");
     ui->fontComboBox->setCurrentFont(f);
 }
 
@@ -44,6 +45,7 @@ void PrintPreviewDialog::on_spinBoxFontSize_valueChanged(int arg1)
 }
 
 void PrintPreviewDialog::setText(Song song)
+    // This will prepare print text edit for current song
 {
     QString s;
     s = QString("%1 %2\n%3\nTune: %4\nWords By: %5\tMusic By: %6\n\n")
@@ -52,9 +54,126 @@ void PrintPreviewDialog::setText(Song song)
     song.songText=song.songText.split("@%").join("\n");
     s += QString("%1\n\nNotes:\n%2").arg(song.songText).arg(song.notes);
 
-    qDebug();
     ui->textEdit->setText(s);
     ui->spinBoxFontSize->setValue(14);// default font size for Songs
+}
+
+void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
+    // This will prepare print text edit for Current chapter
+{
+    QString s;
+
+    // get proper bible id if operator bible == "same"
+    QStringList bb = bible.split(",");
+    if(bb.at(0) == "same")
+        bible = bb.at(1); // primary bible
+    else
+        bible = bb.at(0); // operator bible
+
+
+    Bible b;
+
+    b.setBiblesId(bible);
+    // get bible name instead of id
+    bible = b.getBibleName();
+
+    QStringList clist;
+    // Get chapter with correct book id
+    for(int i(0);i<b.books.count();++i)
+    {
+        if(b.books.at(i).book == book)
+        {
+            clist = b.getChapter(b.books.at(i).bookId,chapter);
+            break;
+        }
+    }
+
+    s = QString("%1\n%2 %3\n\n").arg(bible).arg(book).arg(chapter);
+    s += clist.join("");
+
+    ui->textEdit->setText(s);
+    ui->spinBoxFontSize->setValue(11);// default font size for Bible chapter
+}
+
+void PrintPreviewDialog::setText(QString project, QList<BibleSearch> histories, QList<Song> songs, QList<Announcement> announcements)
+    // This will prepare print text edit for softProjector Project
+{
+    QFileInfo fi(project);
+    project = fi.fileName();
+    project.remove(".spp");
+    QString s;
+
+    // start
+    if(project.isEmpty())
+        s = "";
+    else
+        s = "softProject Project: " + project + "\n\n";
+
+    // set bible histories
+    if(histories.count()<=0)
+        s += "";
+    else
+    {
+        s += "Bible\n---------\n";
+        for(int i(0);i<histories.count();++i)
+            s += QString("     %1\n").arg(histories.at(i).display_text);
+
+    }
+
+    // set playlist songs
+    if(songs.count()<=0)
+        s += "";
+    else
+    {
+        s += "\nSongs\n--------\n";
+        for(int i(0);i<songs.count();++i)
+        {
+            s+= QString("     %1 %2 - %3\n")
+                    .arg(songs.at(i).songbook_name)
+                    .arg(songs.at(i).number)
+                    .arg(songs.at(i).title);
+        }
+    }
+
+    // set announcements
+    if(announcements.count()<=0)
+        s += "";
+    else
+    {
+        s += "\nAnnouncements\n---------\n";
+        for(int i(0);i<announcements.count();++i)
+        {
+            s += QString("     Announcement %1:\n%2\n")
+                    .arg(i+1)
+                    .arg(announcements.at(i).text);
+        }
+
+    }
+
+    ui->textEdit->setText(s);
+    ui->spinBoxFontSize->setValue(11);// default font size for spftProjector Project
+}
+
+void PrintPreviewDialog::setText(QList<Announcement> announcements)
+{
+    QString s;
+    // set announcements
+    if(announcements.count()<=0)
+        s = "No Announcement Text To Print";
+    else
+    {
+        s = "Announcements\n---------\n";
+        for(int i(0);i<announcements.count();++i)
+        {
+            s += QString("     Announcement %1:\n%2\n--------------------------------\n")
+                    .arg(i+1)
+                    .arg(announcements.at(i).text);
+        }
+
+    }
+
+    ui->textEdit->setText(s);
+    ui->spinBoxFontSize->setValue(11);// default font size for spftProjector Project
 }
 
 void PrintPreviewDialog::on_pushButtonPDF_clicked()

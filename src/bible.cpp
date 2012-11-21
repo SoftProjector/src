@@ -29,6 +29,17 @@ void Bible::setBiblesId(QString& id)
     retrieveBooks();
 }
 
+QString Bible::getBibleName()
+{
+    if(bibleId.isEmpty())
+        return "";
+    QSqlQuery sq;
+    sq.exec("SELECT bible_name FROM BibleVersions WHERE id = "+ bibleId );
+    sq.first();
+    QString b = sq.value(0).toString().trimmed();
+    return b;
+}
+
 void Bible::retrieveBooks()
 {
     BibleBook book;

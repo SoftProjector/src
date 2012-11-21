@@ -150,6 +150,7 @@
     <addaction name="actionClose_Project"/>
     <addaction name="separator"/>
     <addaction name="actionPrint"/>
+    <addaction name="actionPrint_Project"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -356,7 +357,7 @@
      <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
    </property>
    <property name="text">
-    <string>New Project</string>
+    <string>&amp;New Project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
@@ -373,10 +374,21 @@
      <normaloff>:/icons/icons/print.png</normaloff>:/icons/icons/print.png</iconset>
    </property>
    <property name="text">
-    <string>Print</string>
+    <string>&amp;Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print everything but softProjector project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionPrint_Project">
+   <property name="text">
+    <string>Print Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+P</string>
    </property>
   </action>
  </widget>

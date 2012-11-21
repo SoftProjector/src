@@ -1068,7 +1068,7 @@ void SoftProjector::on_projectTab_currentChanged(int index)
         ui->actionNewSong->setEnabled(true);
         ui->actionCopy_Song->setEnabled(true);
         ui->actionDeleteSong->setEnabled(true);
-        ui->actionPrint->setEnabled(true);
+//        ui->actionPrint->setEnabled(true);
     }
     else
     {
@@ -1077,7 +1077,7 @@ void SoftProjector::on_projectTab_currentChanged(int index)
         ui->actionNewSong->setEnabled(false);
         ui->actionCopy_Song->setEnabled(false);
         ui->actionDeleteSong->setEnabled(false);
-        ui->actionPrint->setEnabled(false);
+//        ui->actionPrint->setEnabled(false);
     }
 }
 
@@ -1759,20 +1759,42 @@ void SoftProjector::on_actionPrint_triggered()
 {
     PrintPreviewDialog* p;
     p = new PrintPreviewDialog(this);
-    if (songWidget->isSongSelected())
+    if(ui->projectTab->currentIndex() == 0)
     {
-        p->setText(songWidget->getSongToEdit());
+        p->setText(allsettings.bible.operatorBible + "," + allsettings.bible.primaryBible,
+                   bibleWidget->getCurrentBook(),bibleWidget->getCurrentChapter());
         p->exec();
-
     }
-    else
+    else if (ui->projectTab->currentIndex() == 1)
     {
-        QMessageBox ms;
-        ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be printed."));
-        ms.setInformativeText(tr("Please select a song to be printed."));
-        ms.setIcon(QMessageBox::Information);
-        ms.exec();
-    }
+        if (songWidget->isSongSelected())
+        {
+            p->setText(songWidget->getSongToEdit());
+            p->exec();
 
+        }
+        else
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("No song selected"));
+            ms.setText(tr("No song has been selected to be printed."));
+            ms.setInformativeText(tr("Please select a song to be printed."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
+
+    }
+    else if (ui->projectTab->currentIndex() == 2)
+    {
+        p->setText(announceWidget->getAnnouncements());
+        p->exec();
+    }
+}
+
+void SoftProjector::on_actionPrint_Project_triggered()
+{
+    PrintPreviewDialog* p;
+    p = new PrintPreviewDialog(this);
+    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
+    p->exec();
 }

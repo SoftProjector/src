@@ -141,6 +141,8 @@ private slots:
 
     void on_actionPrint_triggered();
 
+    void on_actionPrint_Project_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent( QKeyEvent * event );
