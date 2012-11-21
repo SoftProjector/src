@@ -99,10 +99,10 @@ FORMS += softprojector.ui \
     songsettingwidget.ui \
     announcementsettingwidget.ui \
     printpreviewdialog.ui
-TRANSLATIONS += softpro_de.ts\
-    softpro_ru.ts\
-    softpro_cs.ts\
-    softpro_ua.ts
+TRANSLATIONS += translations/softpro_de.ts\
+    translations/softpro_ru.ts\
+    translations/softpro_cs.ts\
+    translations/softpro_ua.ts
 CODECFORTR = UTF-8
 RESOURCES += softprojector.qrc
 
