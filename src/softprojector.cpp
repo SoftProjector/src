@@ -34,7 +34,8 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     // NOTE: With virtual desktop, desktop->screen() will always return the main screen,
     // so this will initialize the Display1 widget on the main screen:
-    display = new Display1(desktop->screen(0));
+    displayScreen1 = new DisplayScreen(desktop->screen(0));
+    //displayScreen2 = new DisplayScreen(desktop->screen(0)); //for future
     // Don't worry, we'll move it later
 
     bibleWidget = new BibleWidget;
@@ -43,7 +44,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     announceWidget = new AnnounceWidget;
     manageDialog = new ManageDataDialog(this);
 
-//    this->setLayoutDirection(Qt::RightToLeft);
     ui->setupUi(this);
 
 
@@ -60,12 +60,11 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Apply Settings
     applySetting(allsettings);
 
-    display->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
-    display->setWindowIcon(QIcon(":icons/icons/display.png"));
+    displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
 
     positionDisplayWindow();
 
-    display->renderText(false);
+    displayScreen1->renderText(false);
 
     showing = false;
 
@@ -80,7 +79,7 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
     connect(announceWidget,SIGNAL(sendText(Announcement)),
             this, SLOT(setAnnounceText(Announcement)));
-    connect(display, SIGNAL(requestTextDrawing(QPainter*, int, int)),
+    connect(displayScreen1, SIGNAL(requestTextDrawing(QPainter*, int, int)),
             this, SLOT(drawText(QPainter*, int, int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)),
             songWidget, SLOT(updateSongFromDatabase(int,int)));
@@ -105,6 +104,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(bibleWidget, SIGNAL(historyListChanged(bool)),
             this, SLOT(setProjectChanged(bool)));
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
+    connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
+    connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
+    connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
 
     ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
@@ -129,8 +131,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Hide Multi verse selection, only visibel to be when showing bible
     ui->rbMultiVerse->setVisible(false);
 
-        version_string = "1.07"; // to be used only for official release
-//    version_string = "1.07_Beta2"; // to be used between official releases
+//    version_string = "2"; // to be used only for official release
+    version_string = "2.Dev.Build:1"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 }
 
@@ -141,7 +143,7 @@ SoftProjector::~SoftProjector()
     delete editWidget;
     delete bibleWidget;
     delete announceWidget;
-    delete display;
+    delete displayScreen1;
     delete desktop;
     delete ui;
 }
@@ -152,28 +154,44 @@ void SoftProjector::positionDisplayWindow()
     // showing full screen / normal mode, and positioning it on the right screen)
 
     if (allsettings.general.displayIsOnTop)
-        display->setWindowFlags(Qt::WindowStaysOnTopHint);
+        displayScreen1->setWindowFlags(Qt::WindowStaysOnTopHint);
     else
-        display->setWindowFlags(0); // Do not show always on top
+        displayScreen1->setWindowFlags(0); // Do not show always on top
 
     if( desktop->numScreens() > 1 )
     {
         if (desktop->isVirtualDesktop())
         {
             // Move the display widget to screen 1 (secondary screen):
-            // FIXME what if more than 2 screens are available??
             QPoint top_left = desktop->screenGeometry(allsettings.general.displayScreen).topLeft();
-            display->move(top_left);
+            displayScreen1->move(top_left);
         }
-        display->showFullScreen();
+        displayScreen1->showFullScreen();
+        displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+        displayScreen1->setControlButtonsVisible(false);
+        isSingleScreen = false;
     }
     else
     {
         // Single monitor only, show normal (not full screen):
-        display->showNormal();
-        display->setGeometry(10, 50, 800, 600);
+//        displayScreen1->showNormal();
         // NOTE the y-coordinate of 50 is so that the window does not overwrite the menu bar on Mac OS X
+//        displayScreen1->setGeometry(10, 50, 800, 600);
+        showDisplayScreen(false);
+        isSingleScreen = true;
+
     }
+
+}
+
+void SoftProjector::showDisplayScreen(bool show)
+{
+    if(show)
+        displayScreen1->showFullScreen();
+    else
+        displayScreen1->hide();
+    displayScreen1->setControlsSettings(allsettings.general.displayControls);
+    displayScreen1->setControlButtonsVisible(true);
 }
 
 void SoftProjector::saveSettings()
@@ -212,10 +230,10 @@ void SoftProjector::updateSetting(Settings &allsets)
     announceWidget->setAlingment(allsettings.announce.textAlingmentV,allsettings.announce.textAlingmentH);
 
     // Apply display settings;
-    display->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    display->setFading(allsettings.general.useFading);
-    display->setUseShadow(allsettings.general.useShadow);
-    display->setBlur(allsettings.general.useBlurShadow);
+    displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+    displayScreen1->setFading(allsettings.general.useFading);
+    displayScreen1->setUseShadow(allsettings.general.useShadow);
+    displayScreen1->setBlur(allsettings.general.useBlurShadow);
 }
 
 void SoftProjector::applySetting(Settings &allsets)
@@ -225,10 +243,10 @@ void SoftProjector::applySetting(Settings &allsets)
     announceWidget->setAlingment(allsettings.announce.textAlingmentV,allsettings.announce.textAlingmentH);
 
     // Apply display settings;
-    display->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    display->setFading(allsettings.general.useFading);
-    display->setUseShadow(allsettings.general.useShadow);
-    display->setBlur(allsettings.general.useBlurShadow);
+    displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+    displayScreen1->setFading(allsettings.general.useFading);
+    displayScreen1->setUseShadow(allsettings.general.useShadow);
+    displayScreen1->setBlur(allsettings.general.useBlurShadow);
 
     // Apply splitter states
     ui->splitter->restoreState(allsettings.spmain.spSplitter);
@@ -304,16 +322,56 @@ void SoftProjector::closeEvent(QCloseEvent *event)
     }
 }
 
-void SoftProjector::keyPressEvent( QKeyEvent * event )
+void SoftProjector::keyPressEvent(QKeyEvent *event)
 {
     // Will get called when a key is pressed
     int key = event->key();
-    if( key == Qt::Key_F6 )
+    if(key == Qt::Key_F6)
         ui->projectTab->setCurrentWidget(bibleWidget);
-    else if( key == Qt::Key_F7 )
+    else if(key == Qt::Key_F7)
         ui->projectTab->setCurrentWidget(songWidget);
-    else if( key == Qt::Key_F8 )
+    else if(key == Qt::Key_F8)
         ui->projectTab->setCurrentWidget(announceWidget);
+    else if(key == Qt::Key_Left)
+    {
+        if(ui->listShow->hasFocus())
+            prevSlide();
+    }
+    else if(key == Qt::Key_Up)
+    {
+        if(ui->listShow->hasFocus())
+            prevSlide();
+    }
+    else if(key == Qt::Key_PageUp)
+    {
+        if(ui->listShow->hasFocus())
+            prevSlide();
+    }
+    else if(key == Qt::Key_Right)
+    {
+        if(ui->listShow->hasFocus())
+            nextSlide();
+    }
+    else if(key == Qt::Key_Down)
+    {
+        if(ui->listShow->hasFocus())
+            nextSlide();
+    }
+    else if(key == Qt::Key_PageDown)
+    {
+        if(ui->listShow->hasFocus())
+            nextSlide();
+    }
+    else if(key == Qt::Key_Return)
+    {
+        if(ui->listShow->hasFocus())
+            nextSlide();
+    }
+    else if(key == Qt::Key_Enter)
+    {
+        if(ui->listShow->hasFocus())
+            nextSlide();
+    }
     else
         QMainWindow::keyPressEvent(event);
 }
@@ -787,7 +845,7 @@ void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
 
     QRect rect = QRect(left, top, w, h);
     QString announce_text = announcement_text.text;
-    display->paintTextToRect(painter, rect, flags, announce_text);
+    displayScreen1->paintTextToRect(painter, rect, flags, announce_text);
 
     //    announceWidget->drawToPainter(painter, width, height);
 }
@@ -848,19 +906,29 @@ void SoftProjector::on_listShow_itemSelectionChanged()
 
 void SoftProjector::updateScreen()
 {
+
     // Display the specified row of the show (rightmost) table to
     // the display
     int currentRow = ui->listShow->currentRow();
 
     if( showing == false )
     {
+        if(isSingleScreen)
+            showDisplayScreen(false);
+
         // Do not display any text:
-        display->renderText(false);
+        displayScreen1->renderText(false);
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
     else if (currentRow >=0 && !new_list)
     {
+        if(isSingleScreen)
+        {
+            if(displayScreen1->isHidden())
+                showDisplayScreen(true);
+        }
+
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
 
@@ -869,23 +937,23 @@ void SoftProjector::updateScreen()
             if(current_song.usePrivateSettings)
             {
                 bool useBack = !current_song.backgroundPath.trimmed().isEmpty();
-                display->setNewWallpaper(current_song.backgroundPath,useBack);
-                display->setForegroundColor(current_song.color);
-                display->setNewFont(current_song.font);
+                displayScreen1->setNewWallpaper(current_song.backgroundPath,useBack);
+                displayScreen1->setForegroundColor(current_song.color);
+                displayScreen1->setNewFont(current_song.font);
             }
             else
             {
-                display->setNewWallpaper(allsettings.song.backgroundPath,allsettings.song.useBackground);
-                display->setForegroundColor(allsettings.song.textColor);
-                display->setNewFont(allsettings.song.textFont);
+                displayScreen1->setNewWallpaper(allsettings.song.backgroundPath,allsettings.song.useBackground);
+                displayScreen1->setForegroundColor(allsettings.song.textColor);
+                displayScreen1->setNewFont(allsettings.song.textFont);
             }
             current_song_verse = currentRow;
         }
         else if(type=="bible")
         {
-            display->setNewWallpaper(allsettings.bible.backgroundPath,allsettings.bible.useBackground);
-            display->setForegroundColor(allsettings.bible.textColor);
-            display->setNewFont(allsettings.bible.textFont);
+            displayScreen1->setNewWallpaper(allsettings.bible.backgroundPath,allsettings.bible.useBackground);
+            displayScreen1->setForegroundColor(allsettings.bible.textColor);
+            displayScreen1->setNewFont(allsettings.bible.textFont);
             int srows(ui->listShow->count());
             QList<int> currentRows;
             for(int i(0); i<srows; ++i)
@@ -897,12 +965,12 @@ void SoftProjector::updateScreen()
         }
         else if( type == "announce" )
         {
-            display->setNewWallpaper(allsettings.announce.backgroundPath,allsettings.announce.useBackground);
-            display->setForegroundColor(allsettings.announce.textColor);
-            display->setNewFont(allsettings.announce.textFont);
+            displayScreen1->setNewWallpaper(allsettings.announce.backgroundPath,allsettings.announce.useBackground);
+            displayScreen1->setForegroundColor(allsettings.announce.textColor);
+            displayScreen1->setNewFont(allsettings.announce.textFont);
             announcement_text.text = announceWidget->getText();
         }
-        display->renderText(true);
+        displayScreen1->renderText(true);
     }
 }
 
@@ -1797,4 +1865,45 @@ void SoftProjector::on_actionPrint_Project_triggered()
     p = new PrintPreviewDialog(this);
     p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
     p->exec();
+}
+
+void SoftProjector::nextSlide()
+{
+    // selects next item in the show list
+    int current = ui->listShow->currentRow();
+    if(ui->rbMultiVerse->isChecked())
+    {
+        // if multiple is selected, select last one
+        for (int i(0);i<ui->listShow->count();++i)
+        {
+            if(ui->listShow->item(i)->isSelected())
+                current = i;
+        }
+        if(current < ui->listShow->count()-1)
+            ui->rbMultiVerse->setChecked(false);
+    }
+    if(current < ui->listShow->count()-1)
+        ui->listShow->setCurrentRow(current+1);
+}
+
+void SoftProjector::prevSlide()
+{
+    // selects previous item in the show list
+    int current = ui->listShow->currentRow();
+    if(ui->rbMultiVerse->isChecked())
+    {
+        // if multiple is selected, select first one
+        for (int i(0);i<ui->listShow->count();++i)
+        {
+            if(ui->listShow->item(i)->isSelected())
+            {
+                current = i;
+                break;
+            }
+        }
+        if(current>0)
+            ui->rbMultiVerse->setChecked(false);
+    }
+    if(current>0)
+        ui->listShow->setCurrentRow(current-1);
 }

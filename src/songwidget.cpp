@@ -738,7 +738,6 @@ void SongWidget::on_pushButtonSearch_clicked()
     ui->songs_view->scrollToTop();
 
     int row = proxy_model->mapToSource(ui->songs_view->currentIndex()).row();
-    qDebug()<<"songs:"<<row;
     if( row>=0)
     {
         sendToPreview(songs_model->getSong(row));

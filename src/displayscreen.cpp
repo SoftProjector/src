@@ -1,79 +1,21 @@
-/***************************************************************************
-//
-//    softProjector - an open source media projection software
-//    Copyright (C) 2011  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
-//
-//    This program is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation version 3 of the License.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-***************************************************************************/
-
-#include <QPainter>
-#include <QDebug>
-
-#include "display1.h"
+#include "displayscreen.h"
+#include "ui_displayscreen.h"
 
 #define BLUR_RADIUS 5
 
-
-
-/*
-shadow_effect.setBlurRadius(15.0);
-
-r = self.boundingRect()
-sz = QSize(r.width(), r.height())
-tmp = QImage(sz, QImage.Format_ARGB32_Premultiplied)
-self.tmp = tmp
-new_painter = QPainter(tmp)
-QGraphicsDropShadowEffect.drawSource(self, new_painter)
-
-pixmap, offset = self.sourcePixmap()
-painter.setCompositionMode(QPainter.CompositionMode_SourceOver)
-painter.drawPixmap(0,0, QPixmap.fromImage(tmp))
-new_painter.end()
-del self.tmp
-
-
-
-
-class ShadowAndAlphaEffect(QGraphicsDropShadowEffect):
-    def __init__(self, blur, transparency, parent=None):
-        QGraphicsEffect.__init__(self, parent)
-        self.opacity = QGraphicsOpacityEffect(self)
-        self.setBlurRadius(15.0)
-        self.opacity.setOpacity(0.9)
-
-    def draw(self, painter):
-        r = self.boundingRect()
-        sz = QSize(r.width(), r.height())
-        tmp = QImage(sz, QImage.Format_ARGB32_Premultiplied)
-        self.tmp = tmp
-        new_painter = QPainter(tmp)
-        QGraphicsDropShadowEffect.drawSource(self, new_painter)
-
-        painter.setOpacity(self.opacity.opacity())
-        pixmap, offset = self.sourcePixmap()
-        painter.setCompositionMode(QPainter.CompositionMode_SourceOver)
-        painter.drawPixmap(0,0, QPixmap.fromImage(tmp))
-        new_painter.end()
-        del self.tmp
-
-
-*/
-
-Display1::Display1(QWidget *parent)
-    : QWidget(parent)
+DisplayScreen::DisplayScreen(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::DisplayScreen)
 {
-    setPalette(QPalette(QColor("BLACK"),QColor("BLACK")));
+    ui->setupUi(this);
+    setPalette(QPalette(QColor(Qt::black),QColor(Qt::black)));
+//    QPalette p;
+//    QColor c;
+//    c.setRgb(123,232,13,50);
+//    p.setColor(QPalette::Base,c);
+//    ui->graphicsView->setPalette(p);
+//    ui->widget->setPalette(QPalette(QColor(Qt::green),QColor(50,50,50,50)));
+//    ui->widget_2->setPalette(QPalette(QColor(Qt::green),QColor(70,150,250,50)));
 
     timer = new QTimer(this);
     timer_out = new QTimer(this);
@@ -83,9 +25,162 @@ Display1::Display1(QWidget *parent)
 
     acounter[0]=255;
 
+
+
+    btnNext = new ControlButton(QIcon(":/icons/icons/controlNext.png"),
+                                QIcon(":/icons/icons/controlNextHovered.png"),
+                                QIcon(":/icons/icons/controlNextPressed.png"),this);
+    btnPrev = new ControlButton(QIcon(":/icons/icons/controlPrev.png"),
+                                QIcon(":/icons/icons/controlPrevHovered.png"),
+                                QIcon(":/icons/icons/controlPrevPressed.png"),this);
+    btnExit = new ControlButton(QIcon(":/icons/icons/controlExit.png"),
+                                QIcon(":/icons/icons/controlExitHovered.png"),
+                                QIcon(":/icons/icons/controlExitPressed.png"),this);
+    connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
+    connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
+    connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
+
 }
 
-void Display1::fadeIn()
+DisplayScreen::~DisplayScreen()
+{
+    delete ui;
+}
+void DisplayScreen::keyPressEvent(QKeyEvent *event)
+{
+    // Will get called when a key is pressed
+    int key = event->key();
+    if(key == Qt::Key_Left)
+        prevSlide();
+    else if(key == Qt::Key_Up)
+        prevSlide();
+    else if(key == Qt::Key_P)
+        prevSlide();
+    else if(key == Qt::Key_B)
+        prevSlide();
+    else if(key == Qt::Key_PageUp)
+        prevSlide();
+    else if(key == Qt::Key_Right)
+        nextSlide();
+    else if(key == Qt::Key_Down)
+        nextSlide();
+    else if(key == Qt::Key_F)
+        nextSlide();
+    else if(key == Qt::Key_N)
+        nextSlide();
+    else if(key == Qt::Key_PageDown)
+        nextSlide();
+    else if(key == Qt::Key_Enter)
+        nextSlide();
+    else if(key == Qt::Key_Return)
+        nextSlide();
+    else if(key == Qt::Key_Escape)
+        exitSlide();
+    else if(key == Qt::Key_X)
+        exitSlide();
+    else
+        QWidget::keyPressEvent(event);
+}
+
+void DisplayScreen::setControlsSettings(DisplayControlsSettings &settings)
+{
+    controlsSettings = settings;
+    positionControlButtons();
+}
+
+void DisplayScreen::setControlButtonsVisible(bool visible)
+{
+    btnPrev->setVisible(visible);
+    btnNext->setVisible(visible);
+    btnExit->setVisible(visible);
+}
+
+void DisplayScreen::positionControlButtons()
+{
+    // set icon sise
+    int buttonSize(controlsSettings.buttonSize);
+    if(buttonSize == 0)
+        buttonSize = 16;
+    else if(buttonSize == 1)
+        buttonSize = 24;
+    else if(buttonSize == 2)
+        buttonSize = 32;
+    else if(buttonSize == 3)
+        buttonSize = 48;
+    else if(buttonSize == 4)
+        buttonSize = 64;
+    else if(buttonSize == 5)
+        buttonSize = 96;
+    else
+        buttonSize = 48;
+    btnNext->setIconSize(QSize(buttonSize,buttonSize));
+    btnPrev->setIconSize(QSize(buttonSize,buttonSize));
+    btnExit->setIconSize(QSize(buttonSize,buttonSize));
+
+    // set buttons size to be 2px greater than the icon size
+    buttonSize +=2;
+
+    // calculate button position
+    int y(this->height()), x(this->width()), margin(5);
+
+    // calculate y position
+    if(controlsSettings.alignmentV==0)//top
+        y = margin;
+    else if(controlsSettings.alignmentV==1)//middle
+        y = (y-buttonSize)/2;
+    else if(controlsSettings.alignmentV==2)//buttom
+        y = y-buttonSize-margin;
+    else
+        y = y-buttonSize-margin;
+
+    // calculate x position
+    int xt((buttonSize*3)+10); //total width of the button group
+    if(controlsSettings.alignmentH==0)
+        x = margin;
+    else if(controlsSettings.alignmentH==1)
+        x = (x-xt)/2;
+    else if (controlsSettings.alignmentH==2)
+        x = x-xt-margin;
+    else
+        x = (x-xt)/2;
+
+
+    int x1(x);
+    int x2(x1+buttonSize+5);
+    int x3(x2+buttonSize+5);
+
+    //set button positon
+    btnPrev->setGeometry(x1,y,buttonSize,buttonSize);
+    btnNext->setGeometry(x2,y,buttonSize,buttonSize);
+    btnExit->setGeometry(x3,y,buttonSize,buttonSize);
+
+    //set button opacity
+    btnPrev->setOpacity(controlsSettings.opacity);
+    btnNext->setOpacity(controlsSettings.opacity);
+    btnExit->setOpacity(controlsSettings.opacity);
+
+    // repaint buttons
+    btnPrev->repaint();
+    btnNext->repaint();
+    btnExit->repaint();
+}
+
+void DisplayScreen::btnNextClicked()
+{
+    emit nextSlide();
+}
+
+void DisplayScreen::btnPrevClicked()
+{
+    emit prevSlide();
+}
+
+void DisplayScreen::btnExitClicked()
+{
+    emit exitSlide();
+}
+
+void DisplayScreen::fadeIn()
 {
     if (use_fading)
     {
@@ -97,7 +192,7 @@ void Display1::fadeIn()
 }
 
 
-void Display1::fadeOut() // For future
+void DisplayScreen::fadeOut() // For future
 {
     //    acounter[0]-=24;
     //    if (acounter[0]<0)acounter[0]=0;
@@ -105,7 +200,7 @@ void Display1::fadeOut() // For future
     //    update();
 }
 
-int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
+int DisplayScreen::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
 {
 
     int left = origrect.left();
@@ -157,7 +252,7 @@ int Display1::paintTextToRect(QPainter *painter, QRect origrect, int flags, QStr
 }
 
 
-void Display1::renderText(bool text_present)
+void DisplayScreen::renderText(bool text_present)
 {
     if(use_fading)
     {
@@ -260,32 +355,32 @@ void Display1::renderText(bool text_present)
         update();
 }
 
-void Display1::setBlur(bool blur)
+void DisplayScreen::setBlur(bool blur)
 {
     use_blur = blur;
 }
 
-void Display1::setUseShadow(bool useShadow)
+void DisplayScreen::setUseShadow(bool useShadow)
 {
     use_shadow = useShadow;
 }
 
-void Display1::setFading(bool fade)
+void DisplayScreen::setFading(bool fade)
 {
     use_fading = fade;
 }
 
-void Display1::setDisplaySettings(DisplaySettings sets)
+void DisplayScreen::setDisplaySettings(DisplaySettings sets)
 {
-    mySettings = sets;
+//    mySettings = sets;
 }
 
-void Display1::setNewFont(QFont new_font)
+void DisplayScreen::setNewFont(QFont new_font)
 {
     main_font = new_font;
 }
 
-void Display1::setNewWallpaper(QString path, bool isToUse)
+void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
 {
     if(isToUse)
         wallpaper_path = path;
@@ -301,7 +396,7 @@ void Display1::setNewWallpaper(QString path, bool isToUse)
     }
 }
 
-void Display1::setNewPassiveWallpaper(QString path, bool isToUse)
+void DisplayScreen::setNewPassiveWallpaper(QString path, bool isToUse)
 {
     if(isToUse)
         passive_wallpaper_path = path;
@@ -317,12 +412,12 @@ void Display1::setNewPassiveWallpaper(QString path, bool isToUse)
     }
 }
 
-void Display1::setForegroundColor(QColor new_color)
+void DisplayScreen::setForegroundColor(QColor new_color)
 {
     foreground_color = new_color;
 }
 
-void Display1::paintEvent(QPaintEvent *event )
+void DisplayScreen::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
 
@@ -390,7 +485,7 @@ void Display1::paintEvent(QPaintEvent *event )
 
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
-void Display1::fastbluralpha(QImage &img, int radius)
+void DisplayScreen::fastbluralpha(QImage &img, int radius)
 {
     if (radius < 1) {
         return;
@@ -631,8 +726,3 @@ void Display1::fastbluralpha(QImage &img, int radius)
     delete [] vmin;
     delete [] dv;
 }
-
-
-
-
-

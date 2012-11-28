@@ -37,6 +37,12 @@ void GeneralSettingWidget::loadSettings()
         ui->comboBox_displayScreen->addItem(QString::number(i+1));
     }
     ui->comboBox_displayScreen->setCurrentIndex(mySettings.displayScreen);
+
+    // Set Display Controls
+    ui->comboBoxIconSize->setCurrentIndex(mySettings.displayControls.buttonSize);
+    ui->comboBoxControlsAlignV->setCurrentIndex(mySettings.displayControls.alignmentV);
+    ui->comboBoxControlsAlignH->setCurrentIndex(mySettings.displayControls.alignmentH);
+    ui->horizontalSliderOpacity->setValue(mySettings.displayControls.opacity*100);
 }
 
 GeneralSettings GeneralSettingWidget::getSettings()
@@ -49,6 +55,13 @@ GeneralSettings GeneralSettingWidget::getSettings()
     mySettings.backgroundPath = ui->lineEdit_BackPath->text();
 
     mySettings.displayScreen = ui->comboBox_displayScreen->currentIndex();
+
+    mySettings.displayControls.buttonSize = ui->comboBoxIconSize->currentIndex();
+    mySettings.displayControls.alignmentV = ui->comboBoxControlsAlignV->currentIndex();
+    mySettings.displayControls.alignmentH = ui->comboBoxControlsAlignH->currentIndex();
+    qreal r = ui->horizontalSliderOpacity->value();
+    r = r/100;
+    mySettings.displayControls.opacity = r;
 
     return mySettings;
 }
@@ -66,12 +79,6 @@ void GeneralSettingWidget::on_button_BrowseBack_clicked()
 
 void GeneralSettingWidget::on_pushButton_default_clicked()
 {
-//    mySettings.displayIsOnTop = false;
-//    mySettings.useShadow = true;
-//    mySettings.useFading = true;
-//    mySettings.useBlurShadow = false;
-//    mySettings.useBackground = false;
-//    mySettings.backgroundPath.clear();
     GeneralSettings g;
     mySettings = g;
     loadSettings();

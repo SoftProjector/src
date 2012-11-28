@@ -30,6 +30,15 @@
         <file>icons/new.png</file>
         <file>icons/flag_uk.png</file>
         <file>icons/print.png</file>
+        <file>icons/controlExit.png</file>
+        <file>icons/controlExitHovered.png</file>
+        <file>icons/controlExitPressed.png</file>
+        <file>icons/controlNext.png</file>
+        <file>icons/controlNextHovered.png</file>
+        <file>icons/controlNextPressed.png</file>
+        <file>icons/controlPrev.png</file>
+        <file>icons/controlPrevHovered.png</file>
+        <file>icons/controlPrevPressed.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>
@@ -174,6 +183,7 @@
         <file>help/images/softprojector_help_cloud_ru.png</file>
         <file>help/images/softprojector_help_de.png</file>
         <file>help/images/softprojector_help_ru.png</file>
+        <file>icons/controlNextHovered.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

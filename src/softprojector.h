@@ -24,7 +24,7 @@
 #include "songwidget.h"
 #include "biblewidget.h"
 #include "announcewidget.h"
-#include "display1.h"
+#include "displayscreen.h"
 #include "editwidget.h"
 #include "bible.h"
 #include "managedatadialog.h"
@@ -51,8 +51,9 @@ public:
     AnnounceWidget *announceWidget;
     ManageDataDialog *manageDialog;
     QDesktopWidget *desktop;
-    Display1 *display;
     EditWidget *editWidget;
+    DisplayScreen *displayScreen1;
+//    DisplayScreen *displayScreen2;
 
     bool showing; // whether we are currently showing to the projector
     Song current_song;
@@ -95,7 +96,10 @@ private:
     bool is_project_saved;
     QString cur_locale;
 
+    bool isSingleScreen;
+
 private slots:
+    void showDisplayScreen(bool show);
     //For saving and opening softProjector project files
     void on_actionClose_Project_triggered();
     void on_actionNew_Project_triggered();
@@ -136,16 +140,16 @@ private slots:
     void drawText(QPainter *painter, int width, int height);
 
     void on_listShow_itemSelectionChanged();
-
     void on_rbMultiVerse_toggled(bool checked);
-
     void on_actionPrint_triggered();
-
     void on_actionPrint_Project_triggered();
+
+    void nextSlide();
+    void prevSlide();
 
 protected:
     void closeEvent(QCloseEvent *event);
-    void keyPressEvent( QKeyEvent * event );
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // SOFTPROJECTOR_H

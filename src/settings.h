@@ -4,6 +4,16 @@
 #include <QtGui>
 #include <QtSql>
 
+class DisplayControlsSettings
+{
+public:
+    DisplayControlsSettings();
+    int buttonSize;
+    int alignmentV;
+    int alignmentH;
+    qreal opacity;
+};
+
 class GeneralSettings
 {   // To store General Program Settings
 public:
@@ -15,6 +25,7 @@ public:
     bool useBackground;
     QString backgroundPath;
     int displayScreen; // stores which sreen to display on
+    DisplayControlsSettings displayControls;
 };
 
 class BibleSettings

@@ -1,34 +1,21 @@
-/***************************************************************************
-//
-//    softProjector - an open source media projection software
-//    Copyright (C) 2011  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
-//
-//    This program is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation version 3 of the License.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-***************************************************************************/
-
-#ifndef DISPLAY1_H
-#define DISPLAY1_H
+#ifndef DISPLAYSCREEN_H
+#define DISPLAYSCREEN_H
 
 #include <QtGui>
 #include "settings.h"
+#include "controlbutton.h"
 
-class Display1 : public QWidget
+namespace Ui {
+class DisplayScreen;
+}
+
+class DisplayScreen : public QWidget
 {
     Q_OBJECT
+    
 public:
-    Display1(QWidget *parent = 0);
-//    QTextCodec *codec;
+    explicit DisplayScreen(QWidget *parent = 0);
+    ~DisplayScreen();
     int paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
     void setNewWallpaper(QString path, bool isToUse);
     void setNewPassiveWallpaper(QString path, bool isToUse);
@@ -44,16 +31,30 @@ public slots:
     void setNewFont(QFont newFont);
     void setForegroundColor(QColor new_color);
     void fastbluralpha(QImage &img, int radius);
+    void setControlsSettings(DisplayControlsSettings &settings);
+    void setControlButtonsVisible(bool visible);
 
 signals:
     void requestTextDrawing(QPainter *painter, int width, int height);
+    void exitSlide();
+    void nextSlide();
+    void prevSlide();
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    
+private slots:
+    void positionControlButtons();
 
+    void btnNextClicked();
+    void btnPrevClicked();
+    void btnExitClicked();
 
 private:
-    DisplaySettings mySettings;
+    Ui::DisplayScreen *ui;
+    DisplayControlsSettings controlsSettings;
+    DisplaySettings displaySettings;
     bool use_fading;
     bool use_shadow;
     bool use_blur;
@@ -71,6 +72,10 @@ private:
     int acounter[2];
     QTimer *timer;
     QTimer *timer_out;
+
+    ControlButton *btnNext;
+    ControlButton *btnPrev;
+    ControlButton *btnExit;
 };
 
-#endif // DISPLAY1_H
+#endif // DISPLAYSCREEN_H

@@ -57,6 +57,14 @@ AnnounceSettings::AnnounceSettings()
     textAlingmentH = 1;
 }
 
+DisplayControlsSettings::DisplayControlsSettings()
+{
+    buttonSize = 3; // 0=16,1=24,2=32,3=48,4=64,5=96
+    alignmentV = 2;
+    alignmentH = 1;
+    opacity = .3;
+}
+
 SpSettings::SpSettings()
 {
     // Apply main window defaults
@@ -103,6 +111,16 @@ void Settings::loadSettings(QString user)
                     general.backgroundPath = v;
                 else if (n == "displayScreen")
                     general.displayScreen = v.toInt();
+                else if (n == "dcIconSize")
+                    general.displayControls.buttonSize = v.toInt();
+                else if (n == "dcAlignment")
+                {
+                    QStringList alinglist = v.split(",");
+                    general.displayControls.alignmentV = alinglist.at(0).toInt();
+                    general.displayControls.alignmentH = alinglist.at(1).toInt();
+                }
+                else if (n == "dcOpacity")
+                    general.displayControls.opacity = v.toDouble();
             }
         }
         else if(t == "bible")
@@ -260,6 +278,9 @@ void Settings::saveSettings(QString user)
         gset += "useBackground = fasle\n";
     gset += "backgroundPath = " + general.backgroundPath;
     gset += "\ndisplayScreen = " + QString::number(general.displayScreen);
+    gset += "\ndcIconSize = " + QString::number(general.displayControls.buttonSize);
+    gset += QString("\ndcAlignment = %1,%2").arg(general.displayControls.alignmentV).arg(general.displayControls.alignmentH);
+    gset += "\ndcOpacity = " + QString::number(general.displayControls.opacity);
 
     // **** Prepare bible settings *********************************************************
     bset = "primaryBible = " + bible.primaryBible;

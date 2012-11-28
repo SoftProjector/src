@@ -41,7 +41,6 @@ SOURCES += main.cpp \
     biblewidget.cpp \
     editwidget.cpp \
     song.cpp \
-    display1.cpp \
     bible.cpp \
     settingsdialog.cpp \
     aboutdialog.cpp \
@@ -58,13 +57,14 @@ SOURCES += main.cpp \
     biblesettingwidget.cpp \
     songsettingwidget.cpp \
     announcementsettingwidget.cpp \
-    printpreviewdialog.cpp
+    printpreviewdialog.cpp \
+    displayscreen.cpp \
+    controlbutton.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
     editwidget.h \
     song.h \
-    display1.h \
     bible.h \
     settingsdialog.h \
     aboutdialog.h \
@@ -81,7 +81,9 @@ HEADERS += softprojector.h \
     biblesettingwidget.h \
     songsettingwidget.h \
     announcementsettingwidget.h \
-    printpreviewdialog.h
+    printpreviewdialog.h \
+    displayscreen.h \
+    controlbutton.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -98,7 +100,8 @@ FORMS += softprojector.ui \
     biblesettingwidget.ui \
     songsettingwidget.ui \
     announcementsettingwidget.ui \
-    printpreviewdialog.ui
+    printpreviewdialog.ui \
+    displayscreen.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\
