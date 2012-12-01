@@ -7,61 +7,24 @@
     <x>0</x>
     <y>0</y>
     <width>412</width>
-    <height>518</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_8">
-   <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QCheckBox" name="checkBox_displayOnTop">
-       <property name="toolTip">
-        <string>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector's screen.</string>
-       </property>
-       <property name="text">
-        <string>Display window always on top</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="checkBox_useShadow">
-       <property name="toolTip">
-        <string>Useful when using a wallpaper image. Displays a fancy shadow effect.</string>
-       </property>
-       <property name="text">
-        <string>Use shadow</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="checkBox_useFading">
-       <property name="toolTip">
-        <string>If checked, when switching displayed text, fades the old text out and fades the new text in .</string>
-       </property>
-       <property name="text">
-        <string>Use fading effects</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="checkBox_useBlurredShadow">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Useful when using a wallpaper image. Displays a fancy shadow effect.</string>
-       </property>
-       <property name="text">
-        <string>Use blurred shadow</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCheckBox" name="checkBox_displayOnTop">
+     <property name="toolTip">
+      <string>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector's screen.</string>
+     </property>
+     <property name="text">
+      <string>Display window always on top</string>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <widget class="QGroupBox" name="groupBox_Back">
      <property name="title">
       <string>Use Passive Background Image</string>
@@ -87,29 +50,29 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item>
     <widget class="QGroupBox" name="groupBox_displayScreen">
      <property name="title">
       <string>Display Screen Selection</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
          <widget class="QLabel" name="label_displayScreen">
           <property name="text">
            <string>Display Screen:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item>
          <widget class="QComboBox" name="comboBox_displayScreen">
           <property name="toolTip">
            <string>Select onto which screen to dispaly</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
+        <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -124,7 +87,7 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
+      <item>
        <widget class="QLabel" name="label_displayWarning">
         <property name="text">
          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -144,7 +107,7 @@ p, li { white-space: pre-wrap; }
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item>
     <widget class="QGroupBox" name="groupBoxDisplayControls">
      <property name="title">
       <string>Display Screen Controls</string>
@@ -301,7 +264,7 @@ p, li { white-space: pre-wrap; }
      </layout>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -309,12 +272,12 @@ p, li { white-space: pre-wrap; }
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>126</height>
+       <height>57</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="5" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QPushButton" name="pushButton_default">

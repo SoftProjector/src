@@ -19,9 +19,6 @@ class GeneralSettings
 public:
     GeneralSettings();
     bool displayIsOnTop;
-    bool useShadow;
-    bool useFading;
-    bool useBlurShadow;
     bool useBackground;
     QString backgroundPath;
     int displayScreen; // stores which sreen to display on
@@ -36,6 +33,9 @@ public:
     QString secondaryBible;
     QString trinaryBible;
     QString operatorBible;
+    bool useShadow;
+    bool useFading;
+    bool useBlurShadow;
     bool useBackground;
     QString backgroundPath;
     QFont textFont;
@@ -56,6 +56,9 @@ public:
     bool showSongNumber;
     bool showSongEnding;
     int songEndingType; // 0 for (***), 1 for song copyright info
+    bool useShadow;
+    bool useFading;
+    bool useBlurShadow;
     bool useBackground;
     QString backgroundPath; // file path for background image
     QFont textFont;
@@ -68,6 +71,9 @@ class AnnounceSettings
 {   // To store Announcement related settings
 public:
     AnnounceSettings();
+    bool useShadow;
+    bool useFading;
+    bool useBlurShadow;
     bool useBackground;
     QString backgroundPath; // file path for background image
     QFont textFont;

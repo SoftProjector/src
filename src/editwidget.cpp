@@ -473,7 +473,9 @@ void EditWidget::updateColor()
 
 void EditWidget::on_pushButtonTextColor_clicked()
 {
-    editSong.color = QColorDialog::getColor(editSong.color,this);
+    QColor c(QColorDialog::getColor(editSong.color,this));
+    if(c.isValid())
+        editSong.color = c;
     updateColor();
 }
 

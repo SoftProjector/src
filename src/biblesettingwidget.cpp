@@ -58,6 +58,11 @@ BibleSettings BibleSettingWidget::getSettings()
         mySettings.operatorBible = "same";
     }
 
+    // Effects
+    mySettings.useShadow = ui->checkBox_useShadow->isChecked();
+    mySettings.useFading = ui->checkBox_useFading->isChecked();
+    mySettings.useBlurShadow = ui->checkBox_useBlurredShadow->isChecked();
+
     // Backgroud
     mySettings.useBackground = ui->groupBox_Background->isChecked();
     mySettings.backgroundPath = ui->lineEdit_BackPath->text();
@@ -129,6 +134,11 @@ void BibleSettingWidget::loadSettings()
         ui->comboBox_operatorBible->setCurrentIndex(bible_id_list.indexOf(mySettings.operatorBible)+1);
     updateOperatorBibleMenu();
 
+    // Set Effects
+    ui->checkBox_useShadow->setChecked(mySettings.useShadow);
+    ui->checkBox_useFading->setChecked(mySettings.useFading);
+    ui->checkBox_useBlurredShadow->setChecked(mySettings.useBlurShadow);
+
     // Set background use
     ui->groupBox_Background->setChecked(mySettings.useBackground);
     ui->lineEdit_BackPath->setText(mySettings.backgroundPath);
@@ -141,6 +151,18 @@ void BibleSettingWidget::loadSettings()
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicView_textColor->setPalette(p);
+
+    // Set text font
+    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
+    if(mySettings.textFont.bold())
+        st += ", Bold";
+    if(mySettings.textFont.italic())
+        st += ", Italic";
+    if(mySettings.textFont.strikeOut())
+        st += ", StrikeOut";
+    if(mySettings.textFont.underline())
+        st += ", Underline";
+    ui->label_font->setText(st);
 
     // Set abbriviations use
     ui->checkBox_abbiviations->setChecked(mySettings.useAbbriviations);
@@ -251,7 +273,9 @@ void BibleSettingWidget::on_button_BrowseBackground_clicked()
 
 void BibleSettingWidget::on_button_textColor_clicked()
 {
-    mySettings.textColor = QColorDialog::getColor(mySettings.textColor,this);
+    QColor c(QColorDialog::getColor(mySettings.textColor,this));
+    if(c.isValid())
+        mySettings.textColor = c;
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicView_textColor->setPalette(p);
@@ -263,6 +287,17 @@ void BibleSettingWidget::on_button_font_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
         mySettings.textFont = font;
+
+    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
+    if(mySettings.textFont.bold())
+        st += ", Bold";
+    if(mySettings.textFont.italic())
+        st += ", Italic";
+    if(mySettings.textFont.strikeOut())
+        st += ", StrikeOut";
+    if(mySettings.textFont.underline())
+        st += ", Underline";
+    ui->label_font->setText(st);
 }
 
 void BibleSettingWidget::on_pushButton_default_clicked()
@@ -270,4 +305,15 @@ void BibleSettingWidget::on_pushButton_default_clicked()
     BibleSettings b;
     mySettings = b;
     loadSettings();
+}
+
+void BibleSettingWidget::on_checkBox_useShadow_stateChanged(int arg1)
+{
+    if(arg1==2)
+        ui->checkBox_useBlurredShadow->setEnabled(true);
+    else
+    {
+        ui->checkBox_useBlurredShadow->setChecked(false);
+        ui->checkBox_useBlurredShadow->setEnabled(false);
+    }
 }

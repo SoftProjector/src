@@ -9,13 +9,6 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 {
     ui->setupUi(this);
     setPalette(QPalette(QColor(Qt::black),QColor(Qt::black)));
-//    QPalette p;
-//    QColor c;
-//    c.setRgb(123,232,13,50);
-//    p.setColor(QPalette::Base,c);
-//    ui->graphicsView->setPalette(p);
-//    ui->widget->setPalette(QPalette(QColor(Qt::green),QColor(50,50,50,50)));
-//    ui->widget_2->setPalette(QPalette(QColor(Qt::green),QColor(70,150,250,50)));
 
     timer = new QTimer(this);
     timer_out = new QTimer(this);
@@ -25,8 +18,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 
     acounter[0]=255;
 
-
-
+    // Add control buttons
     btnNext = new ControlButton(QIcon(":/icons/icons/controlNext.png"),
                                 QIcon(":/icons/icons/controlNextHovered.png"),
                                 QIcon(":/icons/icons/controlNextPressed.png"),this);
@@ -39,7 +31,6 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
-
 }
 
 DisplayScreen::~DisplayScreen()
@@ -50,20 +41,12 @@ void DisplayScreen::keyPressEvent(QKeyEvent *event)
 {
     // Will get called when a key is pressed
     int key = event->key();
-    if(key == Qt::Key_Left)
-        prevSlide();
-    else if(key == Qt::Key_Up)
-        prevSlide();
-    else if(key == Qt::Key_P)
+    if(key == Qt::Key_P)
         prevSlide();
     else if(key == Qt::Key_B)
         prevSlide();
     else if(key == Qt::Key_PageUp)
         prevSlide();
-    else if(key == Qt::Key_Right)
-        nextSlide();
-    else if(key == Qt::Key_Down)
-        nextSlide();
     else if(key == Qt::Key_F)
         nextSlide();
     else if(key == Qt::Key_N)
@@ -144,7 +127,6 @@ void DisplayScreen::positionControlButtons()
     else
         x = (x-xt)/2;
 
-
     int x1(x);
     int x2(x1+buttonSize+5);
     int x3(x2+buttonSize+5);
@@ -182,15 +164,17 @@ void DisplayScreen::btnExitClicked()
 
 void DisplayScreen::fadeIn()
 {
-    if (use_fading)
+    if (useFading)
     {
-        acounter[0]+=64;
-        if (acounter[0]>255)acounter[0]=255;
-        if (acounter[0]>254){timer->stop();}
+        acounter[0]+=64; // fade step increaments
+        if (acounter[0]>255)
+            acounter[0]=255;
+
+        if (acounter[0]>254)
+            timer->stop();
         update();
     }
 }
-
 
 void DisplayScreen::fadeOut() // For future
 {
@@ -200,74 +184,18 @@ void DisplayScreen::fadeOut() // For future
     //    update();
 }
 
-int DisplayScreen::paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text)
-{
-
-    int left = origrect.left();
-    int top = origrect.top();
-    int w = origrect.width();
-    int h = origrect.height();
-
-    QFont font = painter->font();
-    int orig_font_size = font.pointSize();
-    // Keep decreasing the font size until the text fits into the allocated space:
-    QRect rect;
-
-    bool exit = false;
-    while( !exit )
-    {
-        rect = painter->boundingRect(left, top, w, h, flags, text);
-        exit = ( rect.width() <= w && rect.height() <= h );
-        if( !exit )
-        {
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
-        }
-    }
-
-    // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
-    if( font.pointSize() < (orig_font_size*4/5) )
-    {
-        font.setPointSize(orig_font_size);
-        painter->setFont(font);
-        flags = (flags | Qt::TextWordWrap);
-        //qDebug() << "DRAWING WITH WRAP";
-        exit = false;
-        while( !exit )
-        {
-            rect = painter->boundingRect(left, top, w, h, flags, text);
-            exit = ( rect.width() <= w && rect.height() <= h );
-            if( !exit )
-            {
-                font.setPointSize( font.pointSize()-1 );
-                //qDebug() << "SETTING SIZE:" << font.pointSize();
-                painter->setFont(font);
-            }
-        }
-    }
-    painter->drawText(rect, flags, text);
-    return font.pointSize();
-
-}
-
-
 void DisplayScreen::renderText(bool text_present)
 {
-    if(use_fading)
+    if(useFading)
     {
         acounter[0]=0;
         // Save the previous image for fade-out effect:
         previous_image_pixmap = QPixmap::fromImage(output_image);
     }
 
-
     // For later determening which background to draw, and whether to transition to it:
     background_needs_transition = ( use_active_background != text_present );
     use_active_background = text_present;
-
-    setFont(main_font);
-
 
     // Render the foreground text:
     QImage text_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
@@ -276,30 +204,39 @@ void DisplayScreen::renderText(bool text_present)
 
     QPainter text_painter(&text_image);
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
-    //text_painter.setRenderHint( QPainter::Antialiasing);
+    //text_painter.setRenderHint(QPainter::Antialiasing);
 
-    text_painter.setPen(foreground_color);
-    text_painter.setFont(font());
+    text_painter.setPen(foregroundColor);
+    text_painter.setFont(mainFont);
 
-    // Request SoftProjector to write its text to the QPainter:
-    emit requestTextDrawing(&text_painter, width(), height());
+    // Request to write its text to the QPainter:
+    if(textType == "bible")
+        drawBibleText(&text_painter, width(), height());
+    else if(textType == "song")
+        drawSongText(&text_painter, width(), height());
+    else if(textType == "announce")
+        drawAnnounceText(&text_painter, width(), height());
     text_painter.end();
-
 
     // Draw the shadow image:
     QImage shadow_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     shadow_image.fill(qRgba(0, 0, 0, 0)); //transparent background
     QPainter shadow_painter(&shadow_image);
     shadow_painter.setPen(QColor(Qt::black));
-    shadow_painter.setFont(font());
-    if(use_shadow)
+    shadow_painter.setFont(mainFont);
+    if(useShadow)
     {
-        emit requestTextDrawing(&shadow_painter, width(), height());
+        if(textType == "bible")
+            drawBibleText(&shadow_painter, width(), height());
+        else if(textType == "song")
+            drawSongText(&shadow_painter, width(), height());
+        else if(textType == "announce")
+            drawAnnounceText(&shadow_painter, width(), height());
         shadow_painter.end();
     }
 
     // Set the blured image to the produced text image:
-    if(use_blur)
+    if(useBluredShadow)
     {
         /*
         Produces a text with a blurred drop shadow using QGraphicsView.
@@ -336,62 +273,544 @@ void DisplayScreen::renderText(bool text_present)
     // Painter for drawing the final image:
     QPainter output_painter(&output_image);
     //output_painter.setRenderHint(QPainter::TextAntialiasing);
-    //output_painter.setRenderHint( QPainter::Antialiasing);
+    //output_painter.setRenderHint(QPainter::Antialiasing);
 
     // Offset the shadow by a fraction of the font size:
-    int shadow_offset = ( font().pointSize() / 15 );
+    int shadow_offset = (mainFont.pointSize() / 15 );
 
     // Draw the shadow:
     output_painter.drawImage(shadow_offset, shadow_offset, shadow_image);
 
     // Draw the text:
     output_painter.drawImage(0, 0, text_image);
-
     output_painter.end();
 
-    if(use_fading)
-        timer->start(33); // 1/24 sec = ~42miliseconds
+    if(useFading)
+        timer->start(32); // time beween fade steps in milliseconds
     else
         update();
 }
 
-void DisplayScreen::setBlur(bool blur)
+void DisplayScreen::renderText(Verse verse, BibleSettings &bibleSetings)
 {
-    use_blur = blur;
+    // Render bible verse text
+    textType = "bible";
+    bibleVerse = verse;
+    bibleSets = bibleSetings;
+
+    useFading = bibleSets.useFading;
+    useShadow = bibleSets.useShadow;
+    useBluredShadow = bibleSets.useBlurShadow;
+    setNewWallpaper(bibleSets.backgroundPath,bibleSets.useBackground);
+    mainFont = bibleSets.textFont;
+    foregroundColor = bibleSets.textColor;
 }
 
-void DisplayScreen::setUseShadow(bool useShadow)
+void DisplayScreen::renderText(Stanza stanza, SongSettings &songSettings)
 {
-    use_shadow = useShadow;
+    // Render song stanza text
+    textType = "song";
+    songStanza = stanza;
+    songSets = songSettings;
+
+    useFading = songSets.useFading;
+    useShadow = songSets.useShadow;
+    useBluredShadow = songSets.useBlurShadow;
+    if(songStanza.usePrivateSettings)
+    {
+        // Set song specific settings
+        setNewWallpaper(songStanza.backgroundPath,(!songStanza.backgroundPath.simplified().isEmpty()));
+        mainFont = songStanza.font;
+        foregroundColor = songStanza.color;
+    }
+    else
+    {
+        setNewWallpaper(songSets.backgroundPath,songSets.useBackground);
+        mainFont = songSets.textFont;
+        foregroundColor = songSets.textColor;
+    }
+}
+
+void DisplayScreen::renderText(Announcement announce, AnnounceSettings &announceSettings)
+{
+    // Render aanouncement text
+    textType = "announce";
+    announcement = announce;
+    annouceSets = announceSettings;
+
+    useFading = annouceSets.useFading;
+    useShadow = annouceSets.useShadow;
+    useBluredShadow = annouceSets.useBlurShadow;
+    setNewWallpaper(annouceSets.backgroundPath,annouceSets.useBackground);
+    mainFont = annouceSets.textFont;
+    foregroundColor = annouceSets.textColor;
+}
+
+void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
+{
+    // Margins:
+    int left = 30;
+    int top = 20;
+
+    //int right = width - left;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    // set maximum screen size - For primary bibile  only
+    int maxh = h * bibleSets.maxScreen/100; // maximun screen height
+    int maxtop; // top of max screen
+    if(bibleSets.maxScreenFrom=="top")
+        maxtop  = top;
+    if(bibleSets.maxScreenFrom=="bottom")
+        maxtop = top+h-maxh;
+
+    // apply max screen use settings
+    h=maxh;
+    top=maxtop;
+
+    QFont font = painter->font();
+    int original_size = font.pointSize();
+    int current_size = original_size;
+
+    // Keep decreasing the font size until the text fits into the allocated space:
+
+    // Rects for storing the position of the text and caption drawing:
+    QRect trect1, crect1, trect2, crect2, trect3, crect3;
+    // Flags to be used for drawing verse text and caption:
+    int tflags = Qt::TextWordWrap;
+    tflags = Qt::TextWordWrap;
+    if(bibleSets.textAlingmentV==0)
+        tflags += Qt::AlignTop;
+    else if(bibleSets.textAlingmentV==1)
+        tflags += Qt::AlignVCenter;
+    else if(bibleSets.textAlingmentV==2)
+        tflags += Qt::AlignBottom;
+    if(bibleSets.textAlingmentH==0)
+        tflags += Qt::AlignLeft;
+    else if(bibleSets.textAlingmentH==1)
+        tflags += Qt::AlignHCenter;
+    else if(bibleSets.textAlingmentH==2)
+        tflags += Qt::AlignRight;
+    int cflags = Qt::AlignRight | Qt::AlignTop ;
+
+    bool exit = false;
+    while( !exit )
+    {
+        if(bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
+        {
+            // Prepare primary version only, 2nd and 3rd do not exist
+            // Figure out how much space the drawing will take at the current font size:
+            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h, current_size);
+
+            // Make sure that all fits into the screen
+            int th = trect1.height()+crect1.height();
+            exit = (th<=h);
+        }
+        else if(!bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
+        {
+            // Prepare primary and secondary versions, trinary does not exist
+            // Figure out how much space the drawing will take at the current font size for primary:
+            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h/2,current_size);
+
+            // set new top for secondary
+            int top2 = crect1.bottom();
+            if(top2<h/2+top)
+                top2=h/2+top;
+
+            // Figure out how much space the drawing will take at the current font size for secondary:
+            drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
+
+            int th1 = trect1.height()+crect1.height();
+            int th2 = trect2.height()+crect2.height();
+
+            // Make sure that primary fits
+            exit = (th1<=h/2);
+            if (exit)
+                // If primary fits, make sure secondary fits
+                exit = (th2<=h/2);
+        }
+        else if(!bibleVerse.secondary_text.isEmpty() && !bibleVerse.trinary_text.isEmpty())
+        {
+            // Prepare primary and secondary and trinary versions
+            // Figure out how much space the drawing will take at the current font size for primary:
+            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h*1/3,current_size);
+
+            // set new top for secondary
+            int top2 = crect1.bottom();
+            if(top2<h*1/3+top)
+                top2=h*1/3+top;
+
+            // Figure out how much space the drawing will take at the current font size for secondary:
+            drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+
+            // set new top for trinaty
+            top2 = crect2.bottom();
+            if(top2<h*2/3+top)
+                top2 = h*2/3+top;
+
+            // Figure out how much space the drawing will take at the current font size for trinary:
+            drawBibleTextToRect(painter,trect3,crect3,bibleVerse.trinary_text,bibleVerse.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+
+            int th1 = trect1.height()+crect1.height();
+            int th2 = trect2.height()+crect2.height();
+            int th3 = trect3.height()+crect3.height();
+
+            // Make sure that primary fits
+            exit = (th1<=h*1/3);
+            if(exit)
+                // If primary fits, make sure secondary fits
+                exit = (th2<=h*1/3);
+            if(exit)
+                // If also secondary fits, make sure trinary fits
+                exit = (th3<=h*1/3);
+        }
+
+        if( !exit ) // The current font is too large, decrease and try again:
+            current_size--;
+    }
+
+    // Draw the bible text verse(s) at the final size:
+    font.setPointSize(current_size);
+    painter->setFont(font);
+    painter->drawText(trect1, tflags, bibleVerse.primary_text);
+    if(!bibleVerse.secondary_text.isNull())
+        painter->drawText(trect2, tflags, bibleVerse.secondary_text);
+    if(!bibleVerse.trinary_text.isNull())
+        painter->drawText(trect3, tflags, bibleVerse.trinary_text);
+
+    // Draw the verse caption(s) at the final size:
+    font.setPointSize(current_size*3/4);
+    painter->setFont(font);
+    painter->drawText(crect1, cflags, bibleVerse.primary_caption);
+    if(!bibleVerse.secondary_text.isNull())
+        painter->drawText(crect2, cflags, bibleVerse.secondary_caption);
+    if(!bibleVerse.trinary_caption.isNull())
+        painter->drawText(crect3, cflags, bibleVerse.trinary_caption);
+
+    // Restore the original font:
+    font.setPointSize(original_size);
+    painter->setFont(font);
+
+}
+
+void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size)
+{
+    QFont font = painter->font();
+
+    // prepare caption
+    font.setPointSize(font_size * 3/4);
+    painter->setFont(font);
+    crect = painter->boundingRect(left, top, width, height, cflags, ctext);
+
+    // prepare text
+    font.setPointSize(font_size);
+    painter->setFont(font);
+    trect = painter->boundingRect(left, top, width, height-crect.height(), tflags, ttext);
+
+    // reset capion location
+    int ch = crect.height();
+    crect.setTop(trect.bottom());
+    crect.setHeight(ch);
+}
+
+void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
+{
+    // Draw the text of the current song verse to the specified painter; making
+    // sure that the output rect is narrower than <width> and shorter than <height>.
+
+    QString main_text = songStanza.stanza;
+    QString top_caption_str;
+    QString song_ending = " ";
+
+    //QStringList lines_list = song_list.at(current_song_verse).split("\n");
+    QString song_num_str = QString::number(songStanza.number);
+    QString song_key_str = songStanza.tune;
+
+    // Check whether to display song numbers
+    if (songSets.showSongNumber)
+        song_num_str = song_num_str;
+    else
+        song_num_str = " ";
+
+    // Check whether to display song key
+    if (songSets.showSongKey)
+        song_num_str = song_key_str + "  " + song_num_str;
+    else
+        song_num_str = song_num_str;
+
+    // Check wheter to display stanza tiles
+    if (songSets.showStanzaTitle)
+        top_caption_str = songStanza.stanzaTitle;
+    else
+        top_caption_str = " ";
+
+    // Prepare Song ending string
+    if(songStanza.isLast)
+    {
+        // first check if to show ending
+        if(songSets.showSongEnding)
+        {
+            if(songSets.songEndingType == 0)
+                song_ending = "*    *    *";
+            else if(songSets.songEndingType == 1)
+            {
+                // First check if copyrigth info exist. If it does show it.
+                // If some exist, then show what exist. If nothing exist, then show '* * *'
+                if(!songStanza.wordsBy.isEmpty() && !songStanza.musicBy.isEmpty())
+                    song_ending = QString(tr("Words by: %1, Music by: %2")).arg(songStanza.wordsBy).arg(songStanza.musicBy);
+                else if(!songStanza.wordsBy.isEmpty() && songStanza.musicBy.isEmpty())
+                    song_ending = QString(tr("Words by: %1")).arg(songStanza.wordsBy);
+                else if(songStanza.wordsBy.isEmpty() && !songStanza.musicBy.isEmpty())
+                    song_ending = QString(tr("Music by: %1")).arg(songStanza.musicBy);
+                else if(songStanza.wordsBy.isEmpty() && songStanza.musicBy.isEmpty())
+                    song_ending = "*    *    *";
+            }
+        }
+    }
+
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+    QRect rect = QRect(left, top, w, h);
+
+    QRect out_rect;
+
+    QFont font = painter->font();
+
+    int orig_font_size = font.pointSize();
+
+    // Keep decreasing the font size until the text fits into the allocated space:
+    bool exit = false;
+    while( !exit )
+    {
+        out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str, song_ending);
+        exit = ( out_rect.width() <= w && out_rect.height() <= h );
+        if( !exit )
+        {
+            // Decrease font size by one point and try again
+            font.setPointSize( font.pointSize()-1 );
+            painter->setFont(font);
+        }
+    }
+
+    bool wrap = false;
+    // Force wrapping of songs that have really wide lines:
+    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
+    if( font.pointSize() < (orig_font_size*4/5) )
+    {
+        font.setPointSize(orig_font_size);
+        painter->setFont(font);
+        exit = false;
+        wrap = true;
+        while( !exit )
+        {
+            out_rect = drawSongTextToRect(painter, rect, false, wrap, main_text, top_caption_str, song_num_str, song_ending);
+            exit = ( out_rect.width() <= w && out_rect.height() <= h );
+            if( !exit )
+            {
+                // Decrease font size by one point and try again
+                font.setPointSize( font.pointSize()-1 );
+                painter->setFont(font);
+            }
+        }
+    }
+    // At this point we picked correct font size and flags; so it's safe to draw:
+    drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str, song_ending);
+}
+
+QRect DisplayScreen::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str)
+{
+    // Figure out how to draw the specified song verse to the specified rect.
+    // Return the rectangle of the output - may be bigger than input rect.
+    // draw - whether to actually draw or to simply calculate the rect.
+
+    QRect caption_rect, num_rect, main_rect, out_rect, ending_rect;
+    int left = bound_rect.left();
+    int top = bound_rect.top();
+    int width = bound_rect.width();
+    int height = bound_rect.height();
+    int main_flags(0);
+
+    if(wrap)
+        main_flags += Qt::TextWordWrap;
+
+    if(songStanza.usePrivateSettings)
+    {
+        // Apply song specific alignment
+        if(songStanza.alignmentV==0)
+            main_flags += Qt::AlignTop;
+        else if(songStanza.alignmentV==1)
+            main_flags += Qt::AlignVCenter;
+        else if(songStanza.alignmentV==2)
+            main_flags += Qt::AlignBottom;
+        if(songStanza.alignmentH==0)
+            main_flags += Qt::AlignLeft;
+        else if(songStanza.alignmentH==1)
+            main_flags += Qt::AlignHCenter;
+        else if(songStanza.alignmentH==2)
+            main_flags += Qt::AlignRight;
+    }
+    else
+    {
+        if(songSets.textAlingmentV==0)
+            main_flags += Qt::AlignTop;
+        else if(songSets.textAlingmentV==1)
+            main_flags += Qt::AlignVCenter;
+        else if(songSets.textAlingmentV==2)
+            main_flags += Qt::AlignBottom;
+        if(songSets.textAlingmentH==0)
+            main_flags += Qt::AlignLeft;
+        else if(songSets.textAlingmentH==1)
+            main_flags += Qt::AlignHCenter;
+        else if(songSets.textAlingmentH==2)
+            main_flags += Qt::AlignRight;
+    }
+
+
+    QFont orig_font = painter->font();
+    QFont caption_font = orig_font;
+    caption_font.setPointSize( orig_font.pointSize() *4/5 );
+    QFont ending_font = orig_font;
+    ending_font.setPointSize(orig_font.pointSize() *2/3);
+
+    // Paint caption, key and number
+    painter->setFont(caption_font);
+    caption_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+    num_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
+
+    // Paint song ending
+    painter->setFont(ending_font);
+    ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
+    if(ending_rect.width()> width)
+    {
+        // decrease songe ending font size so that it would fit in the screen
+        while (ending_rect.width()> width)
+        {
+            ending_font.setPointSize(ending_font.pointSize()-1);
+            painter->setFont(ending_font);
+            ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
+        }
+        ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
+    }
+    else
+        ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
+
+    int cheight = caption_rect.height(); // Height of the caption text
+    int eheight = ending_rect.height(); // hieght of song ending text
+    painter->setFont(orig_font);
+    main_rect = boundRectOrDrawText(painter, draw, left, top+cheight, width, height-cheight-eheight, main_flags, main_text);
+
+    top = top-eheight;
+    left = main_rect.left();
+    height = main_rect.bottom() - top ;
+    width = main_rect.right() - left;
+
+    out_rect.setRect(left, top, width, height);
+    return out_rect;
+}
+
+QRect DisplayScreen::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)
+{
+    // If draw is false, calculate the rectangle that the specified text would be
+    // drawn into if it was draw. If draw is true, draw as well.
+    // Output rect is returned.
+    QRect out_rect;
+    if(draw)
+        painter->drawText(left, top, width, height, flags, text, &out_rect);
+    else
+        out_rect = painter->boundingRect(left, top, width, height, flags, text);
+    return out_rect;
+}
+
+void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height)
+{
+    // Margins:
+    int left = 30;
+    int top = 20;
+    int w = width - left - left;
+    int h = height - top - top;
+
+    int flags = Qt::TextWordWrap;
+    if(annouceSets.textAlingmentV==0)
+        flags += Qt::AlignTop;
+    else if(annouceSets.textAlingmentV==1)
+        flags += Qt::AlignVCenter;
+    else if(annouceSets.textAlingmentV==2)
+        flags += Qt::AlignBottom;
+    if(annouceSets.textAlingmentH==0)
+        flags += Qt::AlignLeft;
+    else if(annouceSets.textAlingmentH==1)
+        flags += Qt::AlignHCenter;
+    else if(annouceSets.textAlingmentH==2)
+        flags += Qt::AlignRight;
+
+    QFont font = painter->font();
+    int orig_font_size = font.pointSize();
+
+    // Keep decreasing the font size until the text fits into the allocated space:
+    QRect rect;
+
+    bool exit = false;
+    while( !exit )
+    {
+        rect = painter->boundingRect(left, top, w, h, flags, announcement.text);
+        exit = ( rect.width() <= w && rect.height() <= h );
+        if( !exit )
+        {
+            font.setPointSize( font.pointSize()-1 );
+            painter->setFont(font);
+        }
+    }
+
+    // Force wrapping of songs that have really wide lines:
+    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
+    if( font.pointSize() < (orig_font_size*4/5) )
+    {
+        font.setPointSize(orig_font_size);
+        painter->setFont(font);
+        flags = (flags | Qt::TextWordWrap);
+        //qDebug() << "DRAWING WITH WRAP";
+        exit = false;
+        while( !exit )
+        {
+            rect = painter->boundingRect(left, top, w, h, flags, announcement.text);
+            exit = ( rect.width() <= w && rect.height() <= h );
+            if( !exit )
+            {
+                font.setPointSize( font.pointSize()-1 );
+                //qDebug() << "SETTING SIZE:" << font.pointSize();
+                painter->setFont(font);
+            }
+        }
+    }
+    painter->drawText(rect, flags, announcement.text);
+
 }
 
 void DisplayScreen::setFading(bool fade)
 {
-    use_fading = fade;
+    useFading = fade;
 }
 
 void DisplayScreen::setDisplaySettings(DisplaySettings sets)
 {
-//    mySettings = sets;
-}
-
-void DisplayScreen::setNewFont(QFont new_font)
-{
-    main_font = new_font;
+    //    mySettings = sets;
 }
 
 void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
 {
     if(isToUse)
-        wallpaper_path = path;
+        wallpaperPath = path;
     else
-        wallpaper_path.clear();
+        wallpaperPath.clear();
 
-    if( wallpaper_path.isEmpty() )
+    if(wallpaperPath.simplified().isEmpty() )
         wallpaper = QImage();
     else
     {
-        wallpaper.load(wallpaper_path);
+        wallpaper.load(wallpaperPath);
         wallpaper = wallpaper.scaled(width(),height());
     }
 }
@@ -399,22 +818,17 @@ void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
 void DisplayScreen::setNewPassiveWallpaper(QString path, bool isToUse)
 {
     if(isToUse)
-        passive_wallpaper_path = path;
+        passiveWallpaperPath = path;
     else
-        passive_wallpaper_path.clear();
+        passiveWallpaperPath.clear();
 
-    if( passive_wallpaper_path.isEmpty() )
-        passive_wallpaper = QImage();
+    if(passiveWallpaperPath.simplified().isEmpty() )
+        passiveWallpaper = QImage();
     else
     {
-        passive_wallpaper.load(passive_wallpaper_path);
-        passive_wallpaper = passive_wallpaper.scaled(width(), height());
+        passiveWallpaper.load(passiveWallpaperPath);
+        passiveWallpaper = passiveWallpaper.scaled(width(), height());
     }
-}
-
-void DisplayScreen::setForegroundColor(QColor new_color)
-{
-    foreground_color = new_color;
 }
 
 void DisplayScreen::paintEvent(QPaintEvent *event )
@@ -436,7 +850,7 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
         // Draw the active wallpaper if there is text to display
         if (wallpaper.width()!=width() || wallpaper.isNull())
         {
-            wallpaper.load(wallpaper_path);
+            wallpaper.load(wallpaperPath);
             if( !wallpaper.isNull() )
                 wallpaper = wallpaper.scaled(width(),height());
         }
@@ -452,16 +866,16 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     else
     {
         // Draw the passive wallpaper if set:
-        //qDebug() << "no text present, passive path:" << passive_wallpaper_path;
+        //qDebug() << "no text present, passive path:" << passiveWallpaperPath;
 
-        if (passive_wallpaper.width()!=width() || passive_wallpaper.isNull())
+        if (passiveWallpaper.width()!=width() || passiveWallpaper.isNull())
         {
-            passive_wallpaper.load(passive_wallpaper_path);
-            if( !passive_wallpaper.isNull() )
-                passive_wallpaper = passive_wallpaper.scaled(width(),height());
+            passiveWallpaper.load(passiveWallpaperPath);
+            if( !passiveWallpaper.isNull() )
+                passiveWallpaper = passiveWallpaper.scaled(width(),height());
         }
-        if( ! passive_wallpaper.isNull() )
-            painter.drawImage(0,0, passive_wallpaper);
+        if( ! passiveWallpaper.isNull() )
+            painter.drawImage(0,0, passiveWallpaper);
         else
         {
             // Use black for the background:
@@ -469,7 +883,6 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
             painter.drawRect( 0, 0, width(), height() );
         }
     }
-
 
     // Draw the previous image into the window, at decreasing opacity:
     painter.setOpacity(prev_opacity);
@@ -487,9 +900,8 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 void DisplayScreen::fastbluralpha(QImage &img, int radius)
 {
-    if (radius < 1) {
+    if (radius < 1)
         return;
-    }
 
     QRgb *pix = (QRgb*)img.bits();
     int w   = img.width();
@@ -511,17 +923,18 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
     int divsum = (div+1)>>1;
     divsum *= divsum;
     int *dv = new int[256*divsum];
-    for (i=0; i < 256*divsum; ++i) {
+    for (i=0; i < 256*divsum; ++i)
+    {
         dv[i] = (i/divsum);
     }
 
     yw = yi = 0;
 
     int **stack = new int*[div];
-    for (int i = 0; i < div; ++i) {
+    for (int i = 0; i < div; ++i)
+    {
         stack[i] = new int[4];
     }
-
 
     int stackpointer;
     int stackstart;
@@ -531,11 +944,13 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
     int routsum, goutsum, boutsum, aoutsum;
     int rinsum, ginsum, binsum, ainsum;
 
-    for (y = 0; y < h; ++y){
+    for (y = 0; y < h; ++y)
+    {
         rinsum = ginsum = binsum = ainsum
                 = routsum = goutsum = boutsum = aoutsum
                 = rsum = gsum = bsum = asum = 0;
-        for (i =- radius; i <= radius; ++i) {
+        for (i =- radius; i <= radius; ++i)
+        {
             p = pix[yi+qMin(wm,qMax(i,0))];
             sir = stack[i+radius];
             sir[0] = qRed(p);
@@ -549,12 +964,15 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
             bsum += sir[2]*rbs;
             asum += sir[3]*rbs;
 
-            if (i > 0){
+            if (i > 0)
+            {
                 rinsum += sir[0];
                 ginsum += sir[1];
                 binsum += sir[2];
                 ainsum += sir[3];
-            } else {
+            }
+            else
+            {
                 routsum += sir[0];
                 goutsum += sir[1];
                 boutsum += sir[2];
@@ -563,8 +981,8 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
         }
         stackpointer = radius;
 
-        for (x=0; x < w; ++x) {
-
+        for (x=0; x < w; ++x)
+        {
             r[yi] = dv[rsum];
             g[yi] = dv[gsum];
             b[yi] = dv[bsum];
@@ -583,7 +1001,8 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
             boutsum -= sir[2];
             aoutsum -= sir[3];
 
-            if (y == 0) {
+            if (y == 0)
+            {
                 vmin[x] = qMin(x+radius+1,wm);
             }
             p = pix[yw+vmin[x]];
@@ -620,14 +1039,16 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
         }
         yw += w;
     }
-    for (x=0; x < w; ++x){
+    for (x=0; x < w; ++x)
+    {
         rinsum = ginsum = binsum = ainsum
                 = routsum = goutsum = boutsum = aoutsum
                 = rsum = gsum = bsum = asum = 0;
 
         yp =- radius * w;
 
-        for (i=-radius; i <= radius; ++i) {
+        for (i=-radius; i <= radius; ++i)
+        {
             yi=qMax(0,yp)+x;
 
             sir = stack[i+radius];
@@ -644,19 +1065,23 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
             bsum += b[yi]*rbs;
             asum += a[yi]*rbs;
 
-            if (i > 0) {
+            if (i > 0)
+            {
                 rinsum += sir[0];
                 ginsum += sir[1];
                 binsum += sir[2];
                 ainsum += sir[3];
-            } else {
+            }
+            else
+            {
                 routsum += sir[0];
                 goutsum += sir[1];
                 boutsum += sir[2];
                 aoutsum += sir[3];
             }
 
-            if (i < hm){
+            if (i < hm)
+            {
                 yp += w;
             }
         }
@@ -664,7 +1089,8 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
         yi = x;
         stackpointer = radius;
 
-        for (y=0; y < h; ++y){
+        for (y=0; y < h; ++y)
+        {
             junk=dv[asum];
             junk=junk*2.4;
             if (junk>255)junk=255;
@@ -683,7 +1109,8 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
             boutsum -= sir[2];
             aoutsum -= sir[3];
 
-            if (x==0){
+            if (x==0)
+            {
                 vmin[y] = qMin(y+r1,hm)*w;
             }
             p = x+vmin[y];

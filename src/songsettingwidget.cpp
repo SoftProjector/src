@@ -33,6 +33,11 @@ SongSettings SongSettingWidget::getSettings()
     else if(ui->radioButton_songCopyInfo)
         mySettings.songEndingType = 1;
 
+    // Effects
+    mySettings.useShadow = ui->checkBox_useShadow->isChecked();
+    mySettings.useFading = ui->checkBox_useFading->isChecked();
+    mySettings.useBlurShadow = ui->checkBox_useBlurredShadow->isChecked();
+
     // Save song background
     mySettings.useBackground = ui->groupBox_SongBackground->isChecked();
     mySettings.backgroundPath = ui->lineEdit_SongBackground->text();
@@ -60,6 +65,11 @@ void SongSettingWidget::loadSettings()
     else if(mySettings.songEndingType == 1)
         ui->radioButton_songCopyInfo->setChecked(true);
 
+    // Set Effects
+    ui->checkBox_useShadow->setChecked(mySettings.useShadow);
+    ui->checkBox_useFading->setChecked(mySettings.useFading);
+    ui->checkBox_useBlurredShadow->setChecked(mySettings.useBlurShadow);
+
     // Set Song Background
     ui->groupBox_SongBackground->setChecked(mySettings.useBackground);
     ui->lineEdit_SongBackground->setText(mySettings.backgroundPath);
@@ -73,6 +83,18 @@ void SongSettingWidget::loadSettings()
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicView_textColor->setPalette(p);
 
+    // Set text font lable
+    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
+    if(mySettings.textFont.bold())
+        st += ", Bold";
+    if(mySettings.textFont.italic())
+        st += ", Italic";
+    if(mySettings.textFont.strikeOut())
+        st += ", StrikeOut";
+    if(mySettings.textFont.underline())
+        st += ", Underline";
+    ui->label_font->setText(st);
+
 }
 
 void SongSettingWidget::on_button_SongBackground_clicked()
@@ -85,7 +107,9 @@ void SongSettingWidget::on_button_SongBackground_clicked()
 
 void SongSettingWidget::on_button_textColor_clicked()
 {
-    mySettings.textColor = QColorDialog::getColor(mySettings.textColor,this);
+    QColor c(QColorDialog::getColor(mySettings.textColor,this));
+    if(c.isValid())
+        mySettings.textColor = c;
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicView_textColor->setPalette(p);
@@ -97,6 +121,17 @@ void SongSettingWidget::on_button_font_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
         mySettings.textFont = font;
+
+    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
+    if(mySettings.textFont.bold())
+        st += ", Bold";
+    if(mySettings.textFont.italic())
+        st += ", Italic";
+    if(mySettings.textFont.strikeOut())
+        st += ", StrikeOut";
+    if(mySettings.textFont.underline())
+        st += ", Underline";
+    ui->label_font->setText(st);
 }
 
 void SongSettingWidget::on_pushButton_default_clicked()
@@ -104,4 +139,20 @@ void SongSettingWidget::on_pushButton_default_clicked()
     SongSettings s;
     mySettings = s;
     loadSettings();
+}
+
+void SongSettingWidget::on_checkBox_useShadow_stateChanged(int arg1)
+{
+    if(arg1==2)
+        ui->checkBox_useBlurredShadow->setEnabled(true);
+    else
+    {
+        ui->checkBox_useBlurredShadow->setChecked(false);
+        ui->checkBox_useBlurredShadow->setEnabled(false);
+    }
+}
+
+void SongSettingWidget::on_groupBoxDisplay2_toggled(bool arg1)
+{
+//    ui->widget->setVisible(arg1);
 }

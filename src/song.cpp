@@ -194,7 +194,7 @@ void Song::setDefaults()
     alignmentH = 1;
     color = QColor(Qt::white);
     font.fromString("Arial,28,-1,5,50,0,0,0,0,0");
-    backgroundPath = "";
+    backgroundPath.clear();
     notes = "";
 }
 
@@ -394,6 +394,34 @@ QStringList Song::getSongTextList()
         ++pnum;
     }
     return formatedSong;
+}
+
+Stanza Song::getStanza(int current)
+{
+    Stanza stanza;
+    QStringList song_list = getSongTextList();
+    stanza.isLast = (current == song_list.count()-1);
+    stanza.number = number;
+    stanza.tune = tune;
+    stanza.musicBy = musicBy;
+    stanza.wordsBy = wordsBy;
+    stanza.usePrivateSettings = usePrivateSettings;
+    stanza.alignmentV = alignmentV;
+    stanza.alignmentH = alignmentH;
+    stanza.backgroundPath = backgroundPath;
+    stanza.color = color;
+    stanza.font = font;
+
+    QStringList lines_list = song_list.at(current).split("\n");
+    if(isStanzaTitle(lines_list.at(0)))
+    {
+        stanza.stanzaTitle = lines_list.at(0);
+        lines_list.removeFirst();
+    }
+
+    stanza.stanza = lines_list.join("\n").trimmed();
+
+    return stanza;
 }
 
 QString Song::getSongbookName()

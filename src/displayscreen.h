@@ -4,6 +4,9 @@
 #include <QtGui>
 #include "settings.h"
 #include "controlbutton.h"
+#include "bible.h"
+#include "song.h"
+#include "announcewidget.h"
 
 namespace Ui {
 class DisplayScreen;
@@ -16,26 +19,26 @@ class DisplayScreen : public QWidget
 public:
     explicit DisplayScreen(QWidget *parent = 0);
     ~DisplayScreen();
-    int paintTextToRect(QPainter *painter, QRect origrect, int flags, QString text);
+
+public slots:
     void setNewWallpaper(QString path, bool isToUse);
     void setNewPassiveWallpaper(QString path, bool isToUse);
 
-public slots:
     void fadeIn();
     void fadeOut();
-    void setBlur(bool blur);
-    void setUseShadow(bool useShadow);
     void setDisplaySettings(DisplaySettings sets);
     void setFading(bool fade);
-    void renderText(bool text_present);
-    void setNewFont(QFont newFont);
-    void setForegroundColor(QColor new_color);
+
     void fastbluralpha(QImage &img, int radius);
     void setControlsSettings(DisplayControlsSettings &settings);
     void setControlButtonsVisible(bool visible);
 
+    void renderText(bool text_present);
+    void renderText(Verse verse, BibleSettings &bibleSetings);
+    void renderText(Stanza stanza, SongSettings &songSettings);
+    void renderText(Announcement announce, AnnounceSettings &announceSettings);
+
 signals:
-    void requestTextDrawing(QPainter *painter, int width, int height);
     void exitSlide();
     void nextSlide();
     void prevSlide();
@@ -46,24 +49,30 @@ protected:
     
 private slots:
     void positionControlButtons();
-
     void btnNextClicked();
     void btnPrevClicked();
     void btnExitClicked();
 
+    void drawBibleText(QPainter *painter, int width, int height);
+    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
+    void drawSongText(QPainter *painter, int width, int height);
+    QRect drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
+    QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
+    void drawAnnounceText(QPainter *painter, int width, int height);
+
 private:
     Ui::DisplayScreen *ui;
     DisplayControlsSettings controlsSettings;
-    DisplaySettings displaySettings;
-    bool use_fading;
-    bool use_shadow;
-    bool use_blur;
-    QFont main_font;
-    QString wallpaper_path; // Wallpaper image file path
+//    DisplaySettings displaySettings;
+    bool useFading;
+    bool useShadow;
+    bool useBluredShadow;
+    QFont mainFont;
+    QString wallpaperPath; // Wallpaper image file path
     QImage wallpaper; // Wallpaper image
-    QString passive_wallpaper_path;
-    QImage passive_wallpaper;
-    QColor foreground_color;
+    QString passiveWallpaperPath;
+    QImage passiveWallpaper;
+    QColor foregroundColor;
 
     QPixmap previous_image_pixmap;
     QImage output_image;
@@ -76,6 +85,16 @@ private:
     ControlButton *btnNext;
     ControlButton *btnPrev;
     ControlButton *btnExit;
+
+    SongSettings songSets;
+    BibleSettings bibleSets;
+    AnnounceSettings annouceSets;
+
+    Verse bibleVerse;
+    Stanza songStanza;
+    Announcement announcement;
+
+    QString textType;
 };
 
 #endif // DISPLAYSCREEN_H

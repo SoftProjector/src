@@ -31,6 +31,10 @@ private slots:
 
     void on_pushButton_default_clicked();
 
+    void on_checkBox_useShadow_stateChanged(int arg1);
+
+    void on_groupBoxDisplay2_toggled(bool arg1);
+
 private:
     SongSettings mySettings;
     Ui::SongSettingWidget *ui;

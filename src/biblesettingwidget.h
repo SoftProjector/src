@@ -41,6 +41,8 @@ private slots:
 
     void on_pushButton_default_clicked();
 
+    void on_checkBox_useShadow_stateChanged(int arg1);
+
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list,secondary_id_list,trinary_id_list,operator_id_list;

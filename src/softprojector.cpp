@@ -79,8 +79,6 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
     connect(announceWidget,SIGNAL(sendText(Announcement)),
             this, SLOT(setAnnounceText(Announcement)));
-    connect(displayScreen1, SIGNAL(requestTextDrawing(QPainter*, int, int)),
-            this, SLOT(drawText(QPainter*, int, int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)),
             songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)),
@@ -231,9 +229,6 @@ void SoftProjector::updateSetting(Settings &allsets)
 
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    displayScreen1->setFading(allsettings.general.useFading);
-    displayScreen1->setUseShadow(allsettings.general.useShadow);
-    displayScreen1->setBlur(allsettings.general.useBlurShadow);
 }
 
 void SoftProjector::applySetting(Settings &allsets)
@@ -244,9 +239,6 @@ void SoftProjector::applySetting(Settings &allsets)
 
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    displayScreen1->setFading(allsettings.general.useFading);
-    displayScreen1->setUseShadow(allsettings.general.useShadow);
-    displayScreen1->setBlur(allsettings.general.useBlurShadow);
 
     // Apply splitter states
     ui->splitter->restoreState(allsettings.spmain.spSplitter);
@@ -423,446 +415,6 @@ void SoftProjector::setSongList(Song song, int row)
     updateScreen();
 }
 
-QRect SoftProjector::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)
-{
-    // If draw is false, calculate the rectangle that the specified text would be
-    // drawn into if it was draw. If draw is true, draw as well.
-    // Output rect is returned.
-    QRect out_rect;
-    if(draw)
-        painter->drawText(left, top, width, height, flags, text, &out_rect);
-    else
-        out_rect = painter->boundingRect(left, top, width, height, flags, text);
-    return out_rect;
-}
-
-QRect SoftProjector::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str)
-{
-    // Figure out how to draw the specified song verse to the specified rect.
-    // Return the rectangle of the output - may be bigger than input rect.
-    // draw - whether to actually draw or to simply calculate the rect.
-
-    QRect caption_rect, num_rect, main_rect, out_rect, ending_rect;
-    int left = bound_rect.left();
-    int top = bound_rect.top();
-    int width = bound_rect.width();
-    int height = bound_rect.height();
-    int main_flags(0);
-
-    if(wrap)
-        main_flags += Qt::TextWordWrap;
-
-    if(current_song.usePrivateSettings)
-    {
-        if(current_song.alignmentV==0)
-            main_flags += Qt::AlignTop;
-        else if(current_song.alignmentV==1)
-            main_flags += Qt::AlignVCenter;
-        else if(current_song.alignmentV==2)
-            main_flags += Qt::AlignBottom;
-        if(current_song.alignmentH==0)
-            main_flags += Qt::AlignLeft;
-        else if(current_song.alignmentH==1)
-            main_flags += Qt::AlignHCenter;
-        else if(current_song.alignmentH==2)
-            main_flags += Qt::AlignRight;
-    }
-    else
-    {
-        if(allsettings.song.textAlingmentV==0)
-            main_flags += Qt::AlignTop;
-        else if(allsettings.song.textAlingmentV==1)
-            main_flags += Qt::AlignVCenter;
-        else if(allsettings.song.textAlingmentV==2)
-            main_flags += Qt::AlignBottom;
-        if(allsettings.song.textAlingmentH==0)
-            main_flags += Qt::AlignLeft;
-        else if(allsettings.song.textAlingmentH==1)
-            main_flags += Qt::AlignHCenter;
-        else if(allsettings.song.textAlingmentH==2)
-            main_flags += Qt::AlignRight;
-    }
-
-
-    QFont orig_font = painter->font();
-    QFont caption_font = orig_font;
-    caption_font.setPointSize( orig_font.pointSize() *4/5 );
-    QFont ending_font = orig_font;
-    ending_font.setPointSize(orig_font.pointSize() *2/3);
-
-    // Paint caption, key and number
-    painter->setFont(caption_font);
-    caption_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
-    num_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
-
-    // Paint song ending
-    painter->setFont(ending_font);
-    ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-    if(ending_rect.width()> width)
-    {
-        // decrease songe ending font size so that it would fit in the screen
-        while (ending_rect.width()> width)
-        {
-            ending_font.setPointSize(ending_font.pointSize()-1);
-            painter->setFont(ending_font);
-            ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        }
-        ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-    }
-    else
-        ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-
-    int cheight = caption_rect.height(); // Height of the caption text
-    int eheight = ending_rect.height(); // hieght of song ending text
-    painter->setFont(orig_font);
-    main_rect = boundRectOrDrawText(painter, draw, left, top+cheight, width, height-cheight-eheight, main_flags, main_text);
-
-    top = top-eheight;
-    left = main_rect.left();
-    height = main_rect.bottom() - top ;
-    width = main_rect.right() - left;
-
-    //    qDebug() << "OUT top, left, height, width:" << top << left << height << width;
-    out_rect.setRect(left, top, width, height);
-    return out_rect;
-}
-
-void SoftProjector::drawCurrentSongText(QPainter *painter, int width, int height)
-{
-    // Draw the text of the current song verse to the specified painter; making
-    // sure that the output rect is narrower than <width> and shorter than <height>.
-    QStringList song_list = current_song.getSongTextList();
-
-    QString main_text;
-    QString top_caption_str;
-    QString song_ending = " ";
-
-    bool last_verse = ( current_song_verse == song_list.count()-1 );
-
-    QStringList lines_list = song_list.at(current_song_verse).split("\n");
-    QString song_num_str = QString::number(current_song.number);
-    QString song_key_str = current_song.tune;
-
-    // Remove the first line if it starts with "Kuplet" or "Pripev" or "Vstavka":
-    QString textemp = lines_list[0];
-    //    textemp.remove(6,10);
-
-    // Check whether to display song numbers
-    if (allsettings.song.showSongNumber)
-        song_num_str = song_num_str;
-    else
-        song_num_str = " ";
-
-    // Check whether to display song key
-    if (allsettings.song.showSongKey)
-        song_num_str = song_key_str + "  " + song_num_str;
-    else
-        song_num_str = song_num_str;
-
-    // Remove Stanza Title from the stanza and send it to top caption
-    if(isStanzaTitle(textemp))
-    {
-        if (allsettings.song.showStanzaTitle)
-            top_caption_str = lines_list.at(0);
-        else
-            top_caption_str = " ";
-        //qDebug() << "CAPTION:";
-        //qDebug() << top_caption_str;
-        lines_list.removeFirst();
-    }
-
-
-    // Convert lines_list to a string:
-    main_text = "";
-    int num_lines = 0;
-    for (int i = 0; i < lines_list.size(); ++i)
-    {
-        if( i > 0 )
-            main_text += "\n";
-        main_text += lines_list.at(i);
-        num_lines++;
-    }
-
-    // Prepare Song ending string
-    if( last_verse )
-    {
-        // first check if to show ending
-        if(allsettings.song.showSongEnding)
-        {
-            if(allsettings.song.songEndingType == 0)
-                song_ending = "*    *    *";
-            else if(allsettings.song.songEndingType == 1)
-            {
-                // First check if copyrigth info exist. If it does show it.
-                // If some exist, then show what exist. If nothing exist, then show '* * *'
-                if(!current_song.wordsBy.isEmpty() && !current_song.musicBy.isEmpty())
-                    song_ending = QString(tr("Words by: %1, Music by: %2")).arg(current_song.wordsBy).arg(current_song.musicBy);
-                else if(!current_song.wordsBy.isEmpty() && current_song.musicBy.isEmpty())
-                    song_ending = QString(tr("Words by: %1")).arg(current_song.wordsBy);
-                else if(current_song.wordsBy.isEmpty() && !current_song.musicBy.isEmpty())
-                    song_ending = QString(tr("Music by: %1")).arg(current_song.musicBy);
-                else if(current_song.wordsBy.isEmpty() && current_song.musicBy.isEmpty())
-                    song_ending = "*    *    *";
-            }
-        }
-    }
-    // Margins:
-    int left = 30;
-    int top = 20;
-    int w = width - left - left;
-    int h = height - top - top;
-    QRect rect = QRect(left, top, w, h);
-
-    QRect out_rect;
-
-    QFont font = painter->font();
-    int orig_font_size = font.pointSize();
-
-    // Keep decreasing the font size until the text fits into the allocated space:
-    bool exit = false;
-    while( !exit )
-    {
-        out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str, song_ending);
-        exit = ( out_rect.width() <= w && out_rect.height() <= h );
-        if( !exit )
-        {
-            // Decrease font size by one point and try again
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
-        }
-    }
-    bool wrap = false;
-    // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
-    if( font.pointSize() < (orig_font_size*4/5) )
-    {
-        font.setPointSize(orig_font_size);
-        painter->setFont(font);
-        exit = false;
-        wrap = true;
-        while( !exit )
-        {
-            out_rect = drawSongTextToRect(painter, rect, false, true, main_text, top_caption_str, song_num_str, song_ending);
-            exit = ( out_rect.width() <= w && out_rect.height() <= h );
-            if( !exit )
-            {
-                // Decrease font size by one point and try again
-                font.setPointSize( font.pointSize()-1 );
-                painter->setFont(font);
-            }
-        }
-    }
-    // At this point we picked correct font size and flags; so it's safe to draw:
-    drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str, song_ending);
-}
-
-void SoftProjector::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size)
-{
-    QFont font = painter->font();
-
-    // prepare caption
-    font.setPointSize(font_size * 3/4);
-    painter->setFont(font);
-    crect = painter->boundingRect(left, top, width, height, cflags, ctext);
-
-    // prepare text
-    font.setPointSize(font_size);
-    painter->setFont(font);
-    trect = painter->boundingRect(left, top, width, height-crect.height(), tflags, ttext);
-
-    // reset capion location
-    int ch = crect.height();
-    crect.setTop(trect.bottom());
-    crect.setHeight(ch);
-
-}
-
-void SoftProjector::drawCurrentBibleText(QPainter *painter, int width, int height)
-{
-    // Margins:
-    int left = 30;
-    int top = 20;
-
-    //int right = width - left;
-    int w = width - left - left;
-    int h = height - top - top;
-
-    // set maximum screen size - For primary bibile  only
-    int maxh = h * allsettings.bible.maxScreen/100; // maximun screen height
-    int maxtop; // top of max screen
-    if(allsettings.bible.maxScreenFrom=="top")
-        maxtop  = top;
-    if(allsettings.bible.maxScreenFrom=="bottom")
-        maxtop = top+h-maxh;
-
-    // apply max screen use settings
-    h=maxh;
-    top=maxtop;
-
-    //       QFont font = painter->font();
-    QFont font = painter->font();
-    //       qDebug()<< "font 1:" + font.toString();
-    int original_size = font.pointSize();
-    int current_size = original_size;
-    Verse& v = current_verse; // for convenience
-
-
-    // Keep decreasing the font size until the text fits into the allocated space:
-
-    // Rects for storing the position of the text and caption drawing:
-    QRect trect1, crect1, trect2, crect2, trect3, crect3;
-    // Flags to be used for drawing verse text and caption:
-    int tflags = Qt::TextWordWrap;
-    tflags = Qt::TextWordWrap;
-    if(allsettings.bible.textAlingmentV==0)
-        tflags += Qt::AlignTop;
-    else if(allsettings.bible.textAlingmentV==1)
-        tflags += Qt::AlignVCenter;
-    else if(allsettings.bible.textAlingmentV==2)
-        tflags += Qt::AlignBottom;
-    if(allsettings.bible.textAlingmentH==0)
-        tflags += Qt::AlignLeft;
-    else if(allsettings.bible.textAlingmentH==1)
-        tflags += Qt::AlignHCenter;
-    else if(allsettings.bible.textAlingmentH==2)
-        tflags += Qt::AlignRight;
-    int cflags = Qt::AlignRight | Qt::AlignTop ;
-
-    bool exit = false;
-    while( !exit )
-    {
-        if(v.secondary_text.isEmpty() && v.trinary_text.isEmpty())
-        {
-            // Prepare primary version only, 2nd and 3rd do not exist
-            // Figure out how much space the drawing will take at the current font size:
-            drawBibleTextToRect(painter,trect1,crect1,v.primary_text,v.primary_caption,tflags,cflags,top,left,w,h, current_size);
-
-            // Make sure that all fits into the screen
-            int th = trect1.height()+crect1.height();
-            exit = (th<=h);
-        }
-        else if(!v.secondary_text.isEmpty() && v.trinary_text.isEmpty())
-        {
-            // Prepare primary and secondary versions, trinary does not exist
-
-            // Figure out how much space the drawing will take at the current font size for primary:
-            drawBibleTextToRect(painter,trect1,crect1,v.primary_text,v.primary_caption,tflags,cflags,top,left,w,h/2,current_size);
-
-            // set new top for secondary
-            int top2 = crect1.bottom();
-            if(top2<h/2+top)
-                top2=h/2+top;
-
-            // Figure out how much space the drawing will take at the current font size for secondary:
-            drawBibleTextToRect(painter,trect2,crect2,v.secondary_text,v.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
-
-            int th1 = trect1.height()+crect1.height();
-            int th2 = trect2.height()+crect2.height();
-
-            // Make sure that primary fits
-            exit = (th1<=h/2);
-            if (exit)
-                // If primary fits, make sure secondary fits
-                exit = (th2<=h/2);
-        }
-        else if(!v.secondary_text.isEmpty() && !v.trinary_text.isEmpty())
-        {
-            // Prepare primary and secondary and trinary versions
-
-            // Figure out how much space the drawing will take at the current font size for primary:
-            drawBibleTextToRect(painter,trect1,crect1,v.primary_text,v.primary_caption,tflags,cflags,top,left,w,h*1/3,current_size);
-
-            // set new top for secondary
-            int top2 = crect1.bottom();
-            if(top2<h*1/3+top)
-                top2=h*1/3+top;
-
-            // Figure out how much space the drawing will take at the current font size for secondary:
-            drawBibleTextToRect(painter,trect2,crect2,v.secondary_text,v.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
-
-            // set new top for trinaty
-            top2 = crect2.bottom();
-            if(top2<h*2/3+top)
-                top2 = h*2/3+top;
-
-            // Figure out how much space the drawing will take at the current font size for trinary:
-            drawBibleTextToRect(painter,trect3,crect3,v.trinary_text,v.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
-
-            int th1 = trect1.height()+crect1.height();
-            int th2 = trect2.height()+crect2.height();
-            int th3 = trect3.height()+crect3.height();
-
-            // Make sure that primary fits
-            exit = (th1<=h*1/3);
-            if(exit)
-                // If primary fits, make sure secondary fits
-                exit = (th2<=h*1/3);
-            if(exit)
-                // If also secondary fits, make sure trinary fits
-                exit = (th3<=h*1/3);
-        }
-
-        if( !exit ) // The current font is too large, decrease and try again:
-            current_size--;
-    }
-
-
-    // Draw the bible text verse(s) at the final size:
-    font.setPointSize(current_size);
-    painter->setFont(font);
-    painter->drawText(trect1, tflags, v.primary_text);
-//    tflags += Qt::RightToLeft;
-    if(!v.secondary_text.isNull())
-        painter->drawText(trect2, tflags, v.secondary_text);
-    if(!v.trinary_text.isNull())
-        painter->drawText(trect3, tflags, v.trinary_text);
-
-    // Draw the verse caption(s) at the final size:
-    font.setPointSize(current_size*3/4);
-    painter->setFont(font);
-    painter->drawText(crect1, cflags, v.primary_caption);
-//    cflags += Qt::RightToLeft;
-    if(!v.secondary_text.isNull())
-        painter->drawText(crect2, cflags, v.secondary_caption);
-    if(!v.trinary_caption.isNull())
-        painter->drawText(crect3, cflags, v.trinary_caption);
-
-    // Restore the original font:
-    font.setPointSize(original_size);
-    painter->setFont(font);
-
-}
-
-void SoftProjector::drawAnnounceText(QPainter *painter, int width, int height)
-{
-    // Margins:
-    int left = 30;
-    int top = 20;
-    int w = width - left - left;
-    int h = height - top - top;
-
-    int flags = announcement_text.align_flags;
-
-    QRect rect = QRect(left, top, w, h);
-    QString announce_text = announcement_text.text;
-    displayScreen1->paintTextToRect(painter, rect, flags, announce_text);
-
-    //    announceWidget->drawToPainter(painter, width, height);
-}
-
-void SoftProjector::drawText(QPainter *painter, int width, int height)
-{
-    if( !showing )
-        return;
-
-    if(type=="song")
-        drawCurrentSongText(painter, width, height);
-    else if(type=="bible")
-        drawCurrentBibleText(painter, width, height);
-    else if(type == "announce")
-        drawAnnounceText(painter, width, height);
-}
-
 void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems)
 {
     // Called to show a bible verse from a chapter in the preview list
@@ -911,7 +463,7 @@ void SoftProjector::updateScreen()
     // the display
     int currentRow = ui->listShow->currentRow();
 
-    if( showing == false )
+    if(!showing)
     {
         if(isSingleScreen)
             showDisplayScreen(false);
@@ -932,28 +484,8 @@ void SoftProjector::updateScreen()
         ui->show_button->setEnabled(false);
         ui->clear_button->setEnabled(true);
 
-        if(type=="song")
+        if(type=="bible")
         {
-            if(current_song.usePrivateSettings)
-            {
-                bool useBack = !current_song.backgroundPath.trimmed().isEmpty();
-                displayScreen1->setNewWallpaper(current_song.backgroundPath,useBack);
-                displayScreen1->setForegroundColor(current_song.color);
-                displayScreen1->setNewFont(current_song.font);
-            }
-            else
-            {
-                displayScreen1->setNewWallpaper(allsettings.song.backgroundPath,allsettings.song.useBackground);
-                displayScreen1->setForegroundColor(allsettings.song.textColor);
-                displayScreen1->setNewFont(allsettings.song.textFont);
-            }
-            current_song_verse = currentRow;
-        }
-        else if(type=="bible")
-        {
-            displayScreen1->setNewWallpaper(allsettings.bible.backgroundPath,allsettings.bible.useBackground);
-            displayScreen1->setForegroundColor(allsettings.bible.textColor);
-            displayScreen1->setNewFont(allsettings.bible.textFont);
             int srows(ui->listShow->count());
             QList<int> currentRows;
             for(int i(0); i<srows; ++i)
@@ -961,15 +493,12 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-            current_verse = bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible);
+            displayScreen1->renderText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
         }
-        else if( type == "announce" )
-        {
-            displayScreen1->setNewWallpaper(allsettings.announce.backgroundPath,allsettings.announce.useBackground);
-            displayScreen1->setForegroundColor(allsettings.announce.textColor);
-            displayScreen1->setNewFont(allsettings.announce.textFont);
-            announcement_text.text = announceWidget->getText();
-        }
+        else if(type=="song")
+            displayScreen1->renderText(current_song.getStanza(currentRow),allsettings.song);
+        else if(type == "announce")
+            displayScreen1->renderText(announcement_text,allsettings.announce);
         displayScreen1->renderText(true);
     }
 }

@@ -30,7 +30,6 @@ private slots:
     void on_pushButton_default_clicked();
 
     void loadSettings();
-    void on_checkBox_useShadow_stateChanged(int arg1);
 };
 
 #endif // GENERALSETTINGWIDGET_H

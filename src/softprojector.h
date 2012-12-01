@@ -82,12 +82,6 @@ private:
     bool new_list;
     QActionGroup *languageGroup;
     QString languagePath;
-    QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
-    QRect drawSongTextToRect(QPainter *painter, QRect rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
-    void drawCurrentSongText(QPainter *painter, int width, int height);
-    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
-    void drawCurrentBibleText(QPainter *painter, int width, int height);
-    void drawAnnounceText(QPainter *painter, int width, int height);
     QTranslator translator;
 
     //For saving and opening softProjector project files
@@ -137,7 +131,6 @@ private slots:
     void setSongList(Song song, int row);
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
-    void drawText(QPainter *painter, int width, int height);
 
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);

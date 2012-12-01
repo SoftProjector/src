@@ -22,9 +22,6 @@ void GeneralSettingWidget::setSettings(GeneralSettings settings)
 void GeneralSettingWidget::loadSettings()
 {
     ui->checkBox_displayOnTop->setChecked(mySettings.displayIsOnTop);
-    ui->checkBox_useShadow->setChecked(mySettings.useShadow);
-    ui->checkBox_useFading->setChecked(mySettings.useFading);
-    ui->checkBox_useBlurredShadow->setChecked(mySettings.useBlurShadow);
     ui->groupBox_Back->setChecked(mySettings.useBackground);
     ui->lineEdit_BackPath->setText(mySettings.backgroundPath);
 
@@ -39,6 +36,10 @@ void GeneralSettingWidget::loadSettings()
     ui->comboBox_displayScreen->setCurrentIndex(mySettings.displayScreen);
 
     // Set Display Controls
+    if(screen_count>1)
+        ui->groupBoxDisplayControls->setEnabled(false);
+    else
+        ui->groupBoxDisplayControls->setEnabled(true);
     ui->comboBoxIconSize->setCurrentIndex(mySettings.displayControls.buttonSize);
     ui->comboBoxControlsAlignV->setCurrentIndex(mySettings.displayControls.alignmentV);
     ui->comboBoxControlsAlignH->setCurrentIndex(mySettings.displayControls.alignmentH);
@@ -48,9 +49,6 @@ void GeneralSettingWidget::loadSettings()
 GeneralSettings GeneralSettingWidget::getSettings()
 {
     mySettings.displayIsOnTop = ui->checkBox_displayOnTop->isChecked();
-    mySettings.useShadow = ui->checkBox_useShadow->isChecked();
-    mySettings.useFading = ui->checkBox_useFading->isChecked();
-    mySettings.useBlurShadow = ui->checkBox_useBlurredShadow->isChecked();
     mySettings.useBackground = ui->groupBox_Back->isChecked();
     mySettings.backgroundPath = ui->lineEdit_BackPath->text();
 
@@ -82,15 +80,4 @@ void GeneralSettingWidget::on_pushButton_default_clicked()
     GeneralSettings g;
     mySettings = g;
     loadSettings();
-}
-
-void GeneralSettingWidget::on_checkBox_useShadow_stateChanged(int arg1)
-{
-    if(arg1==2)
-        ui->checkBox_useBlurredShadow->setEnabled(true);
-    else
-    {
-        ui->checkBox_useBlurredShadow->setChecked(false);
-        ui->checkBox_useBlurredShadow->setEnabled(false);
-    }
 }

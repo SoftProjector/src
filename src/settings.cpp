@@ -4,9 +4,6 @@ GeneralSettings::GeneralSettings()
 {
     // Apply General Defauls
     displayIsOnTop = false;
-    useShadow = true;
-    useFading = true;
-    useBlurShadow = false;
     useBackground = false;
     backgroundPath = "";
     displayScreen = 0;
@@ -19,6 +16,9 @@ BibleSettings::BibleSettings()
     secondaryBible = "none";
     trinaryBible = "none";
     operatorBible = "same";
+    useShadow = true;
+    useFading = true;
+    useBlurShadow = false;
     useBackground = false;
     backgroundPath = "";
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
@@ -38,6 +38,9 @@ SongSettings::SongSettings()
     showSongNumber = false;
     showSongEnding = true;
     songEndingType = 0;
+    useShadow = true;
+    useFading = true;
+    useBlurShadow = false;
     useBackground = false;
     backgroundPath = "";
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
@@ -49,6 +52,9 @@ SongSettings::SongSettings()
 AnnounceSettings::AnnounceSettings()
 {
     // Apply annouce defaults
+    useShadow = true;
+    useFading = true;
+    useBlurShadow = false;
     useBackground = false;
     backgroundPath = "";
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
@@ -99,12 +105,6 @@ void Settings::loadSettings(QString user)
                 v = set.at(1).trimmed();
                 if(n == "displayIsOnTop")
                     general.displayIsOnTop = (v=="true");
-                else if (n == "useShadow")
-                    general.useShadow = (v=="true");
-                else if (n == "useFading")
-                    general.useFading = (v=="true");
-                else if (n == "useBlurShadow")
-                    general.useBlurShadow = (v=="true");
                 else if (n == "useBackground")
                     general.useBackground = (v=="true");
                 else if (n == "backgroundPath")
@@ -141,6 +141,12 @@ void Settings::loadSettings(QString user)
                     bible.trinaryBible = v;
                 else if(n=="operatorBible")
                     bible.operatorBible = v;
+                else if (n == "useShadow")
+                    bible.useShadow = (v=="true");
+                else if (n == "useFading")
+                    bible.useFading = (v=="true");
+                else if (n == "useBlurShadow")
+                    bible.useBlurShadow = (v=="true");
                 else if(n=="useBackground")
                     bible.useBackground = (v=="true");
                 else if(n=="backgroundPath")
@@ -182,6 +188,12 @@ void Settings::loadSettings(QString user)
                     song.showSongEnding = (v=="true");
                 else if(n=="songEndingType")
                     song.songEndingType = v.toInt();
+                else if (n == "useShadow")
+                    song.useShadow = (v=="true");
+                else if (n == "useFading")
+                    song.useFading = (v=="true");
+                else if (n == "useBlurShadow")
+                    song.useBlurShadow = (v=="true");
                 else if(n=="useBackground")
                     song.useBackground = (v=="true");
                 else if(n=="backgroundPath")
@@ -208,7 +220,13 @@ void Settings::loadSettings(QString user)
                 set = s.split("=");
                 n = set.at(0).trimmed();
                 v = set.at(1).trimmed();
-                if(n=="useBackground")
+                if (n == "useShadow")
+                    announce.useShadow = (v=="true");
+                else if (n == "useFading")
+                    announce.useFading = (v=="true");
+                else if (n == "useBlurShadow")
+                    announce.useBlurShadow = (v=="true");
+                else if(n=="useBackground")
                     announce.useBackground = (v=="true");
                 else if(n=="backgroundPath")
                     announce.backgroundPath = v;
@@ -260,18 +278,18 @@ void Settings::saveSettings(QString user)
         gset = "displayIsOnTop = true\n";
     else
         gset = "displayIsOnTop = false\n";
-    if(general.useShadow)
-        gset += "useShadow = true\n";
-    else
-        gset += "useShadow = false\n";
-    if(general.useFading)
-        gset += "useFading = true\n";
-    else
-        gset += "useFading = false\n";
-    if(general.useBlurShadow)
-        gset += "useBlurShadow = true\n";
-    else
-        gset += "useBlurShadow = false\n";
+//    if(general.useShadow)
+//        gset += "useShadow = true\n";
+//    else
+//        gset += "useShadow = false\n";
+//    if(general.useFading)
+//        gset += "useFading = true\n";
+//    else
+//        gset += "useFading = false\n";
+//    if(general.useBlurShadow)
+//        gset += "useBlurShadow = true\n";
+//    else
+//        gset += "useBlurShadow = false\n";
     if(general.useBackground)
         gset += "useBackground = true\n";
     else
@@ -287,6 +305,20 @@ void Settings::saveSettings(QString user)
     bset += "\nsecondaryBible = " + bible.secondaryBible;
     bset += "\ntrinaryBible = " + bible.trinaryBible;
     bset += "\noperatorBible = " + bible.operatorBible;
+
+    // Effects
+    if(bible.useShadow)
+        bset += "\nuseShadow = true";
+    else
+        bset += "\nuseShadow = false";
+    if(bible.useFading)
+        bset += "\nuseFading = true";
+    else
+        bset += "\nuseFading = false";
+    if(bible.useBlurShadow)
+        bset += "\nuseBlurShadow = true";
+    else
+        bset += "\nuseBlurShadow = false";
 
     // Background
     if(bible.useBackground)
@@ -336,6 +368,20 @@ void Settings::saveSettings(QString user)
         sset += "showSongEnding = false\n";
     sset += "songEndingType = " + QString::number(song.songEndingType);
 
+    // Effects
+    if(song.useShadow)
+        sset += "\nuseShadow = true";
+    else
+        sset += "\nuseShadow = false";
+    if(song.useFading)
+        sset += "\nuseFading = true";
+    else
+        sset += "\nuseFading = false";
+    if(song.useBlurShadow)
+        sset += "\nuseBlurShadow = true";
+    else
+        sset += "\nuseBlurShadow = false";
+
     if(song.useBackground)
         sset += "\nuseBackground = true";
     else
@@ -355,8 +401,22 @@ void Settings::saveSettings(QString user)
     sset += "\ntextFont = " + song.textFont.toString();
 
     // **** prepare announcement settings ************************************
+    // Effects
+    if(announce.useShadow)
+        aset = "useShadow = true";
+    else
+        aset = "useShadow = false";
+    if(announce.useFading)
+        aset += "\nuseFading = true";
+    else
+        aset += "\nuseFading = false";
+    if(announce.useBlurShadow)
+        aset += "\nuseBlurShadow = true";
+    else
+        aset += "\nuseBlurShadow = false";
+
     // background
-    (announce.useBackground)? aset = "useBackground = true" : aset = "useBackground = false";
+    (announce.useBackground)? aset += "\nuseBackground = true" : aset += "\nuseBackground = false";
     aset += "\nbackgroundPath = " + announce.backgroundPath;
 
     // Text alingment

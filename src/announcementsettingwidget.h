@@ -28,6 +28,8 @@ private slots:
 
     void on_pushButton_default_clicked();
 
+    void on_checkBox_useShadow_stateChanged(int arg1);
+
 private:
     AnnounceSettings mySettings;
     Ui::AnnouncementSettingWidget *ui;

@@ -20,8 +20,7 @@
 #ifndef ANNOUNCEWIDGET_H
 #define ANNOUNCEWIDGET_H
 
-#include <QtGui/QWidget>
-#include "display1.h"
+#include <QtGui>
 
 namespace Ui {
     class AnnounceWidget;
@@ -67,7 +66,6 @@ signals:
 
 private:
     Ui::AnnounceWidget *ui;
-    Display1 *display;
     QList<Announcement> history_items;
 
 public slots:

@@ -30,6 +30,25 @@ bool isStanzaRefrainTitle(QString string);
 bool isStanzaAndRefrainTitle(QString string);
 bool isStanzaSlideTitle(QString string);
 
+class Stanza
+    // Class to hold current verse text and song info to send to projection
+{
+public:
+    int number;
+    QString stanza;
+    QString stanzaTitle;
+    QString wordsBy;
+    QString musicBy;
+    QString tune;
+    bool isLast;
+    bool usePrivateSettings;
+    int alignmentV;
+    int alignmentH;
+    QString backgroundPath;
+    QColor color;
+    QFont font;
+};
+
 class Song
 // Class for storing song information: number, name, songbook
 // The instance of this class is specific to a song & songbook.
@@ -43,6 +62,7 @@ class Song
     void saveUpdate();
     void saveNew();
     QStringList getSongTextList();
+    Stanza getStanza(int current);
     QString getSongbookName();
     bool isValid();
 
