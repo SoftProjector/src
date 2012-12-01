@@ -20,9 +20,13 @@ public:
     GeneralSettings();
     bool displayIsOnTop;
     bool useBackground;
+    bool useBackground2;
     QString backgroundPath;
-    int displayScreen; // stores which sreen to display on
+    QString backgroundPath2;
+    int displayScreen; // stores primary display screen location
+    int displayScreen2; // stores secondary display screen location
     DisplayControlsSettings displayControls;
+    bool useDisplaySettings2;
 };
 
 class BibleSettings

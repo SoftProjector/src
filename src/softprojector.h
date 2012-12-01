@@ -53,7 +53,7 @@ public:
     QDesktopWidget *desktop;
     EditWidget *editWidget;
     DisplayScreen *displayScreen1;
-//    DisplayScreen *displayScreen2;
+    DisplayScreen *displayScreen2;
 
     bool showing; // whether we are currently showing to the projector
     Song current_song;
@@ -91,6 +91,7 @@ private:
     QString cur_locale;
 
     bool isSingleScreen;
+    bool hasDisplayScreen2;
 
 private slots:
     void showDisplayScreen(bool show);

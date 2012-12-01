@@ -51,6 +51,7 @@ private:
     SoftProjector *softProjector;
 
     int current_display_screen;
+    int currentDisplayScreen2;
     bool is_always_on_top;
 
     Settings allSettings;

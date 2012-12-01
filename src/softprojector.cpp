@@ -35,7 +35,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // NOTE: With virtual desktop, desktop->screen() will always return the main screen,
     // so this will initialize the Display1 widget on the main screen:
     displayScreen1 = new DisplayScreen(desktop->screen(0));
-    //displayScreen2 = new DisplayScreen(desktop->screen(0)); //for future
+    displayScreen2 = new DisplayScreen(desktop->screen(0)); //for future
     // Don't worry, we'll move it later
 
     bibleWidget = new BibleWidget;
@@ -61,10 +61,12 @@ SoftProjector::SoftProjector(QWidget *parent)
     applySetting(allsettings);
 
     displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
+    displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
 
     positionDisplayWindow();
 
     displayScreen1->renderText(false);
+    displayScreen2->renderText(false);
 
     showing = false;
 
@@ -130,7 +132,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->rbMultiVerse->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
-    version_string = "2.Dev.Build:1"; // to be used between official releases
+    version_string = "2.Dev.Build:2"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 }
 
@@ -152,11 +154,17 @@ void SoftProjector::positionDisplayWindow()
     // showing full screen / normal mode, and positioning it on the right screen)
 
     if (allsettings.general.displayIsOnTop)
+    {
         displayScreen1->setWindowFlags(Qt::WindowStaysOnTopHint);
+        displayScreen2->setWindowFlags(Qt::WindowStaysOnTopHint);
+    }
     else
+    {
         displayScreen1->setWindowFlags(0); // Do not show always on top
+        displayScreen2->setWindowFlags(0); // Do not show always on top
+    }
 
-    if( desktop->numScreens() > 1 )
+    if(desktop->screenCount() > 1)
     {
         if (desktop->isVirtualDesktop())
         {
@@ -167,6 +175,30 @@ void SoftProjector::positionDisplayWindow()
         displayScreen1->showFullScreen();
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
         displayScreen1->setControlButtonsVisible(false);
+
+
+        // check if to display secondary display screen
+        qDebug()<<"DS2#:"<<allsettings.general.displayScreen2;
+        if(allsettings.general.displayScreen2>=0)
+        {
+            hasDisplayScreen2 = true;
+            if (desktop->isVirtualDesktop())
+            {
+                // Move the display widget to screen 1 (secondary screen):
+                QPoint top_left = desktop->screenGeometry(allsettings.general.displayScreen2).topLeft();
+                displayScreen2->move(top_left);
+            }
+            displayScreen2->showFullScreen();
+            displayScreen2->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+            displayScreen2->setControlButtonsVisible(false);
+        }
+        else
+        {
+            hasDisplayScreen2 = false;
+            displayScreen2->hide();
+        }
+
+        // specify that there is more than one diplay screen(monitor) availbale
         isSingleScreen = false;
     }
     else
@@ -229,16 +261,18 @@ void SoftProjector::updateSetting(Settings &allsets)
 
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+    if(hasDisplayScreen2)
+    {
+        if(allsettings.general.useDisplaySettings2)
+            displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath2,allsettings.general.useBackground2);
+        else
+            displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+    }
 }
 
 void SoftProjector::applySetting(Settings &allsets)
 {
-    allsettings = allsets;
-    bibleWidget->setSettings(allsettings.bible);
-    announceWidget->setAlingment(allsettings.announce.textAlingmentV,allsettings.announce.textAlingmentH);
-
-    // Apply display settings;
-    displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+    updateSetting(allsets);
 
     // Apply splitter states
     ui->splitter->restoreState(allsettings.spmain.spSplitter);
@@ -470,6 +504,8 @@ void SoftProjector::updateScreen()
 
         // Do not display any text:
         displayScreen1->renderText(false);
+        if(hasDisplayScreen2)
+            displayScreen2->renderText(false);
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
@@ -493,13 +529,22 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-            displayScreen1->renderText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+            if(hasDisplayScreen2)
+                displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
         }
         else if(type=="song")
-            displayScreen1->renderText(current_song.getStanza(currentRow),allsettings.song);
+        {
+            displayScreen1->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+            if(hasDisplayScreen2)
+                displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+        }
         else if(type == "announce")
-            displayScreen1->renderText(announcement_text,allsettings.announce);
-        displayScreen1->renderText(true);
+        {
+            displayScreen1->renderAnnounceText(announcement_text,allsettings.announce);
+            if(hasDisplayScreen2)
+                displayScreen2->renderAnnounceText(announcement_text,allsettings.announce);
+        }
     }
 }
 

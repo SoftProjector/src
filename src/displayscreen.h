@@ -34,9 +34,9 @@ public slots:
     void setControlButtonsVisible(bool visible);
 
     void renderText(bool text_present);
-    void renderText(Verse verse, BibleSettings &bibleSetings);
-    void renderText(Stanza stanza, SongSettings &songSettings);
-    void renderText(Announcement announce, AnnounceSettings &announceSettings);
+    void renderBibleText(Verse verse, BibleSettings &bibleSetings);
+    void renderSongText(Stanza stanza, SongSettings &songSettings);
+    void renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings);
 
 signals:
     void exitSlide();

@@ -49,6 +49,7 @@ void SettingsDialog::loadSettings(Settings& sets)
     // remember main display window setting if they will be changed
     is_always_on_top = allSettings.general.displayIsOnTop;
     current_display_screen = allSettings.general.displayScreen;
+    currentDisplayScreen2 = allSettings.general.displayScreen2;
 
     // Set individual items
     generalSettingswidget->setSettings(allSettings.general);
@@ -94,7 +95,9 @@ void SettingsDialog::on_buttonBox_accepted()
     softProjector->updateScreen();
 
     // Update <display_on_top> only when changed, or when screen location has been changed
-    if(is_always_on_top!=allSettings.general.displayIsOnTop || current_display_screen!=allSettings.general.displayScreen)
+    if(is_always_on_top!=allSettings.general.displayIsOnTop
+            || current_display_screen!=allSettings.general.displayScreen
+            || currentDisplayScreen2!=allSettings.general.displayScreen2)
         softProjector->positionDisplayWindow();
 
     close();

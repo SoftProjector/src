@@ -5,8 +5,12 @@ GeneralSettings::GeneralSettings()
     // Apply General Defauls
     displayIsOnTop = false;
     useBackground = false;
+    useBackground2 = false;
     backgroundPath = "";
+    backgroundPath2 = "";
     displayScreen = 0;
+    displayScreen2 = -1; // interger "-1" mean "None" or not to display
+    useDisplaySettings2 = false;
 }
 
 BibleSettings::BibleSettings()
@@ -111,6 +115,8 @@ void Settings::loadSettings(QString user)
                     general.backgroundPath = v;
                 else if (n == "displayScreen")
                     general.displayScreen = v.toInt();
+                else if (n == "displayScreen2")
+                    general.displayScreen2 = v.toInt();
                 else if (n == "dcIconSize")
                     general.displayControls.buttonSize = v.toInt();
                 else if (n == "dcAlignment")
@@ -278,24 +284,13 @@ void Settings::saveSettings(QString user)
         gset = "displayIsOnTop = true\n";
     else
         gset = "displayIsOnTop = false\n";
-//    if(general.useShadow)
-//        gset += "useShadow = true\n";
-//    else
-//        gset += "useShadow = false\n";
-//    if(general.useFading)
-//        gset += "useFading = true\n";
-//    else
-//        gset += "useFading = false\n";
-//    if(general.useBlurShadow)
-//        gset += "useBlurShadow = true\n";
-//    else
-//        gset += "useBlurShadow = false\n";
     if(general.useBackground)
         gset += "useBackground = true\n";
     else
         gset += "useBackground = fasle\n";
     gset += "backgroundPath = " + general.backgroundPath;
     gset += "\ndisplayScreen = " + QString::number(general.displayScreen);
+    gset += "\ndisplayScreen2 = " + QString::number(general.displayScreen2);
     gset += "\ndcIconSize = " + QString::number(general.displayControls.buttonSize);
     gset += QString("\ndcAlignment = %1,%2").arg(general.displayControls.alignmentV).arg(general.displayControls.alignmentH);
     gset += "\ndcOpacity = " + QString::number(general.displayControls.opacity);

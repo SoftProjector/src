@@ -186,6 +186,9 @@ void DisplayScreen::fadeOut() // For future
 
 void DisplayScreen::renderText(bool text_present)
 {
+    if(!text_present)
+        textType.clear();
+
     if(useFading)
     {
         acounter[0]=0;
@@ -291,7 +294,7 @@ void DisplayScreen::renderText(bool text_present)
         update();
 }
 
-void DisplayScreen::renderText(Verse verse, BibleSettings &bibleSetings)
+void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
 {
     // Render bible verse text
     textType = "bible";
@@ -304,9 +307,11 @@ void DisplayScreen::renderText(Verse verse, BibleSettings &bibleSetings)
     setNewWallpaper(bibleSets.backgroundPath,bibleSets.useBackground);
     mainFont = bibleSets.textFont;
     foregroundColor = bibleSets.textColor;
+
+    renderText(true);
 }
 
-void DisplayScreen::renderText(Stanza stanza, SongSettings &songSettings)
+void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
 {
     // Render song stanza text
     textType = "song";
@@ -329,9 +334,11 @@ void DisplayScreen::renderText(Stanza stanza, SongSettings &songSettings)
         mainFont = songSets.textFont;
         foregroundColor = songSets.textColor;
     }
+
+    renderText(true);
 }
 
-void DisplayScreen::renderText(Announcement announce, AnnounceSettings &announceSettings)
+void DisplayScreen::renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings)
 {
     // Render aanouncement text
     textType = "announce";
@@ -344,6 +351,8 @@ void DisplayScreen::renderText(Announcement announce, AnnounceSettings &announce
     setNewWallpaper(annouceSets.backgroundPath,annouceSets.useBackground);
     mainFont = annouceSets.textFont;
     foregroundColor = annouceSets.textColor;
+
+    renderText(true);
 }
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
