@@ -35,6 +35,11 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 
 DisplayScreen::~DisplayScreen()
 {
+    delete timer;
+    delete timer_out;
+    delete btnPrev;
+    delete btnNext;
+    delete btnExit;
     delete ui;
 }
 void DisplayScreen::keyPressEvent(QKeyEvent *event)

@@ -20,7 +20,6 @@
 #include <QDesktopWidget>
 #include "softprojector.h"
 #include "ui_softprojector.h"
-#include "settingsdialog.h"
 #include "aboutdialog.h"
 #include "helpdialog.h"
 
@@ -43,6 +42,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     editWidget = new EditWidget;
     announceWidget = new AnnounceWidget;
     manageDialog = new ManageDataDialog(this);
+    settingsDialog = new SettingsDialog(this);
 
     ui->setupUi(this);
 
@@ -75,38 +75,28 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
 
-    connect(songWidget, SIGNAL(sendSong(Song, int)),
-            this, SLOT(setSongList(Song, int)));
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
-    connect(announceWidget,SIGNAL(sendText(Announcement)),
-            this, SLOT(setAnnounceText(Announcement)));
-    connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)),
-            songWidget, SLOT(updateSongFromDatabase(int,int)));
-    connect(editWidget, SIGNAL(addedNew(Song,int)),
-            songWidget,SLOT(addNewSong(Song,int)));
-    connect(manageDialog, SIGNAL(setMainArrowCursor()),
-            this, SLOT(setArrowCursor()));
-    connect(manageDialog, SIGNAL(setMainWaitCursor()),
-            this, SLOT(setWaitCursor()));
-    connect(bibleWidget, SIGNAL(setArrowCursor()),
-            this, SLOT(setArrowCursor()));
-    connect(bibleWidget, SIGNAL(setWaitCursor()),
-            this, SLOT(setWaitCursor()));
-    connect(songWidget, SIGNAL(setArrowCursor()),
-            this, SLOT(setArrowCursor()));
-    connect(songWidget, SIGNAL(setWaitCursor()),
-            this, SLOT(setWaitCursor()));
-    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)),
-            this, SLOT(setProjectChanged(bool)));
-    connect(announceWidget, SIGNAL(annouceListChanged(bool)),
-            this, SLOT(setProjectChanged(bool)));
-    connect(bibleWidget, SIGNAL(historyListChanged(bool)),
-            this, SLOT(setProjectChanged(bool)));
+    connect(bibleWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
+    connect(bibleWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
+    connect(bibleWidget, SIGNAL(historyListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    connect(songWidget, SIGNAL(sendSong(Song, int)), this, SLOT(setSongList(Song, int)));
+    connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
+    connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
+    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
+    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
+    connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
+    connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
+    connect(manageDialog, SIGNAL(setMainWaitCursor()), this, SLOT(setWaitCursor()));
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
     connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
     connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
     connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
+    connect(settingsDialog,SIGNAL(updateSettings(Settings&)),this,SLOT(updateSetting(Settings&)));
+    connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
+    connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
 
     ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
@@ -143,8 +133,12 @@ SoftProjector::~SoftProjector()
     delete editWidget;
     delete bibleWidget;
     delete announceWidget;
+    delete manageDialog;
     delete displayScreen1;
+    delete displayScreen2;
     delete desktop;
+    delete languageGroup;
+    delete settingsDialog;
     delete ui;
 }
 
@@ -176,9 +170,7 @@ void SoftProjector::positionDisplayWindow()
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
         displayScreen1->setControlButtonsVisible(false);
 
-
         // check if to display secondary display screen
-        qDebug()<<"DS2#:"<<allsettings.general.displayScreen2;
         if(allsettings.general.displayScreen2>=0)
         {
             hasDisplayScreen2 = true;
@@ -203,15 +195,12 @@ void SoftProjector::positionDisplayWindow()
     }
     else
     {
-        // Single monitor only, show normal (not full screen):
-//        displayScreen1->showNormal();
-        // NOTE the y-coordinate of 50 is so that the window does not overwrite the menu bar on Mac OS X
-//        displayScreen1->setGeometry(10, 50, 800, 600);
+        // Single monitor only: Do not show on strat up.
+        // Will be shown only when items were sent to the projector.
         showDisplayScreen(false);
         isSingleScreen = true;
-
+        hasDisplayScreen2 = false;
     }
-
 }
 
 void SoftProjector::showDisplayScreen(bool show)
@@ -258,16 +247,13 @@ void SoftProjector::updateSetting(Settings &allsets)
     allsettings = allsets;
     bibleWidget->setSettings(allsettings.bible);
     announceWidget->setAlingment(allsettings.announce.textAlingmentV,allsettings.announce.textAlingmentH);
-
+    
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    if(hasDisplayScreen2)
-    {
-        if(allsettings.general.useDisplaySettings2)
-            displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath2,allsettings.general.useBackground2);
-        else
-            displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    }
+    if(allsettings.general.useDisplaySettings2)
+        displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath2,allsettings.general.useBackground2);
+    else
+        displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
 }
 
 void SoftProjector::applySetting(Settings &allsets)
@@ -531,19 +517,34 @@ void SoftProjector::updateScreen()
             }
             displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
             if(hasDisplayScreen2)
-                displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+            {
+                if(allsettings.bible2.useDisp2settings)
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible2),allsettings.bible2);
+                else
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+            }
         }
         else if(type=="song")
         {
             displayScreen1->renderSongText(current_song.getStanza(currentRow),allsettings.song);
             if(hasDisplayScreen2)
-                displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+            {
+                if(allsettings.song2.useDisp2settings)
+                    displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song2);
+                else
+                    displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+            }
         }
         else if(type == "announce")
         {
             displayScreen1->renderAnnounceText(announcement_text,allsettings.announce);
             if(hasDisplayScreen2)
-                displayScreen2->renderAnnounceText(announcement_text,allsettings.announce);
+            {
+                if(allsettings.announce2.useDisp2settings)
+                    displayScreen2->renderAnnounceText(announcement_text,allsettings.announce2);
+                else
+                    displayScreen2->renderAnnounceText(announcement_text,allsettings.announce);
+            }
         }
     }
 }
@@ -681,8 +682,6 @@ void SoftProjector::on_actionDeleteSong_triggered()
 
 void SoftProjector::on_actionSettings_triggered()
 {
-    SettingsDialog *settingsDialog;
-    settingsDialog = new SettingsDialog(this);
     settingsDialog->loadSettings(allsettings);
     settingsDialog->exec();
 }
@@ -699,6 +698,7 @@ void SoftProjector::on_actionAbout_triggered()
     AboutDialog *aboutDialog;
     aboutDialog = new AboutDialog(this, version_string);
     aboutDialog->exec();
+    delete aboutDialog;
 }
 
 void SoftProjector::on_projectTab_currentChanged(int index)
@@ -774,6 +774,7 @@ void SoftProjector::on_action_Help_triggered()
     HelpDialog *help_dialog;
     help_dialog = new HelpDialog();
     help_dialog->show();
+    delete help_dialog;
 }
 
 void SoftProjector::setArrowCursor()
@@ -831,7 +832,9 @@ void SoftProjector::createLanguageActions()
             tmpAction->setCheckable(true);
             languageGroup->addAction(tmpAction);
             ui->menuLanguage->addAction(tmpAction);
+            delete tmpAction;
         }
+        delete englishAction;
 
 //        connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
 }
@@ -865,6 +868,7 @@ void SoftProjector::on_actionSong_Counter_triggered()
     SongCounter *songCounter;
     songCounter = new SongCounter(this, cur_locale);
     songCounter->exec();
+    delete songCounter;
 }
 
 void SoftProjector::on_actionOpen_triggered()
@@ -1431,6 +1435,8 @@ void SoftProjector::on_actionPrint_triggered()
         p->setText(announceWidget->getAnnouncements());
         p->exec();
     }
+
+    delete p;
 }
 
 void SoftProjector::on_actionPrint_Project_triggered()
@@ -1439,6 +1445,7 @@ void SoftProjector::on_actionPrint_Project_triggered()
     p = new PrintPreviewDialog(this);
     p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
     p->exec();
+    delete p;
 }
 
 void SoftProjector::nextSlide()

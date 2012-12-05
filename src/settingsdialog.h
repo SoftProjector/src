@@ -23,8 +23,6 @@
 
 #include <QtGui/QDialog>
 #include <QtGui/QFileDialog>
-#include "softprojector.h"
-
 #include "settings.h"
 #include "generalsettingwidget.h"
 #include "biblesettingwidget.h"
@@ -38,17 +36,22 @@ class SettingsDialog;
 class SettingsDialog : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(SettingsDialog)
+
 public:
     explicit SettingsDialog(QWidget *parent = 0);
     virtual ~SettingsDialog();
     void updateSecondaryBibleMenu();
 
-protected:
-    virtual void changeEvent(QEvent *e);
+public slots:
+    void loadSettings(Settings& sets);
+
+signals:
+    void updateSettings(Settings &sets);
+    void positionsDisplayWindow();
+    void updateScreen();
 
 private:
     Ui::SettingsDialog *ui;
-    SoftProjector *softProjector;
 
     int current_display_screen;
     int currentDisplayScreen2;
@@ -60,13 +63,18 @@ private:
     SongSettingWidget *songSettingswidget;
     AnnouncementSettingWidget *announcementSettingswidget;
 
-private slots:
-    void on_buttonBox_accepted();
-    void on_buttonBox_rejected();
-    void on_listWidget_currentRowChanged(int currentRow);
+    QPushButton *btnOk;
+    QPushButton *btnCancel;
+    QPushButton *btnApply;
 
-public slots:
-    void loadSettings(Settings& sets);
+private slots:
+    void on_listWidget_currentRowChanged(int currentRow);
+    void setUseDispScreen2(bool toUse);
+    void on_buttonBox_clicked(QAbstractButton *button);
+    void applySettings();
+
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // SETTINGSDIALOG_H

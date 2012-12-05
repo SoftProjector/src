@@ -28,6 +28,7 @@
 #include "editwidget.h"
 #include "bible.h"
 #include "managedatadialog.h"
+#include "settingsdialog.h"
 #include "songcounter.h"
 #include "settings.h"
 #include "printpreviewdialog.h"
@@ -78,6 +79,7 @@ public slots:
 private:
     DisplaySettings dispSettings;
     Ui::SoftProjectorClass *ui;
+    SettingsDialog *settingsDialog;
     QString type;
     bool new_list;
     QActionGroup *languageGroup;

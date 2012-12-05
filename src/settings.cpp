@@ -5,12 +5,12 @@ GeneralSettings::GeneralSettings()
     // Apply General Defauls
     displayIsOnTop = false;
     useBackground = false;
-    useBackground2 = false;
     backgroundPath = "";
-    backgroundPath2 = "";
     displayScreen = 0;
-    displayScreen2 = -1; // interger "-1" mean "None" or not to display
     useDisplaySettings2 = false;
+    useBackground2 = false;
+    backgroundPath2 = "";
+    displayScreen2 = -1; // interger "-1" mean "None" or not to display
 }
 
 BibleSettings::BibleSettings()
@@ -32,6 +32,7 @@ BibleSettings::BibleSettings()
     useAbbriviations = false;
     maxScreen = 100;
     maxScreenFrom = "bottom";
+    useDisp2settings = false;
 }
 
 SongSettings::SongSettings()
@@ -51,6 +52,7 @@ SongSettings::SongSettings()
     textColor = QColor(Qt::white);
     textAlingmentV = 1;
     textAlingmentH = 1;
+    useDisp2settings = false;
 }
 
 AnnounceSettings::AnnounceSettings()
@@ -65,6 +67,7 @@ AnnounceSettings::AnnounceSettings()
     textColor = QColor(Qt::white);
     textAlingmentV = 0;
     textAlingmentH = 1;
+    useDisp2settings = false;
 }
 
 DisplayControlsSettings::DisplayControlsSettings()
@@ -115,8 +118,16 @@ void Settings::loadSettings(QString user)
                     general.backgroundPath = v;
                 else if (n == "displayScreen")
                     general.displayScreen = v.toInt();
+                // Display Screen 2 settings
+                else if (n == "useBackground2")
+                    general.useBackground2 = (v=="true");
+                else if (n == "backgroundPath2")
+                    general.backgroundPath2 = v;
+                else if (n == "useDisplaySettings2")
+                    general.useDisplaySettings2 = (v=="true");
                 else if (n == "displayScreen2")
                     general.displayScreen2 = v.toInt();
+                // End display screen 2 settings
                 else if (n == "dcIconSize")
                     general.displayControls.buttonSize = v.toInt();
                 else if (n == "dcAlignment")
@@ -130,124 +141,17 @@ void Settings::loadSettings(QString user)
             }
         }
         else if(t == "bible")
-        {
-            values = sets.split("\n");
-            for(int i(0);i<values.count();++i)
-            {
-                s = values.at(i);
-                set = s.split("=");
-                n = set.at(0).trimmed();
-                v = set.at(1).trimmed();
-
-                if(n=="primaryBible")
-                    bible.primaryBible = v;
-                else if(n=="secondaryBible")
-                    bible.secondaryBible = v;
-                else if(n=="trinaryBible")
-                    bible.trinaryBible = v;
-                else if(n=="operatorBible")
-                    bible.operatorBible = v;
-                else if (n == "useShadow")
-                    bible.useShadow = (v=="true");
-                else if (n == "useFading")
-                    bible.useFading = (v=="true");
-                else if (n == "useBlurShadow")
-                    bible.useBlurShadow = (v=="true");
-                else if(n=="useBackground")
-                    bible.useBackground = (v=="true");
-                else if(n=="backgroundPath")
-                    bible.backgroundPath = v;
-                else if(n=="textAlingment")
-                {
-                    QStringList alinglist = v.split(",");
-                    bible.textAlingmentV = alinglist.at(0).toInt();
-                    bible.textAlingmentH = alinglist.at(1).toInt();
-                }
-                else if(n=="textColor")
-                    bible.textColor = QColor::fromRgb(v.toUInt());
-                else if(n=="textFont")
-                    bible.textFont.fromString(v);
-                else if(n=="useAbbriviations")
-                    bible.useAbbriviations = (v=="true");
-                else if(n=="maxScreen")
-                    bible.maxScreen = v.toInt();
-                else if(n=="maxScreenFrom")
-                    bible.maxScreenFrom = v;
-            }
-        }
+            bibleSettingFromString(sets,bible);
+        else if(t == "bible2")
+            bibleSettingFromString(sets,bible2);
         else if(t == "song")
-        {
-            values = sets.split("\n");
-            for(int i(0);i<values.count();++i)
-            {
-                s = values.at(i);
-                set = s.split("=");
-                n = set.at(0).trimmed();
-                v = set.at(1).trimmed();
-                if(n=="showStanzaTitle")
-                    song.showStanzaTitle = (v=="true");
-                else if(n=="showSongKey")
-                    song.showSongKey = (v=="true");
-                else if(n=="showSongNumber")
-                    song.showSongNumber = (v=="true");
-                else if(n=="showSongEnding")
-                    song.showSongEnding = (v=="true");
-                else if(n=="songEndingType")
-                    song.songEndingType = v.toInt();
-                else if (n == "useShadow")
-                    song.useShadow = (v=="true");
-                else if (n == "useFading")
-                    song.useFading = (v=="true");
-                else if (n == "useBlurShadow")
-                    song.useBlurShadow = (v=="true");
-                else if(n=="useBackground")
-                    song.useBackground = (v=="true");
-                else if(n=="backgroundPath")
-                    song.backgroundPath = v;
-                else if(n=="textAlingment")
-                {
-                    QStringList alinglist = v.split(",");
-                    song.textAlingmentV = alinglist.at(0).toInt();
-                    song.textAlingmentH = alinglist.at(1).toInt();
-                }
-                else if(n=="textColor")
-                    song.textColor = QColor::fromRgb(v.toUInt());
-                else if(n=="textFont")
-                    song.textFont.fromString(v);
-
-            }
-        }
+            songSettingFromString(sets,song);
+        else if(t == "song2")
+            songSettingFromString(sets,song2);
         else if(t == "announce")
-        {
-            values = sets.split("\n");
-            for(int i(0);i<values.count();++i)
-            {
-                s = values.at(i);
-                set = s.split("=");
-                n = set.at(0).trimmed();
-                v = set.at(1).trimmed();
-                if (n == "useShadow")
-                    announce.useShadow = (v=="true");
-                else if (n == "useFading")
-                    announce.useFading = (v=="true");
-                else if (n == "useBlurShadow")
-                    announce.useBlurShadow = (v=="true");
-                else if(n=="useBackground")
-                    announce.useBackground = (v=="true");
-                else if(n=="backgroundPath")
-                    announce.backgroundPath = v;
-                else if(n=="textAlingment")
-                {
-                    QStringList alinglist = v.split(",");
-                    announce.textAlingmentV = alinglist.at(0).toInt();
-                    announce.textAlingmentH = alinglist.at(1).toInt();
-                }
-                else if(n=="textColor")
-                    announce.textColor = QColor::fromRgb(v.toUInt());
-                else if(n=="textFont")
-                    announce.textFont.fromString(v);
-            }
-        }
+            announceSettingFromString(sets,announce);
+        else if(t == "announce2")
+            announceSettingFromString(sets,announce2);
         else if(t == "spmain")
         {
             values = sets.split("\n");
@@ -274,10 +178,140 @@ void Settings::loadSettings(QString user)
     }
 }
 
+void Settings::bibleSettingFromString(QString &sets, BibleSettings &settings)
+{
+    QString s,n,v;
+    QStringList values = sets.split("\n");
+    for(int i(0);i<values.count();++i)
+    {
+        s = values.at(i);
+        QStringList set = s.split("=");
+        n = set.at(0).trimmed();
+        v = set.at(1).trimmed();
+
+        if (n == "useDisp2settings")
+            settings.useDisp2settings = (v=="true");
+        else if(n=="primaryBible")
+            settings.primaryBible = v;
+        else if(n=="secondaryBible")
+            settings.secondaryBible = v;
+        else if(n=="trinaryBible")
+            settings.trinaryBible = v;
+        else if(n=="operatorBible")
+            settings.operatorBible = v;
+        else if (n == "useShadow")
+            settings.useShadow = (v=="true");
+        else if (n == "useFading")
+            settings.useFading = (v=="true");
+        else if (n == "useBlurShadow")
+            settings.useBlurShadow = (v=="true");
+        else if(n=="useBackground")
+            settings.useBackground = (v=="true");
+        else if(n=="backgroundPath")
+            settings.backgroundPath = v;
+        else if(n=="textAlingment")
+        {
+            QStringList alinglist = v.split(",");
+            settings.textAlingmentV = alinglist.at(0).toInt();
+            settings.textAlingmentH = alinglist.at(1).toInt();
+        }
+        else if(n=="textColor")
+            settings.textColor = QColor::fromRgb(v.toUInt());
+        else if(n=="textFont")
+            settings.textFont.fromString(v);
+        else if(n=="useAbbriviations")
+            settings.useAbbriviations = (v=="true");
+        else if(n=="maxScreen")
+            settings.maxScreen = v.toInt();
+        else if(n=="maxScreenFrom")
+            settings.maxScreenFrom = v;
+    }
+}
+
+void Settings::songSettingFromString(QString &sets, SongSettings &settings)
+{
+    QString s,n,v;
+    QStringList values = sets.split("\n");
+    for(int i(0);i<values.count();++i)
+    {
+        s = values.at(i);
+        QStringList set = s.split("=");
+        n = set.at(0).trimmed();
+        v = set.at(1).trimmed();
+        if(n=="useDisp2settings")
+            settings.useDisp2settings = (v=="true");
+        else if(n=="showStanzaTitle")
+            settings.showStanzaTitle = (v=="true");
+        else if(n=="showSongKey")
+            settings.showSongKey = (v=="true");
+        else if(n=="showSongNumber")
+            settings.showSongNumber = (v=="true");
+        else if(n=="showSongEnding")
+            settings.showSongEnding = (v=="true");
+        else if(n=="songEndingType")
+            settings.songEndingType = v.toInt();
+        else if (n == "useShadow")
+            settings.useShadow = (v=="true");
+        else if (n == "useFading")
+            settings.useFading = (v=="true");
+        else if (n == "useBlurShadow")
+            settings.useBlurShadow = (v=="true");
+        else if(n=="useBackground")
+            settings.useBackground = (v=="true");
+        else if(n=="backgroundPath")
+            settings.backgroundPath = v;
+        else if(n=="textAlingment")
+        {
+            QStringList alinglist = v.split(",");
+            settings.textAlingmentV = alinglist.at(0).toInt();
+            settings.textAlingmentH = alinglist.at(1).toInt();
+        }
+        else if(n=="textColor")
+            settings.textColor = QColor::fromRgb(v.toUInt());
+        else if(n=="textFont")
+            settings.textFont.fromString(v);
+    }
+}
+
+void Settings::announceSettingFromString(QString &sets, AnnounceSettings &settings)
+{
+    QString s,n,v;
+    QStringList values = sets.split("\n");
+    for(int i(0);i<values.count();++i)
+    {
+        s = values.at(i);
+        QStringList set = s.split("=");
+        n = set.at(0).trimmed();
+        v = set.at(1).trimmed();
+        if (n == "useDisp2settings")
+            settings.useDisp2settings = (v=="true");
+        else if (n == "useShadow")
+            settings.useShadow = (v=="true");
+        else if (n == "useFading")
+            settings.useFading = (v=="true");
+        else if (n == "useBlurShadow")
+            settings.useBlurShadow = (v=="true");
+        else if(n=="useBackground")
+            settings.useBackground = (v=="true");
+        else if(n=="backgroundPath")
+            settings.backgroundPath = v;
+        else if(n=="textAlingment")
+        {
+            QStringList alinglist = v.split(",");
+            settings.textAlingmentV = alinglist.at(0).toInt();
+            settings.textAlingmentH = alinglist.at(1).toInt();
+        }
+        else if(n=="textColor")
+            settings.textColor = QColor::fromRgb(v.toUInt());
+        else if(n=="textFont")
+            settings.textFont.fromString(v);
+    }
+}
+
 void Settings::saveSettings(QString user)
 {
     QSqlQuery sq;
-    QString gset,bset,sset,aset,spset;//general,bible,song,annouce,spmain
+    QString gset,bset,bset2,sset,sset2,aset,aset2,spset;//general,bible,song,annouce,spmain
 
     // **** Prepare general settings ***************************************
     if(general.displayIsOnTop)
@@ -287,143 +321,32 @@ void Settings::saveSettings(QString user)
     if(general.useBackground)
         gset += "useBackground = true\n";
     else
-        gset += "useBackground = fasle\n";
+        gset += "useBackground = false\n";
     gset += "backgroundPath = " + general.backgroundPath;
     gset += "\ndisplayScreen = " + QString::number(general.displayScreen);
+    if(general.useDisplaySettings2)
+        gset += "\nuseDisplaySettings2 = true";
+    else
+        gset += "\nuseDisplaySettings2 = false";
+    if(general.useBackground2)
+        gset += "\nuseBackground2 = true";
+    else
+        gset += "\nuseBackground2 = false";
+    gset += "\nbackgroundPath2 = " + general.backgroundPath2;
     gset += "\ndisplayScreen2 = " + QString::number(general.displayScreen2);
     gset += "\ndcIconSize = " + QString::number(general.displayControls.buttonSize);
     gset += QString("\ndcAlignment = %1,%2").arg(general.displayControls.alignmentV).arg(general.displayControls.alignmentH);
     gset += "\ndcOpacity = " + QString::number(general.displayControls.opacity);
 
-    // **** Prepare bible settings *********************************************************
-    bset = "primaryBible = " + bible.primaryBible;
-    bset += "\nsecondaryBible = " + bible.secondaryBible;
-    bset += "\ntrinaryBible = " + bible.trinaryBible;
-    bset += "\noperatorBible = " + bible.operatorBible;
+    // **** prepare bible, song and announce settings ************************
+    bset = bibleSettingToString(bible); // prepare primary bible screen settings
+    bset2 = bibleSettingToString(bible2); // prepare secondary bible screen settings
 
-    // Effects
-    if(bible.useShadow)
-        bset += "\nuseShadow = true";
-    else
-        bset += "\nuseShadow = false";
-    if(bible.useFading)
-        bset += "\nuseFading = true";
-    else
-        bset += "\nuseFading = false";
-    if(bible.useBlurShadow)
-        bset += "\nuseBlurShadow = true";
-    else
-        bset += "\nuseBlurShadow = false";
+    sset = songSettingToString(song); // prepare primary song screen settings
+    sset2 = songSettingToString(song2); // prepare secondary song screen settings
 
-    // Background
-    if(bible.useBackground)
-        bset += "\nuseBackground = true";
-    else
-        bset += "\nuseBackground = false";
-
-    bset += "\nbackgroundPath = " + bible.backgroundPath;
-
-    // Text alingment
-    bset += "\ntextAlingment = " + QString::number(bible.textAlingmentV) +
-            "," + QString::number(bible.textAlingmentH);
-
-    // Text color
-    unsigned int textColorInt = (unsigned int)(bible.textColor.rgb());
-    bset += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    bset += "\ntextFont = " + bible.textFont.toString();
-
-    // Version abbriviations
-    if(bible.useAbbriviations)
-        bset += "\nuseAbbriviations = true";
-    else
-        bset += "\nuseAbbriviations = false";
-
-    // Max screen
-    bset += "\nmaxScreen = " + QString::number(bible.maxScreen);
-    bset += "\nmaxScreenFrom = " + bible.maxScreenFrom;
-
-    // **** Prepare song settings ************************************************
-    if(song.showStanzaTitle)
-        sset = "showStanzaTitle = true\n";
-    else
-        sset = "showStanzaTitle = false\n";
-    if(song.showSongKey)
-        sset += "showSongKey = true\n";
-    else
-        sset += "showSongKey = false\n";
-    if(song.showSongNumber)
-        sset += "showSongNumber = true\n";
-    else
-        sset += "showSongNumber = false\n";
-    if(song.showSongEnding)
-        sset += "showSongEnding = true\n";
-    else
-        sset += "showSongEnding = false\n";
-    sset += "songEndingType = " + QString::number(song.songEndingType);
-
-    // Effects
-    if(song.useShadow)
-        sset += "\nuseShadow = true";
-    else
-        sset += "\nuseShadow = false";
-    if(song.useFading)
-        sset += "\nuseFading = true";
-    else
-        sset += "\nuseFading = false";
-    if(song.useBlurShadow)
-        sset += "\nuseBlurShadow = true";
-    else
-        sset += "\nuseBlurShadow = false";
-
-    if(song.useBackground)
-        sset += "\nuseBackground = true";
-    else
-        sset += "\nuseBackground = false";
-
-    sset += "\nbackgroundPath = " + song.backgroundPath;
-
-    // Text alingment
-    sset += "\ntextAlingment = " + QString::number(song.textAlingmentV) +
-            "," + QString::number(song.textAlingmentH);
-
-    // Text color
-    textColorInt = (unsigned int)(song.textColor.rgb());
-    sset += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    sset += "\ntextFont = " + song.textFont.toString();
-
-    // **** prepare announcement settings ************************************
-    // Effects
-    if(announce.useShadow)
-        aset = "useShadow = true";
-    else
-        aset = "useShadow = false";
-    if(announce.useFading)
-        aset += "\nuseFading = true";
-    else
-        aset += "\nuseFading = false";
-    if(announce.useBlurShadow)
-        aset += "\nuseBlurShadow = true";
-    else
-        aset += "\nuseBlurShadow = false";
-
-    // background
-    (announce.useBackground)? aset += "\nuseBackground = true" : aset += "\nuseBackground = false";
-    aset += "\nbackgroundPath = " + announce.backgroundPath;
-
-    // Text alingment
-    aset += "\ntextAlingment = " + QString::number(announce.textAlingmentV) +
-            "," + QString::number(announce.textAlingmentH);
-
-    // Text color
-    textColorInt = (unsigned int)(announce.textColor.rgb());
-    aset += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    aset += "\ntextFont = " + announce.textFont.toString();
+    aset = announceSettingToString(announce); // prepare primary announce screen settings
+    aset2 = announceSettingToString(announce2); // prepare secondary announce screen settings
 
     // **** prepare SpMain settings *****************************************
     spset = "spSplitter = " + spmain.spSplitter.toHex();
@@ -438,10 +361,176 @@ void Settings::saveSettings(QString user)
 
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general' AND user = '%2'").arg(gset).arg(user));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible' AND user = '%2'").arg(bset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible2' AND user = '%2'").arg(bset2).arg(user));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song' AND user = '%2'").arg(sset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song2' AND user = '%2'").arg(sset2).arg(user));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce' AND user = '%2'").arg(aset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce2' AND user = '%2'").arg(aset2).arg(user));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spmain' AND user = '%2'").arg(spset).arg(user));
 
+}
+
+QString Settings::bibleSettingToString(BibleSettings &settings)
+{
+    QString rString;
+    // **** Prepare bible settings ************************************************
+    if(settings.useDisp2settings)
+        rString = "useDisp2settings = true";
+    else
+        rString = "useDisp2settings = false";
+    rString += "\nprimaryBible = " + settings.primaryBible;
+    rString += "\nsecondaryBible = " + settings.secondaryBible;
+    rString += "\ntrinaryBible = " + settings.trinaryBible;
+    rString += "\noperatorBible = " + settings.operatorBible;
+
+    // Effects
+    if(settings.useShadow)
+        rString += "\nuseShadow = true";
+    else
+        rString += "\nuseShadow = false";
+    if(settings.useFading)
+        rString += "\nuseFading = true";
+    else
+        rString += "\nuseFading = false";
+    if(settings.useBlurShadow)
+        rString += "\nuseBlurShadow = true";
+    else
+        rString += "\nuseBlurShadow = false";
+
+    // Background
+    if(settings.useBackground)
+        rString += "\nuseBackground = true";
+    else
+        rString += "\nuseBackground = false";
+
+    rString += "\nbackgroundPath = " + settings.backgroundPath;
+
+    // Text alingment
+    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
+            "," + QString::number(settings.textAlingmentH);
+
+    // Text color
+    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
+    rString += "\ntextColor = " + QString::number(textColorInt);
+
+    // Text font
+    rString += "\ntextFont = " + settings.textFont.toString();
+
+    // Version abbriviations
+    if(settings.useAbbriviations)
+        rString += "\nuseAbbriviations = true";
+    else
+        rString += "\nuseAbbriviations = false";
+
+    // Max screen
+    rString += "\nmaxScreen = " + QString::number(settings.maxScreen);
+    rString += "\nmaxScreenFrom = " + settings.maxScreenFrom;
+
+    return rString;
+}
+
+QString Settings::songSettingToString(SongSettings &settings)
+{
+    QString rString;
+
+    // **** Prepare song settings ************************************************
+    if(settings.useDisp2settings)
+        rString = "useDisp2settings = true\n";
+    else
+        rString = "useDisp2settings = false\n";
+    if(settings.showStanzaTitle)
+        rString += "showStanzaTitle = true\n";
+    else
+        rString += "showStanzaTitle = false\n";
+    if(settings.showSongKey)
+        rString += "showSongKey = true\n";
+    else
+        rString += "showSongKey = false\n";
+    if(settings.showSongNumber)
+        rString += "showSongNumber = true\n";
+    else
+        rString += "showSongNumber = false\n";
+    if(settings.showSongEnding)
+        rString += "showSongEnding = true\n";
+    else
+        rString += "showSongEnding = false\n";
+    rString += "songEndingType = " + QString::number(settings.songEndingType);
+
+    // Effects
+    if(settings.useShadow)
+        rString += "\nuseShadow = true";
+    else
+        rString += "\nuseShadow = false";
+    if(settings.useFading)
+        rString += "\nuseFading = true";
+    else
+        rString += "\nuseFading = false";
+    if(settings.useBlurShadow)
+        rString += "\nuseBlurShadow = true";
+    else
+        rString += "\nuseBlurShadow = false";
+
+    if(settings.useBackground)
+        rString += "\nuseBackground = true";
+    else
+        rString += "\nuseBackground = false";
+
+    rString += "\nbackgroundPath = " + settings.backgroundPath;
+
+    // Text alingment
+    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
+            "," + QString::number(settings.textAlingmentH);
+
+    // Text color
+    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
+    rString += "\ntextColor = " + QString::number(textColorInt);
+
+    // Text font
+    rString += "\ntextFont = " + settings.textFont.toString();
+
+    return rString;
+}
+
+QString Settings::announceSettingToString(AnnounceSettings &settings)
+{
+    QString rString;
+
+    // **** prepare announcement settings ************************************
+    if(settings.useDisp2settings)
+        rString = "useDisp2settings = true";
+    else
+        rString = "useDisp2settings = false";
+
+    // Effects
+    if(settings.useShadow)
+        rString += "\nuseShadow = true";
+    else
+        rString += "\nuseShadow = false";
+    if(settings.useFading)
+        rString += "\nuseFading = true";
+    else
+        rString += "\nuseFading = false";
+    if(settings.useBlurShadow)
+        rString += "\nuseBlurShadow = true";
+    else
+        rString += "\nuseBlurShadow = false";
+
+    // background
+    (settings.useBackground)? rString += "\nuseBackground = true" : rString += "\nuseBackground = false";
+    rString += "\nbackgroundPath = " + settings.backgroundPath;
+
+    // Text alingment
+    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
+            "," + QString::number(settings.textAlingmentH);
+
+    // Text color
+    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
+    rString += "\ntextColor = " + QString::number(textColorInt);
+
+    // Text font
+    rString += "\ntextFont = " + settings.textFont.toString();
+
+    return rString;
 }
 
 QByteArray Settings::textToByt(QString text)

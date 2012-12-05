@@ -17,21 +17,25 @@ public:
     ~AnnouncementSettingWidget();
 
 public slots:
-    void setSettings(AnnounceSettings& settings);
-    AnnounceSettings getSettings();
+    void setSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
+    void getSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
+    void setDispScreen2Visible(bool visible);
 
 private slots:
     void loadSettings();
-    void on_button_Background_clicked();
-    void on_button_textColor_clicked();
-    void on_button_font_clicked();
-
-    void on_pushButton_default_clicked();
-
-    void on_checkBox_useShadow_stateChanged(int arg1);
+    void on_buttonBackground_clicked();
+    void on_buttonTextColor_clicked();
+    void on_buttonFont_clicked();
+    void on_pushButtonDefault_clicked();
+    void on_checkBoxUseShadow_stateChanged(int arg1);
+    void on_groupBoxUseDisp2_toggled(bool arg1);
+    void on_checkBoxUseShadow2_stateChanged(int arg1);
+    void on_buttonTextColor2_clicked();
+    void on_buttonFont2_clicked();
+    void on_buttonBackground2_clicked();
 
 private:
-    AnnounceSettings mySettings;
+    AnnounceSettings mySettings, mySettings2;
     Ui::AnnouncementSettingWidget *ui;
 };
 

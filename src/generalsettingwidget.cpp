@@ -72,6 +72,7 @@ void GeneralSettingWidget::loadSettings()
 
     // Set display 2 settings
     ui->groupBoxDisp2Sets->setChecked(mySettings.useDisplaySettings2);
+    on_groupBoxDisp2Sets_toggled(ui->groupBoxDisp2Sets->isChecked());
     ui->groupBoxBackground2->setChecked(mySettings.useBackground2);
     ui->lineEditBackgroundPath2->setText(mySettings.backgroundPath2);
 }
@@ -94,7 +95,6 @@ GeneralSettings GeneralSettingWidget::getSettings()
 
     // get dispaly 2 settings
     mySettings.useDisplaySettings2 = ui->groupBoxDisp2Sets->isChecked();
-    on_groupBoxDisp2Sets_toggled(ui->groupBoxDisp2Sets->isChecked());
     mySettings.useBackground2 = ui->groupBoxBackground2->isChecked();
     mySettings.backgroundPath2 = ui->lineEditBackgroundPath2->text();
 
@@ -126,9 +126,15 @@ void GeneralSettingWidget::updateSecondaryDisplayScreen()
         ui->comboBoxDisplayScreen_2->setCurrentIndex(0);
 
     if(ui->comboBoxDisplayScreen_2->currentIndex()<=0)
+    {
         ui->groupBoxDisp2Sets->setVisible(false);
+        emit setDisp2Use(false);
+    }
     else
+    {
         ui->groupBoxDisp2Sets->setVisible(true);
+        emit setDisp2Use(true);
+    }
 }
 
 void GeneralSettingWidget::on_comboBoxDisplayScreen_activated(const QString &arg1)
@@ -164,7 +170,13 @@ void GeneralSettingWidget::on_buttonBrowseBackgound2_clicked()
 void GeneralSettingWidget::on_comboBoxDisplayScreen_2_activated(int index)
 {
     if(index<=0)
+    {
         ui->groupBoxDisp2Sets->setVisible(false);
+        emit setDisp2Use(false);
+    }
     else
+    {
         ui->groupBoxDisp2Sets->setVisible(true);
+        emit setDisp2Use(true);
+    }
 }

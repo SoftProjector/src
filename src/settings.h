@@ -49,6 +49,8 @@ public:
     bool useAbbriviations;
     int maxScreen;
     QString maxScreenFrom;
+
+    bool useDisp2settings;
 };
 
 class SongSettings
@@ -69,6 +71,8 @@ public:
     QColor textColor;
     int textAlingmentV;
     int textAlingmentH;
+
+    bool useDisp2settings;
 };
 
 class AnnounceSettings
@@ -84,6 +88,8 @@ public:
     QColor textColor;
     int textAlingmentV;
     int textAlingmentH;
+
+    bool useDisp2settings;
 };
 
 class DisplaySettings
@@ -115,14 +121,23 @@ public:
     Settings();
     GeneralSettings general;
     BibleSettings bible;
+    BibleSettings bible2; // Holds secondary display screen settings
     SongSettings song;
+    SongSettings song2; // Holds secondary display screen settings
     AnnounceSettings announce;
+    AnnounceSettings announce2; // Holds secondary display screen settings
     SpSettings spmain;
 public slots:
     void loadSettings(QString user);
     void saveSettings(QString user);
 private slots:
     QByteArray textToByt(QString text);
+    void bibleSettingFromString(QString &sets, BibleSettings &settings);
+    void songSettingFromString(QString &sets, SongSettings &settings);
+    void announceSettingFromString(QString &sets, AnnounceSettings &settings);
+    QString bibleSettingToString(BibleSettings &settings);
+    QString songSettingToString(SongSettings &settings);
+    QString announceSettingToString(AnnounceSettings &settings);
 };
 
 #endif // SETTINGS_H

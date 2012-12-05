@@ -21,15 +21,12 @@
 #include <QMessageBox>
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
-#include "softprojector.h"
-
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
-    softProjector = (SoftProjector*)parent;
     generalSettingswidget = new GeneralSettingWidget;
     bibleSettingswidget = new BibleSettingWidget;
     songSettingswidget = new SongSettingWidget;
@@ -39,6 +36,17 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->scrollAreaBibleSettings->setWidget(bibleSettingswidget);
     ui->scrollAreaSongSettings->setWidget(songSettingswidget);
     ui->scrollAreaAnnouncementSettings->setWidget(announcementSettingswidget);
+
+    btnOk = new QPushButton(tr("OK"));
+    btnCancel = new QPushButton(tr("Cancel"));
+    btnApply = new QPushButton(tr("Apply"));
+
+    ui->buttonBox->addButton(btnOk,QDialogButtonBox::AcceptRole);
+    ui->buttonBox->addButton(btnCancel,QDialogButtonBox::RejectRole);
+    ui->buttonBox->addButton(btnApply,QDialogButtonBox::ApplyRole);
+
+    // Connect display screen slot
+    connect(generalSettingswidget,SIGNAL(setDisp2Use(bool)),this,SLOT(setUseDispScreen2(bool)));
 
 }
 
@@ -53,57 +61,84 @@ void SettingsDialog::loadSettings(Settings& sets)
 
     // Set individual items
     generalSettingswidget->setSettings(allSettings.general);
-    bibleSettingswidget->setSettings(allSettings.bible);
-    songSettingswidget->setSettings(allSettings.song);
-    announcementSettingswidget->setSettings(allSettings.announce);
-
+    bibleSettingswidget->setSettings(allSettings.bible, allSettings.bible2);
+    songSettingswidget->setSettings(allSettings.song, allSettings.song2);
+    announcementSettingswidget->setSettings(allSettings.announce, allSettings.announce2);
 }
 
 SettingsDialog::~SettingsDialog()
 {
     delete ui;
+
+    //    delete softProjector;
+    delete generalSettingswidget;
+    delete bibleSettingswidget;
+    delete songSettingswidget;
+    delete announcementSettingswidget;
+
+    delete btnOk;
+    delete btnCancel;
+    delete btnApply;
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch ( e->type() ) {
-        case QEvent::LanguageChange:
-            ui->retranslateUi(this);
-            break;
-        default:
-            break;
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
     }
-}
-
-void SettingsDialog::on_buttonBox_rejected()
-{
-    close();
-}
-
-void SettingsDialog::on_buttonBox_accepted()
-{
-    allSettings.general = generalSettingswidget->getSettings();
-    allSettings.bible = bibleSettingswidget->getSettings();
-    allSettings.song = songSettingswidget->getSettings();
-    allSettings.announce = announcementSettingswidget->getSettings();
-
-    // Apply settings
-    softProjector->updateSetting(allSettings);
-
-    // Redraw the screen:
-    softProjector->updateScreen();
-
-    // Update <display_on_top> only when changed, or when screen location has been changed
-    if(is_always_on_top!=allSettings.general.displayIsOnTop
-            || current_display_screen!=allSettings.general.displayScreen
-            || currentDisplayScreen2!=allSettings.general.displayScreen2)
-        softProjector->positionDisplayWindow();
-
-    close();
 }
 
 void SettingsDialog::on_listWidget_currentRowChanged(int currentRow)
 {
     ui->stackedWidget->setCurrentIndex(currentRow);
+}
+
+void SettingsDialog::setUseDispScreen2(bool toUse)
+{
+    bibleSettingswidget->setDispScreen2Visible(toUse);
+    songSettingswidget->setDispScreen2Visible(toUse);
+    announcementSettingswidget->setDispScreen2Visible(toUse);
+}
+
+void SettingsDialog::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(button == btnOk)
+    {
+        applySettings();
+        close();
+    }
+    else if(button == btnCancel)
+        close();
+    else if(button == btnApply)
+        applySettings();
+}
+
+void SettingsDialog::applySettings()
+{
+    allSettings.general = generalSettingswidget->getSettings();
+    bibleSettingswidget->getSettings(allSettings.bible, allSettings.bible2);
+    songSettingswidget->getSettings(allSettings.song, allSettings.song2);
+    announcementSettingswidget->getSettings(allSettings.announce, allSettings.announce2);
+
+    // Apply settings
+    emit updateSettings(allSettings);
+
+    // Update <display_on_top> only when changed, or when screen location has been changed
+    if(is_always_on_top!=allSettings.general.displayIsOnTop
+            || current_display_screen!=allSettings.general.displayScreen
+            || currentDisplayScreen2!=allSettings.general.displayScreen2)
+        emit positionsDisplayWindow();
+
+    // Redraw the screen:
+    emit updateScreen();
+
+    // reset display holders
+    is_always_on_top = allSettings.general.displayIsOnTop;
+    current_display_screen = allSettings.general.displayScreen;
+    currentDisplayScreen2 = allSettings.general.displayScreen2;
 }

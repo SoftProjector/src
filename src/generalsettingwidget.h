@@ -27,6 +27,9 @@ public slots:
     void updateSecondaryDisplayScreen();
     GeneralSettings getSettings();
 
+signals:
+    void setDisp2Use(bool toUse);
+
 private slots:
     void on_pushButtonDefault_clicked();
 

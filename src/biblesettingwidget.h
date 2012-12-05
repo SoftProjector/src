@@ -18,35 +18,38 @@ public:
     ~BibleSettingWidget();
 
 public slots:
-    void setSettings(BibleSettings settings);
-    BibleSettings getSettings();
+    void setSettings(BibleSettings &settings, BibleSettings &settings2);
+    void getSettings(BibleSettings &settings, BibleSettings &settings2);
+    void setDispScreen2Visible(bool visible);
 
 private slots:
     void loadSettings();
     void updateSecondaryBibleMenu();
+    void updateSecondaryBibleMenu2();
     void updateTrinaryBibleMenu();
+    void updateTrinaryBibleMenu2();
     void updateOperatorBibleMenu();
 
-    void on_comboBox_primaryBible_activated(const QString &arg1);
-
-    void on_comboBox_secondaryBible_activated(const QString &arg1);
-
-    void on_comboBox_trinaryBible_activated(const QString &arg1);
-
-    void on_button_BrowseBackground_clicked();
-
-    void on_button_textColor_clicked();
-
-    void on_button_font_clicked();
-
-    void on_pushButton_default_clicked();
-
-    void on_checkBox_useShadow_stateChanged(int arg1);
+    void on_comboBoxPrimaryBible_activated(const QString &arg1);
+    void on_comboBoxSecondaryBible_activated(const QString &arg1);
+    void on_buttonBrowseBackground_clicked();
+    void on_buttonTextColor_clicked();
+    void on_buttonFont_clicked();
+    void on_pushButtonDefault_clicked();
+    void on_checkBoxUseShadow_stateChanged(int arg1);
+    void on_groupBoxUseDisp2_toggled(bool arg1);
+    void on_comboBoxPrimaryBible2_activated(const QString &arg1);
+    void on_comboBoxSecondaryBible2_activated(const QString &arg1);
+    void on_buttonBrowseBackground2_clicked();
+    void on_buttonTextColor2_clicked();
+    void on_buttonFont2_clicked();
+    void on_checkBoxUseShadow2_stateChanged(int arg1);
 
 private:
     QStringList bibles, secondary_bibles;
-    QStringList bible_id_list,secondary_id_list,trinary_id_list,operator_id_list;
-    BibleSettings mySettings;
+    QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;
+    QStringList secondary_bibles2, secondary_id_list2, trinary_id_list2;
+    BibleSettings mySettings, mySettings2;
     Ui::BibleSettingWidget *ui;
 };
 
