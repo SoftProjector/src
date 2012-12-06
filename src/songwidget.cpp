@@ -67,6 +67,7 @@ SongWidget::SongWidget(QWidget *parent) :
     // set highligher
     highlight = new HighlighterDelegate(ui->listPreview);
     ui->listWidgetDummy->setVisible(false);
+
 }
 
 SongWidget::~SongWidget()
@@ -170,10 +171,12 @@ void SongWidget::loadSongbooks()
     //ui->song_num_spinbox->setEnabled(false);
     songs_model->setSongs(allSongs);
 
-    // Hide clear result button
+    // Hide song search items
+    ui->comboBoxSearchType->setVisible(false);
     if(ui->pushButtonClearResults->isVisible())
         ui->listPreview->setItemDelegate(ui->listWidgetDummy->itemDelegate());
     ui->pushButtonClearResults->setVisible(false);
+    ui->labelSearchType->setVisible(false);
 
     // update the song spin box and redraw the table:
     on_songbook_menu_currentIndexChanged( ui->songbook_menu->currentIndex() );
@@ -584,9 +587,6 @@ QByteArray SongWidget::getSplitterState()
 
 void SongWidget::setSplitterState(QByteArray& state)
 {
-//    QByteArray b;
-//    b.insert(0,state);
-//    b = b.fromHex(b);
     ui->splitter->restoreState(state);
 }
 
@@ -689,7 +689,10 @@ void SongWidget::loadPlaylistFromFile(QList<Song> songs)
 void SongWidget::on_pushButtonSearch_clicked()
 {
     QString search_text = ui->lineEditSearch->text();
+    search_text.replace(QRegExp(QString::fromUtf8("[+:;\\]\\[{}().,?/\\\"!'—*-]"))," ");
+    search_text = search_text.simplified();
     QList<Song> search_results;
+    int type = ui->comboBoxSearchType->currentIndex();
 
     // Make sure that there is some text to do a search for, if non, then return
     if(search_text.count()<1)
@@ -698,37 +701,68 @@ void SongWidget::on_pushButtonSearch_clicked()
         return;
     }
 
+    // set filter
+    QRegExp rx,rx2;
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
+    if(type == 1 )
+        // Search whole word exsact phrase only
+        rx.setPattern("\\b"+search_text+"\\b");
+    else if(type == 2) // contains all words
+        // Search begining of every line
+        rx.setPattern("@%"+search_text);
+    else if(type == 3 || type == 4) // line begins
+    {
+        // Search for any of the search words
+        search_text.replace(" ","|");
+        rx.setPattern("\\b("+search_text+")\\b");
+    }
+    else
+        // Search text phrase
+        rx.setPattern(search_text);
+
+    // perform search
     for(int i(0);i<allSongs.count();++i)
     {
-        if(ui->begins_rbutton->isChecked())
+        QString stext = allSongs.at(i).songText;
+        stext.replace(QRegExp(QString::fromUtf8("[+:;\\]\\[{}().,?/\\\"!'—*-]"))," ");
+        stext = stext.simplified();
+        if(type == 4)
         {
-            // Search begining of every line
-            if(allSongs.at(i).songText.contains("@%"+search_text,Qt::CaseInsensitive))
-                search_results.append(allSongs.at(i));
-        }
-        else if(ui->exact_match_rbutton->isChecked())
-        {
-            // Search whole words only
-            QRegExp rx("\\b"+search_text+"\\b",Qt::CaseInsensitive);
-            if(allSongs.at(i).songText.contains(rx))
+            QStringList stl = search_text.split("|");
+            bool hasAll = false;
+            for(int j(0);j<stl.count();++j)
+            {
+                hasAll = stext.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
+                if(!hasAll)
+                    break;
+            }
+            if(hasAll)
                 search_results.append(allSongs.at(i));
         }
         else
         {
-            // Search all text
-            if(allSongs.at(i).songText.contains(search_text,Qt::CaseInsensitive))
+            if(stext.contains(rx))
                 search_results.append(allSongs.at(i));
         }
     }
 
-
+    // Hide song filter items and show search items
+    ui->begins_rbutton->setVisible(false);
+    ui->contains_rbutton->setVisible(false);
+    ui->exact_match_rbutton->setVisible(false);
+    ui->labelSearchType->setVisible(true);
+    ui->comboBoxSearchType->setVisible(true);
     ui->pushButtonClearResults->setVisible(true);
+
     // set new songs_model with search relusts
     songs_model->setSongs(search_results);
 
     // setup higligher
     ui->listPreview->setItemDelegate(highlight);
-    highlight->highlighter->setHighlightText(search_text);
+    if(type == 2)
+        highlight->highlighter->setHighlightText(search_text);
+    else
+        highlight->highlighter->setHighlightText(rx.pattern());
     // reset filter on song table to show all results
     songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
     proxy_model->setFilterString("", false, false);
@@ -757,7 +791,14 @@ void SongWidget::on_pushButtonClearResults_clicked()
     ui->listPreview->setItemDelegate(ui->listWidgetDummy->itemDelegate());
 
     ui->lineEditSearch->setPlaceholderText("");
+
+    // Hide song filter items and show search items
+    ui->begins_rbutton->setVisible(true);
+    ui->contains_rbutton->setVisible(true);
+    ui->exact_match_rbutton->setVisible(true);
+    ui->comboBoxSearchType->setVisible(false);
     ui->pushButtonClearResults->setVisible(false);
+    ui->labelSearchType->setVisible(false);
     songs_model->setSongs(allSongs);
     ui->lineEditSearch->clear();
     Song s;
