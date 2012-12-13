@@ -77,6 +77,8 @@ int main(int argc, char *argv[])
         mb.exec();
         return 1;
     }
+
+    // Try to connect to database
     if( !connect(database_file) )
     {
         QMessageBox mb;
@@ -86,8 +88,31 @@ int main(int argc, char *argv[])
         mb.exec();
         return 1;
     }
-
     // Connected to the database OK:
+
+    // Make sure that database is of correct version
+    QString currentVersion = "2db4";
+    QSqlQuery sq;
+    sq.exec("SELECT Version FROM spData");
+    sq.first();
+    QString dbVersion = sq.value(0).toString().trimmed();
+    if(currentVersion != dbVersion)
+    {
+        QString errortxt = QString("SoftProjector requires database vesion # %1\n"
+                                   "The database you are trying to open has vesion # %2\n"
+                                   "Please use supplied database with current version of softProjector.\n"
+                                   "The program will terminate!"
+                                   ).arg(currentVersion).arg(dbVersion);
+        QMessageBox mb;
+        mb.setText(errortxt);
+        mb.setWindowTitle("Incorrect Database Version");
+        mb.setIcon(QMessageBox::Critical);
+        mb.exec();
+        return 1;
+    }
+    // Database is of correct version
+
+
     SoftProjector w;
     w.show();
     splash.finish(&w);

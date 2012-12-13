@@ -128,8 +128,8 @@ public:
     AnnounceSettings announce2; // Holds secondary display screen settings
     SpSettings spmain;
 public slots:
-    void loadSettings(QString user);
-    void saveSettings(QString user);
+    void loadSettings(QString theme_id);
+    void saveSettings(QString theme_id);
 private slots:
     QByteArray textToByt(QString text);
     void bibleSettingFromString(QString &sets, BibleSettings &settings);

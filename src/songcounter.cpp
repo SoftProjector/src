@@ -126,7 +126,7 @@ QList<Counter> SongCounter::getSongCounts()
     {
         song_count.id = sq.value(0).toString();
         QString sbid = sq.value(1).toString();
-        song_count.number = sq.value(2).toString();
+        song_count.number = sq.value(2).toInt();
         song_count.title = sq.value(3).toString();
         song_count.count = sq.value(4).toInt();
         song_count.date = sq.value(5).toString();

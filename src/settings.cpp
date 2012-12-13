@@ -90,12 +90,12 @@ Settings::Settings()
 
 }
 
-void Settings::loadSettings(QString user)
+void Settings::loadSettings(QString theme_id)
 {
     QString t,n,v,s,sets; // type, name, value, userValues
     QStringList set,values;
     QSqlQuery sq;
-    sq.exec(QString("SELECT type, sets FROM Settings WHERE user = %1").arg(user));
+    sq.exec(QString("SELECT type, sets FROM Settings WHERE theme_id = %1").arg(theme_id));
     while (sq.next())
     {
         t = sq.value(0).toString();
@@ -308,7 +308,7 @@ void Settings::announceSettingFromString(QString &sets, AnnounceSettings &settin
     }
 }
 
-void Settings::saveSettings(QString user)
+void Settings::saveSettings(QString theme_id)
 {
     QSqlQuery sq;
     QString gset,bset,bset2,sset,sset2,aset,aset2,spset;//general,bible,song,annouce,spmain
@@ -359,14 +359,14 @@ void Settings::saveSettings(QString user)
     else
         spset += "\nisWindowMaximized = false";
 
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general' AND user = '%2'").arg(gset).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible' AND user = '%2'").arg(bset).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible2' AND user = '%2'").arg(bset2).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song' AND user = '%2'").arg(sset).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song2' AND user = '%2'").arg(sset2).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce' AND user = '%2'").arg(aset).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce2' AND user = '%2'").arg(aset2).arg(user));
-    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spmain' AND user = '%2'").arg(spset).arg(user));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general' AND theme_id = '%2'").arg(gset).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible' AND theme_id = '%2'").arg(bset).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible2' AND theme_id = '%2'").arg(bset2).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song' AND theme_id = '%2'").arg(sset).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'song2' AND theme_id = '%2'").arg(sset2).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce' AND theme_id = '%2'").arg(aset).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'announce2' AND theme_id = '%2'").arg(aset2).arg(theme_id));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spmain' AND theme_id = '%2'").arg(spset).arg(theme_id));
 
 }
 
