@@ -203,7 +203,7 @@ void EditWidget::setSave(){
     newSong.number = ui->lineEditSongNumber->text().toInt();
     newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
     newSong.songbook_name = ui->songbook_label->text();
-    newSong.title = clean(ui->lineEditTitle->text());
+    newSong.title = ui->lineEditTitle->text();
     newSong.category = cat_ids.at(ui->comboBoxCategory->currentIndex());
     newSong.tune = ui->lineEditKey->text();
     newSong.wordsBy = ui->lineEditWordsBy->text();

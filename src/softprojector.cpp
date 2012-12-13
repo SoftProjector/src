@@ -122,7 +122,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->rbMultiVerse->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
-    version_string = "2.Dev.Build:3"; // to be used between official releases
+    version_string = "2.Dev.Build: 4"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 }
 

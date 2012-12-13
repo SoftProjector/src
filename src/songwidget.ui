@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>553</width>
+    <width>575</width>
     <height>528</height>
    </rect>
   </property>
@@ -103,20 +103,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="pushButtonSearch">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="softprojector.qrc">
-             <normaloff>:/icons/icons/search.png</normaloff>:/icons/icons/search.png</iconset>
-           </property>
-           <property name="shortcut">
-            <string>Return</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item>
@@ -155,6 +141,19 @@
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QLabel" name="labelSearchType">
            <property name="text">
             <string>Search Type:</string>
@@ -191,17 +190,18 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QPushButton" name="pushButtonSearch">
+           <property name="text">
+            <string>Search</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/search.png</normaloff>:/icons/icons/search.png</iconset>
            </property>
-          </spacer>
+           <property name="shortcut">
+            <string>Return</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

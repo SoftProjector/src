@@ -20,12 +20,14 @@
 #include "song.h"
 #include <QDebug>
 
+// for future use or chord import
+// to filter out ChorPro chords from within the song text
+// Use following QRegExp = "(\\[[\\w]*[\\w]\\]|\\[[\\w]*[#b♭♯][\\w]*\\])"
+
 QString clean(QString str)
 {
-    // Removes all none alphanumeric characters from the string
-    //str.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\\[\\\]\\\\]")));
-    // NOTE: Modified this string to make it work on Mac OS X:
-    str.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\[]")));
+     //Removes all none alphanumeric characters from the string
+    str.replace(QRegExp("[\\W*]")," ");
     str = str.simplified();
     return str;
 }
@@ -449,10 +451,7 @@ void SongsModel::setSongs(QList<Song> songs)
 {
     emit layoutAboutToBeChanged();
     song_list.clear();
-    for (int i = 0; i < songs.size(); i++) {
-        Song song = songs.at(i);
-        song_list.append(song);
-    }
+    song_list = songs;
     emit layoutChanged();
 }
 
@@ -628,15 +627,25 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
         // No filter specified
         return true;
 
+    QRegExp rx;
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
+    QString s = filter_string;
+    s.replace(" ","\\W*");
     if(exact_match)
         return ( str1.compare(filter_string, Qt::CaseInsensitive) == 0
                  || str2.compare(filter_string, Qt::CaseInsensitive) == 0 );
     else if(match_beginning)
-        return (str1.startsWith(filter_string)
-                || str2.startsWith(filter_string, Qt::CaseInsensitive) );
+    {
+        rx.setPattern("^"+s);
+        return (str1.contains(rx)
+                || str2.contains(rx) );
+    }
     else
-        return (str1.contains(filter_string)
-                || str2.contains(filter_string, Qt::CaseInsensitive) );
+    {
+        rx.setPattern(s);
+        return (str1.contains(rx)
+                || str2.contains(rx) );
+    }
 
 }
 
@@ -657,7 +666,7 @@ void Song::saveUpdate()
     sr = sq.record(0);
     sr.setValue(1,songbook_id);
     sr.setValue(2,number);
-    sr.setValue(3,clean(title));
+    sr.setValue(3,title);
     sr.setValue(4,category);
     sr.setValue(5,tune);
     sr.setValue(6,wordsBy);
@@ -693,7 +702,7 @@ void Song::saveNew()
     sqt.insertRows(0,1);
     sqt.setData(sqt.index(0,1),songbook_id);
     sqt.setData(sqt.index(0,2),number);
-    sqt.setData(sqt.index(0,3),clean(title));
+    sqt.setData(sqt.index(0,3),title);
     sqt.setData(sqt.index(0,4),category);
     sqt.setData(sqt.index(0,5),tune);
     sqt.setData(sqt.index(0,6),wordsBy);

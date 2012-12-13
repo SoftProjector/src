@@ -525,6 +525,22 @@ void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
 {
     songs_model->updateSongFromDatabase(songid, initial_sid);
 
+    // Update in allSongs list
+    for(int i(0);i<allSongs.count();++i)
+    {
+
+        if(allSongs.at(i).songID == songid)
+        {
+            Song s;
+            s = allSongs.at(i);
+            s.readData();
+            allSongs.removeAt(i);
+            allSongs.append(s);
+            break;
+        }
+
+    }
+
     // Updated playlist song if song was edited comes from playlist table
     if (playlistSongWasEdited)
     {
@@ -702,8 +718,9 @@ void SongWidget::on_pushButtonSearch_clicked()
     }
 
     // set filter
-    QRegExp rx,rx2;
+    QRegExp rx;
     rx.setCaseSensitivity(Qt::CaseInsensitive);
+    search_text.replace(" ","\\W*");
     if(type == 1 )
         // Search whole word exsact phrase only
         rx.setPattern("\\b"+search_text+"\\b");
@@ -713,7 +730,7 @@ void SongWidget::on_pushButtonSearch_clicked()
     else if(type == 3 || type == 4) // line begins
     {
         // Search for any of the search words
-        search_text.replace(" ","|");
+        search_text.replace("\\W*","|");
         rx.setPattern("\\b("+search_text+")\\b");
     }
     else
@@ -723,16 +740,13 @@ void SongWidget::on_pushButtonSearch_clicked()
     // perform search
     for(int i(0);i<allSongs.count();++i)
     {
-        QString stext = allSongs.at(i).songText;
-        stext.replace(QRegExp(QString::fromUtf8("[+:;\\]\\[{}().,?/\\\"!'—*-]"))," ");
-        stext = stext.simplified();
         if(type == 4)
         {
             QStringList stl = search_text.split("|");
             bool hasAll = false;
             for(int j(0);j<stl.count();++j)
             {
-                hasAll = stext.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
+                hasAll = allSongs.at(i).songText.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
                 if(!hasAll)
                     break;
             }
@@ -741,12 +755,13 @@ void SongWidget::on_pushButtonSearch_clicked()
         }
         else
         {
-            if(stext.contains(rx))
+            if(allSongs.at(i).songText.contains(rx))
                 search_results.append(allSongs.at(i));
         }
     }
 
     // Hide song filter items and show search items
+    //ui->pushButtonSearch->setText(tr("Search"));
     ui->begins_rbutton->setVisible(false);
     ui->contains_rbutton->setVisible(false);
     ui->exact_match_rbutton->setVisible(false);
@@ -793,6 +808,7 @@ void SongWidget::on_pushButtonClearResults_clicked()
     ui->lineEditSearch->setPlaceholderText("");
 
     // Hide song filter items and show search items
+    //ui->pushButtonSearch->setText("");
     ui->begins_rbutton->setVisible(true);
     ui->contains_rbutton->setVisible(true);
     ui->exact_match_rbutton->setVisible(true);
