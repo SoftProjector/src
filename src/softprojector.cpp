@@ -27,10 +27,14 @@ SoftProjector::SoftProjector(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::SoftProjectorClass)
 {
     // Load settings
-    allsettings.loadSettings("0");
+    mySettings.loadSettings();
+    theme.setThemeId(mySettings.general.currentThemeId);
+    theme.loadTheme();
+    // Reset current theme id if initial was 0
+    mySettings.general.currentThemeId = theme.getThemeId();
+
     //Setting up the Display Screen
     desktop = new QDesktopWidget();
-
     // NOTE: With virtual desktop, desktop->screen() will always return the main screen,
     // so this will initialize the Display1 widget on the main screen:
     displayScreen1 = new DisplayScreen(desktop->screen(0));
@@ -58,7 +62,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // display window (Mac OS X)
 
     // Apply Settings
-    applySetting(allsettings);
+    applySetting(mySettings.general, theme);
 
     displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
     displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
@@ -94,7 +98,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
     connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
     connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
-    connect(settingsDialog,SIGNAL(updateSettings(Settings&)),this,SLOT(updateSetting(Settings&)));
+    connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&)),
+            this,SLOT(updateSetting(GeneralSettings&,Theme&)));
     connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
     connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
 
@@ -147,7 +152,7 @@ void SoftProjector::positionDisplayWindow()
     // Position the display window as needed (including setting "always on top" flag,
     // showing full screen / normal mode, and positioning it on the right screen)
 
-    if (allsettings.general.displayIsOnTop)
+    if (mySettings.general.displayIsOnTop)
     {
         displayScreen1->setWindowFlags(Qt::WindowStaysOnTopHint);
         displayScreen2->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -163,7 +168,7 @@ void SoftProjector::positionDisplayWindow()
         if (desktop->isVirtualDesktop())
         {
             // Move the display widget to screen 1 (secondary screen):
-            QPoint top_left = desktop->screenGeometry(allsettings.general.displayScreen).topLeft();
+            QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen).topLeft();
             displayScreen1->move(top_left);
         }
         displayScreen1->showFullScreen();
@@ -171,13 +176,13 @@ void SoftProjector::positionDisplayWindow()
         displayScreen1->setControlButtonsVisible(false);
 
         // check if to display secondary display screen
-        if(allsettings.general.displayScreen2>=0)
+        if(mySettings.general.displayScreen2>=0)
         {
             hasDisplayScreen2 = true;
             if (desktop->isVirtualDesktop())
             {
                 // Move the display widget to screen 1 (secondary screen):
-                QPoint top_left = desktop->screenGeometry(allsettings.general.displayScreen2).topLeft();
+                QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen2).topLeft();
                 displayScreen2->move(top_left);
             }
             displayScreen2->showFullScreen();
@@ -209,20 +214,20 @@ void SoftProjector::showDisplayScreen(bool show)
         displayScreen1->showFullScreen();
     else
         displayScreen1->hide();
-    displayScreen1->setControlsSettings(allsettings.general.displayControls);
+    displayScreen1->setControlsSettings(mySettings.general.displayControls);
     displayScreen1->setControlButtonsVisible(true);
 }
 
 void SoftProjector::saveSettings()
 {
     // Save splitter states
-    allsettings.spmain.spSplitter = ui->splitter->saveState();
-    allsettings.spmain.bibleHiddenSplitter = bibleWidget->getHiddenSplitterState();
-    allsettings.spmain.bibleShowSplitter = bibleWidget->getShownSplitterState();
-    allsettings.spmain.songSplitter = songWidget->getSplitterState();
+    mySettings.spMain.spSplitter = ui->splitter->saveState();
+    mySettings.spMain.bibleHiddenSplitter = bibleWidget->getHiddenSplitterState();
+    mySettings.spMain.bibleShowSplitter = bibleWidget->getShownSplitterState();
+    mySettings.spMain.songSplitter = songWidget->getSplitterState();
 
     // Save window maximized state
-    allsettings.spmain.isWindowMaximized = this->isMaximized();
+    mySettings.spMain.isWindowMaximized = this->isMaximized();
 
     // save translation settings
     QList<QAction*> languageActions = ui->menuLanguage->actions();
@@ -232,42 +237,45 @@ void SoftProjector::saveSettings()
         if(languageActions.at(i)->isChecked())
         {
             if(i < languageActions.count())
-                allsettings.spmain.uiTranslation = languageActions.at(i)->data().toString();
+                mySettings.spMain.uiTranslation = languageActions.at(i)->data().toString();
             else
-                allsettings.spmain.uiTranslation = "en";
+                mySettings.spMain.uiTranslation = "en";
         }
     }
 
     // save settings
-    allsettings.saveSettings("0");
+//    mySettings.general.currentThemeId = theme.getThemeId();
+    mySettings.saveSettings();
+    theme.saveTheme();
 }
 
-void SoftProjector::updateSetting(Settings &allsets)
+void SoftProjector::updateSetting(GeneralSettings &g, Theme &t)
 {
-    allsettings = allsets;
-    bibleWidget->setSettings(allsettings.bible);
-    announceWidget->setAlingment(allsettings.announce.textAlingmentV,allsettings.announce.textAlingmentH);
+    mySettings.general = g;
+    theme = t;
+    bibleWidget->setSettings(theme.bible);
+    announceWidget->setAlingment(theme.announce.textAlingmentV,theme.announce.textAlingmentH);
     
     // Apply display settings;
-    displayScreen1->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
-    if(allsettings.general.useDisplaySettings2)
-        displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath2,allsettings.general.useBackground2);
+    displayScreen1->setNewPassiveWallpaper(theme.passive.backgroundPath,theme.passive.useBackground);
+    if(theme.passive2.useDisp2settings)
+        displayScreen2->setNewPassiveWallpaper(theme.passive2.backgroundPath,theme.passive2.useBackground);
     else
-        displayScreen2->setNewPassiveWallpaper(allsettings.general.backgroundPath,allsettings.general.useBackground);
+        displayScreen2->setNewPassiveWallpaper(theme.passive.backgroundPath,theme.passive.useBackground);
 }
 
-void SoftProjector::applySetting(Settings &allsets)
+void SoftProjector::applySetting(GeneralSettings &g, Theme &t)
 {
-    updateSetting(allsets);
+    updateSetting(g,t);
 
     // Apply splitter states
-    ui->splitter->restoreState(allsettings.spmain.spSplitter);
-    bibleWidget->setHiddenSplitterState(allsettings.spmain.bibleHiddenSplitter);
-    bibleWidget->setShownSplitterState(allsettings.spmain.bibleShowSplitter);
-    songWidget->setSplitterState(allsettings.spmain.songSplitter);
+    ui->splitter->restoreState(mySettings.spMain.spSplitter);
+    bibleWidget->setHiddenSplitterState(mySettings.spMain.bibleHiddenSplitter);
+    bibleWidget->setShownSplitterState(mySettings.spMain.bibleShowSplitter);
+    songWidget->setSplitterState(mySettings.spMain.songSplitter);
 
     // Apply window maximized
-    if(allsettings.spmain.isWindowMaximized)
+    if(mySettings.spMain.isWindowMaximized)
         this->setWindowState(Qt::WindowMaximized);
 
     // Apply current translation
@@ -275,12 +283,12 @@ void SoftProjector::applySetting(Settings &allsets)
     QString splocale;
     for(int i(0);i < la.count(); ++i)
     {
-        if(la.at(i)->data().toString() == allsettings.spmain.uiTranslation)
+        if(la.at(i)->data().toString() == mySettings.spMain.uiTranslation)
         {
             if(i < la.count())
             {
                 ui->menuLanguage->actions().at(i)->setChecked(true);
-                splocale = allsettings.spmain.uiTranslation;
+                splocale = mySettings.spMain.uiTranslation;
             }
             else
             {
@@ -515,35 +523,35 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible),theme.bible);
             if(hasDisplayScreen2)
             {
-                if(allsettings.bible2.useDisp2settings)
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible2),allsettings.bible2);
+                if(theme.bible2.useDisp2settings)
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible2),theme.bible2);
                 else
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,allsettings.bible),allsettings.bible);
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible),theme.bible);
             }
         }
         else if(type=="song")
         {
-            displayScreen1->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+            displayScreen1->renderSongText(current_song.getStanza(currentRow),theme.song);
             if(hasDisplayScreen2)
             {
-                if(allsettings.song2.useDisp2settings)
-                    displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song2);
+                if(theme.song2.useDisp2settings)
+                    displayScreen2->renderSongText(current_song.getStanza(currentRow),theme.song2);
                 else
-                    displayScreen2->renderSongText(current_song.getStanza(currentRow),allsettings.song);
+                    displayScreen2->renderSongText(current_song.getStanza(currentRow),theme.song);
             }
         }
         else if(type == "announce")
         {
-            displayScreen1->renderAnnounceText(announcement_text,allsettings.announce);
+            displayScreen1->renderAnnounceText(announcement_text,theme.announce);
             if(hasDisplayScreen2)
             {
-                if(allsettings.announce2.useDisp2settings)
-                    displayScreen2->renderAnnounceText(announcement_text,allsettings.announce2);
+                if(theme.announce2.useDisp2settings)
+                    displayScreen2->renderAnnounceText(announcement_text,theme.announce2);
                 else
-                    displayScreen2->renderAnnounceText(announcement_text,allsettings.announce);
+                    displayScreen2->renderAnnounceText(announcement_text,theme.announce);
             }
         }
     }
@@ -682,7 +690,7 @@ void SoftProjector::on_actionDeleteSong_triggered()
 
 void SoftProjector::on_actionSettings_triggered()
 {
-    settingsDialog->loadSettings(allsettings);
+    settingsDialog->loadSettings(mySettings.general,theme);
     settingsDialog->exec();
 }
 
@@ -727,6 +735,7 @@ void SoftProjector::on_actionManage_Database_triggered()
 {
     QSqlQuery sq;
 
+    manageDialog->loadThemes();
     manageDialog->load_songbooks();
     manageDialog->exec();
 
@@ -734,38 +743,57 @@ void SoftProjector::on_actionManage_Database_triggered()
     if (manageDialog->reload_songbook)
         songWidget->updateSongbooks();
 
+    // Relaod themes if a theme has been deleted
+    if (manageDialog->reloadThemes)
+    {
+        // Check if current theme has been deleted
+        sq.exec("SELECT * FROM Themes WHERE is = " + theme.getThemeId());
+        if(!sq.first())
+        {
+            GeneralSettings g = mySettings.general;
+            Theme t;
+            sq.exec("SELECT id FROM Themes");
+            sq.first();
+            t.setThemeId(sq.value(0).toString());
+            t.loadTheme();
+            g.currentThemeId = t.getThemeId();
+            updateSetting(g,t);
+            updateScreen();
+        }
+    }
+
     // Reload Bibles if Bible has been deleted
     if (manageDialog->reload_bible)
     {
         // check if Primary bible has been removed
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + allsettings.bible.primaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.primaryBible);
         if (!sq.first())
         {
             // If original primary bible has been removed, set first bible in the list to be primary
             sq.clear();
             sq.exec("SELECT id FROM BibleVersions");
             sq.first();
-            allsettings.bible.primaryBible = sq.value(0).toString();
+            theme.bible.primaryBible = sq.value(0).toString();
         }
         sq.clear();
 
         // check if secondary bible has been removed, if yes, set secondary to "none"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + allsettings.bible.secondaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.secondaryBible);
         if (!sq.first())
-            allsettings.bible.secondaryBible = "none";
+            theme.bible.secondaryBible = "none";
         sq.clear();
 
         // check if trinary bible has been removed, if yes, set secondary to "none"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + allsettings.bible.trinaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.trinaryBible);
         if (!sq.first())
-            allsettings.bible.trinaryBible = "none";
+            theme.bible.trinaryBible = "none";
         sq.clear();
 
         // check if operator bible has been removed, if yes, set secondary to "same"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + allsettings.bible.operatorBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.operatorBible);
         if (!sq.first())
-            allsettings.bible.operatorBible = "same";
-        bibleWidget->setSettings(allsettings.bible);
+            theme.bible.operatorBible = "same";
+        bibleWidget->setSettings(theme.bible);
     }
 }
 
@@ -1407,7 +1435,7 @@ void SoftProjector::on_actionPrint_triggered()
     p = new PrintPreviewDialog(this);
     if(ui->projectTab->currentIndex() == 0)
     {
-        p->setText(allsettings.bible.operatorBible + "," + allsettings.bible.primaryBible,
+        p->setText(theme.bible.operatorBible + "," + theme.bible.primaryBible,
                    bibleWidget->getCurrentBook(),bibleWidget->getCurrentChapter());
         p->exec();
     }

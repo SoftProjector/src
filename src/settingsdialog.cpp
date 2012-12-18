@@ -28,11 +28,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     generalSettingswidget = new GeneralSettingWidget;
+    passiveSettingwidget = new PassiveSettingWidget;
     bibleSettingswidget = new BibleSettingWidget;
     songSettingswidget = new SongSettingWidget;
     announcementSettingswidget = new AnnouncementSettingWidget;
 
     ui->scrollAreaGeneralSettings->setWidget(generalSettingswidget);
+    ui->scrollAreaPassiveSettings->setWidget(passiveSettingwidget);
     ui->scrollAreaBibleSettings->setWidget(bibleSettingswidget);
     ui->scrollAreaSongSettings->setWidget(songSettingswidget);
     ui->scrollAreaAnnouncementSettings->setWidget(announcementSettingswidget);
@@ -47,31 +49,31 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Connect display screen slot
     connect(generalSettingswidget,SIGNAL(setDisp2Use(bool)),this,SLOT(setUseDispScreen2(bool)));
+    connect(generalSettingswidget,SIGNAL(themeChanged(QString)),this,SLOT(changeTheme(QString)));
 
 }
 
-void SettingsDialog::loadSettings(Settings& sets)
+void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm)
 {
-    allSettings = sets;
+    gsettings = sets;
+    theme = thm;
 
     // remember main display window setting if they will be changed
-    is_always_on_top = allSettings.general.displayIsOnTop;
-    current_display_screen = allSettings.general.displayScreen;
-    currentDisplayScreen2 = allSettings.general.displayScreen2;
+    is_always_on_top = gsettings.displayIsOnTop;
+    current_display_screen = gsettings.displayScreen;
+    currentDisplayScreen2 = gsettings.displayScreen2;
 
     // Set individual items
-    generalSettingswidget->setSettings(allSettings.general);
-    bibleSettingswidget->setSettings(allSettings.bible, allSettings.bible2);
-    songSettingswidget->setSettings(allSettings.song, allSettings.song2);
-    announcementSettingswidget->setSettings(allSettings.announce, allSettings.announce2);
+    generalSettingswidget->setSettings(gsettings);
+    setThemes();
 }
 
 SettingsDialog::~SettingsDialog()
 {
     delete ui;
 
-    //    delete softProjector;
     delete generalSettingswidget;
+    delete passiveSettingwidget;
     delete bibleSettingswidget;
     delete songSettingswidget;
     delete announcementSettingswidget;
@@ -100,6 +102,7 @@ void SettingsDialog::on_listWidget_currentRowChanged(int currentRow)
 
 void SettingsDialog::setUseDispScreen2(bool toUse)
 {
+    passiveSettingwidget->setDispScreen2Visible(toUse);
     bibleSettingswidget->setDispScreen2Visible(toUse);
     songSettingswidget->setDispScreen2Visible(toUse);
     announcementSettingswidget->setDispScreen2Visible(toUse);
@@ -120,25 +123,54 @@ void SettingsDialog::on_buttonBox_clicked(QAbstractButton *button)
 
 void SettingsDialog::applySettings()
 {
-    allSettings.general = generalSettingswidget->getSettings();
-    bibleSettingswidget->getSettings(allSettings.bible, allSettings.bible2);
-    songSettingswidget->getSettings(allSettings.song, allSettings.song2);
-    announcementSettingswidget->getSettings(allSettings.announce, allSettings.announce2);
+    gsettings = generalSettingswidget->getSettings();
+    getThemes();
 
     // Apply settings
-    emit updateSettings(allSettings);
+    emit updateSettings(gsettings,theme);
 
     // Update <display_on_top> only when changed, or when screen location has been changed
-    if(is_always_on_top!=allSettings.general.displayIsOnTop
-            || current_display_screen!=allSettings.general.displayScreen
-            || currentDisplayScreen2!=allSettings.general.displayScreen2)
+    if(is_always_on_top!=gsettings.displayIsOnTop
+            || current_display_screen!=gsettings.displayScreen
+            || currentDisplayScreen2!=gsettings.displayScreen2)
         emit positionsDisplayWindow();
 
     // Redraw the screen:
     emit updateScreen();
 
+    // Save Settings
+    theme.saveTheme();
+
     // reset display holders
-    is_always_on_top = allSettings.general.displayIsOnTop;
-    current_display_screen = allSettings.general.displayScreen;
-    currentDisplayScreen2 = allSettings.general.displayScreen2;
+    is_always_on_top = gsettings.displayIsOnTop;
+    current_display_screen = gsettings.displayScreen;
+    currentDisplayScreen2 = gsettings.displayScreen2;
+}
+
+void SettingsDialog::getThemes()
+{
+    passiveSettingwidget->getSettings(theme.passive, theme.passive2);
+    bibleSettingswidget->getSettings(theme.bible, theme.bible2);
+    songSettingswidget->getSettings(theme.song, theme.song2);
+    announcementSettingswidget->getSettings(theme.announce, theme.announce2);
+}
+
+void SettingsDialog::setThemes()
+{
+    passiveSettingwidget->setSetings(theme.passive, theme.passive2);
+    bibleSettingswidget->setSettings(theme.bible, theme.bible2);
+    songSettingswidget->setSettings(theme.song, theme.song2);
+    announcementSettingswidget->setSettings(theme.announce, theme.announce2);
+}
+
+void SettingsDialog::changeTheme(QString theme_id)
+{
+    // First save existing changes to the theme
+    getThemes();
+    theme.saveTheme();
+
+    // Then load changed theme
+    theme.setThemeId(theme_id);
+    theme.loadTheme();
+    setThemes();
 }

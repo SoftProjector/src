@@ -26,7 +26,11 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui(new Ui::ManageDataDialog)
 {
     ui->setupUi(this);
-    //    Database db;
+
+    // Set tables
+    bible_model = new BiblesModel;
+    songbook_model = new SongbooksModel;
+    themeModel = new ThemeModel;
 
     // Set Bible Table
     load_bibles();
@@ -34,7 +38,6 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui->bibleTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->bibleTableView->verticalHeader()->hide();
     ui->bibleTableView->setColumnWidth(0, 395);
-//    updateBibleButtons();
 
     // Set Songbooks Table
     load_songbooks();
@@ -44,14 +47,25 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     ui->songbookTableView->setColumnWidth(0, 195);
     ui->songbookTableView->setColumnWidth(1, 195);
 
+    // Set Theme Table
+    loadThemes();
+    ui->TableViewTheme->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->TableViewTheme->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->TableViewTheme->verticalHeader()->hide();
+    ui->TableViewTheme->setColumnWidth(0, 195);
+    ui->TableViewTheme->setColumnWidth(1, 195);
+
     //Set reload cariers to false
     reload_bible = false;
     reload_songbook = false;
-
+    reloadThemes = false;
 }
 
 ManageDataDialog::~ManageDataDialog()
 {
+    delete bible_model;
+    delete songbook_model;
+    delete themeModel;
     delete ui;
 }
 
@@ -72,7 +86,6 @@ void ManageDataDialog::load_songbooks()
     Database db;
     // Set Songbooks Table
     songbook_list = db.getSongbooks();
-    songbook_model = new SongbooksModel;
     songbook_model->setSongbook(songbook_list);
     ui->songbookTableView->setModel(songbook_model);
     updateSongbookButtons();
@@ -83,10 +96,19 @@ void ManageDataDialog::load_bibles()
     Database db;
     // Set Bible Table
     bible_list = db.getBibles();
-    bible_model = new BiblesModel;
     bible_model->setBible(bible_list);
     ui->bibleTableView->setModel(bible_model);
     updateBibleButtons();
+}
+
+void ManageDataDialog::loadThemes()
+{
+    Database db;
+    // Set Songbooks Table
+    themeList = db.getThemes();
+    themeModel->setThemes(themeList);
+    ui->TableViewTheme->setModel(themeModel);
+    updateThemeButtons();
 }
 
 void ManageDataDialog::updateBibleButtons()
@@ -141,6 +163,33 @@ void ManageDataDialog::updateSongbookButtons()
     ui->edit_songbook_pushButton->setEnabled(enable_edit);
     ui->export_songbook_pushButton->setEnabled(enable_export);
     ui->delete_songbook_pushButton->setEnabled(enable_delete);
+}
+
+void ManageDataDialog::updateThemeButtons()
+{
+    bool enable_edit;
+    bool enable_export;
+    bool enable_delete;
+
+    if (ui->TableViewTheme->hasFocus())
+    {
+        enable_edit = true;
+        enable_export = true;
+        if (themeModel->rowCount()>=2)
+            enable_delete = true;
+        else
+            enable_delete = false;
+    }
+    else
+    {
+        enable_edit = false;
+        enable_export = false;
+        enable_delete = false;
+    }
+
+    ui->pushButtonThemeEdit->setEnabled(enable_edit);
+    ui->pushButtonThemeExport->setEnabled(enable_export);
+    ui->pushButtonThemeDelete->setEnabled(enable_delete);
 }
 
 void ManageDataDialog::on_import_songbook_pushButton_clicked()
@@ -1038,4 +1087,132 @@ void ManageDataDialog::toSingleLine(QString &sline)
         sline += "@%" + line_list[i];
     }
     sline = sline.trimmed();
+}
+
+void ManageDataDialog::on_pushButtonThemeNew_clicked()
+{
+//    Theme theme = themeModel->getTheme(row);
+    QSqlTableModel sq;
+    QSqlRecord sr;
+
+    AddSongbookDialog theme_dia;
+    theme_dia.setWindowTitle(tr("Edit Theme"));
+    theme_dia.setWindowText(tr("Theme Name:"),tr("Comments:"));
+    theme_dia.setSongbook(tr("Default"),tr("This theme will contain default settings."));
+    int ret = theme_dia.exec();
+    switch(ret)
+    {
+    case AddSongbookDialog::Accepted:
+//        reloadThemes = true;
+//        sq.setTable("Themes");
+//        sq.setFilter("id = " + theme.id);
+//        sq.select();
+//        sr = sq.record(0);
+//        sr.setValue(1,theme_dia.title.trimmed());
+//        sr.setValue(2,theme_dia.info.trimmed());
+//        sq.setRecord(0,sr);
+//        sq.submitAll();
+        break;
+    case AddSongbookDialog::Rejected:
+        break;
+    }
+
+    loadThemes();
+
+}
+
+void ManageDataDialog::on_pushButtonThemeImport_clicked()
+{
+
+}
+
+void ManageDataDialog::on_pushButtonThemeEdit_clicked()
+{
+    int row = ui->TableViewTheme->currentIndex().row();
+    ThemeInfo theme = themeModel->getTheme(row);
+    QSqlTableModel sq;
+    QSqlRecord sr;
+
+    AddSongbookDialog theme_dia;
+    theme_dia.setWindowTitle(tr("Edit Theme"));
+    theme_dia.setWindowText(tr("Theme Name:"),tr("Comments:"));
+    theme_dia.setSongbook(theme.name,theme.comments);
+    int ret = theme_dia.exec();
+    switch(ret)
+    {
+    case AddSongbookDialog::Accepted:
+        reloadThemes = true;
+        sq.setTable("Themes");
+        sq.setFilter("id = " + theme.themeId);
+        sq.select();
+        sr = sq.record(0);
+        sr.setValue(1,theme_dia.title.trimmed());
+        sr.setValue(2,theme_dia.info.trimmed());
+        sq.setRecord(0,sr);
+        sq.submitAll();
+        break;
+    case AddSongbookDialog::Rejected:
+        break;
+    }
+
+    loadThemes();
+}
+
+void ManageDataDialog::on_pushButtonThemeExport_clicked()
+{
+
+}
+
+void ManageDataDialog::on_pushButtonThemeDelete_clicked()
+{
+
+    int row = ui->TableViewTheme->currentIndex().row();
+    ThemeInfo tm = themeModel->getTheme(row);
+    QString name = tm.name;
+
+    QMessageBox ms;
+    ms.setWindowTitle(tr("Delete Theme?"));
+    ms.setText(tr("Are you sure that you want to delete: ")+ name);
+    ms.setInformativeText(tr("This action will permanentrly delete this Theme"));
+    ms.setIcon(QMessageBox::Question);
+    ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    ms.setDefaultButton(QMessageBox::Yes);
+    int ret = ms.exec();
+
+    switch (ret) {
+    case QMessageBox::Yes:
+        // Delete a songbook
+        deleteTheme(tm);
+        break;
+    case QMessageBox::No:
+        // Cancel was clicked
+        break;
+    default:
+        // should never be reached
+        break;
+    }
+}
+
+void ManageDataDialog::deleteTheme(ThemeInfo tme)
+{
+    setWaitCursor();
+    QSqlQuery sq;
+    QString id = tme.themeId.trimmed();
+    reloadThemes = true;
+
+    // Delete from Themes Table
+    sq.exec("DELETE FROM Themes WHERE id = '" + id + "'");
+    sq.clear();
+
+    // Delete from ThemeData Table
+    sq.exec("DELETE FROM ThemeData WHERE theme_id = '" + id +"'");
+
+    loadThemes();
+    updateThemeButtons();
+    setArrowCursor();
+}
+
+void ManageDataDialog::on_TableViewTheme_clicked(const QModelIndex &index)
+{
+    updateThemeButtons();
 }

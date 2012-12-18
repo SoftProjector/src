@@ -1,9 +1,9 @@
 #ifndef BIBLESETTINGWIDGET_H
 #define BIBLESETTINGWIDGET_H
 
-#include <QtCore>
+#include <QtGui>
 #include <QtSql>
-#include "settings.h"
+#include "theme.h"
 
 namespace Ui {
     class BibleSettingWidget;

@@ -646,7 +646,6 @@ bool SongProxyModel::filterAcceptsRow(int sourceRow,
         return (str1.contains(rx)
                 || str2.contains(rx) );
     }
-
 }
 
 SongDatabase::SongDatabase()
@@ -685,12 +684,6 @@ void Song::saveUpdate()
     sr.setValue(14,backgroundPath);
     sq.setRecord(0,sr);
     sq.submitAll();
-
-    // Update SongLink information
-//    QSqlQuery sqq;
-//    sqq.exec("UPDATE SongLink SET song_number = "
-//             + QString::number(number) + " WHERE songbook_id = "
-//             + songbook_id + " AND song_id = " + QString::number(songID));
 }
 
 void Song::saveNew()
@@ -720,19 +713,6 @@ void Song::saveNew()
     sqt.setData(sqt.index(0,13),font.toString());
     sqt.setData(sqt.index(0,14),backgroundPath);
     sqt.submitAll();
-
-    // Connect song with songbook
-//    QSqlQuery sq;
-//    QString sid = "";
-//    sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songs'");
-//    while (sq.next())
-//        sid = sq.value(0).toString();
-//    sq.clear();
-
-//    sq.exec("INSERT into SongLink (songbook_id, song_id, song_number) VALUES ('"
-//            + songbook_id.trimmed() + "',"
-//            + sid + ","
-//            + QString::number(number) + ")");
 }
 
 Song SongDatabase::getSong(int id)

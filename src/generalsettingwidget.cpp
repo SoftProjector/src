@@ -22,8 +22,10 @@ void GeneralSettingWidget::setSettings(GeneralSettings settings)
 void GeneralSettingWidget::loadSettings()
 {
     ui->checkBoxDisplayOnTop->setChecked(mySettings.displayIsOnTop);
-    ui->groupBoxBackground->setChecked(mySettings.useBackground);
-    ui->lineEditBackgroundPath->setText(mySettings.backgroundPath);
+
+    // Load Themes
+    loadThemes();
+    ui->comboBoxTheme->setCurrentIndex(themeIdList.indexOf(mySettings.currentThemeId));
 
     // Get display screen infomration
     monitors.clear();
@@ -69,19 +71,32 @@ void GeneralSettingWidget::loadSettings()
     ui->comboBoxControlsAlignV->setCurrentIndex(mySettings.displayControls.alignmentV);
     ui->comboBoxControlsAlignH->setCurrentIndex(mySettings.displayControls.alignmentH);
     ui->horizontalSliderOpacity->setValue(mySettings.displayControls.opacity*100);
+}
 
-    // Set display 2 settings
-    ui->groupBoxDisp2Sets->setChecked(mySettings.useDisplaySettings2);
-    on_groupBoxDisp2Sets_toggled(ui->groupBoxDisp2Sets->isChecked());
-    ui->groupBoxBackground2->setChecked(mySettings.useBackground2);
-    ui->lineEditBackgroundPath2->setText(mySettings.backgroundPath2);
+void GeneralSettingWidget::loadThemes()
+{
+    QSqlQuery sq;
+    sq.exec("SELECT id, name FROM Themes");
+    themeIdList.clear();
+    themes.clear();
+    while(sq.next())
+    {
+        themeIdList<< sq.value(0).toString();
+        themes<<sq.value(1).toString();
+    }
+    ui->comboBoxTheme->clear();
+    ui->comboBoxTheme->addItems(themes);
 }
 
 GeneralSettings GeneralSettingWidget::getSettings()
 {
     mySettings.displayIsOnTop = ui->checkBoxDisplayOnTop->isChecked();
-    mySettings.useBackground = ui->groupBoxBackground->isChecked();
-    mySettings.backgroundPath = ui->lineEditBackgroundPath->text();
+
+    int tmx = ui->comboBoxTheme->currentIndex();
+    if(tmx != -1)
+        mySettings.currentThemeId = themeIdList.at(tmx);
+    else
+        mySettings.currentThemeId = "0";
 
     mySettings.displayScreen = ui->comboBoxDisplayScreen->currentIndex();
     mySettings.displayScreen2 = monitors.indexOf(ui->comboBoxDisplayScreen_2->currentText());
@@ -92,11 +107,6 @@ GeneralSettings GeneralSettingWidget::getSettings()
     qreal r = ui->horizontalSliderOpacity->value();
     r = r/100;
     mySettings.displayControls.opacity = r;
-
-    // get dispaly 2 settings
-    mySettings.useDisplaySettings2 = ui->groupBoxDisp2Sets->isChecked();
-    mySettings.useBackground2 = ui->groupBoxBackground2->isChecked();
-    mySettings.backgroundPath2 = ui->lineEditBackgroundPath2->text();
 
     return mySettings;
 }
@@ -123,17 +133,9 @@ void GeneralSettingWidget::updateSecondaryDisplayScreen()
     if(i != -1)
         ui->comboBoxDisplayScreen_2->setCurrentIndex(i);
     else
+    {
         ui->comboBoxDisplayScreen_2->setCurrentIndex(0);
-
-    if(ui->comboBoxDisplayScreen_2->currentIndex()<=0)
-    {
-        ui->groupBoxDisp2Sets->setVisible(false);
         emit setDisp2Use(false);
-    }
-    else
-    {
-        ui->groupBoxDisp2Sets->setVisible(true);
-        emit setDisp2Use(true);
     }
 }
 
@@ -142,41 +144,54 @@ void GeneralSettingWidget::on_comboBoxDisplayScreen_activated(const QString &arg
     updateSecondaryDisplayScreen();
 }
 
-void GeneralSettingWidget::on_buttonBrowseBackgound_clicked()
-{
-    // Change background
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for main wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
-
-    if( !filename.isNull() )
-        ui->lineEditBackgroundPath->setText(filename);
-}
-
-void GeneralSettingWidget::on_groupBoxDisp2Sets_toggled(bool arg1)
-{
-    ui->groupBoxBackground2->setVisible(arg1);
-}
-
-void GeneralSettingWidget::on_buttonBrowseBackgound2_clicked()
-{
-    // Change background
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for main wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
-
-    if( !filename.isNull() )
-        ui->lineEditBackgroundPath2->setText(filename);
-}
-
 void GeneralSettingWidget::on_comboBoxDisplayScreen_2_activated(int index)
 {
     if(index<=0)
-    {
-        ui->groupBoxDisp2Sets->setVisible(false);
-        emit setDisp2Use(false);
-    }
+       emit setDisp2Use(false);
     else
-    {
-        ui->groupBoxDisp2Sets->setVisible(true);
         emit setDisp2Use(true);
-    }
+}
+
+void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
+{
+        QSqlTableModel sqt;
+        QSqlQuery sq;
+        Theme tm;
+        QString nId;
+
+        AddSongbookDialog theme_dia;
+        theme_dia.setWindowTitle(tr("Edit Theme"));
+        theme_dia.setWindowText(tr("Theme Name:"),tr("Comments:"));
+        theme_dia.setSongbook(tr("Default"),tr("This theme will contain program default settings."));
+        int ret = theme_dia.exec();
+        switch(ret)
+        {
+        case AddSongbookDialog::Accepted:
+            sqt.setTable("Themes");
+            sqt.insertRow(0);
+            sqt.setData(sqt.index(0,1),theme_dia.title);
+            sqt.setData(sqt.index(0,2),theme_dia.info);
+            sqt.submitAll();
+
+
+            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
+            sq.first();
+            nId = sq.value(0).toString();
+
+            tm.saveNewTheme(nId);
+
+            loadThemes();
+
+            ui->comboBoxTheme->setCurrentIndex(themeIdList.indexOf(nId));
+            emit themeChanged(nId);
+
+            break;
+        case AddSongbookDialog::Rejected:
+            break;
+        }
+}
+
+void GeneralSettingWidget::on_comboBoxTheme_activated(int index)
+{
+    emit themeChanged(themeIdList.at(index));
 }

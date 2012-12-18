@@ -22,6 +22,7 @@
 
 #include <QtGui>
 #include <QtSql>
+#include "theme.h"
 
 class ManageData
 {
@@ -74,8 +75,6 @@ class Songbook
 {
 public:
     Songbook();
-//    Songbook(QString id);
-//    void readData();
     QString songbookId;
     QString title;
     QString info;
@@ -103,7 +102,29 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+};
 
+//*************************************/
+//*** Theme Model Class ***************/
+//*************************************/
+class ThemeModel : public QAbstractTableModel
+{
+    Q_OBJECT
+    Q_DISABLE_COPY(ThemeModel)
+
+public:
+    ThemeModel();
+    QList<ThemeInfo> themeList;
+
+    void setThemes(QList<ThemeInfo> themes);
+    void addTheme(ThemeInfo theme);
+    ThemeInfo getTheme(int row);
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 };
 
 ///////////////////////
@@ -115,6 +136,7 @@ public:
     Database();
     QList<Songbook> getSongbooks();
     QList<Bibles> getBibles();
+    QList<ThemeInfo> getThemes();
 };
 
 #endif // MANAGEDATA_H

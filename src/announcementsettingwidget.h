@@ -1,8 +1,9 @@
 #ifndef ANNOUNCEMENTSETTINGWIDGET_H
 #define ANNOUNCEMENTSETTINGWIDGET_H
 
-#include <QWidget>
-#include "settings.h"
+//#include <QWidget>
+#include <QtGui>
+#include "theme.h"
 
 namespace Ui {
     class AnnouncementSettingWidget;

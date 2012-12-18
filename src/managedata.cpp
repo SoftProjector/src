@@ -114,20 +114,6 @@ Songbook::Songbook()
 {
 }
 
-//Songbook::Songbook(QString id)
-//{
-//    songbookId = id;
-//}
-//
-//void Songbook::readData()
-//{
-//    QSqlQuery sq;
-//    sq.exec("SELECT id, name, info FROM Songbooks WHERE id = '" + songbookId + "'");
-//    sq.first();
-//    title = sq.value(1).toString();
-//    info = sq.value(2).toString();
-//}
-
 //***************************************
 //****        Songbooks Model         ****
 //***************************************
@@ -207,9 +193,85 @@ bool SongbooksModel::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-//***************************************
-//****        Database                ****
-//***************************************
+//***************************************/
+//****        Theme Model            ****/
+//***************************************/
+ThemeModel::ThemeModel()
+{
+}
+
+void ThemeModel::setThemes(QList<ThemeInfo> themes)
+{
+    themeList.clear();
+    themeList = themes;
+    emit layoutChanged();
+}
+
+void ThemeModel::addTheme(ThemeInfo theme)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    themeList.append(theme);
+    endInsertRows();
+}
+
+ThemeInfo ThemeModel::getTheme(int row)
+{
+    return themeList.at(row);
+}
+
+int ThemeModel::rowCount(const QModelIndex &parent) const
+{
+    return themeList.count();
+}
+
+int ThemeModel::columnCount(const QModelIndex &parent) const
+{
+    return 2;
+}
+
+QVariant ThemeModel::data(const QModelIndex &index, int role) const
+{
+    if( index.isValid() && role == Qt::DisplayRole )
+    {
+        ThemeInfo theme = themeList.at(index.row());
+        if( index.column() == 0 )
+            return QVariant(theme.name);
+        else if( index.column() == 1 )
+            return QVariant(theme.comments);
+    }
+    return QVariant();
+}
+
+QVariant ThemeModel::headerData(int section,
+                                 Qt::Orientation orientation,
+                                 int role) const
+{
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
+    {
+        switch(section) {
+        case 0:
+            return QVariant(tr("Name"));
+        case 1:
+            return QVariant(tr("Comments"));
+        }
+    }
+    return QVariant();
+}
+
+bool ThemeModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row+count-1);
+    // Need to remove starting from the end:
+    for(int i=row+count-1; i>=row; i--)
+        themeList.removeAt(i);
+    endRemoveRows();
+    return true;
+}
+
+
+//***************************************/
+//****        Database               ****/
+//***************************************/
 Database::Database()
 {
 }
@@ -250,4 +312,20 @@ QList<Bibles> Database::getBibles()
         bibles.append(bible);
     }
     return bibles;
+}
+
+QList<ThemeInfo> Database::getThemes()
+{
+    QList<ThemeInfo> theme_list;
+    ThemeInfo theme;
+    QSqlQuery sq;
+    sq.exec("SELECT id, name, comment FROM Themes");
+    while (sq.next())
+    {
+        theme.themeId = sq.value(0).toString();
+        theme.name = sq.value(1).toString();
+        theme.comments = sq.value(2).toString();
+        theme_list.append(theme);
+    }
+    return theme_list;
 }

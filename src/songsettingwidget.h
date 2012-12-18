@@ -1,8 +1,9 @@
 #ifndef SONGSETTINGWIDGET_H
 #define SONGSETTINGWIDGET_H
 
-#include <QWidget>
-#include "settings.h"
+//#include <QWidget>
+#include <QtGui>
+#include "theme.h"
 
 namespace Ui {
     class SongSettingWidget;

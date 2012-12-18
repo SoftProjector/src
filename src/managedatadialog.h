@@ -41,9 +41,11 @@ public:
     virtual ~ManageDataDialog();
     bool reload_bible;
     bool reload_songbook;
+    bool reloadThemes;
 
 public slots:
     void load_songbooks();
+    void loadThemes();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -55,8 +57,10 @@ signals:
 private:
     QList<Bibles> bible_list;
     QList<Songbook> songbook_list;
+    QList<ThemeInfo> themeList;
     BiblesModel *bible_model;
     SongbooksModel *songbook_model;
+    ThemeModel *themeModel;
     Ui::ManageDataDialog *ui;
 
 
@@ -70,6 +74,7 @@ private slots:
     void on_bibleTableView_clicked(QModelIndex index);
     void updateBibleButtons();
     void updateSongbookButtons();
+    void updateThemeButtons();
     void on_edit_bible_pushButton_clicked();
     void on_edit_songbook_pushButton_clicked();
     void on_delete_bible_pushButton_clicked();
@@ -88,6 +93,13 @@ private slots:
     void load_bibles();
     void toMultiLine(QString& mline);
     void toSingleLine(QString& sline);
+    void on_pushButtonThemeNew_clicked();
+    void on_pushButtonThemeImport_clicked();
+    void on_pushButtonThemeEdit_clicked();
+    void on_pushButtonThemeExport_clicked();
+    void on_pushButtonThemeDelete_clicked();
+    void on_TableViewTheme_clicked(const QModelIndex &index);
+    void deleteTheme(ThemeInfo tme);
 };
 
 

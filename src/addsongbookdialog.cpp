@@ -56,8 +56,14 @@ void AddSongbookDialog::on_buttonBox_rejected()
     close();
 }
 
-void AddSongbookDialog::setSongbook(QString tit, QString inf)
+void AddSongbookDialog::setSongbook(QString i_title, QString i_info)
 {
-    ui->songbook_title_box->setText(tit);
-    ui->songbook_info_box->setPlainText(inf);
+    ui->songbook_title_box->setText(i_title);
+    ui->songbook_info_box->setPlainText(i_info);
+}
+
+void AddSongbookDialog::setWindowText(QString lblName, QString lblInfo)
+{
+    ui->sbonik_title_label->setText(lblName);
+    ui->songbook_info_label->setText(lblInfo);
 }

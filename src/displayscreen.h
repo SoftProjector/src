@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include "settings.h"
+#include "theme.h"
 #include "controlbutton.h"
 #include "bible.h"
 #include "song.h"

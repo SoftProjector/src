@@ -62,12 +62,13 @@ public:
     Verse current_verse;
     Announcement announcement_text;
     QString version_string;
-    Settings allsettings;
+    Theme theme;
+    Settings mySettings;
 
     SoftProjector *softProjector;
 
 public slots:
-    void updateSetting(Settings& allsets);
+    void updateSetting(GeneralSettings &g,Theme &t);
     void saveSettings();
     void positionDisplayWindow();
     void updateScreen();
@@ -77,7 +78,6 @@ public slots:
     void setProjectChanged(bool isChanged);
 
 private:
-    DisplaySettings dispSettings;
     Ui::SoftProjectorClass *ui;
     SettingsDialog *settingsDialog;
     QString type;
@@ -108,7 +108,7 @@ private slots:
     void readSongsFromSavedProject(QXmlStreamReader *xml);
     void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);
 
-    void applySetting(Settings& allsets);
+    void applySetting(GeneralSettings &g, Theme &t);
     void on_actionSave_Project_As_triggered();
     void on_actionSave_Project_triggered();
     void on_actionOpen_triggered();

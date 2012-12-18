@@ -21,10 +21,13 @@
 #define SETTINGSDIALOG_H
 
 
-#include <QtGui/QDialog>
-#include <QtGui/QFileDialog>
+//#include <QtGui/QDialog>
+//#include <QtGui/QFileDialog>
+#include <QtGui>
 #include "settings.h"
+#include "theme.h"
 #include "generalsettingwidget.h"
+#include "passivesettingwidget.h"
 #include "biblesettingwidget.h"
 #include "songsettingwidget.h"
 #include "announcementsettingwidget.h"
@@ -43,10 +46,10 @@ public:
     void updateSecondaryBibleMenu();
 
 public slots:
-    void loadSettings(Settings& sets);
+    void loadSettings(GeneralSettings& sets, Theme &thm);
 
 signals:
-    void updateSettings(Settings &sets);
+    void updateSettings(GeneralSettings& sets, Theme &thm);
     void positionsDisplayWindow();
     void updateScreen();
 
@@ -57,12 +60,17 @@ private:
     int currentDisplayScreen2;
     bool is_always_on_top;
 
-    Settings allSettings;
+    GeneralSettings gsettings;
+    Theme theme;
     GeneralSettingWidget *generalSettingswidget;
+    PassiveSettingWidget *passiveSettingwidget;
     BibleSettingWidget *bibleSettingswidget;
     SongSettingWidget *songSettingswidget;
     AnnouncementSettingWidget *announcementSettingswidget;
 
+//    QAbstract *btnOk;
+//    QPushButton *btnCancel;
+//    QPushButton *btnApply;
     QPushButton *btnOk;
     QPushButton *btnCancel;
     QPushButton *btnApply;
@@ -72,6 +80,9 @@ private slots:
     void setUseDispScreen2(bool toUse);
     void on_buttonBox_clicked(QAbstractButton *button);
     void applySettings();
+    void changeTheme(QString theme_id);
+    void getThemes();
+    void setThemes();
 
 protected:
     virtual void changeEvent(QEvent *e);

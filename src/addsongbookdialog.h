@@ -36,7 +36,8 @@ public:
     virtual ~AddSongbookDialog();
 
 public slots:
-    void setSongbook(QString title, QString info);
+    void setSongbook(QString i_title, QString i_info);
+    void setWindowText(QString lblName, QString lblInfo);
 
 protected:
     virtual void changeEvent(QEvent *e);
