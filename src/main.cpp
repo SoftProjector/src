@@ -24,6 +24,8 @@
 
 bool connect(QString database_file)
 {
+    bool database_exists = ( QFile::exists(database_file) );
+
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(database_file);
     if (!db.open())
@@ -42,16 +44,41 @@ bool connect(QString database_file)
         mb.exec();
        return false;
     }
-    else return true;
+    else
+    {
+        // If no files exited, then database hase been created now we need to fill it
+        if(!database_exists)
+        {
+            QSqlQuery sq;
+            sq.exec("CREATE TABLE 'BibleBooks' ('bible_id' INTEGER, 'id' INTEGER, 'book_name' "
+                    "TEXT, 'chapter_count' INTEGER DEFAULT 0)");
+            sq.exec("CREATE TABLE 'BibleVerse' ('verse_id' TEXT, 'bible_id' TEXT, 'book' TEXT, "
+                    "'chapter' INTEGER, 'verse' INTEGER, 'verse_text' TEXT)");
+            sq.exec("CREATE TABLE 'BibleVersions' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
+                    "'bible_name' TEXT, 'abbreviation' TEXT, 'information' TEXT, 'right_to_left' INTEGER DEFAULT 0)");
+            sq.exec("CREATE TABLE 'Settings' ('type' TEXT, 'sets' TEXT)");
+            sq.exec("CREATE TABLE 'Songbooks' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'info' TEXT)");
+            sq.exec("CREATE TABLE 'Songs' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
+                    "'songbook_id' INTEGER, 'number' INTEGER, 'title' TEXT, 'category' INTEGER DEFAULT 0, "
+                    "'tune' TEXT, 'words' TEXT, 'music' TEXT, 'song_text' TEXT, 'notes' TEXT, "
+                    "'use_private' TEXT, 'alignment' TEXT, 'color' TEXT, 'font' TEXT, "
+                    "'background' TEXT, 'count' INTEGER DEFAULT 0, 'date' TEXT)");
+            sq.exec("CREATE TABLE 'ThemeData' ('theme_id' INTEGER, 'type' TEXT, 'sets' TEXT)");
+            sq.exec("CREATE TABLE 'Themes' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'comment' TEXT)");
+            sq.exec("CREATE TABLE 'spData' ('Version' TEXT)");
+            sq.exec("INSERT INTO spData (Version) VALUES ('2db4')");
+        }
+        return true;
+    }
 }
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     
-    #ifndef Q_WS_MAC
+//    #ifndef Q_WS_MAC
 //    QApplication::setStyle("Plastique");
-    #endif
+//    #endif
 
     QPixmap pixmap(":icons/icons/splash.png");
     QSplashScreen splash(pixmap);
@@ -66,17 +93,6 @@ int main(int argc, char *argv[])
     // and display a friendly error if it was not found:
     QString database_file = a.applicationDirPath() + QDir::separator() + "spData.sqlite";
 
-    bool database_exists = ( QFile::exists(database_file) );
-
-    if (!database_exists)
-    {
-        QMessageBox mb;
-        mb.setText("Database file 'spData.sqlite' cannot be found.\nThe program will Terminate!");
-        mb.setWindowTitle("Database File Error");
-        mb.setIcon(QMessageBox::Critical);
-        mb.exec();
-        return 1;
-    }
 
     // Try to connect to database
     if( !connect(database_file) )
@@ -100,7 +116,9 @@ int main(int argc, char *argv[])
     {
         QString errortxt = QString("SoftProjector requires database vesion # %1\n"
                                    "The database you are trying to open has vesion # %2\n"
-                                   "Please use supplied database with current version of softProjector.\n"
+                                   "Please use database with current version\n"
+                                   "OR rename/remove all the database files\n"
+                                   "and let softProjector to create needed database file.\n"
                                    "The program will terminate!"
                                    ).arg(currentVersion).arg(dbVersion);
         QMessageBox mb;
