@@ -13,9 +13,6 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     timer = new QTimer(this);
     timer_out = new QTimer(this);
 
-    connect(timer, SIGNAL(timeout()), this, SLOT(fadeIn()));
-    //    connect(timer_out, SIGNAL(timeout()), this, SLOT(fadeOut()));
-
     acounter[0]=255;
 
     // Add control buttons
@@ -28,6 +25,8 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     btnExit = new ControlButton(QIcon(":/icons/icons/controlExit.png"),
                                 QIcon(":/icons/icons/controlExitHovered.png"),
                                 QIcon(":/icons/icons/controlExitPressed.png"),this);
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(fadeIn()));
     connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
@@ -42,21 +41,25 @@ DisplayScreen::~DisplayScreen()
     delete btnExit;
     delete ui;
 }
-void DisplayScreen::keyPressEvent(QKeyEvent *event)
+void DisplayScreen::keyReleaseEvent(QKeyEvent *event)
 {
-    // Will get called when a key is pressed
+    // Will get called when a key is released
     int key = event->key();
-    if(key == Qt::Key_P)
+    if(key == Qt::Key_Left)
         prevSlide();
-    else if(key == Qt::Key_B)
+    else if(key == Qt::Key_Up)
         prevSlide();
     else if(key == Qt::Key_PageUp)
         prevSlide();
-    else if(key == Qt::Key_F)
+    else if(key == Qt::Key_Back)
+        prevSlide();
+    else if(key == Qt::Key_Right)
         nextSlide();
-    else if(key == Qt::Key_N)
+    else if(key == Qt::Key_Down)
         nextSlide();
     else if(key == Qt::Key_PageDown)
+        nextSlide();
+    else if(key == Qt::Key_Forward)
         nextSlide();
     else if(key == Qt::Key_Enter)
         nextSlide();
@@ -64,10 +67,8 @@ void DisplayScreen::keyPressEvent(QKeyEvent *event)
         nextSlide();
     else if(key == Qt::Key_Escape)
         exitSlide();
-    else if(key == Qt::Key_X)
-        exitSlide();
     else
-        QWidget::keyPressEvent(event);
+        QWidget::keyReleaseEvent(event);
 }
 
 void DisplayScreen::setControlsSettings(DisplayControlsSettings &settings)
@@ -909,7 +910,6 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     // Reset the opacity to default opaque:
     painter.setOpacity(1.0);
 }
-
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 void DisplayScreen::fastbluralpha(QImage &img, int radius)

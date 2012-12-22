@@ -273,6 +273,19 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="pushButtonThemeExportAll">
+           <property name="toolTip">
+            <string>Export currently selected Songbook to be able to share with others and for backup.</string>
+           </property>
+           <property name="text">
+            <string>Export All...</string>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+X</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButtonThemeDelete">
            <property name="toolTip">
             <string>Delete currently selected Songbook from database.</string>

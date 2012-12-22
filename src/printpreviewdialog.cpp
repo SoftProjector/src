@@ -48,11 +48,25 @@ void PrintPreviewDialog::setText(Song song)
     // This will prepare print text edit for current song
 {
     QString s;
-    s = QString("%1 %2\n%3\nTune: %4\nWords By: %5\tMusic By: %6\n\n")
-            .arg(song.songbook_name).arg(song.number).arg(song.title).arg(song.tune).arg(song.wordsBy).arg(song.musicBy);
+    s = QString("%1 %2\n%3\n").arg(song.songbook_name).arg(song.number).arg(song.title);
+    // Do not print Tune, WordsBy, and MusicBy if they are empty
+    if(!song.tune.isEmpty())
+        s+= tr("Tune: %1\n").arg(song.tune);
+    if(!song.wordsBy.isEmpty() && !song.musicBy.isEmpty())
+        s+= tr("Words By: %1\tMusic By: %2\n\n").arg(song.wordsBy).arg(song.musicBy);
+    else if(!song.wordsBy.isEmpty() && song.musicBy.isEmpty())
+        s+= tr("Words By: %1\n\n").arg(song.wordsBy);
+    else if(song.wordsBy.isEmpty() && !song.musicBy.isEmpty())
+        s+= tr("Music By: %1\n\n").arg(song.musicBy);
+    else
+        s+= "\n";
     song.songText=song.songText.split("@$").join("\n\n");
     song.songText=song.songText.split("@%").join("\n");
-    s += QString("%1\n\nNotes:\n%2").arg(song.songText).arg(song.notes);
+    s += song.songText;
+
+    //Check for notes
+    if(!song.notes.isEmpty())
+        s += tr("\n\nNotes:\n%1").arg(song.notes);
 
     ui->textEdit->setText(s);
     ui->spinBoxFontSize->setValue(14);// default font size for Songs

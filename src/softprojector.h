@@ -95,6 +95,12 @@ private:
     bool isSingleScreen;
     bool hasDisplayScreen2;
 
+    // shortcuts
+    QShortcut *shpgUP;
+    QShortcut *shpgDwn;
+    QShortcut *shSart1;
+    QShortcut *shSart2;
+
 private slots:
     void showDisplayScreen(bool show);
     //For saving and opening softProjector project files

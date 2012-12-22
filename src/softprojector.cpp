@@ -123,7 +123,17 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->show_button->setEnabled(false);
     ui->clear_button->setEnabled(false);
 
-    // Hide Multi verse selection, only visibel to be when showing bible
+    // Create and connect shortcuts
+    shpgUP = new QShortcut(Qt::Key_PageUp,this);
+    shpgDwn = new QShortcut(Qt::Key_PageDown,this);
+    shSart1 = new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_B),this);
+    shSart2 = new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F5),this);
+    connect(shpgUP,SIGNAL(activated()),this,SLOT(prevSlide()));
+    connect(shpgDwn,SIGNAL(activated()),this,SLOT(nextSlide()));
+    connect(shSart1,SIGNAL(activated()),this,SLOT(on_show_button_clicked()));
+    connect(shSart2,SIGNAL(activated()),this,SLOT(on_show_button_clicked()));
+
+    // Hide Multi verse selection, only visible to be when showing bible
     ui->rbMultiVerse->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
@@ -144,6 +154,10 @@ SoftProjector::~SoftProjector()
     delete desktop;
     delete languageGroup;
     delete settingsDialog;
+    delete shpgUP;
+    delete shpgDwn;
+    delete shSart1;
+    delete shSart2;
     delete ui;
 }
 
@@ -353,45 +367,17 @@ void SoftProjector::keyPressEvent(QKeyEvent *event)
     else if(key == Qt::Key_F8)
         ui->projectTab->setCurrentWidget(announceWidget);
     else if(key == Qt::Key_Left)
-    {
-        if(ui->listShow->hasFocus())
-            prevSlide();
-    }
-    else if(key == Qt::Key_Up)
-    {
-        if(ui->listShow->hasFocus())
-            prevSlide();
-    }
-    else if(key == Qt::Key_PageUp)
-    {
-        if(ui->listShow->hasFocus())
-            prevSlide();
-    }
+        prevSlide();
+    else if(key == Qt::Key_Back)
+        prevSlide();
     else if(key == Qt::Key_Right)
-    {
-        if(ui->listShow->hasFocus())
-            nextSlide();
-    }
-    else if(key == Qt::Key_Down)
-    {
-        if(ui->listShow->hasFocus())
-            nextSlide();
-    }
-    else if(key == Qt::Key_PageDown)
-    {
-        if(ui->listShow->hasFocus())
-            nextSlide();
-    }
+        nextSlide();
+    else if(key == Qt::Key_Forward)
+        nextSlide();
     else if(key == Qt::Key_Return)
-    {
-        if(ui->listShow->hasFocus())
-            nextSlide();
-    }
+        nextSlide();
     else if(key == Qt::Key_Enter)
-    {
-        if(ui->listShow->hasFocus())
-            nextSlide();
-    }
+        nextSlide();
     else
         QMainWindow::keyPressEvent(event);
 }
