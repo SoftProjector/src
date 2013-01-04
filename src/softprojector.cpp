@@ -137,7 +137,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->rbMultiVerse->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
-    version_string = "2.Dev.Build: 4"; // to be used between official releases
+    version_string = "2.Dev.Build: 5"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 }
 
@@ -834,6 +834,7 @@ void SoftProjector::createLanguageActions()
 
             QString splocale = agent.remove(0, agent.indexOf('_')+1);
             splocale.chop(3);
+
             // flag's file name
             QString flagFileName = "flag_"+splocale+".png";
             if(flagsList.contains(flagFileName))//  if flag is available
@@ -846,10 +847,7 @@ void SoftProjector::createLanguageActions()
             tmpAction->setCheckable(true);
             languageGroup->addAction(tmpAction);
             ui->menuLanguage->addAction(tmpAction);
-            delete tmpAction;
         }
-        delete englishAction;
-
 //        connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
 }
 void SoftProjector::switchLanguage(QAction *action)
