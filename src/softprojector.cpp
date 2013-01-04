@@ -47,6 +47,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     manageDialog = new ManageDataDialog(this);
     settingsDialog = new SettingsDialog(this);
     helpDialog = new HelpDialog();
+    pictureWidget = new PictureWidget;
 
     ui->setupUi(this);
 
@@ -77,6 +78,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->clear();
     ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
+    ui->projectTab->addTab(pictureWidget,tr("Pictures"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
 
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
@@ -90,6 +92,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
     connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    connect(pictureWidget, SIGNAL(sendImageList(QList<QPixmap>&,int)), this, SLOT(setPictureList(QList<QPixmap>&,int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
@@ -455,6 +458,32 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     updateScreen();
 }
 
+void SoftProjector::setPictureList(QList<QPixmap> &image_list,int row)
+{
+    // Called to show picture list
+    type = "pix";
+    showing = true;
+    new_list = true;
+    pictureShowList = image_list;
+    ui->labelShow->clear();
+    ui->listShow->clear();
+    ui->listShow->setSpacing(0);
+    ui->listShow->setIconSize(QSize(100,100));
+
+    foreach(const QPixmap &p, pictureShowList)
+    {
+        QListWidgetItem *itm = new QListWidgetItem;
+        QIcon ico(p);
+        itm->setIcon(ico);
+        ui->listShow->addItem(itm);
+    }
+
+    ui->listShow->setCurrentRow(row);
+    ui->listShow->setFocus();
+    new_list = false;
+    updateScreen();
+}
+
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the show (right-most) list.
@@ -540,6 +569,10 @@ void SoftProjector::updateScreen()
                 else
                     displayScreen2->renderAnnounceText(announcement_text,theme.announce);
             }
+        }
+        else if(type == "pix")
+        {
+            displayScreen1->renderPicture(pictureShowList.at(currentRow));
         }
     }
 }
@@ -868,7 +901,8 @@ void SoftProjector::retranslateUis()
     ui->retranslateUi(this);
     ui->projectTab->setTabText(0, tr("Bible (F6)"));
     ui->projectTab->setTabText(1, tr("Songs (F7)"));
-    ui->projectTab->setTabText(2, tr("Announcements (F8)"));
+    ui->projectTab->setTabText(2, tr("Pictures"));
+    ui->projectTab->setTabText(3, tr("Announcements (F8)"));
     songWidget->retranslateUis();
     editWidget->retranslateUis();
 }
@@ -1440,7 +1474,7 @@ void SoftProjector::on_actionPrint_triggered()
         }
 
     }
-    else if (ui->projectTab->currentIndex() == 2)
+    else if (ui->projectTab->currentIndex() == 3)
     {
         p->setText(announceWidget->getAnnouncements());
         p->exec();

@@ -57,6 +57,7 @@ public slots:
     void renderBibleText(Verse verse, BibleSettings &bibleSetings);
     void renderSongText(Stanza stanza, SongSettings &songSettings);
     void renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings);
+    void renderPicture(QPixmap image);
 
 signals:
     void exitSlide();
@@ -89,7 +90,8 @@ private:
     bool useBluredShadow;
     QFont mainFont;
     QString wallpaperPath; // Wallpaper image file path
-    QImage wallpaper; // Wallpaper image
+//    QImage wallpaper; // Wallpaper image
+    QPixmap wallpaper;
     QString passiveWallpaperPath;
     QImage passiveWallpaper;
     QColor foregroundColor;
@@ -114,7 +116,7 @@ private:
     Stanza songStanza;
     Announcement announcement;
 
-    QString textType;
+    QString displayType;
 };
 
 #endif // DISPLAYSCREEN_H

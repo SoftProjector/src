@@ -212,7 +212,7 @@ void DisplayScreen::fadeOut() // For future
 void DisplayScreen::renderText(bool text_present)
 {
     if(!text_present)
-        textType.clear();
+        displayType.clear();
 
     if(useFading)
     {
@@ -238,11 +238,11 @@ void DisplayScreen::renderText(bool text_present)
     text_painter.setFont(mainFont);
 
     // Request to write its text to the QPainter:
-    if(textType == "bible")
+    if(displayType == "bible")
         drawBibleText(&text_painter, width(), height());
-    else if(textType == "song")
+    else if(displayType == "song")
         drawSongText(&text_painter, width(), height());
-    else if(textType == "announce")
+    else if(displayType == "announce")
         drawAnnounceText(&text_painter, width(), height());
     text_painter.end();
 
@@ -254,11 +254,11 @@ void DisplayScreen::renderText(bool text_present)
     shadow_painter.setFont(mainFont);
     if(useShadow)
     {
-        if(textType == "bible")
+        if(displayType == "bible")
             drawBibleText(&shadow_painter, width(), height());
-        else if(textType == "song")
+        else if(displayType == "song")
             drawSongText(&shadow_painter, width(), height());
-        else if(textType == "announce")
+        else if(displayType == "announce")
             drawAnnounceText(&shadow_painter, width(), height());
         shadow_painter.end();
     }
@@ -322,7 +322,7 @@ void DisplayScreen::renderText(bool text_present)
 void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
 {
     // Render bible verse text
-    textType = "bible";
+    displayType = "bible";
     bibleVerse = verse;
     bibleSets = bibleSetings;
 
@@ -339,7 +339,7 @@ void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
 void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
 {
     // Render song stanza text
-    textType = "song";
+    displayType = "song";
     songStanza = stanza;
     songSets = songSettings;
 
@@ -366,7 +366,7 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
 void DisplayScreen::renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings)
 {
     // Render aanouncement text
-    textType = "announce";
+    displayType = "announce";
     announcement = announce;
     annouceSets = announceSettings;
 
@@ -378,6 +378,18 @@ void DisplayScreen::renderAnnounceText(Announcement announce, AnnounceSettings &
     foregroundColor = annouceSets.textColor;
 
     renderText(true);
+}
+
+void DisplayScreen::renderPicture(QPixmap image)
+{
+    displayType = "pix";
+    wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatio);
+
+//        wallpaper = image;
+
+    renderText(true);
+    useBluredShadow = false;
+    useShadow = false;
 }
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
@@ -841,7 +853,7 @@ void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
         wallpaperPath.clear();
 
     if(wallpaperPath.simplified().isEmpty() )
-        wallpaper = QImage();
+        wallpaper = QPixmap();
     else
     {
         wallpaper.load(wallpaperPath);
@@ -882,14 +894,27 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     if( use_active_background )
     {
         // Draw the active wallpaper if there is text to display
-        if (wallpaper.width()!=width() || wallpaper.isNull())
+        if (displayType != "pix" && (wallpaper.width()!=width() || wallpaper.isNull()))
         {
             wallpaper.load(wallpaperPath);
             if( !wallpaper.isNull() )
                 wallpaper = wallpaper.scaled(width(),height());
         }
         if( ! wallpaper.isNull() )
-            painter.drawImage(0,0,wallpaper);
+//            painter.drawImage(0,0,wallpaper);
+        {
+            int ww = wallpaper.width();
+            int wh = wallpaper.height();
+            if(displayType == "pix" && ww<width() && wh<height())
+                painter.drawPixmap((width()-ww)/2,(height()-wh)/2,wallpaper);
+            else if(displayType == "pix" && ww<width())
+                painter.drawPixmap((width()-ww)/2,0,wallpaper);
+            else if(displayType == "pix" && wh<height())
+                painter.drawPixmap(0,(height()-wh)/2,wallpaper);
+            else
+                painter.drawPixmap(0,0,wallpaper);
+
+        }
         else
         {
             // Use black for the background:

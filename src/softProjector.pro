@@ -61,7 +61,8 @@ SOURCES += main.cpp \
     displayscreen.cpp \
     controlbutton.cpp \
     passivesettingwidget.cpp \
-    theme.cpp
+    theme.cpp \
+    picturewidget.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -87,7 +88,8 @@ HEADERS += softprojector.h \
     displayscreen.h \
     controlbutton.h \
     passivesettingwidget.h \
-    theme.h
+    theme.h \
+    picturewidget.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -106,7 +108,8 @@ FORMS += softprojector.ui \
     announcementsettingwidget.ui \
     printpreviewdialog.ui \
     displayscreen.ui \
-    passivesettingwidget.ui
+    passivesettingwidget.ui \
+    picturewidget.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

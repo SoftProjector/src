@@ -33,6 +33,7 @@
 #include "settings.h"
 #include "printpreviewdialog.h"
 #include "helpdialog.h"
+#include "picturewidget.h"
 
 class QActionGroup;
 
@@ -56,6 +57,7 @@ public:
     EditWidget *editWidget;
     DisplayScreen *displayScreen1;
     DisplayScreen *displayScreen2;
+    PictureWidget *pictureWidget;
 
     bool showing; // whether we are currently showing to the projector
     Song current_song;
@@ -103,6 +105,9 @@ private:
     QShortcut *shSart1;
     QShortcut *shSart2;
 
+    // Pictures
+    QList<QPixmap> pictureShowList;
+
 private slots:
     void showDisplayScreen(bool show);
     //For saving and opening softProjector project files
@@ -142,6 +147,7 @@ private slots:
     void setSongList(Song song, int row);
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
+    void setPictureList(QList<QPixmap> &image_list, int row);
 
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);
