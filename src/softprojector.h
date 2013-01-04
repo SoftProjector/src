@@ -32,6 +32,7 @@
 #include "songcounter.h"
 #include "settings.h"
 #include "printpreviewdialog.h"
+#include "helpdialog.h"
 
 class QActionGroup;
 
@@ -80,6 +81,7 @@ public slots:
 private:
     Ui::SoftProjectorClass *ui;
     SettingsDialog *settingsDialog;
+    HelpDialog *helpDialog;
     QString type;
     bool new_list;
     QActionGroup *languageGroup;

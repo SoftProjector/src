@@ -416,7 +416,7 @@ void BibleWidget::on_search_button_clicked()
         QStringList verse_list;
         int count = search_results.count();
 
-        ui->result_count_label->setText(tr("Total\n") + QString::number(count) + tr("\nresults"));
+        ui->result_count_label->setText(tr("Total\nresutls:\n%1").arg(count));
 //          ui->result_count_label->setText(tr("Total of ") + QString::number(count) + tr(" search results returned."));
 
         for(int i(0);i<count;i++)
@@ -430,7 +430,8 @@ void BibleWidget::on_search_button_clicked()
 //        mb.setWindowTitle(tr("No search results"));
 //        mb.setIcon(QMessageBox::Information);
 //        mb.exec();
-        on_hide_result_button_clicked();
+//        on_hide_result_button_clicked();
+        ui->result_count_label->setText(tr("No search\nresults."));
     }
     emit setArrowCursor();
 }

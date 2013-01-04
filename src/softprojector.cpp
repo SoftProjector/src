@@ -21,7 +21,6 @@
 #include "softprojector.h"
 #include "ui_softprojector.h"
 #include "aboutdialog.h"
-#include "helpdialog.h"
 
 SoftProjector::SoftProjector(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::SoftProjectorClass)
@@ -47,6 +46,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     announceWidget = new AnnounceWidget;
     manageDialog = new ManageDataDialog(this);
     settingsDialog = new SettingsDialog(this);
+    helpDialog = new HelpDialog();
 
     ui->setupUi(this);
 
@@ -158,6 +158,7 @@ SoftProjector::~SoftProjector()
     delete shpgDwn;
     delete shSart1;
     delete shSart2;
+    delete helpDialog;
     delete ui;
 }
 
@@ -785,10 +786,7 @@ void SoftProjector::on_actionManage_Database_triggered()
 
 void SoftProjector::on_action_Help_triggered()
 {
-    HelpDialog *help_dialog;
-    help_dialog = new HelpDialog();
-    help_dialog->show();
-    delete help_dialog;
+    helpDialog->show();
 }
 
 void SoftProjector::setArrowCursor()
