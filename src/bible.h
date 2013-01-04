@@ -23,6 +23,17 @@
 #include <QtSql>
 #include "theme.h"
 
+class BibleVerse
+{
+public:
+    // Hold Bible Verse Info
+    QString verseId;
+    int book;
+    int chapter;
+    int verseNumber;
+    QString verseText;
+};
+
 class Verse
 {
 public:
@@ -63,23 +74,28 @@ class Bible
 {
 public:
     Bible();
-    QList<BibleSearch> searchBible(bool begins, QString searchText);
-    QList<BibleSearch> searchBible(bool begins, QString book, QString searchText);
-    QList<BibleSearch> searchBible(bool begins, QString book, QString chapter, QString searchText);
-    QStringList getBooks();
-    QStringList getChapter(QString book, int chapter);
-    void getVerseAndCaption(QString &verse, QString &caption, QString verId, QString &bibId, bool useAbbr);
-    int getCurrentBookRow(QString book);
-    Verse getCurrentVerseAndCaption(QList<int> currentRows, BibleSettings& sets);
     QStringList verseList;
     QStringList previewIdList; // Verses that are in the preview (chapter) list
     QStringList currentIdList; // Verses that are in the show list
-    void setBiblesId(QString& id);
     QList<BibleBook> books;
+public slots:
+    QList<BibleSearch> searchBible(bool begins, QRegExp searchExp);
+    QList<BibleSearch> searchBible(bool allWords, QRegExp searchExp, int book);
+    QList<BibleSearch> searchBible(bool allWords, QRegExp searchExp, int book, int chapter);
+    QStringList getBooks();
+    QStringList getChapter(int book, int chapter);
+    void getVerseAndCaption(QString &verse, QString &caption, QString verId, QString &bibId, bool useAbbr);
+    int getCurrentBookRow(QString book);
+    Verse getCurrentVerseAndCaption(QList<int> currentRows, BibleSettings& sets);
+    void setBiblesId(QString& id);
     QString getBibleName();
+    void loadOperatorBible();
 private:
     QString bibleId;
+    QList<BibleVerse> operatorBible;
     void retrieveBooks();
+private slots:
+    void addSearchResult(const BibleVerse &bv,QList<BibleSearch> &bsl);
 
 private slots:
 

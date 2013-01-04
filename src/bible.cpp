@@ -82,32 +82,36 @@ int Bible::getCurrentBookRow(QString book)
     return chapters;
 }
 
-QStringList Bible::getChapter(QString book, int chapter)
+QStringList Bible::getChapter(int book, int chapter)
 {
-    QString verse, verseText, id, verse_old;
+    QString verseText, id;
+    int verse, verse_old;
     QSqlQuery sq;
     previewIdList.clear();
     verseList.clear();
-    sq.exec(QString("SELECT verse_id,verse,verse_text FROM BibleVerse WHERE bible_id = %1 AND book = '%2' AND chapter = %3").arg(bibleId).arg(book).arg(QString::number(chapter)));
-    while (sq.next())
+    foreach (const BibleVerse &bv,operatorBible)
     {
-        verse  = sq.value(1).toString();
-        if(verse==verse_old)
+        if(bv.book == book && bv.chapter == chapter)
         {
-            verseText = verseText.simplified() + " " + sq.value(2).toString();
-            id += "," + sq.value(0).toString();
-            verseList.removeLast();
-            previewIdList.removeLast();
+            verse  = bv.verseNumber;
+            if(verse==verse_old)
+            {
+                verseText = verseText.simplified() + " " + bv.verseText;
+                id += "," + bv.verseId;
+                verseList.removeLast();
+                previewIdList.removeLast();
+            }
+            else
+            {
+                verseText = bv.verseText;
+                id = bv.verseId;
+            }
+            verseList << QString::number(verse) + ". " + verseText;
+            previewIdList << id;
+            verse_old = verse;
         }
-        else
-        {
-            verseText = sq.value(2).toString();
-            id = sq.value(0).toString();
-        }
-        verseList << verse + ". " + verseText;
-        previewIdList << id;
-        verse_old = verse;
     }
+
     return verseList;
 }
 
@@ -239,126 +243,144 @@ void Bible::getVerseAndCaption(QString& verse, QString& caption, QString verId, 
     caption = caption.simplified();
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool allWords, QRegExp searchExp)
 {   ///////// Search entire Bible //////////
 
-    QString s_book,s_chapter,verse,verse_text;
-    BibleSearch results;
     QList<BibleSearch> return_results;
-    QSqlQuery sq,sq1;
 
-    // Search for text and return verse ids
-    if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND verse_text like '" + searchText.trimmed() + "%'");
-    else        // Search verses that contain searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    QString sw = searchExp.pattern();
+    sw.remove("\\b(");
+    sw.remove(")\\b");
 
-    while (sq.next())
+    foreach(const BibleVerse &bv,operatorBible)
     {
-        s_book = sq.value(0).toString().trimmed();
-        s_chapter = sq.value(1).toString().trimmed();
-        verse = sq.value(2).toString().trimmed();
-        verse_text = sq.value(3).toString().trimmed();
+        if(bv.verseText.contains(searchExp))
+        {
+            if(allWords)
+            {
+                QStringList stl = sw.split("|");
+                bool hasAll = false;
+                for (int j(0);j<stl.count();++j)
+                {
+                    hasAll = bv.verseText.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
+                    if(!hasAll)
+                        break;
+                }
+                if(hasAll)
+                    addSearchResult(bv,return_results);
+            }
+            else
+                addSearchResult(bv,return_results);
+        }
 
-        // Get Book name instead of number
-        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + s_book + " AND bible_id = " + bibleId);
-        sq1.first();
-        s_book = sq1.value(0).toString();
-
-        // Prepare results
-        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
-        results.book = s_book;
-        results.chapter = s_chapter;
-        results.verse = verse;
-        return_results.append(results);
     }
-    return return_results;//*/
+
+    return return_results;
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString book, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool allWords, QRegExp searchExp, int book)
 {   ///////// Search in selected book //////////
 
-    QString s_book,s_chapter,verse,verse_text;
-    BibleSearch results;
     QList<BibleSearch> return_results;
-    QSqlQuery sq,sq1;
 
-    // Search for text and return verse ids
-    if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND book = '" + book + "' "
-                "AND verse_text like '" + searchText.trimmed() + "%'");
-    else        // Search verses that contain searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND book = '" + book + "' "
-                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    QString sw = searchExp.pattern();
+    sw.remove("\\b(");
+    sw.remove(")\\b");
 
-    while (sq.next())
-    {   s_book = sq.value(0).toString().trimmed();
-        s_chapter = sq.value(1).toString().trimmed();
-        verse = sq.value(2).toString().trimmed();
-        verse_text = sq.value(3).toString().trimmed();
+    foreach(const BibleVerse &bv,operatorBible)
+    {
+        if(bv.verseText.contains(searchExp) && bv.book == book)
+        {
+            if(allWords)
+            {
+                QStringList stl = sw.split("|");
+                bool hasAll = false;
+                for (int j(0);j<stl.count();++j)
+                {
+                    hasAll = bv.verseText.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
+                    if(!hasAll)
+                        break;
+                }
+                if(hasAll)
+                    addSearchResult(bv,return_results);
+            }
+            else
+                addSearchResult(bv,return_results);
+        }
 
-        // Get Book name instead of number
-        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + s_book + " AND bible_id = " + bibleId);
-        sq1.first();
-        s_book = sq1.value(0).toString();
-
-        // Prepare results
-        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
-        results.book = s_book;
-        results.chapter = s_chapter;
-        results.verse = verse;
-        return_results.append(results);
     }
+
     return return_results;
 }
 
-QList<BibleSearch> Bible::searchBible(bool begins, QString book, QString chapter, QString searchText)
+QList<BibleSearch> Bible::searchBible(bool allWords, QRegExp searchExp, int book, int chapter)
 {   ///////// Search in selected chapter //////////
 
-    QString s_book,s_chapter,verse,verse_text;
-    BibleSearch results;
     QList<BibleSearch> return_results;
-    QSqlQuery sq,sq1;
 
-    if (begins) // Search verses that begin with searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
-                "AND verse_text like '" + searchText.trimmed() + "%'");
-    else        // Search verses that contain searchText
-        sq.exec("SELECT book, chapter, verse, verse_text FROM BibleVerse "
-                "WHERE bible_id = '" + bibleId + "' "
-                "AND book = '" + book + "' AND chapter = '" + chapter + "' "
-                "AND verse_text like '%" + searchText.trimmed() + "%'");
+    QString sw = searchExp.pattern();
+    sw.remove("\\b(");
+    sw.remove(")\\b");
 
-    while (sq.next())
-    {   s_book = sq.value(0).toString().trimmed();
-        s_chapter = sq.value(1).toString().trimmed();
-        verse = sq.value(2).toString().trimmed();
-        verse_text = sq.value(3).toString().trimmed();
+    foreach(const BibleVerse &bv,operatorBible)
+    {
+        if(bv.verseText.contains(searchExp) && bv.book == book && bv.chapter == chapter)
+        {
+            if(allWords)
+            {
+                QStringList stl = sw.split("|");
+                bool hasAll = false;
+                for (int j(0);j<stl.count();++j)
+                {
+                    hasAll = bv.verseText.contains(QRegExp("\\b"+stl.at(j)+"\\b",Qt::CaseInsensitive));
+                    if(!hasAll)
+                        break;
+                }
+                if(hasAll)
+                    addSearchResult(bv,return_results);
+            }
+            else
+                addSearchResult(bv,return_results);
+        }
 
-        // Get Book name instead of number
-        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + s_book + " AND bible_id = " + bibleId);
-        sq1.first();
-        s_book = sq1.value(0).toString();
-
-        // Prepare results
-        results.verse_text = s_book + " " + s_chapter + ":" + verse + " " + verse_text;
-        results.book = s_book;
-        results.chapter = s_chapter;
-        results.verse = verse;
-        return_results.append(results);
     }
+
     return return_results;
+}
+
+void Bible::addSearchResult(const BibleVerse &bv, QList<BibleSearch> &bsl)
+{
+    BibleSearch  results;
+    foreach (const BibleBook &bk,books)
+    {
+        if(bk.bookId == QString::number(bv.book))
+        {
+            results.book = bk.book;
+            break;
+        }
+    }
+    results.chapter = QString::number(bv.chapter);
+    results.verse = QString::number(bv.verseNumber);
+    results.verse_text = QString("%1 %2:%3 %4").arg(results.book).arg(results.chapter).arg(results.verse).arg(bv.verseText);
+
+
+    bsl.append(results);
+}
+
+void Bible::loadOperatorBible()
+{
+    operatorBible.clear();
+    BibleVerse bv;
+    QSqlQuery sq;
+    sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = '"+bibleId+"'");
+    while(sq.next())
+    {
+        bv.verseId = sq.value(0).toString().trimmed();
+        bv.book = sq.value(1).toInt();
+        bv.chapter = sq.value(2).toInt();
+        bv.verseNumber = sq.value(3).toInt();
+        bv.verseText = sq.value(4).toString().trimmed();
+        operatorBible.append(bv);
+    }
+
 }

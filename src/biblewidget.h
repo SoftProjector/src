@@ -78,7 +78,6 @@ private slots:
     void on_remove_from_history_pushButton_clicked();
     void on_add_to_history_pushButton_clicked();
     void on_search_results_list_doubleClicked(QModelIndex index);
-    void on_search_ef_textChanged(QString text);
     void on_search_results_list_currentRowChanged(int currentRow);
     void on_hide_result_button_clicked();
     void on_search_button_clicked();
@@ -103,7 +102,6 @@ private:
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;
-
 };
 //class HighlightSearch;
 //class QTextDocument;

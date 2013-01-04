@@ -107,6 +107,7 @@ void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
     Bible b;
 
     b.setBiblesId(bible);
+    b.loadOperatorBible();
     // get bible name instead of id
     bible = b.getBibleName();
 
@@ -116,13 +117,13 @@ void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
     {
         if(b.books.at(i).book == book)
         {
-            clist = b.getChapter(b.books.at(i).bookId,chapter);
+            clist = b.getChapter(b.books.at(i).bookId.toInt(),chapter);
             break;
         }
     }
 
     s = QString("%1\n%2 %3\n\n").arg(bible).arg(book).arg(chapter);
-    s += clist.join("");
+    s += clist.join("\n");
 
     ui->textEdit->setText(s);
     ui->spinBoxFontSize->setValue(11);// default font size for Bible chapter

@@ -705,14 +705,14 @@ void SongWidget::loadPlaylistFromFile(QList<Song> songs)
 void SongWidget::on_pushButtonSearch_clicked()
 {
     QString search_text = ui->lineEditSearch->text();
-    search_text.replace(QRegExp(QString::fromUtf8("[+:;\\]\\[{}().,?/\\\"!'—*-]"))," ");
-    search_text = search_text.simplified();
+    search_text = clean(search_text); // remove all none alphanumeric charecters
     QList<Song> search_results;
     int type = ui->comboBoxSearchType->currentIndex();
 
-    // Make sure that there is some text to do a search for, if non, then return
+    // Make sure that there is some text to do a search for, if none, then return
     if(search_text.count()<1)
     {
+        ui->lineEditSearch->clear();
         ui->lineEditSearch->setPlaceholderText(tr("Please enter search text"));
         return;
     }
@@ -727,7 +727,7 @@ void SongWidget::on_pushButtonSearch_clicked()
     else if(type == 2) // contains all words
         // Search begining of every line
         rx.setPattern("@%"+search_text);
-    else if(type == 3 || type == 4) // line begins
+    else if(type == 3 || type == 4)
     {
         // Search for any of the search words
         search_text.replace("\\W*","|");

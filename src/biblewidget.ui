@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>488</width>
-    <height>529</height>
+    <height>772</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -19,8 +19,8 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout_9">
+   <item>
     <widget class="QSplitter" name="results_splitter">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -34,12 +34,6 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0,0,0">
          <item>
           <widget class="QLabel" name="lblBook_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -59,12 +53,6 @@
          </item>
          <item>
           <widget class="QLineEdit" name="search_ef">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -83,39 +71,61 @@
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="begin_radioButton">
+          <widget class="QComboBox" name="comboBoxSearchRange">
            <property name="toolTip">
-            <string>If selected, only Bible verses starting with the search string will be searched.</string>
+            <string>Select search range</string>
            </property>
-           <property name="text">
-            <string>Begins</string>
-           </property>
+           <item>
+            <property name="text">
+             <string>Entire Bible</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Current Book</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Current Chapter</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="contain_radioButton">
+          <widget class="QComboBox" name="comboBoxSearchType">
            <property name="toolTip">
-            <string>If selected, Bible verses that contain the search string will be searched.</string>
+            <string>Select search type</string>
            </property>
-           <property name="text">
-            <string>Contains</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
+           <item>
+            <property name="text">
+             <string>Contains Phrase</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Contains Word Phrase</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Verse Begins</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Contains Any Word</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Contains All Words</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="search_button">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
            <property name="toolTip">
             <string>Quickly display  the selected Bible verse on the screen</string>
            </property>
@@ -130,81 +140,6 @@
             <string>Return</string>
            </property>
           </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="lblBook_3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Limit search to:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="entire_bible_radioButton">
-           <property name="toolTip">
-            <string>If selected, the entire bible will be searched.</string>
-           </property>
-           <property name="text">
-            <string>Entire Bible</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="current_book_radioButton">
-           <property name="toolTip">
-            <string>If selected, only the selected Bible book will be searched.</string>
-           </property>
-           <property name="text">
-            <string>Current Book</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="current_chapter_radioButton">
-           <property name="toolTip">
-            <string>If selected, only the selected chapter of the selected Bible book will be searched.</string>
-           </property>
-           <property name="text">
-            <string>Current Chapter</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>17</width>
-             <height>13</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </item>
@@ -357,19 +292,6 @@ Results</string>
           </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>13</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

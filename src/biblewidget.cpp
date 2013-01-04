@@ -42,10 +42,6 @@ BibleWidget::BibleWidget(QWidget *parent) :
     ui->chapter_ef->setValidator( chapter_validator );
     ui->verse_ef->setValidator( verse_validator );
 
-    search_type_buttongroup.addButton(ui->begin_radioButton);
-    search_type_buttongroup.addButton(ui->contain_radioButton);
-    ui->contain_radioButton->setChecked(true);
-
     highlight = new HighlighterDelegate(ui->search_results_list);
     ui->search_results_list->setItemDelegate(highlight);
 }
@@ -100,9 +96,11 @@ void BibleWidget::loadBibles(QString initialId)
     if(initialId!=mySettings.operatorBible)
     {
         bible.setBiblesId(mySettings.operatorBible);
+        bible.loadOperatorBible();
         ui->listBook->clear();
         ui->listBook->addItems(bible.getBooks());
         ui->listBook->setCurrentRow(0);
+
     }
 }
 
@@ -139,7 +137,7 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
         {
             currentBook = getCurrentBook();
             currentChapter = currentText.toInt();
-            currentChapterList = bible.getChapter(bible.books.at(bible.getCurrentBookRow(currentBook)).bookId, currentChapter);
+            currentChapterList = bible.getChapter(bible.books.at(bible.getCurrentBookRow(currentBook)).bookId.toInt(), currentChapter);
         }
 
         ui->chapter_preview_list->clear();
@@ -339,28 +337,66 @@ void BibleWidget::on_chapter_ef_textChanged(QString new_string)
 
 void BibleWidget::on_search_button_clicked()
 {
-    emit setWaitCursor();
-    
     QString search_text = ui->search_ef->text();
     search_text = clean(search_text); // remove all none alphanumeric charecters
-    search_text = search_text.simplified(); // remove all extra spaces
-    highlight->highlighter->setHighlightText(search_text); // set highlighting rule
 
-    if (ui->entire_bible_radioButton->isChecked()) // Search entire Bible
+    // Make sure that there is some text to do a search for, if none, then return
+    if(search_text.count()<1)
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),search_text);
+        ui->search_ef->clear();
+        ui->search_ef->setPlaceholderText(tr("Please enter search text"));
+        return;
     }
-    else if (ui->current_book_radioButton->isChecked()) // Search current book only
+
+    emit setWaitCursor();
+    int type = ui->comboBoxSearchType->currentIndex();
+    int range = ui->comboBoxSearchRange->currentIndex();
+
+    QRegExp rx, rxh;
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
+    search_text.replace(" ","\\W*");
+    if(type == 0)
+        // Search text phrase
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),
-                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
-                                           search_text);
+        rx.setPattern(search_text);
+        rxh.setPattern(search_text);
     }
-    else if (ui->current_chapter_radioButton->isChecked()) // Search current chapter only
+    else if(type == 1)
+        // Search whole word exsact phrase only
     {
-        search_results = bible.searchBible(ui->begin_radioButton->isChecked(),
-                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId,
-                                           ui->listChapterNum->currentItem()->text(),search_text);
+        rx.setPattern("\\b"+search_text+"\\b");
+        rxh.setPattern("\\b"+search_text+"\\b");
+    }
+    else if(type == 2)
+        // Search begining of every line
+    {
+        rx.setPattern("^"+search_text);
+        rxh.setPattern(search_text);
+    }
+    else if(type == 3 || type == 4)
+    {
+        // Search for any of the search words
+        search_text.replace("\\W*","|");
+        rx.setPattern("\\b("+search_text+")\\b");
+        rxh.setPattern("\\b("+search_text+")\\b");
+    }
+
+    highlight->highlighter->setHighlightText(rxh.pattern()); // set highlighting rule
+
+    if(range == 0) // Search entire Bible
+    {
+        search_results = bible.searchBible((type == 4),rx);
+    }
+    else if(range == 1) // Search current book only
+    {
+        search_results = bible.searchBible((type == 4),rx,
+                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId.toInt());
+    }
+    else if (range == 2) // Search current chapter only
+    {
+        search_results = bible.searchBible((type == 4),rx,
+                                           bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId.toInt(),
+                                           ui->listChapterNum->currentItem()->text().toInt());
     }
     ui->search_results_list->clear();
 
@@ -389,11 +425,11 @@ void BibleWidget::on_search_button_clicked()
     }
     else // If no relust, notify the user and hide result list
     {
-        QMessageBox mb;
-        mb.setText(tr("No search results have retrieved"));
-        mb.setWindowTitle(tr("No search results"));
-        mb.setIcon(QMessageBox::Information);
-        mb.exec();
+//        QMessageBox mb;
+//        mb.setText(tr("No search results have retrieved"));
+//        mb.setWindowTitle(tr("No search results"));
+//        mb.setIcon(QMessageBox::Information);
+//        mb.exec();
         on_hide_result_button_clicked();
     }
     emit setArrowCursor();
@@ -423,14 +459,6 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
         ui->chapter_ef->setText(search_results.at(currentRow).chapter);
         ui->verse_ef->setText(search_results.at(currentRow).verse);
     }
-}
-
-void BibleWidget::on_search_ef_textChanged(QString text)
-{
-    if(text.size()>3 && mySettings.operatorBible!="none")
-        ui->search_button->setEnabled(true);
-    else
-        ui->search_button->setEnabled(false);
 }
 
 void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
