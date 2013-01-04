@@ -1178,14 +1178,16 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
 
 void ManageDataDialog::importTheme(QXmlStreamReader &xml)
 {
-    Theme tmx;
+    ThemeInfo tminfo;
+                QSqlTableModel sqt;
+                QSqlQuery sq;
     xml.readNext();
     while(xml.tokenString() != "EndElement" && xml.name() != "Theme")
     {
         xml.readNext();
         if(xml.StartElement && xml.name() == "ThemeInfo")
         {
-            ThemeInfo tminfo;
+
             xml.readNext();
             while(xml.tokenString() != "EndElement")
             {
@@ -1201,8 +1203,6 @@ void ManageDataDialog::importTheme(QXmlStreamReader &xml)
                     xml.readNext();
                 }
             }
-            QSqlTableModel sqt;
-            QSqlQuery sq;
             sqt.setTable("Themes");
             sqt.insertRow(0);
             sqt.setData(sqt.index(0,1),tminfo.name);
@@ -1212,303 +1212,86 @@ void ManageDataDialog::importTheme(QXmlStreamReader &xml)
 
             sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
             sq.first();
-            QString nId = sq.value(0).toString();
-
-            tmx.saveNewTheme(nId);
+            tminfo.themeId = sq.value(0).toString();
+            sq.clear();
+//            tmx.saveNewTheme(nId);
             xml.readNext();
         }
-        else if(xml.StartElement && xml.name() == "passive")
+        else if(xml.StartElement && xml.name() == "ThemeData")
         {
-            importThemePassive(xml,tmx.passive);
+            QSqlDatabase::database().transaction();
+            sq.prepare("INSERT INTO ThemeData (theme_id, type, sets) VALUES (?,?,?)");
             xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "passive2")
-        {
-            importThemePassive(xml,tmx.passive2);
+            while(xml.tokenString() != "EndElement")
+            {
+                xml.readNext();
+                if(xml.StartElement && xml.name() == "passive")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("passive");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "passive2")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("passive2");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "bible")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("bible");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "bible2")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("bible2");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "song")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("song");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "song2")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("song2");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "announce")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("announce");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+                else if(xml.StartElement && xml.name() == "announce2")
+                {
+                    sq.addBindValue(tminfo.themeId);
+                    sq.addBindValue("announce2");
+                    sq.addBindValue(xml.readElementText());
+                    sq.exec();
+                    xml.readNext();
+                }
+            }
             xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "bible")
-        {
-            importThemeBible(xml,tmx.bible);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "bible2")
-        {
-            importThemeBible(xml,tmx.bible2);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "song")
-        {
-            importThemeSong(xml,tmx.song);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "song2")
-        {
-            importThemeSong(xml,tmx.song2);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "announce")
-        {
-            importThemeAnnounce(xml,tmx.announce);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "announce2")
-        {
-            importThemeAnnounce(xml,tmx.announce2);
-            xml.readNext();
-        }
-    }
-    tmx.saveTheme();
-}
-
-void ManageDataDialog::importThemePassive(QXmlStreamReader &xml, PassiveSettings &p)
-{
-    xml.readNext();
-    while(xml.tokenString() != "EndElement")
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name()=="useDisp2settings")
-        {
-            p.useDisp2settings = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBackground")
-        {
-            p.useBackground = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="backgroundPath")
-        {
-            p.backgroundPath = xml.readElementText();
-            xml.readNext();
-        }
-    }
-}
-
-void ManageDataDialog::importThemeBible(QXmlStreamReader &xml, BibleSettings &b)
-{
-    xml.readNext();
-    while(xml.tokenString() != "EndElement")
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name()=="useDisp2settings")
-        {
-            b.useDisp2settings = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="primaryBible")
-        {
-            b.primaryBible = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="secondaryBible")
-        {
-            b.secondaryBible = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="trinaryBible")
-        {
-            b.trinaryBible = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="operatorBible")
-        {
-            b.operatorBible = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useShadow")
-        {
-            b.useShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useFading")
-        {
-            b.useFading = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBlurShadow")
-        {
-            b.useBlurShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBackground")
-        {
-            b.useBackground = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="backgroundPath")
-        {
-            b.backgroundPath = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textAlingment")
-        {
-            QStringList sl = xml.readElementText().split(",");
-            b.textAlingmentV = sl.at(0).toInt();
-            b.textAlingmentH = sl.at(1).toInt();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textColor")
-        {
-            b.textColor = QColor::fromRgb(xml.readElementText().toUInt());
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textFont")
-        {
-            b.textFont.fromString(xml.readElementText());
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useAbbriviations")
-        {
-            b.useAbbriviations = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="maxScreen")
-        {
-            b.maxScreen = xml.readElementText().toInt();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="maxScreenFrom")
-        {
-            b.maxScreenFrom = xml.readElementText();
-            xml.readNext();
-        }
-    }
-}
-
-void ManageDataDialog::importThemeSong(QXmlStreamReader &xml, SongSettings &s)
-{
-    xml.readNext();
-    while(xml.tokenString() != "EndElement")
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name()=="useDisp2settings")
-        {
-            s.useDisp2settings = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="showStanzaTitle")
-        {
-            s.showStanzaTitle = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="showSongKey")
-        {
-            s.showSongKey = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="showSongNumber")
-        {
-            s.showSongNumber = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="showSongEnding")
-        {
-            s.showSongEnding = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="songEndingType")
-        {
-            s.songEndingType = xml.readElementText().toInt();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useShadow")
-        {
-            s.useShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useFading")
-        {
-            s.useFading = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBlurShadow")
-        {
-            s.useBlurShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBackground")
-        {
-            s.useBackground = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="backgroundPath")
-        {
-            s.backgroundPath = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textAlingment")
-        {
-            QStringList sl = xml.readElementText().split(",");
-            s.textAlingmentV = sl.at(0).toInt();
-            s.textAlingmentH = sl.at(1).toInt();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textColor")
-        {
-            s.textColor = QColor::fromRgb(xml.readElementText().toUInt());
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textFont")
-        {
-            s.textFont.fromString(xml.readElementText());
-            xml.readNext();
-        }
-    }
-}
-
-void ManageDataDialog::importThemeAnnounce(QXmlStreamReader &xml, AnnounceSettings &a)
-{
-    xml.readNext();
-    while(xml.tokenString() != "EndElement")
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name()=="useDisp2settings")
-        {
-            a.useDisp2settings = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useShadow")
-        {
-            a.useShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useFading")
-        {
-            a.useFading = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBlurShadow")
-        {
-            a.useBlurShadow = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="useBackground")
-        {
-            a.useBackground = (xml.readElementText()=="true");
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="backgroundPath")
-        {
-            a.backgroundPath = xml.readElementText();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textAlingment")
-        {
-            QStringList sl = xml.readElementText().split(",");
-            a.textAlingmentV = sl.at(0).toInt();
-            a.textAlingmentH = sl.at(1).toInt();
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textColor")
-        {
-            a.textColor = QColor::fromRgb(xml.readElementText().toUInt());
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name()=="textFont")
-        {
-            a.textFont.fromString(xml.readElementText());
-            xml.readNext();
+            QSqlDatabase::database().commit();
         }
     }
 }
@@ -1613,175 +1396,25 @@ void ManageDataDialog::on_pushButtonThemeExportAll_clicked()
 
 void ManageDataDialog::exportTheme(QXmlStreamWriter &xml, ThemeInfo &tmInfo)
 {
-    Theme tm;
-    tm.setThemeId(tmInfo.themeId);
-    tm.loadTheme();
+    // Start Theme
+    xml.writeStartElement("Theme"); // start Theme
 
-    xml.writeStartElement("Theme");
-
-    xml.writeStartElement("ThemeInfo");
+    xml.writeStartElement("ThemeInfo"); // start Theme Info
     xml.writeTextElement("name",tmInfo.name);
     xml.writeTextElement("comments",tmInfo.comments);
-    xml.writeEndElement();
+    xml.writeEndElement(); // End Theme Info
 
-    // Write theme elements
-    xml.writeStartElement("passive");
-    exportThemePassive(xml,tm.passive);
-    xml.writeEndElement();
-    xml.writeStartElement("passive2");
-    exportThemePassive(xml,tm.passive2);
-    xml.writeEndElement();
+    // Write theme data
+    xml.writeStartElement("ThemeData"); // Start Theme Data
+    QSqlQuery sq;
+    sq.exec("SELECT type, sets FROM ThemeData WHERE theme_id = '"+tmInfo.themeId+"'");
 
-    xml.writeStartElement("bible");
-    exportThemeBible(xml,tm.bible);
-    xml.writeEndElement();
-    xml.writeStartElement("bible2");
-    exportThemeBible(xml,tm.bible2);
-    xml.writeEndElement();
+    while(sq.next())
+        xml.writeTextElement(sq.value(0).toString().trimmed(),sq.value(1).toString().trimmed());
 
-    xml.writeStartElement("song");
-    exportThemeSong(xml,tm.song);
-    xml.writeEndElement();
-    xml.writeStartElement("song2");
-    exportThemeSong(xml,tm.song2);
-    xml.writeEndElement();
+    xml.writeEndElement(); // End Theme Data
 
-    xml.writeStartElement("announce");
-    exportThemeAnnounce(xml,tm.announce);
-    xml.writeEndElement();
-    xml.writeStartElement("announce2");
-    exportThemeAnnounce(xml,tm.announce2);
-    xml.writeEndElement();
-
-    xml.writeEndElement();
-
-}
-
-void ManageDataDialog::exportThemePassive(QXmlStreamWriter &xml, PassiveSettings &p)
-{
-    if(p.useDisp2settings)
-        xml.writeTextElement("useDisp2settings","true");
-    else
-        xml.writeTextElement("useDisp2settings","false");
-    if(p.useBackground)
-        xml.writeTextElement("useBackground","true");
-    else
-        xml.writeTextElement("useBackground","false");
-    xml.writeTextElement("backgroundPath",p.backgroundPath);
-}
-
-void ManageDataDialog::exportThemeBible(QXmlStreamWriter &xml, BibleSettings &b)
-{
-    if(b.useDisp2settings)
-        xml.writeTextElement("useDisp2settings","true");
-    else
-        xml.writeTextElement("useDisp2settings","false");
-    xml.writeTextElement("primaryBible",b.primaryBible);
-    xml.writeTextElement("secondaryBible",b.secondaryBible);
-    xml.writeTextElement("trinaryBible",b.trinaryBible);
-    xml.writeTextElement("operatorBible",b.operatorBible);
-    if(b.useShadow)
-        xml.writeTextElement("useShadow","true");
-    else
-        xml.writeTextElement("useShadow","false");
-    if(b.useFading)
-        xml.writeTextElement("useFading","true");
-    else
-        xml.writeTextElement("useFading","false");
-    if(b.useBlurShadow)
-        xml.writeTextElement("useBlurShadow","true");
-    else
-        xml.writeTextElement("useBlurShadow","false");
-    if(b.useBackground)
-        xml.writeTextElement("useBackground","true");
-    else
-        xml.writeTextElement("useBackground","false");
-    xml.writeTextElement("backgroundPath",b.backgroundPath);
-    xml.writeTextElement("textAlingment",QString("%1,%2").arg(b.textAlingmentV).arg(b.textAlingmentH));
-    unsigned int textColorInt = (unsigned int)(b.textColor.rgb());
-    xml.writeTextElement("textColor",QString::number(textColorInt));
-    xml.writeTextElement("textFont",b.textFont.toString());
-    if(b.useAbbriviations)
-        xml.writeTextElement("useAbbriviations","true");
-    else
-        xml.writeTextElement("useAbbriviations","false");
-    xml.writeTextElement("maxScreen",QString::number(b.maxScreen));
-    xml.writeTextElement("maxScreenFrom",b.maxScreenFrom);
-}
-
-void ManageDataDialog::exportThemeSong(QXmlStreamWriter &xml, SongSettings &s)
-{
-    if(s.useDisp2settings)
-        xml.writeTextElement("useDisp2settings","true");
-    else
-        xml.writeTextElement("useDisp2settings","false");
-    if(s.showStanzaTitle)
-        xml.writeTextElement("showStanzaTitle","true");
-    else
-        xml.writeTextElement("showStanzaTitle","false");
-    if(s.showSongKey)
-        xml.writeTextElement("showSongKey","true");
-    else
-        xml.writeTextElement("showSongKey","false");
-    if(s.showSongNumber)
-        xml.writeTextElement("showSongNumber","true");
-    else
-        xml.writeTextElement("showSongNumber","false");
-    if(s.showSongEnding)
-        xml.writeTextElement("showSongEnding","true");
-    else
-        xml.writeTextElement("showSongEnding","false");
-    xml.writeTextElement("songEndingType",QString::number(s.songEndingType));
-    if(s.useShadow)
-        xml.writeTextElement("useShadow","true");
-    else
-        xml.writeTextElement("useShadow","false");
-    if(s.useFading)
-        xml.writeTextElement("useFading","true");
-    else
-        xml.writeTextElement("useFading","false");
-    if(s.useBlurShadow)
-        xml.writeTextElement("useBlurShadow","true");
-    else
-        xml.writeTextElement("useBlurShadow","false");
-    if(s.useBackground)
-        xml.writeTextElement("useBackground","true");
-    else
-        xml.writeTextElement("useBackground","false");
-    xml.writeTextElement("backgroundPath",s.backgroundPath);
-    xml.writeTextElement("textAlingment",QString("%1,%2").arg(s.textAlingmentV).arg(s.textAlingmentH));
-    unsigned int textColorInt = (unsigned int)(s.textColor.rgb());
-    xml.writeTextElement("textColor",QString::number(textColorInt));
-    xml.writeTextElement("textFont",s.textFont.toString());
-}
-
-void ManageDataDialog::exportThemeAnnounce(QXmlStreamWriter &xml, AnnounceSettings &a)
-{
-    if(a.useDisp2settings)
-        xml.writeTextElement("useDisp2settings","true");
-    else
-        xml.writeTextElement("useDisp2settings","false");
-    if(a.useShadow)
-        xml.writeTextElement("useShadow","true");
-    else
-        xml.writeTextElement("useShadow","false");
-    if(a.useFading)
-        xml.writeTextElement("useFading","true");
-    else
-        xml.writeTextElement("useFading","false");
-    if(a.useBlurShadow)
-        xml.writeTextElement("useBlurShadow","true");
-    else
-        xml.writeTextElement("useBlurShadow","false");
-    if(a.useBackground)
-        xml.writeTextElement("useBackground","true");
-    else
-        xml.writeTextElement("useBackground","false");
-    xml.writeTextElement("backgroundPath",a.backgroundPath);
-    xml.writeTextElement("textAlingment",QString("%1,%2").arg(a.textAlingmentV).arg(a.textAlingmentH));
-    unsigned int textColorInt = (unsigned int)(a.textColor.rgb());
-    xml.writeTextElement("textColor",QString::number(textColorInt));
-    xml.writeTextElement("textFont",a.textFont.toString());
+    xml.writeEndElement();  // End Theme
 }
 
 void ManageDataDialog::on_pushButtonThemeDelete_clicked()

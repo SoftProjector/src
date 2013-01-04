@@ -101,16 +101,7 @@ private slots:
     void deleteTheme(ThemeInfo tme);
     void on_pushButtonThemeExportAll_clicked();
     void exportTheme(QXmlStreamWriter &xml, ThemeInfo &tmInfo);
-    void exportThemePassive(QXmlStreamWriter &xml, PassiveSettings &p);
-    void exportThemeBible(QXmlStreamWriter &xml, BibleSettings &b);
-    void exportThemeSong(QXmlStreamWriter &xml, SongSettings &s);
-    void exportThemeAnnounce(QXmlStreamWriter &xml, AnnounceSettings &a);
     void importTheme(QXmlStreamReader &xml);
-    void importThemePassive(QXmlStreamReader &xml, PassiveSettings &p);
-    void importThemeBible(QXmlStreamReader &xml, BibleSettings &b);
-    void importThemeSong(QXmlStreamReader &xml, SongSettings &s);
-    void importThemeAnnounce(QXmlStreamReader &xml, AnnounceSettings &a);
-
 };
 
 
