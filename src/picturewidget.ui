@@ -125,6 +125,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="labelPixInfo">
+       <property name="text">
+        <string>Picture Information</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -140,12 +150,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>pushButtonMoveUp</zorder>
-  <zorder>pushButtonMoveDown</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>label</zorder>
-  <zorder>pushButtonGoLive</zorder>
-  <zorder>horizontalSpacer</zorder>
  </widget>
  <resources>
   <include location="softprojector.qrc"/>

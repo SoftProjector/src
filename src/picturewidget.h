@@ -21,6 +21,7 @@
 #define PICTUREWIDGET_H
 
 #include <QtGui>
+#include "slideshow.h"
 
 namespace Ui {
 class PictureWidget;
@@ -35,7 +36,7 @@ public:
     ~PictureWidget();
     
 signals:
-    void sendImageList(QList<QPixmap> &imageList, int row);
+    void sendSlideShow(QList<SlideShowItem> &slideShow, int row);
 
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
@@ -48,6 +49,7 @@ private slots:
     void sendToProjector();
 private:
     Ui::PictureWidget *ui;
+    QList<SlideShowItem> slides;
     QList<QPixmap> imagesPreview;
     QList<QPixmap> imagesToShow;
 };

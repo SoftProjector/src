@@ -85,8 +85,8 @@ int Bible::getCurrentBookRow(QString book)
 QStringList Bible::getChapter(int book, int chapter)
 {
     QString verseText, id;
-    int verse, verse_old;
-    QSqlQuery sq;
+    int verse(0), verse_old(0);
+
     previewIdList.clear();
     verseList.clear();
     foreach (const BibleVerse &bv,operatorBible)

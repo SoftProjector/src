@@ -78,7 +78,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->clear();
     ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
-    ui->projectTab->addTab(pictureWidget,tr("Pictures"));
+    ui->projectTab->addTab(pictureWidget,QIcon(":/icons/icons/photo.png"),tr("Pictures"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
 
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
@@ -92,7 +92,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
     connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
-    connect(pictureWidget, SIGNAL(sendImageList(QList<QPixmap>&,int)), this, SLOT(setPictureList(QList<QPixmap>&,int)));
+    connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
@@ -458,7 +458,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     updateScreen();
 }
 
-void SoftProjector::setPictureList(QList<QPixmap> &image_list,int row)
+void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
 {
     // Called to show picture list
     type = "pix";
@@ -470,10 +470,10 @@ void SoftProjector::setPictureList(QList<QPixmap> &image_list,int row)
     ui->listShow->setSpacing(0);
     ui->listShow->setIconSize(QSize(100,100));
 
-    foreach(const QPixmap &p, pictureShowList)
+    foreach(const SlideShowItem &p, pictureShowList)
     {
         QListWidgetItem *itm = new QListWidgetItem;
-        QIcon ico(p);
+        QIcon ico(p.imageSmall);
         itm->setIcon(ico);
         ui->listShow->addItem(itm);
     }
@@ -572,7 +572,7 @@ void SoftProjector::updateScreen()
         }
         else if(type == "pix")
         {
-            displayScreen1->renderPicture(pictureShowList.at(currentRow));
+            displayScreen1->renderPicture(pictureShowList.at(currentRow).image);
         }
     }
 }

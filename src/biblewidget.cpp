@@ -161,17 +161,6 @@ int BibleWidget::getCurrentChapter(void)
     return ui->listChapterNum->currentItem()->text().toInt();
 }
 
-QString BibleWidget::getCaption()
-{
-    // Get the caption string to show above the show list (right-most list)
-    QString id = bible.currentIdList.at(0);
-    QString vr,cap;
-//    QStringList temp = bible.getVerseAndCaption(id, mySettings.operatorBible,false);
-    bible.getVerseAndCaption(vr,cap,id, mySettings.operatorBible,false);
-    QStringList temp1;
-    temp1 = cap.split(":");
-    return temp1[0];
-}
 /*
 bool BibleWidget::eventFilter(QObject *object, QEvent *event)
 {
@@ -204,7 +193,9 @@ void BibleWidget::sendToProjector(bool add_to_history)
 {
     bible.currentIdList = bible.previewIdList;
     QItemSelection selectedItems = ui->chapter_preview_list->selectionModel()->selection();
-    emit goLive(bible.verseList, getCaption(),selectedItems);
+    // Get the caption string to show above the show list (right-most list)
+    QString cap = QString("%1 %2").arg(ui->listBook->currentItem()->text()).arg(ui->listChapterNum->currentItem()->text());
+    emit goLive(bible.verseList, cap,selectedItems);
     if (add_to_history)
         addToHistory();
 }

@@ -39,7 +39,8 @@ void PictureWidget::on_listWidget_currentRowChanged(int currentRow)
 {
     if(currentRow>=0)
     {
-        ui->labelPreview->setPixmap(imagesPreview.at(currentRow));
+        ui->labelPreview->setPixmap(slides.at(currentRow).imagePreview);
+        ui->labelPixInfo->setText("Preview slide: "+slides.at(currentRow).name);
     }
 }
 
@@ -55,25 +56,50 @@ void PictureWidget::on_pushButtonAddImages_clicked()
 //    imagesToShow.clear();
     QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",tr("Images(*.png *.jpg *.jpeg)"));
 
+
     if(imageFilePaths.count()>0)
     {
         this->setCursor(Qt::WaitCursor);
 //        ui->listWidget->clear();
+        int i(0);
+        QProgressDialog progress(tr("Adding files..."), tr("Cancel"), 0, imageFilePaths.count(), this);
         ui->listWidget->setIconSize(QSize(100,100));
         foreach(const QString &file, imageFilePaths)
         {
-
+            ++i;
+            progress.setValue(i);
 
             QPixmap img;
+            SlideShowItem sd;
             img.load(file);
-            imagesToShow.append(img);
+            // set display image
+            if(img.width()>1280 || img.height()>1280)
+                sd.image = img.scaled(1280,1280, Qt::KeepAspectRatio);
+            else
+                sd.image = img;
 
+            // set preview image
+            if(img.width()>400 || img.height()>400)
+                sd.imagePreview = img.scaled(400,400, Qt::KeepAspectRatio);
+            else
+                sd.imagePreview = img;
+
+            // set list image
+            if(img.width()>100 || img.height()>100)
+                sd.imageSmall = img.scaled(100,100, Qt::KeepAspectRatio);
+            else
+                sd.imageSmall = img;
+
+            // set file name
+            QFileInfo f(file);
+            sd.name = f.fileName();
+
+            // add to slideshow
+            slides.append(sd);
+
+            // add to slide show list
             QListWidgetItem *itm = new QListWidgetItem;
-            QIcon ico(img);
-
-            img = img.scaled(400,400,Qt::KeepAspectRatio);
-            imagesPreview.append(img);
-
+            QIcon ico(sd.imageSmall);
 
             itm->setIcon(ico);
             ui->listWidget->addItem(itm);
@@ -104,5 +130,5 @@ void PictureWidget::on_pushButtonGoLive_clicked()
 
 void PictureWidget::sendToProjector()
 {
-    emit sendImageList(imagesToShow, ui->listWidget->currentRow());
+    emit sendSlideShow(slides, ui->listWidget->currentRow());
 }

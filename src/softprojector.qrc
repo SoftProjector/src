@@ -39,6 +39,7 @@
         <file>icons/controlPrev.png</file>
         <file>icons/controlPrevHovered.png</file>
         <file>icons/controlPrevPressed.png</file>
+        <file>icons/photo.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>

@@ -384,8 +384,9 @@ void DisplayScreen::renderPicture(QPixmap image)
 {
     displayType = "pix";
     wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatio);
-
-//        wallpaper = image;
+//    wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatioByExpanding);
+//    wallpaper = image.scaled(width(),height());
+//    wallpaper = image;
 
     renderText(true);
     useBluredShadow = false;
@@ -905,11 +906,11 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
         {
             int ww = wallpaper.width();
             int wh = wallpaper.height();
-            if(displayType == "pix" && ww<width() && wh<height())
+            if(displayType == "pix" && ww!=width() && wh!=height())
                 painter.drawPixmap((width()-ww)/2,(height()-wh)/2,wallpaper);
-            else if(displayType == "pix" && ww<width())
+            else if(displayType == "pix" && ww!=width())
                 painter.drawPixmap((width()-ww)/2,0,wallpaper);
-            else if(displayType == "pix" && wh<height())
+            else if(displayType == "pix" && wh!=height())
                 painter.drawPixmap(0,(height()-wh)/2,wallpaper);
             else
                 painter.drawPixmap(0,0,wallpaper);

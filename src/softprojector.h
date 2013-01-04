@@ -34,6 +34,7 @@
 #include "printpreviewdialog.h"
 #include "helpdialog.h"
 #include "picturewidget.h"
+#include "slideshow.h"
 
 class QActionGroup;
 
@@ -106,7 +107,7 @@ private:
     QShortcut *shSart2;
 
     // Pictures
-    QList<QPixmap> pictureShowList;
+    QList<SlideShowItem> pictureShowList;
 
 private slots:
     void showDisplayScreen(bool show);
@@ -147,7 +148,7 @@ private slots:
     void setSongList(Song song, int row);
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
-    void setPictureList(QList<QPixmap> &image_list, int row);
+    void setPictureList(QList<SlideShowItem> &image_list, int row);
 
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);

@@ -62,7 +62,8 @@ SOURCES += main.cpp \
     controlbutton.cpp \
     passivesettingwidget.cpp \
     theme.cpp \
-    picturewidget.cpp
+    picturewidget.cpp \
+    slideshow.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -89,7 +90,8 @@ HEADERS += softprojector.h \
     controlbutton.h \
     passivesettingwidget.h \
     theme.h \
-    picturewidget.h
+    picturewidget.h \
+    slideshow.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \

@@ -46,7 +46,6 @@ public:
     QStringList currentChapterList;
 
     int getCurrentChapter(void);
-    QString getCaption();
 
 public slots:
     void loadHistoriesFromFile(QList<BibleSearch> history_ids);
