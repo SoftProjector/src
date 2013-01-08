@@ -49,6 +49,13 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
+
+    // add video player
+    videoWidget = new VideoPlayerWidget(this);
+    this->layout()->addWidget(videoWidget);
+    videoWidget->setVisible(false);
+
+    Phonon::createPath(&videoPlayer,videoWidget);
 }
 
 DisplayScreen::~DisplayScreen()
@@ -211,6 +218,11 @@ void DisplayScreen::fadeOut() // For future
 
 void DisplayScreen::renderText(bool text_present)
 {
+//    if(displayType=="video")
+//    {
+        videoPlayer.stop();
+        videoWidget->setVisible(false);
+//    }
     if(!text_present)
         displayType.clear();
 
@@ -391,6 +403,18 @@ void DisplayScreen::renderPicture(QPixmap image)
     renderText(true);
     useBluredShadow = false;
     useShadow = false;
+}
+
+void DisplayScreen::renderVideo(QString vidPath)
+{
+    displayType = "video";
+    qDebug()<<vidPath;
+    videoWidget->setVisible(true);
+    videoPlayer.stop();
+//    videoPlayer.clearQueue();
+    videoPlayer.setCurrentSource(Phonon::MediaSource(vidPath));
+//    videoPlayer.enqueue(Phonon::MediaSource(vidPath));
+    videoPlayer.play();
 }
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)

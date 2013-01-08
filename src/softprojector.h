@@ -35,6 +35,7 @@
 #include "helpdialog.h"
 #include "picturewidget.h"
 #include "slideshow.h"
+#include "mediawidget.h"
 
 class QActionGroup;
 
@@ -59,6 +60,7 @@ public:
     DisplayScreen *displayScreen1;
     DisplayScreen *displayScreen2;
     PictureWidget *pictureWidget;
+    MediaWidget *mediaPlayer;
 
     bool showing; // whether we are currently showing to the projector
     Song current_song;
@@ -149,6 +151,7 @@ private slots:
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
     void setPictureList(QList<SlideShowItem> &image_list, int row);
+    void setVideo(QString videoPath);
 
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);

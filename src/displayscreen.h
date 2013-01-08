@@ -21,12 +21,14 @@
 #define DISPLAYSCREEN_H
 
 #include <QtGui>
+#include <phonon>
 #include "settings.h"
 #include "theme.h"
 #include "controlbutton.h"
 #include "bible.h"
 #include "song.h"
 #include "announcewidget.h"
+#include "videoplayerwidget.h"
 
 namespace Ui {
 class DisplayScreen;
@@ -58,6 +60,7 @@ public slots:
     void renderSongText(Stanza stanza, SongSettings &songSettings);
     void renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings);
     void renderPicture(QPixmap image);
+    void renderVideo(QString vidPath);
 
 signals:
     void exitSlide();
@@ -117,6 +120,9 @@ private:
     Announcement announcement;
 
     QString displayType;
+
+    Phonon::MediaObject videoPlayer;
+    VideoPlayerWidget *videoWidget;
 };
 
 #endif // DISPLAYSCREEN_H

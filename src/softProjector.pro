@@ -18,7 +18,8 @@
 ##**************************************************************************
 
 
-QT += sql
+QT += sql \
+    phonon
 TARGET = softProjector
 TEMPLATE = app
 //CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
@@ -63,7 +64,9 @@ SOURCES += main.cpp \
     passivesettingwidget.cpp \
     theme.cpp \
     picturewidget.cpp \
-    slideshow.cpp
+    slideshow.cpp \
+    mediawidget.cpp \
+    videoplayerwidget.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -91,7 +94,9 @@ HEADERS += softprojector.h \
     passivesettingwidget.h \
     theme.h \
     picturewidget.h \
-    slideshow.h
+    slideshow.h \
+    mediawidget.h \
+    videoplayerwidget.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -111,7 +116,9 @@ FORMS += softprojector.ui \
     printpreviewdialog.ui \
     displayscreen.ui \
     passivesettingwidget.ui \
-    picturewidget.ui
+    picturewidget.ui \
+    mediawidget.ui \
+    mpsettings.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

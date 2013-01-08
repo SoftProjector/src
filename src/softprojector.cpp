@@ -48,6 +48,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     settingsDialog = new SettingsDialog(this);
     helpDialog = new HelpDialog();
     pictureWidget = new PictureWidget;
+    mediaPlayer = new MediaWidget;
 
     ui->setupUi(this);
 
@@ -80,6 +81,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->projectTab->addTab(pictureWidget,QIcon(":/icons/icons/photo.png"),tr("Pictures"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
+    ui->projectTab->addTab(mediaPlayer,tr("Media"));
 
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
@@ -93,6 +95,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
     connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
+    connect(mediaPlayer, SIGNAL(toProjector(QString)), this, SLOT(setVideo(QString)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
@@ -484,6 +487,20 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     updateScreen();
 }
 
+void SoftProjector::setVideo(QString videoPath)
+{
+    // Called when showing video
+    type = "video";
+    showing = true;
+    new_list = true;
+    ui->listShow->clear();
+    ui->listShow->addItem(videoPath);
+    ui->listShow->setCurrentRow(0);
+//    ui->labelShow->setText(videoPath);
+    new_list = false;
+    updateScreen();
+}
+
 void SoftProjector::on_listShow_currentRowChanged(int currentRow)
 {
     // Called when the user selects a different row in the show (right-most) list.
@@ -573,6 +590,12 @@ void SoftProjector::updateScreen()
         else if(type == "pix")
         {
             displayScreen1->renderPicture(pictureShowList.at(currentRow).image);
+        }
+        else if(type == "video")
+        {
+            QString p = ui->listShow->currentItem()->text();
+            qDebug()<<"send"<<p;
+            displayScreen1->renderVideo(p);
         }
     }
 }
