@@ -21,6 +21,7 @@
 #define SOFTPROJECTOR_H
 
 #include <QtGui/QMainWindow>
+#include <phonon>
 #include "songwidget.h"
 #include "biblewidget.h"
 #include "announcewidget.h"
@@ -111,6 +112,13 @@ private:
     // Pictures
     QList<SlideShowItem> pictureShowList;
 
+    // video items
+    Phonon::SeekSlider *playerSlider;
+    Phonon::VolumeSlider *volumeSlider;
+
+    Phonon::AudioOutput *playerAudioOutput;
+//    Phonon::Path playerAudioOutputPath;
+
 private slots:
     void showDisplayScreen(bool show);
     //For saving and opening softProjector project files
@@ -160,6 +168,12 @@ private slots:
 
     void nextSlide();
     void prevSlide();
+
+    // video playback functions
+    void on_pushButtonPlay_clicked();
+    void on_pushButtonStop_clicked();
+    void setButtonPlayIcon(bool isPlaying);
+    void setTimeText(QString cTime);
 
 protected:
     void closeEvent(QCloseEvent *event);

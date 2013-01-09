@@ -41,6 +41,9 @@
         <file>icons/controlPrevPressed.png</file>
         <file>icons/photo.png</file>
         <file>icons/screen.png</file>
+        <file>icons/pause.png</file>
+        <file>icons/play.png</file>
+        <file>icons/stop.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>help/sphelp.css</file>

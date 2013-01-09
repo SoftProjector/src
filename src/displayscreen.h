@@ -41,6 +41,7 @@ class DisplayScreen : public QWidget
 public:
     explicit DisplayScreen(QWidget *parent = 0);
     ~DisplayScreen();
+    Phonon::MediaObject *videoPlayer;
 
 public slots:
     void setNewWallpaper(QString path, bool isToUse);
@@ -54,6 +55,7 @@ public slots:
     void fastbluralpha(QImage &img, int radius);
     void setControlsSettings(DisplayControlsSettings &settings);
     void setControlButtonsVisible(bool visible);
+    void positionOpjects();
 
     void renderText(bool text_present);
     void renderBibleText(Verse verse, BibleSettings &bibleSetings);
@@ -62,10 +64,13 @@ public slots:
     void renderPicture(QPixmap image);
     void renderVideo(QString vidPath);
 
+
+
 signals:
     void exitSlide();
     void nextSlide();
     void prevSlide();
+    void sendTimeText(QString cTime);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -83,6 +88,8 @@ private slots:
     QRect drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     void drawAnnounceText(QPainter *painter, int width, int height);
+
+    void updateTimeText();
 
 private:
     Ui::DisplayScreen *ui;
@@ -121,7 +128,9 @@ private:
 
     QString displayType;
 
-    Phonon::MediaObject videoPlayer;
+    QLabel *textRenderLabel;
+
+
     VideoPlayerWidget *videoWidget;
 };
 

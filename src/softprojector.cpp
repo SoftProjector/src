@@ -142,6 +142,21 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Hide Multi verse selection, only visible to be when showing bible
     ui->rbMultiVerse->setVisible(false);
 
+    // Set up video controls
+    playerSlider = new Phonon::SeekSlider(this);
+    playerSlider->setMediaObject(displayScreen1->videoPlayer);
+    ui->horizontalLayoutPlayBackTime->insertWidget(0,playerSlider);
+
+    playerAudioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
+    volumeSlider = new Phonon::VolumeSlider(playerAudioOutput);
+    Phonon::createPath(displayScreen1->videoPlayer,playerAudioOutput);
+    ui->horizontalLayoutPlayBackButtons->addWidget(volumeSlider);
+
+
+    connect(displayScreen1, SIGNAL(sendTimeText(QString)),this, SLOT(setTimeText(QString)));
+
+    ui->widgetPlayBackControls->setVisible(false);
+
 //    version_string = "2"; // to be used only for official release
     version_string = "2.Dev.Build: 5"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
@@ -194,6 +209,7 @@ void SoftProjector::positionDisplayWindow()
         }
         displayScreen1->showFullScreen();
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+        displayScreen1->positionOpjects();
         displayScreen1->setControlButtonsVisible(false);
 
         // check if to display secondary display screen
@@ -208,6 +224,7 @@ void SoftProjector::positionDisplayWindow()
             }
             displayScreen2->showFullScreen();
             displayScreen2->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
+            displayScreen2->positionOpjects();
             displayScreen2->setControlButtonsVisible(false);
         }
         else
@@ -400,6 +417,7 @@ void SoftProjector::setAnnounceText(Announcement text)
     type = "announce";
     ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
+    ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
     ui->labelShow->setText(tr("Announcement"));
@@ -423,6 +441,7 @@ void SoftProjector::setSongList(Song song, int row)
     type = "song";
     ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
+    ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
     ui->labelShow->setText(song.title);
@@ -442,6 +461,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
 
     type = "bible";
     ui->rbMultiVerse->setVisible(true);
+    ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
     ui->labelShow->setText(caption);
@@ -466,6 +486,9 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     // Called to show picture list
     type = "pix";
     showing = true;
+    ui->rbMultiVerse->setVisible(false);
+    ui->rbMultiVerse->setChecked(false);
+    ui->widgetPlayBackControls->setVisible(false);
     new_list = true;
     pictureShowList = image_list;
     ui->labelShow->clear();
@@ -492,6 +515,10 @@ void SoftProjector::setVideo(QString videoPath)
     // Called when showing video
     type = "video";
     showing = true;
+    ui->rbMultiVerse->setVisible(false);
+    ui->rbMultiVerse->setChecked(false);
+    if(!ui->widgetPlayBackControls->isVisible())
+        ui->widgetPlayBackControls->setVisible(true);
     new_list = true;
     ui->listShow->clear();
     ui->listShow->addItem(videoPath);
@@ -594,8 +621,8 @@ void SoftProjector::updateScreen()
         else if(type == "video")
         {
             QString p = ui->listShow->currentItem()->text();
-            qDebug()<<"send"<<p;
             displayScreen1->renderVideo(p);
+            setButtonPlayIcon(true);
         }
     }
 }
@@ -904,6 +931,7 @@ void SoftProjector::createLanguageActions()
         }
 //        connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
 }
+
 void SoftProjector::switchLanguage(QAction *action)
 {
     cur_locale = action->data().toString();
@@ -1554,4 +1582,38 @@ void SoftProjector::prevSlide()
     }
     if(current>0)
         ui->listShow->setCurrentRow(current-1);
+}
+
+void SoftProjector::on_pushButtonPlay_clicked()
+{
+    if(displayScreen1->videoPlayer->state() == Phonon::PlayingState)
+    {
+        displayScreen1->videoPlayer->pause();
+        setButtonPlayIcon(false);
+    }
+    else
+    {
+        if(displayScreen1->videoPlayer->currentTime() == displayScreen1->videoPlayer->totalTime())
+            displayScreen1->videoPlayer->seek(0);
+        displayScreen1->videoPlayer->play();
+        setButtonPlayIcon(true);
+    }
+}
+
+void SoftProjector::on_pushButtonStop_clicked()
+{
+    qDebug()<<"c:"<<playerSlider->mediaObject()->currentTime()<<"/t:"<<playerSlider->mediaObject()->totalTime();
+}
+
+void SoftProjector::setButtonPlayIcon(bool isPlaying)
+{
+    if (isPlaying)
+        ui->pushButtonPlay->setIcon(QIcon(":icons/icons/pause.png"));
+    else
+        ui->pushButtonPlay->setIcon(QIcon(":icons/icons/play.png"));
+}
+
+void SoftProjector::setTimeText(QString cTime)
+{
+    ui->labelTime->setText(cTime);
 }

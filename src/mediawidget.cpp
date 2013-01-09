@@ -192,6 +192,7 @@ void MediaWidget::stateChanged(Phonon::State newstate, Phonon::State oldstate)
             break;
         case Phonon::LoadingState:
             ui->pushButtonPrev->setEnabled(false);
+            m_AudioOutput.setMuted(true);
             break;
     }
 

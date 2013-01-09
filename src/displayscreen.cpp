@@ -34,6 +34,18 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 
     acounter[0]=255;
 
+    // add video player
+    videoPlayer = new Phonon::MediaObject;
+    videoWidget = new VideoPlayerWidget(this);
+    videoWidget->setVisible(false);
+    Phonon::createPath(videoPlayer,videoWidget);
+
+    connect(videoPlayer, SIGNAL(tick(qint64)),this,SLOT(updateTimeText()));
+    connect(videoPlayer, SIGNAL(totalTimeChanged(qint64)),this,SLOT(updateTimeText()));
+
+    // add text render lable
+    textRenderLabel = new QLabel(this);
+
     // Add control buttons
     btnNext = new ControlButton(QIcon(":/icons/icons/controlNext.png"),
                                 QIcon(":/icons/icons/controlNextHovered.png"),
@@ -50,12 +62,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
 
-    // add video player
-    videoWidget = new VideoPlayerWidget(this);
-    this->layout()->addWidget(videoWidget);
-    videoWidget->setVisible(false);
 
-    Phonon::createPath(&videoPlayer,videoWidget);
 }
 
 DisplayScreen::~DisplayScreen()
@@ -95,6 +102,12 @@ void DisplayScreen::keyReleaseEvent(QKeyEvent *event)
         exitSlide();
     else
         QWidget::keyReleaseEvent(event);
+}
+
+void DisplayScreen::positionOpjects()
+{
+    videoWidget->setGeometry(0,0,width(),height());
+    textRenderLabel->setGeometry(0,0,width(),height());
 }
 
 void DisplayScreen::setControlsSettings(DisplayControlsSettings &settings)
@@ -218,13 +231,25 @@ void DisplayScreen::fadeOut() // For future
 
 void DisplayScreen::renderText(bool text_present)
 {
-//    if(displayType=="video")
-//    {
-        videoPlayer.stop();
-        videoWidget->setVisible(false);
-//    }
-    if(!text_present)
-        displayType.clear();
+    if(displayType=="video")
+    {
+        if(!videoWidget->isVisible())
+            videoWidget->setVisible(true);
+        if(textRenderLabel->isVisible())    // Need to remove when text lable on top of video properly works
+            textRenderLabel->setVisible(false);
+    }
+    else
+    {
+        if(!textRenderLabel->isVisible())   // Need to remove when text lable on top of video properly works
+            textRenderLabel->setVisible(true);
+        if(videoWidget->isVisible())
+        {
+            videoPlayer->stop();
+            videoWidget->setVisible(false);
+        }
+    }
+//    if(!text_present)
+//        displayType.clear();
 
     if(useFading)
     {
@@ -408,13 +433,41 @@ void DisplayScreen::renderPicture(QPixmap image)
 void DisplayScreen::renderVideo(QString vidPath)
 {
     displayType = "video";
-    qDebug()<<vidPath;
-    videoWidget->setVisible(true);
-    videoPlayer.stop();
-//    videoPlayer.clearQueue();
-    videoPlayer.setCurrentSource(Phonon::MediaSource(vidPath));
-//    videoPlayer.enqueue(Phonon::MediaSource(vidPath));
-    videoPlayer.play();
+    renderText(false);
+    videoPlayer->stop();
+    videoPlayer->setCurrentSource(Phonon::MediaSource(vidPath));
+    videoPlayer->play();
+}
+
+void DisplayScreen::updateTimeText()
+{
+    long len = videoPlayer->totalTime();
+    long pos = videoPlayer->currentTime();
+    QString timeString;
+    if (pos || len)
+    {
+        int sec = pos/1000;
+        int min = sec/60;
+        int hour = min/60;
+        int msec = pos;
+
+        QTime playTime(hour%60, min%60, sec%60, msec%1000);
+        sec = len / 1000;
+        min = sec / 60;
+        hour = min / 60;
+        msec = len;
+
+        QTime stopTime(hour%60, min%60, sec%60, msec%1000);
+        QString timeFormat = "m:ss";
+        if (hour > 0)
+            timeFormat = "h:mm:ss";
+        timeString = playTime.toString(timeFormat);
+        if (len)
+            timeString += " / " + stopTime.toString(timeFormat);
+    }
+
+    emit sendTimeText(timeString);
+
 }
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
@@ -905,6 +958,10 @@ void DisplayScreen::setNewPassiveWallpaper(QString path, bool isToUse)
 void DisplayScreen::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
+//    QSiza sz();
+    QImage txtPix(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+    txtPix.fill(qRgba(0, 0, 0, 0)); //transparent background
+    QPainter txtPainter(&txtPix);
 
     // This code will, with each iteraction, draw the previous image with increasing transparency, and draw
     // the current image with increasing opacity; making a smooth transition:
@@ -969,15 +1026,24 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     }
 
     // Draw the previous image into the window, at decreasing opacity:
-    painter.setOpacity(prev_opacity);
-    painter.drawPixmap(0, 0, previous_image_pixmap);
+    txtPainter.setOpacity(prev_opacity);
+    txtPainter.drawPixmap(0, 0, previous_image_pixmap);
+//    painter.setOpacity(prev_opacity);
+//    painter.drawPixmap(0, 0, previous_image_pixmap);
 
     // Draw the output_image into the window, at increasing opacity:
-    painter.setOpacity(curr_opacity);
-    painter.drawImage(0, 0, output_image);
+//    painter.setOpacity(curr_opacity);
+//    painter.drawImage(0, 0, output_image);
+    txtPainter.setOpacity(curr_opacity);
+    txtPainter.drawImage(0, 0, output_image);
+
+//    textRenderLabel->setPixmap(QPixmap::fromImage(output_image.scaled(width()/2,height()/2)));
+    textRenderLabel->setPixmap(QPixmap::fromImage(txtPix));
 
     // Reset the opacity to default opaque:
     painter.setOpacity(1.0);
+    txtPainter.setOpacity(1.0);
+//    txtPainter.end();
 }
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
