@@ -66,7 +66,8 @@ SOURCES += main.cpp \
     picturewidget.cpp \
     slideshow.cpp \
     mediawidget.cpp \
-    videoplayerwidget.cpp
+    videoplayerwidget.cpp \
+    videoinfo.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -96,7 +97,8 @@ HEADERS += softprojector.h \
     picturewidget.h \
     slideshow.h \
     mediawidget.h \
-    videoplayerwidget.h
+    videoplayerwidget.h \
+    videoinfo.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \

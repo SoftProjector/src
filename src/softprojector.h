@@ -37,6 +37,7 @@
 #include "picturewidget.h"
 #include "slideshow.h"
 #include "mediawidget.h"
+#include "videoinfo.h"
 
 class QActionGroup;
 
@@ -115,7 +116,7 @@ private:
     // video items
     Phonon::SeekSlider *playerSlider;
     Phonon::VolumeSlider *volumeSlider;
-
+    VideoInfo currentVideo;
     Phonon::AudioOutput *playerAudioOutput;
 //    Phonon::Path playerAudioOutputPath;
 
@@ -159,7 +160,7 @@ private slots:
     void setAnnounceText(Announcement text);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
     void setPictureList(QList<SlideShowItem> &image_list, int row);
-    void setVideo(QString videoPath);
+    void setVideo(VideoInfo &video);
 
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);
@@ -171,7 +172,6 @@ private slots:
 
     // video playback functions
     void on_pushButtonPlay_clicked();
-    void on_pushButtonStop_clicked();
     void setButtonPlayIcon(bool isPlaying);
     void setTimeText(QString cTime);
 

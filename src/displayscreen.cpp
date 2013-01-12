@@ -42,6 +42,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 
     connect(videoPlayer, SIGNAL(tick(qint64)),this,SLOT(updateTimeText()));
     connect(videoPlayer, SIGNAL(totalTimeChanged(qint64)),this,SLOT(updateTimeText()));
+    connect(videoPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),this,SLOT(playerStateChanged(Phonon::State,Phonon::State)));
 
     // add text render lable
     textRenderLabel = new QLabel(this);
@@ -108,6 +109,8 @@ void DisplayScreen::positionOpjects()
 {
     videoWidget->setGeometry(0,0,width(),height());
     textRenderLabel->setGeometry(0,0,width(),height());
+//    videoWidget->setGeometry(0,0,width(),height());
+//    textRenderLabel->setGeometry(0,0,width()/2,height()/2);
 }
 
 void DisplayScreen::setControlsSettings(DisplayControlsSettings &settings)
@@ -248,8 +251,8 @@ void DisplayScreen::renderText(bool text_present)
             videoWidget->setVisible(false);
         }
     }
-//    if(!text_present)
-//        displayType.clear();
+    if(!text_present)
+        displayType.clear();
 
     if(useFading)
     {
@@ -430,12 +433,13 @@ void DisplayScreen::renderPicture(QPixmap image)
     useShadow = false;
 }
 
-void DisplayScreen::renderVideo(QString vidPath)
+void DisplayScreen::renderVideo(VideoInfo &vid)
 {
     displayType = "video";
     renderText(false);
     videoPlayer->stop();
-    videoPlayer->setCurrentSource(Phonon::MediaSource(vidPath));
+    videoPlayer->setCurrentSource(Phonon::MediaSource(vid.filePath));
+    videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(vid.aspectRatio));
     videoPlayer->play();
 }
 
@@ -468,6 +472,28 @@ void DisplayScreen::updateTimeText()
 
     emit sendTimeText(timeString);
 
+}
+
+void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State oldstate)
+{
+    Q_UNUSED(oldstate);
+    switch (newstate)
+    {
+    case Phonon::ErrorState:
+        videoPlayer->pause();
+        QMessageBox::warning(this,tr("Video Player Error"),videoPlayer->errorString(),QMessageBox::Close);
+        break;
+    case Phonon::StoppedState:
+    case Phonon::PausedState:
+        emit updatePlayButton(false);
+        break;
+    case Phonon::PlayingState:
+        emit updatePlayButton(true);
+    case Phonon::BufferingState:
+        break;
+    case Phonon::LoadingState:
+        break;
+    }
 }
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)

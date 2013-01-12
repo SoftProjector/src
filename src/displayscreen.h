@@ -29,6 +29,7 @@
 #include "song.h"
 #include "announcewidget.h"
 #include "videoplayerwidget.h"
+#include "videoinfo.h"
 
 namespace Ui {
 class DisplayScreen;
@@ -62,7 +63,7 @@ public slots:
     void renderSongText(Stanza stanza, SongSettings &songSettings);
     void renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings);
     void renderPicture(QPixmap image);
-    void renderVideo(QString vidPath);
+    void renderVideo(VideoInfo &vid);
 
 
 
@@ -71,6 +72,7 @@ signals:
     void nextSlide();
     void prevSlide();
     void sendTimeText(QString cTime);
+    void updatePlayButton(bool isPlaying);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -90,6 +92,7 @@ private slots:
     void drawAnnounceText(QPainter *painter, int width, int height);
 
     void updateTimeText();
+    void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
 
 private:
     Ui::DisplayScreen *ui;

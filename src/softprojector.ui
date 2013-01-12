@@ -53,7 +53,7 @@
         <layout class="QGridLayout" name="gridLayout_2"/>
        </widget>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -123,22 +123,6 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayoutPlayBackButtons">
              <item>
-              <widget class="QPushButton" name="pushButtonPlay">
-               <property name="icon">
-                <iconset resource="softprojector.qrc">
-                 <normaloff>:/icons/icons/play.png</normaloff>:/icons/icons/play.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButtonStop">
-               <property name="icon">
-                <iconset resource="softprojector.qrc">
-                 <normaloff>:/icons/icons/stop.png</normaloff>:/icons/icons/stop.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_3">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -156,6 +140,14 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayoutPlayBackTime">
              <item>
+              <widget class="QPushButton" name="pushButtonPlay">
+               <property name="icon">
+                <iconset resource="softprojector.qrc">
+                 <normaloff>:/icons/icons/play.png</normaloff>:/icons/icons/play.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="labelTime">
                <property name="text">
                 <string/>
@@ -169,6 +161,12 @@
         </item>
         <item>
          <widget class="QListWidget" name="listShow">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="alternatingRowColors">
            <bool>false</bool>
           </property>

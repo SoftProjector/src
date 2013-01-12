@@ -80,8 +80,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->projectTab->addTab(pictureWidget,QIcon(":/icons/icons/photo.png"),tr("Pictures"));
+    ui->projectTab->addTab(mediaPlayer,QIcon(":/icons/icons/video.png"),tr("Media"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
-    ui->projectTab->addTab(mediaPlayer,tr("Media"));
+
 
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
@@ -95,7 +96,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
     connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
-    connect(mediaPlayer, SIGNAL(toProjector(QString)), this, SLOT(setVideo(QString)));
+    connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
     connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
@@ -145,15 +146,15 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Set up video controls
     playerSlider = new Phonon::SeekSlider(this);
     playerSlider->setMediaObject(displayScreen1->videoPlayer);
-    ui->horizontalLayoutPlayBackTime->insertWidget(0,playerSlider);
+    ui->horizontalLayoutPlayBackTime->insertWidget(1,playerSlider);
 
     playerAudioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
     volumeSlider = new Phonon::VolumeSlider(playerAudioOutput);
     Phonon::createPath(displayScreen1->videoPlayer,playerAudioOutput);
     ui->horizontalLayoutPlayBackButtons->addWidget(volumeSlider);
 
-
     connect(displayScreen1, SIGNAL(sendTimeText(QString)),this, SLOT(setTimeText(QString)));
+    connect(displayScreen1, SIGNAL(updatePlayButton(bool)),this,SLOT(setButtonPlayIcon(bool)));
 
     ui->widgetPlayBackControls->setVisible(false);
 
@@ -444,10 +445,11 @@ void SoftProjector::setSongList(Song song, int row)
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
+    ui->listShow->clear();
     ui->labelShow->setText(song.title);
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
-    ui->listShow->clear();
+
     ui->listShow->addItems(song_list);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
@@ -466,7 +468,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     new_list = true;
     ui->labelShow->setText(caption);
     ui->listShow->clear();
-    ui->listShow->setSpacing(0);
+    ui->listShow->setSpacing(2);
     ui->listShow->setWordWrap(true);
     ui->listShow->addItems(chapter_list);
     if(selectedItems.indexes().count()>1)
@@ -510,10 +512,11 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     updateScreen();
 }
 
-void SoftProjector::setVideo(QString videoPath)
+void SoftProjector::setVideo(VideoInfo &video)
 {
     // Called when showing video
     type = "video";
+    currentVideo = video;
     showing = true;
     ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
@@ -521,9 +524,9 @@ void SoftProjector::setVideo(QString videoPath)
         ui->widgetPlayBackControls->setVisible(true);
     new_list = true;
     ui->listShow->clear();
-    ui->listShow->addItem(videoPath);
-    ui->listShow->setCurrentRow(0);
-//    ui->labelShow->setText(videoPath);
+//    ui->listShow->addItem(videoPath);
+//    ui->listShow->setCurrentRow(0);
+    ui->labelShow->setText(currentVideo.fileName);
     new_list = false;
     updateScreen();
 }
@@ -546,7 +549,6 @@ void SoftProjector::on_listShow_itemSelectionChanged()
 
 void SoftProjector::updateScreen()
 {
-
     // Display the specified row of the show (rightmost) table to
     // the display
     int currentRow = ui->listShow->currentRow();
@@ -563,7 +565,7 @@ void SoftProjector::updateScreen()
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
-    else if (currentRow >=0 && !new_list)
+    else if ((currentRow >=0 && !new_list) || (type == "video" && ! new_list))
     {
         if(isSingleScreen)
         {
@@ -620,11 +622,12 @@ void SoftProjector::updateScreen()
         }
         else if(type == "video")
         {
-            QString p = ui->listShow->currentItem()->text();
-            displayScreen1->renderVideo(p);
-            setButtonPlayIcon(true);
+            displayScreen1->renderVideo(currentVideo);
+            if(hasDisplayScreen2)
+                displayScreen2->renderVideo(currentVideo);
         }
     }
+
 }
 
 void SoftProjector::on_clear_button_clicked()
@@ -953,7 +956,8 @@ void SoftProjector::retranslateUis()
     ui->projectTab->setTabText(0, tr("Bible (F6)"));
     ui->projectTab->setTabText(1, tr("Songs (F7)"));
     ui->projectTab->setTabText(2, tr("Pictures"));
-    ui->projectTab->setTabText(3, tr("Announcements (F8)"));
+    ui->projectTab->setTabText(3, tr("Media"));
+    ui->projectTab->setTabText(4, tr("Announcements (F8)"));
     songWidget->retranslateUis();
     editWidget->retranslateUis();
 }
@@ -1525,7 +1529,7 @@ void SoftProjector::on_actionPrint_triggered()
         }
 
     }
-    else if (ui->projectTab->currentIndex() == 3)
+    else if (ui->projectTab->currentIndex() == 4)
     {
         p->setText(announceWidget->getAnnouncements());
         p->exec();
@@ -1589,20 +1593,21 @@ void SoftProjector::on_pushButtonPlay_clicked()
     if(displayScreen1->videoPlayer->state() == Phonon::PlayingState)
     {
         displayScreen1->videoPlayer->pause();
-        setButtonPlayIcon(false);
+        if(hasDisplayScreen2)
+            displayScreen2->videoPlayer->pause();
     }
     else
     {
         if(displayScreen1->videoPlayer->currentTime() == displayScreen1->videoPlayer->totalTime())
+        {
             displayScreen1->videoPlayer->seek(0);
+            if(hasDisplayScreen2)
+                displayScreen2->videoPlayer->seek(0);
+        }
         displayScreen1->videoPlayer->play();
-        setButtonPlayIcon(true);
+        if(hasDisplayScreen2)
+            displayScreen2->videoPlayer->play();
     }
-}
-
-void SoftProjector::on_pushButtonStop_clicked()
-{
-    qDebug()<<"c:"<<playerSlider->mediaObject()->currentTime()<<"/t:"<<playerSlider->mediaObject()->totalTime();
 }
 
 void SoftProjector::setButtonPlayIcon(bool isPlaying)
@@ -1611,6 +1616,7 @@ void SoftProjector::setButtonPlayIcon(bool isPlaying)
         ui->pushButtonPlay->setIcon(QIcon(":icons/icons/pause.png"));
     else
         ui->pushButtonPlay->setIcon(QIcon(":icons/icons/play.png"));
+
 }
 
 void SoftProjector::setTimeText(QString cTime)

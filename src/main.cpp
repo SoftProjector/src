@@ -56,6 +56,7 @@ bool connect(QString database_file)
                     "'chapter' INTEGER, 'verse' INTEGER, 'verse_text' TEXT)");
             sq.exec("CREATE TABLE 'BibleVersions' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
                     "'bible_name' TEXT, 'abbreviation' TEXT, 'information' TEXT, 'right_to_left' INTEGER DEFAULT 0)");
+            sq.exec("CREATE TABLE 'Media' ('long_path' TEXT, 'short_path' TEXT)");
             sq.exec("CREATE TABLE 'Settings' ('type' TEXT, 'sets' TEXT)");
             sq.exec("CREATE TABLE 'Songbooks' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'info' TEXT)");
             sq.exec("CREATE TABLE 'Songs' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
@@ -66,7 +67,7 @@ bool connect(QString database_file)
             sq.exec("CREATE TABLE 'ThemeData' ('theme_id' INTEGER, 'type' TEXT, 'sets' TEXT)");
             sq.exec("CREATE TABLE 'Themes' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'comment' TEXT)");
             sq.exec("CREATE TABLE 'spData' ('Version' TEXT)");
-            sq.exec("INSERT INTO spData (Version) VALUES ('2db4')");
+            sq.exec("INSERT INTO spData (Version) VALUES ('2db5')");
         }
         return true;
     }
@@ -107,7 +108,7 @@ int main(int argc, char *argv[])
     // Connected to the database OK:
 
     // Make sure that database is of correct version
-    QString currentVersion = "2db4";
+    QString currentVersion = "2db5";
     QSqlQuery sq;
     sq.exec("SELECT Version FROM spData");
     sq.first();
