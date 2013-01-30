@@ -67,7 +67,9 @@ SOURCES += main.cpp \
     slideshow.cpp \
     mediawidget.cpp \
     videoplayerwidget.cpp \
-    videoinfo.cpp
+    videoinfo.cpp \
+    spfunctions.cpp \
+    slideshoweditor.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -98,7 +100,9 @@ HEADERS += softprojector.h \
     slideshow.h \
     mediawidget.h \
     videoplayerwidget.h \
-    videoinfo.h
+    videoinfo.h \
+    spfunctions.h \
+    slideshoweditor.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -120,7 +124,7 @@ FORMS += softprojector.ui \
     passivesettingwidget.ui \
     picturewidget.ui \
     mediawidget.ui \
-    mpsettings.ui
+    slideshoweditor.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

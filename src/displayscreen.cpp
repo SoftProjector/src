@@ -36,7 +36,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
 
     // add video player
     videoPlayer = new Phonon::MediaObject;
-    videoWidget = new VideoPlayerWidget(this);
+    videoWidget = new Phonon::VideoWidget(this);
     videoWidget->setVisible(false);
     Phonon::createPath(videoPlayer,videoWidget);
 
@@ -70,6 +70,9 @@ DisplayScreen::~DisplayScreen()
 {
     delete timer;
     delete timer_out;
+    delete videoPlayer;
+    delete videoWidget;
+    delete textRenderLabel;
     delete btnPrev;
     delete btnNext;
     delete btnExit;
@@ -109,7 +112,7 @@ void DisplayScreen::positionOpjects()
 {
     videoWidget->setGeometry(0,0,width(),height());
     textRenderLabel->setGeometry(0,0,width(),height());
-//    videoWidget->setGeometry(0,0,width(),height());
+//    videoWidget->setGeometry(200,200,width()/2,height()/2);
 //    textRenderLabel->setGeometry(0,0,width()/2,height()/2);
 }
 
@@ -257,9 +260,10 @@ void DisplayScreen::renderText(bool text_present)
     if(useFading)
     {
         acounter[0]=0;
+    }
         // Save the previous image for fade-out effect:
         previous_image_pixmap = QPixmap::fromImage(output_image);
-    }
+
 
     // For later determening which background to draw, and whether to transition to it:
     background_needs_transition = ( use_active_background != text_present );
@@ -1009,7 +1013,6 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
                 wallpaper = wallpaper.scaled(width(),height());
         }
         if( ! wallpaper.isNull() )
-//            painter.drawImage(0,0,wallpaper);
         {
             int ww = wallpaper.width();
             int wh = wallpaper.height();

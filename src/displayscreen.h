@@ -28,7 +28,6 @@
 #include "bible.h"
 #include "song.h"
 #include "announcewidget.h"
-#include "videoplayerwidget.h"
 #include "videoinfo.h"
 
 namespace Ui {
@@ -133,8 +132,8 @@ private:
 
     QLabel *textRenderLabel;
 
-
-    VideoPlayerWidget *videoWidget;
+    Phonon::VideoWidget *videoWidget;
+//    Phonon::VideoPlayer *vidP;
 };
 
 #endif // DISPLAYSCREEN_H

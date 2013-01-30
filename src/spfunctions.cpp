@@ -17,33 +17,17 @@
 //
 ***************************************************************************/
 
-#ifndef VIDEOPLAYERWIDGET_H
-#define VIDEOPLAYERWIDGET_H
+#include "spfunctions.h"
 
-#include <QtGui>
-#include <phonon>
-
-class VideoPlayerWidget : public Phonon::VideoWidget
+QByteArray pixToByte(const QPixmap & pmap)
 {
-    Q_OBJECT
-public:
-    VideoPlayerWidget(QWidget *parent = 0);
-public slots:
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    pmap.save(&buffer, "JPG",90);
+    return buffer.data();
+}
 
-    void setFullScreen(bool);
-
-signals:
-    void playPause();
-    void handleDrops(QDropEvent *e);
-
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *e);
-    void keyPressEvent(QKeyEvent *e);
-    bool event(QEvent *e);
-    void timerEvent(QTimerEvent *e);
-
-private:
-    QBasicTimer m_timer;
-};
-
-#endif // VIDEOPLAYERWIDGET_H
+//spFunctions::spFunctions()
+//{
+//}

@@ -25,9 +25,11 @@ PictureWidget::PictureWidget(QWidget *parent) :
     ui(new Ui::PictureWidget)
 {
     ui->setupUi(this);
-    ui->pushButtonMoveUp->setEnabled(false);
-    ui->pushButtonMoveDown->setEnabled(false);
+//    ui->pushButtonMoveUp->setEnabled(false);
+//    ui->pushButtonMoveDown->setEnabled(false);
     ui->pushButtonRemoveImage->setEnabled(false);
+
+    loadSlideShows();
 }
 
 PictureWidget::~PictureWidget()
@@ -35,7 +37,28 @@ PictureWidget::~PictureWidget()
     delete ui;
 }
 
-void PictureWidget::on_listWidget_currentRowChanged(int currentRow)
+void PictureWidget::loadSlideShows()
+{
+    QSqlQuery sq;
+    sq.exec("SELECT * FROM SlideShows");
+    QStringList sl;
+
+    slideShows.clear();
+
+    while(sq.next())
+    {
+        SlideShowInfo ssi;
+        ssi.slideSwId = sq.value(0).toInt();
+        ssi.name = sq.value(1).toString();
+        ssi.info = sq.value(2).toString();
+        slideShows.append(ssi);
+        sl.append( sq.value(1).toString());
+    }
+    ui->listWidgetSlideShow->clear();
+    ui->listWidgetSlideShow->addItems(sl);
+}
+
+void PictureWidget::on_listWidgetSlides_currentRowChanged(int currentRow)
 {
     if(currentRow>=0)
     {
@@ -44,7 +67,7 @@ void PictureWidget::on_listWidget_currentRowChanged(int currentRow)
     }
 }
 
-void PictureWidget::on_listWidget_doubleClicked(const QModelIndex &index)
+void PictureWidget::on_listWidgetSlides_doubleClicked(const QModelIndex &index)
 {
     sendToProjector();
 //    emit sendImageList(imagesToShow, index.row());
@@ -60,10 +83,10 @@ void PictureWidget::on_pushButtonAddImages_clicked()
     if(imageFilePaths.count()>0)
     {
         this->setCursor(Qt::WaitCursor);
-//        ui->listWidget->clear();
+//        ui->listWidgetSlides->clear();
         int i(0);
         QProgressDialog progress(tr("Adding files..."), tr("Cancel"), 0, imageFilePaths.count(), this);
-        ui->listWidget->setIconSize(QSize(100,100));
+        ui->listWidgetSlides->setIconSize(QSize(100,100));
         foreach(const QString &file, imageFilePaths)
         {
             ++i;
@@ -80,7 +103,7 @@ void PictureWidget::on_pushButtonAddImages_clicked()
 
             // set preview image
             if(img.width()>400 || img.height()>400)
-                sd.imagePreview = img.scaled(400,400, Qt::KeepAspectRatio);
+                sd.imagePreview = img.scaled(400,300, Qt::KeepAspectRatio);
             else
                 sd.imagePreview = img;
 
@@ -93,6 +116,7 @@ void PictureWidget::on_pushButtonAddImages_clicked()
             // set file name
             QFileInfo f(file);
             sd.name = f.fileName();
+            sd.path = f.filePath();
 
             // add to slideshow
             slides.append(sd);
@@ -102,7 +126,7 @@ void PictureWidget::on_pushButtonAddImages_clicked()
             QIcon ico(sd.imageSmall);
 
             itm->setIcon(ico);
-            ui->listWidget->addItem(itm);
+            ui->listWidgetSlides->addItem(itm);
         }
         this->setCursor(Qt::ArrowCursor);
     }
@@ -115,12 +139,40 @@ void PictureWidget::on_pushButtonRemoveImage_clicked()
 
 void PictureWidget::on_pushButtonMoveUp_clicked()
 {
-
+    int c = ui->listWidgetSlides->currentRow();
+    int u = c-1;
+    if(u>=0)
+    {
+        slides.move(c,u);
+        ui->listWidgetSlides->clear();
+        foreach(const SlideShowItem &sst, slides)
+        {
+            QListWidgetItem *itm = new QListWidgetItem;
+            QIcon ico(sst.imageSmall);
+            itm->setIcon(ico);
+            ui->listWidgetSlides->addItem(itm);
+        }
+        ui->listWidgetSlides->setCurrentRow(u);
+    }
 }
 
 void PictureWidget::on_pushButtonMoveDown_clicked()
 {
-
+    int c = ui->listWidgetSlides->currentRow();
+    int d = c+1;
+    if(d<slides.count())
+    {
+        slides.move(c,d);
+        ui->listWidgetSlides->clear();
+        foreach(const SlideShowItem &sst, slides)
+        {
+            QListWidgetItem *itm = new QListWidgetItem;
+            QIcon ico(sst.imageSmall);
+            itm->setIcon(ico);
+            ui->listWidgetSlides->addItem(itm);
+        }
+        ui->listWidgetSlides->setCurrentRow(d);
+    }
 }
 
 void PictureWidget::on_pushButtonGoLive_clicked()
@@ -130,5 +182,80 @@ void PictureWidget::on_pushButtonGoLive_clicked()
 
 void PictureWidget::sendToProjector()
 {
-    emit sendSlideShow(slides, ui->listWidget->currentRow());
+    emit sendSlideShow(slides, ui->listWidgetSlides->currentRow());
+}
+
+void PictureWidget::on_pushButton_clicked()
+{
+//    QSqlTableModel sqt;
+//    QSqlQuery sq;
+
+//    AddSongbookDialog newSlide;
+//    newSlide.setWindowTitle(tr("New Slide Show"));
+//    newSlide.setWindowText(tr("Slide Show Name"),tr("Info"));
+////    newSlide.setSongbook(tr("Slide Show");
+//    int rt = newSlide.exec();
+//    switch(rt)
+//    {
+//    case AddSongbookDialog::Accepted:
+//        sqt.setTable("SlideShows");
+//        sqt.insertRow(0);
+//        sqt.setData(sqt.index(0,1),newSlide.title);
+//        sqt.setData(sqt.index(0,2),newSlide.info);
+//        sqt.submitAll();
+
+
+//        loadSlideShows();
+//        break;
+//    case AddSongbookDialog::Rejected:
+//        break;
+//    }
+    SlideShowEditor * sse = new SlideShowEditor;
+//    sse->setSlideShow(currentSlideShow);
+//    sse->show();
+    sse->exec();
+    loadSlideShows();
+}
+
+void PictureWidget::on_pushButton_2_clicked()
+{
+    currentSlideShow.slides = slides;
+//    currentSlideShow.saveSideShow();
+    SlideShowEditor * sse = new SlideShowEditor;
+    sse->setSlideShow(currentSlideShow);
+    sse->exec();
+    loadSlideShows();
+//    sse->show();
+}
+
+void PictureWidget::on_listWidgetSlideShow_currentRowChanged(int currentRow)
+{
+    if(currentRow>=0)
+    {
+        loadSlideShow(slideShows.at(currentRow).slideSwId);
+    }
+
+}
+
+void PictureWidget::loadSlideShow(int ss_id)
+{
+//    currentSlideShow.slideShowId = ;
+    qDebug()<<"ss_id:"<<ss_id;
+    currentSlideShow.loadSlideShow(ss_id);
+//    QStringList ln;
+    slides.clear();
+    ui->listWidgetSlides->clear();
+    foreach(const SlideShowItem &sst, currentSlideShow.slides)
+    {
+        slides.append(sst);
+        QListWidgetItem *itm = new QListWidgetItem;
+        QIcon ico(sst.imageSmall);
+        itm->setIcon(ico);
+        ui->listWidgetSlides->addItem(itm);
+    }
+
+//    slides = currentSlideShow.slides;
+
+//    ui->listWidgetSlides->addItems(ln);
+
 }

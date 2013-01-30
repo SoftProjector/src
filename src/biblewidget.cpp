@@ -440,9 +440,15 @@ void BibleWidget::on_hide_result_button_clicked()
 
 void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
 {
-    if (!(currentRow == -1))
+    if (currentRow >=0)
     {
         QStringList all_books = bible.getBooks();
+
+        if(ui->listBook->count() != all_books.count())
+        {
+            ui->listBook->clear();
+            ui->listBook->addItems(all_books);
+        }
 
         int row = all_books.indexOf(search_results.at(currentRow).book);
         ui->listBook->setCurrentRow(row);
@@ -455,6 +461,7 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
 
 void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
 {
+    on_search_results_list_currentRowChanged(index.row());
     on_btnLive_clicked();
 }
 

@@ -17,53 +17,50 @@
 //
 ***************************************************************************/
 
-#ifndef PICTUREWIDGET_H
-#define PICTUREWIDGET_H
+#ifndef SLIDESHOWEDITOR_H
+#define SLIDESHOWEDITOR_H
 
-#include <QtGui>
+//#include <QWidget>
+#include <QDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QtSql>
+
 #include "slideshow.h"
-#include "slideshoweditor.h"
+
 
 namespace Ui {
-class PictureWidget;
+class SlideShowEditor;
 }
 
-class PictureWidget : public QWidget
+//class SlideShowEditor : public QWidget
+class SlideShowEditor : public QDialog
 {
     Q_OBJECT
-    
+    Q_DISABLE_COPY(SlideShowEditor)// for Dialog test
 public:
-    explicit PictureWidget(QWidget *parent = 0);
-    ~PictureWidget();
+    explicit SlideShowEditor(QWidget *parent = 0);
+    ~SlideShowEditor();
+    void setSlideShow(SlideShow &ss);
     
-signals:
-    void sendSlideShow(QList<SlideShowItem> &slideShow, int row);
-
 private slots:
-    void loadSlideShows();
-    void on_listWidgetSlides_currentRowChanged(int currentRow);
-    void on_listWidgetSlides_doubleClicked(const QModelIndex &index);
+    void loadSlideShow();
+    void reloadSlides();
+    void updateButtonState();
+
     void on_pushButtonAddImages_clicked();
     void on_pushButtonRemoveImage_clicked();
     void on_pushButtonMoveUp_clicked();
     void on_pushButtonMoveDown_clicked();
-    void on_pushButtonGoLive_clicked();
-    void sendToProjector();
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_listWidgetSlideShow_currentRowChanged(int currentRow);
-    void loadSlideShow(int ss_id);
+    void on_pushButtonSave_clicked();
+    void on_pushButtonCancel_clicked();
+    void on_listWidgetSlides_currentRowChanged(int currentRow);
 
 private:
-    Ui::PictureWidget *ui;
-    QList<SlideShowInfo> slideShows;
-    SlideShow currentSlideShow;
-    QList<SlideShowItem> slides;
-    QList<QPixmap> imagesPreview;
-    QList<QPixmap> imagesToShow;
+    Ui::SlideShowEditor *ui;
+    SlideShow editSS;
+    QProgressDialog progress;
+    QList<int> deleteList;
 };
 
-#endif // PICTUREWIDGET_H
+#endif // SLIDESHOWEDITOR_H

@@ -171,6 +171,10 @@ SoftProjector::~SoftProjector()
     delete bibleWidget;
     delete announceWidget;
     delete manageDialog;
+    delete playerSlider;
+    delete playerAudioOutput;
+    delete volumeSlider;
+    delete mediaPlayer;
     delete displayScreen1;
     delete displayScreen2;
     delete desktop;
@@ -250,7 +254,10 @@ void SoftProjector::positionDisplayWindow()
 void SoftProjector::showDisplayScreen(bool show)
 {
     if(show)
+    {
         displayScreen1->showFullScreen();
+        displayScreen1->positionOpjects();
+    }
     else
         displayScreen1->hide();
     displayScreen1->setControlsSettings(mySettings.general.displayControls);
@@ -555,17 +562,20 @@ void SoftProjector::updateScreen()
 
     if(!showing)
     {
+        // Do not display any text:
+        displayScreen1->renderText(false);
+//        if(type == "video")
+//            displayScreen1->videoPlayer->pause();
+
         if(isSingleScreen)
             showDisplayScreen(false);
 
-        // Do not display any text:
-        displayScreen1->renderText(false);
         if(hasDisplayScreen2)
             displayScreen2->renderText(false);
         ui->show_button->setEnabled(true);
         ui->clear_button->setEnabled(false);
     }
-    else if ((currentRow >=0 && !new_list) || (type == "video" && ! new_list))
+    else if ((currentRow >=0 && !new_list) || (type == "video" && !new_list))
     {
         if(isSingleScreen)
         {

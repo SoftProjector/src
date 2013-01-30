@@ -58,6 +58,10 @@ bool connect(QString database_file)
                     "'bible_name' TEXT, 'abbreviation' TEXT, 'information' TEXT, 'right_to_left' INTEGER DEFAULT 0)");
             sq.exec("CREATE TABLE 'Media' ('long_path' TEXT, 'short_path' TEXT)");
             sq.exec("CREATE TABLE 'Settings' ('type' TEXT, 'sets' TEXT)");
+            sq.exec("CREATE TABLE 'SlideShows' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'info' TEXT)");
+            sq.exec("CREATE TABLE 'Slides' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
+                    "'ss_id' INTEGER, 'p_order' INTEGER, 'name' TEXT, 'path' TEXT, "
+                    "'pix' BLOB, 'pix_small' BLOB, 'pix_prev' BLOB)");
             sq.exec("CREATE TABLE 'Songbooks' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'info' TEXT)");
             sq.exec("CREATE TABLE 'Songs' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
                     "'songbook_id' INTEGER, 'number' INTEGER, 'title' TEXT, 'category' INTEGER DEFAULT 0, "
