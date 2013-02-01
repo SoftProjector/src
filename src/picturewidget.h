@@ -40,8 +40,13 @@ public:
 signals:
     void sendSlideShow(QList<SlideShowItem> &slideShow, int row);
 
-private slots:
+public slots:
     void loadSlideShows();
+    SlideShow getCurrentSlideshow();
+    bool isSlideShowSelected();
+
+private slots:
+
     void on_listWidgetSlides_currentRowChanged(int currentRow);
     void on_listWidgetSlides_doubleClicked(const QModelIndex &index);
     void on_pushButtonAddImages_clicked();
@@ -50,9 +55,6 @@ private slots:
     void on_pushButtonMoveDown_clicked();
     void on_pushButtonGoLive_clicked();
     void sendToProjector();
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
 
     void on_listWidgetSlideShow_currentRowChanged(int currentRow);
     void loadSlideShow(int ss_id);

@@ -185,64 +185,17 @@ void PictureWidget::sendToProjector()
     emit sendSlideShow(slides, ui->listWidgetSlides->currentRow());
 }
 
-void PictureWidget::on_pushButton_clicked()
-{
-//    QSqlTableModel sqt;
-//    QSqlQuery sq;
-
-//    AddSongbookDialog newSlide;
-//    newSlide.setWindowTitle(tr("New Slide Show"));
-//    newSlide.setWindowText(tr("Slide Show Name"),tr("Info"));
-////    newSlide.setSongbook(tr("Slide Show");
-//    int rt = newSlide.exec();
-//    switch(rt)
-//    {
-//    case AddSongbookDialog::Accepted:
-//        sqt.setTable("SlideShows");
-//        sqt.insertRow(0);
-//        sqt.setData(sqt.index(0,1),newSlide.title);
-//        sqt.setData(sqt.index(0,2),newSlide.info);
-//        sqt.submitAll();
-
-
-//        loadSlideShows();
-//        break;
-//    case AddSongbookDialog::Rejected:
-//        break;
-//    }
-    SlideShowEditor * sse = new SlideShowEditor;
-//    sse->setSlideShow(currentSlideShow);
-//    sse->show();
-    sse->exec();
-    loadSlideShows();
-}
-
-void PictureWidget::on_pushButton_2_clicked()
-{
-    currentSlideShow.slides = slides;
-//    currentSlideShow.saveSideShow();
-    SlideShowEditor * sse = new SlideShowEditor;
-    sse->setSlideShow(currentSlideShow);
-    sse->exec();
-    loadSlideShows();
-//    sse->show();
-}
-
 void PictureWidget::on_listWidgetSlideShow_currentRowChanged(int currentRow)
 {
     if(currentRow>=0)
     {
         loadSlideShow(slideShows.at(currentRow).slideSwId);
     }
-
 }
 
 void PictureWidget::loadSlideShow(int ss_id)
 {
-//    currentSlideShow.slideShowId = ;
-    qDebug()<<"ss_id:"<<ss_id;
     currentSlideShow.loadSlideShow(ss_id);
-//    QStringList ln;
     slides.clear();
     ui->listWidgetSlides->clear();
     foreach(const SlideShowItem &sst, currentSlideShow.slides)
@@ -253,9 +206,21 @@ void PictureWidget::loadSlideShow(int ss_id)
         itm->setIcon(ico);
         ui->listWidgetSlides->addItem(itm);
     }
+    ui->listWidgetSlides->setCurrentRow(0);
+}
 
-//    slides = currentSlideShow.slides;
+SlideShow PictureWidget::getCurrentSlideshow()
+{
+    currentSlideShow.slides = slides;
+    return currentSlideShow;
+}
 
-//    ui->listWidgetSlides->addItems(ln);
+bool PictureWidget::isSlideShowSelected()
+{
+    int css = ui->listWidgetSlideShow->currentRow();
+    if(css>=0)
+        return true;
+    else
+        return false;
 
 }

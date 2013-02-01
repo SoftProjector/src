@@ -38,6 +38,7 @@
 #include "slideshow.h"
 #include "mediawidget.h"
 #include "videoinfo.h"
+#include "slideshoweditor.h"
 
 class QActionGroup;
 
@@ -139,19 +140,28 @@ private slots:
     void on_actionOpen_triggered();
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
-    void on_actionCopy_Song_triggered();
+    void updateEditActions();
+    void on_actionNew_triggered();
+    void on_actionEdit_triggered();
+    void on_actionCopy_triggered();
+    void on_actionDelete_triggered();
+
     void retranslateUis();
     void createLanguageActions();
     void switchLanguage(QAction *action);
 
     void on_action_Help_triggered();
-    void on_actionDeleteSong_triggered();
     void on_actionManage_Database_triggered();
     void on_actionAbout_triggered();
     void on_listShow_doubleClicked(QModelIndex index);
     void on_actionSettings_triggered();
-    void on_actionNewSong_triggered();
-    void on_actionEditSong_triggered();
+    void newSong();
+    void copySong();
+    void editSong();
+    void deleteSong();
+    void newSlideShow();
+    void editSlideShow();
+    void deleteSlideShow();
     void on_show_button_clicked();
     void on_clear_button_clicked();
     void on_listShow_currentRowChanged(int currentRow);
@@ -174,6 +184,8 @@ private slots:
     void on_pushButtonPlay_clicked();
     void setButtonPlayIcon(bool isPlaying);
     void setTimeText(QString cTime);
+
+
 
 protected:
     void closeEvent(QCloseEvent *event);

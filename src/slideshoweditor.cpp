@@ -34,7 +34,7 @@ SlideShowEditor::~SlideShowEditor()
     delete ui;
 }
 
-void SlideShowEditor::setSlideShow(SlideShow &ss)
+void SlideShowEditor::setSlideShow(SlideShow ss)
 {
     editSS = ss;
     deleteList.clear();

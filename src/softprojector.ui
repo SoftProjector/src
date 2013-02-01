@@ -208,7 +208,7 @@
      <x>0</x>
      <y>0</y>
      <width>1055</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -230,6 +230,10 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionEdit"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionManage_Database"/>
     <addaction name="separator"/>
@@ -249,13 +253,8 @@
    </widget>
    <widget class="QMenu" name="menuSongs">
     <property name="title">
-     <string>Songs</string>
+     <string>View</string>
     </property>
-    <addaction name="actionNewSong"/>
-    <addaction name="actionEditSong"/>
-    <addaction name="actionCopy_Song"/>
-    <addaction name="actionDeleteSong"/>
-    <addaction name="separator"/>
     <addaction name="actionSong_Counter"/>
    </widget>
    <addaction name="menuFile"/>
@@ -307,30 +306,6 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionEditSong">
-   <property name="icon">
-    <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/song_edit.png</normaloff>:/icons/icons/song_edit.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Edit Current Song...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+E</string>
-   </property>
-  </action>
-  <action name="actionNewSong">
-   <property name="icon">
-    <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/song_new.png</normaloff>:/icons/icons/song_new.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;New Song...</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-  </action>
   <action name="actionManage_Database">
    <property name="icon">
     <iconset resource="softprojector.qrc">
@@ -346,18 +321,6 @@
     <string>Ctrl+M</string>
    </property>
   </action>
-  <action name="actionDeleteSong">
-   <property name="icon">
-    <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/song_delete.png</normaloff>:/icons/icons/song_delete.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Delete Current Song</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
-   </property>
-  </action>
   <action name="action_Help">
    <property name="icon">
     <iconset resource="softprojector.qrc">
@@ -368,21 +331,6 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
-   </property>
-  </action>
-  <action name="actionCopy_Song">
-   <property name="icon">
-    <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/song_copy.png</normaloff>:/icons/icons/song_copy.png</iconset>
-   </property>
-   <property name="text">
-    <string>Copy Current Song...</string>
-   </property>
-   <property name="toolTip">
-    <string>Copy current song into a new songbook</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="actionSong_Counter">
@@ -463,6 +411,10 @@
     <string>Ctrl+Shift+P</string>
    </property>
   </action>
+  <action name="actionNew"/>
+  <action name="actionEdit"/>
+  <action name="actionCopy"/>
+  <action name="actionDelete"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

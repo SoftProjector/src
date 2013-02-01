@@ -41,7 +41,7 @@ class SlideShowEditor : public QDialog
 public:
     explicit SlideShowEditor(QWidget *parent = 0);
     ~SlideShowEditor();
-    void setSlideShow(SlideShow &ss);
+    void setSlideShow(SlideShow ss);
     
 private slots:
     void loadSlideShow();

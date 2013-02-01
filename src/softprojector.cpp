@@ -82,6 +82,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(pictureWidget,QIcon(":/icons/icons/photo.png"),tr("Pictures"));
     ui->projectTab->addTab(mediaPlayer,QIcon(":/icons/icons/video.png"),tr("Media"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
+    ui->projectTab->setCurrentIndex(0);
 
 
     connect(bibleWidget, SIGNAL(goLive(QStringList, QString, QItemSelection)),
@@ -118,10 +119,10 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionSettings);
     ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionNewSong);
-    ui->toolBar->addAction(ui->actionEditSong);
-    ui->toolBar->addAction(ui->actionCopy_Song);
-    ui->toolBar->addAction(ui->actionDeleteSong);
+    ui->toolBar->addAction(ui->actionNew);
+    ui->toolBar->addAction(ui->actionEdit);
+    ui->toolBar->addAction(ui->actionCopy);
+    ui->toolBar->addAction(ui->actionDelete);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionSong_Counter);
     ui->toolBar->addSeparator();
@@ -652,125 +653,6 @@ void SoftProjector::on_show_button_clicked()
     updateScreen();
 }
 
-void SoftProjector::on_actionEditSong_triggered()
-{
-    if (songWidget->isSongSelected())
-    {
-        if(!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
-        {
-            QMessageBox ms;
-            ms.setWindowTitle(tr("Cannot start new edit"));
-            ms.setText(tr("Another song is already been edited."));
-            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
-            ms.setIcon(QMessageBox::Information);
-            ms.exec();
-        }
-        else
-        {
-            editWidget->show();
-            editWidget->setEdit(songWidget->getSongToEdit());
-            editWidget->activateWindow();
-        }
-    }
-    else
-    {
-        QMessageBox ms;
-        ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be edited."));
-        ms.setInformativeText(tr("Please select a song to be edited."));
-        ms.setIcon(QMessageBox::Information);
-        ms.exec();
-    }
-}
-
-void SoftProjector::on_actionNewSong_triggered()
-{
-    if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
-    {
-        QMessageBox ms;
-        ms.setWindowTitle(tr("Cannot create a new song"));
-        ms.setText(tr("Another song is already been edited."));
-        ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
-        ms.setIcon(QMessageBox::Information);
-        ms.exec();
-    }
-    else
-    {
-        editWidget->show();
-        editWidget->setNew();
-        editWidget->activateWindow();
-    }
-}
-
-void SoftProjector::on_actionCopy_Song_triggered()
-{
-    if (songWidget->isSongSelected())
-    {if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
-        {
-            QMessageBox ms;
-            ms.setWindowTitle(tr("Cannot copy this song"));
-            ms.setText(tr("Another song is already been edited."));
-            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
-            ms.setIcon(QMessageBox::Information);
-            ms.exec();
-        }
-        else
-        {
-            editWidget->show();
-            editWidget->setCopy(songWidget->getSongToEdit());
-            editWidget->activateWindow();
-        }
-    }
-    else
-    {
-        QMessageBox ms;
-        ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be copied"));
-        ms.setInformativeText(tr("Please select a song to be copied"));
-        ms.setIcon(QMessageBox::Information);
-        ms.exec();
-    }
-}
-
-void SoftProjector::on_actionDeleteSong_triggered()
-{
-    if (songWidget->isSongSelected())
-    {
-        QString song_title = songWidget->currentSong().title;
-        QMessageBox ms;
-        ms.setWindowTitle(tr("Delete song?"));
-        ms.setText(tr("Delete song \"") + song_title + "\"?");
-        ms.setInformativeText(tr("This action will permanentrly delete this song"));
-        ms.setIcon(QMessageBox::Question);
-        ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        ms.setDefaultButton(QMessageBox::Yes);
-        int ret = ms.exec();
-
-        switch (ret) {
-        case QMessageBox::Yes:
-            // Delete a song
-            //        close();
-            songWidget->deleteSong();
-            break;
-        case QMessageBox::No:
-            // Cancel was clicked
-            break;
-        default:
-            // should never be reached
-            break;
-        }
-    }
-    else
-    {
-        QMessageBox ms;
-        ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be deleted"));
-        ms.setInformativeText(tr("Please select a song to be deleted"));
-        ms.setIcon(QMessageBox::Information);
-        ms.exec();
-    }
-}
-
 void SoftProjector::on_actionSettings_triggered()
 {
     settingsDialog->loadSettings(mySettings.general,theme);
@@ -794,24 +676,110 @@ void SoftProjector::on_actionAbout_triggered()
 
 void SoftProjector::on_projectTab_currentChanged(int index)
 {
-    if (index == 1)
+    updateEditActions();
+}
+
+void SoftProjector::updateEditActions()
+{
+    int ctab = ui->projectTab->currentIndex();
+    // ctab - 0=bible, 1=songs, 2=pix, 3=media, 4=annouce
+    if(ctab == 1) // Song Tab
     {
-        // Songs tab is activated
-        ui->actionEditSong->setEnabled(true);
-        ui->actionNewSong->setEnabled(true);
-        ui->actionCopy_Song->setEnabled(true);
-        ui->actionDeleteSong->setEnabled(true);
-//        ui->actionPrint->setEnabled(true);
+        ui->actionNew->setText(tr("&New Song..."));
+        ui->actionEdit->setText(tr("&Edit Song..."));
+        ui->actionCopy->setText(tr("&Copy Song..."));
+        ui->actionDelete->setText(tr("&Delete Song"));
+        ui->actionNew->setIcon(QIcon(":/icons/icons/song_new.png"));
+        ui->actionEdit->setIcon(QIcon(":/icons/icons/song_edit.png"));
+        ui->actionCopy->setIcon(QIcon(":/icons/icons/song_copy.png"));
+        ui->actionDelete->setIcon(QIcon(":/icons/icons/song_delete.png"));
+    }
+    else if (ctab == 2) // Picture Tab
+    {
+        ui->actionNew->setText(tr("&New SlideShow..."));
+        ui->actionEdit->setText(tr("&Edit SlideShow..."));
+        ui->actionCopy->setText("");
+        ui->actionDelete->setText(tr("&Delete SlideShow"));
+        ui->actionNew->setIcon(QIcon());
+        ui->actionEdit->setIcon(QIcon());
+        ui->actionCopy->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon());
+    }
+    else if (ctab == 3) // Media Tab
+    {
+        ui->actionNew->setText(tr("&Add Media Files..."));
+        ui->actionEdit->setText("");
+        ui->actionCopy->setText("");
+        ui->actionDelete->setText(tr("&Remove Media Files"));
+        ui->actionNew->setIcon(QIcon());
+        ui->actionEdit->setIcon(QIcon());
+        ui->actionCopy->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon());
+    }
+    else if (ctab == 4) // Announcement Tab
+    {
+        ui->actionNew->setText(tr("&New Announcement..."));
+        ui->actionEdit->setText(tr("&Edit Announcement..."));
+        ui->actionCopy->setText(tr("&Copy Announcement..."));
+        ui->actionDelete->setText(tr("&Delete Announcement"));
+        ui->actionNew->setIcon(QIcon());
+        ui->actionEdit->setIcon(QIcon());
+        ui->actionCopy->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon());
     }
     else
     {
-        // Other tabs are activated
-        ui->actionEditSong->setEnabled(false);
-        ui->actionNewSong->setEnabled(false);
-        ui->actionCopy_Song->setEnabled(false);
-        ui->actionDeleteSong->setEnabled(false);
-//        ui->actionPrint->setEnabled(false);
+        ui->actionNew->setText("");
+        ui->actionEdit->setText("");
+        ui->actionCopy->setText("");
+        ui->actionDelete->setText("");
+        ui->actionNew->setIcon(QIcon());
+        ui->actionEdit->setIcon(QIcon());
+        ui->actionCopy->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon());
     }
+
+    // Set Edit Action Menuw Visibility
+    ui->actionNew->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+    ui->actionEdit->setVisible(ctab == 1 || ctab == 2 || ctab == 4);
+    ui->actionCopy->setVisible(ctab == 1 || ctab == 4);
+    ui->actionDelete->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+}
+
+void SoftProjector::on_actionNew_triggered()
+{
+    int ctab = ui->projectTab->currentIndex();
+    if(ctab == 1)
+        newSong();
+    else if(ctab == 2)
+        newSlideShow();
+
+}
+
+void SoftProjector::on_actionEdit_triggered()
+{
+    int ctab = ui->projectTab->currentIndex();
+    if(ctab == 1)
+        editSong();
+    else if(ctab == 2)
+        editSlideShow();
+
+}
+
+void SoftProjector::on_actionCopy_triggered()
+{
+    int ctab = ui->projectTab->currentIndex();
+    if(ctab == 1)
+        copySong();
+}
+
+void SoftProjector::on_actionDelete_triggered()
+{
+    int ctab = ui->projectTab->currentIndex();
+    if(ctab == 1)
+        deleteSong();
+    else if(ctab == 2)
+        deleteSlideShow();
 }
 
 void SoftProjector::on_actionManage_Database_triggered()
@@ -883,6 +851,171 @@ void SoftProjector::on_actionManage_Database_triggered()
 void SoftProjector::on_action_Help_triggered()
 {
     helpDialog->show();
+}
+
+void SoftProjector::newSong()
+{
+    if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Cannot create a new song"));
+        ms.setText(tr("Another song is already been edited."));
+        ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+    else
+    {
+        editWidget->show();
+        editWidget->setNew();
+        editWidget->activateWindow();
+    }
+}
+
+void SoftProjector::editSong()
+{
+    if (songWidget->isSongSelected())
+    {
+        if(!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("Cannot start new edit"));
+            ms.setText(tr("Another song is already been edited."));
+            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
+        else
+        {
+            editWidget->show();
+            editWidget->setEdit(songWidget->getSongToEdit());
+            editWidget->activateWindow();
+        }
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be edited."));
+        ms.setInformativeText(tr("Please select a song to be edited."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::copySong()
+{
+    if (songWidget->isSongSelected())
+    {if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("Cannot copy this song"));
+            ms.setText(tr("Another song is already been edited."));
+            ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
+        else
+        {
+            editWidget->show();
+            editWidget->setCopy(songWidget->getSongToEdit());
+            editWidget->activateWindow();
+        }
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be copied"));
+        ms.setInformativeText(tr("Please select a song to be copied"));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::deleteSong()
+{
+    if (songWidget->isSongSelected())
+    {
+        QString song_title = songWidget->currentSong().title;
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Delete song?"));
+        ms.setText(tr("Delete song \"") + song_title + "\"?");
+        ms.setInformativeText(tr("This action will permanentrly delete this song"));
+        ms.setIcon(QMessageBox::Question);
+        ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        ms.setDefaultButton(QMessageBox::Yes);
+        int ret = ms.exec();
+
+        switch (ret) {
+        case QMessageBox::Yes:
+            // Delete a song
+            //        close();
+            songWidget->deleteSong();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No song selected"));
+        ms.setText(tr("No song has been selected to be deleted"));
+        ms.setInformativeText(tr("Please select a song to be deleted"));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::newSlideShow()
+{
+    SlideShowEditor * sse = new SlideShowEditor;
+    sse->exec();
+    pictureWidget->loadSlideShows();
+    delete sse;
+}
+
+void SoftProjector::editSlideShow()
+{
+    if(pictureWidget->isSlideShowSelected())
+    {
+        SlideShowEditor * sse = new SlideShowEditor;
+        sse->setSlideShow(pictureWidget->getCurrentSlideshow());
+        sse->exec();
+        pictureWidget->loadSlideShows();
+        delete sse;
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No slideshow selected"));
+        ms.setText(tr("No slideshow has been selected to edit."));
+        ms.setInformativeText(tr("Please select a slideshow to edit."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::deleteSlideShow()
+{
+    if(pictureWidget->isSlideShowSelected())
+    {
+        // TODO: need code to delete slideshow
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No slideshow selected"));
+        ms.setText(tr("No slideshow has been selected to delete."));
+        ms.setInformativeText(tr("Please select a slideshow to delete."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
 }
 
 void SoftProjector::setArrowCursor()
