@@ -19,7 +19,8 @@
 
 
 QT += sql \
-    phonon
+    phonon \
+    webkit
 TARGET = softProjector
 TEMPLATE = app
 //CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build

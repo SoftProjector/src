@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>softProjector Help</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="source">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWebView" name="webViewHelp">
+     <property name="url">
       <url>
-       <string>qrc:/help/help/index.html</string>
+       <string>about:blank</string>
       </url>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <spacer name="horizontalSpacer">
@@ -52,6 +52,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
