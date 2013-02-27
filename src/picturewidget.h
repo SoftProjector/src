@@ -44,6 +44,7 @@ public slots:
     void loadSlideShows();
     SlideShow getCurrentSlideshow();
     bool isSlideShowSelected();
+    void deleteSlideShow();
 
 private slots:
 

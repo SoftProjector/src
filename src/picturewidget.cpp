@@ -224,3 +224,12 @@ bool PictureWidget::isSlideShowSelected()
         return false;
 
 }
+
+void PictureWidget::deleteSlideShow()
+{
+    QSqlQuery sq;
+    int ssId = slideShows.at(ui->listWidgetSlideShow->currentRow()).slideSwId;
+    sq.exec(QString("DELETE FROM SlideShows WHERE id = %1").arg(ssId));
+    sq.exec(QString("DELETE FROM Slides WHERE ss_id = %1").arg(ssId));
+    loadSlideShows();
+}

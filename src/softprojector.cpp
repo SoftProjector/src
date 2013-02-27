@@ -1005,7 +1005,28 @@ void SoftProjector::deleteSlideShow()
 {
     if(pictureWidget->isSlideShowSelected())
     {
-        // TODO: need code to delete slideshow
+        QString title = pictureWidget->getCurrentSlideshow().name;
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Delete slideshow?"));
+        ms.setText(tr("Delete slideshow: \"") + title + "\"?");
+        ms.setInformativeText(tr("This action will permanentrly delete this slideshow"));
+        ms.setIcon(QMessageBox::Question);
+        ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        ms.setDefaultButton(QMessageBox::Yes);
+        int ret = ms.exec();
+
+        switch (ret) {
+        case QMessageBox::Yes:
+            // Delete a slideshow
+            pictureWidget->deleteSlideShow();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked
+            break;
+        default:
+            // should never be reached
+            break;
+        }
     }
     else
     {
