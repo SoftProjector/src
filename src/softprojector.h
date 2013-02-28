@@ -187,6 +187,8 @@ private slots:
 
 
 
+    void on_actionDonate_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);

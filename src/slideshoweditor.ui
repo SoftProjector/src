@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Slide Show Editor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/slideshow_edit.png</normaloff>:/icons/icons/slideshow_edit.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="2">
     <layout class="QFormLayout" name="formLayout">

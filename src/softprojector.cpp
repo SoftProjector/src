@@ -544,6 +544,7 @@ void SoftProjector::on_listShow_currentRowChanged(int currentRow)
     // Called when the user selects a different row in the show (right-most) list.
     //    updateScreen();
 }
+
 void SoftProjector::on_listShow_itemSelectionChanged()
 {
     // Called when the user selects a different row in the show (right-most) list.
@@ -666,14 +667,6 @@ void SoftProjector::on_listShow_doubleClicked(QModelIndex index)
     updateScreen();
 }
 
-void SoftProjector::on_actionAbout_triggered()
-{
-    AboutDialog *aboutDialog;
-    aboutDialog = new AboutDialog(this, version_string);
-    aboutDialog->exec();
-    delete aboutDialog;
-}
-
 void SoftProjector::on_projectTab_currentChanged(int index)
 {
     updateEditActions();
@@ -700,10 +693,10 @@ void SoftProjector::updateEditActions()
         ui->actionEdit->setText(tr("&Edit SlideShow..."));
         ui->actionCopy->setText("");
         ui->actionDelete->setText(tr("&Delete SlideShow"));
-        ui->actionNew->setIcon(QIcon());
-        ui->actionEdit->setIcon(QIcon());
+        ui->actionNew->setIcon(QIcon(":/icons/icons/slideshow_new.png"));
+        ui->actionEdit->setIcon(QIcon(":/icons/icons/slideshow_edit.png"));
         ui->actionCopy->setIcon(QIcon());
-        ui->actionDelete->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon(":/icons/icons/slideshow_delete.png"));
     }
     else if (ctab == 3) // Media Tab
     {
@@ -711,10 +704,10 @@ void SoftProjector::updateEditActions()
         ui->actionEdit->setText("");
         ui->actionCopy->setText("");
         ui->actionDelete->setText(tr("&Remove Media Files"));
-        ui->actionNew->setIcon(QIcon());
+        ui->actionNew->setIcon(QIcon(":/icons/icons/video_add.png"));
         ui->actionEdit->setIcon(QIcon());
         ui->actionCopy->setIcon(QIcon());
-        ui->actionDelete->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon(":/icons/icons/video_remove.png"));
     }
     else if (ctab == 4) // Announcement Tab
     {
@@ -722,10 +715,10 @@ void SoftProjector::updateEditActions()
         ui->actionEdit->setText(tr("&Edit Announcement..."));
         ui->actionCopy->setText(tr("&Copy Announcement..."));
         ui->actionDelete->setText(tr("&Delete Announcement"));
-        ui->actionNew->setIcon(QIcon());
-        ui->actionEdit->setIcon(QIcon());
-        ui->actionCopy->setIcon(QIcon());
-        ui->actionDelete->setIcon(QIcon());
+        ui->actionNew->setIcon(QIcon(":/icons/icons/announce_new.png"));
+        ui->actionEdit->setIcon(QIcon(":/icons/icons/announce_edit.png"));
+        ui->actionCopy->setIcon(QIcon(":/icons/icons/announce_copy.png"));
+        ui->actionDelete->setIcon(QIcon(":/icons/icons/announce_delete.png"));
     }
     else
     {
@@ -846,6 +839,19 @@ void SoftProjector::on_actionManage_Database_triggered()
             theme.bible.operatorBible = "same";
         bibleWidget->setSettings(theme.bible);
     }
+}
+
+void SoftProjector::on_actionDonate_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPCLPXFMH9XP4"));
+}
+
+void SoftProjector::on_actionAbout_triggered()
+{
+    AboutDialog *aboutDialog;
+    aboutDialog = new AboutDialog(this, version_string);
+    aboutDialog->exec();
+    delete aboutDialog;
 }
 
 void SoftProjector::on_action_Help_triggered()
