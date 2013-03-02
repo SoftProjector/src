@@ -362,7 +362,7 @@ void MediaWidget::on_pushButtonGoLive_clicked()
     prepareForProjection();
 }
 
-void MediaWidget::on_pushButtonAdd_clicked()
+void MediaWidget::addToLibrary()
 {
     QStringList mfp = QFileDialog::getOpenFileNames(this,tr("Select Music/Video Files to Open"),".",tr("Media Files (%1);;Audio Files (%2);;Video Files (%3)")
                                                     .arg(audioExt + " " + videoExt) // media files
@@ -373,7 +373,7 @@ void MediaWidget::on_pushButtonAdd_clicked()
         insertFiles(mfp);
 }
 
-void MediaWidget::on_pushButtonRemove_clicked()
+void MediaWidget::removeFromLibrary()
 {
     int cm = ui->listWidgetMediaFiles->currentIndex().row();
     if(cm>=0)
@@ -390,10 +390,11 @@ void MediaWidget::on_pushButtonRemove_clicked()
     }
 }
 
-void MediaWidget::on_listWidgetMediaFiles_currentRowChanged(int currentRow)
+void MediaWidget::on_listWidgetMediaFiles_itemSelectionChanged()
 {
-    if(currentRow>=0)
-        playFile(mediaFilePaths.at(currentRow));
+    int cRow = ui->listWidgetMediaFiles->currentRow();
+    if(cRow>=0)
+        playFile(mediaFilePaths.at(cRow));
 }
 
 void MediaWidget::on_listWidgetMediaFiles_doubleClicked(const QModelIndex &index)

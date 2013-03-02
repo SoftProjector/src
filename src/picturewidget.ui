@@ -36,6 +36,9 @@
         <height>100</height>
        </size>
       </property>
+      <property name="spacing">
+       <number>1</number>
+      </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -120,7 +123,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Edit Slide Show:</string>
+            <string>Edit Preview Slide Show:</string>
            </property>
           </widget>
          </item>
@@ -164,6 +167,17 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="pushButtonClearImages">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/remove_all.png</normaloff>:/icons/icons/remove_all.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButtonMoveUp">
            <property name="text">
             <string/>
@@ -201,6 +215,16 @@
         </layout>
        </item>
        <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Editing slide show here will not change anything in database. To have save changes, use &quot;New Slide Show&quot; or &quot;Edit Slide Show&quot;. </string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -219,6 +243,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pushButtonGoLive</tabstop>
+  <tabstop>pushButtonAddImages</tabstop>
+  <tabstop>pushButtonRemoveImage</tabstop>
+  <tabstop>pushButtonClearImages</tabstop>
+  <tabstop>pushButtonMoveUp</tabstop>
+  <tabstop>pushButtonMoveDown</tabstop>
+  <tabstop>listWidgetSlideShow</tabstop>
+  <tabstop>listWidgetSlides</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

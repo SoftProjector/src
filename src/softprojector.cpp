@@ -689,10 +689,10 @@ void SoftProjector::updateEditActions()
     }
     else if (ctab == 2) // Picture Tab
     {
-        ui->actionNew->setText(tr("&New SlideShow..."));
-        ui->actionEdit->setText(tr("&Edit SlideShow..."));
+        ui->actionNew->setText(tr("&New Slide Show..."));
+        ui->actionEdit->setText(tr("&Edit Slide Show..."));
         ui->actionCopy->setText("");
-        ui->actionDelete->setText(tr("&Delete SlideShow"));
+        ui->actionDelete->setText(tr("&Delete Slide Show"));
         ui->actionNew->setIcon(QIcon(":/icons/icons/slideshow_new.png"));
         ui->actionEdit->setIcon(QIcon(":/icons/icons/slideshow_edit.png"));
         ui->actionCopy->setIcon(QIcon());
@@ -746,7 +746,8 @@ void SoftProjector::on_actionNew_triggered()
         newSong();
     else if(ctab == 2)
         newSlideShow();
-
+    else if(ctab ==3)
+        addMediaToLibrary();
 }
 
 void SoftProjector::on_actionEdit_triggered()
@@ -756,7 +757,6 @@ void SoftProjector::on_actionEdit_triggered()
         editSong();
     else if(ctab == 2)
         editSlideShow();
-
 }
 
 void SoftProjector::on_actionCopy_triggered()
@@ -773,6 +773,8 @@ void SoftProjector::on_actionDelete_triggered()
         deleteSong();
     else if(ctab == 2)
         deleteSlideShow();
+    else if(ctab == 3)
+        removeMediaFromLibrary();
 }
 
 void SoftProjector::on_actionManage_Database_triggered()
@@ -1043,6 +1045,16 @@ void SoftProjector::deleteSlideShow()
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
+}
+
+void SoftProjector::addMediaToLibrary()
+{
+    mediaPlayer->addToLibrary();
+}
+
+void SoftProjector::removeMediaFromLibrary()
+{
+    mediaPlayer->removeFromLibrary();
 }
 
 void SoftProjector::setArrowCursor()

@@ -37,6 +37,10 @@ class MediaWidget : public QWidget
 public:
     explicit MediaWidget(QWidget *parent = 0);
     ~MediaWidget();
+
+public slots:
+    void addToLibrary();
+    void removeFromLibrary();
 protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
@@ -53,7 +57,6 @@ private slots:
     void finished();
     void playPause();
 
-
     void handleDrop(QDropEvent *e);
     void loadMediaLibrary();
     void stateChanged(Phonon::State newstate, Phonon::State oldstate);
@@ -65,9 +68,7 @@ private slots:
     void on_pushButtonOpen_clicked();
     void on_pushButtonPlayPause_clicked();
     void on_pushButtonGoLive_clicked();
-    void on_pushButtonAdd_clicked();
-    void on_pushButtonRemove_clicked();
-    void on_listWidgetMediaFiles_currentRowChanged(int currentRow);
+    void on_listWidgetMediaFiles_itemSelectionChanged();
     void on_listWidgetMediaFiles_doubleClicked(const QModelIndex &index);
     void on_comboBoxAspectRatio_currentIndexChanged(int index);
 

@@ -25,10 +25,6 @@ PictureWidget::PictureWidget(QWidget *parent) :
     ui(new Ui::PictureWidget)
 {
     ui->setupUi(this);
-//    ui->pushButtonMoveUp->setEnabled(false);
-//    ui->pushButtonMoveDown->setEnabled(false);
-    ui->pushButtonRemoveImage->setEnabled(false);
-
     loadSlideShows();
 }
 
@@ -63,7 +59,7 @@ void PictureWidget::on_listWidgetSlides_currentRowChanged(int currentRow)
     if(currentRow>=0)
     {
         ui->labelPreview->setPixmap(slides.at(currentRow).imagePreview);
-        ui->labelPixInfo->setText("Preview slide: "+slides.at(currentRow).name);
+        ui->labelPixInfo->setText(tr("Preview slide: ")+slides.at(currentRow).name);
     }
 }
 
@@ -134,7 +130,30 @@ void PictureWidget::on_pushButtonAddImages_clicked()
 
 void PictureWidget::on_pushButtonRemoveImage_clicked()
 {
+    int c = ui->listWidgetSlides->currentRow();
+    if(c>=0)
+    {
+        slides.removeAt(c);
+        ui->listWidgetSlides->clear();
+        foreach(const SlideShowItem &sst, slides)
+        {
+            QListWidgetItem *itm = new QListWidgetItem;
+            QIcon ico(sst.imageSmall);
+            itm->setIcon(ico);
+            ui->listWidgetSlides->addItem(itm);
+        }
+        ui->listWidgetSlides->setCurrentRow(c);
+    }
+}
 
+void PictureWidget::on_pushButtonClearImages_clicked()
+{
+    ui->listWidgetSlideShow->setCurrentRow(-1);
+    ui->listWidgetSlides->clear();
+    slides.clear();
+    ui->labelPreview->clear();
+    ui->labelPreview->setText(tr("Picture Preview"));
+    ui->labelPixInfo->setText(tr("Preview slide: "));
 }
 
 void PictureWidget::on_pushButtonMoveUp_clicked()
@@ -185,14 +204,6 @@ void PictureWidget::sendToProjector()
     emit sendSlideShow(slides, ui->listWidgetSlides->currentRow());
 }
 
-void PictureWidget::on_listWidgetSlideShow_currentRowChanged(int currentRow)
-{
-    if(currentRow>=0)
-    {
-        loadSlideShow(slideShows.at(currentRow).slideSwId);
-    }
-}
-
 void PictureWidget::loadSlideShow(int ss_id)
 {
     currentSlideShow.loadSlideShow(ss_id);
@@ -217,12 +228,11 @@ SlideShow PictureWidget::getCurrentSlideshow()
 
 bool PictureWidget::isSlideShowSelected()
 {
-    int css = ui->listWidgetSlideShow->currentRow();
-    if(css>=0)
+    int css = ui->listWidgetSlideShow->selectionModel()->selection().count();
+    if(css>0)
         return true;
     else
         return false;
-
 }
 
 void PictureWidget::deleteSlideShow()
@@ -232,4 +242,11 @@ void PictureWidget::deleteSlideShow()
     sq.exec(QString("DELETE FROM SlideShows WHERE id = %1").arg(ssId));
     sq.exec(QString("DELETE FROM Slides WHERE ss_id = %1").arg(ssId));
     loadSlideShows();
+}
+
+void PictureWidget::on_listWidgetSlideShow_itemSelectionChanged()
+{
+    int cRow = ui->listWidgetSlideShow->currentRow();
+    if(cRow>=0)
+        loadSlideShow(slideShows.at(cRow).slideSwId);
 }

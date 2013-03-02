@@ -66,6 +66,9 @@
        <height>100</height>
       </size>
      </property>
+     <property name="spacing">
+      <number>1</number>
+     </property>
     </widget>
    </item>
    <item row="1" column="1">

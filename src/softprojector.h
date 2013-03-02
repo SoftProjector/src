@@ -149,7 +149,7 @@ private slots:
     void retranslateUis();
     void createLanguageActions();
     void switchLanguage(QAction *action);
-
+    void on_actionDonate_triggered();
     void on_action_Help_triggered();
     void on_actionManage_Database_triggered();
     void on_actionAbout_triggered();
@@ -162,6 +162,8 @@ private slots:
     void newSlideShow();
     void editSlideShow();
     void deleteSlideShow();
+    void addMediaToLibrary();
+    void removeMediaFromLibrary();
     void on_show_button_clicked();
     void on_clear_button_clicked();
     void on_listShow_currentRowChanged(int currentRow);
@@ -186,8 +188,6 @@ private slots:
     void setTimeText(QString cTime);
 
 
-
-    void on_actionDonate_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);

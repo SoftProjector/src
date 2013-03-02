@@ -47,8 +47,6 @@ public slots:
     void deleteSlideShow();
 
 private slots:
-
-    void on_listWidgetSlides_currentRowChanged(int currentRow);
     void on_listWidgetSlides_doubleClicked(const QModelIndex &index);
     void on_pushButtonAddImages_clicked();
     void on_pushButtonRemoveImage_clicked();
@@ -56,8 +54,9 @@ private slots:
     void on_pushButtonMoveDown_clicked();
     void on_pushButtonGoLive_clicked();
     void sendToProjector();
-
-    void on_listWidgetSlideShow_currentRowChanged(int currentRow);
+    void on_pushButtonClearImages_clicked();
+    void on_listWidgetSlideShow_itemSelectionChanged();
+    void on_listWidgetSlides_currentRowChanged(int currentRow);
     void loadSlideShow(int ss_id);
 
 private:
