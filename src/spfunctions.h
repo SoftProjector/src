@@ -25,7 +25,7 @@
 #include <QBuffer>
 
 QByteArray pixToByte(const QPixmap & pmap);
-
+bool isAnnounceTitle(QString string);
 //class spFunctions
 //{
 //public:

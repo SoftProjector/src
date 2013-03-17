@@ -21,21 +21,12 @@
 #define ANNOUNCEWIDGET_H
 
 #include <QtGui>
+#include "announcement.h"
+#include "editannouncementdialog.h"
 
 namespace Ui {
     class AnnounceWidget;
 }
-
-
-class Announcement
-// Class for holding all information about an announcement
-{
-public:
-    QString text;
-    int align_flags;
-    // FIXME add aligment info, font size, etc.
-};
-
 
 class AnnounceWidget : public QWidget {
     Q_OBJECT
@@ -43,6 +34,20 @@ class AnnounceWidget : public QWidget {
 public:
     explicit AnnounceWidget(QWidget *parent = 0);
     virtual ~AnnounceWidget();
+
+public slots:
+    void loadAnnouncements();
+    void newAnnouncement();
+    void editAnnouncement();
+    void copyAnnouncement();
+    void deleteAnnouncement();
+    bool isAnnounceValid();
+    Announcement getAnnouncement();
+
+    // TODO: Check and remove folosing functions
+    QList<Announcement> getAnnouncements();
+    void loadFromFile(QList<Announcement> anns);
+    void setAlingment(int v, int h);
     QString getText();
 //    void drawToPainter(QPainter *painter, int width, int height);
 
@@ -50,28 +55,28 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 private slots:
-    void on_history_listWidget_currentRowChanged(int currentRow);
-    void on_history_listWidget_doubleClicked(QModelIndex index);
-    void on_remove_from_history_pushButton_clicked();
-    void on_add_to_history_pushButton_clicked();
-    void on_btnLive_clicked();
+    void loadAnnouncement();
+    void announceViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void setAnnounceList();
+    void setPreview(Announcement announce);
+    void addNewAnnouncement(Announcement announce);
     void sendToProjector();
-    int get_align_flags();
-    void set_align_boxes(int flags);
+    void on_pushButtonLive_clicked();
+    void on_listWidgetAnnouncement_doubleClicked(const QModelIndex &index);
+    Announcement currentAnnouncement();
 
 signals:
-    // To be used ONLY by SongWidget::sendToProjector():
-    void sendText(Announcement text);
-    void annouceListChanged(bool changed);
+    void sendAnnounce(Announcement announce, int row);
 
 private:
     Ui::AnnounceWidget *ui;
-    QList<Announcement> history_items;
+    EditAnnouncementDialog * editAnounceDialog;
 
-public slots:
-    QList<Announcement> getAnnouncements();
-    void loadFromFile(QList<Announcement> anns);
-    void setAlingment(int v, int h);
+    QList<Announcement> announceList;
+    Announcement previewAnnounce;
+
+    AnnounceModel *announceModel;
+    AnnounceProxyModel * announceProxy;
 };
 
 #endif // ANNOUNCEWIDGET_H

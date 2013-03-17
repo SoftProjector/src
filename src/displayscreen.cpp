@@ -407,9 +407,9 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     renderText(true);
 }
 
-void DisplayScreen::renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings)
+void DisplayScreen::renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings)
 {
-    // Render aanouncement text
+    // Render announcement slide text
     displayType = "announce";
     announcement = announce;
     annouceSets = announceSettings;

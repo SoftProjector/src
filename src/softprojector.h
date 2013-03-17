@@ -69,7 +69,7 @@ public:
     Song current_song;
     int current_song_verse;
     Verse current_verse;
-    Announcement announcement_text;
+    Announcement currentAnnounce;
     QString version_string;
     Theme theme;
     Settings mySettings;
@@ -164,12 +164,16 @@ private slots:
     void deleteSlideShow();
     void addMediaToLibrary();
     void removeMediaFromLibrary();
+    void newAnnouncement();
+    void editAnnouncement();
+    void copyAnnouncement();
+    void deleteAnnoucement();
     void on_show_button_clicked();
     void on_clear_button_clicked();
     void on_listShow_currentRowChanged(int currentRow);
     void on_actionClose_triggered();
     void setSongList(Song song, int row);
-    void setAnnounceText(Announcement text);
+    void setAnnounceText(Announcement announce, int row);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
     void setPictureList(QList<SlideShowItem> &image_list, int row);
     void setVideo(VideoInfo &video);

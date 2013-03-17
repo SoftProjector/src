@@ -60,7 +60,7 @@ public slots:
     void renderText(bool text_present);
     void renderBibleText(Verse verse, BibleSettings &bibleSetings);
     void renderSongText(Stanza stanza, SongSettings &songSettings);
-    void renderAnnounceText(Announcement announce, AnnounceSettings &announceSettings);
+    void renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings);
     void renderPicture(QPixmap image);
     void renderVideo(VideoInfo &vid);
 
@@ -126,7 +126,7 @@ private:
 
     Verse bibleVerse;
     Stanza songStanza;
-    Announcement announcement;
+    AnnounceSlide announcement;
 
     QString displayType;
 

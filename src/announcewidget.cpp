@@ -17,6 +17,7 @@
 //
 ***************************************************************************/
 
+#include <QtSql>
 #include <QDebug>
 #include "announcewidget.h"
 #include "ui_announcewidget.h"
@@ -27,10 +28,29 @@ AnnounceWidget::AnnounceWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    editAnounceDialog = new EditAnnouncementDialog(this);
+    connect(editAnounceDialog,SIGNAL(announceToAdd(Announcement)),this,SLOT(addNewAnnouncement(Announcement)));
+
+    announceModel = new AnnounceModel;
+    announceProxy = new AnnounceProxyModel(this);
+    announceProxy->setSourceModel(announceModel);
+    announceProxy->setDynamicSortFilter(true);
+    ui->tableViewAnnouncements->setModel(announceProxy);
+    ui->tableViewAnnouncements->setColumnWidth(0,200);
+    connect(ui->tableViewAnnouncements->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(announceViewRowChanged(QModelIndex,QModelIndex)));
+
+    // Derease row height
+    ui->tableViewAnnouncements->resizeRowsToContents();
+
+    setAnnounceList();
+    loadAnnouncements();
 }
 
 AnnounceWidget::~AnnounceWidget()
 {
+    delete editAnounceDialog;
+    delete announceModel;
     delete ui;
 }
 
@@ -46,16 +66,173 @@ void AnnounceWidget::changeEvent(QEvent *e)
     }
 }
 
-QString AnnounceWidget::getText()
+void AnnounceWidget::announceViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    return ui->announceTextEdit->toPlainText();
+    if(current.isValid())
+    {
+        int row = announceProxy->mapToSource(current).row();
+        previewAnnounce = announceModel->getAnnounce(row);
+        loadAnnouncement();
+    }
+}
+
+void AnnounceWidget::loadAnnouncements()
+{
+    announceModel->setAnnoucements(announceList);
+}
+
+void AnnounceWidget::loadAnnouncement()
+{
+    ui->listWidgetAnnouncement->clear();
+    ui->listWidgetAnnouncement->addItems(previewAnnounce.getAnnounceList());
+    ui->labelAnnounceTitle->setText(previewAnnounce.title);
+}
+
+void AnnounceWidget::setAnnounceList()
+{
+    QSqlQuery sq;
+    Announcement a;
+    announceList.clear();
+    //              0       1       2           3       4   5           6               7
+    sq.exec("SELECT title, text, usePrivate, useAuto, loop, slideTime, useBackground, backgoundPath, "
+            "font, color, alignment, id FROM Announcements");
+    //          8     9     10       11
+    while(sq.next())
+    {
+        a.title = sq.value(0).toString().trimmed();
+        a.text = sq.value(1).toString().trimmed();
+        a.usePrivateSettings = sq.value(2).toBool();
+        a.useAutoNext = sq.value(3).toBool();
+        a.loop = sq.value(4).toBool();
+        a.slideTimer = sq.value(5).toInt();
+        a.useBackground = sq.value(6).toBool();
+        a.backgroundPath = sq.value(7).toString().trimmed();
+        a.font.fromString(sq.value(8).toString().trimmed());
+        a.color = QColor(sq.value(9).toUInt());
+        QString str = sq.value(10).toString().trimmed();
+        QStringList l = str.split(",");
+        a.alignmentV = l.at(0).toInt();
+        a.alignmentH = l.at(1).toInt();
+        a.idNum = sq.value(11).toInt();
+
+        announceList.append(a);
+    }
+}
+
+void AnnounceWidget::setPreview(Announcement announce)
+{
+    previewAnnounce = announce;
+    ui->listWidgetAnnouncement->clear();
+//    ui->listWidgetAnnouncement->addItem(previewAnnounce.text);
+    ui->listWidgetAnnouncement->addItems(previewAnnounce.getAnnounceList());
+}
+
+void AnnounceWidget::newAnnouncement()
+{
+    editAnounceDialog->setNewAnnouce();
+    editAnounceDialog->exec();
+}
+
+void AnnounceWidget::editAnnouncement()
+{
+    if(previewAnnounce.idNum>0)
+    {
+        editAnounceDialog->setEditAnnouce(previewAnnounce);
+        int ret = editAnounceDialog->exec();
+        switch(ret)
+        {
+        case EditAnnouncementDialog::Accepted:
+            announceModel->updateAnnounceFromDatabase(previewAnnounce.idNum);
+            setPreview(currentAnnouncement());
+            loadAnnouncement();
+            break;
+        case EditAnnouncementDialog::Rejected:
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void AnnounceWidget::copyAnnouncement()
+{
+    if(previewAnnounce.idNum>0)
+    {
+        editAnounceDialog->setCopyAnnouce(previewAnnounce);
+        editAnounceDialog->exec();
+    }
+}
+
+void AnnounceWidget::deleteAnnouncement()
+{
+    if(previewAnnounce.idNum>0)
+    {
+        previewAnnounce.deleteAnnouce();
+        int row = ui->tableViewAnnouncements->currentIndex().row();
+        announceModel->removeRow(row);
+    }
+}
+
+void AnnounceWidget::addNewAnnouncement(Announcement announce)
+{
+    announceModel->addAnnouncement(announce);
+    ui->tableViewAnnouncements->selectRow(announceModel->rowCount()-1);
+}
+
+bool AnnounceWidget::isAnnounceValid()
+{
+    if(previewAnnounce.idNum>0)
+        return true;
+    else
+        return false;
+}
+
+Announcement AnnounceWidget::getAnnouncement()
+{
+    return previewAnnounce;
 }
 
 void AnnounceWidget::sendToProjector()
 {
+    if(isAnnounceValid())
+        emit sendAnnounce(previewAnnounce,ui->listWidgetAnnouncement->currentRow());
+}
+
+void AnnounceWidget::on_pushButtonLive_clicked()
+{
+    sendToProjector();
+}
+
+void AnnounceWidget::on_listWidgetAnnouncement_doubleClicked(const QModelIndex &index)
+{
+    sendToProjector();
+}
+
+Announcement AnnounceWidget::currentAnnouncement()
+{
+    Announcement ancmnt;
+    QModelIndex index;
+    int row;
+    index = announceProxy->mapToSource(ui->tableViewAnnouncements->currentIndex());
+    row = index.row();
+
+    if(row>=0)
+        ancmnt = announceModel->getAnnounce(row);
+
+    return ancmnt;
+}
+
+QString AnnounceWidget::getText()
+{
+//    return ui->announceTextEdit->toPlainText();
+}
+
+
+//void AnnounceWidget::sendToProjector()
+//{
     // Display the specified song text in the right-most column of softProjector:
     //emit sendSong(song, row);
-}
+//}
 
 //void AnnounceWidget::drawToPainter(QPainter *painter, int width, int height)
 //{
@@ -72,149 +249,159 @@ void AnnounceWidget::sendToProjector()
 //    display->paintTextToRect(painter, rect, flags, announce_text);
 //}
 
-void AnnounceWidget::on_btnLive_clicked()
-{
-    //qDebug() << "Go LIVE TEXT:";
-    //qDebug() << ui->announceTextEdit->toPlainText();
-//    QString text = ui->announceTextEdit->toPlainText();
-    Announcement a;
-    a.text = ui->announceTextEdit->toPlainText();
-    a.align_flags = get_align_flags();
-    emit sendText(a);
-}
+//void AnnounceWidget::on_btnLive_clicked()
+//{
+//    //qDebug() << "Go LIVE TEXT:";
+//    //qDebug() << ui->announceTextEdit->toPlainText();
+////    QString text = ui->announceTextEdit->toPlainText();
+//    Announcement a;
+//    a.text = ui->announceTextEdit->toPlainText();
+//    a.align_flags = get_align_flags();
+//    emit sendText(a);
+//}
 
-void AnnounceWidget::on_add_to_history_pushButton_clicked()
-{
-    Announcement a;
-    a.text = ui->announceTextEdit->toPlainText();
-    a.align_flags = get_align_flags();
-    history_items.append(a);
-    ui->history_listWidget->addItem(a.text);
-    emit annouceListChanged(true);
-}
+//void AnnounceWidget::on_add_to_history_pushButton_clicked()
+//{
+//    Announcement a;
+//    a.text = ui->announceTextEdit->toPlainText();
+//    a.align_flags = get_align_flags();
+//    history_items.append(a);
+//    ui->history_listWidget->addItem(a.text);
+//    emit annouceListChanged(true);
+//}
 
-void AnnounceWidget::on_remove_from_history_pushButton_clicked()
-{
-    int current_row = ui->history_listWidget->currentRow();
-    // FIXME disable this item if there is no row selected
-    if (current_row >= 0)
-    {
-        ui->history_listWidget->takeItem(current_row);
-        history_items.takeAt(current_row);
-        emit annouceListChanged(true);
-    }
-}
-void AnnounceWidget::on_history_listWidget_currentRowChanged(int currentRow)
-{
-    if( currentRow != -1 )
-    {
-        Announcement a = history_items.at(currentRow);
-        ui->announceTextEdit->setText(a.text);
-        set_align_boxes(a.align_flags);
-    }
-}
+//void AnnounceWidget::on_remove_from_history_pushButton_clicked()
+//{
+//    int current_row = ui->history_listWidget->currentRow();
+//    // FIXME disable this item if there is no row selected
+//    if (current_row >= 0)
+//    {
+//        ui->history_listWidget->takeItem(current_row);
+//        history_items.takeAt(current_row);
+//        emit annouceListChanged(true);
+//    }
+//}
 
-void AnnounceWidget::on_history_listWidget_doubleClicked(QModelIndex index)
-{
-    Announcement a = history_items.at(index.row());
-    //ui->announceTextEdit->setText(a.text);
-    emit sendText(a);
-}
+//void AnnounceWidget::on_history_listWidget_currentRowChanged(int currentRow)
+//{
+//    if( currentRow != -1 )
+//    {
+//        Announcement a = history_items.at(currentRow);
+//        ui->announceTextEdit->setText(a.text);
+//        set_align_boxes(a.align_flags);
+//    }
+//}
 
-int AnnounceWidget::get_align_flags()
-{
-    int flags = Qt::TextWordWrap;
-    if( ui->horizontal_comboBox->currentText() == tr("Left") )
-        flags = flags | Qt::AlignLeft;
-    else if( ui->horizontal_comboBox->currentText() == tr("Right") )
-        flags = flags | Qt::AlignRight;
-    else if( ui->horizontal_comboBox->currentText() == tr("Center") )
-        flags = flags | Qt::AlignHCenter;
-    else
-        qDebug() << "ERROR no such horizontal alignment";
+//void AnnounceWidget::on_history_listWidget_doubleClicked(QModelIndex index)
+//{
+//    Announcement a = history_items.at(index.row());
+//    //ui->announceTextEdit->setText(a.text);
+//    emit sendText(a);
+//}
 
-    if( ui->vertical_comboBox->currentText() == tr("Top") )
-        flags = flags | Qt::AlignTop;
-    else if( ui->vertical_comboBox->currentText() == tr("Bottom") )
-        flags = flags | Qt::AlignBottom;
-    else if( ui->vertical_comboBox->currentText() == tr("Middle") )
-        flags = flags | Qt::AlignVCenter;
-    else
-        qDebug() << "ERROR no such vertical alignment";
+//int AnnounceWidget::get_align_flags()
+//{
+//    int flags = Qt::TextWordWrap;
+//    if( ui->horizontal_comboBox->currentText() == tr("Left") )
+//        flags = flags | Qt::AlignLeft;
+//    else if( ui->horizontal_comboBox->currentText() == tr("Right") )
+//        flags = flags | Qt::AlignRight;
+//    else if( ui->horizontal_comboBox->currentText() == tr("Center") )
+//        flags = flags | Qt::AlignHCenter;
+//    else
+//        qDebug() << "ERROR no such horizontal alignment";
 
-    return flags;
-}
+//    if( ui->vertical_comboBox->currentText() == tr("Top") )
+//        flags = flags | Qt::AlignTop;
+//    else if( ui->vertical_comboBox->currentText() == tr("Bottom") )
+//        flags = flags | Qt::AlignBottom;
+//    else if( ui->vertical_comboBox->currentText() == tr("Middle") )
+//        flags = flags | Qt::AlignVCenter;
+//    else
+//        qDebug() << "ERROR no such vertical alignment";
 
-void AnnounceWidget::set_align_boxes(int flags)
-{
-    if(flags == 4129)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(0);
-        ui->vertical_comboBox->setCurrentIndex(0);
-    }
-    else if(flags == 4225)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(0);
-        ui->vertical_comboBox->setCurrentIndex(1);
-    }
-    else if(flags == 4161)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(0);
-        ui->vertical_comboBox->setCurrentIndex(2);
-    }
-    else if(flags == 4132)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(1);
-        ui->vertical_comboBox->setCurrentIndex(0);
-    }
-    else if(flags == 4228)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(1);
-        ui->vertical_comboBox->setCurrentIndex(1);
-    }
-    else if(flags == 4164)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(1);
-        ui->vertical_comboBox->setCurrentIndex(2);
-    }
-    else if(flags == 4130)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(2);
-        ui->vertical_comboBox->setCurrentIndex(0);
-    }
-    else if(flags == 4226)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(2);
-        ui->vertical_comboBox->setCurrentIndex(1);
-    }
-    else if(flags == 4162)
-    {
-        ui->horizontal_comboBox->setCurrentIndex(2);
-        ui->vertical_comboBox->setCurrentIndex(2);
-    }
-}
+//    return flags;
+//}
+
+//void AnnounceWidget::set_align_boxes(int flags)
+//{
+//    if(flags == 4129)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(0);
+//        ui->vertical_comboBox->setCurrentIndex(0);
+//    }
+//    else if(flags == 4225)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(0);
+//        ui->vertical_comboBox->setCurrentIndex(1);
+//    }
+//    else if(flags == 4161)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(0);
+//        ui->vertical_comboBox->setCurrentIndex(2);
+//    }
+//    else if(flags == 4132)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(1);
+//        ui->vertical_comboBox->setCurrentIndex(0);
+//    }
+//    else if(flags == 4228)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(1);
+//        ui->vertical_comboBox->setCurrentIndex(1);
+//    }
+//    else if(flags == 4164)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(1);
+//        ui->vertical_comboBox->setCurrentIndex(2);
+//    }
+//    else if(flags == 4130)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(2);
+//        ui->vertical_comboBox->setCurrentIndex(0);
+//    }
+//    else if(flags == 4226)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(2);
+//        ui->vertical_comboBox->setCurrentIndex(1);
+//    }
+//    else if(flags == 4162)
+//    {
+//        ui->horizontal_comboBox->setCurrentIndex(2);
+//        ui->vertical_comboBox->setCurrentIndex(2);
+//    }
+//}
 
 QList<Announcement> AnnounceWidget::getAnnouncements()
 {
-    return history_items;
+//    return history_items;
 }
 
 void AnnounceWidget::loadFromFile(QList<Announcement> anns)
 {
-    QStringList a_list;
-    history_items = anns;
-    int count = anns.count();
-    ui->history_listWidget->clear();
-    if(count>0)
-    {
-        for(int i(0); i<count; ++i)
-            a_list.append(anns.at(i).text);
-        ui->history_listWidget->addItems(a_list);
-    }
+//    QStringList a_list;
+//    history_items = anns;
+//    int count = anns.count();
+//    ui->history_listWidget->clear();
+//    if(count>0)
+//    {
+//        for(int i(0); i<count; ++i)
+//            a_list.append(anns.at(i).text);
+//        ui->history_listWidget->addItems(a_list);
+//    }
 }
 
 void AnnounceWidget::setAlingment(int v, int h)
 {
-    ui->vertical_comboBox->setCurrentIndex(v);
-    ui->horizontal_comboBox->setCurrentIndex(h);
+//    ui->vertical_comboBox->setCurrentIndex(v);
+//    ui->horizontal_comboBox->setCurrentIndex(h);
 }
+
+//void AnnounceWidget::on_btnLive_clicked()
+//{
+
+//}
+
+
+
+

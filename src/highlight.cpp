@@ -96,6 +96,46 @@ void Highlight::highlightBlock(const QString &text)
     setCurrentBlockState(0);
 }
 
+// *** Announcement Editor Highlighter
+
+HighlightAnnounce::HighlightAnnounce(QTextDocument *parent)
+        : QSyntaxHighlighter(parent)
+{
+    HighlightingRule rule;
+
+    QStringList patterns;
+
+    // Verse formating
+    announceFormat.setForeground(Qt::red);
+    announceFormat.setBackground(Qt::yellow);
+    patterns << "^Announce[^\n]*" << "^Slide[^\n]*"
+             << QString::fromUtf8("^Объявление[^\n]*") << QString::fromUtf8("^Слайд[^\n]*")
+             << QString::fromUtf8("^Оголошення[^\n]*")
+             << QString::fromUtf8("^Ankündigung[^\n]*") << QString::fromUtf8("^Dia[^\n]*")
+             << QString::fromUtf8("^Oznámení[^\n]*") << QString::fromUtf8("^Snímek[^\n]*");
+    foreach (const QString &pattern, patterns)
+    {
+        rule.pattern = QRegExp(pattern);
+        rule.format = announceFormat;
+        highlightingRules.append(rule);
+    }
+}
+
+void HighlightAnnounce::highlightBlock(const QString &text)
+{
+    foreach (const HighlightingRule &rule, highlightingRules) {
+        QRegExp expression(rule.pattern);
+        int index = expression.indexIn(text);
+        while (index >= 0) {
+            int length = expression.matchedLength();
+            setFormat(index, length, rule.format);
+            index = expression.indexIn(text, index + length);
+        }
+    }
+
+    setCurrentBlockState(0);
+}
+
 // *** Highligting for search results ***
 HighlightSearch::HighlightSearch(QTextDocument *parent)
         : QSyntaxHighlighter(parent)

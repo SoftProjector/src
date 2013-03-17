@@ -458,7 +458,7 @@ void SongsModel::setSongs(QList<Song> songs)
 void SongsModel::updateSongFromDatabase(int songid)
 {
     emit layoutAboutToBeChanged();
-    for( int i=0; i < song_list.size(); i++) {
+    for( int i=0; i < song_list.size(); ++i) {
         Song *song = (Song*)&(song_list.at(i));
         if( song->songID == songid )
         {
@@ -806,8 +806,6 @@ void SongDatabase::deleteSong(int song_id)
 {
     QSqlQuery sq;
     sq.exec("DELETE FROM Songs WHERE id = " + QString::number(song_id) );
-//    sq.clear();
-//    sq.exec("DELETE FROM SongLink WHERE song_id = " + QString::number(song_id) );
 }
 
 QString SongDatabase::getSongbookIdStringFromName(QString songbook_name)

@@ -41,6 +41,7 @@ EditWidget::EditWidget(QWidget *parent) :
 
 EditWidget::~EditWidget()
 {
+    delete highlight;
     delete ui;
 }
 

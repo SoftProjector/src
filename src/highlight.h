@@ -46,6 +46,28 @@ private:
     QTextCharFormat verseFormat, chorusFormat, vstavkaFormat;
 };
 
+// *** Announcement editor highlighter
+class HighlightAnnounce : public QSyntaxHighlighter
+{
+    Q_OBJECT
+
+public:
+    HighlightAnnounce(QTextDocument *parent = 0);
+
+protected:
+    void highlightBlock(const QString &text);
+
+private:
+    struct HighlightingRule
+    {
+        QRegExp pattern;
+        QTextCharFormat format;
+    };
+    QVector<HighlightingRule> highlightingRules;
+
+    QTextCharFormat announceFormat;
+};
+
 // *** Highligting for search results ***
 class HighlightSearch : public QSyntaxHighlighter
 {

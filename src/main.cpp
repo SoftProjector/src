@@ -46,10 +46,13 @@ bool connect(QString database_file)
     }
     else
     {
-        // If no files exited, then database hase been created now we need to fill it
+        // If no files exited, then database has been created now we need to fill it
         if(!database_exists)
         {
             QSqlQuery sq;
+            sq.exec("CREATE TABLE 'Announcements' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "
+                    "'title' TEXT, 'text' TEXT, 'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTime' INTEGER, "
+                    "'useBackground' BOOL, 'backgoundPath' TEXT, 'font' TEXT, 'color' TEXT, 'alignment' TEXT)");
             sq.exec("CREATE TABLE 'BibleBooks' ('bible_id' INTEGER, 'id' INTEGER, 'book_name' "
                     "TEXT, 'chapter_count' INTEGER DEFAULT 0)");
             sq.exec("CREATE TABLE 'BibleVerse' ('verse_id' TEXT, 'bible_id' TEXT, 'book' TEXT, "

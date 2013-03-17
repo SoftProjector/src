@@ -21,6 +21,7 @@
 #include "softprojector.h"
 #include "ui_softprojector.h"
 #include "aboutdialog.h"
+#include "editannouncementdialog.h"
 
 SoftProjector::SoftProjector(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::SoftProjectorClass)
@@ -94,8 +95,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
     connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
-    connect(announceWidget,SIGNAL(sendText(Announcement)), this, SLOT(setAnnounceText(Announcement)));
-    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
+//    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
@@ -420,21 +421,22 @@ void SoftProjector::on_actionClose_triggered()
     close();
 }
 
-void SoftProjector::setAnnounceText(Announcement text)
+void SoftProjector::setAnnounceText(Announcement announce, int row)
 {
-    announcement_text = text;
+    currentAnnounce = announce;
     type = "announce";
     ui->rbMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
-    ui->labelShow->setText(tr("Announcement"));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/announce.png").scaled(16,16));
+    ui->labelShow->setText(currentAnnounce.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5); // ?
     ui->listShow->setWordWrap(true);
-    ui->listShow->addItem(announcement_text.text);
-    ui->listShow->setCurrentRow(0);
+    ui->listShow->addItems(currentAnnounce.getAnnounceList());
+    ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
     new_list = false;
     updateScreen();
@@ -454,6 +456,7 @@ void SoftProjector::setSongList(Song song, int row)
     showing = true;
     new_list = true;
     ui->listShow->clear();
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/song_tab.png").scaled(16,16));
     ui->labelShow->setText(song.title);
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
@@ -474,6 +477,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/book.png").scaled(16,16));
     ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(2);
@@ -501,9 +505,10 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     ui->widgetPlayBackControls->setVisible(false);
     new_list = true;
     pictureShowList = image_list;
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/photo.png").scaled(16,16));
     ui->labelShow->clear();
     ui->listShow->clear();
-    ui->listShow->setSpacing(0);
+    ui->listShow->setSpacing(1);
     ui->listShow->setIconSize(QSize(100,100));
 
     foreach(const SlideShowItem &p, pictureShowList)
@@ -532,6 +537,7 @@ void SoftProjector::setVideo(VideoInfo &video)
         ui->widgetPlayBackControls->setVisible(true);
     new_list = true;
     ui->listShow->clear();
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/video.png").scaled(16,16));
 //    ui->listShow->addItem(videoPath);
 //    ui->listShow->setCurrentRow(0);
     ui->labelShow->setText(currentVideo.fileName);
@@ -619,13 +625,13 @@ void SoftProjector::updateScreen()
         }
         else if(type == "announce")
         {
-            displayScreen1->renderAnnounceText(announcement_text,theme.announce);
+            displayScreen1->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce);
             if(hasDisplayScreen2)
             {
                 if(theme.announce2.useDisp2settings)
-                    displayScreen2->renderAnnounceText(announcement_text,theme.announce2);
+                    displayScreen2->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce2);
                 else
-                    displayScreen2->renderAnnounceText(announcement_text,theme.announce);
+                    displayScreen2->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce);
             }
         }
         else if(type == "pix")
@@ -732,11 +738,17 @@ void SoftProjector::updateEditActions()
         ui->actionDelete->setIcon(QIcon());
     }
 
-    // Set Edit Action Menuw Visibility
+    // Set Edit Action Menu Visibility
     ui->actionNew->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
     ui->actionEdit->setVisible(ctab == 1 || ctab == 2 || ctab == 4);
     ui->actionCopy->setVisible(ctab == 1 || ctab == 4);
     ui->actionDelete->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+
+    // Set Edit Action Menu enabled
+    ui->actionNew->setEnabled(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+    ui->actionEdit->setEnabled(ctab == 1 || ctab == 2 || ctab == 4);
+    ui->actionCopy->setEnabled(ctab == 1 || ctab == 4);
+    ui->actionDelete->setEnabled(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
 }
 
 void SoftProjector::on_actionNew_triggered()
@@ -746,8 +758,10 @@ void SoftProjector::on_actionNew_triggered()
         newSong();
     else if(ctab == 2)
         newSlideShow();
-    else if(ctab ==3)
+    else if(ctab == 3)
         addMediaToLibrary();
+    else if(ctab == 4)
+        newAnnouncement();
 }
 
 void SoftProjector::on_actionEdit_triggered()
@@ -757,6 +771,8 @@ void SoftProjector::on_actionEdit_triggered()
         editSong();
     else if(ctab == 2)
         editSlideShow();
+    else if(ctab == 4)
+        editAnnouncement();
 }
 
 void SoftProjector::on_actionCopy_triggered()
@@ -764,6 +780,8 @@ void SoftProjector::on_actionCopy_triggered()
     int ctab = ui->projectTab->currentIndex();
     if(ctab == 1)
         copySong();
+    else if(ctab ==4)
+        copyAnnouncement();
 }
 
 void SoftProjector::on_actionDelete_triggered()
@@ -775,6 +793,8 @@ void SoftProjector::on_actionDelete_triggered()
         deleteSlideShow();
     else if(ctab == 3)
         removeMediaFromLibrary();
+    else if(ctab == 4)
+        deleteAnnoucement();
 }
 
 void SoftProjector::on_actionManage_Database_triggered()
@@ -904,8 +924,8 @@ void SoftProjector::editSong()
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be edited."));
-        ms.setInformativeText(tr("Please select a song to be edited."));
+        ms.setText(tr("No song has been selected to edit."));
+        ms.setInformativeText(tr("Please select a song to edit."));
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
@@ -934,8 +954,8 @@ void SoftProjector::copySong()
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be copied"));
-        ms.setInformativeText(tr("Please select a song to be copied"));
+        ms.setText(tr("No song has been selected to copy"));
+        ms.setInformativeText(tr("Please select a song to copy"));
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
@@ -973,8 +993,8 @@ void SoftProjector::deleteSong()
     {
         QMessageBox ms;
         ms.setWindowTitle(tr("No song selected"));
-        ms.setText(tr("No song has been selected to be deleted"));
-        ms.setInformativeText(tr("Please select a song to be deleted"));
+        ms.setText(tr("No song has been selected to delete"));
+        ms.setInformativeText(tr("Please select a song to delete"));
         ms.setIcon(QMessageBox::Information);
         ms.exec();
     }
@@ -1055,6 +1075,79 @@ void SoftProjector::addMediaToLibrary()
 void SoftProjector::removeMediaFromLibrary()
 {
     mediaPlayer->removeFromLibrary();
+}
+
+void SoftProjector::newAnnouncement()
+{
+    announceWidget->newAnnouncement();
+}
+
+void SoftProjector::editAnnouncement()
+{
+    if(announceWidget->isAnnounceValid())
+        announceWidget->editAnnouncement();
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No Announcement Selected"));
+        ms.setText(tr("No announcement has been selected to edit"));
+        ms.setInformativeText(tr("Please select an announcement to edit"));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::copyAnnouncement()
+{
+    if(announceWidget->isAnnounceValid())
+        announceWidget->copyAnnouncement();
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No Announcement Selected"));
+        ms.setText(tr("No announcement has been selected to copy"));
+        ms.setInformativeText(tr("Please select an announcement to copy"));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
+}
+
+void SoftProjector::deleteAnnoucement()
+{
+    if(announceWidget->isAnnounceValid())
+    {
+        QString title = announceWidget->getAnnouncement().title;
+        QMessageBox ms;
+        ms.setWindowTitle(tr("Delete Announcement?"));
+        ms.setText(tr("Delete announcement: \"") + title + "\"?");
+        ms.setInformativeText(tr("This action will permanentrly delete this announcement"));
+        ms.setIcon(QMessageBox::Question);
+        ms.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        ms.setDefaultButton(QMessageBox::Yes);
+        int ret = ms.exec();
+
+        switch (ret) {
+        case QMessageBox::Yes:
+            // Delete a announce
+            announceWidget->deleteAnnouncement();
+            break;
+        case QMessageBox::No:
+            // Cancel was clicked
+            break;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+    else
+    {
+        QMessageBox ms;
+        ms.setWindowTitle(tr("No Announcement Selected"));
+        ms.setText(tr("No announcement has been selected to delete"));
+        ms.setInformativeText(tr("Please select an announcement to delete"));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
 }
 
 void SoftProjector::setArrowCursor()

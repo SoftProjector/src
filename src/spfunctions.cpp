@@ -31,3 +31,25 @@ QByteArray pixToByte(const QPixmap & pmap)
 //spFunctions::spFunctions()
 //{
 //}
+bool isAnnounceTitle(QString string)
+{
+    // Check if the line is verse title line
+    if(string.startsWith("Announce"))
+        return true;
+    else if (string.startsWith("Slide"))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Объявление")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Слайд")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Оголошення")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Ankündigung")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Oznámení")))
+        return true;
+    else if (string.startsWith(QString::fromUtf8("Snímek")))
+        return true;
+    else
+        return false;
+}

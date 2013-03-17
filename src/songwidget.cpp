@@ -32,7 +32,6 @@ SongWidget::SongWidget(QWidget *parent) :
     proxy_model->setSourceModel(songs_model);
     proxy_model->setDynamicSortFilter(true);
     ui->songs_view->setModel(proxy_model);
-    //ui->songs_view->sortByColumn(1, Qt::AscendingOrder);
     connect(ui->songs_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
         this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
