@@ -8,6 +8,7 @@ EditAnnouncementDialog::EditAnnouncementDialog(QWidget *parent) :
     ui->setupUi(this);
     highlight = new HighlightAnnounce(ui->textEditAnnouncement->document());
     ui->groupBoxPrivateSettings->setVisible(false);
+    ui->checkBoxUsePrivateSettings->setVisible(false);
 }
 
 EditAnnouncementDialog::~EditAnnouncementDialog()

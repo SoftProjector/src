@@ -199,7 +199,7 @@ QVariant AnnounceModel::data(const QModelIndex &index, int role) const
     {
         Announcement announce = announceList.at(index.row());
         if(index.column() == 0) // title
-            return QVariant(announce.title);
+            return QVariant(announce.title.trimmed());
     }
     return QVariant();
 }

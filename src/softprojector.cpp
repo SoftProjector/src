@@ -143,7 +143,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(shSart2,SIGNAL(activated()),this,SLOT(on_show_button_clicked()));
 
     // Hide Multi verse selection, only visible to be when showing bible
-    ui->rbMultiVerse->setVisible(false);
+    ui->widgetMultiVerse->setVisible(false);
 
     // Set up video controls
     playerSlider = new Phonon::SeekSlider(this);
@@ -163,6 +163,14 @@ SoftProjector::SoftProjector(QWidget *parent)
 //    version_string = "2"; // to be used only for official release
     version_string = "2.Dev.Build: 5"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
+
+    // Temporarily disable project menu buttons
+    ui->actionNew_Project->setEnabled(false);
+    ui->actionClose_Project->setEnabled(false);
+    ui->actionSave_Project->setEnabled(false);
+    ui->actionSave_Project_As->setEnabled(false);
+    ui->actionOpen->setEnabled(false);
+    ui->actionPrint_Project->setEnabled(false);
 }
 
 SoftProjector::~SoftProjector()
@@ -302,7 +310,6 @@ void SoftProjector::updateSetting(GeneralSettings &g, Theme &t)
     mySettings.general = g;
     theme = t;
     bibleWidget->setSettings(theme.bible);
-    announceWidget->setAlingment(theme.announce.textAlingmentV,theme.announce.textAlingmentH);
     
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(theme.passive.backgroundPath,theme.passive.useBackground);
@@ -425,12 +432,12 @@ void SoftProjector::setAnnounceText(Announcement announce, int row)
 {
     currentAnnounce = announce;
     type = "announce";
-    ui->rbMultiVerse->setVisible(false);
+    ui->widgetMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
-    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/announce.png").scaled(16,16));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/announce.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->labelShow->setText(currentAnnounce.title);
     ui->listShow->clear();
     ui->listShow->setSpacing(5); // ?
@@ -450,13 +457,13 @@ void SoftProjector::setSongList(Song song, int row)
 
     // Display the specified song text in the right-most column of softProjector
     type = "song";
-    ui->rbMultiVerse->setVisible(false);
+    ui->widgetMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
     ui->listShow->clear();
-    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/song_tab.png").scaled(16,16));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/song_tab.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->labelShow->setText(song.title);
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
@@ -473,11 +480,11 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     // Called to show a bible verse from a chapter in the preview list
 
     type = "bible";
-    ui->rbMultiVerse->setVisible(true);
+    ui->widgetMultiVerse->setVisible(true);
     ui->widgetPlayBackControls->setVisible(false);
     showing = true;
     new_list = true;
-    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/book.png").scaled(16,16));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/book.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->labelShow->setText(caption);
     ui->listShow->clear();
     ui->listShow->setSpacing(2);
@@ -500,12 +507,12 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     // Called to show picture list
     type = "pix";
     showing = true;
-    ui->rbMultiVerse->setVisible(false);
+    ui->widgetMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     ui->widgetPlayBackControls->setVisible(false);
     new_list = true;
     pictureShowList = image_list;
-    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/photo.png").scaled(16,16));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/photo.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->labelShow->clear();
     ui->listShow->clear();
     ui->listShow->setSpacing(1);
@@ -531,13 +538,13 @@ void SoftProjector::setVideo(VideoInfo &video)
     type = "video";
     currentVideo = video;
     showing = true;
-    ui->rbMultiVerse->setVisible(false);
+    ui->widgetMultiVerse->setVisible(false);
     ui->rbMultiVerse->setChecked(false);
     if(!ui->widgetPlayBackControls->isVisible())
         ui->widgetPlayBackControls->setVisible(true);
     new_list = true;
     ui->listShow->clear();
-    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/video.png").scaled(16,16));
+    ui->labelIcon->setPixmap(QPixmap(":/icons/icons/video.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 //    ui->listShow->addItem(videoPath);
 //    ui->listShow->setCurrentRow(0);
     ui->labelShow->setText(currentVideo.fileName);
@@ -749,6 +756,10 @@ void SoftProjector::updateEditActions()
     ui->actionEdit->setEnabled(ctab == 1 || ctab == 2 || ctab == 4);
     ui->actionCopy->setEnabled(ctab == 1 || ctab == 4);
     ui->actionDelete->setEnabled(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+
+    /////////////////////////////////////////
+    // Set Print Action Menu enabled
+    ui->actionPrint->setEnabled(ctab == 0 || ctab == 1);
 }
 
 void SoftProjector::on_actionNew_triggered()
@@ -1381,8 +1392,8 @@ void SoftProjector::saveProject()
     Song s;
     QList<BibleSearch> histories = bibleWidget->getHistoryList();
     BibleSearch h;
-    QList<Announcement> announcements = announceWidget->getAnnouncements();
-    Announcement a;
+//    QList<Announcement> announcements = announceWidget->getAnnouncements();
+//    Announcement a;
 
     QFile file(project_file_path);
     file.open(QIODevice::WriteOnly);
@@ -1448,17 +1459,17 @@ void SoftProjector::saveProject()
     }
     xml.writeEndElement(); // End Songs
 
-    //Write Announcements
-    xml.writeStartElement("Announcements");
-    for(int i(0); i<announcements.count();++i)
-    {
-        a = announcements.at(i);
-        xml.writeStartElement("announce");
-        xml.writeAttribute("aling_flag",QString::number(a.align_flags));
-        xml.writeCharacters(a.text);
-        xml.writeEndElement();
-    }
-    xml.writeEndElement(); // End Announcements
+//    //Write Announcements
+//    xml.writeStartElement("Announcements");
+//    for(int i(0); i<announcements.count();++i)
+//    {
+//        a = announcements.at(i);
+//        xml.writeStartElement("announce");
+//        xml.writeAttribute("aling_flag",QString::number(a.align_flags));
+//        xml.writeCharacters(a.text);
+//        xml.writeEndElement();
+//    }
+//    xml.writeEndElement(); // End Announcements
 
     xml.writeEndElement(); // softProjector Project
     xml.writeEndDocument();
@@ -1539,30 +1550,30 @@ void SoftProjector::clearProject()
     QList<BibleSearch> histories;
     QList<Song> songs;
 
-    announceWidget->loadFromFile(announcements);
+//    announceWidget->loadFromFile(announcements);
     bibleWidget->loadHistoriesFromFile(histories);
     songWidget->loadPlaylistFromFile(songs);
 }
 
 void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
 {
-    QList<Announcement> announcements;
-    Announcement a;
-    QXmlStreamAttributes atrs;
-    while(xml->tokenString() != "EndElement")
-    {
-        xml->readNext();
-        if(xml->StartElement && xml->name() == "announce")
-        {
-            atrs = xml->attributes();
-            QString f = atrs.value("aling_flag").toString();
-            a.align_flags = f.toInt();
-            a.text = xml->readElementText();
-            announcements.append(a);
-            xml->readNext();
-        }
-    }
-    announceWidget->loadFromFile(announcements);
+//    QList<Announcement> announcements;
+//    Announcement a;
+//    QXmlStreamAttributes atrs;
+//    while(xml->tokenString() != "EndElement")
+//    {
+//        xml->readNext();
+//        if(xml->StartElement && xml->name() == "announce")
+//        {
+//            atrs = xml->attributes();
+//            QString f = atrs.value("aling_flag").toString();
+//            a.align_flags = f.toInt();
+//            a.text = xml->readElementText();
+//            announcements.append(a);
+//            xml->readNext();
+//        }
+//    }
+//    announceWidget->loadFromFile(announcements);
 }
 
 void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
@@ -1806,8 +1817,8 @@ void SoftProjector::on_actionPrint_triggered()
     }
     else if (ui->projectTab->currentIndex() == 4)
     {
-        p->setText(announceWidget->getAnnouncements());
-        p->exec();
+//        p->setText(announceWidget->getAnnouncements());
+//        p->exec();
     }
 
     delete p;
@@ -1815,11 +1826,11 @@ void SoftProjector::on_actionPrint_triggered()
 
 void SoftProjector::on_actionPrint_Project_triggered()
 {
-    PrintPreviewDialog* p;
-    p = new PrintPreviewDialog(this);
-    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
-    p->exec();
-    delete p;
+//    PrintPreviewDialog* p;
+//    p = new PrintPreviewDialog(this);
+//    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
+//    p->exec();
+//    delete p;
 }
 
 void SoftProjector::nextSlide()

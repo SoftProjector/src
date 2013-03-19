@@ -151,6 +151,7 @@ void PictureWidget::on_pushButtonClearImages_clicked()
     ui->listWidgetSlideShow->setCurrentRow(-1);
     ui->listWidgetSlides->clear();
     slides.clear();
+    ui->labelPreviewSlideShow->clear();
     ui->labelPreview->clear();
     ui->labelPreview->setText(tr("Picture Preview"));
     ui->labelPixInfo->setText(tr("Preview slide: "));
@@ -209,6 +210,7 @@ void PictureWidget::loadSlideShow(int ss_id)
     currentSlideShow.loadSlideShow(ss_id);
     slides.clear();
     ui->listWidgetSlides->clear();
+    ui->labelPreviewSlideShow->setText(tr("Slide Show: %1").arg(currentSlideShow.name));
     foreach(const SlideShowItem &sst, currentSlideShow.slides)
     {
         slides.append(sst);

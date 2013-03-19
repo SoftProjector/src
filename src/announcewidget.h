@@ -44,11 +44,6 @@ public slots:
     bool isAnnounceValid();
     Announcement getAnnouncement();
 
-    // TODO: Check and remove folosing functions
-    QList<Announcement> getAnnouncements();
-    void loadFromFile(QList<Announcement> anns);
-    void setAlingment(int v, int h);
-    QString getText();
 //    void drawToPainter(QPainter *painter, int width, int height);
 
 protected:
