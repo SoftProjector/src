@@ -553,71 +553,10 @@ Results</string>
        <property name="sizeConstraint">
         <enum>QLayout::SetMinimumSize</enum>
        </property>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="add_to_history_pushButton">
-         <property name="toolTip">
-          <string>Add currently selected verse into history list, automatically will be added when &quot;Go Live&quot; button is pressed</string>
-         </property>
-         <property name="text">
-          <string>Add (F2)</string>
-         </property>
-         <property name="icon">
-          <iconset resource="softprojector.qrc">
-           <normaloff>:/icons/icons/add.png</normaloff>:/icons/icons/add.png</iconset>
-         </property>
-         <property name="shortcut">
-          <string>F2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" rowspan="4">
+       <item row="0" column="0" rowspan="2">
         <widget class="QListWidget" name="history_listWidget">
          <property name="toolTip">
           <string>This list contains verses that were sent to be shown</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="remove_from_history_pushButton">
-         <property name="toolTip">
-          <string>Remove current selected verse in the history list</string>
-         </property>
-         <property name="text">
-          <string>Remove (F3)</string>
-         </property>
-         <property name="icon">
-          <iconset resource="softprojector.qrc">
-           <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
-         </property>
-         <property name="shortcut">
-          <string>F3</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="clear_history_pushButton">
-         <property name="toolTip">
-          <string>Clear all history items</string>
-         </property>
-         <property name="text">
-          <string>Clear</string>
-         </property>
-         <property name="icon">
-          <iconset resource="softprojector.qrc">
-           <normaloff>:/icons/icons/remove_all.png</normaloff>:/icons/icons/remove_all.png</iconset>
          </property>
         </widget>
        </item>

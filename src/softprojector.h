@@ -39,6 +39,7 @@
 #include "mediawidget.h"
 #include "videoinfo.h"
 #include "slideshoweditor.h"
+#include "schedule.h"
 
 class QActionGroup;
 
@@ -121,6 +122,9 @@ private:
     Phonon::AudioOutput *playerAudioOutput;
 //    Phonon::Path playerAudioOutputPath;
 
+    // Schelude list
+    QList<Schedule> schedule;
+
 private slots:
     void showDisplayScreen(bool show);
     //For saving and opening softProjector project files
@@ -191,7 +195,18 @@ private slots:
     void setButtonPlayIcon(bool isPlaying);
     void setTimeText(QString cTime);
 
+    void on_actionScheduleAdd_triggered();
+    void on_actionScheduleRemove_triggered();
+    void on_actionScheduleClear_triggered();
+    void addToShcedule(BibleHistory &b);
+    void addToShcedule(Song &s);
+    void addToShcedule(SlideShow &s);
+    void addToShcedule(VideoInfo &v);
+    void addToShcedule(Announcement &a);
 
+    void on_listWidgetSchedule_currentRowChanged(int currentRow);
+
+    void on_listWidgetSchedule_doubleClicked(const QModelIndex &index);
 
 protected:
     void closeEvent(QCloseEvent *event);

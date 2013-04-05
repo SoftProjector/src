@@ -68,6 +68,49 @@ QStringList Bible::getBooks()
     return book_list;
 }
 
+QString Bible::getBookName(int id)
+{
+    foreach (const BibleBook bk, books)
+    {
+        if(bk.bookId.toInt() == id)
+            return bk.book;
+    }
+}
+
+void Bible::getVerseRef(QString vId, QString &book, int &chapter, int &verse)
+{
+    if(vId.contains(","))
+        vId = vId.split(",").first();
+
+    foreach(const BibleVerse &bv, operatorBible)
+    {
+        if(bv.verseId == vId)
+        {
+            book = QString::number(bv.book);
+            chapter = bv.chapter;
+            verse = bv.verseNumber;
+        }
+    }
+
+    foreach (const BibleBook bk, books)
+    {
+        if(bk.bookId == book)
+            book = bk.book;
+    }
+}
+
+int Bible::getVerseNumberLast(QString vId)
+{
+    if(vId.contains(","))
+        vId = vId.split(",").last();
+
+    foreach(const BibleVerse &bv, operatorBible)
+    {
+        if(bv.verseId == vId)
+            return bv.verseNumber;
+    }
+}
+
 int Bible::getCurrentBookRow(QString book)
 {
     int chapters(0);

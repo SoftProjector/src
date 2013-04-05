@@ -461,11 +461,12 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
     int row = proxy_model->mapToSource(index).row();
     Song song = songs_model->getSong(row);
 
-    playlist_model->addSong(song);
-    emit sendPlaylistChanged(true);
-    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
+//    playlist_model->addSong(song);
+//    emit sendPlaylistChanged(true);
+//    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     //ui->playlist_view->setFocus();
     //focusInPlaylistTable = true;
+    emit addToSchedule(song);
     sendToPreview(song);
 }
 

@@ -23,7 +23,7 @@ QT += sql \
     webkit
 TARGET = softProjector
 TEMPLATE = app
-//CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
+CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
 
 RES_DIR = $${PWD}/unknownsys_bild
 win32: RES_DIR = $${PWD}/win32_bild
@@ -72,7 +72,8 @@ SOURCES += main.cpp \
     spfunctions.cpp \
     slideshoweditor.cpp \
     editannouncementdialog.cpp \
-    announcement.cpp
+    announcement.cpp \
+    schedule.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -107,7 +108,8 @@ HEADERS += softprojector.h \
     spfunctions.h \
     slideshoweditor.h \
     editannouncementdialog.h \
-    announcement.h
+    announcement.h \
+    schedule.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \

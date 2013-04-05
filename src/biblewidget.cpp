@@ -82,13 +82,13 @@ void BibleWidget::loadBibles(QString initialId)
     // make sure that program does not drop if no bible is present
     if(mySettings.operatorBible=="none")
     {
-        ui->add_to_history_pushButton->setEnabled(false);
+//        ui->add_to_history_pushButton->setEnabled(false);
         ui->btnLive->setEnabled(false);
     }
     else
     {
         ui->btnLive->setEnabled(true);
-        ui->add_to_history_pushButton->setEnabled(true);
+//        ui->add_to_history_pushButton->setEnabled(true);
     }
 
     // Check if primary bible is different that what has been loaded already
@@ -152,11 +152,11 @@ void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
     }
 }
 
-QString BibleWidget::getCurrentBook(void)
+QString BibleWidget::getCurrentBook()
 {
     return ui->listBook->currentItem()->text();
 }
-int BibleWidget::getCurrentChapter(void)
+int BibleWidget::getCurrentChapter()
 {
     return ui->listChapterNum->currentItem()->text().toInt();
 }
@@ -467,93 +467,53 @@ void BibleWidget::on_search_results_list_doubleClicked(QModelIndex index)
 
 void BibleWidget::addToHistory()
 {
-    BibleSearch b;
-    QString selected_ids;
-
-    b.book = ui->listBook->currentItem()->text();
-    b.chapter = ui->chapter_ef->text();
-    b.verse = ui->verse_ef->text();
-
-    int first_selected(-1),last_selected(-1);
-    for(int i(0);i<ui->chapter_preview_list->count();++i)
-    {
-        if(ui->chapter_preview_list->item(i)->isSelected())
-        {
-            if(first_selected == -1)
-                first_selected = i;
-            last_selected = i;
-            selected_ids += bible.previewIdList.at(i) + ",";
-        }
-    }
-    selected_ids.chop(1);
-
-    b.verse_text = ui->chapter_preview_list->item(first_selected)->text().trimmed();
-    b.verse_id = selected_ids;
-    b.first_v = first_selected;
-    b.last_v = last_selected;
-
-    if(first_selected==last_selected)
-        b.display_text = b.book + " " + b.chapter + ":" + b.verse_text;
-    else
-    {   // Create multi verse caption for display
-        int f(first_selected+1), l(last_selected+1),j(0);
-        QString v=b.verse_text,p=".";
-        while(v.at(j)!=p.at(0))
-            ++j;
-        v = v.remove(0,j);
-
-        b.display_text = b.book + " " + b.chapter + ":" + QString::number(f) + "-" + QString::number(l) + v + "...";
-    }
+    BibleHistory b = getCurrentVerse();
     history_items.append(b);
-    ui->history_listWidget->addItem(b.display_text);
-    emit historyListChanged(true);
-
+    ui->history_listWidget->addItem(b.captionLong);
+//    emit historyListChanged(true);
 }
 
-void BibleWidget::on_add_to_history_pushButton_clicked()
+void BibleWidget::addToHistory(BibleHistory &b)
 {
-    addToHistory();
+    history_items.append(b);
+    ui->history_listWidget->addItem(b.captionLong);
 }
 
-void BibleWidget::on_remove_from_history_pushButton_clicked()
-{
-    int current_row = ui->history_listWidget->currentRow();
-    if (current_row>=0)
-    {
-        ui->history_listWidget->takeItem(current_row);
-        history_items.takeAt(current_row);
-        emit historyListChanged(true);
-    }
-}
-
-void BibleWidget::on_clear_history_pushButton_clicked()
+void BibleWidget::clearHistory()
 {
     ui->history_listWidget->clear();
     history_items.clear();
-    emit historyListChanged(true);
 }
 
 void BibleWidget::on_history_listWidget_currentRowChanged(int currentRow)
 {
-    if (!(currentRow == -1))
+    if (currentRow >= 0)
     {
-        QStringList all_books = bible.getBooks();
+        BibleHistory bh = history_items.at(currentRow);
+        setSelectedHistory(bh);
+    }
+}
+
+void BibleWidget::setSelectedHistory(BibleHistory &b)
+{
+    QStringList all_books = bible.getBooks();
+    if(ui->listBook->count()!=all_books.count())
+    {
         ui->listBook->clear();
         ui->listBook->addItems(all_books);
-
-        int row = all_books.indexOf(history_items.at(currentRow).book);
-        ui->listBook->setCurrentRow(row);
-
-        ui->chapter_ef->setText(history_items.at(currentRow).chapter);
-        QItemSelection sel;
-        sel.select(ui->chapter_preview_list->model()->index(history_items.at(currentRow).first_v,0,QModelIndex()),
-                   ui->chapter_preview_list->model()->index(history_items.at(currentRow).last_v,0,QModelIndex()));
-        if(history_items.at(currentRow).first_v>=0)
-            ui->verse_ef->setText(QString::number(history_items.at(currentRow).first_v+1));
-        else
-            ui->verse_ef->setText(history_items.at(currentRow).verse);
-        ui->chapter_preview_list->selectionModel()->select(sel,QItemSelectionModel::Select);
     }
+    QString bk;
+    int ch,vr,vrl;
+    bible.getVerseRef(b.verseIds,bk,ch,vr);
+    vrl = bible.getVerseNumberLast(b.verseIds);
+
+    ui->listBook->setCurrentRow(all_books.indexOf(bk));
+    ui->chapter_ef->setText(QString::number(ch));
+    QItemSelection sel;
+    sel.select(ui->chapter_preview_list->model()->index(vr-1,0,QModelIndex()),
+               ui->chapter_preview_list->model()->index(vrl-1,0,QModelIndex()));
+    ui->verse_ef->setText(QString::number(vr));
+    ui->chapter_preview_list->selectionModel()->select(sel,QItemSelectionModel::Select);
 }
 
 void BibleWidget::on_history_listWidget_doubleClicked(QModelIndex index)
@@ -577,127 +537,56 @@ QByteArray BibleWidget::getShownSplitterState()
 
 void BibleWidget::setHiddenSplitterState(QByteArray& state)
 {
-//    hidden_splitter_state.clear();
-//    hidden_splitter_state.insert(0,state);
-//    hidden_splitter_state = hidden_splitter_state.fromHex(hidden_splitter_state);
     hidden_splitter_state = state;
     ui->results_splitter->restoreState(hidden_splitter_state);
 }
 
 void BibleWidget::setShownSplitterState(QByteArray& state)
 {
-//    shown_splitter_state.clear();
-//    shown_splitter_state.insert(0,state);
-//    shown_splitter_state = shown_splitter_state.fromHex(shown_splitter_state);
     shown_splitter_state = state;
 }
 
-QList<BibleSearch> BibleWidget::getHistoryList()
+BibleHistory BibleWidget::getCurrentVerse()
 {
-    return history_items;
-}
+    BibleHistory b;
+    QString selected_ids;
 
-void BibleWidget::loadHistoriesFromFile(QList<BibleSearch> histories)
-{
-    // ******* SoftProjector Project File version 1.5 *****************
+    QString book = ui->listBook->currentItem()->text();
+    QString chapter = ui->chapter_ef->text();
+//    QString verse = ui->verse_ef->text();
 
-    history_items.clear();
-    history_items = histories;
-    QStringList disp_list;
-    ui->history_listWidget->clear();
-    int count = histories.count();
-    if(count>0)
+    int first_selected(-1),last_selected(-1);
+    for(int i(0);i<ui->chapter_preview_list->count();++i)
     {
-        for(int i(0);i<count;++i)
-            disp_list.append(histories.at(i).display_text);
-        ui->history_listWidget->addItems(disp_list);
-    }
-}
-
-void BibleWidget::loadHistoriesFromFile1_0(QStringList histories)
-{
-    // *************** 1.05 and before code ***************************
-    // ******* SoftProjector Project File version 1.0 *****************
-    // Reloads history list with saves verses
-    // It will reload in the same order as saves
-    // Will reload with current primary bible,
-    // in case primary Bible has been changed
-    BibleSearch h;
-    QSqlQuery sq,sq1;
-    QString sql_str, cur_item;
-    QStringList history_list;
-    QList<BibleSearch> h_list;
-    QMap<QString, int> map;
-    QList<int> order_list;
-
-    history_items.clear();
-    ui->history_listWidget->clear();
-
-    // Prepare look verse id up with double verse support
-    for(int i(0); i<histories.count(); ++i)
-    {
-        cur_item = histories.at(i);
-        if(cur_item.contains(","))
+        if(ui->chapter_preview_list->item(i)->isSelected())
         {
-            QStringList l = cur_item.split(",");
-            cur_item = l.at(0);
-            cur_item = cur_item.trimmed();
+            if(first_selected == -1)
+                first_selected = i;
+            last_selected = i;
+            selected_ids += bible.previewIdList.at(i) + ",";
         }
-        map.insert(cur_item,i);
-        sql_str.append("verse_id = '" + cur_item + "' OR ");
     }
-    sql_str.chop(4);
+    selected_ids.chop(1);
 
-    sq.exec("SELECT verse_id, book, chapter, verse, verse_text FROM BibleVerse WHERE bible_id = " + mySettings.operatorBible +
-            " AND(" + sql_str + ")");
+    QString verse_text = ui->chapter_preview_list->item(first_selected)->text().trimmed();
+    b.verseIds = selected_ids;
 
-    // Retrieve results
-    while(sq.next())
+    if(first_selected==last_selected)
     {
-        h.verse_id = sq.value(0).toString().trimmed();
-        h.book = sq.value(1).toString().trimmed();
-        h.chapter = sq.value(2).toString().trimmed();
-        h.verse = sq.value(3).toString().trimmed();
-        h.verse_text = h.verse + ". " + sq.value(4).toString().trimmed();
-
-        // Get Book name instead of number
-        sq1.exec("SELECT book_name FROM BibleBooks WHERE id = "
-                 + h.book + " AND bible_id = " + mySettings.operatorBible);
-        sq1.first();
-        h.book = sq1.value(0).toString().trimmed();
-        h_list.append(h);
-    }
-
-    // Order items the way they were saved
-    order_list = map.values();
-    QMap<int,int> map2; // A nessasery step to proper ordering
-    for(int i(0); i<order_list.count(); ++i)
-        map2.insert(order_list.at(i),i);
-
-    order_list = map2.values();
-
-    if(order_list.count()==h_list.count())
-    {   // Check if opened items and retrieved items from primary bible match in count
-        for(int i(0); i<order_list.count(); ++i)
-        {
-            h = h_list.at(order_list.at(i));
-            // Prepare history line to show
-            h.display_text = h.book + " " + h.chapter + ":" + h.verse_text;
-            history_list.append(h.display_text);
-            history_items.append(h);
-        }
+        b.caption = book + " " + chapter + ":" + QString::number(first_selected+1);
+        b.captionLong = book + " " + chapter + ":" + verse_text;
     }
     else
-    {   // let user know that opened history items do not match retrieved amound trom primary bible
-        QMessageBox mb;
-        mb.setWindowTitle(tr("Error opening Bible histories"));
-        mb.setInformativeText(tr("Cound not find any or all Bible verses from file withing current primary Bible."
-                                 "\nTry changing primary Bible and reopen project file."));
-        mb.setIcon(QMessageBox::Information);
-        mb.exec();
-        return;
+    {   // Create multi verse caption for display
+        int f(first_selected+1), l(last_selected+1),j(0);
+        QString v=verse_text,p=".";
+        while(v.at(j)!=p.at(0))
+            ++j;
+        v = v.remove(0,j);
+
+        b.caption = book + " " + chapter + ":" + QString::number(f) + "-" + QString::number(l);
+        b.captionLong = book + " " + chapter + ":" + QString::number(f) + "-" + QString::number(l) + v + "...";
     }
 
-    // show items from file
-    ui->history_listWidget->addItems(history_list);
+    return b;
 }

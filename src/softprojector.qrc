@@ -56,6 +56,14 @@
         <file>icons/video.png</file>
         <file>icons/video_add.png</file>
         <file>icons/video_remove.png</file>
+        <file>icons/scheduleAdd.png</file>
+        <file>icons/scheduleClear.png</file>
+        <file>icons/scheduleRemove.png</file>
+        <file>icons/scheduleUpM.png</file>
+        <file>icons/bibleHistoryDelete.png</file>
+        <file>icons/scheduleDown.png</file>
+        <file>icons/scheduleDownM.png</file>
+        <file>icons/scheduleUp.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

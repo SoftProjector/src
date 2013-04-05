@@ -36,6 +36,20 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QListWidget" name="listWidgetSchedule">
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QTabWidget" name="projectTab">
        <property name="minimumSize">
         <size>
@@ -246,6 +260,15 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <addaction name="actionScheduleAdd"/>
+    <addaction name="actionScheduleRemove"/>
+    <addaction name="actionScheduleClear"/>
+    <addaction name="separator"/>
+    <addaction name="actionMoveScheduleTop"/>
+    <addaction name="actionMoveScheduleUp"/>
+    <addaction name="actionMoveScheduleDown"/>
+    <addaction name="actionMoveScheduleBottom"/>
+    <addaction name="separator"/>
     <addaction name="actionNew"/>
     <addaction name="actionEdit"/>
     <addaction name="actionCopy"/>
@@ -467,6 +490,84 @@
    </property>
    <property name="toolTip">
     <string>Donate to softProjector development team</string>
+   </property>
+  </action>
+  <action name="actionScheduleAdd">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleAdd.png</normaloff>:/icons/icons/scheduleAdd.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add to Schedule</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionScheduleRemove">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleRemove.png</normaloff>:/icons/icons/scheduleRemove.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove from Schedule</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="actionScheduleClear">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleClear.png</normaloff>:/icons/icons/scheduleClear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Schedule</string>
+   </property>
+  </action>
+  <action name="actionMoveScheduleTop">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleUpM.png</normaloff>:/icons/icons/scheduleUpM.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Schedule Item To Top</string>
+   </property>
+   <property name="toolTip">
+    <string>Move Schedule item to top of the list</string>
+   </property>
+  </action>
+  <action name="actionMoveScheduleUp">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleUp.png</normaloff>:/icons/icons/scheduleUp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Schedule Item Up</string>
+   </property>
+   <property name="toolTip">
+    <string>Move Schedule Item Up</string>
+   </property>
+  </action>
+  <action name="actionMoveScheduleDown">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleDown.png</normaloff>:/icons/icons/scheduleDown.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mode Schedule Item Down</string>
+   </property>
+  </action>
+  <action name="actionMoveScheduleBottom">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/scheduleDownM.png</normaloff>:/icons/icons/scheduleDownM.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Schedule Item To Bottom</string>
+   </property>
+   <property name="toolTip">
+    <string>Move Schedule item to bottom of the list</string>
    </property>
   </action>
  </widget>

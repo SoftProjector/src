@@ -61,6 +61,14 @@ public:
     int last_v;
 };
 
+class BibleHistory
+{
+public:
+    QString verseIds;
+    QString caption;
+    QString captionLong;
+};
+
 class BibleBook
 {
     // For Holding Bible book infromation
@@ -83,6 +91,9 @@ public slots:
     QList<BibleSearch> searchBible(bool allWords, QRegExp searchExp, int book);
     QList<BibleSearch> searchBible(bool allWords, QRegExp searchExp, int book, int chapter);
     QStringList getBooks();
+    QString getBookName(int id);
+    void getVerseRef(QString vId, QString &book, int &chapter, int &verse);
+    int getVerseNumberLast(QString vId);
     QStringList getChapter(int book, int chapter);
     void getVerseAndCaption(QString &verse, QString &caption, QString verId, QString &bibId, bool useAbbr);
     int getCurrentBookRow(QString book);

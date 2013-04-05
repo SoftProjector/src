@@ -61,6 +61,7 @@ signals:
     // To be used ONLY by SongWidget::sendToProjector():
     void sendPlaylistChanged(bool changed);
     void sendSong(Song song, int currentItem);
+    void addToSchedule(Song &song);
 
 private slots:
     void on_comboBoxCategory_currentIndexChanged(int index);

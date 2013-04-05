@@ -38,19 +38,16 @@ public:
     explicit BibleWidget(QWidget *parent = 0);
     virtual ~BibleWidget();
     Bible bible;
-    QString getCurrentBook(void);
+    QString getCurrentBook();
 
     // For optimization:
     QString currentBook;
     int currentChapter;
     QStringList currentChapterList;
 
-    int getCurrentChapter(void);
+    int getCurrentChapter();
 
 public slots:
-    void loadHistoriesFromFile(QList<BibleSearch> history_ids);
-    void loadHistoriesFromFile1_0(QStringList histories);
-    QList<BibleSearch> getHistoryList();
     QByteArray getHiddenSplitterState();
     QByteArray getShownSplitterState();
     void setHiddenSplitterState(QByteArray& state);
@@ -58,6 +55,10 @@ public slots:
     void loadBibles(QString initialId);
     void sendToProjector(bool add_to_history);
     void setSettings(BibleSettings& sets);
+    BibleHistory getCurrentVerse();
+    void addToHistory(BibleHistory &b);
+    void clearHistory();
+    void setSelectedHistory(BibleHistory &b);
 
     //bool eventFilter(QObject *object, QEvent *event);
 
@@ -71,11 +72,9 @@ signals:
     void historyListChanged(bool changed);
 
 private slots:
-    void on_clear_history_pushButton_clicked();
     void on_history_listWidget_doubleClicked(QModelIndex index);
     void on_history_listWidget_currentRowChanged(int currentRow);
-    void on_remove_from_history_pushButton_clicked();
-    void on_add_to_history_pushButton_clicked();
+
     void on_search_results_list_doubleClicked(QModelIndex index);
     void on_search_results_list_currentRowChanged(int currentRow);
     void on_hide_result_button_clicked();
@@ -90,6 +89,7 @@ private slots:
     void on_listBook_currentTextChanged(QString currentText);
 
     void addToHistory();
+//    BibleSearch prepareAddToHistory();
 
 
 private:
@@ -97,7 +97,7 @@ private:
     Ui::BibleWidget *ui;
     HighlighterDelegate *highlight;
     QList<BibleSearch> search_results;
-    QList<BibleSearch> history_items;
+    QList<BibleHistory> history_items;
     QIntValidator *chapter_validator, *verse_validator;
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;

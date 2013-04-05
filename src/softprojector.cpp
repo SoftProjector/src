@@ -111,6 +111,7 @@ SoftProjector::SoftProjector(QWidget *parent)
             this,SLOT(updateSetting(GeneralSettings&,Theme&)));
     connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
     connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
+    connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
 
     ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
@@ -118,12 +119,21 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionPrint);
     ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionSettings);
+    ui->toolBar->addAction(ui->actionMoveScheduleTop);
+    ui->toolBar->addAction(ui->actionMoveScheduleUp);
+    ui->toolBar->addAction(ui->actionMoveScheduleDown);
+    ui->toolBar->addAction(ui->actionMoveScheduleBottom);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionScheduleAdd);
+    ui->toolBar->addAction(ui->actionScheduleRemove);
+    ui->toolBar->addAction(ui->actionScheduleClear);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionNew);
     ui->toolBar->addAction(ui->actionEdit);
     ui->toolBar->addAction(ui->actionCopy);
     ui->toolBar->addAction(ui->actionDelete);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionSettings);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionSong_Counter);
     ui->toolBar->addSeparator();
@@ -161,7 +171,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->widgetPlayBackControls->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
-    version_string = "2.Dev.Build: 5"; // to be used between official releases
+    version_string = "2.Dev.Build: 6"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
     // Temporarily disable project menu buttons
@@ -689,7 +699,18 @@ void SoftProjector::updateEditActions()
 {
     int ctab = ui->projectTab->currentIndex();
     // ctab - 0=bible, 1=songs, 2=pix, 3=media, 4=annouce
-    if(ctab == 1) // Song Tab
+    if(ctab == 0)
+    {
+        ui->actionNew->setText("");
+        ui->actionEdit->setText("");
+        ui->actionCopy->setText("");
+        ui->actionDelete->setText("&Clear Bible History List");
+        ui->actionNew->setIcon(QIcon());
+        ui->actionEdit->setIcon(QIcon());
+        ui->actionCopy->setIcon(QIcon());
+        ui->actionDelete->setIcon(QIcon(":/icons/icons/bibleHistoryDelete.png"));
+    }
+    else if(ctab == 1) // Song Tab
     {
         ui->actionNew->setText(tr("&New Song..."));
         ui->actionEdit->setText(tr("&Edit Song..."));
@@ -749,13 +770,13 @@ void SoftProjector::updateEditActions()
     ui->actionNew->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
     ui->actionEdit->setVisible(ctab == 1 || ctab == 2 || ctab == 4);
     ui->actionCopy->setVisible(ctab == 1 || ctab == 4);
-    ui->actionDelete->setVisible(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+    ui->actionDelete->setVisible(ctab == 0 || ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
 
     // Set Edit Action Menu enabled
     ui->actionNew->setEnabled(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
     ui->actionEdit->setEnabled(ctab == 1 || ctab == 2 || ctab == 4);
     ui->actionCopy->setEnabled(ctab == 1 || ctab == 4);
-    ui->actionDelete->setEnabled(ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
+    ui->actionDelete->setEnabled(ctab == 0 || ctab == 1 || ctab == 2 || ctab == 3 || ctab == 4);
 
     /////////////////////////////////////////
     // Set Print Action Menu enabled
@@ -798,7 +819,9 @@ void SoftProjector::on_actionCopy_triggered()
 void SoftProjector::on_actionDelete_triggered()
 {
     int ctab = ui->projectTab->currentIndex();
-    if(ctab == 1)
+    if(ctab == 0)
+        bibleWidget->clearHistory();
+    else if(ctab == 1)
         deleteSong();
     else if(ctab == 2)
         deleteSlideShow();
@@ -1390,7 +1413,7 @@ void SoftProjector::saveProject()
 {
     QList<Song> songs = songWidget->getPlaylistSongs();
     Song s;
-    QList<BibleSearch> histories = bibleWidget->getHistoryList();
+    QList<BibleSearch> histories /*= bibleWidget->getHistoryList()*/;
     BibleSearch h;
 //    QList<Announcement> announcements = announceWidget->getAnnouncements();
 //    Announcement a;
@@ -1551,7 +1574,7 @@ void SoftProjector::clearProject()
     QList<Song> songs;
 
 //    announceWidget->loadFromFile(announcements);
-    bibleWidget->loadHistoriesFromFile(histories);
+//    bibleWidget->loadHistoriesFromFile(histories);
     songWidget->loadPlaylistFromFile(songs);
 }
 
@@ -1631,7 +1654,7 @@ void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
             xml->readNext();
         }
     }
-    bibleWidget->loadHistoriesFromFile(histories);
+//    bibleWidget->loadHistoriesFromFile(histories);
 }
 
 void SoftProjector::readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml)
@@ -1646,7 +1669,7 @@ void SoftProjector::readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml)
             xml->readNext();
         }
     }
-    bibleWidget->loadHistoriesFromFile1_0(histories);
+//    bibleWidget->loadHistoriesFromFile1_0(histories);
 }
 
 void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
@@ -1908,4 +1931,134 @@ void SoftProjector::setButtonPlayIcon(bool isPlaying)
 void SoftProjector::setTimeText(QString cTime)
 {
     ui->labelTime->setText(cTime);
+}
+
+void SoftProjector::on_actionScheduleAdd_triggered()
+{
+    int ctab = ui->projectTab->currentIndex();
+    if(ctab == 0) // Bible
+    {
+        BibleHistory b = bibleWidget->getCurrentVerse();
+        addToShcedule(b);
+    }
+    else if(ctab == 1) // Song
+    {
+        Song s = songWidget->getSongToEdit();
+        addToShcedule(s);
+    }
+    else if(ctab == 2) // Slide Show
+    {
+        SlideShow ssi;
+        addToShcedule(ssi);
+    }
+    else if(ctab == 3) // Multimedia
+    {
+        VideoInfo v;
+        addToShcedule(v);
+    }
+    else if(ctab == 4)
+    {
+        Announcement a;
+        addToShcedule(a);
+    }
+}
+
+void SoftProjector::on_actionScheduleRemove_triggered()
+{
+    int cRow = ui->listWidgetSchedule->currentRow();
+    if(cRow >=0)
+        ui->listWidgetSchedule->takeItem(cRow);
+}
+
+void SoftProjector::on_actionScheduleClear_triggered()
+{
+    ui->listWidgetSchedule->clear();
+}
+
+void SoftProjector::addToShcedule(BibleHistory &b)
+{
+    Schedule d(b);
+    schedule.append(d);
+
+    QListWidgetItem *itm = new QListWidgetItem;
+    itm->setIcon(QIcon(":/icons/icons/book.png"));
+    itm->setText(b.caption);
+    ui->listWidgetSchedule->addItem(itm);
+}
+
+void SoftProjector::addToShcedule(Song &s)
+{
+    Schedule d(s);
+    schedule.append(d);
+
+    QListWidgetItem *itm = new QListWidgetItem;
+    itm->setIcon(QIcon(":/icons/icons/song_tab.png"));
+    itm->setText(QString("%1 - %2").arg(s.number).arg(s.title));
+    ui->listWidgetSchedule->addItem(itm);
+}
+
+void SoftProjector::addToShcedule(SlideShow &s)
+{
+    Schedule d(s);
+    schedule.append(d);
+
+    QListWidgetItem *itm = new QListWidgetItem;
+    itm->setIcon(QIcon(":/icons/icons/photo.png"));
+    itm->setText("Slide Show");
+    ui->listWidgetSchedule->addItem(itm);
+}
+
+void SoftProjector::addToShcedule(VideoInfo &v)
+{
+    Schedule d(v);
+    schedule.append(d);
+
+    QListWidgetItem *itm = new QListWidgetItem;
+    itm->setIcon(QIcon(":/icons/icons/video.png"));
+    itm->setText("Multimedia");
+    ui->listWidgetSchedule->addItem(itm);
+}
+
+void SoftProjector::addToShcedule(Announcement &a)
+{
+    Schedule d(a);
+    schedule.append(d);
+
+    QListWidgetItem *itm = new QListWidgetItem;
+    itm->setIcon(QIcon(":/icons/icons/announce.png"));
+    itm->setText("Annoncement");
+    ui->listWidgetSchedule->addItem(itm);
+}
+
+void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
+{
+    if(currentRow>=0)
+    {
+        Schedule s = schedule.at(currentRow);
+        if(s.stype == "bible")
+        {
+            ui->projectTab->setCurrentIndex(0);
+            bibleWidget->setSelectedHistory(s.bible);
+        }
+        else if(s.stype == "song")
+            ui->projectTab->setCurrentIndex(1);
+        else if(s.stype == "slideshow")
+            ui->projectTab->setCurrentIndex(2);
+        else if(s.stype == "media")
+            ui->projectTab->setCurrentIndex(3);
+        else if(s.stype == "announce")
+            ui->projectTab->setCurrentIndex(4);
+    }
+}
+
+void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
+{
+    Schedule s = schedule.at(index.row());
+    if(s.stype == "bible")
+    {
+        bibleWidget->setSelectedHistory(s.bible);
+        bibleWidget->sendToProjector(true);
+    }
+    else if(s.stype == "song")
+        setSongList(s.song,0);
 }
