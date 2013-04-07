@@ -94,7 +94,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(sendSong(Song, int)), this, SLOT(setSongList(Song, int)));
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
-    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
+//    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
 //    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
@@ -1411,7 +1411,7 @@ void SoftProjector::on_actionClose_Project_triggered()
 
 void SoftProjector::saveProject()
 {
-    QList<Song> songs = songWidget->getPlaylistSongs();
+    QList<Song> songs /*= songWidget->getPlaylistSongs()*/;
     Song s;
     QList<BibleSearch> histories /*= bibleWidget->getHistoryList()*/;
     BibleSearch h;
@@ -1575,7 +1575,7 @@ void SoftProjector::clearProject()
 
 //    announceWidget->loadFromFile(announcements);
 //    bibleWidget->loadHistoriesFromFile(histories);
-    songWidget->loadPlaylistFromFile(songs);
+//    songWidget->loadPlaylistFromFile(songs);
 }
 
 void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
@@ -1769,7 +1769,7 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
             xml->readNext();
         }
     }
-    songWidget->loadPlaylistFromFile(songs);
+//    songWidget->loadPlaylistFromFile(songs);
 }
 
 void SoftProjector::updateWindowTest()
@@ -1993,7 +1993,7 @@ void SoftProjector::addToShcedule(Song &s)
 
     QListWidgetItem *itm = new QListWidgetItem;
     itm->setIcon(QIcon(":/icons/icons/song_tab.png"));
-    itm->setText(QString("%1 - %2").arg(s.number).arg(s.title));
+    itm->setText(QString("%1 %2").arg(s.number).arg(s.title));
     ui->listWidgetSchedule->addItem(itm);
 }
 
@@ -2030,8 +2030,53 @@ void SoftProjector::addToShcedule(Announcement &a)
     ui->listWidgetSchedule->addItem(itm);
 }
 
-void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
+//void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
+//{
+//    qDebug()<<"row changed:"<<currentRow<<currentRow<<ui->listWidgetSchedule->item(currentRow)->isSelected();
+//    if(currentRow>=0 && ui->listWidgetSchedule->isItemSelected(ui->listWidgetSchedule->item(currentRow)))
+//        qDebug()<<"row is also selected"<<currentRow<<ui->listWidgetSchedule->item(currentRow)->isSelected();
+//    if(ui->listWidgetSchedule->selectionChanged())
+////    if(currentRow>=0)
+////    {
+////        Schedule s = schedule.at(currentRow);
+////        if(s.stype == "bible")
+////        {
+////            ui->projectTab->setCurrentIndex(0);
+////            bibleWidget->setSelectedHistory(s.bible);
+////        }
+////        else if(s.stype == "song")
+////            ui->projectTab->setCurrentIndex(1);
+////        else if(s.stype == "slideshow")
+////            ui->projectTab->setCurrentIndex(2);
+////        else if(s.stype == "media")
+////            ui->projectTab->setCurrentIndex(3);
+////        else if(s.stype == "announce")
+////            ui->projectTab->setCurrentIndex(4);
+////    }
+//}
+
+void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
 {
+    Schedule s = schedule.at(index.row());
+    if(s.stype == "bible")
+    {
+        ui->projectTab->setCurrentIndex(0);
+        bibleWidget->setSelectedHistory(s.bible);
+        bibleWidget->sendToProjector(true);
+    }
+    else if(s.stype == "song")
+    {
+        ui->projectTab->setCurrentIndex(1);
+        songWidget->sendToPreviewFromSchedule(s.song);
+        setSongList(s.song,0);
+        songWidget->counter.addSongCount(s.song);
+//        songWidget->sendToProjector(s.song,0);
+    }
+}
+
+void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
+{
+    int currentRow = ui->listWidgetSchedule->currentRow();
     if(currentRow>=0)
     {
         Schedule s = schedule.at(currentRow);
@@ -2041,7 +2086,10 @@ void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
             bibleWidget->setSelectedHistory(s.bible);
         }
         else if(s.stype == "song")
+        {
             ui->projectTab->setCurrentIndex(1);
+            songWidget->sendToPreviewFromSchedule(s.song);
+        }
         else if(s.stype == "slideshow")
             ui->projectTab->setCurrentIndex(2);
         else if(s.stype == "media")
@@ -2049,16 +2097,4 @@ void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
         else if(s.stype == "announce")
             ui->projectTab->setCurrentIndex(4);
     }
-}
-
-void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
-{
-    Schedule s = schedule.at(index.row());
-    if(s.stype == "bible")
-    {
-        bibleWidget->setSelectedHistory(s.bible);
-        bibleWidget->sendToProjector(true);
-    }
-    else if(s.stype == "song")
-        setSongList(s.song,0);
 }

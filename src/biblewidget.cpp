@@ -512,6 +512,7 @@ void BibleWidget::setSelectedHistory(BibleHistory &b)
     QItemSelection sel;
     sel.select(ui->chapter_preview_list->model()->index(vr-1,0,QModelIndex()),
                ui->chapter_preview_list->model()->index(vrl-1,0,QModelIndex()));
+    ui->chapter_preview_list->clearSelection();
     ui->verse_ef->setText(QString::number(vr));
     ui->chapter_preview_list->selectionModel()->select(sel,QItemSelectionModel::Select);
 }

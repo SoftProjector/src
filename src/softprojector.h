@@ -204,9 +204,11 @@ private slots:
     void addToShcedule(VideoInfo &v);
     void addToShcedule(Announcement &a);
 
-    void on_listWidgetSchedule_currentRowChanged(int currentRow);
+//    void on_listWidgetSchedule_currentRowChanged(int currentRow);
 
     void on_listWidgetSchedule_doubleClicked(const QModelIndex &index);
+
+    void on_listWidgetSchedule_itemSelectionChanged();
 
 protected:
     void closeEvent(QCloseEvent *event);

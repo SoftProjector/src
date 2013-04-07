@@ -35,14 +35,14 @@ SongWidget::SongWidget(QWidget *parent) :
     connect(ui->songs_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
         this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
-    playlist_model = new SongsModel;
-    ui->playlist_view->setModel(playlist_model);
-    connect(ui->playlist_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
-        this, SLOT(playlistViewRowChanged(const QModelIndex&, const QModelIndex&)));
+//    playlist_model = new SongsModel;
+//    ui->playlist_view->setModel(playlist_model);
+//    connect(ui->playlist_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
+//        this, SLOT(playlistViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
-    ui->playlist_view->resizeRowsToContents();
+//    ui->playlist_view->resizeRowsToContents();
     // IS this needed?
 
     // Modify the column widths:
@@ -50,10 +50,10 @@ SongWidget::SongWidget(QWidget *parent) :
     ui->songs_view->setColumnWidth(1, 60);//Song Number
     ui->songs_view->setColumnWidth(2, 150);//Song Title
     ui->songs_view->setColumnWidth(3, 70);//Songbook
-    ui->playlist_view->setColumnWidth(0, 0);//Category
-    ui->playlist_view->setColumnWidth(1, 60);//Song Number
-    ui->playlist_view->setColumnWidth(2, 150);//Song Title
-    ui->playlist_view->setColumnWidth(3, 70);//Songbook
+//    ui->playlist_view->setColumnWidth(0, 0);//Category
+//    ui->playlist_view->setColumnWidth(1, 60);//Song Number
+//    ui->playlist_view->setColumnWidth(2, 150);//Song Title
+//    ui->playlist_view->setColumnWidth(3, 70);//Songbook
 
     proxy_model->setSongbookFilter("ALL");
     proxy_model->setCategoryFilter(-1);
@@ -83,7 +83,8 @@ void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelInd
         int row = proxy_model->mapToSource(current).row();
         Song song = songs_model->getSong(row);
         sendToPreview(song);
-        focusInPlaylistTable = false;
+        isSongFromSchelude = false;
+//        focusInPlaylistTable = false;
     }
     updateButtonStates();
 }
@@ -91,54 +92,54 @@ void SongWidget::songsViewRowChanged(const QModelIndex &current, const QModelInd
 void SongWidget::updateButtonStates()
 {
     bool enable_live;
-    bool enable_add;
-    bool enable_remove;
-    bool enable_up;
-    bool enable_down;
+//    bool enable_add;
+//    bool enable_remove;
+//    bool enable_up;
+//    bool enable_down;
 
-    if(focusInPlaylistTable)
-    {
-        enable_live = ui->playlist_view->currentIndex().isValid();
-        enable_add = false;
-        enable_remove = ( playlist_model->rowCount() > 0 );
-        int selrow = ui->playlist_view->currentIndex().row();
-        enable_up = (playlist_model->rowCount() > 1) && (selrow != 0);
-        enable_down = (playlist_model->rowCount() > 1) && (selrow+1 != playlist_model->rowCount());
-    }
-    else
-    {
+//    if(focusInPlaylistTable)
+//    {
+//        enable_live = ui->playlist_view->currentIndex().isValid();
+//        enable_add = false;
+//        enable_remove = ( playlist_model->rowCount() > 0 );
+//        int selrow = ui->playlist_view->currentIndex().row();
+//        enable_up = (playlist_model->rowCount() > 1) && (selrow != 0);
+//        enable_down = (playlist_model->rowCount() > 1) && (selrow+1 != playlist_model->rowCount());
+//    }
+//    else
+//    {
         // focus in songs table
         if( proxy_model->rowCount() == 0 )
             enable_live = false;
         else
             enable_live = ui->songs_view->currentIndex().isValid();
-        enable_add = enable_live;
-        enable_remove = false;
-        enable_up = false;
-        enable_down = false;
-    }
+//        enable_add = enable_live;
+//        enable_remove = false;
+//        enable_up = false;
+//        enable_down = false;
+//    }
 
     ui->btnLive->setEnabled(enable_live);
-    ui->btnAddToPlaylist->setEnabled(enable_add);
-    ui->btnRemoveFromPlaylist->setEnabled(enable_remove);
-    ui->btnUpInPlaylist->setEnabled(enable_up);
-    ui->btnDownInPlaylist->setEnabled(enable_down);
+//    ui->btnAddToPlaylist->setEnabled(enable_add);
+//    ui->btnRemoveFromPlaylist->setEnabled(enable_remove);
+//    ui->btnUpInPlaylist->setEnabled(enable_up);
+//    ui->btnDownInPlaylist->setEnabled(enable_down);
 }
 
-void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
-{
-    if( current.isValid() )
-    {
-        // Called when a new song is selected in the playlist table
-        Song song = playlist_model->getSong(current.row());
-        sendToPreview(song);
-    }
-    else
-    {
-        //FIXME clear the preview? Or not...
-    }
-    updateButtonStates();
-}
+//void SongWidget::playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous)
+//{
+//    if( current.isValid() )
+//    {
+//        // Called when a new song is selected in the playlist table
+//        Song song = playlist_model->getSong(current.row());
+//        sendToPreview(song);
+//    }
+//    else
+//    {
+//        //FIXME clear the preview? Or not...
+//    }
+//    updateButtonStates();
+//}
 
 void SongWidget::changeEvent(QEvent *e)
 {
@@ -186,19 +187,19 @@ Song SongWidget::currentSong()
     // Returns the selected song
     QModelIndex current_index;
     int current_row;
-    if (focusInPlaylistTable)
-        current_row = ui->playlist_view->currentIndex().row();
-    else
-    {
+//    if (focusInPlaylistTable)
+////        current_row = ui->playlist_view->currentIndex().row();
+//    else
+//    {
         current_index = proxy_model->mapToSource(ui->songs_view->currentIndex());
         current_row = current_index.row();
-    }
+//    }
     Song return_song;
     if(current_row>=0)
     {
-        if(focusInPlaylistTable)
-            return_song = playlist_model->getSong(current_row);
-        else
+//        if(focusInPlaylistTable)
+//            return_song = playlist_model->getSong(current_row);
+//        else
             return_song = songs_model->getSong(current_row);
     }
     return return_song;
@@ -243,6 +244,13 @@ void SongWidget::sendToPreview(Song song)
          ui->label_notes->setVisible(true);
     }
     preview_song = song;
+}
+
+void SongWidget::sendToPreviewFromSchedule(Song &song)
+{
+    ui->songs_view->clearSelection();
+    isSongFromSchelude = true;
+    sendToPreview(song);
 }
 
 void SongWidget::sendToProjector(Song song, int row)
@@ -312,6 +320,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
                 // This song is filtered out using text filter, so can't select
                 // it in the table. Just show it:
                 sendToPreview(s);
+                isSongFromSchelude = false;
             }
             return;
         }
@@ -345,74 +354,74 @@ void SongWidget::on_btnLive_clicked()
     sendToProjector(preview_song, ui->listPreview->currentRow()); // Send current selected
 }
 
-void SongWidget::on_btnAddToPlaylist_clicked()
-{
-    Song song;
-    if( false ) //ui->song_num_spinbox->hasFocus() )
-    {
-        int value = ui->song_num_spinbox->text().toInt();
-        for (int i = 0; i < songs_model->song_list.size(); i++)
-        {
-            Song s = songs_model->song_list.at(i);
-            if( s.number == value )
-            {
-                song = s;
-                break;
-            }
-        }
-    }
-    else
-    {
-        song = currentSong();
-    }
+//void SongWidget::on_btnAddToPlaylist_clicked()
+//{
+//    Song song;
+//    if( false ) //ui->song_num_spinbox->hasFocus() )
+//    {
+//        int value = ui->song_num_spinbox->text().toInt();
+//        for (int i = 0; i < songs_model->song_list.size(); i++)
+//        {
+//            Song s = songs_model->song_list.at(i);
+//            if( s.number == value )
+//            {
+//                song = s;
+//                break;
+//            }
+//        }
+//    }
+//    else
+//    {
+//        song = currentSong();
+//    }
 
-    playlist_model->addSong(song);
-    emit sendPlaylistChanged(true);
+//    playlist_model->addSong(song);
+//    emit sendPlaylistChanged(true);
 
     // Select the row that was just added:
-    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
+//    ui->playlist_view->selectRow(playlist_model->rowCount()-1);
     //ui->playlist_view->setFocus();
     //focusInPlaylistTable = true;
     //ui->btnRemoveFromPlaylist->setEnabled(true);
-    sendToPreview(song);
-    updateButtonStates();
-}
+//    sendToPreview(song);
+//    updateButtonStates();
+//}
 
-void SongWidget::on_btnRemoveFromPlaylist_clicked()
-{
-    int row = ui->playlist_view->currentIndex().row();
-    playlist_model->removeRow(row);
-    emit sendPlaylistChanged(true);
-    updateButtonStates();
-}
+//void SongWidget::on_btnRemoveFromPlaylist_clicked()
+//{
+//    int row = ui->playlist_view->currentIndex().row();
+//    playlist_model->removeRow(row);
+//    emit sendPlaylistChanged(true);
+//    updateButtonStates();
+//}
 
-void SongWidget::on_btnDownInPlaylist_clicked()
-{
-    playlist_model->emitLayoutAboutToBeChanged();
-    int row = ui->playlist_view->currentIndex().row();
-    Song song = playlist_model->song_list.takeAt(row);
-    playlist_model->song_list.insert(row+1, song);
-    playlist_model->emitLayoutChanged();
+//void SongWidget::on_btnDownInPlaylist_clicked()
+//{
+//    playlist_model->emitLayoutAboutToBeChanged();
+//    int row = ui->playlist_view->currentIndex().row();
+//    Song song = playlist_model->song_list.takeAt(row);
+//    playlist_model->song_list.insert(row+1, song);
+//    playlist_model->emitLayoutChanged();
 
-    ui->playlist_view->selectRow(row+1);
-    emit sendPlaylistChanged(true);
+//    ui->playlist_view->selectRow(row+1);
+//    emit sendPlaylistChanged(true);
 
-    updateButtonStates();
-}
+//    updateButtonStates();
+//}
 
-void SongWidget::on_btnUpInPlaylist_clicked()
-{
-    playlist_model->emitLayoutAboutToBeChanged();
-    int row = ui->playlist_view->currentIndex().row();
-    Song song = playlist_model->song_list.takeAt(row);
-    playlist_model->song_list.insert(row-1, song);
-    playlist_model->emitLayoutChanged();
+//void SongWidget::on_btnUpInPlaylist_clicked()
+//{
+//    playlist_model->emitLayoutAboutToBeChanged();
+//    int row = ui->playlist_view->currentIndex().row();
+//    Song song = playlist_model->song_list.takeAt(row);
+//    playlist_model->song_list.insert(row-1, song);
+//    playlist_model->emitLayoutChanged();
 
-    ui->playlist_view->selectRow(row-1);
-    emit sendPlaylistChanged(true);
+//    ui->playlist_view->selectRow(row-1);
+//    emit sendPlaylistChanged(true);
 
-    updateButtonStates();
-}
+//    updateButtonStates();
+//}
 
 void SongWidget::on_lineEditSearch_textEdited(QString text)
 {
@@ -438,7 +447,8 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
         {
             Song song = songs_model->getSong(row);
             sendToPreview(song);
-            focusInPlaylistTable = false;
+            isSongFromSchelude = false;
+//            focusInPlaylistTable = false;
         }
     }
     updateButtonStates();
@@ -446,11 +456,12 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
 
 Song SongWidget::getSongToEdit()
 {
-    playlistSongWasEdited = focusInPlaylistTable;
+//    playlistSongWasEdited = focusInPlaylistTable;
+    isScheduleSongEdited = isSongFromSchelude;
 
     // Check if edited song is also in the playlist table (exact match)
-    if (playlist_model->isInTable(preview_song.songID))
-            playlistSongWasEdited = true;
+//    if (playlist_model->isInTable(preview_song.songID))
+//            playlistSongWasEdited = true;
 
     return preview_song;
 }
@@ -468,32 +479,34 @@ void SongWidget::on_songs_view_doubleClicked(QModelIndex index)
     //focusInPlaylistTable = true;
     emit addToSchedule(song);
     sendToPreview(song);
+    isSongFromSchelude = false;
 }
 
-void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
-{
-    Song song = playlist_model->getSong(index.row());
-    //sendToProjector(song, ui->listPreview->currentRow());
-    sendToProjector(song, 0); // Send the first verse
-}
+//void SongWidget::on_playlist_view_doubleClicked(QModelIndex index)
+//{
+//    Song song = playlist_model->getSong(index.row());
+//    //sendToProjector(song, ui->listPreview->currentRow());
+//    sendToProjector(song, 0); // Send the first verse
+//}
 
-void SongWidget::on_playlist_view_clicked(QModelIndex index)
-{
-    // This method is implemented for the case where the use clicks
-    // in the playlist table without changing the previous selection.
-    Song song = playlist_model->getSong(index);
-    focusInPlaylistTable = true;
-    sendToPreview(song);
-    updateButtonStates();
-}
+//void SongWidget::on_playlist_view_clicked(QModelIndex index)
+//{
+//    // This method is implemented for the case where the use clicks
+//    // in the playlist table without changing the previous selection.
+//    Song song = playlist_model->getSong(index);
+//    focusInPlaylistTable = true;
+//    sendToPreview(song);
+//    updateButtonStates();
+//}
 
 void SongWidget::on_songs_view_clicked(QModelIndex index)
 {
     // This method is implemented for the case where the use clicks
     // in the playlist table without changing the previous selection.
     Song song = songs_model->getSong(proxy_model->mapToSource(index));
-    focusInPlaylistTable = false;
+//    focusInPlaylistTable = false;
     sendToPreview(song);
+    isSongFromSchelude = false;
     updateButtonStates();
 }
 
@@ -542,11 +555,11 @@ void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
     }
 
     // Updated playlist song if song was edited comes from playlist table
-    if (playlistSongWasEdited)
-    {
-        playlist_model->updateSongFromDatabase(songid, initial_sid);
-        emit sendPlaylistChanged(true);
-    }
+//    if (playlistSongWasEdited)
+//    {
+//        playlist_model->updateSongFromDatabase(songid, initial_sid);
+//        emit sendPlaylistChanged(true);
+//    }
 
     // Update the preview table:
     sendToPreview( currentSong() );
@@ -565,11 +578,11 @@ void SongWidget::addNewSong(Song song, int initial_sid)
     ui->songs_view->selectRow(songs_model->rowCount()-1);
 
     // Updated playlist song if song was edited comes from playlist table
-    if (playlistSongWasEdited)
-    {
-        playlist_model->updateSongFromDatabase(song.songID,initial_sid);
-        emit sendPlaylistChanged(true);
-    }
+//    if (playlistSongWasEdited)
+//    {
+//        playlist_model->updateSongFromDatabase(song.songID,initial_sid);
+//        emit sendPlaylistChanged(true);
+//    }
 
     sendToPreview(song);
 }
@@ -675,32 +688,32 @@ void SongWidget::on_comboBoxCategory_currentIndexChanged(int index)
     }
 }
 
-QList<Song> SongWidget::getPlaylistSongs()
-{
-    QList<Song> playlist_songs;
+//QList<Song> SongWidget::getPlaylistSongs()
+//{
+//    QList<Song> playlist_songs;
 
-    for(int i(0); i<playlist_model->rowCount(); ++i)
-    {
-        playlist_songs.append(playlist_model->getSong(i));
-    }
+//    for(int i(0); i<playlist_model->rowCount(); ++i)
+//    {
+//        playlist_songs.append(playlist_model->getSong(i));
+//    }
 
-    return playlist_songs;
-}
+//    return playlist_songs;
+//}
 
-void SongWidget::loadPlaylistFromFile(QList<Song> songs)
-{
-    if(playlist_model->rowCount()>0)
-        playlist_model->removeRows(0,playlist_model->rowCount());
+//void SongWidget::loadPlaylistFromFile(QList<Song> songs)
+//{
+//    if(playlist_model->rowCount()>0)
+//        playlist_model->removeRows(0,playlist_model->rowCount());
 
-    int count = songs.count();
-    if(count>0)
-    {
-        for(int i(0); i<count; ++i)
-            playlist_model->addSong(songs.at(i));
-    }
+//    int count = songs.count();
+//    if(count>0)
+//    {
+//        for(int i(0); i<count; ++i)
+//            playlist_model->addSong(songs.at(i));
+//    }
 
-    updateButtonStates();
-}
+//    updateButtonStates();
+//}
 
 void SongWidget::on_pushButtonSearch_clicked()
 {
@@ -790,6 +803,7 @@ void SongWidget::on_pushButtonSearch_clicked()
     if( row>=0)
     {
         sendToPreview(songs_model->getSong(row));
+        isSongFromSchelude = false;
     }
     else
     {
