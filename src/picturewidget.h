@@ -39,12 +39,14 @@ public:
     
 signals:
     void sendSlideShow(QList<SlideShowItem> &slideShow, int row);
+    void sendToSchedule(SlideShow &sshow);
 
 public slots:
     void loadSlideShows();
     SlideShow getCurrentSlideshow();
     bool isSlideShowSelected();
     void deleteSlideShow();
+    void sendToPreviewFromSchedule(SlideShow &sshow);
 
 private slots:
     void on_listWidgetSlides_doubleClicked(const QModelIndex &index);
@@ -58,6 +60,8 @@ private slots:
     void on_listWidgetSlideShow_itemSelectionChanged();
     void on_listWidgetSlides_currentRowChanged(int currentRow);
     void loadSlideShow(int ss_id);
+    void sendToPreview(SlideShow &sshow);
+    void on_listWidgetSlideShow_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::PictureWidget *ui;

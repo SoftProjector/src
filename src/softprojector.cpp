@@ -98,6 +98,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
 //    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
+    connect(pictureWidget, SIGNAL(sendToSchedule(SlideShow&)),this,SLOT(addToShcedule(SlideShow&)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
     connect(editWidget, SIGNAL(addedNew(Song,int)), songWidget,SLOT(addNewSong(Song,int)));
@@ -119,15 +120,16 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionPrint);
     ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionMoveScheduleTop);
-    ui->toolBar->addAction(ui->actionMoveScheduleUp);
-    ui->toolBar->addAction(ui->actionMoveScheduleDown);
-    ui->toolBar->addAction(ui->actionMoveScheduleBottom);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionScheduleAdd);
-    ui->toolBar->addAction(ui->actionScheduleRemove);
-    ui->toolBar->addAction(ui->actionScheduleClear);
-    ui->toolBar->addSeparator();
+    ui->toolBar_2->addAction(ui->actionMoveScheduleTop);
+    ui->toolBar_2->addAction(ui->actionMoveScheduleUp);
+    ui->toolBar_2->addAction(ui->actionMoveScheduleDown);
+    ui->toolBar_2->addAction(ui->actionMoveScheduleBottom);
+    ui->toolBar_2->addSeparator();
+    ui->toolBar_2->addAction(ui->actionScheduleAdd);
+    ui->toolBar_2->addAction(ui->actionScheduleRemove);
+    ui->toolBar_2->addAction(ui->actionScheduleClear);
+//    ui->toolBar_2->setIconSize(QSize(24,24));
+    //ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionNew);
     ui->toolBar->addAction(ui->actionEdit);
     ui->toolBar->addAction(ui->actionCopy);
@@ -1948,7 +1950,7 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     }
     else if(ctab == 2) // Slide Show
     {
-        SlideShow ssi;
+        SlideShow ssi = pictureWidget->getCurrentSlideshow();
         addToShcedule(ssi);
     }
     else if(ctab == 3) // Multimedia
@@ -2004,7 +2006,7 @@ void SoftProjector::addToShcedule(SlideShow &s)
 
     QListWidgetItem *itm = new QListWidgetItem;
     itm->setIcon(QIcon(":/icons/icons/photo.png"));
-    itm->setText("Slide Show");
+    itm->setText(s.name);
     ui->listWidgetSchedule->addItem(itm);
 }
 
@@ -2072,6 +2074,12 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
         songWidget->counter.addSongCount(s.song);
 //        songWidget->sendToProjector(s.song,0);
     }
+    else if(s.stype == "slideshow")
+    {
+        ui->projectTab->setCurrentIndex(2);
+        pictureWidget->sendToPreviewFromSchedule(s.slideshow);
+        setPictureList(s.slideshow.slides,0);
+    }
 }
 
 void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
@@ -2091,10 +2099,18 @@ void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
             songWidget->sendToPreviewFromSchedule(s.song);
         }
         else if(s.stype == "slideshow")
+        {
             ui->projectTab->setCurrentIndex(2);
+            pictureWidget->sendToPreviewFromSchedule(s.slideshow);
+        }
         else if(s.stype == "media")
+        {
             ui->projectTab->setCurrentIndex(3);
+        }
         else if(s.stype == "announce")
+        {
+
             ui->projectTab->setCurrentIndex(4);
+        }
     }
 }

@@ -207,7 +207,14 @@ void PictureWidget::sendToProjector()
 
 void PictureWidget::loadSlideShow(int ss_id)
 {
-    currentSlideShow.loadSlideShow(ss_id);
+    SlideShow ss;
+    ss.loadSlideShow(ss_id);
+    sendToPreview(ss);
+}
+
+void PictureWidget::sendToPreview(SlideShow &sshow)
+{
+    currentSlideShow = sshow;
     slides.clear();
     ui->listWidgetSlides->clear();
     ui->labelPreviewSlideShow->setText(tr("Slide Show: %1").arg(currentSlideShow.name));
@@ -220,6 +227,12 @@ void PictureWidget::loadSlideShow(int ss_id)
         ui->listWidgetSlides->addItem(itm);
     }
     ui->listWidgetSlides->setCurrentRow(0);
+}
+
+void PictureWidget::sendToPreviewFromSchedule(SlideShow &sshow)
+{
+    ui->listWidgetSlideShow->clearSelection();
+    sendToPreview(sshow);
 }
 
 SlideShow PictureWidget::getCurrentSlideshow()
@@ -249,6 +262,12 @@ void PictureWidget::deleteSlideShow()
 void PictureWidget::on_listWidgetSlideShow_itemSelectionChanged()
 {
     int cRow = ui->listWidgetSlideShow->currentRow();
-    if(cRow>=0)
+    if(cRow>=0 && ui->listWidgetSlideShow->selectedItems().count()>0)
         loadSlideShow(slideShows.at(cRow).slideSwId);
+}
+
+void PictureWidget::on_listWidgetSlideShow_doubleClicked(const QModelIndex &index)
+{
+    currentSlideShow.slides = slides;
+    emit sendToSchedule(currentSlideShow);
 }
