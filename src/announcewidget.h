@@ -43,6 +43,7 @@ public slots:
     void deleteAnnouncement();
     bool isAnnounceValid();
     Announcement getAnnouncement();
+    void setAnnouncementFromHistory(Announcement &announce);
 
 //    void drawToPainter(QPainter *painter, int width, int height);
 
@@ -60,8 +61,11 @@ private slots:
     void on_listWidgetAnnouncement_doubleClicked(const QModelIndex &index);
     Announcement currentAnnouncement();
 
+    void on_tableViewAnnouncements_doubleClicked(const QModelIndex &index);
+
 signals:
     void sendAnnounce(Announcement announce, int row);
+    void addToSchedule(Announcement &announce);
 
 private:
     Ui::AnnounceWidget *ui;

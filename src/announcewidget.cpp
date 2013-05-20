@@ -125,7 +125,7 @@ void AnnounceWidget::setPreview(Announcement announce)
 {
     previewAnnounce = announce;
     ui->listWidgetAnnouncement->clear();
-//    ui->listWidgetAnnouncement->addItem(previewAnnounce.text);
+    ui->labelAnnounceTitle->setText(previewAnnounce.title);
     ui->listWidgetAnnouncement->addItems(previewAnnounce.getAnnounceList());
 }
 
@@ -210,6 +210,14 @@ void AnnounceWidget::on_listWidgetAnnouncement_doubleClicked(const QModelIndex &
     sendToProjector();
 }
 
+void AnnounceWidget::on_tableViewAnnouncements_doubleClicked(const QModelIndex &index)
+{
+    int row = announceProxy->mapToSource(index).row();
+    Announcement announce = announceModel->getAnnounce(row);
+    emit addToSchedule(announce);
+    setPreview(announce);
+}
+
 Announcement AnnounceWidget::currentAnnouncement()
 {
     Announcement ancmnt;
@@ -223,6 +231,14 @@ Announcement AnnounceWidget::currentAnnouncement()
 
     return ancmnt;
 }
+
+void AnnounceWidget::setAnnouncementFromHistory(Announcement &announce)
+{
+    ui->tableViewAnnouncements->clearSelection();
+    setPreview(announce);
+}
+
+
 
 
 

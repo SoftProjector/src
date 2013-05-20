@@ -113,6 +113,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
     connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
+    connect(announceWidget,SIGNAL(addToSchedule(Announcement&)),this,SLOT(addToShcedule(Announcement&)));
 
     ui->toolBar->addAction(ui->actionNew_Project);
     ui->toolBar->addAction(ui->actionOpen);
@@ -1960,7 +1961,7 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     }
     else if(ctab == 4)
     {
-        Announcement a;
+        Announcement a = announceWidget->getAnnouncement();
         addToShcedule(a);
     }
 }
@@ -2028,7 +2029,7 @@ void SoftProjector::addToShcedule(Announcement &a)
 
     QListWidgetItem *itm = new QListWidgetItem;
     itm->setIcon(QIcon(":/icons/icons/announce.png"));
-    itm->setText("Annoncement");
+    itm->setText(a.title);
     ui->listWidgetSchedule->addItem(itm);
 }
 
@@ -2109,8 +2110,8 @@ void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
         }
         else if(s.stype == "announce")
         {
-
             ui->projectTab->setCurrentIndex(4);
+            announceWidget->setAnnouncementFromHistory(s.announce);
         }
     }
 }
