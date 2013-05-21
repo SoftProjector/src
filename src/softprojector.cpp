@@ -1956,7 +1956,7 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     }
     else if(ctab == 3) // Multimedia
     {
-        VideoInfo v;
+        VideoInfo v = mediaPlayer->getMedia();
         addToShcedule(v);
     }
     else if(ctab == 4)
@@ -2018,7 +2018,7 @@ void SoftProjector::addToShcedule(VideoInfo &v)
 
     QListWidgetItem *itm = new QListWidgetItem;
     itm->setIcon(QIcon(":/icons/icons/video.png"));
-    itm->setText("Multimedia");
+    itm->setText(v.fileName);
     ui->listWidgetSchedule->addItem(itm);
 }
 
@@ -2081,6 +2081,18 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
         pictureWidget->sendToPreviewFromSchedule(s.slideshow);
         setPictureList(s.slideshow.slides,0);
     }
+    else if(s.stype == "media")
+    {
+        ui->projectTab->setCurrentIndex(3);
+        mediaPlayer->setMediaFromSchedule(s.media);
+        mediaPlayer->goLiveFromSchedule();
+    }
+    else if(s.stype == "announce")
+    {
+        ui->projectTab->setCurrentIndex(4);
+        announceWidget->setAnnouncementFromHistory(s.announce);
+        setAnnounceText(s.announce,0);
+    }
 }
 
 void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
@@ -2107,6 +2119,7 @@ void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
         else if(s.stype == "media")
         {
             ui->projectTab->setCurrentIndex(3);
+            mediaPlayer->setMediaFromSchedule(s.media);
         }
         else if(s.stype == "announce")
         {

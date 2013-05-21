@@ -108,7 +108,7 @@ void MediaWidget::stateChanged(Phonon::State newstate, Phonon::State oldstate)
         {
             ui->pushButtonPlayPause->setEnabled(false);
             hasVideoChanged(false);
-            ui->labelInfo->setText(tr("<center>No media</center>"));
+            ui->labelInfo->setText(QString("<center>%1</center>").arg(tr("No Media")));
         }
         else
             mediaPlayer.pause();
@@ -416,4 +416,28 @@ void MediaWidget::on_comboBoxAspectRatio_currentIndexChanged(int index)
 //    else
 //        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioAuto);
     videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(index));
+}
+
+VideoInfo MediaWidget::getMedia()
+{
+    VideoInfo v;
+    int cm = ui->listWidgetMediaFiles->currentRow();
+    v.fileName = mediaFileNames.at(cm);
+    v.filePath = mediaFilePaths.at(cm);
+    return v;
+}
+
+void MediaWidget::setMediaFromSchedule(VideoInfo &v)
+{
+    ui->listWidgetMediaFiles->clearSelection();
+    playFile(v.filePath);
+        mediaPlayer.pause();
+}
+
+void MediaWidget::goLiveFromSchedule()
+{
+    if(ui->pushButtonGoLive->isEnabled())
+        prepareForProjection();
+    else
+        mediaPlayer.play();
 }

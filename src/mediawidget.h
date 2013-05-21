@@ -41,6 +41,9 @@ public:
 public slots:
     void addToLibrary();
     void removeFromLibrary();
+    VideoInfo getMedia();
+    void setMediaFromSchedule(VideoInfo &v);
+    void goLiveFromSchedule();
 protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
