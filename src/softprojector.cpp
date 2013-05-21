@@ -1970,93 +1970,91 @@ void SoftProjector::on_actionScheduleRemove_triggered()
 {
     int cRow = ui->listWidgetSchedule->currentRow();
     if(cRow >=0)
-        ui->listWidgetSchedule->takeItem(cRow);
+    {
+        schedule.takeAt(cRow);
+        reloadShceduleList();
+    }
 }
 
 void SoftProjector::on_actionScheduleClear_triggered()
 {
-    ui->listWidgetSchedule->clear();
+    schedule.clear();
+    reloadShceduleList();
 }
 
 void SoftProjector::addToShcedule(BibleHistory &b)
 {
     Schedule d(b);
     schedule.append(d);
-
-    QListWidgetItem *itm = new QListWidgetItem;
-    itm->setIcon(QIcon(":/icons/icons/book.png"));
-    itm->setText(b.caption);
-    ui->listWidgetSchedule->addItem(itm);
+    reloadShceduleList();
 }
 
 void SoftProjector::addToShcedule(Song &s)
 {
     Schedule d(s);
     schedule.append(d);
-
-    QListWidgetItem *itm = new QListWidgetItem;
-    itm->setIcon(QIcon(":/icons/icons/song_tab.png"));
-    itm->setText(QString("%1 %2").arg(s.number).arg(s.title));
-    ui->listWidgetSchedule->addItem(itm);
+    reloadShceduleList();
 }
 
 void SoftProjector::addToShcedule(SlideShow &s)
 {
     Schedule d(s);
     schedule.append(d);
-
-    QListWidgetItem *itm = new QListWidgetItem;
-    itm->setIcon(QIcon(":/icons/icons/photo.png"));
-    itm->setText(s.name);
-    ui->listWidgetSchedule->addItem(itm);
+    reloadShceduleList();
 }
 
 void SoftProjector::addToShcedule(VideoInfo &v)
 {
     Schedule d(v);
     schedule.append(d);
-
-    QListWidgetItem *itm = new QListWidgetItem;
-    itm->setIcon(QIcon(":/icons/icons/video.png"));
-    itm->setText(v.fileName);
-    ui->listWidgetSchedule->addItem(itm);
+    reloadShceduleList();
 }
 
 void SoftProjector::addToShcedule(Announcement &a)
 {
     Schedule d(a);
     schedule.append(d);
-
-    QListWidgetItem *itm = new QListWidgetItem;
-    itm->setIcon(QIcon(":/icons/icons/announce.png"));
-    itm->setText(a.title);
-    ui->listWidgetSchedule->addItem(itm);
+    reloadShceduleList();
 }
 
-//void SoftProjector::on_listWidgetSchedule_currentRowChanged(int currentRow)
-//{
-//    qDebug()<<"row changed:"<<currentRow<<currentRow<<ui->listWidgetSchedule->item(currentRow)->isSelected();
-//    if(currentRow>=0 && ui->listWidgetSchedule->isItemSelected(ui->listWidgetSchedule->item(currentRow)))
-//        qDebug()<<"row is also selected"<<currentRow<<ui->listWidgetSchedule->item(currentRow)->isSelected();
-//    if(ui->listWidgetSchedule->selectionChanged())
-////    if(currentRow>=0)
-////    {
-////        Schedule s = schedule.at(currentRow);
-////        if(s.stype == "bible")
-////        {
-////            ui->projectTab->setCurrentIndex(0);
-////            bibleWidget->setSelectedHistory(s.bible);
-////        }
-////        else if(s.stype == "song")
-////            ui->projectTab->setCurrentIndex(1);
-////        else if(s.stype == "slideshow")
-////            ui->projectTab->setCurrentIndex(2);
-////        else if(s.stype == "media")
-////            ui->projectTab->setCurrentIndex(3);
-////        else if(s.stype == "announce")
-////            ui->projectTab->setCurrentIndex(4);
-////    }
-//}
+void SoftProjector::reloadShceduleList()
+{
+    ui->listWidgetSchedule->clear();
+    foreach (const Schedule &s, schedule)
+    {
+        QListWidgetItem *itm = new QListWidgetItem;
+        if(s.stype == "bible")
+        {
+            itm->setIcon(QIcon(":/icons/icons/book.png"));
+            itm->setText(s.bible.caption);
+            ui->listWidgetSchedule->addItem(itm);
+        }
+        else if(s.stype == "song")
+        {
+            itm->setIcon(QIcon(":/icons/icons/song_tab.png"));
+            itm->setText(QString("%1 %2").arg(s.song.number).arg(s.song.title));
+            ui->listWidgetSchedule->addItem(itm);
+        }
+        else if(s.stype == "slideshow")
+        {
+            itm->setIcon(QIcon(":/icons/icons/photo.png"));
+            itm->setText(s.slideshow.name);
+            ui->listWidgetSchedule->addItem(itm);
+        }
+        else if(s.stype == "media")
+        {
+            itm->setIcon(QIcon(":/icons/icons/video.png"));
+            itm->setText(s.media.fileName);
+            ui->listWidgetSchedule->addItem(itm);
+        }
+        else if(s.stype == "announce")
+        {
+            itm->setIcon(QIcon(":/icons/icons/announce.png"));
+            itm->setText(s.announce.title);
+            ui->listWidgetSchedule->addItem(itm);
+        }
+    }
+}
 
 void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
 {
@@ -2126,5 +2124,51 @@ void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
             ui->projectTab->setCurrentIndex(4);
             announceWidget->setAnnouncementFromHistory(s.announce);
         }
+    }
+}
+
+void SoftProjector::on_actionMoveScheduleTop_triggered()
+{
+    int cs = ui->listWidgetSchedule->currentRow();
+    if(cs>0)
+    {
+        schedule.move(cs,0);
+        reloadShceduleList();
+        ui->listWidgetSchedule->setCurrentRow(0);
+    }
+}
+
+void SoftProjector::on_actionMoveScheduleUp_triggered()
+{
+    int cs = ui->listWidgetSchedule->currentRow();
+    if(cs>0)
+    {
+        schedule.move(cs,cs-1);
+        reloadShceduleList();
+        ui->listWidgetSchedule->setCurrentRow(cs-1);
+    }
+}
+
+void SoftProjector::on_actionMoveScheduleDown_triggered()
+{
+    int cs = ui->listWidgetSchedule->currentRow();
+    int max = schedule.count();
+    if(cs>=0 && cs<max-1)
+    {
+        schedule.move(cs,cs+1);
+        reloadShceduleList();
+        ui->listWidgetSchedule->setCurrentRow(cs+1);
+    }
+}
+
+void SoftProjector::on_actionMoveScheduleBottom_triggered()
+{
+    int cs = ui->listWidgetSchedule->currentRow();
+    int max = schedule.count();
+    if(cs>=0 && cs<max-1)
+    {
+        schedule.move(cs,max-1);
+        reloadShceduleList();
+        ui->listWidgetSchedule->setCurrentRow(max-1);
     }
 }

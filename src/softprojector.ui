@@ -46,6 +46,9 @@
             <height>16</height>
            </size>
           </property>
+          <property name="spacing">
+           <number>1</number>
+          </property>
          </widget>
         </item>
        </layout>
