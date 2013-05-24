@@ -63,6 +63,9 @@
         <file>icons/scheduleDown.png</file>
         <file>icons/scheduleDownM.png</file>
         <file>icons/scheduleUp.png</file>
+        <file>icons/scheduleSave.png</file>
+        <file>icons/scheduleNew.png</file>
+        <file>icons/scheduleOpen.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

@@ -18,6 +18,9 @@ public:
     Schedule(Announcement &a);
 
     QString stype;
+    QString name;
+    QIcon icon;
+    int scid;
 
     BibleHistory bible;
     Song song;

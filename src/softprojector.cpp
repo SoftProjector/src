@@ -90,13 +90,13 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
     connect(bibleWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(bibleWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
-    connect(bibleWidget, SIGNAL(historyListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    //TODO: connect(bibleWidget, SIGNAL(historyListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(songWidget, SIGNAL(sendSong(Song, int)), this, SLOT(setSongList(Song, int)));
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
-//    connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    //TODO: connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
-//    connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
+    //TODO: connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
     connect(pictureWidget, SIGNAL(sendToSchedule(SlideShow&)),this,SLOT(addToShcedule(SlideShow&)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
@@ -115,9 +115,9 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
     connect(announceWidget,SIGNAL(addToSchedule(Announcement&)),this,SLOT(addToShcedule(Announcement&)));
 
-    ui->toolBar->addAction(ui->actionNew_Project);
-    ui->toolBar->addAction(ui->actionOpen);
-    ui->toolBar->addAction(ui->actionSave_Project);
+    ui->toolBar->addAction(ui->actionNewSchedule);
+    ui->toolBar->addAction(ui->actionOpenSchedule);
+    ui->toolBar->addAction(ui->actionSaveSchedule);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionPrint);
     ui->toolBar->addSeparator();
@@ -177,13 +177,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     version_string = "2.Dev.Build: 6"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
-    // Temporarily disable project menu buttons
-    ui->actionNew_Project->setEnabled(false);
-    ui->actionClose_Project->setEnabled(false);
-    ui->actionSave_Project->setEnabled(false);
-    ui->actionSave_Project_As->setEnabled(false);
-    ui->actionOpen->setEnabled(false);
-    ui->actionPrint_Project->setEnabled(false);
 }
 
 SoftProjector::~SoftProjector()
@@ -371,7 +364,7 @@ void SoftProjector::applySetting(GeneralSettings &g, Theme &t)
 
 void SoftProjector::closeEvent(QCloseEvent *event)
 {
-    if(is_project_saved || project_file_path.isEmpty())
+    if(is_schedule_saved || schedule_file_path.isEmpty())
     {
         QCoreApplication::exit(0);
         event->accept();
@@ -379,8 +372,8 @@ void SoftProjector::closeEvent(QCloseEvent *event)
     else
     {
         QMessageBox mb;
-        mb.setWindowTitle(tr("Project not saved","project as in document file"));
-        mb.setText(tr("Do you want to save current project?","project as in document file"));
+        mb.setWindowTitle(tr("Schedule not saved"));
+        mb.setText(tr("Do you want to save current schedule?"));
         mb.setIcon(QMessageBox::Question);
         mb.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Discard);
         mb.setDefaultButton(QMessageBox::Save);
@@ -389,8 +382,8 @@ void SoftProjector::closeEvent(QCloseEvent *event)
         switch (ret)
         {
         case QMessageBox::Save:
-            // Save Project and close
-            on_actionSave_Project_triggered();
+            // Save Schedule and close
+            on_actionSaveSchedule_triggered();
             QCoreApplication::exit(0);
             event->accept();
             break;
@@ -1281,7 +1274,7 @@ void SoftProjector::on_actionSong_Counter_triggered()
     songCounter->exec();
     delete songCounter;
 }
-
+/*
 void SoftProjector::on_actionOpen_triggered()
 {
     if(!is_project_saved && !project_file_path.isEmpty())
@@ -1410,164 +1403,6 @@ void SoftProjector::on_actionClose_Project_triggered()
     project_file_path.clear();
     clearProject();
     updateWindowTest();
-}
-
-void SoftProjector::saveProject()
-{
-    QList<Song> songs /*= songWidget->getPlaylistSongs()*/;
-    Song s;
-    QList<BibleSearch> histories /*= bibleWidget->getHistoryList()*/;
-    BibleSearch h;
-//    QList<Announcement> announcements = announceWidget->getAnnouncements();
-//    Announcement a;
-
-    QFile file(project_file_path);
-    file.open(QIODevice::WriteOnly);
-    QXmlStreamWriter xml(&file);
-    xml.setAutoFormatting(true);
-    xml.setCodec("UTF8");
-
-    xml.writeStartDocument();
-    xml.writeStartElement("spProject");
-    xml.writeAttribute("version","2.0");
-
-    //Write Bible History
-    xml.writeStartElement("BibleHistory");
-    for(int i(0); i<histories.count(); ++i)
-    {
-        QXmlStreamAttributes atrs;
-        h = histories.at(i);
-        atrs.append("first",QString::number(h.first_v));
-        atrs.append("last",QString::number(h.last_v));
-        xml.writeStartElement("history"); // Start verse
-        xml.writeAttributes(atrs);
-        xml.writeTextElement("ids",h.verse_id);
-        xml.writeTextElement("book",h.book);
-        xml.writeTextElement("chapter",h.chapter);
-        xml.writeTextElement("display_txt",h.display_text);
-        xml.writeTextElement("verse",h.verse);
-        xml.writeTextElement("verse_txt",h.verse_text);
-        xml.writeEndElement(); //End verse
-    }
-    xml.writeEndElement(); // End Bible Histories
-
-    //Write songs
-    xml.writeStartElement("Songs");
-    for(int i(0); i<songs.count(); ++i)
-    {
-        xml.writeStartElement("song"); // start song
-        s = songs.at(i);
-        QXmlStreamAttributes atrs;
-        atrs.append("id",QString::number(s.songID));
-        atrs.append("num",QString::number(s.number));
-        atrs.append("category",QString::number(s.category));
-        xml.writeAttributes(atrs);
-
-        // write song items
-        xml.writeTextElement("title",s.title);
-        xml.writeTextElement("text",s.songText);
-        xml.writeTextElement("songbook",s.songbook_name);
-        xml.writeTextElement("tune",s.tune);
-        xml.writeTextElement("words",s.wordsBy);
-        xml.writeTextElement("music",s.musicBy);
-        xml.writeTextElement("notes",s.notes);
-        if(s.usePrivateSettings)
-            xml.writeTextElement("use_private","true");
-        else
-            xml.writeTextElement("use_private","false");
-        xml.writeTextElement("align",QString("%1,%2").arg(QString::number(s.alignmentV)).arg(QString::number(s.alignmentH)));
-        unsigned int textColorInt = (unsigned int)(s.color.rgb());
-        xml.writeTextElement("color",QString::number(textColorInt));
-        xml.writeTextElement("font",s.font.toString());
-        xml.writeTextElement("back",s.backgroundPath.trimmed());
-
-        xml.writeEndElement(); // enst song
-    }
-    xml.writeEndElement(); // End Songs
-
-//    //Write Announcements
-//    xml.writeStartElement("Announcements");
-//    for(int i(0); i<announcements.count();++i)
-//    {
-//        a = announcements.at(i);
-//        xml.writeStartElement("announce");
-//        xml.writeAttribute("aling_flag",QString::number(a.align_flags));
-//        xml.writeCharacters(a.text);
-//        xml.writeEndElement();
-//    }
-//    xml.writeEndElement(); // End Announcements
-
-    xml.writeEndElement(); // softProjector Project
-    xml.writeEndDocument();
-
-    file.close();
-    is_project_saved = true;
-}
-
-void SoftProjector::openProject()
-{
-    QFile file(project_file_path);
-    file.open(QIODevice::ReadOnly);
-    QXmlStreamReader xml(&file);
-
-    while(!xml.atEnd())
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name() == "spProject")
-        {
-            double p_version = xml.attributes().value("version").toString().toDouble();
-            if(1.0 < p_version && p_version <= 2.0)
-            {
-                xml.readNext();
-                while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
-                {
-                    xml.readNext();
-                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version >= 1.5)
-                    {
-                        // Read saved bible history
-                        readBibleHistoryFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.0)
-                    {
-                        // Read saved bible history
-                        readBibleHistoryFromSavedProject1_0(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "Songs")
-                    {
-                        // Read save versionsongs
-                        readSongsFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "Announcements")
-                    {
-                        // Read saved announcements
-                        readAnnouncementsFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                }
-            }
-            else
-            {
-                //User friednly box for incorrect file version
-                QMessageBox mb;
-                mb.setWindowTitle(tr("Incorrect project file format"));
-                mb.setText(tr("The softProjector project file you are opening,\n"
-                              "is not supported by your version of softProjector.\n"
-                              "You may try upgrading your version of softProjector."));
-                mb.setIcon(QMessageBox::Information);
-                mb.exec();
-
-                // remove any file paths
-                project_file_path.clear();
-                updateWindowTest();
-                return;
-            }
-        }
-    }
-    file.close();
-    is_project_saved = true;
 }
 
 void SoftProjector::clearProject()
@@ -1774,16 +1609,16 @@ void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
     }
 //    songWidget->loadPlaylistFromFile(songs);
 }
-
+*/
 void SoftProjector::updateWindowTest()
 {
-    QFileInfo fi(project_file_path);
+    QFileInfo fi(schedule_file_path);
     QString file = fi.fileName();
 
     if(!file.isEmpty())
     {
         file.remove(".spp");
-        if(is_project_saved)
+        if(is_schedule_saved)
             this->setWindowTitle(file + " - softProjector " + version_string);
         else
             this->setWindowTitle(file + "* - softProjector " + version_string);
@@ -1794,15 +1629,15 @@ void SoftProjector::updateWindowTest()
     }
 }
 
-void SoftProjector::setProjectChanged(bool changed)
-{
-    if(changed)
-        is_project_saved = false;
-    else
-        is_project_saved = true;
+//void SoftProjector::setProjectChanged(bool changed)
+//{
+//    if(changed)
+//        is_project_saved = false;
+//    else
+//        is_project_saved = true;
 
-    updateWindowTest();
-}
+//    updateWindowTest();
+//}
 
 void SoftProjector::on_rbMultiVerse_toggled(bool checked)
 {
@@ -1850,13 +1685,18 @@ void SoftProjector::on_actionPrint_triggered()
     delete p;
 }
 
-void SoftProjector::on_actionPrint_Project_triggered()
+//void SoftProjector::on_actionPrint_Project_triggered()
+//{
+////    PrintPreviewDialog* p;
+////    p = new PrintPreviewDialog(this);
+////    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
+////    p->exec();
+////    delete p;
+//}
+
+void SoftProjector::on_actionPrintSchedule_triggered()
 {
-//    PrintPreviewDialog* p;
-//    p = new PrintPreviewDialog(this);
-//    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
-//    p->exec();
-//    delete p;
+
 }
 
 void SoftProjector::nextSlide()
@@ -2019,41 +1859,17 @@ void SoftProjector::addToShcedule(Announcement &a)
 
 void SoftProjector::reloadShceduleList()
 {
+    ui->listWidgetSchedule->clearSelection();
     ui->listWidgetSchedule->clear();
     foreach (const Schedule &s, schedule)
     {
         QListWidgetItem *itm = new QListWidgetItem;
-        if(s.stype == "bible")
-        {
-            itm->setIcon(QIcon(":/icons/icons/book.png"));
-            itm->setText(s.bible.caption);
-            ui->listWidgetSchedule->addItem(itm);
-        }
-        else if(s.stype == "song")
-        {
-            itm->setIcon(QIcon(":/icons/icons/song_tab.png"));
-            itm->setText(QString("%1 %2").arg(s.song.number).arg(s.song.title));
-            ui->listWidgetSchedule->addItem(itm);
-        }
-        else if(s.stype == "slideshow")
-        {
-            itm->setIcon(QIcon(":/icons/icons/photo.png"));
-            itm->setText(s.slideshow.name);
-            ui->listWidgetSchedule->addItem(itm);
-        }
-        else if(s.stype == "media")
-        {
-            itm->setIcon(QIcon(":/icons/icons/video.png"));
-            itm->setText(s.media.fileName);
-            ui->listWidgetSchedule->addItem(itm);
-        }
-        else if(s.stype == "announce")
-        {
-            itm->setIcon(QIcon(":/icons/icons/announce.png"));
-            itm->setText(s.announce.title);
-            ui->listWidgetSchedule->addItem(itm);
-        }
+        itm->setIcon(s.icon);
+        itm->setText(s.name);
+        ui->listWidgetSchedule->addItem(itm);
     }
+    is_schedule_saved = false;
+    updateWindowTest();
 }
 
 void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
@@ -2096,6 +1912,7 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
 void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
 {
     int currentRow = ui->listWidgetSchedule->currentRow();
+    qDebug()<<"cr:"<<currentRow;
     if(currentRow>=0)
     {
         Schedule s = schedule.at(currentRow);
@@ -2171,4 +1988,226 @@ void SoftProjector::on_actionMoveScheduleBottom_triggered()
         reloadShceduleList();
         ui->listWidgetSchedule->setCurrentRow(max-1);
     }
+}
+
+void SoftProjector::on_actionNewSchedule_triggered()
+{
+
+}
+
+void SoftProjector::on_actionOpenSchedule_triggered()
+{
+
+}
+
+void SoftProjector::on_actionSaveSchedule_triggered()
+{
+    if(schedule_file_path.isEmpty() || schedule_file_path.startsWith("untitled"))
+        on_actionSaveScheduleAs_triggered();
+    else
+        saveSchedule();
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionSaveScheduleAs_triggered()
+{
+    QString path = QFileDialog::getSaveFileName(this,tr("Save softProjector schedule as:"),".",
+                                                tr("softProjector schedule file ") + "(*.spsc)");
+    if(!path.isEmpty())
+    {
+        if(path.endsWith(".spsc"))
+            schedule_file_path = path;
+        else
+            schedule_file_path = path + ".spsc";
+        saveSchedule();
+    }
+
+    updateWindowTest();
+}
+
+void SoftProjector::on_actionCloseSchedule_triggered()
+{
+
+}
+
+void SoftProjector::openSchedule()
+{
+  /*  QFile file(project_file_path);
+
+    file.open(QIODevice::ReadOnly);
+    QXmlStreamReader xml(&file);
+
+    while(!xml.atEnd())
+    {
+        xml.readNext();
+        if(xml.StartElement && xml.name() == "spProject")
+        {
+            double p_version = xml.attributes().value("version").toString().toDouble();
+            if(1.0 < p_version && p_version <= 2.0)
+            {
+                xml.readNext();
+                while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
+                {
+                    xml.readNext();
+                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version >= 1.5)
+                    {
+                        // Read saved bible history
+                        readBibleHistoryFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.0)
+                    {
+                        // Read saved bible history
+                        readBibleHistoryFromSavedProject1_0(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "Songs")
+                    {
+                        // Read save versionsongs
+                        readSongsFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                    else if(xml.StartElement && xml.name() == "Announcements")
+                    {
+                        // Read saved announcements
+                        readAnnouncementsFromSavedProject(&xml);
+                        xml.readNext();
+                    }
+                }
+            }
+            else
+            {
+                //User friednly box for incorrect file version
+                QMessageBox mb;
+                mb.setWindowTitle(tr("Incorrect project file format"));
+                mb.setText(tr("The softProjector project file you are opening,\n"
+                              "is not supported by your version of softProjector.\n"
+                              "You may try upgrading your version of softProjector."));
+                mb.setIcon(QMessageBox::Information);
+                mb.exec();
+
+                // remove any file paths
+                project_file_path.clear();
+                updateWindowTest();
+                return;
+            }
+        }
+    }
+    file.close();
+*/
+    is_schedule_saved = true;
+}
+
+void SoftProjector::saveSchedule()
+{
+    // Save schedule as s SQLite database file
+    {
+        bool db_exist = QFile::exists(schedule_file_path);
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spsc");
+        db.setDatabaseName(schedule_file_path);
+        if(db.open())
+        {
+            QSqlQuery sq(db);
+            if(db_exist)
+                saveScheduleUpdate(db,sq);
+            else
+                saveScheduleNew(db,sq);
+        }
+    }
+    QSqlDatabase::removeDatabase("spsc");
+    is_schedule_saved = true;
+}
+
+void SoftProjector::saveScheduleNew(QSqlDatabase &d,QSqlQuery &q)
+{
+    q.exec("CREATE TABLE 'spsc' ('version' TEXT)");
+    q.exec("INSERT INTO spsc (version) VALUES ('2')");
+    q.exec("CREATE TABLE 'schedule' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
+            "'stype' TEXT, 'name' TEXT, 'sorder' INTEGER )");
+    q.exec("CREATE TABLE 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
+    q.exec("CREATE TABLE 'song' ('scid' INTEGER, 'songID' INTEGER, 'sbId' INTEGER, 'sbName' TEXT, 'number' INTEGER, "
+           "'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, 'songText' TEXT, "
+           "'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' TEXT, 'font' TEXT, "
+           "'backImage' BLOB, 'backPath' TEXT)");
+    q.exec("CREATE TABLE 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
+    q.exec("CREATE TABLE 'slides' ('ssid' INTEGER, 'name' TEXT, 'path' TEXT, 'image' BLOB, "
+           "'imageSmall' BLOB, 'imagePreview' BLOB)");
+    q.exec("CREATE TABLE 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
+    q.exec("CREATE TABLE 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, 'usePrivate' BOOL, "
+           "'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' TEXT, 'useBack' BOOL "
+           "'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
+    int ord(0);
+    foreach(const Schedule & sc,schedule)
+    {
+        q.exec(QString("INSERT INTO schedule (stype,name,sorder) VALUES('%1','%2',%3)")
+               .arg(sc.stype).arg(sc.name).arg(ord));
+        q.exec("SELECT seq FROM sqlite_sequence WHERE name = 'schedule'");
+        q.first();
+        int scid = q.value(0).toInt();
+        q.clear();
+        if(sc.stype == "bible")
+            saveScheduleItemNew(q,scid,sc.bible);
+        ++ord;
+    }
+}
+
+void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHistory &b)
+{
+    q.prepare("INSERT INTO bible (scid,verseIds,caption,captionLong) VALUES(?,?,?,?)");
+    q.addBindValue(scid);
+    q.addBindValue(b.verseIds);
+    q.addBindValue(b.caption);
+    q.addBindValue(b.captionLong);
+    q.exec();
+}
+
+void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s)
+{
+
+}
+
+void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const SlideShow &s)
+{
+
+}
+
+void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const VideoInfo &v)
+{
+
+}
+
+void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Announcement &a)
+{
+
+}
+
+void SoftProjector::saveScheduleUpdate(QSqlDatabase &d, QSqlQuery &q)
+{
+
+}
+
+void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const BibleHistory &b)
+{
+
+}
+
+void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const Song &s)
+{
+
+}
+
+void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const SlideShow &s)
+{
+
+}
+
+void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const VideoInfo &v)
+{
+
+}
+
+void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const Announcement &a)
+{
+
 }

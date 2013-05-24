@@ -85,7 +85,6 @@ public slots:
 
     void setWaitCursor();
     void setArrowCursor();
-    void setProjectChanged(bool isChanged);
 
 private:
     Ui::SoftProjectorClass *ui;
@@ -97,10 +96,12 @@ private:
     QString languagePath;
     QTranslator translator;
 
-    //For saving and opening softProjector project files
-    QString project_file_path;
-    void updateWindowTest();
-    bool is_project_saved;
+    //For saving and opening schedule files
+    //QString project_file_path;
+    QString schedule_file_path;
+    bool is_schedule_saved;
+    //bool is_project_saved;
+
     QString cur_locale;
 
     bool isSingleScreen;
@@ -127,21 +128,8 @@ private:
 
 private slots:
     void showDisplayScreen(bool show);
-    //For saving and opening softProjector project files
-    void on_actionClose_Project_triggered();
-    void on_actionNew_Project_triggered();
-    void saveProject();
-    void openProject();
-    void clearProject();
-    void readBibleHistoryFromSavedProject(QXmlStreamReader *xml);
-    void readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml);
-    void readSongsFromSavedProject(QXmlStreamReader *xml);
-    void readAnnouncementsFromSavedProject(QXmlStreamReader *xml);
 
     void applySetting(GeneralSettings &g, Theme &t);
-    void on_actionSave_Project_As_triggered();
-    void on_actionSave_Project_triggered();
-    void on_actionOpen_triggered();
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void updateEditActions();
@@ -149,6 +137,7 @@ private slots:
     void on_actionEdit_triggered();
     void on_actionCopy_triggered();
     void on_actionDelete_triggered();
+    void updateWindowTest();
 
     void retranslateUis();
     void createLanguageActions();
@@ -185,7 +174,7 @@ private slots:
     void on_listShow_itemSelectionChanged();
     void on_rbMultiVerse_toggled(bool checked);
     void on_actionPrint_triggered();
-    void on_actionPrint_Project_triggered();
+    void on_actionPrintSchedule_triggered();
 
     void nextSlide();
     void prevSlide();
@@ -195,6 +184,7 @@ private slots:
     void setButtonPlayIcon(bool isPlaying);
     void setTimeText(QString cTime);
 
+    // schedule functions
     void on_actionScheduleAdd_triggered();
     void on_actionScheduleRemove_triggered();
     void on_actionScheduleClear_triggered();
@@ -210,8 +200,25 @@ private slots:
     void on_actionMoveScheduleUp_triggered();
     void on_actionMoveScheduleDown_triggered();
     void on_actionMoveScheduleBottom_triggered();
-
-
+    void on_actionNewSchedule_triggered();
+    void on_actionOpenSchedule_triggered();
+    void on_actionSaveSchedule_triggered();
+    void on_actionSaveScheduleAs_triggered();
+    void on_actionCloseSchedule_triggered();
+    void openSchedule();
+    void saveSchedule();
+    void saveScheduleNew(QSqlDatabase &d, QSqlQuery &q);
+    void saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHistory &b);
+    void saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s);
+    void saveScheduleItemNew(QSqlQuery &q, int scid, const SlideShow &s);
+    void saveScheduleItemNew(QSqlQuery &q, int scid, const VideoInfo &v);
+    void saveScheduleItemNew(QSqlQuery &q, int scid, const Announcement &a);
+    void saveScheduleUpdate(QSqlDatabase &d, QSqlQuery &q);
+    void saveScheduleItemUpdate(QSqlQuery &q, int scid, const BibleHistory &b);
+    void saveScheduleItemUpdate(QSqlQuery &q, int scid, const Song &s);
+    void saveScheduleItemUpdate(QSqlQuery &q, int scid, const SlideShow &s);
+    void saveScheduleItemUpdate(QSqlQuery &q, int scid, const VideoInfo &v);
+    void saveScheduleItemUpdate(QSqlQuery &q, int scid, const Announcement &a);
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);

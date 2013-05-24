@@ -248,14 +248,14 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew_Project"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave_Project"/>
-    <addaction name="actionSave_Project_As"/>
-    <addaction name="actionClose_Project"/>
+    <addaction name="actionNewSchedule"/>
+    <addaction name="actionOpenSchedule"/>
+    <addaction name="actionSaveSchedule"/>
+    <addaction name="actionSaveScheduleAs"/>
+    <addaction name="actionCloseSchedule"/>
     <addaction name="separator"/>
     <addaction name="actionPrint"/>
-    <addaction name="actionPrint_Project"/>
+    <addaction name="actionPrintSchedule"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -397,50 +397,53 @@
     <string>Song Counter...</string>
    </property>
   </action>
-  <action name="actionOpen">
+  <action name="actionOpenSchedule">
    <property name="icon">
     <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/open.png</normaloff>:/icons/icons/open.png</iconset>
+     <normaloff>:/icons/icons/scheduleOpen.png</normaloff>:/icons/icons/scheduleOpen.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open Project</string>
+    <string>&amp;Open Schedule</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionSave_Project">
+  <action name="actionSaveSchedule">
    <property name="icon">
     <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
+     <normaloff>:/icons/icons/scheduleSave.png</normaloff>:/icons/icons/scheduleSave.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save Project</string>
+    <string>&amp;Save Schedule</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSave_Project_As">
+  <action name="actionSaveScheduleAs">
    <property name="text">
-    <string>Save Project &amp;As</string>
+    <string>Save Schedule &amp;As</string>
    </property>
   </action>
-  <action name="actionNew_Project">
+  <action name="actionNewSchedule">
    <property name="icon">
     <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
+     <normaloff>:/icons/icons/scheduleNew.png</normaloff>:/icons/icons/scheduleNew.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;New Project</string>
+    <string>&amp;New Schedule</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
    </property>
   </action>
-  <action name="actionClose_Project">
+  <action name="actionCloseSchedule">
    <property name="text">
-    <string>Close Project</string>
+    <string>Close Schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Close Schedule</string>
    </property>
   </action>
   <action name="actionPrint">
@@ -458,9 +461,12 @@
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="actionPrint_Project">
+  <action name="actionPrintSchedule">
    <property name="text">
-    <string>Print Project</string>
+    <string>Print Schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Print Schedule</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+P</string>
