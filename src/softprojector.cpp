@@ -1274,342 +1274,7 @@ void SoftProjector::on_actionSong_Counter_triggered()
     songCounter->exec();
     delete songCounter;
 }
-/*
-void SoftProjector::on_actionOpen_triggered()
-{
-    if(!is_project_saved && !project_file_path.isEmpty())
-    {
-        QMessageBox mb;
-        mb.setWindowTitle(tr("Save Project?","project as in document file"));
-        mb.setText(tr("Do you want to save current project before opening other?","project as in document file"));
-        mb.setIcon(QMessageBox::Question);
-        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        mb.setDefaultButton(QMessageBox::Yes);
-        int ret = mb.exec();
 
-        switch (ret)
-        {
-        case QMessageBox::Yes:
-            // Save Project and continuew opening next
-            on_actionSave_Project_triggered();
-            break;
-        case QMessageBox::No:
-            // Cancel was clicked, do nothing
-            break;
-        default:
-            // should never be reached
-            break;
-        }
-    }
-    QString path = QFileDialog::getOpenFileName(this,tr("Open softProjector project"),".",
-                                                tr("softProjector project file ") + "(*.spp)");
-    if(!path.isEmpty())
-    {
-        // reset project file path only when path is valid and then open
-
-        project_file_path = path;
-        openProject();
-    }
-    updateWindowTest();
-}
-
-void SoftProjector::on_actionSave_Project_triggered()
-{
-    if(project_file_path.isEmpty() || project_file_path.startsWith("untitled"))
-        on_actionSave_Project_As_triggered();
-    else
-        saveProject();
-
-    updateWindowTest();
-}
-
-void SoftProjector::on_actionSave_Project_As_triggered()
-{
-    QString path = QFileDialog::getSaveFileName(this,tr("Save softProjector project as:"),".",
-                                                tr("softProjector project file ") + "(*.spp)");
-    if(!path.isEmpty())
-    {
-//        qDebug()<<"path:"<<path;
-        if(path.endsWith(".spp"))
-            project_file_path = path;
-        else
-//            qDebug()<<"file with no .spp";
-            project_file_path = path + ".spp";
-//        qDebug()<<"project path:"<<project_file_path;
-        saveProject();
-    }
-
-    updateWindowTest();
-}
-
-void SoftProjector::on_actionNew_Project_triggered()
-{
-    QMessageBox mb;
-    if(!is_project_saved && !project_file_path.isEmpty())
-    {
-        mb.setWindowTitle(tr("Save Project?"));
-        mb.setText(tr("Do you want to save current project before creating a new project?"));
-        mb.setIcon(QMessageBox::Question);
-        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        mb.setDefaultButton(QMessageBox::Yes);
-        int ret = mb.exec();
-
-        switch (ret)
-        {
-        case QMessageBox::Yes:
-            // Save Project and continuew opening next
-            on_actionSave_Project_triggered();
-            break;
-        case QMessageBox::No:
-            // Cancel was clicked, do nothing
-            break;
-        default:
-            // should never be reached
-            break;
-        }
-    }
-
-    project_file_path = "untitled.spp";
-    clearProject();
-    updateWindowTest();
-}
-
-void SoftProjector::on_actionClose_Project_triggered()
-{
-    QMessageBox mb;
-    if(!is_project_saved && !project_file_path.isEmpty())
-    {
-        mb.setWindowTitle(tr("Save Project?"));
-        mb.setText(tr("Do you want to save current project before closing it?"));
-        mb.setIcon(QMessageBox::Question);
-        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        mb.setDefaultButton(QMessageBox::Yes);
-        int ret = mb.exec();
-
-        switch (ret)
-        {
-        case QMessageBox::Yes:
-            // Save Project and continuew opening next
-            on_actionSave_Project_triggered();
-            break;
-        case QMessageBox::No:
-            // Cancel was clicked, do nothing
-            break;
-        default:
-            // should never be reached
-            break;
-        }
-    }
-    project_file_path.clear();
-    clearProject();
-    updateWindowTest();
-}
-
-void SoftProjector::clearProject()
-{
-    QList<Announcement> announcements;
-    QList<BibleSearch> histories;
-    QList<Song> songs;
-
-//    announceWidget->loadFromFile(announcements);
-//    bibleWidget->loadHistoriesFromFile(histories);
-//    songWidget->loadPlaylistFromFile(songs);
-}
-
-void SoftProjector::readAnnouncementsFromSavedProject(QXmlStreamReader *xml)
-{
-//    QList<Announcement> announcements;
-//    Announcement a;
-//    QXmlStreamAttributes atrs;
-//    while(xml->tokenString() != "EndElement")
-//    {
-//        xml->readNext();
-//        if(xml->StartElement && xml->name() == "announce")
-//        {
-//            atrs = xml->attributes();
-//            QString f = atrs.value("aling_flag").toString();
-//            a.align_flags = f.toInt();
-//            a.text = xml->readElementText();
-//            announcements.append(a);
-//            xml->readNext();
-//        }
-//    }
-//    announceWidget->loadFromFile(announcements);
-}
-
-void SoftProjector::readBibleHistoryFromSavedProject(QXmlStreamReader *xml)
-{
-    BibleSearch h;
-    QList<BibleSearch> histories;
-    QXmlStreamAttributes atrs;
-    while(xml->tokenString() != "EndElement")
-    {
-        xml->readNext();
-        if(xml->StartElement && xml->name() == "history")
-        {
-            atrs = xml->attributes();
-            QString a = atrs.value("first").toString();
-            h.first_v = a.toInt();
-            a = atrs.value("last").toString();
-            h.last_v = a.toInt();
-
-            xml->readNext();
-            while(xml->tokenString() != "EndElement")
-            {
-                xml->readNext();
-                if(xml->StartElement && xml->name() == "ids")
-                {
-                    h.verse_id = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "book")
-                {
-                    h.book = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "chapter")
-                {
-                    h.chapter = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "display_txt")
-                {
-                    h.display_text = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "verse")
-                {
-                    h.verse = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "verse_txt")
-                {
-                    h.verse_text = xml->readElementText();
-                    xml->readNext();
-                }
-            }
-            histories.append(h);
-            xml->readNext();
-        }
-    }
-//    bibleWidget->loadHistoriesFromFile(histories);
-}
-
-void SoftProjector::readBibleHistoryFromSavedProject1_0(QXmlStreamReader *xml)
-{
-    QStringList histories;
-    while(xml->tokenString() != "EndElement")
-    {
-        xml->readNext();
-        if(xml->StartElement && xml->name() == "verse")
-        {
-            histories.append(xml->readElementText());
-            xml->readNext();
-        }
-    }
-//    bibleWidget->loadHistoriesFromFile1_0(histories);
-}
-
-void SoftProjector::readSongsFromSavedProject(QXmlStreamReader *xml)
-{
-    QList<Song> songs;
-    Song s;
-    QXmlStreamAttributes atrs;
-    while(xml->tokenString() != "EndElement")
-    {
-        xml->readNext();
-        if(xml->StartElement && xml->name() == "song")
-        {
-            atrs = xml->attributes();
-            QString a = atrs.value("id").toString();
-            s.songID = a.toInt();
-            a = atrs.value("num").toString();
-            s.number = a.toInt();
-            a = atrs.value("category").toString();
-            s.category = a.toInt();
-
-            xml->readNext();
-            while(xml->tokenString() != "EndElement")
-            {
-                xml->readNext();
-                if(xml->StartElement && xml->name() == "title")
-                {
-                    s.title = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "text")
-                {
-                    s.songText = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "songbook")
-                {
-                    s.songbook_name = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "tune")
-                {
-                    s.tune = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "words")
-                {
-                    s.wordsBy = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "music")
-                {
-                    s.musicBy = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && (xml->name() == "notes" || xml->name() == "comments"))
-                {
-                    s.notes = xml->readElementText();
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "use_private")
-                {
-                    s.usePrivateSettings = (xml->readElementText() == "true");
-                    xml->readNext();
-                }
-                else if(xml->StartElement && (xml->name() == "aling" || xml->name() == "align"))
-                {
-                    QString str = xml->readElementText();
-                    QStringList l = str.split(",");
-                    if(l.count()>1)
-                    {
-                    s.alignmentV = l.at(0).toInt();
-                    s.alignmentH = l.at(1).toInt();
-                    }
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "color")
-                {
-                    s.color = QColor::fromRgb(xml->readElementText().toUInt());
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "font")
-                {
-                    s.font.fromString(xml->readElementText());
-                    xml->readNext();
-                }
-                else if(xml->StartElement && xml->name() == "back")
-                {
-                    s.backgroundPath = xml->readElementText();
-                    xml->readNext();
-                }
-//                else if(xml->StartElement)
-//                {
-//                   xml->readNext();
-//                }
-            }
-            songs.append(s);
-            xml->readNext();
-        }
-    }
-//    songWidget->loadPlaylistFromFile(songs);
-}
-*/
 void SoftProjector::updateWindowTest()
 {
     QFileInfo fi(schedule_file_path);
@@ -1628,16 +1293,6 @@ void SoftProjector::updateWindowTest()
         this->setWindowTitle("softProjector " + version_string);
     }
 }
-
-//void SoftProjector::setProjectChanged(bool changed)
-//{
-//    if(changed)
-//        is_project_saved = false;
-//    else
-//        is_project_saved = true;
-
-//    updateWindowTest();
-//}
 
 void SoftProjector::on_rbMultiVerse_toggled(bool checked)
 {
@@ -2110,32 +1765,32 @@ void SoftProjector::saveSchedule()
         {
             QSqlQuery sq(db);
             if(db_exist)
-                saveScheduleUpdate(db,sq);
+                saveScheduleUpdate(sq);
             else
-                saveScheduleNew(db,sq);
+                saveScheduleNew(sq);
         }
     }
     QSqlDatabase::removeDatabase("spsc");
     is_schedule_saved = true;
 }
 
-void SoftProjector::saveScheduleNew(QSqlDatabase &d,QSqlQuery &q)
+void SoftProjector::saveScheduleNew(QSqlQuery &q)
 {
     q.exec("CREATE TABLE 'spsc' ('version' TEXT)");
     q.exec("INSERT INTO spsc (version) VALUES ('2')");
     q.exec("CREATE TABLE 'schedule' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
             "'stype' TEXT, 'name' TEXT, 'sorder' INTEGER )");
     q.exec("CREATE TABLE 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
-    q.exec("CREATE TABLE 'song' ('scid' INTEGER, 'songID' INTEGER, 'sbId' INTEGER, 'sbName' TEXT, 'number' INTEGER, "
+    q.exec("CREATE TABLE 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, 'number' INTEGER, "
            "'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, 'songText' TEXT, "
-           "'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' TEXT, 'font' TEXT, "
+           "'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, 'font' TEXT, "
            "'backImage' BLOB, 'backPath' TEXT)");
     q.exec("CREATE TABLE 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
-    q.exec("CREATE TABLE 'slides' ('ssid' INTEGER, 'name' TEXT, 'path' TEXT, 'image' BLOB, "
-           "'imageSmall' BLOB, 'imagePreview' BLOB)");
+    q.exec("CREATE TABLE 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, 'porder' INTEGER, "
+           "'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
     q.exec("CREATE TABLE 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
     q.exec("CREATE TABLE 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, 'usePrivate' BOOL, "
-           "'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' TEXT, 'useBack' BOOL "
+           "'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' INTEGER, 'useBack' BOOL, "
            "'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
     int ord(0);
     foreach(const Schedule & sc,schedule)
@@ -2148,6 +1803,14 @@ void SoftProjector::saveScheduleNew(QSqlDatabase &d,QSqlQuery &q)
         q.clear();
         if(sc.stype == "bible")
             saveScheduleItemNew(q,scid,sc.bible);
+        else if(sc.stype == "song")
+            saveScheduleItemNew(q,scid,sc.song);
+        else if(sc.stype == "slideshow")
+            saveScheduleItemNew(q,scid,sc.slideshow);
+        else if(sc.stype == "media")
+            saveScheduleItemNew(q,scid,sc.media);
+        else if(sc.stype == "announce")
+            saveScheduleItemNew(q,scid,sc.announce);
         ++ord;
     }
 }
@@ -2164,25 +1827,91 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHisto
 
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s)
 {
-
+    q.prepare("INSERT INTO song (scid,songid,sbid,sbName,number,title,category,tune,wordsBy,musicBy,"
+              "songText,notes,usePrivate,alignV,alignH,color,font,backImage,backPath) "
+              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    q.addBindValue(scid);
+    q.addBindValue(s.songID);
+    q.addBindValue(s.songbook_id);
+    q.addBindValue(s.songbook_name);
+    q.addBindValue(s.number);
+    q.addBindValue(s.title);
+    q.addBindValue(s.category);
+    q.addBindValue(s.tune);
+    q.addBindValue(s.wordsBy);
+    q.addBindValue(s.musicBy);
+    q.addBindValue(s.songText);
+    q.addBindValue(s.notes);
+    q.addBindValue(s.usePrivateSettings);
+    q.addBindValue(s.alignmentV);
+    q.addBindValue(s.alignmentH);
+    unsigned int tci = (unsigned int)(s.color.rgb());
+    q.addBindValue(tci);
+    q.addBindValue(s.font.toString());
+    q.addBindValue(pixToByte(QPixmap()));
+    q.addBindValue(s.backgroundPath);
+    q.exec();
 }
 
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const SlideShow &s)
 {
+    q.prepare("INSERT INTO slideshow (scid,ssid,name,info) VALUES (?,?,?,?)");
+    q.addBindValue(scid);
+    q.addBindValue(s.slideShowId);
+    q.addBindValue(s.name);
+    q.addBindValue(s.info);
+    q.exec();
 
+    foreach(const SlideShowItem & si,s.slides)
+    {
+        q.prepare("INSERT INTO slides (scid,sid,name,path,porder,image,imageSmall,imagePreview) VALUES(?,?,?,?,?,?,?,?)");
+        q.addBindValue(scid);
+        q.addBindValue(si.slideId);
+        q.addBindValue(si.name);
+        q.addBindValue(si.path);
+        q.addBindValue(si.order);
+        q.addBindValue(pixToByte(si.image));
+        q.addBindValue(pixToByte(si.imageSmall));
+        q.addBindValue(pixToByte(si.imagePreview));
+        q.exec();
+    }
 }
 
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const VideoInfo &v)
 {
-
+    q.prepare("INSERT INTO media (scid,name,path,aRatio) VALUES(?,?,?,?)");
+    q.addBindValue(scid);
+    q.addBindValue(v.fileName);
+    q.addBindValue(v.filePath);
+    q.addBindValue(v.aspectRatio);
+    q.exec();
 }
 
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Announcement &a)
 {
-
+    qDebug()<<q.prepare("INSERT INTO announce (scid,aId,title,aText,usePrivate,useAuto,loop,slideTimer,font,"
+                        "color,useBack,backImage,backPath,alignV,alignH) "
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    q.addBindValue(scid);
+    q.addBindValue(a.idNum);
+    q.addBindValue(a.title);
+    q.addBindValue(a.text);
+    q.addBindValue(a.usePrivateSettings);
+    q.addBindValue(a.useAutoNext);
+    q.addBindValue(a.loop);
+    q.addBindValue(a.slideTimer);
+    q.addBindValue(a.font.toString());
+    unsigned int tci = (unsigned int)(a.color.rgb());
+    q.addBindValue(tci);
+    q.addBindValue(a.useBackground);
+    q.addBindValue(pixToByte(QPixmap()));
+    q.addBindValue(a.backgroundPath);
+    q.addBindValue(a.alignmentV);
+    q.addBindValue(a.alignmentH);
+    qDebug()<<q.exec();
 }
 
-void SoftProjector::saveScheduleUpdate(QSqlDatabase &d, QSqlQuery &q)
+void SoftProjector::saveScheduleUpdate(QSqlQuery &q)
 {
 
 }

@@ -18,6 +18,9 @@
 ***************************************************************************/
 
 #include "spfunctions.h"
+//spFunctions::spFunctions()
+//{
+//}
 
 QByteArray pixToByte(const QPixmap & pmap)
 {
@@ -28,9 +31,6 @@ QByteArray pixToByte(const QPixmap & pmap)
     return buffer.data();
 }
 
-//spFunctions::spFunctions()
-//{
-//}
 bool isAnnounceTitle(QString string)
 {
     // Check if the line is verse title line

@@ -207,13 +207,13 @@ private slots:
     void on_actionCloseSchedule_triggered();
     void openSchedule();
     void saveSchedule();
-    void saveScheduleNew(QSqlDatabase &d, QSqlQuery &q);
+    void saveScheduleNew(QSqlQuery &q);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHistory &b);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const SlideShow &s);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const VideoInfo &v);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const Announcement &a);
-    void saveScheduleUpdate(QSqlDatabase &d, QSqlQuery &q);
+    void saveScheduleUpdate(QSqlQuery &q);
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const BibleHistory &b);
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const Song &s);
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const SlideShow &s);
