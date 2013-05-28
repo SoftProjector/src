@@ -1275,14 +1275,14 @@ void SoftProjector::on_actionSong_Counter_triggered()
     delete songCounter;
 }
 
-void SoftProjector::updateWindowTest()
+void SoftProjector::updateWindowText()
 {
     QFileInfo fi(schedule_file_path);
     QString file = fi.fileName();
 
     if(!file.isEmpty())
     {
-        file.remove(".spp");
+        file.remove(".spsc");
         if(is_schedule_saved)
             this->setWindowTitle(file + " - softProjector " + version_string);
         else
@@ -1524,7 +1524,7 @@ void SoftProjector::reloadShceduleList()
         ui->listWidgetSchedule->addItem(itm);
     }
     is_schedule_saved = false;
-    updateWindowTest();
+    updateWindowText();
 }
 
 void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index)
@@ -1567,7 +1567,7 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
 void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
 {
     int currentRow = ui->listWidgetSchedule->currentRow();
-    qDebug()<<"cr:"<<currentRow;
+    //qDebug()<<"cr:"<<currentRow;
     if(currentRow>=0)
     {
         Schedule s = schedule.at(currentRow);
@@ -1652,7 +1652,15 @@ void SoftProjector::on_actionNewSchedule_triggered()
 
 void SoftProjector::on_actionOpenSchedule_triggered()
 {
-
+    QString path = QFileDialog::getOpenFileName(this,tr("Save softProjector schedule as:"),".",
+                                                tr("softProjector schedule file ") + "(*.spsc)");
+    if(!path.isEmpty())
+    {
+        schedule_file_path = path;
+        openSchedule();
+        is_schedule_saved = true;
+        updateWindowText();
+    }
 }
 
 void SoftProjector::on_actionSaveSchedule_triggered()
@@ -1660,8 +1668,8 @@ void SoftProjector::on_actionSaveSchedule_triggered()
     if(schedule_file_path.isEmpty() || schedule_file_path.startsWith("untitled"))
         on_actionSaveScheduleAs_triggered();
     else
-        saveSchedule();
-    updateWindowTest();
+        saveSchedule(false);
+    updateWindowText();
 }
 
 void SoftProjector::on_actionSaveScheduleAs_triggered()
@@ -1674,100 +1682,62 @@ void SoftProjector::on_actionSaveScheduleAs_triggered()
             schedule_file_path = path;
         else
             schedule_file_path = path + ".spsc";
-        saveSchedule();
+        saveSchedule(true);
     }
 
-    updateWindowTest();
+    updateWindowText();
 }
 
 void SoftProjector::on_actionCloseSchedule_triggered()
 {
-
-}
-
-void SoftProjector::openSchedule()
-{
-  /*  QFile file(project_file_path);
-
-    file.open(QIODevice::ReadOnly);
-    QXmlStreamReader xml(&file);
-
-    while(!xml.atEnd())
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name() == "spProject")
-        {
-            double p_version = xml.attributes().value("version").toString().toDouble();
-            if(1.0 < p_version && p_version <= 2.0)
-            {
-                xml.readNext();
-                while(xml.tokenString() != "EndElement" && xml.name() != "spProject")
-                {
-                    xml.readNext();
-                    if(xml.StartElement && xml.name() == "BibleHistory" && p_version >= 1.5)
-                    {
-                        // Read saved bible history
-                        readBibleHistoryFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "BibleHistory" && p_version == 1.0)
-                    {
-                        // Read saved bible history
-                        readBibleHistoryFromSavedProject1_0(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "Songs")
-                    {
-                        // Read save versionsongs
-                        readSongsFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                    else if(xml.StartElement && xml.name() == "Announcements")
-                    {
-                        // Read saved announcements
-                        readAnnouncementsFromSavedProject(&xml);
-                        xml.readNext();
-                    }
-                }
-            }
-            else
-            {
-                //User friednly box for incorrect file version
-                QMessageBox mb;
-                mb.setWindowTitle(tr("Incorrect project file format"));
-                mb.setText(tr("The softProjector project file you are opening,\n"
-                              "is not supported by your version of softProjector.\n"
-                              "You may try upgrading your version of softProjector."));
-                mb.setIcon(QMessageBox::Information);
-                mb.exec();
-
-                // remove any file paths
-                project_file_path.clear();
-                updateWindowTest();
-                return;
-            }
-        }
-    }
-    file.close();
-*/
+    // TODO: Finalize
     is_schedule_saved = true;
+    schedule_file_path.clear();
+    updateWindowText();
 }
 
-void SoftProjector::saveSchedule()
+void SoftProjector::saveSchedule(bool overWrite)
 {
     // Save schedule as s SQLite database file
     {
         bool db_exist = QFile::exists(schedule_file_path);
-
+        if(db_exist && overWrite)
+        {
+            if(!QFile::remove(schedule_file_path))
+            {
+                // TODO: Show message that file cannot be overwritten
+            }
+            else
+                db_exist = false;
+        }
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spsc");
         db.setDatabaseName(schedule_file_path);
         if(db.open())
         {
             QSqlQuery sq(db);
+            sq.exec("PRAGMA user_version = 2");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'schedule' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
+                    "'stype' TEXT, 'name' TEXT, 'sorder' INTEGER )");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, "
+                    "'number' INTEGER, 'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, "
+                    "'songText' TEXT, 'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, "
+                    "'font' TEXT, 'backImage' BLOB, 'backPath' TEXT)");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, "
+                    "'porder' INTEGER, 'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
+            sq.exec("CREATE TABLE IF NOT EXISTS 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, "
+                    "'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' INTEGER, "
+                    "'useBack' BOOL, 'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
             if(db_exist)
                 saveScheduleUpdate(sq);
             else
                 saveScheduleNew(sq);
+
+//            sq.exec("PRAGMA user_version");
+//            sq.first();
+//            qDebug()<<"prama user version:"<<sq.value(0).toString();
         }
     }
     QSqlDatabase::removeDatabase("spsc");
@@ -1776,42 +1746,26 @@ void SoftProjector::saveSchedule()
 
 void SoftProjector::saveScheduleNew(QSqlQuery &q)
 {
-    q.exec("CREATE TABLE 'spsc' ('version' TEXT)");
-    q.exec("INSERT INTO spsc (version) VALUES ('2')");
-    q.exec("CREATE TABLE 'schedule' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, "
-            "'stype' TEXT, 'name' TEXT, 'sorder' INTEGER )");
-    q.exec("CREATE TABLE 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
-    q.exec("CREATE TABLE 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, 'number' INTEGER, "
-           "'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, 'songText' TEXT, "
-           "'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, 'font' TEXT, "
-           "'backImage' BLOB, 'backPath' TEXT)");
-    q.exec("CREATE TABLE 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
-    q.exec("CREATE TABLE 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, 'porder' INTEGER, "
-           "'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
-    q.exec("CREATE TABLE 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
-    q.exec("CREATE TABLE 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, 'usePrivate' BOOL, "
-           "'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' INTEGER, 'useBack' BOOL, "
-           "'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
-    int ord(0);
-    foreach(const Schedule & sc,schedule)
+    for(int i(0);i < schedule.count();++i)
     {
+        Schedule sc =  schedule.at(i);
         q.exec(QString("INSERT INTO schedule (stype,name,sorder) VALUES('%1','%2',%3)")
-               .arg(sc.stype).arg(sc.name).arg(ord));
+               .arg(sc.stype).arg(sc.name).arg(i+1));
         q.exec("SELECT seq FROM sqlite_sequence WHERE name = 'schedule'");
         q.first();
-        int scid = q.value(0).toInt();
+        sc.scid = q.value(0).toInt();
         q.clear();
         if(sc.stype == "bible")
-            saveScheduleItemNew(q,scid,sc.bible);
+            saveScheduleItemNew(q,sc.scid,sc.bible);
         else if(sc.stype == "song")
-            saveScheduleItemNew(q,scid,sc.song);
+            saveScheduleItemNew(q,sc.scid,sc.song);
         else if(sc.stype == "slideshow")
-            saveScheduleItemNew(q,scid,sc.slideshow);
+            saveScheduleItemNew(q,sc.scid,sc.slideshow);
         else if(sc.stype == "media")
-            saveScheduleItemNew(q,scid,sc.media);
+            saveScheduleItemNew(q,sc.scid,sc.media);
         else if(sc.stype == "announce")
-            saveScheduleItemNew(q,scid,sc.announce);
-        ++ord;
+            saveScheduleItemNew(q,sc.scid,sc.announce);
+        schedule.replace(i,sc);
     }
 }
 
@@ -1913,7 +1867,72 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Announceme
 
 void SoftProjector::saveScheduleUpdate(QSqlQuery &q)
 {
+    for(int i(0);i < schedule.count();++i)
+    {
+        Schedule sc =  schedule.at(i);
+        if(sc.scid == -1)   // Save new schedule item that was not saved yet
+        {
+            q.exec(QString("INSERT INTO schedule (stype,name,sorder) VALUES('%1','%2',%3)")
+                   .arg(sc.stype).arg(sc.name).arg(i+1));
+            q.exec("SELECT seq FROM sqlite_sequence WHERE name = 'schedule'");
+            q.first();
+            sc.scid = q.value(0).toInt();
+            q.clear();
+            if(sc.stype == "bible")
+                saveScheduleItemNew(q,sc.scid,sc.bible);
+            else if(sc.stype == "song")
+                saveScheduleItemNew(q,sc.scid,sc.song);
+            else if(sc.stype == "slideshow")
+                saveScheduleItemNew(q,sc.scid,sc.slideshow);
+            else if(sc.stype == "media")
+                saveScheduleItemNew(q,sc.scid,sc.media);
+            else if(sc.stype == "announce")
+                saveScheduleItemNew(q,sc.scid,sc.announce);
+            schedule.replace(i,sc);
+        }
+        else    // Update existing schedule item
+        {
+            q.exec(QString("UPDATE schedule SET sorder = %1 WHERE id = %2").arg(i+1).arg(sc.scid));
+//            if(sc.stype == "bible")
+//                saveScheduleItemUpdate(q,sc.scid,sc.bible);
+//            else if(sc.stype == "song")
+//                saveScheduleItemUpdate(q,sc.scid,sc.song);
+//            else if(sc.stype == "slideshow")
+//                saveScheduleItemUpdate(q,sc.scid,sc.slideshow);
+//            else if(sc.stype == "media")
+//                saveScheduleItemUpdate(q,sc.scid,sc.media);
+//            else if(sc.stype == "announce")
+//                saveScheduleItemUpdate(q,sc.scid,sc.announce);
+        }
+    }
 
+    // Delete any shcedule items from file that have removed from schedule
+    q.exec("SELECT id,stype FROM schedule");
+    QSqlQuery sq = q;
+    while(q.next())
+    {
+        int scid = q.value(0).toInt();
+        bool toDelete;
+        QString stype = q.value(1).toString();
+        foreach(const Schedule &s,schedule)
+        {
+            if(scid == s.scid)
+            {
+                toDelete = false;
+                break;
+            }
+            else
+                toDelete = true;
+        }
+
+        if(toDelete)
+        {
+            sq.exec("DELETE FROM schedule WHERE id = " + QString::number(scid));
+            sq.exec("DELETE FROM " + stype + " WHERE scid = " + QString::number(scid));
+            if(stype == "slideshow")
+                sq.exec("DELETE FROM slides WHERE scid = " + QString::number(scid));
+        }
+    }
 }
 
 void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const BibleHistory &b)
@@ -1939,4 +1958,187 @@ void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const VideoIn
 void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const Announcement &a)
 {
 
+}
+
+void SoftProjector::openSchedule()
+{
+    // Save schedule as s SQLite database file
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spsc");
+        db.setDatabaseName(schedule_file_path);
+        if(db.open())
+        {
+            QSqlQuery sq(db);
+            sq.exec("PRAGMA user_version");
+            sq.first();
+            int scVer = sq.value(0).toInt();
+            if(scVer == 2)
+            {
+                schedule.clear();
+                sq.exec("SELECT id, stype, name FROM schedule ORDER BY sorder");
+                QSqlQuery sqsc = sq;
+                while(sq.next())
+                {
+//                    Schedule sc;
+                    int scid = sq.value(0).toInt();
+                    QString stype = sq.value(1).toString();
+                    QString name = sq.value(2).toString();
+
+                    if(stype == "bible")
+                    {
+                        BibleHistory bib;
+                        openScheduleItem(sqsc,scid,bib);
+                        Schedule sc(bib);
+                        sc.name = name;
+                        sc.scid = scid;
+                        schedule.append(sc);
+                    }
+                    else if(stype == "song")
+                    {
+                        Song song;
+                        openScheduleItem(sqsc,scid,song);
+                        Schedule sc(song);
+                        sc.name = name;
+                        sc.scid = scid;
+                        schedule.append(sc);
+                    }
+                    else if(stype == "slideshow")
+                    {
+                        SlideShow ss;
+                        openScheduleItem(sqsc,scid,ss);
+                        Schedule sc(ss);
+                        sc.name = name;
+                        sc.scid = scid;
+                        schedule.append(sc);
+                    }
+                    else if(stype == "media")
+                    {
+                        VideoInfo vi;
+                        openScheduleItem(sqsc,scid,vi);
+                        Schedule sc(vi);
+                        sc.name = name;
+                        sc.scid = scid;
+                        schedule.append(sc);
+                    }
+                    else if(stype == "announce")
+                    {
+                        Announcement announce;
+                        openScheduleItem(sqsc,scid,announce);
+                        Schedule sc(announce);
+                        sc.name = name;
+                        sc.scid = scid;
+                        schedule.append(sc);
+                    }
+                }
+                reloadShceduleList();
+            }
+            else
+            {
+                // TODO: give error message
+                qDebug()<<"Incorect file version:"<<scVer;
+                schedule_file_path.clear();
+                updateWindowText();
+            }
+        }
+    }
+    QSqlDatabase::removeDatabase("spsc");
+}
+
+void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, BibleHistory &b)
+{
+    //sq.exec("CREATE TABLE IF NOT EXISTS 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
+    q.exec("SELECT verseIds, caption, captionLong FROM bible WHERE scid = " + QString::number(scid));
+    q.first();
+    b.verseIds = q.value(0).toString();
+    b.caption = q.value(1).toString();
+    b.caption = q.value(2).toString();
+}
+
+void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
+{
+//    sq.exec("CREATE TABLE IF NOT EXISTS 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, "
+//            "'number' INTEGER, 'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, "
+//            "'songText' TEXT, 'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, "
+//            "'font' TEXT, 'backImage' BLOB, 'backPath' TEXT)");
+    q.exec("SELECT songid, sbid, sbName, number, title, category, tune, wordsBy, musicBy, songText, notes, usePrivate, "
+           "alignV, alignH, color, font, backImage, backPath FROM song WHERE scid = " + QString::number(scid));
+    q.first();
+    s.songID = q.value(0).toInt();
+    s.songbook_id = q.value(1).toInt();
+    s.songbook_name = q.value(2).toString();
+    s.number = q.value(3).toInt();
+    s.title = q.value(4).toString();
+    s.category = q.value(5).toInt();
+    s.tune = q.value(6).toString();
+    s.wordsBy = q.value(7).toString();
+    s.musicBy = q.value(8).toString();
+    s.songText = q.value(9).toString();
+    s.notes = q.value(10).toString();
+    s.usePrivateSettings = q.value(11).toBool();
+    s.alignmentV = q.value(12).toInt();
+    s.alignmentH = q.value(13).toInt();
+    s.color = QColor::fromRgb(q.value(14).toUInt());
+    s.font.fromString(q.value(15).toString());
+//    s.backgroundImage = QPixmap()
+    s.backgroundPath = q.value(17).toString();
+}
+
+void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s)
+{
+    //sq.exec("CREATE TABLE IF NOT EXISTS 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
+//    sq.exec("CREATE TABLE IF NOT EXISTS 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, "
+//            "'porder' INTEGER, 'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
+    q.exec("SELECT ssid, name, info FROM slideshow WHERE scid = " + QString::number(scid));
+    q.first();
+    s.slideShowId = q.value(0).toInt();
+    s.name = q.value(1).toString();
+    s.info = q.value(2).toString();
+
+    q.exec("SELECT sid, name, path, porder, image, imageSmall, imagePreview FROM slides WHERE scid = " + QString::number(scid));
+    while(q.next())
+    {
+        SlideShowItem si;
+        si.slideId = q.value(0).toInt();
+        si.name = q.value(1).toString();
+        si.path = q.value(2).toString();
+        si.order = q.value(3).toInt();
+        si.image.loadFromData(q.value(4).toByteArray());
+        si.imageSmall.loadFromData(q.value(5).toByteArray());
+        si.imagePreview.loadFromData(q.value(6).toByteArray());
+        s.slides.append(si);
+    }
+}
+
+void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v)
+{
+    //sq.exec("CREATE TABLE IF NOT EXISTS 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
+    q.exec("SELECT name, path, aRatio FROM media WHERE scid = " + QString::number(scid));
+    q.first();
+    v.fileName = q.value(0).toString();
+    v.filePath = q.value(1).toString();
+    v.aspectRatio = q.value(2).toInt();
+}
+
+void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Announcement &a)
+{
+//    sq.exec("CREATE TABLE IF NOT EXISTS 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, "
+//            "'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' INTEGER, "
+//            "'useBack' BOOL, 'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
+    q.exec("SELECT aId, title, aText, usePrivate, useAuto, loop, slideTimer, font, color, useBack, "
+           "backImage, backPath, alignV, alignH FROM announce WHERE scid = " + QString::number(scid));
+    q.first();
+    a.idNum = q.value(0).toInt();
+    a.title = q.value(1).toString();
+    a.text = q.value(2).toString();
+    a.usePrivateSettings = q.value(3).toBool();
+    a.useAutoNext = q.value(4).toBool();
+    a.loop = q.value(5).toBool();
+    a.slideTimer = q.value(6).toInt();
+    a.font.fromString(q.value(7).toString());
+    a.color = QColor::fromRgb(q.value(8).toUInt());
+    a.useBackground = q.value(9).toBool();
+//    a.backImage = QPixmap
+    a.backgroundPath = q.value(11).toString();
+    a.alignmentV = q.value(12).toInt();
+    a.alignmentH = q.value(13).toInt();
 }

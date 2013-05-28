@@ -137,7 +137,7 @@ private slots:
     void on_actionEdit_triggered();
     void on_actionCopy_triggered();
     void on_actionDelete_triggered();
-    void updateWindowTest();
+    void updateWindowText();
 
     void retranslateUis();
     void createLanguageActions();
@@ -206,7 +206,7 @@ private slots:
     void on_actionSaveScheduleAs_triggered();
     void on_actionCloseSchedule_triggered();
     void openSchedule();
-    void saveSchedule();
+    void saveSchedule(bool overWrite);
     void saveScheduleNew(QSqlQuery &q);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHistory &b);
     void saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s);
@@ -219,6 +219,11 @@ private slots:
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const SlideShow &s);
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const VideoInfo &v);
     void saveScheduleItemUpdate(QSqlQuery &q, int scid, const Announcement &a);
+    void openScheduleItem(QSqlQuery &q, const int scid, BibleHistory &b);
+    void openScheduleItem(QSqlQuery &q, const int scid, Song &s);
+    void openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s);
+    void openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v);
+    void openScheduleItem(QSqlQuery &q, const int scid, Announcement &a);
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);
