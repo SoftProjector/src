@@ -69,7 +69,6 @@ signals:
     void setWaitCursor();
     void setArrowCursor();
     void goLive(QStringList chapter_list, QString caption, QItemSelection selectItems);
-    void historyListChanged(bool changed);
 
 private slots:
     void on_history_listWidget_doubleClicked(QModelIndex index);

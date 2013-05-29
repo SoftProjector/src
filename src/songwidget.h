@@ -39,8 +39,6 @@ public:
     Song currentSong();
 
 public slots:
-//    void loadPlaylistFromFile(QList<Song> savedSongs);
-//    QList<Song> getPlaylistSongs();
     void retranslateUis();
     void deleteSong();
     Song getSongToEdit();
@@ -61,26 +59,19 @@ signals:
     void setWaitCursor();
     void setArrowCursor();
     // To be used ONLY by SongWidget::sendToProjector():
-//    void sendPlaylistChanged(bool changed);
     void sendSong(Song song, int currentItem);
     void addToSchedule(Song &song);
 
 private slots:
     void on_comboBoxCategory_currentIndexChanged(int index);
-//    void on_btnDownInPlaylist_clicked();
-//    void on_btnUpInPlaylist_clicked();
     void on_exact_match_rbutton_clicked();
     void on_begins_rbutton_clicked();
     void on_contains_rbutton_clicked();
     void on_listPreview_doubleClicked(QModelIndex index);
     void on_songs_view_clicked(QModelIndex index);
-//    void on_playlist_view_clicked(QModelIndex index);
     void on_song_num_spinbox_editingFinished();
-//    void on_playlist_view_doubleClicked(QModelIndex index);
     void on_songs_view_doubleClicked(QModelIndex index);
     void on_lineEditSearch_textEdited(QString Text);
-//    void on_btnRemoveFromPlaylist_clicked();
-//    void on_btnAddToPlaylist_clicked();
     void on_btnLive_clicked();
     void on_song_num_spinbox_valueChanged(int value);
     void on_songbook_menu_currentIndexChanged(int index);
@@ -103,11 +94,8 @@ private:
     QStringList songbookList;
     int titleType;
     SongDatabase song_database;
-//    SongsModel *playlist_model;
     SongProxyModel *proxy_model;
     bool isSpinboxEditing;
-//    bool focusInPlaylistTable;
-    bool playlistSongWasEdited;
     bool isSongFromSchelude;
     bool isScheduleSongEdited;
 //    bool allSongs;
@@ -122,7 +110,6 @@ public:
     SongCounter counter;
 public slots:
     void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
-//    void playlistViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
 };
 
 #endif // SONGWIDGET_H

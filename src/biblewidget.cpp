@@ -470,7 +470,6 @@ void BibleWidget::addToHistory()
     BibleHistory b = getCurrentVerse();
     history_items.append(b);
     ui->history_listWidget->addItem(b.captionLong);
-//    emit historyListChanged(true);
 }
 
 void BibleWidget::addToHistory(BibleHistory &b)

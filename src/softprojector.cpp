@@ -90,13 +90,10 @@ SoftProjector::SoftProjector(QWidget *parent)
             this, SLOT(setChapterList(QStringList, QString, QItemSelection)));
     connect(bibleWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(bibleWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
-    //TODO: connect(bibleWidget, SIGNAL(historyListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(songWidget, SIGNAL(sendSong(Song, int)), this, SLOT(setSongList(Song, int)));
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
-    //TODO: connect(songWidget, SIGNAL(sendPlaylistChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
-    //TODO: connect(announceWidget, SIGNAL(annouceListChanged(bool)), this, SLOT(setProjectChanged(bool)));
     connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
     connect(pictureWidget, SIGNAL(sendToSchedule(SlideShow&)),this,SLOT(addToShcedule(SlideShow&)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
@@ -1459,6 +1456,8 @@ void SoftProjector::on_actionScheduleAdd_triggered()
         Announcement a = announceWidget->getAnnouncement();
         addToShcedule(a);
     }
+    int row_count = ui->listWidgetSchedule->count();
+    ui->listWidgetSchedule->setCurrentRow(row_count-1);
 }
 
 void SoftProjector::on_actionScheduleRemove_triggered()
@@ -1514,7 +1513,8 @@ void SoftProjector::addToShcedule(Announcement &a)
 
 void SoftProjector::reloadShceduleList()
 {
-    ui->listWidgetSchedule->clearSelection();
+    ui->listWidgetSchedule->setCurrentRow(-1);
+//    ui->listWidgetSchedule->clearSelection();
     ui->listWidgetSchedule->clear();
     foreach (const Schedule &s, schedule)
     {
@@ -1647,12 +1647,72 @@ void SoftProjector::on_actionMoveScheduleBottom_triggered()
 
 void SoftProjector::on_actionNewSchedule_triggered()
 {
+    if(!is_schedule_saved && !schedule_file_path.isEmpty())
+    {
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Save Schedule?"));
+        mb.setText(tr("Do you want to save current schedule before creating a new schedule?"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
 
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Yes to save unsaved schedule and contiue creating new schedule
+            on_actionSaveSchedule_triggered();
+            break;
+        case QMessageBox::No:
+            // No to save unsaved schedule and continue to create new schedule
+            break;
+        case QMessageBox::Cancel:
+            // Cancel all
+            return;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+
+    schedule_file_path = "untitled.spsc";
+    schedule.clear();
+    reloadShceduleList();
+    is_schedule_saved = false;
+    updateWindowText();
 }
 
 void SoftProjector::on_actionOpenSchedule_triggered()
 {
-    QString path = QFileDialog::getOpenFileName(this,tr("Save softProjector schedule as:"),".",
+    if(!is_schedule_saved && !schedule_file_path.isEmpty())
+    {
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Save Schedule?"));
+        mb.setText(tr("Do you want to save current schedule before opening a new schedule?"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
+
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Yes to save unsaved schedule and contiue opening new schedule
+            on_actionSaveSchedule_triggered();
+            break;
+        case QMessageBox::No:
+            // No to save unsaved schedule and continue opening new schedule
+            break;
+        case QMessageBox::Cancel:
+            // Cancel all
+            return;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+
+    QString path = QFileDialog::getOpenFileName(this,tr("Open softProjector schedule:"),".",
                                                 tr("softProjector schedule file ") + "(*.spsc)");
     if(!path.isEmpty())
     {
@@ -1690,22 +1750,61 @@ void SoftProjector::on_actionSaveScheduleAs_triggered()
 
 void SoftProjector::on_actionCloseSchedule_triggered()
 {
-    // TODO: Finalize
-    is_schedule_saved = true;
+    if(!is_schedule_saved && !schedule_file_path.isEmpty())
+    {
+        QMessageBox mb;
+        mb.setWindowTitle(tr("Save Schedule?"));
+        mb.setText(tr("Do you want to save current schedule before closing it?"));
+        mb.setIcon(QMessageBox::Question);
+        mb.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        mb.setDefaultButton(QMessageBox::Yes);
+        int ret = mb.exec();
+
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+            // Yes to save unsaved schedule and contiue creating new schedule
+            on_actionSaveSchedule_triggered();
+            break;
+        case QMessageBox::No:
+            // No to save unsaved schedule and continue to create new schedule
+            break;
+        case QMessageBox::Cancel:
+            // Cancel all
+            return;
+        default:
+            // should never be reached
+            break;
+        }
+    }
+
     schedule_file_path.clear();
+    schedule.clear();
+    reloadShceduleList();
+    is_schedule_saved = true;
     updateWindowText();
 }
 
 void SoftProjector::saveSchedule(bool overWrite)
 {
     // Save schedule as s SQLite database file
+    QProgressDialog progress;
+    progress.setMaximum(0);
+    progress.setLabelText(tr("Saving schedule file..."));
+    progress.show();
     {
         bool db_exist = QFile::exists(schedule_file_path);
         if(db_exist && overWrite)
         {
             if(!QFile::remove(schedule_file_path))
             {
-                // TODO: Show message that file cannot be overwritten
+                QMessageBox mb;
+                mb.setText(tr("An error has ocured when overwriting existing file.\n"
+                              "Please try again with different file name"));
+                mb.setIcon(QMessageBox::Information);
+                mb.setStandardButtons(QMessageBox::Ok);
+                mb.exec();
+                return;
             }
             else
                 db_exist = false;
@@ -1734,14 +1833,11 @@ void SoftProjector::saveSchedule(bool overWrite)
                 saveScheduleUpdate(sq);
             else
                 saveScheduleNew(sq);
-
-//            sq.exec("PRAGMA user_version");
-//            sq.first();
-//            qDebug()<<"prama user version:"<<sq.value(0).toString();
         }
     }
     QSqlDatabase::removeDatabase("spsc");
     is_schedule_saved = true;
+    progress.close();
 }
 
 void SoftProjector::saveScheduleNew(QSqlQuery &q)
@@ -1843,7 +1939,7 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const VideoInfo 
 
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Announcement &a)
 {
-    qDebug()<<q.prepare("INSERT INTO announce (scid,aId,title,aText,usePrivate,useAuto,loop,slideTimer,font,"
+    q.prepare("INSERT INTO announce (scid,aId,title,aText,usePrivate,useAuto,loop,slideTimer,font,"
                         "color,useBack,backImage,backPath,alignV,alignH) "
                         "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     q.addBindValue(scid);
@@ -1862,7 +1958,7 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Announceme
     q.addBindValue(a.backgroundPath);
     q.addBindValue(a.alignmentV);
     q.addBindValue(a.alignmentH);
-    qDebug()<<q.exec();
+    q.exec();
 }
 
 void SoftProjector::saveScheduleUpdate(QSqlQuery &q)
@@ -1962,7 +2058,10 @@ void SoftProjector::saveScheduleItemUpdate(QSqlQuery &q, int scid, const Announc
 
 void SoftProjector::openSchedule()
 {
-    // Save schedule as s SQLite database file
+    QProgressDialog progress;
+    progress.setMaximum(0);
+    progress.setLabelText(tr("Opening schedule file..."));
+    progress.show();
     {
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spsc");
         db.setDatabaseName(schedule_file_path);
@@ -2034,19 +2133,24 @@ void SoftProjector::openSchedule()
             }
             else
             {
-                // TODO: give error message
-                qDebug()<<"Incorect file version:"<<scVer;
+                QMessageBox mb;
+                mb.setText(tr("The schedule file you are trying to open is of uncompatible version.\n"
+                              "Compatible version: 2\n"
+                              "This schedule file version: ") + QString::number(scVer));
+                mb.setIcon(QMessageBox::Information);
+                mb.setStandardButtons(QMessageBox::Ok);
+                mb.exec();
                 schedule_file_path.clear();
                 updateWindowText();
             }
         }
     }
     QSqlDatabase::removeDatabase("spsc");
+    progress.close();
 }
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, BibleHistory &b)
 {
-    //sq.exec("CREATE TABLE IF NOT EXISTS 'bible' ('scid' INTEGER, 'verseIds' TEXT, 'caption' TEXT, 'captionLong' TEXT)");
     q.exec("SELECT verseIds, caption, captionLong FROM bible WHERE scid = " + QString::number(scid));
     q.first();
     b.verseIds = q.value(0).toString();
@@ -2056,10 +2160,6 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, BibleHistory 
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
 {
-//    sq.exec("CREATE TABLE IF NOT EXISTS 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, "
-//            "'number' INTEGER, 'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, "
-//            "'songText' TEXT, 'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, "
-//            "'font' TEXT, 'backImage' BLOB, 'backPath' TEXT)");
     q.exec("SELECT songid, sbid, sbName, number, title, category, tune, wordsBy, musicBy, songText, notes, usePrivate, "
            "alignV, alignH, color, font, backImage, backPath FROM song WHERE scid = " + QString::number(scid));
     q.first();
@@ -2085,9 +2185,6 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s)
 {
-    //sq.exec("CREATE TABLE IF NOT EXISTS 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
-//    sq.exec("CREATE TABLE IF NOT EXISTS 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, "
-//            "'porder' INTEGER, 'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
     q.exec("SELECT ssid, name, info FROM slideshow WHERE scid = " + QString::number(scid));
     q.first();
     s.slideShowId = q.value(0).toInt();
@@ -2111,7 +2208,6 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s)
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v)
 {
-    //sq.exec("CREATE TABLE IF NOT EXISTS 'media' ('scid' INTEGER, 'name' TEXT, 'path' TEXT, 'aRatio' INTEGER)");
     q.exec("SELECT name, path, aRatio FROM media WHERE scid = " + QString::number(scid));
     q.first();
     v.fileName = q.value(0).toString();
@@ -2121,9 +2217,6 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v)
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Announcement &a)
 {
-//    sq.exec("CREATE TABLE IF NOT EXISTS 'announce' ('scid' INTEGER, 'aId' INTEGER, 'title' TEXT, 'aText' TEXT, "
-//            "'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTimer' INTEGER, 'font' TEXT, 'color' INTEGER, "
-//            "'useBack' BOOL, 'backImage' BLOB, 'backPath' TEXT, 'alignV' INTEGER, 'alignH' INTEGER)");
     q.exec("SELECT aId, title, aText, usePrivate, useAuto, loop, slideTimer, font, color, useBack, "
            "backImage, backPath, alignV, alignH FROM announce WHERE scid = " + QString::number(scid));
     q.first();
