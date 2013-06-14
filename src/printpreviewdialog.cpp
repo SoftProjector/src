@@ -129,85 +129,44 @@ void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
     ui->spinBoxFontSize->setValue(11);// default font size for Bible chapter
 }
 
-void PrintPreviewDialog::setText(QString project, QList<BibleSearch> histories, QList<Song> songs, QList<Announcement> announcements)
-    // This will prepare print text edit for softProjector Project
+void PrintPreviewDialog::setText(Announcement announce)
 {
-    QFileInfo fi(project);
-    project = fi.fileName();
-    project.remove(".spp");
+    QString s;
+    s = tr("Announcements: %1\n\n").arg(announce.title);
+    s += announce.text;
+
+    ui->textEdit->setText(s);
+    ui->spinBoxFontSize->setValue(14);// default font size for Announcements
+}
+
+void PrintPreviewDialog::setSchedule(QString scheduleName, const QList<Schedule> &schedule, bool printDetail)
+{
+    QFileInfo fi(scheduleName);
+    scheduleName = fi.fileName();
+    scheduleName.remove(".spsc");
     QString s;
 
     // start
-    if(project.isEmpty())
+    if(scheduleName.isEmpty())
         s = "";
     else
-        s = "softProject Project: " + project + "\n\n";
+        s = "softProject Schedule: " + scheduleName + "\n\n";
 
-    // set bible histories
-    if(histories.count()<=0)
-        s += "";
-    else
+    if(printDetail)
     {
-        s += "Bible\n---------\n";
-        for(int i(0);i<histories.count();++i)
-            s += QString("     %1\n").arg(histories.at(i).display_text);
 
     }
-
-    // set playlist songs
-    if(songs.count()<=0)
-        s += "";
     else
     {
-        s += "\nSongs\n--------\n";
-        for(int i(0);i<songs.count();++i)
+        foreach(const Schedule &si,schedule)
         {
-            s+= QString("     %1 %2 - %3\n")
-                    .arg(songs.at(i).songbook_name)
-                    .arg(songs.at(i).number)
-                    .arg(songs.at(i).title);
+            s += QString("%1: %2\n").arg(si.stype).arg(si.name);
         }
-    }
-
-    // set announcements
-    if(announcements.count()<=0)
-        s += "";
-    else
-    {
-        s += "\nAnnouncements\n---------\n";
-        for(int i(0);i<announcements.count();++i)
-        {
-            s += QString("     Announcement %1:\n%2\n")
-                    .arg(i+1)
-                    .arg(announcements.at(i).text);
-        }
-
     }
 
     ui->textEdit->setText(s);
-    ui->spinBoxFontSize->setValue(11);// default font size for spftProjector Project
-}
+    ui->spinBoxFontSize->setValue(11); // default font size for spftProjector Schedule
 
-void PrintPreviewDialog::setText(QList<Announcement> announcements)
-{
-    QString s;
-    // set announcements
-    if(announcements.count()<=0)
-        s = "No Announcement Text To Print";
-    else
-    {
-        s = "Announcements\n---------\n";
-        for(int i(0);i<announcements.count();++i)
-        {
-            s += QString("     Announcement %1:\n%2\n--------------------------------\n")
-                    .arg(i+1)
-                    .arg(announcements.at(i).text);
-        }
-
-    }
-
-    ui->textEdit->setText(s);
-    ui->spinBoxFontSize->setValue(11);// default font size for spftProjector Project
 }
 
 void PrintPreviewDialog::on_pushButtonPDF_clicked()

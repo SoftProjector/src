@@ -773,7 +773,7 @@ void SoftProjector::updateEditActions()
 
     /////////////////////////////////////////
     // Set Print Action Menu enabled
-    ui->actionPrint->setEnabled(ctab == 0 || ctab == 1);
+    ui->actionPrint->setEnabled(ctab == 0 || ctab == 1 || ctab == 4);
 }
 
 void SoftProjector::on_actionNew_triggered()
@@ -1326,29 +1326,33 @@ void SoftProjector::on_actionPrint_triggered()
             ms.setIcon(QMessageBox::Information);
             ms.exec();
         }
-
     }
     else if (ui->projectTab->currentIndex() == 4)
     {
-//        p->setText(announceWidget->getAnnouncements());
-//        p->exec();
+        if(announceWidget->isAnnounceValid())
+        {
+            p->setText(announceWidget->getAnnouncement());
+            p->exec();
+        }
+        else
+        {
+            QMessageBox ms;
+            ms.setWindowTitle(tr("No announcement selected"));
+            ms.setText(tr("No announcement has been selected to be printed."));
+            ms.setInformativeText(tr("Please select a announcement to be printed."));
+            ms.setIcon(QMessageBox::Information);
+            ms.exec();
+        }
     }
-
     delete p;
 }
 
-//void SoftProjector::on_actionPrint_Project_triggered()
-//{
-////    PrintPreviewDialog* p;
-////    p = new PrintPreviewDialog(this);
-////    p->setText(project_file_path,bibleWidget->getHistoryList(),songWidget->getPlaylistSongs(),announceWidget->getAnnouncements());
-////    p->exec();
-////    delete p;
-//}
-
 void SoftProjector::on_actionPrintSchedule_triggered()
 {
-
+    PrintPreviewDialog* p = new PrintPreviewDialog(this);
+    p->setSchedule(schedule_file_path,schedule,false);
+    p->exec();
+    delete p;
 }
 
 void SoftProjector::nextSlide()

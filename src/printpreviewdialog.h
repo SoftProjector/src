@@ -25,6 +25,7 @@
 #include "song.h"
 #include "bible.h"
 #include "announcewidget.h"
+#include "schedule.h"
 
 namespace Ui {
 class PrintPreviewDialog;
@@ -41,9 +42,9 @@ public:
 public slots:
     void setText(Song song);
     void setText(QString bible,QString book,int chapter);
-    void setText(QString project, QList<BibleSearch> histories, QList<Song> songs, QList<Announcement> announcements);
-    void setText(QList<Announcement> announcements);
-    
+    void setText(Announcement announce);
+//    void setText(QString project, QList<BibleSearch> histories, QList<Song> songs, QList<Announcement> announcements);
+    void setSchedule(QString scheduleName, const QList<Schedule> &schedule, bool printDetail);
 private slots:
     void on_fontComboBox_currentFontChanged(const QFont &f);
     void on_spinBoxFontSize_valueChanged(int arg1);

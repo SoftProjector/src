@@ -35,7 +35,7 @@ void SlideShow::loadSlideShow(int id)
         ++max;
 
     sq.first();
-    progress.setLabelText("Loading Slides");
+    progress.setLabelText("Loading Slides...");
     progress.setMaximum(max+1);
     int ct(0);
 
