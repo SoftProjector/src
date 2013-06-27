@@ -45,10 +45,12 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
     mySettings.showStanzaTitle = ui->checkBoxStanzaTitle->isChecked();
     mySettings.showSongKey = ui->checkBoxSongKey->isChecked();
     mySettings.showSongNumber = ui->checkBoxSongNumber->isChecked();
+    mySettings.infoAling = ui->comboBoxAlingSongInfo->currentIndex();
 
     mySettings2.showStanzaTitle = ui->checkBoxStanzaTitle2->isChecked();
     mySettings2.showSongKey = ui->checkBoxSongKey2->isChecked();
     mySettings2.showSongNumber = ui->checkBoxSongNumber2->isChecked();
+    mySettings2.infoAling = ui->comboBoxAlingSongInfo2->currentIndex();
 
     // Save song ending
     mySettings.showSongEnding = ui->groupBoxSongEnding->isChecked();
@@ -99,10 +101,12 @@ void SongSettingWidget::loadSettings()
     ui->checkBoxStanzaTitle->setChecked(mySettings.showStanzaTitle);
     ui->checkBoxSongKey->setChecked(mySettings.showSongKey);
     ui->checkBoxSongNumber->setChecked(mySettings.showSongNumber);
+    ui->comboBoxAlingSongInfo->setCurrentIndex(mySettings.infoAling);
 
     ui->checkBoxStanzaTitle2->setChecked(mySettings2.showStanzaTitle);
     ui->checkBoxSongKey2->setChecked(mySettings2.showSongKey);
     ui->checkBoxSongNumber2->setChecked(mySettings2.showSongNumber);
+    ui->comboBoxAlingSongInfo2->setCurrentIndex(mySettings2.infoAling);
 
     // Set Song Ending
     ui->groupBoxSongEnding->setChecked(mySettings.showSongEnding);

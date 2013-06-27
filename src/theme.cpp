@@ -55,6 +55,7 @@ SongSettings::SongSettings()
     showSongKey = false;
     showSongNumber = false;
     showSongEnding = true;
+    infoAling = 0;
     songEndingType = 0;
     useShadow = true;
     useFading = true;
@@ -315,6 +316,8 @@ void Theme::songSettingFromString(QString &sets, SongSettings &settings)
             settings.showSongKey = (v=="true");
         else if(n=="showSongNumber")
             settings.showSongNumber = (v=="true");
+        else if(n=="infoAling")
+            settings.infoAling = v.toInt();
         else if(n=="showSongEnding")
             settings.showSongEnding = (v=="true");
         else if(n=="songEndingType")
@@ -474,10 +477,11 @@ QString Theme::songSettingToString(SongSettings &settings)
         rString += "showSongNumber = true\n";
     else
         rString += "showSongNumber = false\n";
+    rString += "infoAling = " + QString::number(settings.infoAling);
     if(settings.showSongEnding)
-        rString += "showSongEnding = true\n";
+        rString += "\nshowSongEnding = true\n";
     else
-        rString += "showSongEnding = false\n";
+        rString += "\nshowSongEnding = false\n";
     rString += "songEndingType = " + QString::number(settings.songEndingType);
 
     // Effects

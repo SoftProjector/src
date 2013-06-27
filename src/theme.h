@@ -64,6 +64,7 @@ public:
     bool showSongKey;
     bool showSongNumber;
     bool showSongEnding;
+    int infoAling; // 0 = Top, 1 = Bottom
     int songEndingType; // 0 for (***), 1 for song copyright info
     bool useShadow;
     bool useFading;
