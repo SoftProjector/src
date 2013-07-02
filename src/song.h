@@ -44,9 +44,15 @@ public:
     bool usePrivateSettings;
     int alignmentV;
     int alignmentH;
-    QString backgroundPath;
     QColor color;
     QFont font;
+    QColor infoColor;
+    QFont infoFont;
+    QColor endingColor;
+    QFont endingFont;
+    bool useBackground;
+    QString backgroundPath;
+    QPixmap background;
 };
 
 class Song
@@ -73,8 +79,6 @@ class Song
     int number; // Number of the song in the specified songbook
     QString title;
     int category;
-//    int language;
-//    int favorite;
     QString tune;
     QString wordsBy;
     QString musicBy;
@@ -85,7 +89,13 @@ class Song
     int alignmentH;
     QColor color;
     QFont font;
+    QColor infoColor;
+    QFont infoFont;
+    QColor endingColor;
+    QFont endingFont;
+    bool useBackground;
     QString backgroundPath;
+    QPixmap background;
 
 private:
     void setDefaults();

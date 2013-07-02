@@ -50,22 +50,29 @@ BibleSettings::BibleSettings()
 
 SongSettings::SongSettings()
 {
-    // Apply song defauls
-    showStanzaTitle = false;
-    showSongKey = false;
-    showSongNumber = false;
-    showSongEnding = true;
-    infoAling = 0;
-    songEndingType = 0;
+    // Apply song defaults
     useShadow = true;
     useFading = true;
     useBlurShadow = false;
+    showStanzaTitle = false;
+    showSongKey = false;
+    showSongNumber = false;
+    infoColor = QColor(Qt::white);
+    infoFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    infoAling = 0;
+    showSongEnding = true;
+    endingColor = QColor(Qt::white);
+    endingFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    endingType = 0;
     useBackground = false;
     backgroundPath = "";
-    textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    background = QPixmap();
     textColor = QColor(Qt::white);
+    textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     textAlingmentV = 1;
     textAlingmentH = 1;
+    screenUse = 100;
+    screenUseAlign = 1;
     useDisp2settings = false;
 }
 
@@ -321,7 +328,7 @@ void Theme::songSettingFromString(QString &sets, SongSettings &settings)
         else if(n=="showSongEnding")
             settings.showSongEnding = (v=="true");
         else if(n=="songEndingType")
-            settings.songEndingType = v.toInt();
+            settings.endingType = v.toInt();
         else if (n == "useShadow")
             settings.useShadow = (v=="true");
         else if (n == "useFading")
@@ -482,7 +489,7 @@ QString Theme::songSettingToString(SongSettings &settings)
         rString += "\nshowSongEnding = true\n";
     else
         rString += "\nshowSongEnding = false\n";
-    rString += "songEndingType = " + QString::number(settings.songEndingType);
+    rString += "songEndingType = " + QString::number(settings.endingType);
 
     // Effects
     if(settings.useShadow)

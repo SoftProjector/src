@@ -196,7 +196,13 @@ void Song::setDefaults()
     alignmentH = 1;
     color = QColor(Qt::white);
     font.fromString("Arial,28,-1,5,50,0,0,0,0,0");
-    backgroundPath.clear();
+    infoColor = QColor(Qt::white);
+    infoFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    endingColor = QColor(Qt::white);
+    endingFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
+    useBackground = false;
+    backgroundPath = "";
+    background = QPixmap();
     notes = "";
 }
 
@@ -410,9 +416,15 @@ Stanza Song::getStanza(int current)
     stanza.usePrivateSettings = usePrivateSettings;
     stanza.alignmentV = alignmentV;
     stanza.alignmentH = alignmentH;
+    stanza.useBackground = useBackground;
     stanza.backgroundPath = backgroundPath;
+    stanza.background = background;
     stanza.color = color;
     stanza.font = font;
+    stanza.infoColor = infoColor;
+    stanza.infoFont = infoFont;
+    stanza.endingColor = endingColor;
+    stanza.endingFont = endingFont;
 
     QStringList lines_list = song_list.at(current).split("\n");
     if(isStanzaTitle(lines_list.at(0)))

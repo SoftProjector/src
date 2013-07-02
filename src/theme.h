@@ -60,22 +60,28 @@ class SongSettings
 {   // To store Song related settings
 public:
     SongSettings();
+    bool useFading;
+    bool useShadow;
+    bool useBlurShadow;
     bool showStanzaTitle;
     bool showSongKey;
     bool showSongNumber;
-    bool showSongEnding;
+    QColor infoColor;
+    QFont infoFont;
     int infoAling; // 0 = Top, 1 = Bottom
-    int songEndingType; // 0 for (***), 1 for song copyright info
-    bool useShadow;
-    bool useFading;
-    bool useBlurShadow;
+    bool showSongEnding;
+    QColor endingColor;
+    QFont endingFont;
+    int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
     bool useBackground;
     QString backgroundPath; // file path for background image
-    QFont textFont;
+    QPixmap background;
     QColor textColor;
+    QFont textFont;
     int textAlingmentV;
     int textAlingmentH;
-
+    int screenUse;
+    int screenUseAlign; // 0 = Top, 1 = Bottom
     bool useDisp2settings;
 };
 

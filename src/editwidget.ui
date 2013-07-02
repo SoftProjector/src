@@ -23,8 +23,8 @@
    <iconset resource="softprojector.qrc">
     <normaloff>:/icons/icons/edit.png</normaloff>:/icons/icons/edit.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_7">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
     <layout class="QGridLayout" name="gridLayout_6">
      <item row="0" column="0">
       <widget class="QLabel" name="label">
@@ -82,7 +82,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_15">
@@ -99,7 +99,7 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
       <widget class="QLabel" name="label_16">
@@ -129,7 +129,7 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="0" column="0">
       <widget class="QLabel" name="label_17">
@@ -169,7 +169,7 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QCheckBox" name="checkBoxSongSettings">
@@ -193,7 +193,7 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0">
+   <item>
     <widget class="QGroupBox" name="groupBoxSettings">
      <property name="title">
       <string/>
@@ -201,25 +201,83 @@
      <property name="flat">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <property name="leftMargin">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="margin">
        <number>0</number>
       </property>
-      <property name="topMargin">
-       <number>3</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Main Text Properties:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonMainColor">
+          <property name="text">
+           <string>Color...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGraphicsView" name="graphicsViewTextColor">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>19</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>19</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonMainFont">
+          <property name="text">
+           <string>Font...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="labelVAlign">
           <property name="text">
-           <string>Align Vertical:</string>
+           <string>Main Text Alignment:</string>
           </property>
          </widget>
         </item>
@@ -243,13 +301,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="labelHAlign">
-          <property name="text">
-           <string>Align Horizontal</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QComboBox" name="comboBoxHAlignment">
           <item>
            <property name="text">
@@ -269,13 +320,13 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_5">
+         <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>98</width>
+            <width>40</width>
             <height>20</height>
            </size>
           </property>
@@ -283,17 +334,24 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QPushButton" name="pushButtonTextColor">
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Text Color...</string>
+           <string>Song Information Properties:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QGraphicsView" name="graphicsViewTextColor">
+         <widget class="QToolButton" name="toolButtonInfoColor">
+          <property name="text">
+           <string>Color...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGraphicsView" name="graphicsViewInfoColor">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -303,48 +361,39 @@
           <property name="minimumSize">
            <size>
             <width>50</width>
-            <height>20</height>
+            <height>19</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>50</width>
-            <height>20</height>
+            <height>19</height>
            </size>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="Line" name="line_2">
+         <widget class="Line" name="line_5">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonTextFont">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QToolButton" name="toolButtonFont">
           <property name="text">
-           <string>Text Font...</string>
+           <string>Font...</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="labelTextFont"/>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_4">
+         <spacer name="horizontalSpacer_5">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>148</width>
+            <width>40</width>
             <height>20</height>
            </size>
           </property>
@@ -352,12 +401,79 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="0">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Song Ending Properties:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonEndingColor">
+          <property name="text">
+           <string>Color...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGraphicsView" name="graphicsViewEndingColor">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>19</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>19</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonEndingFont">
+          <property name="text">
+           <string>Font...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="labelBackground">
+         <widget class="QCheckBox" name="checkBoxUseBackground">
           <property name="text">
-           <string>Background:</string>
+           <string>Use Background:</string>
           </property>
          </widget>
         </item>
@@ -372,20 +488,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonBackgroundPath">
+         <widget class="QToolButton" name="toolButtonBrowseBackground">
           <property name="text">
            <string>Browse...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonRemoveBackground">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="softprojector.qrc">
-            <normaloff>:/icons/icons/remove.png</normaloff>:/icons/icons/remove.png</iconset>
           </property>
          </widget>
         </item>
@@ -394,21 +499,21 @@
      </layout>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item>
     <widget class="QTextEdit" name="textEditSong">
      <property name="acceptRichText">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item>
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="labelNotes">
@@ -432,7 +537,7 @@
      </item>
     </layout>
    </item>
-   <item row="9" column="0">
+   <item>
     <widget class="QPlainTextEdit" name="plainTextEditNotes">
      <property name="maximumSize">
       <size>
@@ -442,7 +547,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <spacer name="horizontalSpacer">

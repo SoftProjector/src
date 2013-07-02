@@ -172,7 +172,11 @@ void EditWidget::resetUiItems()
     QPalette p;
     p.setColor(QPalette::Base,ss.color);
     ui->graphicsViewTextColor->setPalette(p);
-    ui->labelTextFont->clear();
+    p.setColor(QPalette::Base,ss.infoColor);
+    ui->graphicsViewInfoColor->setPalette(p);
+    p.setColor(QPalette::Base,ss.endingColor);
+    ui->graphicsViewEndingColor->setPalette(p);
+    ui->checkBoxUseBackground->setChecked(ss.useBackground);
     ui->lineEditBackgroundPath->setText(ss.backgroundPath);
     ui->textEditSong->setPlainText(setSongText(ss.songText));
     ui->plainTextEditNotes->setPlainText(ss.notes);
@@ -191,7 +195,11 @@ void EditWidget::setUiItems()
     ui->comboBoxVAlignment->setCurrentIndex(editSong.alignmentV);
     ui->comboBoxHAlignment->setCurrentIndex(editSong.alignmentH);
     updateColor();
-    ui->labelTextFont->setText(QString("%1 %2").arg(editSong.font.rawName()).arg(QString::number(editSong.font.pointSize())));
+    updateInfoColor();
+    updateEndingColor();
+    ui->checkBoxUseBackground->setChecked(editSong.useBackground);
+    ui->lineEditBackgroundPath->setEnabled(editSong.useBackground);
+    ui->toolButtonBrowseBackground->setEnabled(editSong.useBackground);
     ui->lineEditBackgroundPath->setText(editSong.backgroundPath);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
     ui->plainTextEditNotes->setPlainText(editSong.notes);
@@ -213,6 +221,7 @@ void EditWidget::setSave(){
     newSong.alignmentV = ui->comboBoxVAlignment->currentIndex();
     newSong.alignmentH = ui->comboBoxHAlignment->currentIndex();
     newSong.usePrivateSettings = ui->checkBoxSongSettings->isChecked();
+    newSong.useBackground = ui->checkBoxUseBackground->isChecked();
     newSong.backgroundPath = ui->lineEditBackgroundPath->text();
     newSong.notes = ui->plainTextEditNotes->toPlainText();
 }
@@ -472,36 +481,18 @@ void EditWidget::updateColor()
     ui->graphicsViewTextColor->setPalette(p);
 }
 
-void EditWidget::on_pushButtonTextColor_clicked()
+void EditWidget::updateInfoColor()
 {
-    QColor c(QColorDialog::getColor(editSong.color,this));
-    if(c.isValid())
-        editSong.color = c;
-    updateColor();
+    QPalette p;
+    p.setColor(QPalette::Base,editSong.infoColor);
+    ui->graphicsViewInfoColor->setPalette(p);
 }
 
-void EditWidget::on_pushButtonTextFont_clicked()
+void EditWidget::updateEndingColor()
 {
-    bool ok;
-    QFont font = QFontDialog::getFont(&ok,editSong.font,this);
-    if(ok)
-        editSong.font = font;
-    ui->labelTextFont->setText(QString("%1 %2").arg(editSong.font.rawName()).arg(QString::number(editSong.font.pointSize())));
-}
-
-void EditWidget::on_pushButtonBackgroundPath_clicked()
-{
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Select an image for the wallpaper"),
-                                                    ".", "Images (*.png *.jpg *.jpeg)");
-
-    if( !filename.isNull() )
-        ui->lineEditBackgroundPath->setText(filename);
-}
-
-void EditWidget::on_pushButtonRemoveBackground_clicked()
-{
-    ui->lineEditBackgroundPath->clear();
+    QPalette p;
+    p.setColor(QPalette::Base,editSong.endingColor);
+    ui->graphicsViewEndingColor->setPalette(p);
 }
 
 void EditWidget::on_pushButtonPrint_clicked()
@@ -511,4 +502,68 @@ void EditWidget::on_pushButtonPrint_clicked()
     p = new PrintPreviewDialog(this);
     p->setText(newSong);
     p->exec();
+}
+
+void EditWidget::on_toolButtonMainColor_clicked()
+{
+    QColor c(QColorDialog::getColor(editSong.color,this));
+    if(c.isValid())
+        editSong.color = c;
+    updateColor();
+}
+
+void EditWidget::on_toolButtonMainFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,editSong.font,this);
+    if(ok)
+        editSong.font = font;
+}
+
+void EditWidget::on_toolButtonInfoColor_clicked()
+{
+    QColor c(QColorDialog::getColor(editSong.infoColor,this));
+    if(c.isValid())
+        editSong.infoColor = c;
+    updateInfoColor();
+}
+
+void EditWidget::on_toolButtonFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,editSong.infoFont,this);
+    if(ok)
+        editSong.infoFont = font;
+}
+
+void EditWidget::on_toolButtonEndingColor_clicked()
+{
+    QColor c(QColorDialog::getColor(editSong.endingColor,this));
+    if(c.isValid())
+        editSong.endingColor = c;
+    updateEndingColor();
+}
+
+void EditWidget::on_toolButtonEndingFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,editSong.endingFont,this);
+    if(ok)
+        editSong.endingFont = font;
+}
+
+void EditWidget::on_checkBoxUseBackground_toggled(bool checked)
+{
+    ui->lineEditBackgroundPath->setEnabled(checked);
+    ui->toolButtonBrowseBackground->setEnabled(checked);
+}
+
+void EditWidget::on_toolButtonBrowseBackground_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Select an image for the wallpaper"),
+                                                    ".", "Images (*.png *.jpg *.jpeg)");
+
+    if( !filename.isNull() )
+        ui->lineEditBackgroundPath->setText(filename);
 }

@@ -43,21 +43,24 @@ public slots:
 
 private slots:
     void loadSettings();
-    void on_buttonSongBackground_clicked();
-    void on_buttonTextColor_clicked();
-    void on_buttonFont_clicked();
-    void on_pushButtonDefault_clicked();
     void on_checkBoxUseShadow_stateChanged(int arg1);
-    void on_groupBoxDisplay2_toggled(bool arg1);
-
     void on_checkBoxUseShadow2_stateChanged(int arg1);
-
+    void on_toolButtonInfoColor_clicked();
+    void on_toolButtonInfoColor2_clicked();
+    void on_toolButtonInfoFont_clicked();
+    void on_toolButtonInfoFont2_clicked();
+    void on_toolButtonEndingColor_clicked();
+    void on_toolButtonEndingColor2_clicked();
+    void on_toolButtonEndingFont_clicked();
+    void on_toolButtonEndingFont2_clicked();
+    void on_buttonSongBackground_clicked();
     void on_buttonSongBackground2_clicked();
-
-    void on_buttonTextColor2_clicked();
-
-    void on_buttonFont2_clicked();
-
+    void on_toolButtonColor_clicked();
+    void on_toolButtonColor2_clicked();
+    void on_toolButtonFont_clicked();
+    void on_toolButtonFont2_clicked();
+    void on_groupBoxDisplay2_toggled(bool arg1);
+    void on_pushButtonDefault_clicked();
 private:
     SongSettings mySettings;
     SongSettings mySettings2;

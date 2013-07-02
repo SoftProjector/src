@@ -82,11 +82,17 @@ private slots:
     int isInDatabase(Song *song);
     void on_checkBoxSongSettings_toggled(bool checked);
     void updateColor();
-    void on_pushButtonTextColor_clicked();
-    void on_pushButtonTextFont_clicked();
-    void on_pushButtonBackgroundPath_clicked();
-    void on_pushButtonRemoveBackground_clicked();
+    void updateInfoColor();
+    void updateEndingColor();
     void on_pushButtonPrint_clicked();
+    void on_toolButtonMainColor_clicked();
+    void on_toolButtonMainFont_clicked();
+    void on_toolButtonInfoColor_clicked();
+    void on_toolButtonFont_clicked();
+    void on_toolButtonEndingColor_clicked();
+    void on_toolButtonEndingFont_clicked();
+    void on_checkBoxUseBackground_toggled(bool checked);
+    void on_toolButtonBrowseBackground_clicked();
 };
 
 #endif // EDITWIDGET_H
