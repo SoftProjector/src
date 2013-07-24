@@ -287,7 +287,13 @@ void SongSettingWidget::on_buttonSongBackground_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for song wallpaper"),
                                                     ".", tr("Images (*.png *.jpg *.jpeg)"));
     if(!filename.isNull())
+    {
+        mySettings.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings.backgroundPath = filename;
         ui->lineEditSongBackground->setText(filename);
+    }
 }
 
 void SongSettingWidget::on_buttonSongBackground2_clicked()
@@ -295,7 +301,13 @@ void SongSettingWidget::on_buttonSongBackground2_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for song wallpaper"),
                                                     ".", tr("Images (*.png *.jpg *.jpeg)"));
     if(!filename.isNull())
+    {
+        mySettings2.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings2.backgroundPath = filename;
         ui->lineEditSongBackground2->setText(filename);
+    }
 }
 
 void SongSettingWidget::on_toolButtonColor_clicked()

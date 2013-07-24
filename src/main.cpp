@@ -50,6 +50,7 @@ bool connect(QString database_file)
         if(!database_exists)
         {
             QSqlQuery sq;
+            sq.exec("PRAGMA user_version = 990206");
             sq.exec("CREATE TABLE 'Announcements' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "
                     "'title' TEXT, 'text' TEXT, 'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTime' INTEGER, "
                     "'useBackground' BOOL, 'backgoundPath' TEXT, 'font' TEXT, 'color' TEXT, 'alignment' TEXT)");
@@ -69,12 +70,11 @@ bool connect(QString database_file)
             sq.exec("CREATE TABLE 'Songs' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
                     "'songbook_id' INTEGER, 'number' INTEGER, 'title' TEXT, 'category' INTEGER DEFAULT 0, "
                     "'tune' TEXT, 'words' TEXT, 'music' TEXT, 'song_text' TEXT, 'notes' TEXT, "
-                    "'use_private' TEXT, 'alignment' TEXT, 'color' TEXT, 'font' TEXT, "
-                    "'background' TEXT, 'count' INTEGER DEFAULT 0, 'date' TEXT)");
+                    "'use_private' BOOL, 'alignment_v' INTEGER, 'alignment_h' INTEGER, 'color' INTEGER, 'font' TEXT, "
+                    "'info_color' INTEGER, 'info_font' TEXT, 'ending_color' INTEGER, 'ending_font' TEXT, "
+                    "'use_background' BOOL, 'background_name' TEXT, 'background' BLOB, 'count' INTEGER DEFAULT 0, 'date' TEXT)");
             sq.exec("CREATE TABLE 'ThemeData' ('theme_id' INTEGER, 'type' TEXT, 'sets' TEXT)");
             sq.exec("CREATE TABLE 'Themes' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'comment' TEXT)");
-            sq.exec("CREATE TABLE 'spData' ('Version' TEXT)");
-            sq.exec("INSERT INTO spData (Version) VALUES ('2db5')");
         }
         return true;
     }
@@ -115,11 +115,11 @@ int main(int argc, char *argv[])
     // Connected to the database OK:
 
     // Make sure that database is of correct version
-    QString currentVersion = "2db5";
+    int currentVersion = 990206;
     QSqlQuery sq;
-    sq.exec("SELECT Version FROM spData");
+    sq.exec("PRAGMA user_version");
     sq.first();
-    QString dbVersion = sq.value(0).toString().trimmed();
+    int dbVersion = sq.value(0).toInt();
     if(currentVersion != dbVersion)
     {
         QString errortxt = QString("SoftProjector requires database vesion # %1\n"

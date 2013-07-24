@@ -44,11 +44,16 @@ public:
     bool useFading;
     bool useBlurShadow;
     bool useBackground;
-    QString backgroundPath;
+    QString backgroundName;
+    QPixmap background;
     QFont textFont;
     QColor textColor;
     int textAlingmentV;
     int textAlingmentH;
+    QFont captionFont;
+    QColor captionColor;
+    int captionAlingment;
+    int captionPosition;
     bool useAbbriviations;
     int maxScreen;
     QString maxScreenFrom;

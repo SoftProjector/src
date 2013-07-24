@@ -19,6 +19,7 @@
 
 #include "song.h"
 #include <QDebug>
+#include "spfunctions.h"
 
 // for future use or chord import
 // to filter out ChorPro chords from within the song text
@@ -201,7 +202,7 @@ void Song::setDefaults()
     endingColor = QColor(Qt::white);
     endingFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     useBackground = false;
-    backgroundPath = "";
+    backgroundName = "";
     background = QPixmap();
     notes = "";
 }
@@ -209,8 +210,12 @@ void Song::setDefaults()
 void Song::readData()
 {
     QSqlQuery sq;
-    //              0               1       2   3           4   5       6       7           8   9               10      11      12      13
-    sq.exec("SELECT songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background FROM Songs WHERE id = " + QString::number(songID));
+    //              0               1       2     3        4    5      6       7         8
+    //        9               10        11          12     13    14            15          16         17
+    //        18                19              20
+    sq.exec("SELECT songbook_id, number, title, category, tune, words, music, song_text, notes, "
+            "use_private, alignment_v, alignment_h, color, font, info_color, info_font, ending_color, ending_font, "
+            "use_background, background_name, background FROM Songs WHERE id = " + QString::number(songID));
     sq.first();
     songbook_id = sq.value(0).toString();
     number = sq.value(1).toInt();
@@ -221,21 +226,18 @@ void Song::readData()
     musicBy = sq.value(6).toString();
     songText = sq.value(7).toString();
     notes = sq.value(8).toString();
-    usePrivateSettings = (sq.value(9).toString() == "true");
-    QString str = sq.value(10).toString();
-    QStringList l = str.split(",");
-    if(l.count()>1)
-    {
-        alignmentV = l.at(0).toInt();
-        alignmentH = l.at(1).toInt();
-    }
-    str = sq.value(11).toString();
-    if(!str.isEmpty())
-        color = QColor::fromRgb(str.toUInt());
-    str = sq.value(12).toString();
-    if(!str.isEmpty())
-        font.fromString(str);
-    backgroundPath = sq.value(13).toString();
+    usePrivateSettings = sq.value(9).toBool();
+    alignmentV = sq.value(10).toInt();
+    alignmentH = sq.value(11).toInt();
+    color = QColor::fromRgb(sq.value(12).toUInt());
+    font.fromString(sq.value(13).toString());
+    infoColor = QColor::fromRgb(sq.value(14).toUInt());
+    infoFont.fromString(sq.value(15).toString());
+    endingColor = QColor::fromRgb(sq.value(16).toUInt());
+    endingFont.fromString(sq.value(17).toString());
+    useBackground = sq.value(18).toBool();
+    backgroundName = sq.value(19).toString();
+    background.loadFromData(sq.value(20).toByteArray());
 }
 
 QStringList Song::getSongTextList()
@@ -417,7 +419,7 @@ Stanza Song::getStanza(int current)
     stanza.alignmentV = alignmentV;
     stanza.alignmentH = alignmentH;
     stanza.useBackground = useBackground;
-    stanza.backgroundPath = backgroundPath;
+    stanza.backgroundName = backgroundName;
     stanza.background = background;
     stanza.color = color;
     stanza.font = font;
@@ -667,64 +669,66 @@ SongDatabase::SongDatabase()
 void Song::saveUpdate()
 {
     // Update song information
-    QSqlTableModel sq;
-    QSqlRecord sr;
-
-    sq.setTable("Songs");
-    sq.setFilter("id = " + QString::number(songID));
-    sq.select();
-
-    sr = sq.record(0);
-    sr.setValue(1,songbook_id);
-    sr.setValue(2,number);
-    sr.setValue(3,title);
-    sr.setValue(4,category);
-    sr.setValue(5,tune);
-    sr.setValue(6,wordsBy);
-    sr.setValue(7,musicBy);
-    sr.setValue(8,songText);
-    sr.setValue(9,notes);
-    if(usePrivateSettings)
-        sr.setValue(10,"true");
-    else
-        sr.setValue(10,"false");
-    QString alingment = QString("%1,%2").arg(QString::number(alignmentV)).arg(QString::number(alignmentH));
-    sr.setValue(11,alingment);
-    unsigned int textColorInt = (unsigned int)(color.rgb());
-    sr.setValue(12,QString::number(textColorInt));
-    sr.setValue(13,font.toString());
-    sr.setValue(14,backgroundPath);
-    sq.setRecord(0,sr);
-    sq.submitAll();
+    QSqlQuery sq;
+    sq.prepare("UPDATE Songs SET songbook_id = ?, number = ?, title = ?, category = ?, tune = ?, words = ?, music = ?, "
+               "song_text = ?, notes = ?, use_private = ?, alignment_v = ?, alignment_h = ?, color = ?, font = ?, "
+               "info_color = ?, info_font = ?, ending_color = ?, ending_font = ?, use_background = ?, "
+               "background_name = ?, background = ? WHERE id = ?");
+    sq.addBindValue(songbook_id);
+    sq.addBindValue(number);
+    sq.addBindValue(title);
+    sq.addBindValue(category);
+    sq.addBindValue(tune);
+    sq.addBindValue(wordsBy);
+    sq.addBindValue(musicBy);
+    sq.addBindValue(songText);
+    sq.addBindValue(notes);
+    sq.addBindValue(usePrivateSettings);
+    sq.addBindValue(alignmentV);
+    sq.addBindValue(alignmentH);
+    sq.addBindValue((unsigned int)(color.rgb()));
+    sq.addBindValue(font.toString());
+    sq.addBindValue((unsigned int)(infoColor.rgb()));
+    sq.addBindValue(infoFont.toString());
+    sq.addBindValue((unsigned int)(endingColor.rgb()));
+    sq.addBindValue(endingFont.toString());
+    sq.addBindValue(useBackground);
+    sq.addBindValue(backgroundName);
+    sq.addBindValue(pixToByte(background));
+    sq.addBindValue(songID);
+    sq.exec();
 }
 
 void Song::saveNew()
 {
     // Add a new song
-    QSqlTableModel sqt;
-
-    sqt.setTable("Songs");
-    sqt.insertRows(0,1);
-    sqt.setData(sqt.index(0,1),songbook_id);
-    sqt.setData(sqt.index(0,2),number);
-    sqt.setData(sqt.index(0,3),title);
-    sqt.setData(sqt.index(0,4),category);
-    sqt.setData(sqt.index(0,5),tune);
-    sqt.setData(sqt.index(0,6),wordsBy);
-    sqt.setData(sqt.index(0,7),musicBy);
-    sqt.setData(sqt.index(0,8),songText);
-    sqt.setData(sqt.index(0,9),notes);
-    if(usePrivateSettings)
-        sqt.setData(sqt.index(0,10),"true");
-    else
-        sqt.setData(sqt.index(0,10),"false");
-    QString alingment = QString("%1,%2").arg(QString::number(alignmentV)).arg(QString::number(alignmentH));
-    sqt.setData(sqt.index(0,11),alingment);
-    unsigned int textColorInt = (unsigned int)(color.rgb());
-    sqt.setData(sqt.index(0,12),QString::number(textColorInt));
-    sqt.setData(sqt.index(0,13),font.toString());
-    sqt.setData(sqt.index(0,14),backgroundPath);
-    sqt.submitAll();
+    QSqlQuery sq;
+    sq.prepare("INSERT INTO Songs (songbook_id,number,title,category,tune,words,music,song_text,notes,"
+               "use_private,alignment_v,alignment_h,color,font,info_color,info_font,ending_color,"
+               "ending_font,use_background,background_name,background) "
+               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    sq.addBindValue(songbook_id);
+    sq.addBindValue(number);
+    sq.addBindValue(title);
+    sq.addBindValue(category);
+    sq.addBindValue(tune);
+    sq.addBindValue(wordsBy);
+    sq.addBindValue(musicBy);
+    sq.addBindValue(songText);
+    sq.addBindValue(notes);
+    sq.addBindValue(usePrivateSettings);
+    sq.addBindValue(alignmentV);
+    sq.addBindValue(alignmentH);
+    sq.addBindValue((unsigned int)(color.rgb()));
+    sq.addBindValue(font.toString());
+    sq.addBindValue((unsigned int)(infoColor.rgb()));
+    sq.addBindValue(infoFont.toString());
+    sq.addBindValue((unsigned int)(endingColor.rgb()));
+    sq.addBindValue(endingFont.toString());
+    sq.addBindValue(useBackground);
+    sq.addBindValue(backgroundName);
+    sq.addBindValue(pixToByte(background));
+    sq.exec();
 }
 
 Song SongDatabase::getSong(int id)
@@ -751,14 +755,17 @@ QList<Song> SongDatabase::getSongs()
     sq.clear();
 
     // get songs
-    //              0   1               2       3       4       5   6       7       8           9   10              11      12      13      14
-    sq.exec("SELECT id, songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background FROM Songs");
+    //              0               1       2     3        4    5      6       7         8
+    //        9               10        11          12     13    14            15          16         17
+    //        18                19              20
+    sq.exec("SELECT id, songbook_id, number, title, category, tune, words, music, song_text, notes, "
+            "use_private, alignment_v, alignment_h, color, font, info_color, info_font, ending_color, ending_font, "
+            "use_background, background_name, background FROM Songs");
     while(sq.next())
     {
         Song song;
         song.songID = sq.value(0).toInt();
         song.songbook_id = sq.value(1).toString();
-        song.songbook_name = sb_names.at(sb_ids.indexOf(song.songbook_id));
         song.number = sq.value(2).toInt();
         song.title = sq.value(3).toString();
         song.category = sq.value(4).toInt();
@@ -767,21 +774,19 @@ QList<Song> SongDatabase::getSongs()
         song.musicBy = sq.value(7).toString();
         song.songText = sq.value(8).toString();
         song.notes = sq.value(9).toString();
-        song.usePrivateSettings = (sq.value(10).toString() == "true");
-        QString str = sq.value(11).toString();
-        QStringList l = str.split(",");
-        if(l.count()>1)
-        {
-            song.alignmentV = l.at(0).toInt();
-            song.alignmentH = l.at(1).toInt();
-        }
-        str = sq.value(12).toString();
-        if(!str.isEmpty())
-            song.color = QColor::fromRgb(str.toUInt());
-        str = sq.value(13).toString();
-        if(!str.isEmpty())
-            song.font.fromString(str);
-        song.backgroundPath = sq.value(14).toString();
+        song.usePrivateSettings = sq.value(10).toBool();
+        song.alignmentV = sq.value(11).toInt();
+        song.alignmentH = sq.value(12).toInt();
+        song.color = QColor::fromRgb(sq.value(13).toUInt());
+        song.font.fromString(sq.value(14).toString());
+        song.infoColor = QColor::fromRgb(sq.value(15).toUInt());
+        song.infoFont.fromString(sq.value(16).toString());
+        song.endingColor = QColor::fromRgb(sq.value(17).toUInt());
+        song.endingFont.fromString(sq.value(18).toString());
+        song.useBackground = sq.value(19).toBool();
+        song.backgroundName = sq.value(20).toString();
+        song.background.loadFromData(sq.value(21).toByteArray());
+        song.songbook_name = sb_names.at(sb_ids.indexOf(song.songbook_id));
 
         songs.append(song);
     }

@@ -116,10 +116,10 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
 
     // Backgroud
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
-    mySettings.backgroundPath = ui->lineEditBackPath->text();
+    mySettings.backgroundName = ui->lineEditBackPath->text();
 
     mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
-    mySettings2.backgroundPath = ui->lineEditBackPath2->text();
+    mySettings2.backgroundName = ui->lineEditBackPath2->text();
 
     //Alingment
     mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
@@ -127,6 +127,13 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
 
     mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
     mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
+
+    //Caption Alignment
+    mySettings.captionPosition = ui->comboBoxCaptionPosition->currentIndex();
+    mySettings.captionAlingment = ui->comboBoxCaptionAlign->currentIndex();
+
+    mySettings2.captionPosition = ui->comboBoxCaptionPosition2->currentIndex();
+    mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
 
     // Version Abbreviations
     mySettings.useAbbriviations = ui->checkBoxAbbiviations->isChecked();
@@ -237,17 +244,10 @@ void BibleSettingWidget::loadSettings()
 
     // Set background use
     ui->groupBoxBackground->setChecked(mySettings.useBackground);
-    ui->lineEditBackPath->setText(mySettings.backgroundPath);
+    ui->lineEditBackPath->setText(mySettings.backgroundName);
 
     ui->groupBoxBackground2->setChecked(mySettings2.useBackground);
-    ui->lineEditBackPath2->setText(mySettings2.backgroundPath);
-
-    // Set alingment
-    ui->comboBoxVerticalAling->setCurrentIndex(mySettings.textAlingmentV);
-    ui->comboBoxHorizontalAling->setCurrentIndex(mySettings.textAlingmentH);
-
-    ui->comboBoxVerticalAling2->setCurrentIndex(mySettings2.textAlingmentV);
-    ui->comboBoxHorizontalAling2->setCurrentIndex(mySettings2.textAlingmentH);
+    ui->lineEditBackPath2->setText(mySettings2.backgroundName);
 
     // Set text color
     QPalette p;
@@ -258,27 +258,33 @@ void BibleSettingWidget::loadSettings()
     ui->graphicViewTextColor2->setPalette(p);
 
     // Set text font
-    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
-    if(mySettings.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont->setText(st);
+    ui->labelFont->setText(getFontText(mySettings.textFont));
+    ui->labelFont2->setText(getFontText(mySettings2.textFont));
 
-    st = QString("%1: %2").arg(mySettings2.textFont.rawName()).arg(mySettings2.textFont.pointSize());
-        if(mySettings2.textFont.bold())
-            st += ", " + tr("Bold");
-        if(mySettings2.textFont.italic())
-            st += ", " + tr("Italic");
-        if(mySettings2.textFont.strikeOut())
-            st += ", " + tr("StrikeOut");
-        if(mySettings2.textFont.underline())
-            st += ", " + tr("Underline");
-        ui->labelFont2->setText(st);
+    // Set alingment
+    ui->comboBoxVerticalAling->setCurrentIndex(mySettings.textAlingmentV);
+    ui->comboBoxHorizontalAling->setCurrentIndex(mySettings.textAlingmentH);
+
+    ui->comboBoxVerticalAling2->setCurrentIndex(mySettings2.textAlingmentV);
+    ui->comboBoxHorizontalAling2->setCurrentIndex(mySettings2.textAlingmentH);
+
+    // Set caption color
+    p.setColor(QPalette::Base,mySettings.captionColor);
+    ui->graphicViewCaptionColor->setPalette(p);
+
+    p.setColor(QPalette::Base,mySettings2.captionColor);
+    ui->graphicViewCaptionColor2->setPalette(p);
+
+    // Set caption font
+    ui->labelFontCaption->setText(getFontText(mySettings.captionFont));
+    ui->labelFontCaption2->setText(getFontText(mySettings2.captionFont));
+
+    // Set caption alignment
+    ui->comboBoxCaptionPosition->setCurrentIndex(mySettings.captionPosition);
+    ui->comboBoxCaptionPosition2->setCurrentIndex(mySettings2.captionPosition);
+
+    ui->comboBoxCaptionAlign->setCurrentIndex(mySettings.captionAlingment);
+    ui->comboBoxCaptionAlign2->setCurrentIndex(mySettings2.captionAlingment);
 
     // Set abbriviations use
     ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviations);
@@ -425,10 +431,21 @@ void BibleSettingWidget::updateOperatorBibleMenu()
 
 }
 
+void BibleSettingWidget::setDispScreen2Visible(bool visible)
+{
+    ui->groupBoxUseDisp2->setVisible(visible);
+}
+
 void BibleSettingWidget::on_comboBoxPrimaryBible_activated(const QString &arg1)
 {
     updateSecondaryBibleMenu();
     updateOperatorBibleMenu();
+}
+
+void BibleSettingWidget::on_comboBoxPrimaryBible2_activated(const QString &arg1)
+{
+    updateSecondaryBibleMenu2();
+    updateTrinaryBibleMenu2();
 }
 
 void BibleSettingWidget::on_comboBoxSecondaryBible_activated(const QString &arg1)
@@ -436,49 +453,9 @@ void BibleSettingWidget::on_comboBoxSecondaryBible_activated(const QString &arg1
     updateTrinaryBibleMenu();
 }
 
-void BibleSettingWidget::on_buttonBrowseBackground_clicked()
+void BibleSettingWidget::on_comboBoxSecondaryBible2_activated(const QString &arg1)
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
-    if(!filename.isNull())
-        ui->lineEditBackPath->setText(filename);
-}
-
-void BibleSettingWidget::on_buttonTextColor_clicked()
-{
-    QColor c(QColorDialog::getColor(mySettings.textColor,this));
-    if(c.isValid())
-        mySettings.textColor = c;
-    QPalette p;
-    p.setColor(QPalette::Base,mySettings.textColor);
-    ui->graphicViewTextColor->setPalette(p);
-}
-
-void BibleSettingWidget::on_buttonFont_clicked()
-{
-    bool ok;
-    QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
-    if(ok)
-        mySettings.textFont = font;
-
-    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
-    if(mySettings.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont->setText(st);
-}
-
-void BibleSettingWidget::on_pushButtonDefault_clicked()
-{
-    BibleSettings b;
-    mySettings = b;
-    mySettings2 = b;
-    loadSettings();
+    updateTrinaryBibleMenu2();
 }
 
 void BibleSettingWidget::on_checkBoxUseShadow_stateChanged(int arg1)
@@ -492,70 +469,6 @@ void BibleSettingWidget::on_checkBoxUseShadow_stateChanged(int arg1)
     }
 }
 
-void BibleSettingWidget::on_groupBoxUseDisp2_toggled(bool arg1)
-{
-    ui->widgetBibles2->setVisible(arg1);
-    ui->groupBoxEffects2->setVisible(arg1);
-    ui->groupBoxBackground2->setVisible(arg1);
-    ui->groupBoxMaxScreen2->setVisible(arg1);
-    ui->groupBoxTextAlingment2->setVisible(arg1);
-    ui->groupBoxTextProperties2->setVisible(arg1);
-    ui->checkBoxAbbiviations2->setVisible(arg1);
-}
-
-void BibleSettingWidget::setDispScreen2Visible(bool visible)
-{
-    ui->groupBoxUseDisp2->setVisible(visible);
-}
-
-void BibleSettingWidget::on_comboBoxPrimaryBible2_activated(const QString &arg1)
-{
-    updateSecondaryBibleMenu2();
-    updateTrinaryBibleMenu2();
-}
-
-void BibleSettingWidget::on_comboBoxSecondaryBible2_activated(const QString &arg1)
-{
-    updateTrinaryBibleMenu2();
-}
-
-void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
-{
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
-    if(!filename.isNull())
-        ui->lineEditBackPath2->setText(filename);
-}
-
-void BibleSettingWidget::on_buttonTextColor2_clicked()
-{
-    QColor c(QColorDialog::getColor(mySettings2.textColor,this));
-    if(c.isValid())
-        mySettings2.textColor = c;
-    QPalette p;
-    p.setColor(QPalette::Base,mySettings2.textColor);
-    ui->graphicViewTextColor2->setPalette(p);
-}
-
-void BibleSettingWidget::on_buttonFont2_clicked()
-{
-    bool ok;
-    QFont font = QFontDialog::getFont(&ok,mySettings2.textFont,this);
-    if(ok)
-        mySettings2.textFont = font;
-
-    QString st(QString("%1: %2").arg(mySettings2.textFont.rawName()).arg(mySettings2.textFont.pointSize()));
-    if(mySettings2.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings2.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings2.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings2.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont2->setText(st);
-}
-
 void BibleSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
 {
     if(arg1==2)
@@ -565,4 +478,146 @@ void BibleSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
         ui->checkBoxUseBlurredShadow2->setChecked(false);
         ui->checkBoxUseBlurredShadow2->setEnabled(false);
     }
+}
+
+void BibleSettingWidget::on_buttonBrowseBackground_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
+                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+    if(!filename.isNull())
+    {
+        mySettings.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings.backgroundName = filename;
+        ui->lineEditBackPath->setText(filename);
+    }
+}
+
+void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
+                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+    if(!filename.isNull())
+    {
+        mySettings2.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings2.backgroundName = filename;
+        ui->lineEditBackPath2->setText(filename);
+    }
+}
+
+void BibleSettingWidget::on_toolButtonTextColor_clicked()
+{
+    QColor c(QColorDialog::getColor(mySettings.textColor,this));
+    if(c.isValid())
+        mySettings.textColor = c;
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings.textColor);
+    ui->graphicViewTextColor->setPalette(p);
+}
+
+void BibleSettingWidget::on_toolButtonTextColor2_clicked()
+{
+    QColor c(QColorDialog::getColor(mySettings2.textColor,this));
+    if(c.isValid())
+        mySettings2.textColor = c;
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings2.textColor);
+    ui->graphicViewTextColor2->setPalette(p);
+}
+
+void BibleSettingWidget::on_toolButtonTextFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
+    if(ok)
+        mySettings.textFont = font;
+
+    ui->labelFont->setText(getFontText(mySettings.textFont));
+}
+
+void BibleSettingWidget::on_toolButtonTextFont2_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,mySettings2.textFont,this);
+    if(ok)
+        mySettings2.textFont = font;
+
+    ui->labelFont2->setText(getFontText(mySettings2.textFont));
+}
+
+void BibleSettingWidget::on_toolButtonCaptionColor_clicked()
+{
+    QColor c(QColorDialog::getColor(mySettings.captionColor,this));
+    if(c.isValid())
+        mySettings.captionColor = c;
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings.captionColor);
+    ui->graphicViewCaptionColor->setPalette(p);
+}
+
+void BibleSettingWidget::on_toolButtonCaptionColor2_clicked()
+{
+    QColor c(QColorDialog::getColor(mySettings2.captionColor,this));
+    if(c.isValid())
+        mySettings2.captionColor = c;
+    QPalette p;
+    p.setColor(QPalette::Base,mySettings2.captionColor);
+    ui->graphicViewCaptionColor2->setPalette(p);
+}
+
+void BibleSettingWidget::on_toolButtonCaptionFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,mySettings.captionFont,this);
+    if(ok)
+        mySettings.captionFont = font;
+
+    ui->labelFontCaption->setText(getFontText(mySettings.captionFont));
+}
+
+void BibleSettingWidget::on_toolButtonCaptionFont2_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok,mySettings2.captionFont,this);
+    if(ok)
+        mySettings2.captionFont = font;
+
+    ui->labelFontCaption2->setText(getFontText(mySettings2.captionFont));
+}
+
+void BibleSettingWidget::on_groupBoxUseDisp2_toggled(bool arg1)
+{
+    ui->widgetBibles2->setVisible(arg1);
+    ui->groupBoxEffects2->setVisible(arg1);
+    ui->groupBoxBackground2->setVisible(arg1);
+    ui->groupBoxMaxScreen2->setVisible(arg1);
+    ui->groupBoxCaptionProperties2->setVisible(arg1);
+    ui->groupBoxTextProperties2->setVisible(arg1);
+    ui->checkBoxAbbiviations2->setVisible(arg1);
+}
+
+void BibleSettingWidget::on_pushButtonDefault_clicked()
+{
+    BibleSettings b;
+    mySettings = b;
+    mySettings2 = b;
+    loadSettings();
+}
+
+QString BibleSettingWidget::getFontText(QFont font)
+{
+    QString st(QString("%1: %2").arg(font.rawName()).arg(font.pointSize()));
+    if(font.bold())
+        st += ", " + tr("Bold");
+    if(font.italic())
+        st += ", " + tr("Italic");
+    if(font.strikeOut())
+        st += ", " + tr("StrikeOut");
+    if(font.underline())
+        st += ", " + tr("Underline");
+
+    return st;
 }

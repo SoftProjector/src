@@ -373,9 +373,9 @@ void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
     useFading = bibleSets.useFading;
     useShadow = bibleSets.useShadow;
     useBluredShadow = bibleSets.useBlurShadow;
-    setNewWallpaper(bibleSets.backgroundPath,bibleSets.useBackground);
-    mainFont = bibleSets.textFont;
-    foregroundColor = bibleSets.textColor;
+    setNewWallpaper(bibleSets.background,bibleSets.useBackground);
+//    mainFont = bibleSets.textFont;
+//    foregroundColor = bibleSets.textColor;
 
     renderText(true);
 }
@@ -394,7 +394,7 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     {
         // Set song specific settings
         songSets.useBackground = songStanza.useBackground;
-        songSets.backgroundPath = songStanza.backgroundPath;
+        songSets.backgroundPath = songStanza.backgroundName;
         songSets.background = songStanza.background;
         songSets.textFont = songStanza.font;
         songSets.textColor = songStanza.color;
@@ -405,12 +405,9 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
         songSets.textAlingmentV = songStanza.alignmentV;
         songSets.textAlingmentH = songStanza.alignmentH;
     }
-    else
-//    {
-        setNewWallpaper(songSets.backgroundPath,songSets.useBackground);
-        mainFont = songSets.textFont;
-//        foregroundColor = songSets.textColor;
-//    }
+
+    setNewWallpaper(songSets.background,songSets.useBackground);
+    mainFont = songSets.textFont;
 
     renderText(true);
 }
@@ -530,7 +527,7 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
     h=maxh;
     top=maxtop;
 
-    QFont font = painter->font();
+    QFont font = bibleSets.textFont;
     int original_size = font.pointSize();
     int current_size = original_size;
 
@@ -547,13 +544,21 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
         tflags += Qt::AlignVCenter;
     else if(bibleSets.textAlingmentV==2)
         tflags += Qt::AlignBottom;
+
     if(bibleSets.textAlingmentH==0)
         tflags += Qt::AlignLeft;
     else if(bibleSets.textAlingmentH==1)
         tflags += Qt::AlignHCenter;
     else if(bibleSets.textAlingmentH==2)
         tflags += Qt::AlignRight;
-    int cflags = Qt::AlignRight | Qt::AlignTop ;
+
+    int cflags = Qt::AlignTop ;
+    if(bibleSets.captionAlingment==0)
+        cflags += Qt::AlignLeft;
+    else if(bibleSets.captionAlingment==1)
+        cflags += Qt::AlignHCenter;
+    else if(bibleSets.captionAlingment==2)
+        cflags += Qt::AlignRight;
 
     bool exit = false;
     while( !exit )
@@ -634,6 +639,7 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
     // Draw the bible text verse(s) at the final size:
     font.setPointSize(current_size);
     painter->setFont(font);
+    painter->setPen(bibleSets.textColor);
     painter->drawText(trect1, tflags, bibleVerse.primary_text);
     if(!bibleVerse.secondary_text.isNull())
         painter->drawText(trect2, tflags, bibleVerse.secondary_text);
@@ -641,8 +647,9 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
         painter->drawText(trect3, tflags, bibleVerse.trinary_text);
 
     // Draw the verse caption(s) at the final size:
-    font.setPointSize(current_size*3/4);
-    painter->setFont(font);
+//    font.setPointSize(current_size*3/4);
+    painter->setFont(bibleSets.captionFont);
+    painter->setPen(bibleSets.captionColor);
     painter->drawText(crect1, cflags, bibleVerse.primary_caption);
     if(!bibleVerse.secondary_text.isNull())
         painter->drawText(crect2, cflags, bibleVerse.secondary_caption);
@@ -660,8 +667,8 @@ void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& 
     QFont font = painter->font();
 
     // prepare caption
-    font.setPointSize(font_size * 3/4);
-    painter->setFont(font);
+//    font.setPointSize(font_size * 3/4);
+    painter->setFont(bibleSets.captionFont);
     crect = painter->boundingRect(left, top, width, height, cflags, ctext);
 
     // prepare text
@@ -671,8 +678,19 @@ void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& 
 
     // reset capion location
     int ch = crect.height();
-    crect.setTop(trect.bottom());
-    crect.setHeight(ch);
+    int th = trect.height();
+    if(bibleSets.captionPosition == 0)
+    {
+        crect.setTop(trect.top());
+        crect.setHeight(ch);
+        trect.setTop(crect.bottom());
+        trect.setHeight(th);
+    }
+    else if(bibleSets.captionPosition = 1)
+    {
+        crect.setTop(trect.bottom());
+        crect.setHeight(ch);
+    }
 }
 
 void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
@@ -1047,6 +1065,14 @@ void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
         wallpaper.load(wallpaperPath);
         wallpaper = wallpaper.scaled(width(),height());
     }
+}
+
+void DisplayScreen::setNewWallpaper(QPixmap wallPix, bool isToUse)
+{
+    if(isToUse)
+        wallpaper = wallPix.scaled(width(),height());
+    else
+        wallpaper = QPixmap();
 }
 
 void DisplayScreen::setNewPassiveWallpaper(QString path, bool isToUse)

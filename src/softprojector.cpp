@@ -1902,8 +1902,8 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s)
     unsigned int tci = (unsigned int)(s.color.rgb());
     q.addBindValue(tci);
     q.addBindValue(s.font.toString());
-    q.addBindValue(pixToByte(QPixmap()));
-    q.addBindValue(s.backgroundPath);
+    q.addBindValue(pixToByte(s.background));
+    q.addBindValue(s.backgroundName);
     q.exec();
 }
 
@@ -2183,8 +2183,8 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
     s.alignmentH = q.value(13).toInt();
     s.color = QColor::fromRgb(q.value(14).toUInt());
     s.font.fromString(q.value(15).toString());
-//    s.backgroundImage = QPixmap()
-    s.backgroundPath = q.value(17).toString();
+    s.background = QPixmap();
+    s.backgroundName = q.value(17).toString();
 }
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s)

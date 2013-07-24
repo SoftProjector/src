@@ -177,7 +177,7 @@ void EditWidget::resetUiItems()
     p.setColor(QPalette::Base,ss.endingColor);
     ui->graphicsViewEndingColor->setPalette(p);
     ui->checkBoxUseBackground->setChecked(ss.useBackground);
-    ui->lineEditBackgroundPath->setText(ss.backgroundPath);
+    ui->lineEditBackgroundPath->setText(ss.backgroundName);
     ui->textEditSong->setPlainText(setSongText(ss.songText));
     ui->plainTextEditNotes->setPlainText(ss.notes);
 }
@@ -200,7 +200,7 @@ void EditWidget::setUiItems()
     ui->checkBoxUseBackground->setChecked(editSong.useBackground);
     ui->lineEditBackgroundPath->setEnabled(editSong.useBackground);
     ui->toolButtonBrowseBackground->setEnabled(editSong.useBackground);
-    ui->lineEditBackgroundPath->setText(editSong.backgroundPath);
+    ui->lineEditBackgroundPath->setText(editSong.backgroundName);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
     ui->plainTextEditNotes->setPlainText(editSong.notes);
 
@@ -222,7 +222,7 @@ void EditWidget::setSave(){
     newSong.alignmentH = ui->comboBoxHAlignment->currentIndex();
     newSong.usePrivateSettings = ui->checkBoxSongSettings->isChecked();
     newSong.useBackground = ui->checkBoxUseBackground->isChecked();
-    newSong.backgroundPath = ui->lineEditBackgroundPath->text();
+    newSong.backgroundName = ui->lineEditBackgroundPath->text();
     newSong.notes = ui->plainTextEditNotes->toPlainText();
 }
 
@@ -565,5 +565,11 @@ void EditWidget::on_toolButtonBrowseBackground_clicked()
                                                     ".", "Images (*.png *.jpg *.jpeg)");
 
     if( !filename.isNull() )
+    {
+        editSong.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        editSong.backgroundName = filename;
         ui->lineEditBackgroundPath->setText(filename);
+    }
 }

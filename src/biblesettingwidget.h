@@ -50,20 +50,25 @@ private slots:
     void updateOperatorBibleMenu();
 
     void on_comboBoxPrimaryBible_activated(const QString &arg1);
-    void on_comboBoxSecondaryBible_activated(const QString &arg1);
-    void on_buttonBrowseBackground_clicked();
-    void on_buttonTextColor_clicked();
-    void on_buttonFont_clicked();
-    void on_pushButtonDefault_clicked();
-    void on_checkBoxUseShadow_stateChanged(int arg1);
-    void on_groupBoxUseDisp2_toggled(bool arg1);
     void on_comboBoxPrimaryBible2_activated(const QString &arg1);
+    void on_comboBoxSecondaryBible_activated(const QString &arg1);
     void on_comboBoxSecondaryBible2_activated(const QString &arg1);
+    void on_buttonBrowseBackground_clicked();
     void on_buttonBrowseBackground2_clicked();
-    void on_buttonTextColor2_clicked();
-    void on_buttonFont2_clicked();
+    void on_checkBoxUseShadow_stateChanged(int arg1);
     void on_checkBoxUseShadow2_stateChanged(int arg1);
+    void on_toolButtonTextColor_clicked();
+    void on_toolButtonTextColor2_clicked();
+    void on_toolButtonTextFont_clicked();
+    void on_toolButtonTextFont2_clicked();
+    void on_toolButtonCaptionColor_clicked();
+    void on_toolButtonCaptionColor2_clicked();
+    void on_toolButtonCaptionFont_clicked();
+    void on_toolButtonCaptionFont2_clicked();
+    void on_groupBoxUseDisp2_toggled(bool arg1);
+    void on_pushButtonDefault_clicked();
 
+    QString getFontText(QFont font);
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;

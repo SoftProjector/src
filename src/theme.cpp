@@ -37,11 +37,16 @@ BibleSettings::BibleSettings()
     useFading = true;
     useBlurShadow = false;
     useBackground = false;
-    backgroundPath = "";
+    backgroundName = "";
+    background = QPixmap();
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     textColor = QColor(Qt::white);
     textAlingmentV = 0;
     textAlingmentH = 0;
+    captionFont.fromString("Arial,24,-1,5,50,0,0,0,0,0");
+    captionColor = QColor(Qt::white);
+    captionAlingment = 2;
+    captionPosition = 1;
     useAbbriviations = false;
     maxScreen = 100;
     maxScreenFrom = "bottom";
@@ -285,7 +290,7 @@ void Theme::bibleSettingFromString(QString &sets, BibleSettings &settings)
         else if(n=="useBackground")
             settings.useBackground = (v=="true");
         else if(n=="backgroundPath")
-            settings.backgroundPath = v;
+            settings.backgroundName = v;
         else if(n=="textAlingment")
         {
             QStringList alinglist = v.split(",");
@@ -437,7 +442,7 @@ QString Theme::bibleSettingToString(BibleSettings &settings)
     else
         rString += "\nuseBackground = false";
 
-    rString += "\nbackgroundPath = " + settings.backgroundPath;
+    rString += "\nbackgroundPath = " + settings.backgroundName;
 
     // Text alingment
     rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +

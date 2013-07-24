@@ -51,7 +51,7 @@ public:
     QColor endingColor;
     QFont endingFont;
     bool useBackground;
-    QString backgroundPath;
+    QString backgroundName;
     QPixmap background;
 };
 
@@ -94,7 +94,7 @@ class Song
     QColor endingColor;
     QFont endingFont;
     bool useBackground;
-    QString backgroundPath;
+    QString backgroundName;
     QPixmap background;
 
 private:
