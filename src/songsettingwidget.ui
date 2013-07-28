@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>417</width>
-    <height>925</height>
+    <height>1040</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -133,16 +133,20 @@
          </widget>
         </item>
         <item>
-         <widget class="Line" name="line_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QLabel" name="labelInfoFont">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_19">
         <item>
          <widget class="QLabel" name="labelInfoAlign">
           <property name="text">
-           <string>Align To:</string>
+           <string>Alignment:</string>
           </property>
          </widget>
         </item>
@@ -150,12 +154,12 @@
          <widget class="QComboBox" name="comboBoxInfoAlign">
           <item>
            <property name="text">
-            <string>Top</string>
+            <string>Above Text</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Bottom</string>
+            <string>Below Text</string>
            </property>
           </item>
          </widget>
@@ -233,12 +237,16 @@
          </widget>
         </item>
         <item>
-         <widget class="Line" name="line_9">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QLabel" name="labelEndingFont">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_18">
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
@@ -295,6 +303,19 @@
            </property>
           </item>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -850,16 +871,20 @@
             </widget>
            </item>
            <item>
-            <widget class="Line" name="line_6">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QLabel" name="labelInfoFont2">
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_21">
            <item>
             <widget class="QLabel" name="labelAlingSongInfo2">
              <property name="text">
-              <string>Align To:</string>
+              <string>Alignment:</string>
              </property>
             </widget>
            </item>
@@ -867,12 +892,12 @@
             <widget class="QComboBox" name="comboBoxInfoAlign2">
              <item>
               <property name="text">
-               <string>Top</string>
+               <string>Above Text</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Bottom</string>
+               <string>Below Text</string>
               </property>
              </item>
             </widget>
@@ -987,12 +1012,16 @@
             </widget>
            </item>
            <item>
-            <widget class="Line" name="line_8">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QLabel" name="labelEndingFont2">
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_20">
            <item>
             <widget class="QLabel" name="label">
              <property name="text">
@@ -1049,6 +1078,19 @@
               </property>
              </item>
             </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>

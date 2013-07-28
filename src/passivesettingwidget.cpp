@@ -42,12 +42,12 @@ void PassiveSettingWidget::setSetings(PassiveSettings &settings, PassiveSettings
 void PassiveSettingWidget::getSettings(PassiveSettings &settings, PassiveSettings &settings2)
 {
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
-    mySettings.backgroundPath = ui->lineEditBackgroundPath->text();
+    mySettings.backgroundName = ui->lineEditBackgroundPath->text();
 
     // Get display two settings
     mySettings2.useDisp2settings = ui->groupBoxDisp2Sets->isChecked();
     mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
-    mySettings2.backgroundPath = ui->lineEditBackgroundPath2->text();
+    mySettings2.backgroundName = ui->lineEditBackgroundPath2->text();
 
     settings = mySettings;
     settings2 = mySettings2;
@@ -56,12 +56,12 @@ void PassiveSettingWidget::getSettings(PassiveSettings &settings, PassiveSetting
 void PassiveSettingWidget::loadSettings()
 {
     ui->groupBoxBackground->setChecked(mySettings.useBackground);
-    ui->lineEditBackgroundPath->setText(mySettings.backgroundPath);
+    ui->lineEditBackgroundPath->setText(mySettings.backgroundName);
 
     // Displpay screen two
     ui->groupBoxDisp2Sets->setChecked(mySettings2.useDisp2settings);
     ui->groupBoxBackground2->setChecked(mySettings.useBackground);
-    ui->lineEditBackgroundPath2->setText(mySettings.backgroundPath);
+    ui->lineEditBackgroundPath2->setText(mySettings.backgroundName);
 }
 
 void PassiveSettingWidget::setDispScreen2Visible(bool visible)
@@ -74,7 +74,13 @@ void PassiveSettingWidget::on_buttonBrowseBackgound_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for passive wallpaper"),
                                                     ".", tr("Images (*.png *.jpg *.jpeg)"));
     if(!filename.isNull())
+    {
+        mySettings.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings.backgroundName = filename;
         ui->lineEditBackgroundPath->setText(filename);
+    }
 }
 
 void PassiveSettingWidget::on_groupBoxDisp2Sets_toggled(bool arg1)
@@ -87,7 +93,13 @@ void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for passive wallpaper"),
                                                     ".", tr("Images (*.png *.jpg *.jpeg)"));
     if(!filename.isNull())
+    {
+        mySettings2.background.load(filename);
+        QFileInfo fi(filename);
+        filename = fi.fileName();
+        mySettings2.backgroundName = filename;
         ui->lineEditBackgroundPath2->setText(filename);
+    }
 }
 
 void PassiveSettingWidget::on_pushButtonDefault_clicked()

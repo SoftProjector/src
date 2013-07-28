@@ -394,7 +394,7 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     {
         // Set song specific settings
         songSets.useBackground = songStanza.useBackground;
-        songSets.backgroundPath = songStanza.backgroundName;
+        songSets.backgroundName = songStanza.backgroundName;
         songSets.background = songStanza.background;
         songSets.textFont = songStanza.font;
         songSets.textColor = songStanza.color;
@@ -422,7 +422,7 @@ void DisplayScreen::renderAnnounceText(AnnounceSlide announce, AnnounceSettings 
     useFading = annouceSets.useFading;
     useShadow = annouceSets.useShadow;
     useBluredShadow = annouceSets.useBlurShadow;
-    setNewWallpaper(annouceSets.backgroundPath,annouceSets.useBackground);
+    setNewWallpaper(annouceSets.backgroundName,annouceSets.useBackground);
     mainFont = annouceSets.textFont;
     foregroundColor = annouceSets.textColor;
 
@@ -686,7 +686,7 @@ void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& 
         trect.setTop(crect.bottom());
         trect.setHeight(th);
     }
-    else if(bibleSets.captionPosition = 1)
+    else if(bibleSets.captionPosition == 1)
     {
         crect.setTop(trect.bottom());
         crect.setHeight(ch);

@@ -315,11 +315,11 @@ void SoftProjector::updateSetting(GeneralSettings &g, Theme &t)
     bibleWidget->setSettings(theme.bible);
     
     // Apply display settings;
-    displayScreen1->setNewPassiveWallpaper(theme.passive.backgroundPath,theme.passive.useBackground);
+    displayScreen1->setNewPassiveWallpaper(theme.passive.backgroundName,theme.passive.useBackground);
     if(theme.passive2.useDisp2settings)
-        displayScreen2->setNewPassiveWallpaper(theme.passive2.backgroundPath,theme.passive2.useBackground);
+        displayScreen2->setNewPassiveWallpaper(theme.passive2.backgroundName,theme.passive2.useBackground);
     else
-        displayScreen2->setNewPassiveWallpaper(theme.passive.backgroundPath,theme.passive.useBackground);
+        displayScreen2->setNewPassiveWallpaper(theme.passive.backgroundName,theme.passive.useBackground);
 }
 
 void SoftProjector::applySetting(GeneralSettings &g, Theme &t)

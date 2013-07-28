@@ -44,15 +44,16 @@ public slots:
 private slots:
     void loadSettings();
     void on_buttonBackground_clicked();
-    void on_buttonTextColor_clicked();
-    void on_buttonFont_clicked();
     void on_pushButtonDefault_clicked();
     void on_checkBoxUseShadow_stateChanged(int arg1);
     void on_groupBoxUseDisp2_toggled(bool arg1);
     void on_checkBoxUseShadow2_stateChanged(int arg1);
-    void on_buttonTextColor2_clicked();
-    void on_buttonFont2_clicked();
     void on_buttonBackground2_clicked();
+    void on_toolButtonColor_clicked();
+    void on_toolButtonColor2_clicked();
+    void on_toolButtonFont_clicked();
+    void on_toolButtonFont2_clicked();
+    QString getFontText(QFont font);
 
 private:
     AnnounceSettings mySettings, mySettings2;

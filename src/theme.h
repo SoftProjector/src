@@ -28,7 +28,8 @@ class PassiveSettings
 public:
     PassiveSettings();
     bool useBackground;
-    QString backgroundPath;
+    QString backgroundName;
+    QPixmap background;
     bool useDisp2settings;
 };
 
@@ -79,7 +80,7 @@ public:
     QFont endingFont;
     int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
     bool useBackground;
-    QString backgroundPath; // file path for background image
+    QString backgroundName; // file path for background image
     QPixmap background;
     QColor textColor;
     QFont textFont;
@@ -98,7 +99,8 @@ public:
     bool useFading;
     bool useBlurShadow;
     bool useBackground;
-    QString backgroundPath; // file path for background image
+    QString backgroundName; // file path for background image
+    QPixmap background;
     QFont textFont;
     QColor textColor;
     int textAlingmentV;

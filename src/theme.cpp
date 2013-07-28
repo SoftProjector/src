@@ -22,7 +22,8 @@
 PassiveSettings::PassiveSettings()
 {
     useBackground = false;
-    backgroundPath = "";
+    backgroundName = "";
+    background = QPixmap();
     useDisp2settings = false;
 }
 
@@ -70,7 +71,7 @@ SongSettings::SongSettings()
     endingFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     endingType = 0;
     useBackground = false;
-    backgroundPath = "";
+    backgroundName = "";
     background = QPixmap();
     textColor = QColor(Qt::white);
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
@@ -88,7 +89,8 @@ AnnounceSettings::AnnounceSettings()
     useFading = true;
     useBlurShadow = false;
     useBackground = false;
-    backgroundPath = "";
+    backgroundName = "";
+    background = QPixmap();
     textFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     textColor = QColor(Qt::white);
     textAlingmentV = 0;
@@ -255,8 +257,8 @@ void Theme::passiveSettingFromString(QString &sets, PassiveSettings &settings)
             settings.useDisp2settings = (v=="true");
         else if(n=="useBackground")
             settings.useBackground = (v=="true");
-        else if(n=="backgroundPath")
-            settings.backgroundPath = v;
+        else if(n=="backgroundName")
+            settings.backgroundName = v;
     }
 }
 
@@ -289,7 +291,7 @@ void Theme::bibleSettingFromString(QString &sets, BibleSettings &settings)
             settings.useBlurShadow = (v=="true");
         else if(n=="useBackground")
             settings.useBackground = (v=="true");
-        else if(n=="backgroundPath")
+        else if(n=="backgroundName")
             settings.backgroundName = v;
         else if(n=="textAlingment")
         {
@@ -342,8 +344,8 @@ void Theme::songSettingFromString(QString &sets, SongSettings &settings)
             settings.useBlurShadow = (v=="true");
         else if(n=="useBackground")
             settings.useBackground = (v=="true");
-        else if(n=="backgroundPath")
-            settings.backgroundPath = v;
+        else if(n=="backgroundName")
+            settings.backgroundName = v;
         else if(n=="textAlingment")
         {
             QStringList alinglist = v.split(",");
@@ -377,8 +379,8 @@ void Theme::announceSettingFromString(QString &sets, AnnounceSettings &settings)
             settings.useBlurShadow = (v=="true");
         else if(n=="useBackground")
             settings.useBackground = (v=="true");
-        else if(n=="backgroundPath")
-            settings.backgroundPath = v;
+        else if(n=="backgroundName")
+            settings.backgroundName = v;
         else if(n=="textAlingment")
         {
             QStringList alinglist = v.split(",");
@@ -404,7 +406,7 @@ QString Theme::passiveSettingToString(PassiveSettings &settings)
 
     // background
     (settings.useBackground)? rString += "\nuseBackground = true" : rString += "\nuseBackground = false";
-    rString += "\nbackgroundPath = " + settings.backgroundPath;
+    rString += "\nbackgroundPath = " + settings.backgroundName;
 
     return rString;
 }
@@ -515,7 +517,7 @@ QString Theme::songSettingToString(SongSettings &settings)
     else
         rString += "\nuseBackground = false";
 
-    rString += "\nbackgroundPath = " + settings.backgroundPath;
+    rString += "\nbackgroundPath = " + settings.backgroundName;
 
     // Text alingment
     rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
@@ -557,7 +559,7 @@ QString Theme::announceSettingToString(AnnounceSettings &settings)
 
     // background
     (settings.useBackground)? rString += "\nuseBackground = true" : rString += "\nuseBackground = false";
-    rString += "\nbackgroundPath = " + settings.backgroundPath;
+    rString += "\nbackgroundPath = " + settings.backgroundName;
 
     // Text alingment
     rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +

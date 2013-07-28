@@ -61,6 +61,7 @@ private slots:
     void on_toolButtonFont2_clicked();
     void on_groupBoxDisplay2_toggled(bool arg1);
     void on_pushButtonDefault_clicked();
+    QString getFontText(QFont font);
 private:
     SongSettings mySettings;
     SongSettings mySettings2;

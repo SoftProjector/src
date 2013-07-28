@@ -70,10 +70,10 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
 
     // Save song background
     mySettings.useBackground = ui->groupBoxSongBackground->isChecked();
-    mySettings.backgroundPath = ui->lineEditSongBackground->text();
+    mySettings.backgroundName = ui->lineEditSongBackground->text();
 
     mySettings2.useBackground = ui->groupBoxSongBackground2->isChecked();
-    mySettings2.backgroundPath = ui->lineEditSongBackground2->text();
+    mySettings2.backgroundName = ui->lineEditSongBackground2->text();
 
     // Save alingment
     mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
@@ -114,6 +114,7 @@ void SongSettingWidget::loadSettings()
     ui->checkBoxSongNumber->setChecked(mySettings.showSongNumber);
     p.setColor(QPalette::Base,mySettings.infoColor);
     ui->graphicViewInfoColor->setPalette(p);
+    ui->labelInfoFont->setText(getFontText(mySettings.infoFont));
     ui->comboBoxInfoAlign->setCurrentIndex(mySettings.infoAling);
 
     ui->checkBoxStanzaTitle2->setChecked(mySettings2.showStanzaTitle);
@@ -121,56 +122,41 @@ void SongSettingWidget::loadSettings()
     ui->checkBoxSongNumber2->setChecked(mySettings2.showSongNumber);
     p.setColor(QPalette::Base,mySettings2.infoColor);
     ui->graphicViewInfoColor2->setPalette(p);
+    ui->labelInfoFont2->setText(getFontText(mySettings2.infoFont));
     ui->comboBoxInfoAlign2->setCurrentIndex(mySettings2.infoAling);
 
     // Set Song Ending
     ui->groupBoxSongEnding->setChecked(mySettings.showSongEnding);
     p.setColor(QPalette::Base,mySettings.endingColor);
     ui->graphicViewEndingColor->setPalette(p);
+    ui->labelEndingFont->setText(getFontText(mySettings.endingFont));
     ui->comboBoxEndingType->setCurrentIndex(mySettings.endingType);
 
     ui->groupBoxSongEnding2->setChecked(mySettings2.showSongEnding);
     p.setColor(QPalette::Base,mySettings2.endingColor);
     ui->graphicViewEndingColor2->setPalette(p);
+    ui->labelEndingFont2->setText(getFontText(mySettings2.endingFont));
     ui->comboBoxEndingType2->setCurrentIndex(mySettings2.endingType);
 
     // Set Song Background
     ui->groupBoxSongBackground->setChecked(mySettings.useBackground);
-    ui->lineEditSongBackground->setText(mySettings.backgroundPath);
+    ui->lineEditSongBackground->setText(mySettings.backgroundName);
 
     ui->groupBoxSongBackground2->setChecked(mySettings2.useBackground);
-    ui->lineEditSongBackground2->setText(mySettings2.backgroundPath);
+    ui->lineEditSongBackground2->setText(mySettings2.backgroundName);
 
     // Set Text Properties
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicViewTextColor->setPalette(p);
-    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
-    if(mySettings.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont->setText(st);
+    ui->labelFont->setText(getFontText(mySettings.textFont));
     ui->comboBoxVerticalAling->setCurrentIndex(mySettings.textAlingmentV);
     ui->comboBoxHorizontalAling->setCurrentIndex(mySettings.textAlingmentH);
 
     p.setColor(QPalette::Base,mySettings2.textColor);
     ui->graphicViewTextColor2->setPalette(p);
+    ui->labelFont2->setText(getFontText(mySettings2.textFont));
     ui->comboBoxVerticalAling2->setCurrentIndex(mySettings2.textAlingmentV);
     ui->comboBoxHorizontalAling2->setCurrentIndex(mySettings2.textAlingmentH);
-    st = QString("%1: %2").arg(mySettings2.textFont.rawName()).arg(mySettings2.textFont.pointSize());
-    if(mySettings2.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings2.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings2.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings2.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont2->setText(st);
 
     // Set Screen Use
     ui->spinBoxScreenUse->setValue(mySettings.screenUse);
@@ -236,6 +222,8 @@ void SongSettingWidget::on_toolButtonInfoFont_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings.infoFont,this);
     if(ok)
         mySettings.infoFont = font;
+
+    ui->labelInfoFont->setText(getFontText(mySettings.infoFont));
 }
 
 void SongSettingWidget::on_toolButtonInfoFont2_clicked()
@@ -244,6 +232,8 @@ void SongSettingWidget::on_toolButtonInfoFont2_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings2.infoFont,this);
     if(ok)
         mySettings2.infoFont = font;
+
+    ui->labelInfoFont2->setText(getFontText(mySettings2.infoFont));
 }
 
 void SongSettingWidget::on_toolButtonEndingColor_clicked()
@@ -272,6 +262,8 @@ void SongSettingWidget::on_toolButtonEndingFont_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings.endingFont,this);
     if(ok)
         mySettings.endingFont = font;
+
+    ui->labelEndingFont->setText(getFontText(mySettings.endingFont));
 }
 
 void SongSettingWidget::on_toolButtonEndingFont2_clicked()
@@ -280,6 +272,8 @@ void SongSettingWidget::on_toolButtonEndingFont2_clicked()
     QFont font = QFontDialog::getFont(&ok,mySettings2.endingFont,this);
     if(ok)
         mySettings2.endingFont = font;
+
+    ui->labelEndingFont2->setText(getFontText(mySettings2.endingFont));
 }
 
 void SongSettingWidget::on_buttonSongBackground_clicked()
@@ -291,7 +285,7 @@ void SongSettingWidget::on_buttonSongBackground_clicked()
         mySettings.background.load(filename);
         QFileInfo fi(filename);
         filename = fi.fileName();
-        mySettings.backgroundPath = filename;
+        mySettings.backgroundName = filename;
         ui->lineEditSongBackground->setText(filename);
     }
 }
@@ -305,7 +299,7 @@ void SongSettingWidget::on_buttonSongBackground2_clicked()
         mySettings2.background.load(filename);
         QFileInfo fi(filename);
         filename = fi.fileName();
-        mySettings2.backgroundPath = filename;
+        mySettings2.backgroundName = filename;
         ui->lineEditSongBackground2->setText(filename);
     }
 }
@@ -337,16 +331,7 @@ void SongSettingWidget::on_toolButtonFont_clicked()
     if(ok)
         mySettings.textFont = font;
 
-    QString st(QString("%1: %2").arg(mySettings.textFont.rawName()).arg(mySettings.textFont.pointSize()));
-    if(mySettings.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont->setText(st);
+    ui->labelFont->setText(getFontText(mySettings.textFont));
 }
 
 void SongSettingWidget::on_toolButtonFont2_clicked()
@@ -356,16 +341,7 @@ void SongSettingWidget::on_toolButtonFont2_clicked()
     if(ok)
         mySettings2.textFont = font;
 
-    QString st(QString("%1: %2").arg(mySettings2.textFont.rawName()).arg(mySettings2.textFont.pointSize()));
-    if(mySettings2.textFont.bold())
-        st += ", " + tr("Bold");
-    if(mySettings2.textFont.italic())
-        st += ", " + tr("Italic");
-    if(mySettings2.textFont.strikeOut())
-        st += ", " + tr("StrikeOut");
-    if(mySettings2.textFont.underline())
-        st += ", " + tr("Underline");
-    ui->labelFont2->setText(st);
+    ui->labelFont2->setText(getFontText(mySettings2.textFont));
 }
 
 void SongSettingWidget::on_groupBoxDisplay2_toggled(bool arg1)
@@ -384,4 +360,19 @@ void SongSettingWidget::on_pushButtonDefault_clicked()
     mySettings = s;
     mySettings2 = s;
     loadSettings();
+}
+
+QString SongSettingWidget::getFontText(QFont font)
+{
+    QString st(QString("%1: %2").arg(font.rawName()).arg(font.pointSize()));
+    if(font.bold())
+        st += ", " + tr("Bold");
+    if(font.italic())
+        st += ", " + tr("Italic");
+    if(font.strikeOut())
+        st += ", " + tr("StrikeOut");
+    if(font.underline())
+        st += ", " + tr("Underline");
+
+    return st;
 }
