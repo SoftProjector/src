@@ -43,7 +43,7 @@ private:
     Settings allSetings;
     QStringList monitors;
     QStringList themes;
-    QStringList themeIdList;
+    QList<int> themeIdList;
 
 public slots:
     void setSettings(GeneralSettings settings);
@@ -52,7 +52,7 @@ public slots:
 
 signals:
     void setDisp2Use(bool toUse);
-    void themeChanged(QString theme_id);
+    void themeChanged(int theme_id);
 
 private slots:
     void on_pushButtonDefault_clicked();

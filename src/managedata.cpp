@@ -322,7 +322,7 @@ QList<ThemeInfo> Database::getThemes()
     sq.exec("SELECT id, name, comment FROM Themes");
     while (sq.next())
     {
-        theme.themeId = sq.value(0).toString();
+        theme.themeId = sq.value(0).toInt();
         theme.name = sq.value(1).toString();
         theme.comments = sq.value(2).toString();
         theme_list.append(theme);

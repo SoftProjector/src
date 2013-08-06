@@ -41,7 +41,7 @@ public:
     int displayScreen; // stores primary display screen location
     int displayScreen2; // stores secondary display screen location
     DisplayControlsSettings displayControls;
-    QString currentThemeId;
+    int currentThemeId;
 };
 
 class DisplaySettings
@@ -67,12 +67,25 @@ public:
     QString uiTranslation;
 };
 
+class BibleVersionSettings
+{
+public:
+    BibleVersionSettings();
+    QString primaryBible;
+    QString secondaryBible;
+    QString trinaryBible;
+    QString operatorBible;
+
+};
+
 class Settings
 {
 public:
     Settings();
     GeneralSettings general;
     SpSettings spMain;
+    BibleVersionSettings bibleSets;
+    BibleVersionSettings bibleSets2;
 
 public slots:
     void loadSettings();

@@ -49,14 +49,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     // Connect display screen slot
     connect(generalSettingswidget,SIGNAL(setDisp2Use(bool)),this,SLOT(setUseDispScreen2(bool)));
-    connect(generalSettingswidget,SIGNAL(themeChanged(QString)),this,SLOT(changeTheme(QString)));
+    connect(generalSettingswidget,SIGNAL(themeChanged(int)),this,SLOT(changeTheme(int)));
 
 }
 
-void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm)
+void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm, BibleVersionSettings bsets, BibleVersionSettings bsets2)
 {
     gsettings = sets;
     theme = thm;
+    bsettings = bsets;
+    bsettings2 = bsets2;
 
     // remember main display window setting if they will be changed
     is_always_on_top = gsettings.displayIsOnTop;
@@ -65,6 +67,7 @@ void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm)
 
     // Set individual items
     generalSettingswidget->setSettings(gsettings);
+    bibleSettingswidget->setBibleVersions(bsettings,bsettings2);
     setThemes();
 }
 
@@ -124,10 +127,11 @@ void SettingsDialog::on_buttonBox_clicked(QAbstractButton *button)
 void SettingsDialog::applySettings()
 {
     gsettings = generalSettingswidget->getSettings();
+    bibleSettingswidget->getBibleVersions(bsettings,bsettings2);
     getThemes();
 
     // Apply settings
-    emit updateSettings(gsettings,theme);
+    emit updateSettings(gsettings,theme,bsettings,bsettings2);
 
     // Update <display_on_top> only when changed, or when screen location has been changed
     if(is_always_on_top!=gsettings.displayIsOnTop
@@ -139,7 +143,7 @@ void SettingsDialog::applySettings()
     emit updateScreen();
 
     // Save Settings
-    theme.saveTheme();
+    theme.saveThemeUpdate();
 
     // reset display holders
     is_always_on_top = gsettings.displayIsOnTop;
@@ -163,11 +167,11 @@ void SettingsDialog::setThemes()
     announcementSettingswidget->setSettings(theme.announce, theme.announce2);
 }
 
-void SettingsDialog::changeTheme(QString theme_id)
+void SettingsDialog::changeTheme(int theme_id)
 {
     // First save existing changes to the theme
     getThemes();
-    theme.saveTheme();
+    theme.saveThemeUpdate();
 
     // Then load changed theme
     theme.setThemeId(theme_id);

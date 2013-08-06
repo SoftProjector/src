@@ -78,7 +78,7 @@ public:
     SoftProjector *softProjector;
 
 public slots:
-    void updateSetting(GeneralSettings &g,Theme &t);
+    void updateSetting(GeneralSettings &g,Theme &t, BibleVersionSettings &bsets, BibleVersionSettings &bsets2);
     void saveSettings();
     void positionDisplayWindow();
     void updateScreen();
@@ -129,7 +129,7 @@ private:
 private slots:
     void showDisplayScreen(bool show);
 
-    void applySetting(GeneralSettings &g, Theme &t);
+    void applySetting(GeneralSettings &g, Theme &t, BibleVersionSettings &b1, BibleVersionSettings &b2);
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void updateEditActions();

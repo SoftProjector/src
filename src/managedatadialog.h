@@ -28,6 +28,7 @@
 #include "song.h"
 #include "addsongbookdialog.h"
 #include "bibleinformationdialog.h"
+#include "theme.h"
 
 namespace Ui {
     class ManageDataDialog;

@@ -23,6 +23,7 @@
 #include <QtGui>
 #include <QtSql>
 #include "theme.h"
+#include "settings.h"
 
 namespace Ui {
     class BibleSettingWidget;
@@ -39,10 +40,13 @@ public:
 public slots:
     void setSettings(BibleSettings &settings, BibleSettings &settings2);
     void getSettings(BibleSettings &settings, BibleSettings &settings2);
+    void setBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2);
+    void getBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2);
     void setDispScreen2Visible(bool visible);
 
 private slots:
     void loadSettings();
+    void loadBibleVersions();
     void updateSecondaryBibleMenu();
     void updateSecondaryBibleMenu2();
     void updateTrinaryBibleMenu();
@@ -74,6 +78,7 @@ private:
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;
     QStringList secondary_bibles2, secondary_id_list2, trinary_id_list2;
     BibleSettings mySettings, mySettings2;
+    BibleVersionSettings bversion,bversion2;
     Ui::BibleSettingWidget *ui;
 };
 

@@ -65,7 +65,7 @@ void BibleWidget::changeEvent(QEvent *e)
     }
 }
 
-void BibleWidget::setSettings(BibleSettings& sets)
+void BibleWidget::setSettings(BibleVersionSettings &sets)
 {
     QString initial_bible = mySettings.operatorBible;
     mySettings = sets;
@@ -76,11 +76,11 @@ void BibleWidget::loadBibles(QString initialId)
 {
 
     // if operator bible = "same", then set it to primary bible
-    if(mySettings.operatorBible=="same")
+    if(mySettings.operatorBible == "same")
         mySettings.operatorBible = mySettings.primaryBible;
 
     // make sure that program does not drop if no bible is present
-    if(mySettings.operatorBible=="none")
+    if(mySettings.operatorBible == "none")
     {
 //        ui->add_to_history_pushButton->setEnabled(false);
         ui->btnLive->setEnabled(false);

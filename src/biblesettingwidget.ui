@@ -475,51 +475,28 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
          <widget class="QLabel" name="label_MaxTopBottom">
           <property name="text">
-           <string>Align to:</string>
+           <string>Position:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButtonMaxTop">
-          <property name="toolTip">
-           <string>Select &quot;Top&quot; to use top portion of the display screen</string>
-          </property>
-          <property name="text">
-           <string>Top</string>
-          </property>
+         <widget class="QComboBox" name="comboBoxScreenPosition">
+          <item>
+           <property name="text">
+            <string>Top of Screen</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Botton of Screen</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButtonMaxBottom">
-          <property name="toolTip">
-           <string>Select &quot;Bottom&quot; to use bottom portion of the display screen</string>
-          </property>
-          <property name="text">
-           <string>Bottom</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1294,51 +1271,28 @@
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
             <widget class="QLabel" name="labelMaxTopButtom2">
              <property name="text">
-              <string>Align to:</string>
+              <string>Position:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButtonMaxTop2">
-             <property name="toolTip">
-              <string>Select &quot;Top&quot; to use top portion of the display screen</string>
-             </property>
-             <property name="text">
-              <string>Top</string>
-             </property>
+            <widget class="QComboBox" name="comboBoxScreenPosition2">
+             <item>
+              <property name="text">
+               <string>Top of Screen</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Bottom of Screen</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButtonMaxBottom2">
-             <property name="toolTip">
-              <string>Select &quot;Bottom&quot; to use bottom portion of the display screen</string>
-             </property>
-             <property name="text">
-              <string>Bottom</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_7">
+            <spacer name="horizontalSpacer_4">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>

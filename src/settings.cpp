@@ -25,7 +25,7 @@ GeneralSettings::GeneralSettings()
     displayIsOnTop = false;
     displayScreen = 0;
     displayScreen2 = -1; // interger "-1" mean "None" or not to display
-    currentThemeId = "0";
+    currentThemeId = 0;
 }
 
 DisplayControlsSettings::DisplayControlsSettings()
@@ -43,6 +43,14 @@ SpSettings::SpSettings()
     uiTranslation = "en";
 }
 
+BibleVersionSettings::BibleVersionSettings()
+{
+    primaryBible = "none";
+    secondaryBible = "none";
+    trinaryBible = "none";
+    operatorBible = "same";
+}
+
 Settings::Settings()
 {
 
@@ -52,8 +60,8 @@ void Settings::loadSettings()
 {
     QString t,n,v,s,sets; // type, name, value, userValues
     QStringList set,values;
-    bool dataGenOk = false;
-    bool dataSpOk = false;
+    bool dataGenOk,dataSpOk,dataB1Ok,dataB2Ok;
+    dataGenOk = dataSpOk = dataB1Ok = dataB2Ok = false;
     QSqlQuery sq;
     sq.exec(QString("SELECT type, sets FROM Settings "));
     while (sq.next())
@@ -74,7 +82,7 @@ void Settings::loadSettings()
                 if(n == "displayIsOnTop")
                     general.displayIsOnTop = (v=="true");
                 else if(n == "currentThemeId")
-                    general.currentThemeId = v;
+                    general.currentThemeId = v.toInt();
                 else if (n == "displayScreen")
                     general.displayScreen = v.toInt();
                 // Display Screen 2 settings
@@ -118,24 +126,62 @@ void Settings::loadSettings()
                     spMain.isWindowMaximized = (v=="true");
             }
         }
+        else if(t == "bible1")
+        {
+            dataB1Ok = true;
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n == "primary")
+                    bibleSets.primaryBible = v;
+                else if(n == "secondary")
+                    bibleSets.secondaryBible = v;
+                else if (n == "trinary")
+                    bibleSets.trinaryBible = v;
+                else if (n == "trinary")
+                    bibleSets.operatorBible = v;
+            }
+        }
+        else if(t == "bible2")
+        {
+            dataB2Ok = true;
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n == "primary")
+                    bibleSets2.primaryBible = v;
+                else if(n == "secondary")
+                    bibleSets2.secondaryBible = v;
+                else if (n == "trinary")
+                    bibleSets2.trinaryBible = v;
+            }
+        }
     }
 
     // if no data exist, then create
-    if(!dataGenOk || !dataSpOk)
+    if(!dataGenOk || !dataSpOk || !dataB1Ok || !dataB2Ok)
         saveNewSettings();
 }
 
 void Settings::saveSettings()
 {
     QSqlQuery sq;
-    QString gset,spset;//general,bible,song,annouce,spmain
+    QString gset,spset,b1set,b2set;//general,bible,song,annouce,spmain
 
     // **** Prepare general settings ***************************************
     if(general.displayIsOnTop)
         gset = "displayIsOnTop = true";
     else
         gset = "displayIsOnTop = false";
-    gset += "\ncurrentThemeId = " + general.currentThemeId;
+    gset += "\ncurrentThemeId = " + QString::number(general.currentThemeId);
     gset += "\ndisplayScreen = " + QString::number(general.displayScreen);
     gset += "\ndisplayScreen2 = " + QString::number(general.displayScreen2);
     gset += "\ndcIconSize = " + QString::number(general.displayControls.buttonSize);
@@ -153,15 +199,30 @@ void Settings::saveSettings()
     else
         spset += "\nisWindowMaximized = false";
 
+    // **** prepare screen 1 bible versions
+    b1set = "primary = " + bibleSets.primaryBible;
+    b1set += "\nsecondary = " + bibleSets.secondaryBible;
+    b1set += "\ntrinary = " + bibleSets.trinaryBible;
+    b1set += "\noperator = " + bibleSets.operatorBible;
+
+    // **** prepare screen 1 bible versions
+    b2set = "primary = " + bibleSets2.primaryBible;
+    b2set += "\nsecondary = " + bibleSets2.secondaryBible;
+    b2set += "\ntrinary = " + bibleSets2.trinaryBible;
+
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general'").arg(gset));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spMain'").arg(spset));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible1'").arg(b1set));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible2'").arg(b2set));
 }
 
 void Settings::saveNewSettings()
 {
     QSqlQuery sq;
-    sq.exec("INSERT INTO Settings (type, sets) VALUES ('general', 'n=v')");
-    sq.exec("INSERT INTO Settings (type, sets) VALUES ('spMain', 'n=v')");
+    sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('general', 'n=v')");
+    sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('spMain', 'n=v')");
+    sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('bible1', 'n=v')");
+    sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('bible2', 'n=v')");
 
     saveSettings();
 }

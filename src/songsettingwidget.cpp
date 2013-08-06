@@ -84,10 +84,10 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
 
     // Screen use
     mySettings.screenUse = ui->spinBoxScreenUse->value();
-    mySettings.screenUseAlign = ui->comboBoxScreenUse->currentIndex();
+    mySettings.screenPositon = ui->comboBoxScreenUse->currentIndex();
 
     mySettings2.screenUse = ui->spinBoxScreenUse2->value();
-    mySettings2.screenUseAlign = ui->comboBoxScreenUse2->currentIndex();
+    mySettings2.screenPositon = ui->comboBoxScreenUse2->currentIndex();
 
     // Use secondary display screen settings
     mySettings2.useDisp2settings = ui->groupBoxDisplay2->isChecked();
@@ -160,10 +160,10 @@ void SongSettingWidget::loadSettings()
 
     // Set Screen Use
     ui->spinBoxScreenUse->setValue(mySettings.screenUse);
-    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenUseAlign);
+    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenPositon);
 
     ui->spinBoxScreenUse2->setValue(mySettings2.screenUse);
-    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenUseAlign);
+    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenPositon);
 
     // Set secondary screen
     ui->groupBoxDisplay2->setChecked(mySettings2.useDisp2settings);

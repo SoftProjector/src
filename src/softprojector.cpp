@@ -65,7 +65,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // display window (Mac OS X)
 
     // Apply Settings
-    applySetting(mySettings.general, theme);
+    applySetting(mySettings.general, theme, mySettings.bibleSets, mySettings.bibleSets2);
 
     displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
     displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
@@ -105,8 +105,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
     connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
     connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
-    connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&)),
-            this,SLOT(updateSetting(GeneralSettings&,Theme&)));
+    connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&,BibleVersionSettings&,BibleVersionSettings&)),
+            this,SLOT(updateSetting(GeneralSettings&,Theme&,BibleVersionSettings&,BibleVersionSettings&)));
     connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
     connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
@@ -305,26 +305,29 @@ void SoftProjector::saveSettings()
     // save settings
 //    mySettings.general.currentThemeId = theme.getThemeId();
     mySettings.saveSettings();
-    theme.saveTheme();
+    theme.saveThemeUpdate();
 }
 
-void SoftProjector::updateSetting(GeneralSettings &g, Theme &t)
+void SoftProjector::updateSetting(GeneralSettings &g, Theme &t, BibleVersionSettings &bsets, BibleVersionSettings &bsets2)
 {
     mySettings.general = g;
+    mySettings.bibleSets = bsets;
+    mySettings.bibleSets2 = bsets2;
+    mySettings.saveSettings();
     theme = t;
-    bibleWidget->setSettings(theme.bible);
+    bibleWidget->setSettings(mySettings.bibleSets);
     
     // Apply display settings;
-    displayScreen1->setNewPassiveWallpaper(theme.passive.backgroundName,theme.passive.useBackground);
+    displayScreen1->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
     if(theme.passive2.useDisp2settings)
-        displayScreen2->setNewPassiveWallpaper(theme.passive2.backgroundName,theme.passive2.useBackground);
+        displayScreen2->setNewPassiveWallpaper(theme.passive2.background,theme.passive2.useBackground);
     else
-        displayScreen2->setNewPassiveWallpaper(theme.passive.backgroundName,theme.passive.useBackground);
+        displayScreen2->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
 }
 
-void SoftProjector::applySetting(GeneralSettings &g, Theme &t)
+void SoftProjector::applySetting(GeneralSettings &g, Theme &t, BibleVersionSettings &b1, BibleVersionSettings &b2)
 {
-    updateSetting(g,t);
+    updateSetting(g,t,b1,b2);
 
     // Apply splitter states
     ui->splitter->restoreState(mySettings.spMain.spSplitter);
@@ -613,13 +616,16 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible),theme.bible);
+            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible,mySettings.bibleSets)
+                                            ,theme.bible);
             if(hasDisplayScreen2)
             {
                 if(theme.bible2.useDisp2settings)
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible2),theme.bible2);
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible2,
+                                                                                                 mySettings.bibleSets2),theme.bible2);
                 else
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible),theme.bible);
+                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible,
+                                                                                                 mySettings.bibleSets),theme.bible);
             }
         }
         else if(type=="song")
@@ -672,7 +678,7 @@ void SoftProjector::on_show_button_clicked()
 
 void SoftProjector::on_actionSettings_triggered()
 {
-    settingsDialog->loadSettings(mySettings.general,theme);
+    settingsDialog->loadSettings(mySettings.general,theme,mySettings.bibleSets,mySettings.bibleSets2);
     settingsDialog->exec();
 }
 
@@ -847,10 +853,10 @@ void SoftProjector::on_actionManage_Database_triggered()
             Theme t;
             sq.exec("SELECT id FROM Themes");
             sq.first();
-            t.setThemeId(sq.value(0).toString());
+            t.setThemeId(sq.value(0).toInt());
             t.loadTheme();
             g.currentThemeId = t.getThemeId();
-            updateSetting(g,t);
+            updateSetting(g,t,mySettings.bibleSets,mySettings.bibleSets2);
             updateScreen();
         }
     }
@@ -859,34 +865,34 @@ void SoftProjector::on_actionManage_Database_triggered()
     if (manageDialog->reload_bible)
     {
         // check if Primary bible has been removed
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.primaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + mySettings.bibleSets.primaryBible);
         if (!sq.first())
         {
             // If original primary bible has been removed, set first bible in the list to be primary
             sq.clear();
             sq.exec("SELECT id FROM BibleVersions");
             sq.first();
-            theme.bible.primaryBible = sq.value(0).toString();
+            mySettings.bibleSets.primaryBible = sq.value(0).toString();
         }
         sq.clear();
 
         // check if secondary bible has been removed, if yes, set secondary to "none"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.secondaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + mySettings.bibleSets.secondaryBible);
         if (!sq.first())
-            theme.bible.secondaryBible = "none";
+            mySettings.bibleSets.secondaryBible = "none";
         sq.clear();
 
         // check if trinary bible has been removed, if yes, set secondary to "none"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.trinaryBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + mySettings.bibleSets.trinaryBible);
         if (!sq.first())
-            theme.bible.trinaryBible = "none";
+            mySettings.bibleSets.trinaryBible = "none";
         sq.clear();
 
         // check if operator bible has been removed, if yes, set secondary to "same"
-        sq.exec("SELECT * FROM BibleVersions WHERE id = " + theme.bible.operatorBible);
+        sq.exec("SELECT * FROM BibleVersions WHERE id = " + mySettings.bibleSets.operatorBible);
         if (!sq.first())
-            theme.bible.operatorBible = "same";
-        bibleWidget->setSettings(theme.bible);
+            mySettings.bibleSets.operatorBible = "same";
+        bibleWidget->setSettings(mySettings.bibleSets);
     }
 }
 
@@ -1305,7 +1311,7 @@ void SoftProjector::on_actionPrint_triggered()
     p = new PrintPreviewDialog(this);
     if(ui->projectTab->currentIndex() == 0)
     {
-        p->setText(theme.bible.operatorBible + "," + theme.bible.primaryBible,
+        p->setText(mySettings.bibleSets.operatorBible + "," + mySettings.bibleSets.primaryBible,
                    bibleWidget->getCurrentBook(),bibleWidget->getCurrentChapter());
         p->exec();
     }

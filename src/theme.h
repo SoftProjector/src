@@ -22,6 +22,7 @@
 
 #include <QtCore>
 #include <QtSql>
+#include "spfunctions.h"
 
 class PassiveSettings
 {
@@ -37,10 +38,6 @@ class BibleSettings
 {    // To store Bible projection related settings
 public:
     BibleSettings();
-    QString primaryBible;
-    QString secondaryBible;
-    QString trinaryBible;
-    QString operatorBible;
     bool useShadow;
     bool useFading;
     bool useBlurShadow;
@@ -56,8 +53,8 @@ public:
     int captionAlingment;
     int captionPosition;
     bool useAbbriviations;
-    int maxScreen;
-    QString maxScreenFrom;
+    int screenUse;
+    int screenPosition;
 
     bool useDisp2settings;
 };
@@ -87,7 +84,7 @@ public:
     int textAlingmentV;
     int textAlingmentH;
     int screenUse;
-    int screenUseAlign; // 0 = Top, 1 = Bottom
+    int screenPositon; // 0 = Top, 1 = Bottom
     bool useDisp2settings;
 };
 
@@ -113,7 +110,7 @@ class ThemeInfo
 {
 public:
     ThemeInfo();
-    QString themeId;
+    int themeId;
     QString name;
     QString comments;
 };
@@ -122,6 +119,7 @@ class Theme
 {
 public:
     Theme();
+    //ThemeInfo info;
     PassiveSettings passive;
     PassiveSettings passive2; // Holds secondary display screen settings
     BibleSettings bible;
@@ -132,25 +130,33 @@ public:
     AnnounceSettings announce2; // Holds secondary display screen settings
 
 public slots:
-    void setThemeId(QString id){themeId = id;}
-    QString getThemeId(){return themeId;}
-    void saveTheme();
-    void saveNewTheme(QString newId);
+    void saveThemeNew();
+    void saveThemeUpdate();
     void loadTheme();
+    void setThemeId(int id){themeId = id;}
+    int getThemeId(){return themeId;}
+    void setThemeInfo(ThemeInfo info);
+    ThemeInfo getThemeInfo();
 
 private:
-    QString themeId;
+    int themeId;
+    QString name;
+    QString comments;
 
 private slots:
-    void passiveSettingFromString(QString &sets, PassiveSettings &settings);
-    void bibleSettingFromString(QString &sets, BibleSettings &settings);
-    void songSettingFromString(QString &sets, SongSettings &settings);
-    void announceSettingFromString(QString &sets, AnnounceSettings &settings);
-    QString passiveSettingToString(PassiveSettings &settings);
-    QString bibleSettingToString(BibleSettings &settings);
-    QString songSettingToString(SongSettings &settings);
-    QString announceSettingToString(AnnounceSettings &settings);
-    void saveNewTheme();
+    void savePassiveNew(int screen, PassiveSettings &settings);
+    void saveBibleNew(int screen, BibleSettings &settings);
+    void saveSongNew(int screen, SongSettings &settings);
+    void saveAnnounceNew(int screen, AnnounceSettings &settings);
+    void savePassiveUpdate(int screen, PassiveSettings &settings);
+    void saveBibleUpdate(int screen, BibleSettings &settings);
+    void saveSongUpdate(int screen, SongSettings &settings);
+    void saveAnnounceUpdate(int screen, AnnounceSettings &settings);
+    void loadPassive(int screen, PassiveSettings &settings);
+    void loadBible(int screen, BibleSettings &settings);
+    void loadSong(int screen, SongSettings &settings);
+    void loadAnnounce(int screen, AnnounceSettings &settings);
+
 };
 
 #endif // THEME_H

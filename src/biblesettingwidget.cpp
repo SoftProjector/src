@@ -36,75 +36,12 @@ void BibleSettingWidget::setSettings(BibleSettings &settings, BibleSettings &set
 {
     mySettings = settings;
     mySettings2 = settings2;
+
     loadSettings();
 }
 
 void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &settings2)
 {
-    int pbx = ui->comboBoxPrimaryBible->currentIndex();
-    int sbx = ui->comboBoxSecondaryBible->currentIndex();
-    int tbx = ui->comboBoxTrinaryBible->currentIndex();
-    int obx = ui->comboBoxOperatorBible->currentIndex();
-
-    // Get Bible version settings
-    if(pbx != -1)
-    {
-        // Primary
-        mySettings.primaryBible = bible_id_list.at(pbx);
-        // Secondary
-        if(sbx <=0)
-            mySettings.secondaryBible = "none";
-        else
-            mySettings.secondaryBible = secondary_id_list.at(sbx-1);
-        // Trinary
-        if(tbx <=0)
-            mySettings.trinaryBible = "none";
-        else
-            mySettings.trinaryBible = trinary_id_list.at(tbx-1);
-        // Operatror
-        if(obx <=0)
-            mySettings.operatorBible = "same";
-        else
-            mySettings.operatorBible = operator_id_list.at(obx-1);
-
-    }
-    else
-    {
-        // There are no bibles in the database
-        mySettings.primaryBible = "none";
-        mySettings.secondaryBible = "none";
-        mySettings.trinaryBible = "none";
-        mySettings.operatorBible = "same";
-    }
-
-    // Get Bible versions for secondary screen
-    pbx = ui->comboBoxPrimaryBible2->currentIndex();
-    sbx = ui->comboBoxSecondaryBible2->currentIndex();
-    tbx = ui->comboBoxTrinaryBible2->currentIndex();
-    if(pbx != -1)
-    {
-        // Primary
-        mySettings2.primaryBible = bible_id_list.at(pbx);
-        // Secondary
-        if(sbx <=0)
-            mySettings2.secondaryBible = "none";
-        else
-            mySettings2.secondaryBible = secondary_id_list2.at(sbx-1);
-        // Trinary
-        if(tbx <=0)
-            mySettings2.trinaryBible = "none";
-        else
-            mySettings2.trinaryBible = trinary_id_list2.at(tbx-1);
-    }
-    else
-    {
-        // There are no bibles in the database
-        mySettings2.primaryBible = "none";
-        mySettings2.secondaryBible = "none";
-        mySettings2.trinaryBible = "none";
-        mySettings2.operatorBible = "same";
-    }
-
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
     mySettings.useFading = ui->checkBoxUseFading->isChecked();
@@ -140,17 +77,11 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     mySettings2.useAbbriviations = ui->checkBoxAbbiviations2->isChecked();
 
     // Max screen use
-    mySettings.maxScreen = ui->spinBoxMaxScreen->value();
-    if(ui->radioButtonMaxTop->isChecked())
-        mySettings.maxScreenFrom = "top";
-    if(ui->radioButtonMaxBottom->isChecked())
-        mySettings.maxScreenFrom = "bottom";
+    mySettings.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
 
-    mySettings2.maxScreen = ui->spinBoxMaxScreen2->value();
-    if(ui->radioButtonMaxTop2->isChecked())
-        mySettings2.maxScreenFrom = "top";
-    if(ui->radioButtonMaxBottom2->isChecked())
-        mySettings2.maxScreenFrom = "bottom";
+    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
+    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
 
     // Get if to use secodary screen settings
     mySettings2.useDisp2settings = ui->groupBoxUseDisp2->isChecked();
@@ -159,80 +90,85 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     settings2 = mySettings2;
 }
 
+void BibleSettingWidget::setBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2)
+{
+    bversion = bver;
+    bversion2 = bver2;
+    loadBibleVersions();
+}
+
+void BibleSettingWidget::getBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2)
+{
+    int pbx = ui->comboBoxPrimaryBible->currentIndex();
+    int sbx = ui->comboBoxSecondaryBible->currentIndex();
+    int tbx = ui->comboBoxTrinaryBible->currentIndex();
+    int obx = ui->comboBoxOperatorBible->currentIndex();
+
+    // Get Bible version settings
+    if(pbx != -1)
+    {
+        // Primary
+        bversion.primaryBible = bible_id_list.at(pbx);
+        // Secondary
+        if(sbx <=0)
+            bversion.secondaryBible = "none";
+        else
+            bversion.secondaryBible = secondary_id_list.at(sbx-1);
+        // Trinary
+        if(tbx <=0)
+            bversion.trinaryBible = "none";
+        else
+            bversion.trinaryBible = trinary_id_list.at(tbx-1);
+        // Operatror
+        if(obx <=0)
+            bversion.operatorBible = "same";
+        else
+            bversion.operatorBible = operator_id_list.at(obx-1);
+
+    }
+    else
+    {
+        // There are no bibles in the database
+        bversion.primaryBible = "none";
+        bversion.secondaryBible = "none";
+        bversion.trinaryBible = "none";
+        bversion.operatorBible = "same";
+    }
+
+    // Get Bible versions for secondary screen
+    pbx = ui->comboBoxPrimaryBible2->currentIndex();
+    sbx = ui->comboBoxSecondaryBible2->currentIndex();
+    tbx = ui->comboBoxTrinaryBible2->currentIndex();
+    if(pbx != -1)
+    {
+        // Primary
+        bversion2.primaryBible = bible_id_list.at(pbx);
+        // Secondary
+        if(sbx <=0)
+            bversion2.secondaryBible = "none";
+        else
+            bversion2.secondaryBible = secondary_id_list2.at(sbx-1);
+        // Trinary
+        if(tbx <=0)
+            bversion2.trinaryBible = "none";
+        else
+            bversion2.trinaryBible = trinary_id_list2.at(tbx-1);
+    }
+    else
+    {
+        // There are no bibles in the database
+        bversion2.primaryBible = "none";
+        bversion2.secondaryBible = "none";
+        bversion2.trinaryBible = "none";
+        bversion2.operatorBible = "same";
+    }
+
+    bver = bversion;
+    bver2 = bversion2;
+}
+
 void BibleSettingWidget::loadSettings()
 {
-    // Clear items if exitst
-    bibles.clear();
-    bible_id_list.clear();
-
-    // Get Bibles that exist in the database
-    QSqlQuery sq;
-    sq.exec("SELECT bible_name, id FROM BibleVersions");
-    while(sq.next()){
-        bibles << sq.value(0).toString();
-        bible_id_list << sq.value(1).toString();
-    }
-    sq.clear();
-
-    // Fill bibles comboboxes
-    ui->comboBoxPrimaryBible->clear();
-    ui->comboBoxPrimaryBible->addItems(bibles);
-    ui->comboBoxSecondaryBible->addItem(tr("None"));
-    ui->comboBoxSecondaryBible->addItems(bibles);
-    ui->comboBoxTrinaryBible->addItem(tr("None"));
-    ui->comboBoxTrinaryBible->addItems(bibles);
-    ui->comboBoxOperatorBible->addItem(tr("Same as primary Bible"));
-    ui->comboBoxOperatorBible->addItems(bibles);
-
-    ui->comboBoxPrimaryBible2->clear();
-    ui->comboBoxPrimaryBible2->addItems(bibles);
-    ui->comboBoxSecondaryBible2->addItem(tr("None"));
-    ui->comboBoxSecondaryBible2->addItems(bibles);
-    ui->comboBoxTrinaryBible2->addItem(tr("None"));
-    ui->comboBoxTrinaryBible2->addItems(bibles);
-
-    // Set current primary bible
-    if(mySettings.primaryBible == "none")
-        ui->comboBoxPrimaryBible->setCurrentIndex(0);
-    else
-        ui->comboBoxPrimaryBible->setCurrentIndex(bible_id_list.indexOf(mySettings.primaryBible));
-
-    if(mySettings2.primaryBible == "none")
-        ui->comboBoxPrimaryBible2->setCurrentIndex(0);
-    else
-        ui->comboBoxPrimaryBible2->setCurrentIndex(bible_id_list.indexOf(mySettings2.primaryBible));
-
-    // Set current secondary bible
-    if(mySettings.secondaryBible == "none")
-        ui->comboBoxSecondaryBible->setCurrentIndex(0);
-    else
-        ui->comboBoxSecondaryBible->setCurrentIndex(bible_id_list.indexOf(mySettings.secondaryBible)+1);
-
-    if(mySettings2.secondaryBible == "none")
-        ui->comboBoxSecondaryBible2->setCurrentIndex(0);
-    else
-        ui->comboBoxSecondaryBible2->setCurrentIndex(bible_id_list.indexOf(mySettings2.secondaryBible)+1);
-
-    // Set current trinaty bibile
-    if(mySettings.trinaryBible == "none")
-        ui->comboBoxTrinaryBible->setCurrentIndex(0);
-    else
-        ui->comboBoxTrinaryBible->setCurrentIndex(bible_id_list.indexOf(mySettings.trinaryBible)+1);
-    updateSecondaryBibleMenu();
-
-    if(mySettings2.trinaryBible == "none")
-        ui->comboBoxTrinaryBible2->setCurrentIndex(0);
-    else
-        ui->comboBoxTrinaryBible2->setCurrentIndex(bible_id_list.indexOf(mySettings2.trinaryBible)+1);
-    updateSecondaryBibleMenu2();
-
-    // Set current operator bibile
-    if(mySettings.operatorBible == "same")
-        ui->comboBoxOperatorBible->setCurrentIndex(0);
-    else
-        ui->comboBoxOperatorBible->setCurrentIndex(bible_id_list.indexOf(mySettings.operatorBible)+1);
-    updateOperatorBibleMenu();
-
     // Set Effects
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
     ui->checkBoxUseFading->setChecked(mySettings.useFading);
@@ -292,21 +228,91 @@ void BibleSettingWidget::loadSettings()
     ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviations);
 
     // Set max screen use
-    ui->spinBoxMaxScreen->setValue(mySettings.maxScreen);
-    if(mySettings.maxScreenFrom == "top")
-        ui->radioButtonMaxTop->setChecked(true);
-    else if(mySettings.maxScreenFrom == "bottom")
-        ui->radioButtonMaxBottom->setChecked(true);
+    ui->spinBoxMaxScreen->setValue(mySettings.screenUse);
+    ui->comboBoxScreenPosition->setCurrentIndex(mySettings.screenPosition);
 
-    ui->spinBoxMaxScreen2->setValue(mySettings2.maxScreen);
-    if(mySettings2.maxScreenFrom == "top")
-        ui->radioButtonMaxTop2->setChecked(true);
-    else if(mySettings2.maxScreenFrom == "bottom")
-        ui->radioButtonMaxBottom2->setChecked(true);
+    ui->spinBoxMaxScreen2->setValue(mySettings2.screenUse);
+    ui->comboBoxScreenPosition2->setCurrentIndex(mySettings2.screenPosition);
+
 
     // Set if to use secondary screen settings
     ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2settings);
     on_groupBoxUseDisp2_toggled(mySettings2.useDisp2settings);
+}
+
+void BibleSettingWidget::loadBibleVersions()
+{
+    // Clear items if exitst
+    bibles.clear();
+    bible_id_list.clear();
+
+    // Get Bibles that exist in the database
+    QSqlQuery sq;
+    sq.exec("SELECT bible_name, id FROM BibleVersions");
+    while(sq.next()){
+        bibles << sq.value(0).toString();
+        bible_id_list << sq.value(1).toString();
+    }
+    sq.clear();
+
+    // Fill bibles comboboxes
+    ui->comboBoxPrimaryBible->clear();
+    ui->comboBoxPrimaryBible->addItems(bibles);
+    ui->comboBoxSecondaryBible->addItem(tr("None"));
+    ui->comboBoxSecondaryBible->addItems(bibles);
+    ui->comboBoxTrinaryBible->addItem(tr("None"));
+    ui->comboBoxTrinaryBible->addItems(bibles);
+    ui->comboBoxOperatorBible->addItem(tr("Same as primary Bible"));
+    ui->comboBoxOperatorBible->addItems(bibles);
+
+    ui->comboBoxPrimaryBible2->clear();
+    ui->comboBoxPrimaryBible2->addItems(bibles);
+    ui->comboBoxSecondaryBible2->addItem(tr("None"));
+    ui->comboBoxSecondaryBible2->addItems(bibles);
+    ui->comboBoxTrinaryBible2->addItem(tr("None"));
+    ui->comboBoxTrinaryBible2->addItems(bibles);
+
+    // Set current primary bible
+    if(bversion.primaryBible == "none")
+        ui->comboBoxPrimaryBible->setCurrentIndex(0);
+    else
+        ui->comboBoxPrimaryBible->setCurrentIndex(bible_id_list.indexOf(bversion.primaryBible));
+
+    if(bversion2.primaryBible == "none")
+        ui->comboBoxPrimaryBible2->setCurrentIndex(0);
+    else
+        ui->comboBoxPrimaryBible2->setCurrentIndex(bible_id_list.indexOf(bversion2.primaryBible));
+
+    // Set current secondary bible
+    if(bversion.secondaryBible == "none")
+        ui->comboBoxSecondaryBible->setCurrentIndex(0);
+    else
+        ui->comboBoxSecondaryBible->setCurrentIndex(bible_id_list.indexOf(bversion.secondaryBible)+1);
+
+    if(bversion2.secondaryBible == "none")
+        ui->comboBoxSecondaryBible2->setCurrentIndex(0);
+    else
+        ui->comboBoxSecondaryBible2->setCurrentIndex(bible_id_list.indexOf(bversion2.secondaryBible)+1);
+
+    // Set current trinaty bibile
+    if(bversion.trinaryBible == "none")
+        ui->comboBoxTrinaryBible->setCurrentIndex(0);
+    else
+        ui->comboBoxTrinaryBible->setCurrentIndex(bible_id_list.indexOf(bversion.trinaryBible)+1);
+    updateSecondaryBibleMenu();
+
+    if(bversion2.trinaryBible == "none")
+        ui->comboBoxTrinaryBible2->setCurrentIndex(0);
+    else
+        ui->comboBoxTrinaryBible2->setCurrentIndex(bible_id_list.indexOf(bversion2.trinaryBible)+1);
+    updateSecondaryBibleMenu2();
+
+    // Set current operator bibile
+    if(bversion.operatorBible == "same")
+        ui->comboBoxOperatorBible->setCurrentIndex(0);
+    else
+        ui->comboBoxOperatorBible->setCurrentIndex(bible_id_list.indexOf(bversion.operatorBible)+1);
+    updateOperatorBibleMenu();
 }
 
 void BibleSettingWidget::updateSecondaryBibleMenu()

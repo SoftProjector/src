@@ -516,11 +516,11 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
     int h = height - top - top;
 
     // set maximum screen size - For primary bibile  only
-    int maxh = h * bibleSets.maxScreen/100; // maximun screen height
+    int maxh = h * bibleSets.screenUse/100; // maximun screen height
     int maxtop; // top of max screen
-    if(bibleSets.maxScreenFrom=="top")
+    if(bibleSets.screenPosition == 0)
         maxtop  = top;
-    if(bibleSets.maxScreenFrom=="bottom")
+    if(bibleSets.screenPosition == 1)
         maxtop = top+h-maxh;
 
     // apply max screen use settings
@@ -778,9 +778,9 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
     int h = height - top - top;
     int maxh = h * songSets.screenUse/100;
     int maxtop; // top of max screen
-    if(songSets.screenUseAlign == 0)
+    if(songSets.screenPositon == 0)
         maxtop  = top;
-    if(songSets.screenUseAlign == 1)
+    if(songSets.screenPositon == 1)
         maxtop = top+h-maxh;
 
     h = maxh;
@@ -1075,20 +1075,24 @@ void DisplayScreen::setNewWallpaper(QPixmap wallPix, bool isToUse)
         wallpaper = QPixmap();
 }
 
-void DisplayScreen::setNewPassiveWallpaper(QString path, bool isToUse)
+void DisplayScreen::setNewPassiveWallpaper(QPixmap wallPix, bool isToUse)
 {
     if(isToUse)
-        passiveWallpaperPath = path;
+        passiveWallpaper = wallPix.toImage();
     else
-        passiveWallpaperPath.clear();
-
-    if(passiveWallpaperPath.simplified().isEmpty() )
         passiveWallpaper = QImage();
-    else
-    {
-        passiveWallpaper.load(passiveWallpaperPath);
-        passiveWallpaper = passiveWallpaper.scaled(width(), height());
-    }
+//    if(isToUse)
+//        passiveWallpaperPath = path;
+//    else
+//        passiveWallpaperPath.clear();
+
+//    if(passiveWallpaperPath.simplified().isEmpty() )
+//        passiveWallpaper = QImage();
+//    else
+//    {
+//        passiveWallpaper.load(passiveWallpaperPath);
+//        passiveWallpaper = passiveWallpaper.scaled(width(), height());
+//    }
 }
 
 void DisplayScreen::paintEvent(QPaintEvent *event )

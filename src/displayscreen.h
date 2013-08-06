@@ -46,7 +46,7 @@ public:
 public slots:
     void setNewWallpaper(QString path, bool isToUse);
     void setNewWallpaper(QPixmap wallPix, bool isToUse);
-    void setNewPassiveWallpaper(QString path, bool isToUse);
+    void setNewPassiveWallpaper(QPixmap wallPix, bool isToUse);
 
     void fadeIn();
     void fadeOut();

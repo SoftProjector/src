@@ -19,7 +19,6 @@
 
 #include "managedatadialog.h"
 #include "ui_managedatadialog.h"
-#include "song.h"
 
 ManageDataDialog::ManageDataDialog(QWidget *parent) :
     QDialog(parent),
@@ -1089,6 +1088,7 @@ void ManageDataDialog::on_pushButtonThemeNew_clicked()
     QSqlTableModel sqt;
     QSqlQuery sq;
     Theme tm;
+    ThemeInfo tmi;
     QString nId;
 
     AddSongbookDialog theme_dia;
@@ -1099,18 +1099,22 @@ void ManageDataDialog::on_pushButtonThemeNew_clicked()
     switch(ret)
     {
     case AddSongbookDialog::Accepted:
-        sqt.setTable("Themes");
-        sqt.insertRow(0);
-        sqt.setData(sqt.index(0,1),theme_dia.title);
-        sqt.setData(sqt.index(0,2),theme_dia.info);
-        sqt.submitAll();
+        tmi.name = theme_dia.title;
+        tmi.comments = theme_dia.info;
+        tm.setThemeInfo(tmi);
+        tm.saveThemeNew();
+//        sqt.setTable("Themes");
+//        sqt.insertRow(0);
+//        sqt.setData(sqt.index(0,1),theme_dia.title);
+//        sqt.setData(sqt.index(0,2),theme_dia.info);
+//        sqt.submitAll();
 
 
-        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-        sq.first();
-        nId = sq.value(0).toString();
+//        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
+//        sq.first();
+//        nId = sq.value(0).toString();
 
-        tm.saveNewTheme(nId);
+//        tm.saveNewTheme(nId);
 
         loadThemes();
         break;
@@ -1178,122 +1182,122 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
 
 void ManageDataDialog::importTheme(QXmlStreamReader &xml)
 {
-    ThemeInfo tminfo;
-                QSqlTableModel sqt;
-                QSqlQuery sq;
-    xml.readNext();
-    while(xml.tokenString() != "EndElement" && xml.name() != "Theme")
-    {
-        xml.readNext();
-        if(xml.StartElement && xml.name() == "ThemeInfo")
-        {
+//    ThemeInfo tminfo;
+//                QSqlTableModel sqt;
+//                QSqlQuery sq;
+//    xml.readNext();
+//    while(xml.tokenString() != "EndElement" && xml.name() != "Theme")
+//    {
+//        xml.readNext();
+//        if(xml.StartElement && xml.name() == "ThemeInfo")
+//        {
 
-            xml.readNext();
-            while(xml.tokenString() != "EndElement")
-            {
-                xml.readNext();
-                if(xml.StartElement && xml.name() == "name")
-                {
-                    tminfo.name = xml.readElementText();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "comments")
-                {
-                    tminfo.comments = xml.readElementText();
-                    xml.readNext();
-                }
-            }
-            sqt.setTable("Themes");
-            sqt.insertRow(0);
-            sqt.setData(sqt.index(0,1),tminfo.name);
-            sqt.setData(sqt.index(0,2),tminfo.comments);
-            sqt.submitAll();
+//            xml.readNext();
+//            while(xml.tokenString() != "EndElement")
+//            {
+//                xml.readNext();
+//                if(xml.StartElement && xml.name() == "name")
+//                {
+//                    tminfo.name = xml.readElementText();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "comments")
+//                {
+//                    tminfo.comments = xml.readElementText();
+//                    xml.readNext();
+//                }
+//            }
+//            sqt.setTable("Themes");
+//            sqt.insertRow(0);
+//            sqt.setData(sqt.index(0,1),tminfo.name);
+//            sqt.setData(sqt.index(0,2),tminfo.comments);
+//            sqt.submitAll();
 
 
-            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-            sq.first();
-            tminfo.themeId = sq.value(0).toString();
-            sq.clear();
-//            tmx.saveNewTheme(nId);
-            xml.readNext();
-        }
-        else if(xml.StartElement && xml.name() == "ThemeData")
-        {
-            QSqlDatabase::database().transaction();
-            sq.prepare("INSERT INTO ThemeData (theme_id, type, sets) VALUES (?,?,?)");
-            xml.readNext();
-            while(xml.tokenString() != "EndElement")
-            {
-                xml.readNext();
-                if(xml.StartElement && xml.name() == "passive")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("passive");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "passive2")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("passive2");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "bible")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("bible");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "bible2")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("bible2");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "song")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("song");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "song2")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("song2");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "announce")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("announce");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-                else if(xml.StartElement && xml.name() == "announce2")
-                {
-                    sq.addBindValue(tminfo.themeId);
-                    sq.addBindValue("announce2");
-                    sq.addBindValue(xml.readElementText());
-                    sq.exec();
-                    xml.readNext();
-                }
-            }
-            xml.readNext();
-            QSqlDatabase::database().commit();
-        }
-    }
+//            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
+//            sq.first();
+//            tminfo.themeId = sq.value(0).toString();
+//            sq.clear();
+////            tmx.saveNewTheme(nId);
+//            xml.readNext();
+//        }
+//        else if(xml.StartElement && xml.name() == "ThemeData")
+//        {
+//            QSqlDatabase::database().transaction();
+//            sq.prepare("INSERT INTO ThemeData (theme_id, type, sets) VALUES (?,?,?)");
+//            xml.readNext();
+//            while(xml.tokenString() != "EndElement")
+//            {
+//                xml.readNext();
+//                if(xml.StartElement && xml.name() == "passive")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("passive");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "passive2")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("passive2");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "bible")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("bible");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "bible2")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("bible2");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "song")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("song");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "song2")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("song2");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "announce")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("announce");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//                else if(xml.StartElement && xml.name() == "announce2")
+//                {
+//                    sq.addBindValue(tminfo.themeId);
+//                    sq.addBindValue("announce2");
+//                    sq.addBindValue(xml.readElementText());
+//                    sq.exec();
+//                    xml.readNext();
+//                }
+//            }
+//            xml.readNext();
+//            QSqlDatabase::database().commit();
+//        }
+//    }
 }
 
 void ManageDataDialog::on_pushButtonThemeEdit_clicked()
@@ -1397,24 +1401,24 @@ void ManageDataDialog::on_pushButtonThemeExportAll_clicked()
 void ManageDataDialog::exportTheme(QXmlStreamWriter &xml, ThemeInfo &tmInfo)
 {
     // Start Theme
-    xml.writeStartElement("Theme"); // start Theme
+//    xml.writeStartElement("Theme"); // start Theme
 
-    xml.writeStartElement("ThemeInfo"); // start Theme Info
-    xml.writeTextElement("name",tmInfo.name);
-    xml.writeTextElement("comments",tmInfo.comments);
-    xml.writeEndElement(); // End Theme Info
+//    xml.writeStartElement("ThemeInfo"); // start Theme Info
+//    xml.writeTextElement("name",tmInfo.name);
+//    xml.writeTextElement("comments",tmInfo.comments);
+//    xml.writeEndElement(); // End Theme Info
 
-    // Write theme data
-    xml.writeStartElement("ThemeData"); // Start Theme Data
-    QSqlQuery sq;
-    sq.exec("SELECT type, sets FROM ThemeData WHERE theme_id = '"+tmInfo.themeId+"'");
+//    // Write theme data
+//    xml.writeStartElement("ThemeData"); // Start Theme Data
+//    QSqlQuery sq;
+//    sq.exec("SELECT type, sets FROM ThemeData WHERE theme_id = '"+tmInfo.themeId+"'");
 
-    while(sq.next())
-        xml.writeTextElement(sq.value(0).toString().trimmed(),sq.value(1).toString().trimmed());
+//    while(sq.next())
+//        xml.writeTextElement(sq.value(0).toString().trimmed(),sq.value(1).toString().trimmed());
 
-    xml.writeEndElement(); // End Theme Data
+//    xml.writeEndElement(); // End Theme Data
 
-    xml.writeEndElement();  // End Theme
+//    xml.writeEndElement();  // End Theme
 }
 
 void ManageDataDialog::on_pushButtonThemeDelete_clicked()
@@ -1451,15 +1455,18 @@ void ManageDataDialog::deleteTheme(ThemeInfo tme)
 {
     setWaitCursor();
     QSqlQuery sq;
-    QString id = tme.themeId.trimmed();
+    int id = tme.themeId;
     reloadThemes = true;
 
     // Delete from Themes Table
-    sq.exec("DELETE FROM Themes WHERE id = '" + id + "'");
+    sq.exec("DELETE FROM Themes WHERE id = " + QString::number(id));
     sq.clear();
 
     // Delete from ThemeData Table
-    sq.exec("DELETE FROM ThemeData WHERE theme_id = '" + id +"'");
+    sq.exec("DELETE FROM ThemePassive WHERE theme_id = " + QString::number(id));
+    sq.exec("DELETE FROM ThemeBible WHERE theme_id = " + QString::number(id));
+    sq.exec("DELETE FROM ThemeSong WHERE theme_id = " + QString::number(id));
+    sq.exec("DELETE FROM ThemeAnnounce WHERE theme_id = " + QString::number(id));
 
     loadThemes();
     updateThemeButtons();

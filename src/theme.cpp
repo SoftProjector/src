@@ -30,10 +30,6 @@ PassiveSettings::PassiveSettings()
 BibleSettings::BibleSettings()
 {
     // Apply Bible Defaults
-    primaryBible = "none";
-    secondaryBible = "none";
-    trinaryBible = "none";
-    operatorBible = "same";
     useShadow = true;
     useFading = true;
     useBlurShadow = false;
@@ -49,8 +45,8 @@ BibleSettings::BibleSettings()
     captionAlingment = 2;
     captionPosition = 1;
     useAbbriviations = false;
-    maxScreen = 100;
-    maxScreenFrom = "bottom";
+    screenUse = 100;
+    screenPosition = 1;
     useDisp2settings = false;
 }
 
@@ -78,7 +74,7 @@ SongSettings::SongSettings()
     textAlingmentV = 1;
     textAlingmentH = 1;
     screenUse = 100;
-    screenUseAlign = 1;
+    screenPositon = 1;
     useDisp2settings = false;
 }
 
@@ -100,477 +96,406 @@ AnnounceSettings::AnnounceSettings()
 
 ThemeInfo::ThemeInfo()
 {
-
+    themeId = 0;
+    name = "Default";
+    comments  = "Default SoftProjector Theme";
 }
 
 Theme::Theme()
 {
-    themeId = "0";
+    themeId = 0;
+    name = "Default";
+    comments  = "Default SoftProjector Theme";
 }
 
-void Theme::saveTheme()
-{
-    QString pset,pset2,bset,bset2,sset,sset2,aset,aset2;//passive,bible,song,annouce
-
-    // **** prepare bible, song and announce settings ************************
-    pset = passiveSettingToString(passive); // prepare primary passive screen settings
-    pset2 = passiveSettingToString(passive2); // prepare secondary passive screen settings
-
-    bset = bibleSettingToString(bible); // prepare primary bible screen settings
-    bset2 = bibleSettingToString(bible2); // prepare secondary bible screen settings
-
-    sset = songSettingToString(song); // prepare primary song screen settings
-    sset2 = songSettingToString(song2); // prepare secondary song screen settings
-
-    aset = announceSettingToString(announce); // prepare primary announce screen settings
-    aset2 = announceSettingToString(announce2); // prepare secondary announce screen settings
-
-    QSqlQuery sq;
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'passive' AND theme_id = '%2'").arg(pset).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'passive2' AND theme_id = '%2'").arg(pset2).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'bible' AND theme_id = '%2'").arg(bset).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'bible2' AND theme_id = '%2'").arg(bset2).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'song' AND theme_id = '%2'").arg(sset).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'song2' AND theme_id = '%2'").arg(sset2).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'announce' AND theme_id = '%2'").arg(aset).arg(themeId));
-    sq.exec(QString("UPDATE ThemeData SET sets = '%1' WHERE type = 'announce2' AND theme_id = '%2'").arg(aset2).arg(themeId));
-}
-
-void Theme::saveNewTheme()
+void Theme::saveThemeNew()
 {
     QSqlQuery sq;
-    sq.exec("INSERT INTO Themes (name, comment) VALUES ('Default', 'Default theme settings')");
+    sq.prepare("INSERT INTO Themes (name, comment) VALUES (?,?)");
+    sq.addBindValue(name);
+    sq.addBindValue(comments);
+    sq.exec();
 
     // get new theme id
     sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
     sq.first();
-    QString nId = sq.value(0).toString();
-
-    saveNewTheme(nId);
+    themeId = sq.value(0).toInt();
+    savePassiveNew(1,passive);
+    savePassiveNew(2,passive2);
+    saveBibleNew(1,bible);
+    saveBibleNew(2,bible2);
+    saveSongNew(1,song);
+    saveSongNew(2,song2);
+    saveAnnounceNew(1,announce);
+    saveAnnounceNew(2,announce2);
 }
 
-void Theme::saveNewTheme(QString newId)
+void Theme::savePassiveNew(int screen, PassiveSettings &settings)
 {
-    themeId = newId;
     QSqlQuery sq;
-    sq.exec("DELETE FROM ThemeData WHERE theme_id = '"+themeId+"' ");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'passive', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'passive2', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'bible', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'bible2', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'song', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'song2', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'announce', 'n=v')");
-    sq.exec("INSERT INTO ThemeData (theme_id, type, sets) VALUES ('"+themeId+"', 'announce2', 'n=v')");
+    sq.prepare("INSERT INTO ThemePassive (theme_id, disp, use_background, background_name, background, use_disp_2) "
+               "VALUES(?,?,?,?,?,?)");
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.useDisp2settings);
+    sq.exec();
+}
 
-    saveTheme();
+void Theme::saveBibleNew(int screen, BibleSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("INSERT INTO ThemeBible (theme_id, disp, use_shadow, use_fading, use_blur_shadow, use_background, "
+               "background_name, background, text_font, text_color, text_align_v, text_align_h, caption_font, "
+               "caption_color, caption_align, caption_position, use_abbr, screen_use, screen_position, use_disp_2) "
+               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont.toString());
+    sq.addBindValue((unsigned int)(settings.textColor.rgb()));
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.captionFont.toString());
+    sq.addBindValue((unsigned int)(settings.captionColor.rgb()));
+    sq.addBindValue(settings.captionAlingment);
+    sq.addBindValue(settings.captionPosition);
+    sq.addBindValue(settings.useAbbriviations);
+    sq.addBindValue(settings.screenUse);
+    sq.addBindValue(settings.screenPosition);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.exec();
+}
+
+void Theme::saveSongNew(int screen, SongSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("INSERT INTO ThemeSong (theme_id, disp, use_shadow, use_fading, use_blur_shadow, show_stanza_title, "
+               "show_key, show_number, info_color, info_font, info_align, show_song_ending, ending_color, ending_font, "
+               "ending_type, use_background, background_name, background, text_font, text_color, text_align_v, text_align_h, "
+               "screen_use, screen_position, use_disp_2) "
+               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.showStanzaTitle);
+    sq.addBindValue(settings.showSongKey);
+    sq.addBindValue(settings.showSongNumber);
+    sq.addBindValue((unsigned int)(settings.infoColor.rgb()));
+    sq.addBindValue(settings.infoFont.toString());
+    sq.addBindValue(settings.infoAling);
+    sq.addBindValue(settings.showSongEnding);
+    sq.addBindValue((unsigned int)(settings.endingColor.rgb()));
+    sq.addBindValue(settings.endingFont.toString());
+    sq.addBindValue(settings.endingType);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont);
+    sq.addBindValue((unsigned int)(settings.textColor.rgb()));
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.screenUse);
+    sq.addBindValue(settings.screenPositon);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.exec();
+}
+
+void Theme::saveAnnounceNew(int screen, AnnounceSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("INSERT INTO ThemeAnnounce (theme_id, disp, use_shadow, use_fading, use_blur_shadow, use_background, "
+               "background_name, background, text_font, text_color, text_align_v, text_align_h, use_disp_2) "
+               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont.toString());
+    sq.addBindValue(settings.textColor.rgb());
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.exec();
+}
+
+void Theme::saveThemeUpdate()
+{
+    QSqlQuery sq;
+    sq.prepare("UPDATE Themes SET name = ?, comments = ? WHERE id = ?");
+    sq.addBindValue(name);
+    sq.addBindValue(comments);
+    sq.addBindValue(themeId);
+    sq.exec();
+
+    savePassiveUpdate(1,passive);
+    savePassiveUpdate(2,passive2);
+    saveBibleUpdate(1,bible);
+    saveBibleUpdate(2,bible2);
+    saveSongUpdate(1,song);
+    saveSongUpdate(2,song2);
+    saveAnnounceUpdate(1,announce);
+    saveAnnounceUpdate(2,announce2);
+}
+
+void Theme::savePassiveUpdate(int screen, PassiveSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("UPDATE ThemePassive SET use_background = ?, background_name = ?, background = ?, use_disp_2 = ? "
+               "WHERE theme_id = ? AND disp = ?");
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.useDisp2settings);
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.exec();
+}
+
+void Theme::saveBibleUpdate(int screen, BibleSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("UPDATE ThemeBible SET use_shadow = ?, use_fading = ?, use_blur_shadow = ?, "
+               "use_background = ?, background_name = ?, background = ?, text_font = ?, text_color = ?, text_align_v = ?, "
+               "text_align_h = ?, caption_font = ?, caption_color = ?, caption_align = ?, caption_position = ?, "
+               "use_abbr = ?, screen_use = ?, screen_position = ?, use_disp_2 = ? "
+               "WHERE theme_id = ? AND disp = ?");
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont.toString());
+    sq.addBindValue((unsigned int)(settings.textColor.rgb()));
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.captionFont.toString());
+    sq.addBindValue((unsigned int)(settings.captionColor.rgb()));
+    sq.addBindValue(settings.captionAlingment);
+    sq.addBindValue(settings.captionPosition);
+    sq.addBindValue(settings.useAbbriviations);
+    sq.addBindValue(settings.screenUse);
+    sq.addBindValue(settings.screenPosition);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.exec();
+}
+
+void Theme::saveSongUpdate(int screen, SongSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("UPDATE ThemeSong SET use_shadow = ?, use_fading = ?, use_blur_shadow = ?, "
+               "show_stanza_title = ?, show_key = ?, show_number = ?, info_color = ?, info_font = ?, info_align = ?, "
+               "show_song_ending = ?, ending_color = ?, ending_font = ?, ending_type = ?, use_background = ?, "
+               "background_name = ?, background = ?, text_font = ?, text_color = ?, text_align_v = ?, text_align_h = ?, "
+               "screen_use = ?, screen_position = ?, use_disp_2 = ? "
+               "WHERE theme_id = ? AND disp = ?");
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.showStanzaTitle);
+    sq.addBindValue(settings.showSongKey);
+    sq.addBindValue(settings.showSongNumber);
+    sq.addBindValue((unsigned int)(settings.infoColor.rgb()));
+    sq.addBindValue(settings.infoFont.toString());
+    sq.addBindValue(settings.infoAling);
+    sq.addBindValue(settings.showSongEnding);
+    sq.addBindValue((unsigned int)(settings.endingColor.rgb()));
+    sq.addBindValue(settings.endingFont.toString());
+    sq.addBindValue(settings.endingType);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont);
+    sq.addBindValue((unsigned int)(settings.textColor.rgb()));
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.screenUse);
+    sq.addBindValue(settings.screenPositon);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.exec();
+}
+
+void Theme::saveAnnounceUpdate(int screen, AnnounceSettings &settings)
+{
+    QSqlQuery sq;
+    sq.prepare("UPDATE ThemeAnnounce SET use_shadow = ?, use_fading = ?, use_blur_shadow = ?, "
+               "use_background = ?, background_name = ?, background = ?, text_font = ?, text_color = ?, "
+               "text_align_v = ?, text_align_h = ?, use_disp_2 = ? "
+               "WHERE theme_id = ? AND disp = ?");
+    sq.addBindValue(settings.useShadow);
+    sq.addBindValue(settings.useFading);
+    sq.addBindValue(settings.useBlurShadow);
+    sq.addBindValue(settings.useBackground);
+    sq.addBindValue(settings.backgroundName);
+    sq.addBindValue(pixToByte(settings.background));
+    sq.addBindValue(settings.textFont.toString());
+    sq.addBindValue(settings.textColor.rgb());
+    sq.addBindValue(settings.textAlingmentV);
+    sq.addBindValue(settings.textAlingmentH);
+    sq.addBindValue(settings.useDisp2settings);
+    sq.addBindValue(themeId);
+    sq.addBindValue(screen);
+    sq.exec();
 }
 
 void Theme::loadTheme()
 {
-    QString t,sets; // type, name, value, userValues
     QSqlQuery sq;
 
     // If theme Id is '0' then, get first theme in the list
-    if(themeId == "0")
+    if(themeId == 0)
     {
         sq.exec("SELECT id FROM Themes");
         bool ok = sq.first();
 
         // Check at least one theme exitst
         if (ok) // If exist, then load it
-            themeId = sq.value(0).toString();
+            themeId = sq.value(0).toInt();
         else // No themes exist, creat one and exit
         {
-            saveNewTheme();
+            saveThemeNew();
             return;
         }
     }
 
-    sq.exec(QString("SELECT type, sets FROM ThemeData WHERE theme_id = %1").arg(themeId));
-    bool p,p2,b,b2,s,s2,a,a2;
-    p=p2=b=b2=s=s2=a=a2=false;
-    while (sq.next())
-    {
-        t = sq.value(0).toString();
-        sets = sq.value(1).toString();
+    sq.exec(QString("SELECT name, comment FROM Themes WHERE id = %1").arg(themeId));
+    sq.first();
+    name = sq.value(0).toString();
+    comments = sq.value(1).toString();
 
-        if(t == "passive")
-        {
-            passiveSettingFromString(sets,passive);
-            p = true;
-        }
-        else if(t == "passive2")
-        {
-            passiveSettingFromString(sets,passive2);
-            p2 = true;
-        }
-        else if(t == "bible")
-        {
-            bibleSettingFromString(sets,bible);
-            b = true;
-        }
-        else if(t == "bible2")
-        {
-            bibleSettingFromString(sets,bible2);
-            b2 = true;
-        }
-        else if(t == "song")
-        {
-            songSettingFromString(sets,song);
-            s = true;
-        }
-        else if(t == "song2")
-        {
-            songSettingFromString(sets,song2);
-            s2 = true;
-        }
-        else if(t == "announce")
-        {
-            announceSettingFromString(sets,announce);
-            a = true;
-        }
-        else if(t == "announce2")
-        {
-            announceSettingFromString(sets,announce2);
-            a2 = true;
-        }
-    }
+    loadPassive(1,passive);
+    loadPassive(2,passive2);
+    loadBible(1,bible);
+    loadBible(2,bible2);
+    loadSong(1,song);
+    loadSong(2,song2);
+    loadAnnounce(1,announce);
+    loadAnnounce(2,announce2);
 
-    // check if database has all the items
-    // If not then create or re create all items.
-    if(!p || !p2 || !b || !b2 || !s || !s2 || !a || !a2)
-        saveNewTheme(themeId);
 }
 
-void Theme::passiveSettingFromString(QString &sets, PassiveSettings &settings)
+void Theme::loadPassive(int screen, PassiveSettings &settings)
 {
-    QString s,n,v;
-    QStringList values = sets.split("\n");
-    for(int i(0);i<values.count();++i)
-    {
-        s = values.at(i);
-        QStringList set = s.split("=");
-        n = set.at(0).trimmed();
-        v = set.at(1).trimmed();
-        if (n == "useDisp2settings")
-            settings.useDisp2settings = (v=="true");
-        else if(n=="useBackground")
-            settings.useBackground = (v=="true");
-        else if(n=="backgroundName")
-            settings.backgroundName = v;
-    }
+    QSqlQuery sq;
+    QSqlRecord sr;
+    sq.exec(QString("SELECT * FROM ThemePassive WHERE theme_id = %1 and disp = %2").arg(themeId).arg(screen));
+    sq.first();
+    sr = sq.record();
+    settings.useBackground = sr.field("use_background").value().toBool();
+    settings.backgroundName = sr.field("background_name").value().toString();
+    settings.background.loadFromData(sr.field("background").value().toByteArray());
+    settings.useDisp2settings = sr.field("use_disp_2").value().toBool();
 }
 
-void Theme::bibleSettingFromString(QString &sets, BibleSettings &settings)
+void Theme::loadBible(int screen, BibleSettings &settings)
 {
-    QString s,n,v;
-    QStringList values = sets.split("\n");
-    for(int i(0);i<values.count();++i)
-    {
-        s = values.at(i);
-        QStringList set = s.split("=");
-        n = set.at(0).trimmed();
-        v = set.at(1).trimmed();
-
-        if (n == "useDisp2settings")
-            settings.useDisp2settings = (v=="true");
-        else if(n=="primaryBible")
-            settings.primaryBible = v;
-        else if(n=="secondaryBible")
-            settings.secondaryBible = v;
-        else if(n=="trinaryBible")
-            settings.trinaryBible = v;
-        else if(n=="operatorBible")
-            settings.operatorBible = v;
-        else if (n == "useShadow")
-            settings.useShadow = (v=="true");
-        else if (n == "useFading")
-            settings.useFading = (v=="true");
-        else if (n == "useBlurShadow")
-            settings.useBlurShadow = (v=="true");
-        else if(n=="useBackground")
-            settings.useBackground = (v=="true");
-        else if(n=="backgroundName")
-            settings.backgroundName = v;
-        else if(n=="textAlingment")
-        {
-            QStringList alinglist = v.split(",");
-            settings.textAlingmentV = alinglist.at(0).toInt();
-            settings.textAlingmentH = alinglist.at(1).toInt();
-        }
-        else if(n=="textColor")
-            settings.textColor = QColor::fromRgb(v.toUInt());
-        else if(n=="textFont")
-            settings.textFont.fromString(v);
-        else if(n=="useAbbriviations")
-            settings.useAbbriviations = (v=="true");
-        else if(n=="maxScreen")
-            settings.maxScreen = v.toInt();
-        else if(n=="maxScreenFrom")
-            settings.maxScreenFrom = v;
-    }
+    QSqlQuery sq;
+    QSqlRecord sr;
+    sq.exec(QString("SELECT * FROM ThemeBible WHERE theme_id = %1 and disp = %2").arg(themeId).arg(screen));
+    sq.first();
+    sr = sq.record();
+    settings.useShadow = sr.field("use_shadow").value().toBool();
+    settings.useFading = sr.field("use_fading").value().toBool();
+    settings.useBlurShadow = sr.field("use_blur_shadow").value().toBool();
+    settings.useBackground = sr.field("use_background").value().toBool();
+    settings.backgroundName = sr.field("background_name").value().toString();
+    settings.background.loadFromData(sr.field("background").value().toByteArray());
+    settings.textFont.fromString(sr.field("text_font").value().toString());
+    settings.textColor = QColor::fromRgb(sr.field("text_color").value().toUInt());
+    settings.textAlingmentV = sr.field("text_align_v").value().toInt();
+    settings.textAlingmentH = sr.field("text_align_h").value().toInt();
+    settings.captionFont.fromString(sr.field("caption_font").value().toString());
+    settings.captionColor = QColor::fromRgb(sr.field("caption_color").value().toUInt());
+    settings.captionAlingment = sr.field("caption_align").value().toInt();
+    settings.captionPosition = sr.field("caption_position").value().toInt();
+    settings.useAbbriviations = sr.field("use_abbr").value().toBool();
+    settings.screenUse = sr.field("screen_use").value().toInt();
+    settings.screenPosition = sr.field("screen_position").value().toInt();
+    settings.useDisp2settings = sr.field("use_disp_2").value().toBool();
 }
 
-void Theme::songSettingFromString(QString &sets, SongSettings &settings)
+void Theme::loadSong(int screen, SongSettings &settings)
 {
-    QString s,n,v;
-    QStringList values = sets.split("\n");
-    for(int i(0);i<values.count();++i)
-    {
-        s = values.at(i);
-        QStringList set = s.split("=");
-        n = set.at(0).trimmed();
-        v = set.at(1).trimmed();
-        if(n=="useDisp2settings")
-            settings.useDisp2settings = (v=="true");
-        else if(n=="showStanzaTitle")
-            settings.showStanzaTitle = (v=="true");
-        else if(n=="showSongKey")
-            settings.showSongKey = (v=="true");
-        else if(n=="showSongNumber")
-            settings.showSongNumber = (v=="true");
-        else if(n=="infoAling")
-            settings.infoAling = v.toInt();
-        else if(n=="showSongEnding")
-            settings.showSongEnding = (v=="true");
-        else if(n=="songEndingType")
-            settings.endingType = v.toInt();
-        else if (n == "useShadow")
-            settings.useShadow = (v=="true");
-        else if (n == "useFading")
-            settings.useFading = (v=="true");
-        else if (n == "useBlurShadow")
-            settings.useBlurShadow = (v=="true");
-        else if(n=="useBackground")
-            settings.useBackground = (v=="true");
-        else if(n=="backgroundName")
-            settings.backgroundName = v;
-        else if(n=="textAlingment")
-        {
-            QStringList alinglist = v.split(",");
-            settings.textAlingmentV = alinglist.at(0).toInt();
-            settings.textAlingmentH = alinglist.at(1).toInt();
-        }
-        else if(n=="textColor")
-            settings.textColor = QColor::fromRgb(v.toUInt());
-        else if(n=="textFont")
-            settings.textFont.fromString(v);
-    }
+    QSqlQuery sq;
+    QSqlRecord sr;
+    sq.exec(QString("SELECT * FROM ThemeSong WHERE theme_id = %1 and disp = %2").arg(themeId).arg(screen));
+    sq.first();
+    sr = sq.record();
+    settings.useShadow = sr.field("use_shadow").value().toBool();
+    settings.useFading = sr.field("use_fading").value().toBool();
+    settings.useBlurShadow = sr.field("use_blur_shadow").value().toBool();
+    settings.showStanzaTitle = sr.field("show_stanza_title").value().toBool();
+    settings.showSongKey = sr.field("show_key").value().toBool();
+    settings.showSongNumber = sr.field("show_number").value().toBool();
+    settings.infoColor = QColor::fromRgb(sr.field("info_color").value().toUInt());
+    settings.infoFont.fromString(sr.field("info_font").value().toString());
+    settings.infoAling = sr.field("info_align").value().toInt();
+    settings.showSongEnding = sr.field("show_song_ending").value().toBool();
+    settings.endingColor = QColor::fromRgb(sr.field("ending_color").value().toUInt());
+    settings.endingFont.fromString(sr.field("ending_font").value().toString());
+    settings.endingType = sr.field("ending_type").value().toInt();
+    settings.useBackground = sr.field("use_background").value().toBool();
+    settings.backgroundName = sr.field("background_name").value().toString();
+    settings.background.loadFromData(sr.field("background").value().toByteArray());
+    settings.textFont.fromString(sr.field("text_font").value().toString());
+    settings.textColor = QColor::fromRgb(sr.field("text_color").value().toUInt());
+    settings.textAlingmentV = sr.field("text_align_v").value().toInt();
+    settings.textAlingmentH = sr.field("text_align_h").value().toInt();
+    settings.screenUse = sr.field("screen_use").value().toInt();
+    settings.screenPositon = sr.field("screen_position").value().toInt();
+    settings.useDisp2settings = sr.field("use_disp_2").value().toBool();
 }
 
-void Theme::announceSettingFromString(QString &sets, AnnounceSettings &settings)
+void Theme::loadAnnounce(int screen, AnnounceSettings &settings)
 {
-    QString s,n,v;
-    QStringList values = sets.split("\n");
-    for(int i(0);i<values.count();++i)
-    {
-        s = values.at(i);
-        QStringList set = s.split("=");
-        n = set.at(0).trimmed();
-        v = set.at(1).trimmed();
-        if (n == "useDisp2settings")
-            settings.useDisp2settings = (v=="true");
-        else if (n == "useShadow")
-            settings.useShadow = (v=="true");
-        else if (n == "useFading")
-            settings.useFading = (v=="true");
-        else if (n == "useBlurShadow")
-            settings.useBlurShadow = (v=="true");
-        else if(n=="useBackground")
-            settings.useBackground = (v=="true");
-        else if(n=="backgroundName")
-            settings.backgroundName = v;
-        else if(n=="textAlingment")
-        {
-            QStringList alinglist = v.split(",");
-            settings.textAlingmentV = alinglist.at(0).toInt();
-            settings.textAlingmentH = alinglist.at(1).toInt();
-        }
-        else if(n=="textColor")
-            settings.textColor = QColor::fromRgb(v.toUInt());
-        else if(n=="textFont")
-            settings.textFont.fromString(v);
-    }
+    QSqlQuery sq;
+    QSqlRecord sr;
+    sq.exec(QString("SELECT * FROM ThemeAnnounce WHERE theme_id = %1 and disp = %2").arg(themeId).arg(screen));
+    sq.first();
+    sr = sq.record();
+    settings.useShadow = sr.field("use_shadow").value().toBool();
+    settings.useFading = sr.field("use_fading").value().toBool();
+    settings.useBlurShadow = sr.field("use_blur_shadow").value().toBool();
+    settings.useBackground = sr.field("use_background").value().toBool();
+    settings.backgroundName = sr.field("background_name").value().toString();
+    settings.background.loadFromData(sr.field("background").value().toByteArray());
+    settings.textFont.fromString(sr.field("text_font").value().toString());
+    settings.textColor = QColor::fromRgb(sr.field("text_color").value().toUInt());
+    settings.textAlingmentV = sr.field("text_align_v").value().toInt();
+    settings.textAlingmentH = sr.field("text_align_h").value().toInt();
+    settings.useDisp2settings = sr.field("use_disp_2").value().toBool();
 }
 
-QString Theme::passiveSettingToString(PassiveSettings &settings)
+void Theme::setThemeInfo(ThemeInfo info)
 {
-    QString rString;
-
-    // **** prepare passive settings ************************************
-    if(settings.useDisp2settings)
-        rString = "useDisp2settings = true";
-    else
-        rString = "useDisp2settings = false";
-
-    // background
-    (settings.useBackground)? rString += "\nuseBackground = true" : rString += "\nuseBackground = false";
-    rString += "\nbackgroundPath = " + settings.backgroundName;
-
-    return rString;
+    themeId = info.themeId;
+    name = info.name;
+    comments = info.comments;
 }
 
-QString Theme::bibleSettingToString(BibleSettings &settings)
+ThemeInfo Theme::getThemeInfo()
 {
-    QString rString;
-    // **** Prepare bible settings ************************************************
-    if(settings.useDisp2settings)
-        rString = "useDisp2settings = true";
-    else
-        rString = "useDisp2settings = false";
-    rString += "\nprimaryBible = " + settings.primaryBible;
-    rString += "\nsecondaryBible = " + settings.secondaryBible;
-    rString += "\ntrinaryBible = " + settings.trinaryBible;
-    rString += "\noperatorBible = " + settings.operatorBible;
-
-    // Effects
-    if(settings.useShadow)
-        rString += "\nuseShadow = true";
-    else
-        rString += "\nuseShadow = false";
-    if(settings.useFading)
-        rString += "\nuseFading = true";
-    else
-        rString += "\nuseFading = false";
-    if(settings.useBlurShadow)
-        rString += "\nuseBlurShadow = true";
-    else
-        rString += "\nuseBlurShadow = false";
-
-    // Background
-    if(settings.useBackground)
-        rString += "\nuseBackground = true";
-    else
-        rString += "\nuseBackground = false";
-
-    rString += "\nbackgroundPath = " + settings.backgroundName;
-
-    // Text alingment
-    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
-            "," + QString::number(settings.textAlingmentH);
-
-    // Text color
-    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
-    rString += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    rString += "\ntextFont = " + settings.textFont.toString();
-
-    // Version abbriviations
-    if(settings.useAbbriviations)
-        rString += "\nuseAbbriviations = true";
-    else
-        rString += "\nuseAbbriviations = false";
-
-    // Max screen
-    rString += "\nmaxScreen = " + QString::number(settings.maxScreen);
-    rString += "\nmaxScreenFrom = " + settings.maxScreenFrom;
-
-    return rString;
-}
-
-QString Theme::songSettingToString(SongSettings &settings)
-{
-    QString rString;
-
-    // **** Prepare song settings ************************************************
-    if(settings.useDisp2settings)
-        rString = "useDisp2settings = true\n";
-    else
-        rString = "useDisp2settings = false\n";
-    if(settings.showStanzaTitle)
-        rString += "showStanzaTitle = true\n";
-    else
-        rString += "showStanzaTitle = false\n";
-    if(settings.showSongKey)
-        rString += "showSongKey = true\n";
-    else
-        rString += "showSongKey = false\n";
-    if(settings.showSongNumber)
-        rString += "showSongNumber = true\n";
-    else
-        rString += "showSongNumber = false\n";
-    rString += "infoAling = " + QString::number(settings.infoAling);
-    if(settings.showSongEnding)
-        rString += "\nshowSongEnding = true\n";
-    else
-        rString += "\nshowSongEnding = false\n";
-    rString += "songEndingType = " + QString::number(settings.endingType);
-
-    // Effects
-    if(settings.useShadow)
-        rString += "\nuseShadow = true";
-    else
-        rString += "\nuseShadow = false";
-    if(settings.useFading)
-        rString += "\nuseFading = true";
-    else
-        rString += "\nuseFading = false";
-    if(settings.useBlurShadow)
-        rString += "\nuseBlurShadow = true";
-    else
-        rString += "\nuseBlurShadow = false";
-
-    if(settings.useBackground)
-        rString += "\nuseBackground = true";
-    else
-        rString += "\nuseBackground = false";
-
-    rString += "\nbackgroundPath = " + settings.backgroundName;
-
-    // Text alingment
-    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
-            "," + QString::number(settings.textAlingmentH);
-
-    // Text color
-    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
-    rString += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    rString += "\ntextFont = " + settings.textFont.toString();
-
-    return rString;
-}
-
-QString Theme::announceSettingToString(AnnounceSettings &settings)
-{
-    QString rString;
-
-    // **** prepare announcement settings ************************************
-    if(settings.useDisp2settings)
-        rString = "useDisp2settings = true";
-    else
-        rString = "useDisp2settings = false";
-
-    // Effects
-    if(settings.useShadow)
-        rString += "\nuseShadow = true";
-    else
-        rString += "\nuseShadow = false";
-    if(settings.useFading)
-        rString += "\nuseFading = true";
-    else
-        rString += "\nuseFading = false";
-    if(settings.useBlurShadow)
-        rString += "\nuseBlurShadow = true";
-    else
-        rString += "\nuseBlurShadow = false";
-
-    // background
-    (settings.useBackground)? rString += "\nuseBackground = true" : rString += "\nuseBackground = false";
-    rString += "\nbackgroundPath = " + settings.backgroundName;
-
-    // Text alingment
-    rString += "\ntextAlingment = " + QString::number(settings.textAlingmentV) +
-            "," + QString::number(settings.textAlingmentH);
-
-    // Text color
-    unsigned int textColorInt = (unsigned int)(settings.textColor.rgb());
-    rString += "\ntextColor = " + QString::number(textColorInt);
-
-    // Text font
-    rString += "\ntextFont = " + settings.textFont.toString();
-
-    return rString;
+    ThemeInfo info;
+    info.themeId = themeId;
+    info.name = name;
+    info.comments = comments;
+    return info;
 }

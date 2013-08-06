@@ -158,7 +158,7 @@ QStringList Bible::getChapter(int book, int chapter)
     return verseList;
 }
 
-Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& sets)
+Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& sets, BibleVersionSettings &bv)
 {
     QString verse_id;
     for(int i(0);i<currentRows.count();++i)
@@ -169,15 +169,15 @@ Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& s
 
     Verse v;
     // get primary verse
-    getVerseAndCaption(v.primary_text,v.primary_caption,verse_id,sets.primaryBible,sets.useAbbriviations);
+    getVerseAndCaption(v.primary_text,v.primary_caption,verse_id,bv.primaryBible,sets.useAbbriviations);
 
     // get secondary verse
-    if(sets.primaryBible!=sets.secondaryBible && sets.secondaryBible!="none")
-        getVerseAndCaption(v.secondary_text,v.secondary_caption,verse_id,sets.secondaryBible,sets.useAbbriviations);
+    if(bv.primaryBible!=bv.secondaryBible && bv.secondaryBible!="none")
+        getVerseAndCaption(v.secondary_text,v.secondary_caption,verse_id,bv.secondaryBible,sets.useAbbriviations);
 
     // get trinary versse
-    if(sets.trinaryBible!=sets.primaryBible && sets.trinaryBible!=sets.secondaryBible && sets.trinaryBible!="none")
-        getVerseAndCaption(v.trinary_text,v.trinary_caption,verse_id,sets.trinaryBible,sets.useAbbriviations);
+    if(bv.trinaryBible!=bv.primaryBible && bv.trinaryBible!=bv.secondaryBible && bv.trinaryBible!="none")
+        getVerseAndCaption(v.trinary_text,v.trinary_caption,verse_id,bv.trinaryBible,sets.useAbbriviations);
 
     return v;
 

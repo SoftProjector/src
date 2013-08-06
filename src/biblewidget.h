@@ -24,7 +24,7 @@
 #include <QtGui>
 #include "bible.h"
 #include "highlight.h"
-#include "theme.h"
+#include "settings.h"
 
 
 namespace Ui {
@@ -54,7 +54,7 @@ public slots:
     void setShownSplitterState(QByteArray& state);
     void loadBibles(QString initialId);
     void sendToProjector(bool add_to_history);
-    void setSettings(BibleSettings& sets);
+    void setSettings(BibleVersionSettings& sets);
     BibleHistory getCurrentVerse();
     void addToHistory(BibleHistory &b);
     void clearHistory();
@@ -92,7 +92,7 @@ private slots:
 
 
 private:
-    BibleSettings mySettings;
+    BibleVersionSettings mySettings;
     Ui::BibleWidget *ui;
     HighlighterDelegate *highlight;
     QList<BibleSearch> search_results;

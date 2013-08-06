@@ -100,7 +100,7 @@ void GeneralSettingWidget::loadThemes()
     themes.clear();
     while(sq.next())
     {
-        themeIdList<< sq.value(0).toString();
+        themeIdList<< sq.value(0).toInt();
         themes<<sq.value(1).toString();
     }
     ui->comboBoxTheme->clear();
@@ -115,7 +115,7 @@ GeneralSettings GeneralSettingWidget::getSettings()
     if(tmx != -1)
         mySettings.currentThemeId = themeIdList.at(tmx);
     else
-        mySettings.currentThemeId = "0";
+        mySettings.currentThemeId = 0;
 
     mySettings.displayScreen = ui->comboBoxDisplayScreen->currentIndex();
     mySettings.displayScreen2 = monitors.indexOf(ui->comboBoxDisplayScreen_2->currentText());
@@ -176,7 +176,8 @@ void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
         QSqlTableModel sqt;
         QSqlQuery sq;
         Theme tm;
-        QString nId;
+        ThemeInfo tmi;
+        int nId;
 
         AddSongbookDialog theme_dia;
         theme_dia.setWindowTitle(tr("Edit Theme"));
@@ -186,18 +187,23 @@ void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
         switch(ret)
         {
         case AddSongbookDialog::Accepted:
-            sqt.setTable("Themes");
-            sqt.insertRow(0);
-            sqt.setData(sqt.index(0,1),theme_dia.title);
-            sqt.setData(sqt.index(0,2),theme_dia.info);
-            sqt.submitAll();
+//            sqt.setTable("Themes");
+//            sqt.insertRow(0);
+//            sqt.setData(sqt.index(0,1),theme_dia.title);
+//            sqt.setData(sqt.index(0,2),theme_dia.info);
+//            sqt.submitAll();
 
 
-            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-            sq.first();
-            nId = sq.value(0).toString();
+//            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
+//            sq.first();
+//            nId = sq.value(0).toString();
 
-            tm.saveNewTheme(nId);
+//            tm.saveNewTheme(nId);
+            tmi.name = theme_dia.title;
+            tmi.comments = theme_dia.info;
+            tm.setThemeInfo(tmi);
+            tm.saveThemeNew();
+            nId = tm.getThemeId();
 
             loadThemes();
 

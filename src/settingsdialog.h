@@ -46,10 +46,12 @@ public:
     void updateSecondaryBibleMenu();
 
 public slots:
-    void loadSettings(GeneralSettings& sets, Theme &thm);
+    void loadSettings(GeneralSettings& sets, Theme &thm,
+                      BibleVersionSettings bsets, BibleVersionSettings bsets2);
 
 signals:
-    void updateSettings(GeneralSettings& sets, Theme &thm);
+    void updateSettings(GeneralSettings& sets, Theme &thm,
+                        BibleVersionSettings& bsets, BibleVersionSettings& bsets2);
     void positionsDisplayWindow();
     void updateScreen();
 
@@ -62,6 +64,8 @@ private:
 
     GeneralSettings gsettings;
     Theme theme;
+    BibleVersionSettings bsettings;
+    BibleVersionSettings bsettings2;
     GeneralSettingWidget *generalSettingswidget;
     PassiveSettingWidget *passiveSettingwidget;
     BibleSettingWidget *bibleSettingswidget;
@@ -80,7 +84,7 @@ private slots:
     void setUseDispScreen2(bool toUse);
     void on_buttonBox_clicked(QAbstractButton *button);
     void applySettings();
-    void changeTheme(QString theme_id);
+    void changeTheme(int theme_id);
     void getThemes();
     void setThemes();
 
