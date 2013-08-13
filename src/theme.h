@@ -76,6 +76,7 @@ public:
     QColor endingColor;
     QFont endingFont;
     int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
+    int endingPosition;
     bool useBackground;
     QString backgroundName; // file path for background image
     QPixmap background;

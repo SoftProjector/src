@@ -66,6 +66,7 @@ SongSettings::SongSettings()
     endingColor = QColor(Qt::white);
     endingFont.fromString("Arial,28,-1,5,50,0,0,0,0,0");
     endingType = 0;
+    endingPosition = 1;
     useBackground = false;
     backgroundName = "";
     background = QPixmap();
@@ -179,9 +180,9 @@ void Theme::saveSongNew(int screen, SongSettings &settings)
     QSqlQuery sq;
     sq.prepare("INSERT INTO ThemeSong (theme_id, disp, use_shadow, use_fading, use_blur_shadow, show_stanza_title, "
                "show_key, show_number, info_color, info_font, info_align, show_song_ending, ending_color, ending_font, "
-               "ending_type, use_background, background_name, background, text_font, text_color, text_align_v, text_align_h, "
-               "screen_use, screen_position, use_disp_2) "
-               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+               "ending_type, ending_position, use_background, background_name, background, text_font, text_color, "
+               "text_align_v, text_align_h, screen_use, screen_position, use_disp_2) "
+               "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     sq.addBindValue(themeId);
     sq.addBindValue(screen);
     sq.addBindValue(settings.useShadow);
@@ -197,6 +198,7 @@ void Theme::saveSongNew(int screen, SongSettings &settings)
     sq.addBindValue((unsigned int)(settings.endingColor.rgb()));
     sq.addBindValue(settings.endingFont.toString());
     sq.addBindValue(settings.endingType);
+    sq.addBindValue(settings.endingPosition);
     sq.addBindValue(settings.useBackground);
     sq.addBindValue(settings.backgroundName);
     sq.addBindValue(pixToByte(settings.background));
@@ -301,9 +303,9 @@ void Theme::saveSongUpdate(int screen, SongSettings &settings)
     QSqlQuery sq;
     sq.prepare("UPDATE ThemeSong SET use_shadow = ?, use_fading = ?, use_blur_shadow = ?, "
                "show_stanza_title = ?, show_key = ?, show_number = ?, info_color = ?, info_font = ?, info_align = ?, "
-               "show_song_ending = ?, ending_color = ?, ending_font = ?, ending_type = ?, use_background = ?, "
-               "background_name = ?, background = ?, text_font = ?, text_color = ?, text_align_v = ?, text_align_h = ?, "
-               "screen_use = ?, screen_position = ?, use_disp_2 = ? "
+               "show_song_ending = ?, ending_color = ?, ending_font = ?, ending_type = ?, ending_position = ?, "
+               "use_background = ?, background_name = ?, background = ?, text_font = ?, text_color = ?, text_align_v = ?, "
+               "text_align_h = ?, screen_use = ?, screen_position = ?, use_disp_2 = ? "
                "WHERE theme_id = ? AND disp = ?");
     sq.addBindValue(settings.useShadow);
     sq.addBindValue(settings.useFading);
@@ -318,6 +320,7 @@ void Theme::saveSongUpdate(int screen, SongSettings &settings)
     sq.addBindValue((unsigned int)(settings.endingColor.rgb()));
     sq.addBindValue(settings.endingFont.toString());
     sq.addBindValue(settings.endingType);
+    sq.addBindValue(settings.endingPosition);
     sq.addBindValue(settings.useBackground);
     sq.addBindValue(settings.backgroundName);
     sq.addBindValue(pixToByte(settings.background));
@@ -359,12 +362,13 @@ void Theme::saveAnnounceUpdate(int screen, AnnounceSettings &settings)
 void Theme::loadTheme()
 {
     QSqlQuery sq;
+    bool ok;
 
     // If theme Id is '0' then, get first theme in the list
     if(themeId == 0)
     {
         sq.exec("SELECT id FROM Themes");
-        bool ok = sq.first();
+        ok = sq.first();
 
         // Check at least one theme exitst
         if (ok) // If exist, then load it
@@ -377,19 +381,23 @@ void Theme::loadTheme()
     }
 
     sq.exec(QString("SELECT name, comment FROM Themes WHERE id = %1").arg(themeId));
-    sq.first();
-    name = sq.value(0).toString();
-    comments = sq.value(1).toString();
+    ok = sq.first();
+    if(ok)
+    {
+        name = sq.value(0).toString();
+        comments = sq.value(1).toString();
 
-    loadPassive(1,passive);
-    loadPassive(2,passive2);
-    loadBible(1,bible);
-    loadBible(2,bible2);
-    loadSong(1,song);
-    loadSong(2,song2);
-    loadAnnounce(1,announce);
-    loadAnnounce(2,announce2);
-
+        loadPassive(1,passive);
+        loadPassive(2,passive2);
+        loadBible(1,bible);
+        loadBible(2,bible2);
+        loadSong(1,song);
+        loadSong(2,song2);
+        loadAnnounce(1,announce);
+        loadAnnounce(2,announce2);
+    }
+    else
+        saveThemeNew();
 }
 
 void Theme::loadPassive(int screen, PassiveSettings &settings)
@@ -452,6 +460,7 @@ void Theme::loadSong(int screen, SongSettings &settings)
     settings.endingColor = QColor::fromRgb(sr.field("ending_color").value().toUInt());
     settings.endingFont.fromString(sr.field("ending_font").value().toString());
     settings.endingType = sr.field("ending_type").value().toInt();
+    settings.endingPosition = sr.field("ending_position").value().toInt();
     settings.useBackground = sr.field("use_background").value().toBool();
     settings.backgroundName = sr.field("background_name").value().toString();
     settings.background.loadFromData(sr.field("background").value().toByteArray());

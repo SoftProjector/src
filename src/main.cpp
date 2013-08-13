@@ -86,9 +86,10 @@ bool connect(QString database_file)
             sq.exec("CREATE TABLE 'ThemeSong' ('theme_id' INTEGER, 'disp' INTEGER, 'use_shadow' BOOL, 'use_fading' BOOL, "
                     "'use_blur_shadow' BOOL, 'show_stanza_title' BOOL, 'show_key' BOOL, 'show_number' BOOL, "
                     "'info_color' INTEGER, 'info_font' TEXT, 'info_align' INTEGER, 'show_song_ending' BOOL, "
-                    "'ending_color' INTEGER, 'ending_font' TEXT, 'ending_type' INTEGER, 'use_background' BOOL, "
-                    "'background_name' TEXT, 'background' BLOB, 'text_font' TEXT, 'text_color' INTEGER, 'text_align_v' INTEGER, "
-                    "'text_align_h' INTEGER, 'screen_use' INTEGER, 'screen_position' INTEGER, 'use_disp_2' BOOL)");
+                    "'ending_color' INTEGER, 'ending_font' TEXT, 'ending_type' INTEGER, 'ending_position' INTEGER, "
+                    "'use_background' BOOL, 'background_name' TEXT, 'background' BLOB, 'text_font' TEXT, "
+                    "'text_color' INTEGER, 'text_align_v' INTEGER, 'text_align_h' INTEGER, "
+                    "'screen_use' INTEGER, 'screen_position' INTEGER, 'use_disp_2' BOOL)");
             //sq.exec("CREATE TABLE 'ThemeData' ('theme_id' INTEGER, 'type' TEXT, 'sets' TEXT)");
             sq.exec("CREATE TABLE 'Themes' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' TEXT, 'comment' TEXT)");
         }

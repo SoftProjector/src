@@ -64,9 +64,11 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
     // Save song ending
     mySettings.showSongEnding = ui->groupBoxSongEnding->isChecked();
     mySettings.endingType = ui->comboBoxEndingType->currentIndex();
+    mySettings.endingPosition = ui->comboBoxEndingPosition->currentIndex();
 
     mySettings2.showSongEnding = ui->groupBoxSongEnding2->isChecked();
     mySettings2.endingType = ui->comboBoxEndingType2->currentIndex();
+    mySettings2.endingPosition = ui->comboBoxEndingPosition2->currentIndex();
 
     // Save song background
     mySettings.useBackground = ui->groupBoxSongBackground->isChecked();
@@ -131,12 +133,14 @@ void SongSettingWidget::loadSettings()
     ui->graphicViewEndingColor->setPalette(p);
     ui->labelEndingFont->setText(getFontText(mySettings.endingFont));
     ui->comboBoxEndingType->setCurrentIndex(mySettings.endingType);
+    ui->comboBoxEndingPosition->setCurrentIndex(mySettings.endingPosition);
 
     ui->groupBoxSongEnding2->setChecked(mySettings2.showSongEnding);
     p.setColor(QPalette::Base,mySettings2.endingColor);
     ui->graphicViewEndingColor2->setPalette(p);
     ui->labelEndingFont2->setText(getFontText(mySettings2.endingFont));
     ui->comboBoxEndingType2->setCurrentIndex(mySettings2.endingType);
+    ui->comboBoxEndingPosition2->setCurrentIndex(mySettings2.endingPosition);
 
     // Set Song Background
     ui->groupBoxSongBackground->setChecked(mySettings.useBackground);

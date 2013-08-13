@@ -699,7 +699,7 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
     // sure that the output rect is narrower than <width> and shorter than <height>.
 
     QString main_text = songStanza.stanza;
-    QString top_caption_str;
+    QString caption_str;
     QString song_ending = " ";
 
     //QStringList lines_list = song_list.at(current_song_verse).split("\n");
@@ -720,15 +720,15 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
 
     // Check wheter to display stanza tiles
     if (songSets.showStanzaTitle)
-        top_caption_str = songStanza.stanzaTitle;
+        caption_str = songStanza.stanzaTitle;
     else
-        top_caption_str = " ";
+        caption_str = " ";
 
     // If No cation,number or tune, give the space to song text
     if(!songSets.showSongNumber && !songSets.showSongKey && !songSets.showStanzaTitle)
     {
         song_num_str.clear();
-        top_caption_str.clear();
+        caption_str.clear();
     }
 
     // Prepare Song ending string
@@ -783,184 +783,146 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
     if(songSets.screenPositon == 1)
         maxtop = top+h-maxh;
 
-    h = maxh;
+    height = maxh;
     top = maxtop;
+    width = w;
 
-    QRect rect = QRect(left, top, w, h);
-    QRect out_rect;
-    QFont font = songSets.textFont;
-
-    int orig_font_size = font.pointSize();
-
-    // Keep decreasing the font size until the text fits into the allocated space:
-    bool exit = false;
-    while( !exit )
-    {
-        out_rect = drawSongTextToRect(painter, rect, false, false, main_text, top_caption_str, song_num_str, song_ending);
-        exit = ( out_rect.width() <= w && out_rect.height() <= h );
-        if( !exit )
-        {
-            // Decrease font size by one point and try again
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
-        }
-    }
-
-    bool wrap = false;
-    // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
-    if( font.pointSize() < (orig_font_size*4/5) )
-    {
-        font.setPointSize(orig_font_size);
-        painter->setFont(font);
-        exit = false;
-        wrap = true;
-        while( !exit )
-        {
-            out_rect = drawSongTextToRect(painter, rect, false, wrap, main_text, top_caption_str, song_num_str, song_ending);
-            exit = ( out_rect.width() <= w && out_rect.height() <= h );
-            if( !exit )
-            {
-                // Decrease font size by one point and try again
-                font.setPointSize( font.pointSize()-1 );
-                painter->setFont(font);
-            }
-        }
-    }
-    // At this point we picked correct font size and flags; so it's safe to draw:
-    drawSongTextToRect(painter, rect, true, wrap, main_text, top_caption_str, song_num_str, song_ending);
-}
-
-QRect DisplayScreen::drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str)
-{
-    // Figure out how to draw the specified song verse to the specified rect.
-    // Return the rectangle of the output - may be bigger than input rect.
-    // draw - whether to actually draw or to simply calculate the rect.
-
-    QRect caption_rect, num_rect, main_rect, out_rect, ending_rect;
-    int left = bound_rect.left();
-    int top = bound_rect.top();
-    int width = bound_rect.width();
-    int height = bound_rect.height();
+    QRect caption_rect, num_rect, main_rect, ending_rect;
     int main_flags(0);
 
-    if(wrap)
+    if(songSets.textAlingmentV==0)
+        main_flags += Qt::AlignTop;
+    else if(songSets.textAlingmentV==1)
+        main_flags += Qt::AlignVCenter;
+    else if(songSets.textAlingmentV==2)
+        main_flags += Qt::AlignBottom;
+    if(songSets.textAlingmentH==0)
+        main_flags += Qt::AlignLeft;
+    else if(songSets.textAlingmentH==1)
+        main_flags += Qt::AlignHCenter;
+    else if(songSets.textAlingmentH==2)
+        main_flags += Qt::AlignRight;
+
+    QFont main_font = songSets.textFont;
+
+    int caph, endh, mainh, mainw, totalh;
+
+    // Prepare Caption
+    painter->setFont(songSets.infoFont);
+    caption_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+    caph = caption_rect.height();
+
+    // Prepare Ending
+    painter->setFont(songSets.endingFont);
+    ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
+    // Decrease songe ending font size so that it would fit in the screen width
+    while(ending_rect.width()> width)
+    {
+        songSets.endingFont.setPointSize(songSets.endingFont.pointSize()-1);
+        painter->setFont(songSets.endingFont);
+        ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
+    }
+    endh = ending_rect.height();
+
+    // Prepare Main Text
+    painter->setFont(main_font);
+    main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+    mainh = main_rect.height();
+    mainw = main_rect.width();
+    totalh = caph+endh+mainh;
+
+    // Decrease song text to fit the screen
+    while(mainw > width || totalh > height)
+    {
+        main_font.setPointSize(main_font.pointSize() - 1);
+        painter->setFont(main_font);
+        main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+        mainh = main_rect.height();
+        mainw = main_rect.width();
+        totalh = caph+endh+mainh;
+    }
+
+    // Check if main font is less then 4/5 of original. if so, then song preparation again with text wrap
+    if(main_font.pointSize() <(songSets.textFont.pointSize()*4/5))
+    {
         main_flags += Qt::TextWordWrap;
+        main_font = songSets.textFont;
+        // Prepare Main Text
+        painter->setFont(songSets.textFont);
+        main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+        mainh = main_rect.height();
+        mainw = main_rect.width();
+        totalh = caph+endh+mainh;
 
-//    if(songStanza.usePrivateSettings)
-//    {
-//        // Apply song specific alignment
-//        if(songStanza.alignmentV==0)
-//            main_flags += Qt::AlignTop;
-//        else if(songStanza.alignmentV==1)
-//            main_flags += Qt::AlignVCenter;
-//        else if(songStanza.alignmentV==2)
-//            main_flags += Qt::AlignBottom;
-//        if(songStanza.alignmentH==0)
-//            main_flags += Qt::AlignLeft;
-//        else if(songStanza.alignmentH==1)
-//            main_flags += Qt::AlignHCenter;
-//        else if(songStanza.alignmentH==2)
-//            main_flags += Qt::AlignRight;
-//    }
-//    else
-//    {
-        if(songSets.textAlingmentV==0)
-            main_flags += Qt::AlignTop;
-        else if(songSets.textAlingmentV==1)
-            main_flags += Qt::AlignVCenter;
-        else if(songSets.textAlingmentV==2)
-            main_flags += Qt::AlignBottom;
-        if(songSets.textAlingmentH==0)
-            main_flags += Qt::AlignLeft;
-        else if(songSets.textAlingmentH==1)
-            main_flags += Qt::AlignHCenter;
-        else if(songSets.textAlingmentH==2)
-            main_flags += Qt::AlignRight;
-//    }
+        // Decrease song text to fit the screen
+        while(mainw > width || totalh > height)
+        {
+            main_font.setPointSize(main_font.pointSize() - 1);
+            painter->setFont(main_font);
+            main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+            mainh = main_rect.height();
+            mainw = main_rect.width();
+            totalh = caph+endh+mainh;
+        }
+    }
+    songSets.textFont = main_font;
 
-    QFont orig_font = painter->font();
-//    QFont caption_font = orig_font;
-//    caption_font.setPointSize( orig_font.pointSize() *4/5 );
-//    QFont ending_font = orig_font;
-//    ending_font.setPointSize(orig_font.pointSize() *2/3);
-
-    int cheight; // Height of the caption text
-    int eheight; // hieght of song ending text
-
-    if(songSets.infoAling == 0)
+    // AT This piont, all sizes should be good.
+    // Set object location and DRAW
+    mainh = height-caph-endh;
+    if(songSets.infoAling == 0 && songSets.endingPosition == 0)
     {
-        // Paint caption, key and number
         painter->setFont(songSets.infoFont);
         painter->setPen(songSets.infoColor);
-        caption_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
-        num_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
-        cheight = caption_rect.height();
-
-        // Paint song ending
+        caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+        num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
+        painter->setFont(songSets.textFont);
+        painter->setPen(songSets.textColor);
+        main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
         painter->setFont(songSets.endingFont);
         painter->setPen(songSets.endingColor);
-        ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        if(ending_rect.width()> width)
-        {
-            // decrease songe ending font size so that it would fit in the screen
-            while (ending_rect.width()> width)
-            {
-                songSets.endingFont.setPointSize(songSets.endingFont.pointSize()-1);
-                painter->setFont(songSets.endingFont);
-                ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-            }
-            ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        }
-        else
-            ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        eheight = ending_rect.height();
-
-        // Pain Main Text
-        painter->setFont(orig_font);
-        painter->setPen(songSets.textColor);
-        main_rect = boundRectOrDrawText(painter, draw, left, top+cheight, width, height-cheight-eheight, main_flags, main_text);
+        ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
     }
-    else if(songSets.infoAling == 1)
+    else if(songSets.infoAling == 0 && songSets.endingPosition == 1)
     {
-        // Paint caption, key and number
         painter->setFont(songSets.infoFont);
         painter->setPen(songSets.infoColor);
-        caption_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
-        num_rect = boundRectOrDrawText(painter, draw, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
-        cheight = caption_rect.height();
-
-        // Paint song ending
+        caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+        num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
         painter->setFont(songSets.endingFont);
         painter->setPen(songSets.endingColor);
-        ending_rect = boundRectOrDrawText(painter, false, left, top, width, height-cheight, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        if(ending_rect.width()> width)
-        {
-            // decrease songe ending font size so that it would fit in the screen
-            while (ending_rect.width()> width)
-            {
-                songSets.endingFont.setPointSize(songSets.endingFont.pointSize()-1);
-                painter->setFont(songSets.endingFont);
-                ending_rect = boundRectOrDrawText(painter, false, left, top, width, height-cheight, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-            }
-            ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height-cheight, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        }
-        else
-            ending_rect = boundRectOrDrawText(painter, draw, left, top, width, height-cheight, Qt::AlignBottom | Qt::AlignCenter, ending_str);
-        eheight = ending_rect.height();
-
-        // Pain Main Text
-        painter->setFont(orig_font);
+        ending_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
+        painter->setFont(songSets.textFont);
         painter->setPen(songSets.textColor);
-        main_rect = boundRectOrDrawText(painter, draw, left, top, width, height-cheight-eheight, main_flags, main_text);
+        main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
     }
-
-    left = main_rect.left();
-    height = main_rect.height() + caption_rect.height() + ending_rect.height();
-    width = main_rect.right() - left;
-
-    out_rect.setRect(left, top, width, height);
-    return out_rect;
+    else if(songSets.infoAling == 1 && songSets.endingPosition == 0)
+    {
+        painter->setFont(songSets.textFont);
+        painter->setPen(songSets.textColor);
+        main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
+        painter->setFont(songSets.infoFont);
+        painter->setPen(songSets.infoColor);
+        caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
+        num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
+        painter->setFont(songSets.endingFont);
+        painter->setPen(songSets.endingColor);
+        ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
+    }
+    else if(songSets.infoAling == 1 && songSets.endingPosition == 1)
+    {
+        endh = height-caph;
+        painter->setFont(songSets.textFont);
+        painter->setPen(songSets.textColor);
+        main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
+        painter->setFont(songSets.infoFont);
+        painter->setPen(songSets.infoColor);
+        caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
+        num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
+        painter->setFont(songSets.endingFont);
+        painter->setPen(songSets.endingColor);
+        ending_rect = boundRectOrDrawText(painter, true, left, top, width, endh, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
+    }
 }
 
 QRect DisplayScreen::boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text)

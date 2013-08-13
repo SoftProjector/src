@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>417</width>
-    <height>1040</height>
+    <height>1009</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -305,6 +305,27 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="labelEndingPosition">
+          <property name="text">
+           <string>Position:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxEndingPosition">
+          <item>
+           <property name="text">
+            <string>Below Song Text</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bottom of Screen</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_6">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -505,7 +526,7 @@
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Align To:</string>
+         <string>Position:</string>
         </property>
        </widget>
       </item>
@@ -513,12 +534,12 @@
        <widget class="QComboBox" name="comboBoxScreenUse">
         <item>
          <property name="text">
-          <string>Top</string>
+          <string>Top of screen</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Bottom</string>
+          <string>Bottom of screen</string>
          </property>
         </item>
        </widget>
@@ -1080,6 +1101,27 @@
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="labelEndingPosition2">
+             <property name="text">
+              <string>Position:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxEndingPosition2">
+             <item>
+              <property name="text">
+               <string>Below Song Text</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Bottom of Screen</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
             <spacer name="horizontalSpacer_7">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -1391,7 +1433,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Align To:</string>
+            <string>Position:</string>
            </property>
           </widget>
          </item>
@@ -1399,12 +1441,12 @@
           <widget class="QComboBox" name="comboBoxScreenUse2">
            <item>
             <property name="text">
-             <string>Top</string>
+             <string>Top of Screen</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Bottom</string>
+             <string>Bottom of Screen</string>
             </property>
            </item>
           </widget>
