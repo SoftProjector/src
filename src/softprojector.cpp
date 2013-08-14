@@ -1831,7 +1831,8 @@ void SoftProjector::saveSchedule(bool overWrite)
             sq.exec("CREATE TABLE IF NOT EXISTS 'song' ('scid' INTEGER, 'songid' INTEGER, 'sbid' INTEGER, 'sbName' TEXT, "
                     "'number' INTEGER, 'title' TEXT, 'category' INTEGER, 'tune' TEXT, 'wordsBy' TEXT, 'musicBy' TEXT, "
                     "'songText' TEXT, 'notes' TEXT, 'usePrivate' BOOL, 'alignV' INTEGER, 'alignH' INTEGER, 'color' INTEGER, "
-                    "'font' TEXT, 'backImage' BLOB, 'backPath' TEXT)");
+                    "'font' TEXT, 'infoColor' INTEGER, 'infoFont' TEXT, 'endingColor' INTEGER, 'endingFont' TEXT, "
+                    "'useBack' BOOL, 'backImage' BLOB, 'backName' TEXT)");
             sq.exec("CREATE TABLE IF NOT EXISTS 'slideshow' ('scid' INTEGER, 'ssid' INTEGER, 'name' TEXT, 'info' TEXT)");
             sq.exec("CREATE TABLE IF NOT EXISTS 'slides' ('scid' INTEGER, 'sid' INTEGER, 'name' TEXT, 'path' TEXT, "
                     "'porder' INTEGER, 'image' BLOB, 'imageSmall' BLOB, 'imagePreview' BLOB)");
@@ -1888,8 +1889,9 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const BibleHisto
 void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s)
 {
     q.prepare("INSERT INTO song (scid,songid,sbid,sbName,number,title,category,tune,wordsBy,musicBy,"
-              "songText,notes,usePrivate,alignV,alignH,color,font,backImage,backPath) "
-              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+              "songText,notes,usePrivate,alignV,alignH,color,font,infoColor,infoFont,endingColor,"
+              "endingFont,useBack,backImage,backName) "
+              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     q.addBindValue(scid);
     q.addBindValue(s.songID);
     q.addBindValue(s.songbook_id);
@@ -1905,9 +1907,13 @@ void SoftProjector::saveScheduleItemNew(QSqlQuery &q, int scid, const Song &s)
     q.addBindValue(s.usePrivateSettings);
     q.addBindValue(s.alignmentV);
     q.addBindValue(s.alignmentH);
-    unsigned int tci = (unsigned int)(s.color.rgb());
-    q.addBindValue(tci);
+    q.addBindValue((unsigned int)(s.color.rgb()));
     q.addBindValue(s.font.toString());
+    q.addBindValue((unsigned int)(s.infoColor.rgb()));
+    q.addBindValue(s.infoFont.toString());
+    q.addBindValue((unsigned int)(s.endingColor.rgb()));
+    q.addBindValue(s.endingFont.toString());
+    q.addBindValue(s.useBackground);
     q.addBindValue(pixToByte(s.background));
     q.addBindValue(s.backgroundName);
     q.exec();
@@ -2170,27 +2176,32 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, BibleHistory 
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
 {
-    q.exec("SELECT songid, sbid, sbName, number, title, category, tune, wordsBy, musicBy, songText, notes, usePrivate, "
-           "alignV, alignH, color, font, backImage, backPath FROM song WHERE scid = " + QString::number(scid));
+    q.exec("SELECT * FROM song WHERE scid = " + QString::number(scid));
     q.first();
-    s.songID = q.value(0).toInt();
-    s.songbook_id = q.value(1).toInt();
-    s.songbook_name = q.value(2).toString();
-    s.number = q.value(3).toInt();
-    s.title = q.value(4).toString();
-    s.category = q.value(5).toInt();
-    s.tune = q.value(6).toString();
-    s.wordsBy = q.value(7).toString();
-    s.musicBy = q.value(8).toString();
-    s.songText = q.value(9).toString();
-    s.notes = q.value(10).toString();
-    s.usePrivateSettings = q.value(11).toBool();
-    s.alignmentV = q.value(12).toInt();
-    s.alignmentH = q.value(13).toInt();
-    s.color = QColor::fromRgb(q.value(14).toUInt());
-    s.font.fromString(q.value(15).toString());
-    s.background.loadFromData(q.value(16).toByteArray());
-    s.backgroundName = q.value(17).toString();
+    QSqlRecord r = q.record();
+    s.songID = r.field("songid").value().toInt();
+    s.songbook_id = r.field("sbid").value().toInt();
+    s.songbook_name = r.field("sbName").value().toString();
+    s.number = r.field("number").value().toInt();
+    s.title = r.field("title").value().toString();
+    s.category = r.field("category").value().toInt();
+    s.tune = r.field("tune").value().toString();
+    s.wordsBy = r.field("wordsBy").value().toString();
+    s.musicBy = r.field("musicBy").value().toString();
+    s.songText = r.field("songText").value().toString();
+    s.notes = r.field("notes").value().toString();
+    s.usePrivateSettings = r.field("usePrivate").value().toBool();
+    s.alignmentV = r.field("alignV").value().toInt();
+    s.alignmentH = r.field("alignH").value().toInt();
+    s.color = QColor::fromRgb(r.field("color").value().toUInt());
+    s.font.fromString(r.field("font").value().toString());
+    s.infoColor = QColor::fromRgb(r.field("infoColor").value().toUInt());
+    s.infoFont.fromString(r.field("infoFont").value().toString());
+    s.endingColor = QColor::fromRgb(r.field("endingColor").value().toUInt());
+    s.endingFont.fromString(r.field("endingFont").value().toString());
+    s.useBackground = r.field("useBack").value().toBool();
+    s.background.loadFromData(r.field("backImage").value().toByteArray());
+    s.backgroundName = r.field("backName").value().toString();
 }
 
 void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s)
