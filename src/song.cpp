@@ -227,14 +227,22 @@ void Song::readData()
     songText = sq.value(7).toString();
     notes = sq.value(8).toString();
     usePrivateSettings = sq.value(9).toBool();
-    alignmentV = sq.value(10).toInt();
-    alignmentH = sq.value(11).toInt();
-    color = QColor::fromRgb(sq.value(12).toUInt());
-    font.fromString(sq.value(13).toString());
-    infoColor = QColor::fromRgb(sq.value(14).toUInt());
-    infoFont.fromString(sq.value(15).toString());
-    endingColor = QColor::fromRgb(sq.value(16).toUInt());
-    endingFont.fromString(sq.value(17).toString());
+    if(!sq.value(10).isNull())
+        alignmentV = sq.value(10).toInt();
+    if(!sq.value(11).isNull())
+        alignmentH = sq.value(11).toInt();
+    if(!sq.value(12).isNull())
+        color = QColor::fromRgb(sq.value(12).toUInt());
+    if(!sq.value(13).isNull())
+        font.fromString(sq.value(13).toString());
+    if(!sq.value(14).isNull())
+        infoColor = QColor::fromRgb(sq.value(14).toUInt());
+    if(!sq.value(15).isNull())
+        infoFont.fromString(sq.value(15).toString());
+    if(!sq.value(16).isNull())
+        endingColor = QColor::fromRgb(sq.value(16).toUInt());
+    if(!sq.value(17).isNull())
+        endingFont.fromString(sq.value(17).toString());
     useBackground = sq.value(18).toBool();
     backgroundName = sq.value(19).toString();
     background.loadFromData(sq.value(20).toByteArray());
@@ -775,14 +783,22 @@ QList<Song> SongDatabase::getSongs()
         song.songText = sq.value(8).toString();
         song.notes = sq.value(9).toString();
         song.usePrivateSettings = sq.value(10).toBool();
-        song.alignmentV = sq.value(11).toInt();
-        song.alignmentH = sq.value(12).toInt();
-        song.color = QColor::fromRgb(sq.value(13).toUInt());
-        song.font.fromString(sq.value(14).toString());
-        song.infoColor = QColor::fromRgb(sq.value(15).toUInt());
-        song.infoFont.fromString(sq.value(16).toString());
-        song.endingColor = QColor::fromRgb(sq.value(17).toUInt());
-        song.endingFont.fromString(sq.value(18).toString());
+        if(!sq.value(11).isNull())
+            song.alignmentV = sq.value(11).toInt();
+        if(!sq.value(12).isNull())
+            song.alignmentH = sq.value(12).toInt();
+        if(!sq.value(13).isNull())
+            song.color = QColor::fromRgb(sq.value(13).toUInt());
+        if(!sq.value(14).isNull())
+            song.font.fromString(sq.value(14).toString());
+        if(!sq.value(15).isNull())
+            song.infoColor = QColor::fromRgb(sq.value(15).toUInt());
+        if(!sq.value(16).isNull())
+            song.infoFont.fromString(sq.value(16).toString());
+        if(!sq.value(17).isNull())
+            song.endingColor = QColor::fromRgb(sq.value(17).toUInt());
+        if(!sq.value(18).isNull())
+            song.endingFont.fromString(sq.value(18).toString());
         song.useBackground = sq.value(19).toBool();
         song.backgroundName = sq.value(20).toString();
         song.background.loadFromData(sq.value(21).toByteArray());

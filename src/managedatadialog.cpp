@@ -267,8 +267,9 @@ void ManageDataDialog::importSongbook(QString path)
 
             // Import Songs
             QSqlDatabase::database().transaction();
-            sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, song_text, font, alignment, background, notes)"
-                       "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, "
+                       "song_text, font, background_name, notes)"
+                       "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             while (!file.atEnd())
             {
                 if (progress.wasCanceled())
@@ -290,7 +291,7 @@ void ManageDataDialog::importSongbook(QString path)
                 if (split.count() > 7)
                 {
                     sq.addBindValue(split[7]);//font
-                    sq.addBindValue(split[8]);//alignment
+                    //sq.addBindValue(split[8]);//alignment
                     sq.addBindValue(split[9]);//background
                     if(split.count()>10)
                     {
@@ -304,7 +305,7 @@ void ManageDataDialog::importSongbook(QString path)
                 else
                 {
                     sq.addBindValue("");//font
-                    sq.addBindValue("");//alignment
+                    //sq.addBindValue("");//alignment
                     sq.addBindValue("");//background
                     sq.addBindValue("");//notes
                 }
@@ -330,8 +331,10 @@ void ManageDataDialog::importSongbook(QString path)
                         xml.readNext();
                         // Prepare to import Songs
                         QSqlDatabase::database().transaction();
-                        sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background, count, date)"
-                                   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        sq.prepare("INSERT INTO Songs (songbook_id, number, title, category, tune, words, music, "
+                                   "song_text, notes, use_private, alignment_v, alignment_h, color, font, "
+                                   "background_name, count, date)"
+                                   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                         while(xml.tokenString() != "EndElement" && xml.name() != "spSongBook")
                         {
@@ -370,7 +373,8 @@ void ManageDataDialog::importSongbook(QString path)
                             }
                             else if (xml.StartElement && xml.name() == "Song")
                             {
-                                QString xnum,xtitle,xcat,xtune,xwords,xmusic,xtext,xnotes,xuse,xalign,xcolor,xfont,xback,xcount,xdate;
+                                QString xnum,xtitle,xcat,xtune,xwords,xmusic,xtext,xnotes,
+                                        xuse,xalign,xcolor,xfont,xback,xcount,xdate;
                                 // Read song data
                                 xnum = xml.attributes().value("number").toString();
                                 xml.readNext();
@@ -460,7 +464,17 @@ void ManageDataDialog::importSongbook(QString path)
                                 sq.addBindValue(xtext);
                                 sq.addBindValue(xnotes);
                                 sq.addBindValue(xuse);
-                                sq.addBindValue(xalign);
+                                if(xalign.contains(","))
+                                {
+                                    QStringList l = xalign.split(",");
+                                    sq.addBindValue(l.at(0));
+                                    sq.addBindValue(l.at(1));
+                                }
+                                else
+                                {
+                                    sq.addBindValue(1);
+                                    sq.addBindValue(1);
+                                }
                                 sq.addBindValue(xcolor);
                                 sq.addBindValue(xfont);
                                 sq.addBindValue(xback);
@@ -537,8 +551,10 @@ void ManageDataDialog::exportSongbook(QString path)
     sq.clear();
 
     // Get Songs
-    //              0       1      2         3     4      5      6          7      8            9          10     11    12          13     14
-    sq.exec("SELECT number, title, category, tune, words, music, song_text, notes, use_private, alignment, color, font, background, count, date FROM Songs WHERE songbook_id = "+songbook_id);
+    //              0       1      2         3     4      5      6          7      8            9
+    //            10     11    12          13     14
+    sq.exec("SELECT number, title, category, tune, words, music, song_text, notes, use_private, "
+            "alignment, color, font, background, count, date FROM Songs WHERE songbook_id = "+songbook_id);
     while(sq.next())
     {
         // Write Song

@@ -2189,7 +2189,7 @@ void SoftProjector::openScheduleItem(QSqlQuery &q, const int scid, Song &s)
     s.alignmentH = q.value(13).toInt();
     s.color = QColor::fromRgb(q.value(14).toUInt());
     s.font.fromString(q.value(15).toString());
-    s.background = QPixmap();
+    s.background.loadFromData(q.value(16).toByteArray());
     s.backgroundName = q.value(17).toString();
 }
 

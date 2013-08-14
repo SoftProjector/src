@@ -142,7 +142,7 @@ void Settings::loadSettings()
                     bibleSets.secondaryBible = v;
                 else if (n == "trinary")
                     bibleSets.trinaryBible = v;
-                else if (n == "trinary")
+                else if (n == "operator")
                     bibleSets.operatorBible = v;
             }
         }
