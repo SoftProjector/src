@@ -1810,7 +1810,7 @@ void SoftProjector::saveSchedule(bool overWrite)
             {
                 QMessageBox mb;
                 mb.setText(tr("An error has ocured when overwriting existing file.\n"
-                              "Please try again with different file name"));
+                              "Please try again with different file name."));
                 mb.setIcon(QMessageBox::Information);
                 mb.setStandardButtons(QMessageBox::Ok);
                 mb.exec();

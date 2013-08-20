@@ -202,7 +202,7 @@ void ManageDataDialog::on_import_songbook_pushButton_clicked()
     QString file_path = QFileDialog::getOpenFileName(this,
                                                      tr("Select a songbook to import"),
                                                      ".",
-                                                     tr("softProjector songbook file ") + "(*.sps)");
+                                                     tr("SoftProjector songbook file ") + "(*.sps)");
 
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
@@ -212,7 +212,7 @@ void ManageDataDialog::on_import_songbook_pushButton_clicked()
 void ManageDataDialog::importSongbook(QString path)
 {
     setWaitCursor();
-    int row(1), max(0);
+    int row(0), max(0);
     QFile file(path), file2(path), fileXml(path);
     QString line, code, title, info, num;
     QStringList split;
@@ -225,6 +225,8 @@ void ManageDataDialog::importSongbook(QString path)
         while (!file2.atEnd())
         {
             line = QString::fromUtf8(file2.readLine());
+            if(line.startsWith("SQLite"))
+                break;
             ++max;
         }
     }
@@ -492,13 +494,102 @@ void ManageDataDialog::importSongbook(QString path)
                 } // end if xml name is spSongBook
             }
         }
-        else // too old file format.
+        else if(line.startsWith("SQLite")) // SQLITE database file
+        {
+            file.close();
+            sq.clear();
+            {
+                QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","sps");
+                db.setDatabaseName(path);
+                if(db.open())
+                {
+                    QSqlQuery q(db);
+                    q.exec("PRAGMA user_version");
+                    q.first();
+                    int spsVer = q.value(0).toInt();
+                    if(spsVer == 2)
+                    {
+                        QSqlDatabase::database().transaction();
+                        progress.setMaximum(0);
+                        progress.show();
+                        // Prepare and save songbook
+                        q.exec("SELECT title, info from SongBook");
+                        q.first();
+                        sq.exec(QString("INSERT INTO Songbooks (name,info) VALUES('%1','%2')")
+                                .arg(q.value(0).toString()).arg(q.value(1).toString()));
+                        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
+                        sq.first();
+                        int sbookid = sq.value(0).toInt();
+
+                        // Get and insert songs
+                        q.exec("SELECT * FROM Songs");
+                        sq.prepare("INSERT INTO Songs (songbook_id,number,title,category,tune,words,music,song_text,notes,"
+                                   "use_private,alignment_v,alignment_h,color,font,info_color,info_font,ending_color,"
+                                   "ending_font,use_background,background_name,background,count,date) "
+                                   "VALUES(:id, :num, :ti, :ca, :tu, :wo, :mu, :st, :no, :up, :av, :ah, :tc, :tf, "
+                                   ":ic, :if, :ec, :ef, :ub, :bn, :b, :ct, :d)");
+                        while(q.next())
+                        {
+                            sq.bindValue(":id",sbookid);
+                            sq.bindValue(":num",q.record().value("number"));
+                            sq.bindValue(":ti",q.record().value("title"));
+                            sq.bindValue(":ca",q.record().value("category"));
+                            sq.bindValue(":tu",q.record().value("tune"));
+                            sq.bindValue(":wo",q.record().value("words"));
+                            sq.bindValue(":mu",q.record().value("music"));
+                            sq.bindValue(":st",q.record().value("song_text"));
+                            sq.bindValue(":no",q.record().value("notes"));
+                            sq.bindValue(":up",q.record().value("use_private"));
+                            sq.bindValue(":av",q.record().value("alignment_v"));
+                            sq.bindValue(":ah",q.record().value("alignment_h"));
+                            sq.bindValue(":tc",q.record().value("color"));
+                            sq.bindValue(":tf",q.record().value("font"));
+                            sq.bindValue(":ic",q.record().value("info_color"));
+                            sq.bindValue(":if",q.record().value("info_font"));
+                            sq.bindValue(":ec",q.record().value("ending_color"));
+                            sq.bindValue(":ef",q.record().value("ending_font"));
+                            sq.bindValue(":ub",q.record().value("use_background"));
+                            sq.bindValue(":bn",q.record().value("background_name"));
+                            sq.bindValue(":b",q.record().value("background"));
+                            sq.bindValue(":ct",q.record().value("count"));
+                            sq.bindValue(":d",q.record().value("date"));
+                            sq.exec();
+                        }
+                        progress.close();
+
+                        QSqlDatabase::database().commit();
+                    }
+                    else if(spsVer > 2)
+                    {
+                        QMessageBox mb;
+                        mb.setWindowTitle(tr("Unsupported SongBook version."));
+                        mb.setText(tr("The SongBook file you are opening, is of a later release and \n"
+                                      "is not supported by current version of SoftProjector.\n"
+                                      "You are trying to open SongBook version %1.\n"
+                                      "Please upgrade to latest version of SoftProjector and try again.").arg(spsVer));
+                        mb.setIcon(QMessageBox::Information);
+                        mb.exec();
+                    }
+                    else
+                    {
+                        QMessageBox mb;
+                        mb.setWindowTitle(tr("Unsupported SongBook version."));
+                        mb.setText(tr("The SongBook file you are opening, is not supported \n"
+                                      "by current version of SoftProjector.\n"));
+                        mb.setIcon(QMessageBox::Information);
+                        mb.exec();
+                    }
+                }
+            }
+            QSqlDatabase::removeDatabase("sps");
+        }
+        else// too old file format.
         {
             //User friednly box for incorrect file version
             QMessageBox mb;
             mb.setWindowTitle(tr("Too old SongBook file format"));
             mb.setText(tr("The SongBook file you are opening, is in very old format\n"
-                          "and is no longer supported by current version of softProjector.\n"
+                          "and is no longer supported by current version of SoftProjector.\n"
                           "You may try to import it with version 1.07 and then export it, and import it again."));
             mb.setIcon(QMessageBox::Information);
             mb.exec();
@@ -512,7 +603,7 @@ void ManageDataDialog::importSongbook(QString path)
 void ManageDataDialog::on_export_songbook_pushButton_clicked()
 {
     QString file_path = QFileDialog::getSaveFileName(this,tr("Save the songbook as:"),
-                                                     ".",tr("softProjector songbook file (*.sps)"));
+                                                     ".",tr("SoftProjector songbook file (*.sps)"));
     if(!file_path.isEmpty())
     {
         if(!file_path.endsWith(".sps"))
@@ -529,57 +620,84 @@ void ManageDataDialog::exportSongbook(QString path)
     QSqlQuery sq;
     QString title;
 
-    QFile file(path);
-    file.open(QIODevice::WriteOnly);
-    QXmlStreamWriter xml(&file);
-    xml.setAutoFormatting(true);
-    xml.setCodec("UTF8");
+    // First Delete file if one already exists
 
-    xml.writeStartDocument();
-    xml.writeStartElement("spSongBook");
-    xml.writeAttribute("version","2.0");
-
-    // Get SongBook information
-    sq.exec("SELECT name, info FROM Songbooks WHERE id = '" + songbook_id + "'");
-    sq.first();
-    // Write SongBook
-    xml.writeStartElement("SongBook");
-    title = sq.value(0).toString().trimmed();
-    xml.writeTextElement("title",title);
-    xml.writeTextElement("info",sq.value(1).toString().trimmed());
-    xml.writeEndElement();
-    sq.clear();
-
-    // Get Songs
-    //              0       1      2         3     4      5      6          7      8            9
-    //            10     11    12          13     14
-    sq.exec("SELECT number, title, category, tune, words, music, song_text, notes, use_private, "
-            "alignment, color, font, background, count, date FROM Songs WHERE songbook_id = "+songbook_id);
-    while(sq.next())
+    if(QFile::exists(path))
     {
-        // Write Song
-        xml.writeStartElement("Song");
-        xml.writeAttribute("number",sq.value(0).toString().trimmed());
-        xml.writeTextElement("title",sq.value(1).toString().trimmed());
-        xml.writeTextElement("category",sq.value(2).toString().trimmed());
-        xml.writeTextElement("tune",sq.value(3).toString().trimmed());
-        xml.writeTextElement("words",sq.value(4).toString().trimmed());
-        xml.writeTextElement("music",sq.value(5).toString().trimmed());
-        xml.writeTextElement("song_text",sq.value(6).toString().trimmed());
-        xml.writeTextElement("notes",sq.value(7).toString().trimmed());
-        xml.writeTextElement("use_private",sq.value(8).toString().trimmed());
-        xml.writeTextElement("alignment",sq.value(9).toString().trimmed());
-        xml.writeTextElement("color",sq.value(10).toString().trimmed());
-        xml.writeTextElement("font",sq.value(11).toString().trimmed());
-        xml.writeTextElement("background",sq.value(12).toString().trimmed());
-        xml.writeTextElement("count",sq.value(13).toString().trimmed());
-        xml.writeTextElement("date",sq.value(14).toString().trimmed());
-        xml.writeEndElement();
+        if(!QFile::remove(path))
+        {
+            QMessageBox mb;
+            mb.setText(tr("An error has ocured when overwriting existing file.\n"
+                          "Please try again with different file name."));
+            mb.setIcon(QMessageBox::Information);
+            mb.setStandardButtons(QMessageBox::Ok);
+            mb.exec();
+            return;
+        }
     }
 
-    xml.writeEndElement(); // End spSongBook
-    xml.writeEndDocument();
-    file.close();
+    {
+        // Prepare SQLite songbook database file
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","sps");
+        db.setDatabaseName(path);
+        if(db.open())
+        {
+            db.transaction();
+            QSqlQuery q(db);
+            q.exec("PRAGMA user_version = 2");
+            q.exec("CREATE TABLE 'SongBook' ('title' TEXT, 'info' TEXT)");
+            q.exec("CREATE TABLE 'Songs' ('number' INTEGER, 'title' TEXT, 'category' INTEGER DEFAULT 0, "
+                   "'tune' TEXT, 'words' TEXT, 'music' TEXT, 'song_text' TEXT, 'notes' TEXT, "
+                   "'use_private' BOOL, 'alignment_v' INTEGER, 'alignment_h' INTEGER, 'color' INTEGER, 'font' TEXT, "
+                   "'info_color' INTEGER, 'info_font' TEXT, 'ending_color' INTEGER, 'ending_font' TEXT, "
+                   "'use_background' BOOL, 'background_name' TEXT, 'background' BLOB, 'count' INTEGER DEFAULT 0, 'date' TEXT)");
+
+            // Get/Write SongBook information
+            sq.exec("SELECT name, info FROM Songbooks WHERE id = " + songbook_id);
+            sq.first();
+
+            q.exec(QString("INSERT INTO SongBook (title,info) VALUES('%1','%2')")
+                   .arg(sq.value(0).toString()).arg(sq.value(1).toString()));
+            title = sq.value(0).toString();
+            sq.clear();
+
+            // Write Songs
+            sq.exec("SELECT * FROM Songs WHERE songbook_id = " + songbook_id);
+            q.prepare("INSERT INTO Songs (number,title,category,tune,words,music,song_text,notes,"
+                      "use_private,alignment_v,alignment_h,color,font,info_color,info_font,ending_color,ending_font,"
+                      "use_background,background_name,background,count,date) "
+                      "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            while(sq.next())
+            {
+                q.addBindValue(sq.record().value("number"));
+                q.addBindValue(sq.record().value("title"));
+                q.addBindValue(sq.record().value("category"));
+                q.addBindValue(sq.record().value("tune"));
+                q.addBindValue(sq.record().value("words"));
+                q.addBindValue(sq.record().value("music"));
+                q.addBindValue(sq.record().value("song_text"));
+                q.addBindValue(sq.record().value("notes"));
+                q.addBindValue(sq.record().value("use_private"));
+                q.addBindValue(sq.record().value("alignment_v"));
+                q.addBindValue(sq.record().value("alignment_h"));
+                q.addBindValue(sq.record().value("color"));
+                q.addBindValue(sq.record().value("font"));
+                q.addBindValue(sq.record().value("info_color"));
+                q.addBindValue(sq.record().value("info_font"));
+                q.addBindValue(sq.record().value("ending_color"));
+                q.addBindValue(sq.record().value("ending_font"));
+                q.addBindValue(sq.record().value("use_background"));
+                q.addBindValue(sq.record().value("background_name"));
+                q.addBindValue(sq.record().value("background"));
+                q.addBindValue(sq.record().value("count"));
+                q.addBindValue(sq.record().value("date"));
+                q.exec();
+            }
+            db.commit();
+        }
+
+    }
+    QSqlDatabase::removeDatabase("sps");
 
     setArrowCursor();
 
@@ -818,7 +936,7 @@ void ManageDataDialog::on_export_bible_pushButton_clicked()
 
     QString file_path = QFileDialog::getSaveFileName(this,tr("Save exported Bible as:"),
                                                      clean(bible.title),
-                                                     tr("softProjector Bible file ") + "(*.spb)");
+                                                     tr("SoftProjector Bible file ") + "(*.spb)");
     if(!file_path.isEmpty())
     {
         if(!file_path.endsWith(".spb"))
@@ -1145,7 +1263,7 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
     QString file_path = QFileDialog::getOpenFileName(this,
                                                      tr("Select a Theme to import"),
                                                      ".",
-                                                     tr("softProjector Theme file ") + "(*.spt)");
+                                                     tr("SoftProjector Theme file ") + "(*.spt)");
 
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
@@ -1354,7 +1472,7 @@ void ManageDataDialog::on_pushButtonThemeExport_clicked()
 
     QString file_path = QFileDialog::getSaveFileName(this,tr("Export Theme as:"),
                                                      clean(tmInfo.name),
-                                                     tr("softProjector Theme file ") + "(*.spt)");
+                                                     tr("SoftProjector Theme file ") + "(*.spt)");
     if(!file_path.isEmpty())
     {
         if(!file_path.endsWith(".spt"))
