@@ -695,7 +695,6 @@ void ManageDataDialog::exportSongbook(QString path)
             }
             db.commit();
         }
-
     }
     QSqlDatabase::removeDatabase("sps");
 
@@ -1438,8 +1437,7 @@ void ManageDataDialog::on_pushButtonThemeEdit_clicked()
 {
     int row = ui->TableViewTheme->currentIndex().row();
     ThemeInfo theme = themeModel->getTheme(row);
-    QSqlTableModel sq;
-    QSqlRecord sr;
+    QSqlQuery sq;
 
     AddSongbookDialog theme_dia;
     theme_dia.setWindowTitle(tr("Edit Theme"));
@@ -1450,14 +1448,11 @@ void ManageDataDialog::on_pushButtonThemeEdit_clicked()
     {
     case AddSongbookDialog::Accepted:
         reloadThemes = true;
-        sq.setTable("Themes");
-        sq.setFilter("id = " + theme.themeId);
-        sq.select();
-        sr = sq.record(0);
-        sr.setValue(1,theme_dia.title.trimmed());
-        sr.setValue(2,theme_dia.info.trimmed());
-        sq.setRecord(0,sr);
-        sq.submitAll();
+        sq.prepare("UPDATE Themes SET name = ?, comment = ? WHERE id = ?");
+        sq.addBindValue(theme_dia.title);
+        sq.addBindValue(theme_dia.info);
+        sq.addBindValue(theme.themeId);
+        sq.exec();
         loadThemes();
         break;
     case AddSongbookDialog::Rejected:

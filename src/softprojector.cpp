@@ -846,7 +846,7 @@ void SoftProjector::on_actionManage_Database_triggered()
     if (manageDialog->reloadThemes)
     {
         // Check if current theme has been deleted
-        sq.exec("SELECT * FROM Themes WHERE is = " + theme.getThemeId());
+        sq.exec("SELECT * FROM Themes WHERE id = " + QString::number(theme.getThemeId()));
         if(!sq.first())
         {
             GeneralSettings g = mySettings.general;
