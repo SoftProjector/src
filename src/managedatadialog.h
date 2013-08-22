@@ -101,8 +101,13 @@ private slots:
     void on_TableViewTheme_clicked(const QModelIndex &index);
     void deleteTheme(ThemeInfo tme);
     void on_pushButtonThemeExportAll_clicked();
-    void exportTheme(QXmlStreamWriter &xml, ThemeInfo &tmInfo);
-    void importTheme(QXmlStreamReader &xml);
+    void exportTheme(QString path, bool all);
+    void transferTheme(QSqlQuery &sqf,QSqlQuery &sqt);
+    void transferThemeAnnounce(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
+    void transferThemeBible(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
+    void transferThemePassive(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
+    void transferThemeSong(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
+    void importTheme(QString path);
 };
 
 

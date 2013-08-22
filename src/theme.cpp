@@ -362,23 +362,8 @@ void Theme::saveAnnounceUpdate(int screen, AnnounceSettings &settings)
 void Theme::loadTheme()
 {
     QSqlQuery sq;
-    bool ok;
-
-    // If theme Id is '0' then, get first theme in the list
-    if(themeId == 0)
-    {
-        sq.exec("SELECT id FROM Themes");
-        ok = sq.first();
-
-        // Check at least one theme exitst
-        if (ok) // If exist, then load it
-            themeId = sq.value(0).toInt();
-        else // No themes exist, creat one and exit
-        {
-            saveThemeNew();
-            return;
-        }
-    }
+    bool ok, allok;
+    allok = false;
 
     sq.exec(QString("SELECT name, comment FROM Themes WHERE id = %1").arg(themeId));
     ok = sq.first();
@@ -386,7 +371,30 @@ void Theme::loadTheme()
     {
         name = sq.value(0).toString();
         comments = sq.value(1).toString();
+        allok = true;
+    }
+    else
+    {
+        sq.exec("SELECT id, name, comment FROM Themes");
+        ok = sq.first();
 
+        // Check at least one theme exitst
+        if (ok) // If exist, then load it
+        {
+            themeId = sq.value(0).toInt();
+            name = sq.value(1).toString();
+            comments = sq.value(2).toString();
+            allok = true;
+        }
+        else // No themes exist, creat one and exit
+        {
+            saveThemeNew();
+            allok = false;
+        }
+    }
+
+    if(allok)
+    {
         loadPassive(1,passive);
         loadPassive(2,passive2);
         loadBible(1,bible);
@@ -396,8 +404,6 @@ void Theme::loadTheme()
         loadAnnounce(1,announce);
         loadAnnounce(2,announce2);
     }
-    else
-        saveThemeNew();
 }
 
 void Theme::loadPassive(int screen, PassiveSettings &settings)

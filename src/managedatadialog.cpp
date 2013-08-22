@@ -515,8 +515,11 @@ void ManageDataDialog::importSongbook(QString path)
                         // Prepare and save songbook
                         q.exec("SELECT title, info from SongBook");
                         q.first();
-                        sq.exec(QString("INSERT INTO Songbooks (name,info) VALUES('%1','%2')")
-                                .arg(q.value(0).toString()).arg(q.value(1).toString()));
+                        sq.prepare("INSERT INTO Songbooks (name,info) VALUES(?,?)");
+                        sq.addBindValue(q.value(0));
+                        sq.addBindValue(q.value(1));
+                        sq.exec();
+                        sq.clear();
                         sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Songbooks'");
                         sq.first();
                         int sbookid = sq.value(0).toInt();
@@ -656,8 +659,11 @@ void ManageDataDialog::exportSongbook(QString path)
             sq.exec("SELECT name, info FROM Songbooks WHERE id = " + songbook_id);
             sq.first();
 
-            q.exec(QString("INSERT INTO SongBook (title,info) VALUES('%1','%2')")
-                   .arg(sq.value(0).toString()).arg(sq.value(1).toString()));
+            q.prepare("INSERT INTO SongBook (title,info) VALUES(?,?)");
+            q.addBindValue(sq.value(0));
+            q.addBindValue(sq.value(1));
+            q.exec();
+            q.clear();
             title = sq.value(0).toString();
             sq.clear();
 
@@ -1267,170 +1273,96 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
     {
-        setWaitCursor();
-
-        QFile file(file_path),filen(file_path);
-
-        // get theme count
-        int max(0),cur(0);
-        filen.open(QIODevice::ReadOnly);
-        while(!filen.atEnd())
-        {
-            QString l = filen.readLine();
-            if(l.contains("<Theme>"))
-                ++max;
-        }
-        QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, max, this);
-
-        file.open(QIODevice::ReadOnly);
-        QXmlStreamReader xmlr(&file);
-        while(!xmlr.atEnd())
-        {
-            xmlr.readNext();
-            if(xmlr.StartElement && xmlr.name() == "spThemes")
-            {
-                double st_version = xmlr.attributes().value("version").toString().toDouble();
-                if(st_version == 2.0)
-                {
-                    xmlr.readNext();
-                    while(xmlr.tokenString() != "EndElement" && xmlr.name() != "spThemes")
-                    {
-                        xmlr.readNext();
-                        if(xmlr.StartElement && xmlr.name() == "Theme")
-                        {
-                            ++cur;
-                            progress.setValue(cur);
-                            importTheme(xmlr);
-                            xmlr.readNext();
-                        }
-                    }
-                }// end correct version
-            }// end of xmlr name is spThemes
-        }
-        loadThemes();
-        progress.close();
-        setArrowCursor();
+        importTheme(file_path);
     }
 }
 
-void ManageDataDialog::importTheme(QXmlStreamReader &xml)
+void ManageDataDialog::importTheme(QString path)
 {
-//    ThemeInfo tminfo;
-//                QSqlTableModel sqt;
-//                QSqlQuery sq;
-//    xml.readNext();
-//    while(xml.tokenString() != "EndElement" && xml.name() != "Theme")
-//    {
-//        xml.readNext();
-//        if(xml.StartElement && xml.name() == "ThemeInfo")
-//        {
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spt");
+        db.setDatabaseName(path);
+        if(db.open())
+        {
+            setWaitCursor();
+            QProgressDialog progress;
+            progress.setMaximum(0);
+            progress.setLabelText(tr("Importing Themes..."));
+            progress.show();
+            QSqlQuery q(db), q2(db);
+            QSqlQuery sq;
+            q.exec("PRAGMA user_version");
+            q.first();
+            int sptVer = q.value(0).toInt();
+            if(sptVer == 2)
+            {
+                QSqlDatabase::database().transaction();
+                // Get Themes
+                q.exec("SELECT id, name, comment FROM Themes");
+                while(q.next())
+                {
+                    sq.prepare("INSERT INTO Themes (name,comment) VALUES(?,?)");
+                    int spitidFrom = q.value(0).toInt();
+                    sq.addBindValue(q.value(1));
+                    sq.addBindValue(q.value(2));
+                    sq.exec();
+                    sq.clear();
+                    sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
+                    sq.first();
+                    int sptidTo = sq.value(0).toInt();
+                    sq.clear();
 
-//            xml.readNext();
-//            while(xml.tokenString() != "EndElement")
-//            {
-//                xml.readNext();
-//                if(xml.StartElement && xml.name() == "name")
-//                {
-//                    tminfo.name = xml.readElementText();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "comments")
-//                {
-//                    tminfo.comments = xml.readElementText();
-//                    xml.readNext();
-//                }
-//            }
-//            sqt.setTable("Themes");
-//            sqt.insertRow(0);
-//            sqt.setData(sqt.index(0,1),tminfo.name);
-//            sqt.setData(sqt.index(0,2),tminfo.comments);
-//            sqt.submitAll();
 
+                    // Import Announce Theme
+                    q2.exec(QString("SELECT * FROM ThemeAnnounce WHERE theme_id = %1").arg(spitidFrom));
+                    transferThemeAnnounce(q2,sq,sptidTo);
+//                    progress.setValue(2);
 
-//            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-//            sq.first();
-//            tminfo.themeId = sq.value(0).toString();
-//            sq.clear();
-////            tmx.saveNewTheme(nId);
-//            xml.readNext();
-//        }
-//        else if(xml.StartElement && xml.name() == "ThemeData")
-//        {
-//            QSqlDatabase::database().transaction();
-//            sq.prepare("INSERT INTO ThemeData (theme_id, type, sets) VALUES (?,?,?)");
-//            xml.readNext();
-//            while(xml.tokenString() != "EndElement")
-//            {
-//                xml.readNext();
-//                if(xml.StartElement && xml.name() == "passive")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("passive");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "passive2")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("passive2");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "bible")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("bible");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "bible2")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("bible2");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "song")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("song");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "song2")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("song2");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "announce")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("announce");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//                else if(xml.StartElement && xml.name() == "announce2")
-//                {
-//                    sq.addBindValue(tminfo.themeId);
-//                    sq.addBindValue("announce2");
-//                    sq.addBindValue(xml.readElementText());
-//                    sq.exec();
-//                    xml.readNext();
-//                }
-//            }
-//            xml.readNext();
-//            QSqlDatabase::database().commit();
-//        }
-//    }
+                    // Import Bible Theme
+                    q2.exec(QString("SELECT * FROM ThemeBible WHERE theme_id = %1").arg(spitidFrom));
+                    transferThemeBible(q2,sq,sptidTo);
+//                    progress.setValue(3);
+
+                    // Import Passive Theme
+                    q2.exec(QString("SELECT * FROM ThemePassive WHERE theme_id = %1").arg(spitidFrom));
+                    transferThemePassive(q2,sq,sptidTo);
+//                    progress.setValue(4);
+
+                    // Import Songs Theme
+                    q2.exec(QString("SELECT * FROM ThemeSong WHERE theme_id = %1").arg(spitidFrom));
+                    transferThemeSong(q2,sq,sptidTo);
+//                    progress.setValue(5);
+                }
+                QSqlDatabase::database().commit();
+            }
+            else if(sptVer > 2)
+            {
+                QMessageBox mb;
+                mb.setWindowTitle(tr("Unsupported Theme version."));
+                mb.setText(tr("The Theme file you are opening, is of a later release and \n"
+                              "is not supported by current version of SoftProjector.\n"
+                              "You are trying to open Theme version %1.\n"
+                              "Please upgrade to latest version of SoftProjector and try again.").arg(sptVer));
+                mb.setIcon(QMessageBox::Information);
+                mb.exec();
+            }
+            else
+            {
+                QMessageBox mb;
+                mb.setWindowTitle(tr("Unsupported Theme version."));
+                mb.setText(tr("The Theme file you are opening, is not supported \n"
+                              "by current version of SoftProjector.\n"));
+                mb.setIcon(QMessageBox::Information);
+                mb.exec();
+            }
+            setArrowCursor();
+            progress.close();
+        }
+    }
+    QSqlDatabase::removeDatabase("spt");
+
+    loadThemes();
+
 }
 
 void ManageDataDialog::on_pushButtonThemeEdit_clicked()
@@ -1472,24 +1404,7 @@ void ManageDataDialog::on_pushButtonThemeExport_clicked()
     {
         if(!file_path.endsWith(".spt"))
             file_path = file_path + ".spt";
-
-        QFile file(file_path);
-        file.open(QIODevice::WriteOnly);
-
-        QXmlStreamWriter xmlw(&file);
-        xmlw.setAutoFormatting(true);
-        xmlw.setCodec("UTF8");
-
-        xmlw.writeStartDocument();
-        xmlw.writeStartElement("spThemes");
-        xmlw.writeAttribute("version","2.0");
-
-        // write theme data
-        exportTheme(xmlw,tmInfo);
-
-        xmlw.writeEndElement();// End spThemes
-        xmlw.writeEndDocument();
-        file.close();
+        exportTheme(file_path,false);
     }
 }
 
@@ -1501,53 +1416,270 @@ void ManageDataDialog::on_pushButtonThemeExportAll_clicked()
     {
         if(!file_path.endsWith(".spt"))
             file_path = file_path + ".spt";
-
-        QFile file(file_path);
-        file.open(QIODevice::WriteOnly);
-
-        QXmlStreamWriter xmlw(&file);
-        xmlw.setAutoFormatting(true);
-        xmlw.setCodec("UTF8");
-
-        xmlw.writeStartDocument();
-        xmlw.writeStartElement("spThemes");
-        xmlw.writeAttribute("version","2.0");
-
-        // write theme data
-        for(int i(0);i<themeList.count();++i)
-        {
-            ThemeInfo tminf = themeList.at(i);
-            exportTheme(xmlw,tminf);
-        }
-
-
-        xmlw.writeEndElement();// End spThemes
-        xmlw.writeEndDocument();
-        file.close();
+        exportTheme(file_path,true);
     }
 }
 
-void ManageDataDialog::exportTheme(QXmlStreamWriter &xml, ThemeInfo &tmInfo)
+void ManageDataDialog::exportTheme(QString path, bool all)
 {
-    // Start Theme
-//    xml.writeStartElement("Theme"); // start Theme
+    // Delete Existing File
+    bool db_exist = QFile::exists(path);
+    if(db_exist)
+    {
+        if(!QFile::remove(path))
+        {
+            QMessageBox mb;
+            mb.setText(tr("An error has ocured when overwriting existing file.\n"
+                          "Please try again with different file name."));
+            mb.setIcon(QMessageBox::Information);
+            mb.setStandardButtons(QMessageBox::Ok);
+            mb.exec();
+            return;
+        }
+    }
 
-//    xml.writeStartElement("ThemeInfo"); // start Theme Info
-//    xml.writeTextElement("name",tmInfo.name);
-//    xml.writeTextElement("comments",tmInfo.comments);
-//    xml.writeEndElement(); // End Theme Info
+    setWaitCursor();
+    QProgressDialog progress;
+    progress.setMaximum(5);
+    progress.setLabelText(tr("Exporting Themes..."));
+    progress.setValue(0);
+    progress.show();
 
-//    // Write theme data
-//    xml.writeStartElement("ThemeData"); // Start Theme Data
-//    QSqlQuery sq;
-//    sq.exec("SELECT type, sets FROM ThemeData WHERE theme_id = '"+tmInfo.themeId+"'");
+    // Create new Theme DB
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","spt");
+        db.setDatabaseName(path);
+        if(db.open())
+        {
+            db.transaction();
+            QSqlQuery sqf;
+            QSqlQuery sqt(db);
+            sqt.exec("PRAGMA user_version = 2");
+            sqt.exec("CREATE TABLE 'ThemeAnnounce' ('theme_id' INTEGER, 'disp' INTEGER, 'use_shadow' BOOL, "
+                     "'use_fading' BOOL, 'use_blur_shadow' BOOL, 'use_background' BOOL, 'background_name' TEXT, "
+                     "'background' BLOB, 'text_font' TEXT, 'text_color' INTEGER, 'text_align_v' INTEGER, "
+                     "'text_align_h' INTEGER, 'use_disp_2' BOOL)");
+            sqt.exec("CREATE TABLE 'ThemeBible' ('theme_id' INTEGER, 'disp' INTEGER, 'use_shadow' BOOL, "
+                     "'use_fading' BOOL, 'use_blur_shadow' BOOL, 'use_background' BOOL, 'background_name' TEXT, "
+                     "'background' BLOB, 'text_font' TEXT, 'text_color' INTEGER, 'text_align_v' INTEGER, "
+                     "'text_align_h' INTEGER, 'caption_font' TEXT, 'caption_color' INTEGER, 'caption_align' INTEGER, "
+                     "'caption_position' INTEGER, 'use_abbr' BOOL, 'screen_use' INTEGER, 'screen_position' INTEGER, "
+                     "'use_disp_2' BOOL)");
+            sqt.exec("CREATE TABLE 'ThemePassive' ('theme_id' INTEGER, 'disp' INTEGER, 'use_background' BOOL, "
+                     "'background_name' TEXT, 'background' BLOB, 'use_disp_2' BOOL)");
+            sqt.exec("CREATE TABLE 'ThemeSong' ('theme_id' INTEGER, 'disp' INTEGER, 'use_shadow' BOOL, 'use_fading' BOOL, "
+                     "'use_blur_shadow' BOOL, 'show_stanza_title' BOOL, 'show_key' BOOL, 'show_number' BOOL, "
+                     "'info_color' INTEGER, 'info_font' TEXT, 'info_align' INTEGER, 'show_song_ending' BOOL, "
+                     "'ending_color' INTEGER, 'ending_font' TEXT, 'ending_type' INTEGER, 'ending_position' INTEGER, "
+                     "'use_background' BOOL, 'background_name' TEXT, 'background' BLOB, 'text_font' TEXT, "
+                     "'text_color' INTEGER, 'text_align_v' INTEGER, 'text_align_h' INTEGER, "
+                     "'screen_use' INTEGER, 'screen_position' INTEGER, 'use_disp_2' BOOL)");
+            sqt.exec("CREATE TABLE 'Themes' ('id' INTEGER , 'name' TEXT, 'comment' TEXT)");
 
-//    while(sq.next())
-//        xml.writeTextElement(sq.value(0).toString().trimmed(),sq.value(1).toString().trimmed());
+            if(all)
+            {
+                // Export Theme
+                sqf.exec("SELECT * FROM Themes");
+                transferTheme(sqf,sqt);
+                progress.setValue(1);
 
-//    xml.writeEndElement(); // End Theme Data
+                // Export Announce Theme
+                sqf.exec("SELECT * FROM ThemeAnnounce");
+                transferThemeAnnounce(sqf,sqt,-1);
+                progress.setValue(2);
 
-//    xml.writeEndElement();  // End Theme
+                // Export Bible Theme
+                sqf.exec("SELECT * FROM ThemeBible");
+                transferThemeBible(sqf,sqt,-1);
+                progress.setValue(3);
+
+                // Export Passive Theme
+                sqf.exec("SELECT * FROM ThemePassive");
+                transferThemePassive(sqf,sqt,-1);
+                progress.setValue(4);
+
+                // Export Songs Theme
+                sqf.exec("SELECT * FROM ThemeSong");
+                transferThemeSong(sqf,sqt,-1);
+                progress.setValue(5);
+            }
+            else
+            {
+                int row = ui->TableViewTheme->currentIndex().row();
+                ThemeInfo tmInfo = themeModel->getTheme(row);
+
+                // Export Theme
+                sqf.exec(QString("SELECT * FROM Themes WHERE id = %1").arg(tmInfo.themeId));
+                transferTheme(sqf,sqt);
+                progress.setValue(1);
+
+                // Export Announce Theme
+                sqf.exec(QString("SELECT * FROM ThemeAnnounce WHERE theme_id = %1").arg(tmInfo.themeId));
+                transferThemeAnnounce(sqf,sqt,-1);
+                progress.setValue(2);
+
+                // Export Bible Theme
+                sqf.exec(QString("SELECT * FROM ThemeBible WHERE theme_id = %1").arg(tmInfo.themeId));
+                transferThemeBible(sqf,sqt,-1);
+                progress.setValue(3);
+
+                // Export Passive Theme
+                sqf.exec(QString("SELECT * FROM ThemePassive WHERE theme_id = %1").arg(tmInfo.themeId));
+                transferThemePassive(sqf,sqt,-1);
+                progress.setValue(4);
+
+                // Export Songs Theme
+                sqf.exec(QString("SELECT * FROM ThemeSong WHERE theme_id = %1").arg(tmInfo.themeId));
+                transferThemeSong(sqf,sqt,-1);
+                progress.setValue(5);
+            }
+            db.commit();
+        }
+    }
+    QSqlDatabase::removeDatabase("spt");
+    setArrowCursor();
+}
+
+void ManageDataDialog::transferTheme(QSqlQuery &sqf, QSqlQuery &sqt)
+{
+    sqt.prepare("INSERT INTO Themes (id, name, comment) VALUES(:id, :na, :co)");
+
+    while(sqf.next())
+    {
+        sqt.bindValue(":id",sqf.record().value("id"));
+        sqt.bindValue(":na",sqf.record().value("name"));
+        sqt.bindValue(":co",sqf.record().value("comment"));
+        sqt.exec();
+    }
+}
+
+void ManageDataDialog::transferThemeAnnounce(QSqlQuery &sqf, QSqlQuery &sqt, int tmId)
+{
+    sqt.prepare("INSERT INTO ThemeAnnounce (theme_id, disp, use_shadow, use_fading, use_blur_shadow, use_background, "
+                "background_name, background, text_font, text_color, text_align_v, text_align_h, use_disp_2) "
+                "VALUES(:id, :di, :us, :uf, :uu, :ub, :bn, :ba, :tf, :tc, :av, :ah, :ud)");
+
+    while(sqf.next())
+    {
+        if(tmId > 0)
+            sqt.bindValue(":id",tmId);
+        else
+            sqt.bindValue(":id",sqf.record().value("theme_id"));
+        sqt.bindValue(":di",sqf.record().value("disp"));
+        sqt.bindValue(":us",sqf.record().value("use_shadow"));
+        sqt.bindValue(":uf",sqf.record().value("use_fading"));
+        sqt.bindValue(":uu",sqf.record().value("use_blur_shadow"));
+        sqt.bindValue(":ub",sqf.record().value("use_background"));
+        sqt.bindValue(":bn",sqf.record().value("background_name"));
+        sqt.bindValue(":ba",sqf.record().value("background"));
+        sqt.bindValue(":tf",sqf.record().value("text_font"));
+        sqt.bindValue(":tc",sqf.record().value("text_color"));
+        sqt.bindValue(":av",sqf.record().value("text_align_v"));
+        sqt.bindValue(":ah",sqf.record().value("text_align_h"));
+        sqt.bindValue(":ud",sqf.record().value("use_disp_2"));
+        sqt.exec();
+    }
+}
+
+void ManageDataDialog::transferThemeBible(QSqlQuery &sqf, QSqlQuery &sqt, int tmId)
+{
+    sqt.prepare("INSERT INTO ThemeBible (theme_id, disp, use_shadow, use_fading, use_blur_shadow, use_background, "
+                "background_name, background, text_font, text_color, text_align_v, text_align_h, caption_font, "
+                "caption_color, caption_align, caption_position, use_abbr, screen_use, screen_position, use_disp_2) "
+                "VALUES(:id, :di, :us, :uf, :uu, :ub, :bn, :ba, :tf, :tc, :av, :ah, :cf, :cc, :ca, :cp, "
+                ":ua, :su, :sp, :ud)");
+
+    while(sqf.next())
+    {
+        if(tmId > 0)
+            sqt.bindValue(":id",tmId);
+        else
+            sqt.bindValue(":id",sqf.record().value("theme_id"));
+        sqt.bindValue(":di",sqf.record().value("disp"));
+        sqt.bindValue(":us",sqf.record().value("use_shadow"));
+        sqt.bindValue(":uf",sqf.record().value("use_fading"));
+        sqt.bindValue(":uu",sqf.record().value("use_blur_shadow"));
+        sqt.bindValue(":ub",sqf.record().value("use_background"));
+        sqt.bindValue(":bn",sqf.record().value("background_name"));
+        sqt.bindValue(":ba",sqf.record().value("background"));
+        sqt.bindValue(":tf",sqf.record().value("text_font"));
+        sqt.bindValue(":tc",sqf.record().value("text_color"));
+        sqt.bindValue(":av",sqf.record().value("text_align_v"));
+        sqt.bindValue(":ah",sqf.record().value("text_align_h"));
+        sqt.bindValue(":cf",sqf.record().value("caption_font"));
+        sqt.bindValue(":cc",sqf.record().value("caption_color"));
+        sqt.bindValue(":ca",sqf.record().value("caption_align"));
+        sqt.bindValue(":cp",sqf.record().value("caption_position"));
+        sqt.bindValue(":ua",sqf.record().value("use_abbr"));
+        sqt.bindValue(":su",sqf.record().value("screen_use"));
+        sqt.bindValue(":sp",sqf.record().value("screen_position"));
+        sqt.bindValue(":ud",sqf.record().value("use_disp_2"));
+        sqt.exec();
+    }
+}
+
+void ManageDataDialog::transferThemePassive(QSqlQuery &sqf, QSqlQuery &sqt, int tmId)
+{
+    sqt.prepare("INSERT INTO ThemePassive (theme_id, disp, use_background, background_name, background, use_disp_2) "
+                "VALUES(:id, :di, :ub, :bn, :ba, :ud)");
+
+    while(sqf.next())
+    {
+        if(tmId > 0)
+            sqt.bindValue(":id",tmId);
+        else
+            sqt.bindValue(":id",sqf.record().value("theme_id"));
+        sqt.bindValue(":di",sqf.record().value("disp"));
+        sqt.bindValue(":ub",sqf.record().value("use_background"));
+        sqt.bindValue(":bn",sqf.record().value("background_name"));
+        sqt.bindValue(":ba",sqf.record().value("background"));
+        sqt.bindValue(":ud",sqf.record().value("use_disp_2"));
+        sqt.exec();
+    }
+}
+
+void ManageDataDialog::transferThemeSong(QSqlQuery &sqf, QSqlQuery &sqt, int tmId)
+{
+    sqt.prepare("INSERT INTO ThemeSong (theme_id, disp, use_shadow, use_fading, use_blur_shadow, show_stanza_title, "
+                "show_key, show_number, info_color, info_font, info_align, show_song_ending, ending_color, ending_font, "
+                "ending_type, ending_position, use_background, background_name, background, text_font, text_color, "
+                "text_align_v, text_align_h, screen_use, screen_position, use_disp_2) "
+                "VALUES(:id, :di, :us, :uf, :uu, :ss, :sk, :sn, :ic, :if, :ia, :se, :ec, :ef, :et, :ep, "
+                ":ub, :bn, :ba, :tf, :tc, :av, :ah, :su, :sp, :ud)");
+
+    while(sqf.next())
+    {
+        if(tmId > 0)
+            sqt.bindValue(":id",tmId);
+        else
+            sqt.bindValue(":id",sqf.record().value("theme_id"));
+        sqt.bindValue(":di",sqf.record().value("disp"));
+        sqt.bindValue(":us",sqf.record().value("use_shadow"));
+        sqt.bindValue(":uf",sqf.record().value("use_fading"));
+        sqt.bindValue(":uu",sqf.record().value("use_blur_shadow"));
+        sqt.bindValue(":ss",sqf.record().value("show_stanza_title"));
+        sqt.bindValue(":sk",sqf.record().value("show_key"));
+        sqt.bindValue(":sn",sqf.record().value("show_number"));
+        sqt.bindValue(":ic",sqf.record().value("info_color"));
+        sqt.bindValue(":if",sqf.record().value("info_font"));
+        sqt.bindValue(":ia",sqf.record().value("info_align"));
+        sqt.bindValue(":se",sqf.record().value("show_song_ending"));
+        sqt.bindValue(":ec",sqf.record().value("ending_color"));
+        sqt.bindValue(":ef",sqf.record().value("ending_font"));
+        sqt.bindValue(":et",sqf.record().value("ending_type"));
+        sqt.bindValue(":ep",sqf.record().value("ending_position"));
+        sqt.bindValue(":ub",sqf.record().value("use_background"));
+        sqt.bindValue(":bn",sqf.record().value("background_name"));
+        sqt.bindValue(":ba",sqf.record().value("background"));
+        sqt.bindValue(":tf",sqf.record().value("text_font"));
+        sqt.bindValue(":tc",sqf.record().value("text_color"));
+        sqt.bindValue(":av",sqf.record().value("text_align_v"));
+        sqt.bindValue(":ah",sqf.record().value("text_align_h"));
+        sqt.bindValue(":su",sqf.record().value("screen_use"));
+        sqt.bindValue(":sp",sqf.record().value("screen_position"));
+        sqt.bindValue(":ud",sqf.record().value("use_disp_2"));
+        sqt.exec();
+    }
 }
 
 void ManageDataDialog::on_pushButtonThemeDelete_clicked()
