@@ -24,6 +24,7 @@
 #include <QtSql>
 #include "slideshow.h"
 #include "slideshoweditor.h"
+#include "settings.h"
 
 namespace Ui {
 class PictureWidget;
@@ -47,6 +48,7 @@ public slots:
     bool isSlideShowSelected();
     void deleteSlideShow();
     void sendToPreviewFromSchedule(SlideShow &sshow);
+    void setSettings(SlideShowSettings &settings){mySettings = settings;}
 
 private slots:
     void on_listWidgetSlides_doubleClicked(const QModelIndex &index);
@@ -63,6 +65,7 @@ private slots:
     void sendToPreview(SlideShow &sshow);
     void on_listWidgetSlideShow_doubleClicked(const QModelIndex &index);
 
+
 private:
     Ui::PictureWidget *ui;
     QList<SlideShowInfo> slideShows;
@@ -70,6 +73,7 @@ private:
     QList<SlideShowItem> slides;
     QList<QPixmap> imagesPreview;
     QList<QPixmap> imagesToShow;
+    SlideShowSettings mySettings;
 };
 
 #endif // PICTUREWIDGET_H

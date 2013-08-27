@@ -65,7 +65,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // display window (Mac OS X)
 
     // Apply Settings
-    applySetting(mySettings.general, theme, mySettings.bibleSets, mySettings.bibleSets2);
+    applySetting(mySettings.general, theme, mySettings.slideSets, mySettings.bibleSets, mySettings.bibleSets2);
 
     displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
     displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
@@ -94,7 +94,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
-    connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)), this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
+    connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)),
+            this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
     connect(pictureWidget, SIGNAL(sendToSchedule(SlideShow&)),this,SLOT(addToShcedule(SlideShow&)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
@@ -105,8 +106,10 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
     connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
     connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
-    connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&,BibleVersionSettings&,BibleVersionSettings&)),
-            this,SLOT(updateSetting(GeneralSettings&,Theme&,BibleVersionSettings&,BibleVersionSettings&)));
+    connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&,SlideShowSettings&,
+                                                 BibleVersionSettings&,BibleVersionSettings&)),
+            this,SLOT(updateSetting(GeneralSettings&,Theme&,SlideShowSettings&,
+                                    BibleVersionSettings&,BibleVersionSettings&)));
     connect(settingsDialog,SIGNAL(positionsDisplayWindow()),this,SLOT(positionDisplayWindow()));
     connect(settingsDialog,SIGNAL(updateScreen()),this,SLOT(updateScreen()));
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
@@ -308,14 +311,17 @@ void SoftProjector::saveSettings()
     theme.saveThemeUpdate();
 }
 
-void SoftProjector::updateSetting(GeneralSettings &g, Theme &t, BibleVersionSettings &bsets, BibleVersionSettings &bsets2)
+void SoftProjector::updateSetting(GeneralSettings &g, Theme &t, SlideShowSettings &ssets,
+                                  BibleVersionSettings &bsets, BibleVersionSettings &bsets2)
 {
     mySettings.general = g;
+    mySettings.slideSets = ssets;
     mySettings.bibleSets = bsets;
     mySettings.bibleSets2 = bsets2;
     mySettings.saveSettings();
     theme = t;
     bibleWidget->setSettings(mySettings.bibleSets);
+    pictureWidget->setSettings(mySettings.slideSets);
     
     // Apply display settings;
     displayScreen1->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
@@ -325,9 +331,10 @@ void SoftProjector::updateSetting(GeneralSettings &g, Theme &t, BibleVersionSett
         displayScreen2->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
 }
 
-void SoftProjector::applySetting(GeneralSettings &g, Theme &t, BibleVersionSettings &b1, BibleVersionSettings &b2)
+void SoftProjector::applySetting(GeneralSettings &g, Theme &t, SlideShowSettings &s,
+                                 BibleVersionSettings &b1, BibleVersionSettings &b2)
 {
-    updateSetting(g,t,b1,b2);
+    updateSetting(g,t,s,b1,b2);
 
     // Apply splitter states
     ui->splitter->restoreState(mySettings.spMain.spSplitter);
@@ -616,16 +623,19 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-            displayScreen1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible,mySettings.bibleSets)
+            displayScreen1->renderBibleText(bibleWidget->bible.
+                                            getCurrentVerseAndCaption(currentRows,theme.bible,mySettings.bibleSets)
                                             ,theme.bible);
             if(hasDisplayScreen2)
             {
                 if(theme.bible2.useDisp2settings)
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible2,
-                                                                                                 mySettings.bibleSets2),theme.bible2);
+                    displayScreen2->renderBibleText(bibleWidget->bible.
+                                                    getCurrentVerseAndCaption(currentRows,theme.bible2,
+                                                                              mySettings.bibleSets2),theme.bible2);
                 else
-                    displayScreen2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible,
-                                                                                                 mySettings.bibleSets),theme.bible);
+                    displayScreen2->renderBibleText(bibleWidget->bible.
+                                                    getCurrentVerseAndCaption(currentRows,theme.bible,
+                                                                              mySettings.bibleSets),theme.bible);
             }
         }
         else if(type=="song")
@@ -652,7 +662,7 @@ void SoftProjector::updateScreen()
         }
         else if(type == "pix")
         {
-            displayScreen1->renderPicture(pictureShowList.at(currentRow).image);
+            displayScreen1->renderPicture(pictureShowList.at(currentRow).image,mySettings.slideSets);
         }
         else if(type == "video")
         {
@@ -678,7 +688,7 @@ void SoftProjector::on_show_button_clicked()
 
 void SoftProjector::on_actionSettings_triggered()
 {
-    settingsDialog->loadSettings(mySettings.general,theme,mySettings.bibleSets,mySettings.bibleSets2);
+    settingsDialog->loadSettings(mySettings.general,theme,mySettings.slideSets, mySettings.bibleSets,mySettings.bibleSets2);
     settingsDialog->exec();
 }
 
@@ -856,7 +866,7 @@ void SoftProjector::on_actionManage_Database_triggered()
             t.setThemeId(sq.value(0).toInt());
             t.loadTheme();
             g.currentThemeId = t.getThemeId();
-            updateSetting(g,t,mySettings.bibleSets,mySettings.bibleSets2);
+            updateSetting(g,t,mySettings.slideSets,mySettings.bibleSets,mySettings.bibleSets2);
             updateScreen();
         }
     }
@@ -1036,6 +1046,7 @@ void SoftProjector::deleteSong()
 void SoftProjector::newSlideShow()
 {
     SlideShowEditor * sse = new SlideShowEditor;
+    sse->setSettings(mySettings.slideSets);
     sse->exec();
     pictureWidget->loadSlideShows();
     delete sse;
@@ -1046,6 +1057,7 @@ void SoftProjector::editSlideShow()
     if(pictureWidget->isSlideShowSelected())
     {
         SlideShowEditor * sse = new SlideShowEditor;
+        sse->setSettings(mySettings.slideSets);
         sse->setSlideShow(pictureWidget->getCurrentSlideshow());
         sse->exec();
         pictureWidget->loadSlideShows();

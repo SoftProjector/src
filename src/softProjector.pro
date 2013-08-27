@@ -73,7 +73,8 @@ SOURCES += main.cpp \
     slideshoweditor.cpp \
     editannouncementdialog.cpp \
     announcement.cpp \
-    schedule.cpp
+    schedule.cpp \
+    picturesettingwidget.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -109,7 +110,8 @@ HEADERS += softprojector.h \
     slideshoweditor.h \
     editannouncementdialog.h \
     announcement.h \
-    schedule.h
+    schedule.h \
+    picturesettingwidget.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -132,7 +134,8 @@ FORMS += softprojector.ui \
     picturewidget.ui \
     mediawidget.ui \
     slideshoweditor.ui \
-    editannouncementdialog.ui
+    editannouncementdialog.ui \
+    picturesettingwidget.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

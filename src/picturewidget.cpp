@@ -91,15 +91,20 @@ void PictureWidget::on_pushButtonAddImages_clicked()
             QPixmap img;
             SlideShowItem sd;
             img.load(file);
-            // set display image
-            if(img.width()>1280 || img.height()>1280)
-                sd.image = img.scaled(1280,1280, Qt::KeepAspectRatio);
+            // set display image. If to resize, resize them
+            if(mySettings.resize)
+            {
+                if(img.width()>mySettings.boundWidth || img.height()>mySettings.boundWidth )
+                    sd.image = img.scaled(mySettings.boundWidth ,mySettings.boundWidth , Qt::KeepAspectRatio);
+                else
+                    sd.image = img;
+            }
             else
                 sd.image = img;
 
             // set preview image
             if(img.width()>400 || img.height()>400)
-                sd.imagePreview = img.scaled(400,300, Qt::KeepAspectRatio);
+                sd.imagePreview = img.scaled(400,400, Qt::KeepAspectRatio);
             else
                 sd.imagePreview = img;
 

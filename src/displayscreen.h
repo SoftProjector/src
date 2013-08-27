@@ -62,7 +62,7 @@ public slots:
     void renderBibleText(Verse verse, BibleSettings &bibleSetings);
     void renderSongText(Stanza stanza, SongSettings &songSettings);
     void renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings);
-    void renderPicture(QPixmap image);
+    void renderPicture(QPixmap image, SlideShowSettings ssSets);
     void renderVideo(VideoInfo &vid);
 
 

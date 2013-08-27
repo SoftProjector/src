@@ -66,6 +66,9 @@
         <file>icons/scheduleSave.png</file>
         <file>icons/scheduleNew.png</file>
         <file>icons/scheduleOpen.png</file>
+        <file>icons/ExpandSmall.png</file>
+        <file>icons/FitToScreen.png</file>
+        <file>icons/FitToScreenByExpanding.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

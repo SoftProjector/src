@@ -429,13 +429,24 @@ void DisplayScreen::renderAnnounceText(AnnounceSlide announce, AnnounceSettings 
     renderText(true);
 }
 
-void DisplayScreen::renderPicture(QPixmap image)
+void DisplayScreen::renderPicture(QPixmap image, SlideShowSettings ssSets)
 {
     displayType = "pix";
-    wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatio);
-//    wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatioByExpanding);
-//    wallpaper = image.scaled(width(),height());
-//    wallpaper = image;
+    bool expand;
+    if(image.width()<width() && image.height()<height())
+        expand = ssSets.expandSmall;
+    else
+        expand = true;
+
+    if(expand)
+    {
+        if(ssSets.fitType == 0)
+            wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatio);
+        else if(ssSets.fitType == 1)
+            wallpaper = image.scaled(width(),height(),Qt::KeepAspectRatioByExpanding);
+    }
+    else
+        wallpaper = image;
 
     renderText(true);
     useBluredShadow = false;

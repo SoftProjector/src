@@ -51,6 +51,15 @@ BibleVersionSettings::BibleVersionSettings()
     operatorBible = "same";
 }
 
+SlideShowSettings::SlideShowSettings()
+{
+    expandSmall = true;
+    fitType = 0;
+    resize = true;
+    boundType = 1;
+    boundWidth = 1024;
+}
+
 Settings::Settings()
 {
 
@@ -60,8 +69,8 @@ void Settings::loadSettings()
 {
     QString t,n,v,s,sets; // type, name, value, userValues
     QStringList set,values;
-    bool dataGenOk,dataSpOk,dataB1Ok,dataB2Ok;
-    dataGenOk = dataSpOk = dataB1Ok = dataB2Ok = false;
+    bool dataGenOk,dataSpOk,dataB1Ok,dataB2Ok, dataPixOk;
+    dataGenOk = dataSpOk = dataB1Ok = dataB2Ok = dataPixOk = false;
     QSqlQuery sq;
     sq.exec(QString("SELECT type, sets FROM Settings "));
     while (sq.next())
@@ -164,17 +173,39 @@ void Settings::loadSettings()
                     bibleSets2.trinaryBible = v;
             }
         }
+        else if(t == "pix")
+        {
+            dataPixOk = true;
+            values = sets.split("\n");
+            for(int i(0);i<values.count();++i)
+            {
+                s = values.at(i);
+                set = s.split("=");
+                n = set.at(0).trimmed();
+                v = set.at(1).trimmed();
+                if(n == "expandSmall")
+                    slideSets.expandSmall = (v == "true");
+                else if(n == "fitType")
+                    slideSets.fitType = v.toInt();
+                else if (n == "resize")
+                    slideSets.resize = (v == "true");
+                else if (n == "boundType")
+                    slideSets.boundType = v.toInt();
+                else if (n == "boundWidth")
+                    slideSets.boundWidth = v.toInt();
+            }
+        }
     }
 
     // if no data exist, then create
-    if(!dataGenOk || !dataSpOk || !dataB1Ok || !dataB2Ok)
+    if(!dataGenOk || !dataSpOk || !dataB1Ok || !dataB2Ok || !dataPixOk)
         saveNewSettings();
 }
 
 void Settings::saveSettings()
 {
     QSqlQuery sq;
-    QString gset,spset,b1set,b2set;//general,bible,song,annouce,spmain
+    QString gset,spset,b1set,b2set,pset;//general,bible,song,annouce,spmain
 
     // **** Prepare general settings ***************************************
     if(general.displayIsOnTop)
@@ -210,10 +241,24 @@ void Settings::saveSettings()
     b2set += "\nsecondary = " + bibleSets2.secondaryBible;
     b2set += "\ntrinary = " + bibleSets2.trinaryBible;
 
+    // **** prepare pix settings
+    if(slideSets.expandSmall)
+        pset = "expandSmall = true";
+    else
+        pset = "expandSmall = false";
+    pset += "\nfitType = " + QString::number(slideSets.fitType);
+    if(slideSets.resize)
+        pset += "\nresize = true";
+    else
+        pset += "\nresize = false";
+    pset += "\nboundType = " + QString::number(slideSets.boundType);
+    pset += "\nboundWidth = " + QString::number(slideSets.boundWidth);
+
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'general'").arg(gset));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'spMain'").arg(spset));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible1'").arg(b1set));
     sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'bible2'").arg(b2set));
+    sq.exec(QString("UPDATE Settings SET sets = '%1' WHERE type = 'pix'").arg(pset));
 }
 
 void Settings::saveNewSettings()
@@ -223,6 +268,7 @@ void Settings::saveNewSettings()
     sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('spMain', 'n=v')");
     sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('bible1', 'n=v')");
     sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('bible2', 'n=v')");
+    sq.exec("INSERT OR REPLACE INTO Settings (type, sets) VALUES ('pix', 'n=v')");
 
     saveSettings();
 }

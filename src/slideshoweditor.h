@@ -27,7 +27,7 @@
 #include <QtSql>
 
 #include "slideshow.h"
-
+#include "settings.h"
 
 namespace Ui {
 class SlideShowEditor;
@@ -41,6 +41,7 @@ class SlideShowEditor : public QDialog
 public:
     explicit SlideShowEditor(QWidget *parent = 0);
     ~SlideShowEditor();
+    void setSettings(SlideShowSettings &settings){mySettings = settings;}
     void setSlideShow(SlideShow ss);
     
 private slots:
@@ -61,6 +62,7 @@ private:
     SlideShow editSS;
     QProgressDialog progress;
     QList<int> deleteList;
+    SlideShowSettings mySettings;
 };
 
 #endif // SLIDESHOWEDITOR_H

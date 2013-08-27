@@ -78,6 +78,17 @@ public:
 
 };
 
+class SlideShowSettings
+{
+public:
+    SlideShowSettings();
+    bool expandSmall;
+    int fitType;
+    bool resize;
+    int boundType;
+    int boundWidth;
+};
+
 class Settings
 {
 public:
@@ -86,6 +97,7 @@ public:
     SpSettings spMain;
     BibleVersionSettings bibleSets;
     BibleVersionSettings bibleSets2;
+    SlideShowSettings slideSets;
 
 public slots:
     void loadSettings();

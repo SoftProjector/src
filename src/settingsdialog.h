@@ -31,6 +31,7 @@
 #include "biblesettingwidget.h"
 #include "songsettingwidget.h"
 #include "announcementsettingwidget.h"
+#include "picturesettingwidget.h"
 
 namespace Ui {
 class SettingsDialog;
@@ -46,11 +47,11 @@ public:
     void updateSecondaryBibleMenu();
 
 public slots:
-    void loadSettings(GeneralSettings& sets, Theme &thm,
-                      BibleVersionSettings bsets, BibleVersionSettings bsets2);
+    void loadSettings(GeneralSettings& sets, Theme &thm, SlideShowSettings &ssets,
+                      BibleVersionSettings &bsets, BibleVersionSettings &bsets2);
 
 signals:
-    void updateSettings(GeneralSettings& sets, Theme &thm,
+    void updateSettings(GeneralSettings& sets, Theme &thm, SlideShowSettings &ssets,
                         BibleVersionSettings& bsets, BibleVersionSettings& bsets2);
     void positionsDisplayWindow();
     void updateScreen();
@@ -66,15 +67,16 @@ private:
     Theme theme;
     BibleVersionSettings bsettings;
     BibleVersionSettings bsettings2;
+    SlideShowSettings ssettings;
+
     GeneralSettingWidget *generalSettingswidget;
     PassiveSettingWidget *passiveSettingwidget;
     BibleSettingWidget *bibleSettingswidget;
     SongSettingWidget *songSettingswidget;
+    PictureSettingWidget *pictureSettingWidget;
     AnnouncementSettingWidget *announcementSettingswidget;
 
-//    QAbstract *btnOk;
-//    QPushButton *btnCancel;
-//    QPushButton *btnApply;
+
     QPushButton *btnOk;
     QPushButton *btnCancel;
     QPushButton *btnApply;

@@ -31,12 +31,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     passiveSettingwidget = new PassiveSettingWidget;
     bibleSettingswidget = new BibleSettingWidget;
     songSettingswidget = new SongSettingWidget;
+    pictureSettingWidget = new PictureSettingWidget;
     announcementSettingswidget = new AnnouncementSettingWidget;
 
     ui->scrollAreaGeneralSettings->setWidget(generalSettingswidget);
     ui->scrollAreaPassiveSettings->setWidget(passiveSettingwidget);
     ui->scrollAreaBibleSettings->setWidget(bibleSettingswidget);
     ui->scrollAreaSongSettings->setWidget(songSettingswidget);
+    ui->scrollAreaPicture->setWidget(pictureSettingWidget);
     ui->scrollAreaAnnouncementSettings->setWidget(announcementSettingswidget);
 
     btnOk = new QPushButton(tr("OK"));
@@ -53,12 +55,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 }
 
-void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm, BibleVersionSettings bsets, BibleVersionSettings bsets2)
+void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm, SlideShowSettings &ssets,
+                                  BibleVersionSettings &bsets, BibleVersionSettings &bsets2)
 {
     gsettings = sets;
     theme = thm;
     bsettings = bsets;
     bsettings2 = bsets2;
+    ssettings = ssets;
 
     // remember main display window setting if they will be changed
     is_always_on_top = gsettings.displayIsOnTop;
@@ -68,6 +72,7 @@ void SettingsDialog::loadSettings(GeneralSettings &sets, Theme &thm, BibleVersio
     // Set individual items
     generalSettingswidget->setSettings(gsettings);
     bibleSettingswidget->setBibleVersions(bsettings,bsettings2);
+    pictureSettingWidget->setSettings(ssettings);
     setThemes();
 }
 
@@ -128,10 +133,11 @@ void SettingsDialog::applySettings()
 {
     gsettings = generalSettingswidget->getSettings();
     bibleSettingswidget->getBibleVersions(bsettings,bsettings2);
+    pictureSettingWidget->getSettings(ssettings);
     getThemes();
 
     // Apply settings
-    emit updateSettings(gsettings,theme,bsettings,bsettings2);
+    emit updateSettings(gsettings,theme,ssettings,bsettings,bsettings2);
 
     // Update <display_on_top> only when changed, or when screen location has been changed
     if(is_always_on_top!=gsettings.displayIsOnTop
