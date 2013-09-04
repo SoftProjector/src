@@ -84,9 +84,9 @@ private slots:
     void btnPrevClicked();
     void btnExitClicked();
 
-    void drawBibleText(QPainter *painter, int width, int height);
+    void drawBibleText(QPainter *painter, int width, int height, bool isShadow);
     void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
-    void drawSongText(QPainter *painter, int width, int height);
+    void drawSongText(QPainter *painter, int width, int height, bool isShadow);
 //    QRect drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     void drawAnnounceText(QPainter *painter, int width, int height);

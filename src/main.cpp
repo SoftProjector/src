@@ -22,8 +22,15 @@
 #include <QtSql>
 #include "softprojector.h"
 
+// Definitions for database versions 'dbVer' numbers
+// x - Official release. ex: 2 - for SoftProjector 2
+// xxx - Official sub realeas. ex: 201 - for SoftProjector 2.01
+// 990xxx - Development release. ex: 990206 - for SoftProjector 2 Development Build 6 (2db6)
+int const dbVer = 2;
+
 bool connect(QString database_file)
 {
+    database_file += "spData.sqlite";
     bool database_exists = ( QFile::exists(database_file) );
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -50,7 +57,7 @@ bool connect(QString database_file)
         if(!database_exists)
         {
             QSqlQuery sq;
-            sq.exec("PRAGMA user_version = 990206");
+            sq.exec(QString("PRAGMA user_version = %1").arg(dbVer));
             sq.exec("CREATE TABLE 'Announcements' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "
                     "'title' TEXT, 'text' TEXT, 'usePrivate' BOOL, 'useAuto' BOOL, 'loop' BOOL, 'slideTime' INTEGER, "
                     "'useBackground' BOOL, 'backgoundPath' TEXT, 'font' TEXT, 'color' TEXT, 'alignment' TEXT)");
@@ -116,11 +123,86 @@ int main(int argc, char *argv[])
 
     // Look for the database in all the same places that the QSql module will look,
     // and display a friendly error if it was not found:
-    QString database_file = a.applicationDirPath() + QDir::separator() + "spData.sqlite";
-
+    QString database_dir;
+#ifdef Q_WS_WIN
+    // If running on Windows, check if SoftProjector is Installed.
+    // If it is installed, then provide proper directory for database.
+    QDir d;
+    QString cur_app_path = a.applicationDirPath();
+//    if(cur_app_path.contains(QString("C:%1Program Files").arg(d.separator())))
+    if(cur_app_path.contains("C:/Program Files") || cur_app_path.contains("C:\\Program Files"))
+    {
+        // Check if it is on Windows Vista and Later or before Vista
+        bool is_vista = (QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA);
+        if(is_vista)
+        {
+            d.cd(d.rootPath());
+            if(d.cd("ProgramData"))
+            {
+                // Check if 'SoftProjector directory exists, if not, create one
+                if(d.cd("SoftProjector"))
+                    database_dir = d.absolutePath() + d.separator();
+                else
+                {
+                    d.mkdir("SoftProjector");
+                    if(d.cd("SoftProjector"))
+                        database_dir = d.absolutePath() + d.separator();
+                    else
+                        database_dir = cur_app_path + d.separator();
+                }
+            }
+            else if(d.cd("Public"))
+            {
+                // Check if 'SoftProjector directory exists, if not, create one
+                if(d.cd("SoftProjector"))
+                    database_dir = d.absolutePath() + d.separator();
+                else
+                {
+                    d.mkdir("SoftProjector");
+                    if(d.cd("SoftProjector"))
+                        database_dir = d.absolutePath() + d.separator();
+                    else
+                        database_dir = cur_app_path + d.separator();
+                }
+            }
+            else
+                database_dir = cur_app_path + d.separator();
+        }
+        else
+        {
+            d.cd(d.homePath());
+            d.cdUp();
+            if(d.cd("All Users"))
+            {
+                if(d.cd("Application Data"))
+                {
+                // Check if 'SoftProjector directory exists, if not, create one
+                    if(d.cd("SoftProjector"))
+                        database_dir = d.absolutePath() + d.separator();
+                    else
+                    {
+                        d.mkdir("SoftProjector");
+                        if(d.cd("SoftProjector"))
+                            database_dir = d.absolutePath() + d.separator();
+                        else
+                            database_dir = cur_app_path + d.separator();
+                    }
+                }
+                else
+                    database_dir = cur_app_path + d.separator();
+            }
+            else
+                database_dir = cur_app_path + d.separator();
+        }
+    }
+    else
+        database_dir = cur_app_path + QDir::separator();
+#else
+    database_dir = a.applicationDirPath() + QDir::separator();
+#endif
 
     // Try to connect to database
-    if( !connect(database_file) )
+    if( !connect(database_dir) )
     {
         QMessageBox mb;
         mb.setText("Failed to connect to database 'spData.sqlite'");
@@ -132,12 +214,11 @@ int main(int argc, char *argv[])
     // Connected to the database OK:
 
     // Make sure that database is of correct version
-    int currentVersion = 990206;
     QSqlQuery sq;
     sq.exec("PRAGMA user_version");
     sq.first();
     int dbVersion = sq.value(0).toInt();
-    if(currentVersion != dbVersion)
+    if(dbVer != dbVersion)
     {
         QString errortxt = QString("SoftProjector requires database vesion # %1\n"
                                    "The database you are trying to open has vesion # %2\n"
@@ -145,7 +226,7 @@ int main(int argc, char *argv[])
                                    "OR rename/remove all the database files\n"
                                    "and let softProjector to create needed database file.\n"
                                    "The program will terminate!"
-                                   ).arg(currentVersion).arg(dbVersion);
+                                   ).arg(dbVer).arg(dbVersion);
         QMessageBox mb;
         mb.setText(errortxt);
         mb.setWindowTitle("Incorrect Database Version");

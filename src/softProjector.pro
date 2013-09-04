@@ -20,7 +20,8 @@
 
 QT += sql \
     phonon \
-    webkit
+    webkit \
+    network
 TARGET = softProjector
 TEMPLATE = app
 CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
@@ -74,7 +75,8 @@ SOURCES += main.cpp \
     editannouncementdialog.cpp \
     announcement.cpp \
     schedule.cpp \
-    picturesettingwidget.cpp
+    picturesettingwidget.cpp \
+    moduledownloaddialog.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -111,7 +113,8 @@ HEADERS += softprojector.h \
     editannouncementdialog.h \
     announcement.h \
     schedule.h \
-    picturesettingwidget.h
+    picturesettingwidget.h \
+    moduledownloaddialog.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -135,7 +138,8 @@ FORMS += softprojector.ui \
     mediawidget.ui \
     slideshoweditor.ui \
     editannouncementdialog.ui \
-    picturesettingwidget.ui
+    picturesettingwidget.ui \
+    moduledownloaddialog.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

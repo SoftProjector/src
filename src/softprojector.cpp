@@ -1018,7 +1018,8 @@ void SoftProjector::deleteSong()
         ms.setDefaultButton(QMessageBox::Yes);
         int ret = ms.exec();
 
-        switch (ret) {
+        switch (ret)
+        {
         case QMessageBox::Yes:
             // Delete a song
             //        close();
@@ -2036,7 +2037,7 @@ void SoftProjector::saveScheduleUpdate(QSqlQuery &q)
     while(q.next())
     {
         int scid = q.value(0).toInt();
-        bool toDelete;
+        bool toDelete = false;
         QString stype = q.value(1).toString();
         foreach(const Schedule &s,schedule)
         {

@@ -283,9 +283,9 @@ void DisplayScreen::renderText(bool text_present)
 
     // Request to write its text to the QPainter:
     if(displayType == "bible")
-        drawBibleText(&text_painter, width(), height());
+        drawBibleText(&text_painter, width(), height(),false);
     else if(displayType == "song")
-        drawSongText(&text_painter, width(), height());
+        drawSongText(&text_painter, width(), height(),false);
     else if(displayType == "announce")
         drawAnnounceText(&text_painter, width(), height());
     text_painter.end();
@@ -299,9 +299,9 @@ void DisplayScreen::renderText(bool text_present)
     if(useShadow)
     {
         if(displayType == "bible")
-            drawBibleText(&shadow_painter, width(), height());
+            drawBibleText(&shadow_painter, width(), height(),true);
         else if(displayType == "song")
-            drawSongText(&shadow_painter, width(), height());
+            drawSongText(&shadow_painter, width(), height(),true);
         else if(displayType == "announce")
             drawAnnounceText(&shadow_painter, width(), height());
         shadow_painter.end();
@@ -374,7 +374,7 @@ void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
     useShadow = bibleSets.useShadow;
     useBluredShadow = bibleSets.useBlurShadow;
     setNewWallpaper(bibleSets.background,bibleSets.useBackground);
-//    mainFont = bibleSets.textFont;
+   // mainFont = bibleSets.textFont;
 //    foregroundColor = bibleSets.textColor;
 
     renderText(true);
@@ -407,7 +407,7 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     }
 
     setNewWallpaper(songSets.background,songSets.useBackground);
-    mainFont = songSets.textFont;
+   // mainFont = songSets.textFont;
 
     renderText(true);
 }
@@ -516,7 +516,7 @@ void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State old
     }
 }
 
-void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
+void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool isShadow)
 {
     // Margins:
     int left = 30;
@@ -649,8 +649,12 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
 
     // Draw the bible text verse(s) at the final size:
     font.setPointSize(current_size);
+    mainFont = font;
     painter->setFont(font);
-    painter->setPen(bibleSets.textColor);
+    if(isShadow)
+        painter->setPen(QColor(Qt::black));
+    else
+        painter->setPen(bibleSets.textColor);
     painter->drawText(trect1, tflags, bibleVerse.primary_text);
     if(!bibleVerse.secondary_text.isNull())
         painter->drawText(trect2, tflags, bibleVerse.secondary_text);
@@ -660,7 +664,10 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height)
     // Draw the verse caption(s) at the final size:
 //    font.setPointSize(current_size*3/4);
     painter->setFont(bibleSets.captionFont);
-    painter->setPen(bibleSets.captionColor);
+    if(isShadow)
+        painter->setPen(QColor(Qt::black));
+    else
+        painter->setPen(bibleSets.captionColor);
     painter->drawText(crect1, cflags, bibleVerse.primary_caption);
     if(!bibleVerse.secondary_text.isNull())
         painter->drawText(crect2, cflags, bibleVerse.secondary_caption);
@@ -704,7 +711,7 @@ void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& 
     }
 }
 
-void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
+void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool isShadow)
 {
     // Draw the text of the current song verse to the specified painter; making
     // sure that the output rect is narrower than <width> and shorter than <height>.
@@ -761,7 +768,7 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
             else if(songSets.endingType == 5)
                 song_ending = QString::fromUtf8("▪    ▪    ▪");
             else if(songSets.endingType == 6)
-                song_ending = QString::fromUtf8("■    ■    ■");
+                song_ending = QString::fromUtf8("�     �     � ");
             else if(songSets.endingType == 7)
             {
                 // First check if copyrigth info exist. If it does show it.
@@ -880,58 +887,95 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height)
 
     // AT This piont, all sizes should be good.
     // Set object location and DRAW
+    mainFont = songSets.textFont;
     mainh = height-caph-endh;
     if(songSets.infoAling == 0 && songSets.endingPosition == 0)
     {
         painter->setFont(songSets.infoFont);
-        painter->setPen(songSets.infoColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
         painter->setFont(songSets.textFont);
-        painter->setPen(songSets.textColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
         painter->setFont(songSets.endingFont);
-        painter->setPen(songSets.endingColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
     }
     else if(songSets.infoAling == 0 && songSets.endingPosition == 1)
     {
         painter->setFont(songSets.infoFont);
-        painter->setPen(songSets.infoColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
         painter->setFont(songSets.endingFont);
-        painter->setPen(songSets.endingColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
         painter->setFont(songSets.textFont);
-        painter->setPen(songSets.textColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
     }
     else if(songSets.infoAling == 1 && songSets.endingPosition == 0)
     {
         painter->setFont(songSets.textFont);
-        painter->setPen(songSets.textColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
         painter->setFont(songSets.infoFont);
-        painter->setPen(songSets.infoColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
         painter->setFont(songSets.endingFont);
-        painter->setPen(songSets.endingColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
     }
     else if(songSets.infoAling == 1 && songSets.endingPosition == 1)
     {
         endh = height-caph;
         painter->setFont(songSets.textFont);
-        painter->setPen(songSets.textColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
         painter->setFont(songSets.infoFont);
-        painter->setPen(songSets.infoColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
         painter->setFont(songSets.endingFont);
-        painter->setPen(songSets.endingColor);
+        if(isShadow)
+            painter->setPen(QColor(Qt::black));
+        else
+            painter->setPen(songSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, top, width, endh, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
     }
 }
