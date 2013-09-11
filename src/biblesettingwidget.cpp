@@ -258,20 +258,26 @@ void BibleSettingWidget::loadBibleVersions()
     // Fill bibles comboboxes
     ui->comboBoxPrimaryBible->clear();
     ui->comboBoxPrimaryBible->addItems(bibles);
+    ui->comboBoxSecondaryBible->clear();
     ui->comboBoxSecondaryBible->addItem(tr("None"));
     ui->comboBoxSecondaryBible->addItems(bibles);
+    ui->comboBoxTrinaryBible->clear();
     ui->comboBoxTrinaryBible->addItem(tr("None"));
     ui->comboBoxTrinaryBible->addItems(bibles);
+    ui->comboBoxOperatorBible->clear();
     ui->comboBoxOperatorBible->addItem(tr("Same as primary Bible"));
     ui->comboBoxOperatorBible->addItems(bibles);
 
     ui->comboBoxPrimaryBible2->clear();
     ui->comboBoxPrimaryBible2->addItems(bibles);
+    ui->comboBoxSecondaryBible2->clear();
     ui->comboBoxSecondaryBible2->addItem(tr("None"));
     ui->comboBoxSecondaryBible2->addItems(bibles);
+    ui->comboBoxTrinaryBible2->clear();
     ui->comboBoxTrinaryBible2->addItem(tr("None"));
     ui->comboBoxTrinaryBible2->addItems(bibles);
 
+    qDebug()<<"P,S,T,O"<<bversion.primaryBible<<bversion.secondaryBible<<bversion.trinaryBible<<bversion.operatorBible;
     // Set current primary bible
     if(bversion.primaryBible == "none")
         ui->comboBoxPrimaryBible->setCurrentIndex(0);
