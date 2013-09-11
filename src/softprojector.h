@@ -86,6 +86,7 @@ public slots:
 
     void setWaitCursor();
     void setArrowCursor();
+    void setAppDataDir(QDir d){appDataDir = d;}
 
 private:
     Ui::SoftProjectorClass *ui;
@@ -126,6 +127,7 @@ private:
 
     // Schelude list
     QList<Schedule> schedule;
+    QDir appDataDir;
 
 private slots:
     void showDisplayScreen(bool show);

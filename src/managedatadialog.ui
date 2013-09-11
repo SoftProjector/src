@@ -21,6 +21,32 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>216</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="ok_pushButton">
+     <property name="toolTip">
+      <string>Close Manage Database Dialog</string>
+     </property>
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+Q</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -47,6 +73,17 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QPushButton" name="pushButtonDownBible">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Download
+&amp;&amp; Import...</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QPushButton" name="import_bible_pushButton">
            <property name="toolTip">
@@ -138,6 +175,14 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
+          <widget class="QPushButton" name="pushButtonDownSong">
+           <property name="text">
+            <string>Download
+&amp;&amp; Import...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="import_songbook_pushButton">
            <property name="toolTip">
             <string>Import a new Songbook into database.</string>
@@ -221,15 +266,10 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButtonThemeNew">
-           <property name="toolTip">
-            <string>Import a new Songbook into database.</string>
-           </property>
+          <widget class="QPushButton" name="pushButtonDownTheme">
            <property name="text">
-            <string>&amp;New...</string>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+I</string>
+            <string>Download
+&amp;&amp; Import...</string>
            </property>
           </widget>
          </item>
@@ -240,6 +280,19 @@
            </property>
            <property name="text">
             <string>&amp;Import...</string>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+I</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonThemeNew">
+           <property name="toolTip">
+            <string>Import a new Songbook into database.</string>
+           </property>
+           <property name="text">
+            <string>&amp;New...</string>
            </property>
            <property name="shortcut">
             <string>Ctrl+I</string>
@@ -315,32 +368,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>216</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="ok_pushButton">
-     <property name="toolTip">
-      <string>Close Manage Database Dialog</string>
-     </property>
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="shortcut">
-      <string>Ctrl+Q</string>
-     </property>
     </widget>
    </item>
   </layout>

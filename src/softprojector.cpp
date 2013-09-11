@@ -846,6 +846,7 @@ void SoftProjector::on_actionManage_Database_triggered()
 
     manageDialog->loadThemes();
     manageDialog->load_songbooks();
+    manageDialog->setDataDir(appDataDir);
     manageDialog->exec();
 
     // Reload songbooks if Songbook has been added, edited, or deleted

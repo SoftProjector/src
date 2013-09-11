@@ -20,6 +20,11 @@
 #include "managedatadialog.h"
 #include "ui_managedatadialog.h"
 
+Module::Module()
+{
+
+}
+
 ManageDataDialog::ManageDataDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ManageDataDialog)
@@ -58,6 +63,9 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     reload_bible = false;
     reload_songbook = false;
     reloadThemes = false;
+
+    //  Progress Dialog
+    progressDia = new ModuleProgressDialog(this);
 }
 
 ManageDataDialog::~ManageDataDialog()
@@ -65,6 +73,7 @@ ManageDataDialog::~ManageDataDialog()
     delete bible_model;
     delete songbook_model;
     delete themeModel;
+    delete progressDia;
     delete ui;
 }
 
@@ -204,6 +213,7 @@ void ManageDataDialog::on_import_songbook_pushButton_clicked()
                                                      ".",
                                                      tr("SoftProjector songbook file ") + "(*.sps)");
 
+    importType = "local";
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
         importSongbook(file_path);
@@ -234,7 +244,14 @@ void ManageDataDialog::importSongbook(QString path)
 
     // Start Importing
     QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, max, this);
-    progress.setValue(row);
+    if(importType == "down")
+    {
+        progress.close();
+        progressDia->setCurrentMax(max);
+        progressDia->setCurrentValue(row);
+    }
+    else
+        progress.setValue(row);
 
     if (file.open(QIODevice::ReadOnly))
     {
@@ -274,7 +291,7 @@ void ManageDataDialog::importSongbook(QString path)
                        "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             while (!file.atEnd())
             {
-                if (progress.wasCanceled())
+                if (progress.wasCanceled() && importType == "local")
                     break;
                 line = QString::fromUtf8(file.readLine());
                 split = line.split("#$#");
@@ -314,7 +331,10 @@ void ManageDataDialog::importSongbook(QString path)
                 sq.exec();
 
                 ++row;
-                progress.setValue(row);
+                if(importType == "down")
+                    progressDia->setCurrentValue(row);
+                else
+                    progress.setValue(row);
             }
             QSqlDatabase::database().commit();
         }
@@ -360,7 +380,10 @@ void ManageDataDialog::importSongbook(QString path)
                                         xml.readNext();
                                     }
                                     ++row;
-                                    progress.setValue(row);
+                                    if(importType == "down")
+                                        progressDia->setCurrentValue(row);
+                                    else
+                                        progress.setValue(row);
                                 }
                                 // Save songbook
                                 sdb.addSongbook(xtitle,xinfo);
@@ -485,7 +508,10 @@ void ManageDataDialog::importSongbook(QString path)
                                 sq.exec();
 
                                 row += 16;
-                                progress.setValue(row);
+                                if(importType == "down")
+                                    progressDia->setCurrentValue(row);
+                                else
+                                    progress.setValue(row);
                                 xml.readNext();
                             }
                         }// end while xml.tokenString() != "EndElement" && xml.name() != "spSongBook"
@@ -510,8 +536,17 @@ void ManageDataDialog::importSongbook(QString path)
                     if(spsVer == 2)
                     {
                         QSqlDatabase::database().transaction();
-                        progress.setMaximum(0);
-                        progress.show();
+                        if(importType == "down")
+                        {
+                            progressDia->setCurrentValue(0);
+                            progressDia->setCurrentMin(0);
+                            progressDia->setCurrentMax(0);
+                        }
+                        else
+                        {
+                            progress.setMaximum(0);
+                            progress.show();
+                        }
                         // Prepare and save songbook
                         q.exec("SELECT title, info from SongBook");
                         q.first();
@@ -599,8 +634,10 @@ void ManageDataDialog::importSongbook(QString path)
         }
     }
 
-    load_songbooks();
+    if(importType == "local")
+        load_songbooks();
     setArrowCursor();
+    importModules();
 }
 
 void ManageDataDialog::on_export_songbook_pushButton_clicked()
@@ -772,58 +809,20 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
                                                      tr("Select Bible file to import"),
                                                      ".",tr("SoftProjector Bible file ") + "(*.spb)");
 
-
+    importType = "local";
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
     {
-        QFile file;
-        QString line, version;
-        QStringList split;
-        file.setFileName(file_path);
-
-        if (file.open(QIODevice::ReadOnly))
-        {
-            line = QString::fromUtf8(file.readLine());
-            // check file format and version
-            if (!line.startsWith("##spData")) // Old bible format verison
-            {
-                QMessageBox mb;
-                mb.setWindowTitle(tr("Old Bible file format"));
-                mb.setText(tr("The Bible format you are importing is of an old version.\n"
-                              "Your current SoftProjector does not support this format.\n"
-                              "Please download lattest Bibles and import them."));
-                mb.setIcon(QMessageBox::Critical);
-                mb.exec();
-            }
-            else if (line.startsWith("##spData")) //New bible format version
-            {
-                split = line.split("\t");
-                version = split.at(1);
-                if (version.trimmed() == "1") // Version 1
-                {
-                    importBible(file_path, version.trimmed());
-                }
-                else // Other than version 1
-                {
-                    QMessageBox mb;
-                    mb.setWindowTitle(tr("New Bible file format"));
-                    mb.setText(tr("The Bible format you are importing is of an new version.\n"
-                                  "Your current SoftProjector does not support this format.\n"
-                                  "Please upgrade SoftProjector to latest version."));
-                    mb.setIcon(QMessageBox::Critical);
-                    mb.exec();
-                }
-            }
-            file.close();
-        }
+        importBible(file_path);
     }
 }
 
-void ManageDataDialog::importBible(QString path, QString version)
+void ManageDataDialog::importBible(QString path)
 {
     setWaitCursor();
     QFile file;
     file.setFileName(path);
+    QString version;
     QString line , title, abbr, info, rtol, id;
     QStringList split;
     QSqlQuery sq;
@@ -832,6 +831,41 @@ void ManageDataDialog::importBible(QString path, QString version)
     if (file.open(QIODevice::ReadOnly))
     {
         line = QString::fromUtf8(file.readLine()); // read version
+        // check file format and version
+        if (!line.startsWith("##spData")) // Old bible format verison
+        {
+            QMessageBox mb;
+            mb.setWindowTitle(tr("Old Bible file format"));
+            mb.setText(tr("The Bible format you are importing is of an old version.\n"
+                          "Your current SoftProjector does not support this format.\n"
+                          "Please download lattest Bibles and import them."));
+            mb.setIcon(QMessageBox::Critical);
+            mb.exec();
+            file.close();
+            return;
+        }
+        else if (line.startsWith("##spData")) //New bible format version
+        {
+            split = line.split("\t");
+            version = split.at(1);
+            if (version.trimmed() != "1") // Version 1
+            {
+                QMessageBox mb;
+                mb.setWindowTitle(tr("New Bible file format"));
+                mb.setText(tr("The Bible format you are importing is of an new version.\n"
+                              "Your current SoftProjector does not support this format.\n"
+                              "Please upgrade SoftProjector to latest version."));
+                mb.setIcon(QMessageBox::Critical);
+                mb.exec();
+                file.close();
+                return;
+            }
+        }
+        else
+        {
+            file.close();
+            return;
+        }
 
         line = QString::fromUtf8(file.readLine()); // read title
         split = line.split("\t");
@@ -855,7 +889,14 @@ void ManageDataDialog::importBible(QString path, QString version)
 
 
         QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, 31200, this);
-        progress.setValue(row);
+        if(importType == "down")
+        {
+            progress.close();
+            progressDia->setCurrentMax(31200);
+            progressDia->setCurrentValue(row);
+        }
+        else
+            progress.setValue(row);
 
         // add Bible Name and information
         QSqlDatabase::database().transaction();
@@ -898,7 +939,10 @@ void ManageDataDialog::importBible(QString path, QString version)
 
             line = QString::fromUtf8(file.readLine());
             ++row;
-            progress.setValue(row);
+            if(importType == "down")
+                progressDia->setCurrentValue(row);
+            else
+                progress.setValue(row);
         }
         QSqlDatabase::database().commit();
         sq.clear();
@@ -909,7 +953,7 @@ void ManageDataDialog::importBible(QString path, QString version)
                    "VALUES (?,?,?,?,?,?)");
         while (!file.atEnd())
         {
-            if (progress.wasCanceled())
+            if (progress.wasCanceled() && importType == "local")
                 break;
 
             line = QString::fromUtf8(file.readLine());
@@ -923,15 +967,20 @@ void ManageDataDialog::importBible(QString path, QString version)
             sq.exec();
 
             ++row;
-            progress.setValue(row);
+            if(importType == "down")
+                progressDia->setCurrentValue(row);
+            else
+                progress.setValue(row);
         }
         QSqlDatabase::database().commit();
 
         file.close();
     }
 
-    load_bibles();
+    if(importType == "local")
+        load_bibles();
     setArrowCursor();
+    importModules();
 }
 
 void ManageDataDialog::on_export_bible_pushButton_clicked()
@@ -1269,6 +1318,7 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
                                                      tr("Select a Theme to import"),
                                                      ".",
                                                      tr("SoftProjector Theme file ") + "(*.spt)");
+    importType = "local";
 
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
@@ -1286,9 +1336,18 @@ void ManageDataDialog::importTheme(QString path)
         {
             setWaitCursor();
             QProgressDialog progress;
-            progress.setMaximum(0);
-            progress.setLabelText(tr("Importing Themes..."));
-            progress.show();
+            if(importType == "down")
+            {
+                progressDia->setCurrentMin(0);
+                progressDia->setCurrentMax(0);
+                progressDia->setCurrentValue(0);
+            }
+            else
+            {
+                progress.setMaximum(0);
+                progress.setLabelText(tr("Importing Themes..."));
+                progress.show();
+            }
             QSqlQuery q(db), q2(db);
             QSqlQuery sq;
             q.exec("PRAGMA user_version");
@@ -1362,6 +1421,7 @@ void ManageDataDialog::importTheme(QString path)
     QSqlDatabase::removeDatabase("spt");
 
     loadThemes();
+    importModules();
 
 }
 
@@ -1737,4 +1797,331 @@ void ManageDataDialog::deleteTheme(ThemeInfo tme)
 void ManageDataDialog::on_TableViewTheme_clicked(const QModelIndex &index)
 {
     updateThemeButtons();
+}
+
+void ManageDataDialog::on_pushButtonDownBible_clicked()
+{
+    downType = "bible";
+    importType = "down";
+    downloadModList(QUrl("http://softprojector.sourceforge.net/bibles/bible.xml"));
+}
+
+void ManageDataDialog::on_pushButtonDownSong_clicked()
+{
+    downType = "song";
+    importType = "down";
+    downloadModList(QUrl("http://softprojector.sourceforge.net/songbooks/songbooks.xml"));
+}
+
+void ManageDataDialog::on_pushButtonDownTheme_clicked()
+{
+    downType = "theme";
+    importType = "down";
+    downloadModList(QUrl("http://softprojector.sourceforge.net/themes/themes.xml"));
+}
+
+void ManageDataDialog::downloadModList(QUrl url)
+{
+    QString filename = getSaveFileName(url);
+    outFile.setFileName(filename);
+    if(!outFile.open(QIODevice::WriteOnly))
+    {
+        //Fixme: need error message
+        return;
+    }
+
+    QNetworkRequest request(url);
+    currentDownload = downManager.get(request);
+//    connect(currentDownload,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(dowloadProgress(qint64,qint64)));
+    connect(currentDownload,SIGNAL(finished()),this,SLOT(downloadModListCompleted()));
+    connect(currentDownload,SIGNAL(readyRead()),this,SLOT(saveModFile()));
+}
+
+void ManageDataDialog::downloadNextMod()
+{
+    if(downQueue.empty())
+    {
+        progressDia->setSpeed("");
+        importModules();
+        return;
+    }
+    Module mod;
+    mod = downQueue.dequeue();
+    progressDia->appendText(tr("\nDownloading: %1\nFrom: %2").arg(mod.name).arg(mod.link.toString()));
+    progressDia->setCurrentMax(mod.size);
+    progressDia->setCurrentValue(0);
+    QString filename = getSaveFileName(mod.link);
+    outFile.setFileName(filename);
+    if(!outFile.open(QIODevice::WriteOnly))
+    {
+        progressDia->appendText(tr("Error opening save file %1 for download %2\nError: %3")
+                                .arg(filename).arg(mod.name).arg(outFile.errorString()));
+        downloadNextMod();
+        return;
+    }
+
+    QNetworkRequest request(mod.link);
+    currentDownload = downManager.get(request);
+    connect(currentDownload,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(dowloadProgress(qint64,qint64)));
+    connect(currentDownload,SIGNAL(finished()),this,SLOT(downloadCompleted()));
+    connect(currentDownload,SIGNAL(readyRead()),this,SLOT(saveModFile()));
+    downTime.start();
+}
+
+QString ManageDataDialog::getSaveFileName(QUrl url)
+{
+    QString path = url.path();
+    QString basename = QFileInfo(path).fileName();
+
+    if (basename.isEmpty())
+        basename = "download";
+
+    QDir dir = dataDir;
+    if(downType == "bible")
+    {
+        if(!dir.cd("BibleModules"))
+        {
+            if(dir.mkdir("BibleModules"))
+                dir.cd("BibleModules");
+        }
+        path = dir.absolutePath() + dir.separator() + basename;
+    }
+    else if(downType == "song")
+    {
+        if(!dir.cd("SongModules"))
+        {
+            if(dir.mkdir("SongModules"))
+                dir.cd("SongModules");
+        }
+        path = dir.absolutePath() + dir.separator() + basename;
+    }
+    else if(downType == "theme")
+    {
+        if(!dir.cd("ThemeModules"))
+            {
+                if(dir.mkdir("ThemeModules"))
+                    dir.cd("ThemeModules");
+            }
+            path = dir.absolutePath() + dir.separator() + basename;
+    }
+    else
+        path = dir.absolutePath() + dir.separator() + basename;
+
+    if (QFile::exists(path))
+    {
+        // File already exist, overwrite it
+        if(!QFile::remove(path))
+        {
+            QRegExp rx("(.sps|.spb|.spt|.xml)");
+            rx.indexIn(basename);
+            basename = basename.remove(rx);
+
+            int i(1);
+            while(QFile::exists(QString("%1%2%3_%4%5").arg(dir.absolutePath()).arg(dir.separator())
+                                .arg(basename).arg(i).arg(rx.cap(1))))
+                ++i;
+
+            path = QString("%1%2%3_%4%5").arg(dir.absolutePath()).arg(dir.separator())
+                    .arg(basename).arg(i).arg(rx.cap(1));
+        }
+    }
+
+    return path;
+}
+
+void ManageDataDialog::saveModFile()
+{
+    outFile.write(currentDownload->readAll());
+}
+
+void ManageDataDialog::downloadModListCompleted()
+{
+    outFile.close();
+
+    if(currentDownload->error())
+    {
+        QMessageBox mb(this);
+        mb.setWindowTitle(tr("Error downloading module list."));
+        mb.setIcon(QMessageBox::Critical);
+        mb.setText(currentDownload->errorString());
+        mb.exec();
+        currentDownload->deleteLater();
+        return;
+    }
+
+    currentDownload->deleteLater();
+
+    QStringList modlist;
+    modlist = getModList(outFile.fileName());
+    if(modlist.count()<=0)
+    {
+        return;
+    }
+
+    ModuleDownloadDialog modDia(this);
+    if(downType == "bible")
+        modDia.setWindowTitle(tr("Bible Module Download"));
+    else if(downType == "song")
+        modDia.setWindowTitle(tr("Songbook Module Download"));
+    else if(downType == "theme")
+        modDia.setWindowTitle(tr("Theme Module Download"));
+
+    modDia.setList(modlist);
+    int ret = modDia.exec();
+    QList<int> mods;
+    switch (ret)
+    {
+    case ModuleDownloadDialog::Accepted:
+
+        mods = modDia.getSelected();
+        if(mods.count()<=0)
+            break;
+        foreach(const int &modrow, mods)
+            downQueue.enqueue(moduleList.at(modrow));
+        progressDia->clearAll();
+        progressDia->setTotalMax((mods.count()*2) +1);
+        progressDia->show();
+        downloadNextMod();
+        break;
+    case ModuleDownloadDialog::Rejected:
+        break;
+    }
+}
+
+void ManageDataDialog::downloadCompleted()
+{
+    outFile.close();
+
+    if(currentDownload->error())
+        progressDia->appendText(tr("Download Error: %1").arg(currentDownload->errorString()));
+    else
+    {
+        modQueue.enqueue(outFile.fileName());
+        progressDia->appendText(tr("Saved to: %1").arg(outFile.fileName()));
+        progressDia->increaseTotal();
+    }
+    currentDownload->deleteLater();
+    downloadNextMod();
+}
+
+void ManageDataDialog::dowloadProgress(qint64 recBytes, qint64 totBytes)
+{
+//    qDebug()<<"Progress:"<<recBytes<<totBytes;
+    progressDia->setCurrentValue(recBytes);
+
+    // calculate the download speed
+    double speed = recBytes * 1000.0 / downTime.elapsed();
+    QString unit;
+    if (speed < 1024)
+    {
+        unit = "bytes/sec";
+    }
+    else if (speed < 1024*1024)
+    {
+        speed /= 1024;
+        unit = "kB/s";
+    }
+    else
+    {
+        speed /= 1024*1024;
+        unit = "MB/s";
+    }
+
+    progressDia->setSpeed(QString("%1 %2").arg(speed, 3, 'f', 1).arg(unit));
+}
+
+QStringList ManageDataDialog::getModList(QString filepath)
+{
+    moduleList.clear();
+    QStringList modList;
+    QString name,link;
+    int size;
+    QFile file(filepath);
+    Module mod;
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QXmlStreamReader xml(&file);
+        while(!xml.atEnd())
+        {
+
+            xml.readNext();
+//            qDebug()<<"loop1"<<xml.tokenString()<<xml.name();
+            if(xml.StartElement && xml.name() == "Modules")
+            {
+                xml.readNext();
+                while(xml.tokenString() != "EndElement" && xml.name() != "Modules")
+                {
+                    xml.readNext();
+                    if(xml.StartElement && xml.name() == "Module")
+                    {
+                        xml.readNext();
+                        while(xml.tokenString() != "EndElement")
+                        {
+//                            qDebug()<<"loop2";
+                            xml.readNext();
+                            if(xml.StartElement && xml.name() == "name")
+                            {
+                                name = xml.readElementText();
+                                xml.readNext();
+                            }
+                            else if(xml.StartElement && xml.name() == "link")
+                            {
+                                link = xml.readElementText();
+                                xml.readNext();
+                            }
+                            else if(xml.StartElement && xml.name() == "size")
+                            {
+                                size = xml.readElementText().toInt();
+                                xml.readNext();
+                            }
+                        }
+
+                        mod.name = name;
+                        mod.link = QUrl(link);
+                        mod.size = size;
+                        moduleList.append(mod);
+                        modList.append(name);
+                        xml.readNext();
+                    }
+                }
+                xml.readNext();
+            }
+
+        }
+    }
+    return modList;
+}
+
+void ManageDataDialog::importNextModule()
+{
+    if(modQueue.isEmpty())
+    {
+        progressDia->enableCloseButton(true);
+        progressDia->setToMax();
+        if(downType == "bible")
+            load_bibles();
+        else if(downType == "song")
+            load_songbooks();
+        else if(downType == "theme")
+            loadThemes();
+        return;
+    }
+
+    QString filePath = modQueue.dequeue();
+    progressDia->appendText(tr("\nImporting: %1").arg(filePath));
+    if(downType == "bible")
+        importBible(filePath);
+    else if(downType == "song")
+        importSongbook(filePath);
+    else if(downType == "theme")
+        importTheme(filePath);
+}
+
+void ManageDataDialog::importModules()
+{
+    if(importType == "down")
+    {
+        progressDia->increaseTotal();
+        importNextModule();
+    }
 }

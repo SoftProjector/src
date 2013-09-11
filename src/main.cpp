@@ -238,6 +238,7 @@ int main(int argc, char *argv[])
 
 
     SoftProjector w;
+    w.setAppDataDir(QDir(database_dir));
     w.show();
     splash.finish(&w);
     return a.exec();

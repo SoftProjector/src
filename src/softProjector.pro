@@ -76,7 +76,8 @@ SOURCES += main.cpp \
     announcement.cpp \
     schedule.cpp \
     picturesettingwidget.cpp \
-    moduledownloaddialog.cpp
+    moduledownloaddialog.cpp \
+    moduleprogressdialog.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -114,7 +115,8 @@ HEADERS += softprojector.h \
     announcement.h \
     schedule.h \
     picturesettingwidget.h \
-    moduledownloaddialog.h
+    moduledownloaddialog.h \
+    moduleprogressdialog.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -139,7 +141,8 @@ FORMS += softprojector.ui \
     slideshoweditor.ui \
     editannouncementdialog.ui \
     picturesettingwidget.ui \
-    moduledownloaddialog.ui
+    moduledownloaddialog.ui \
+    moduleprogressdialog.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

@@ -23,16 +23,28 @@
 #include <QtGui/QDialog>
 #include <QtGui>
 #include <QtSql>
+#include <QtNetwork/QtNetwork>
 
 #include "managedata.h"
 #include "song.h"
 #include "addsongbookdialog.h"
 #include "bibleinformationdialog.h"
 #include "theme.h"
+#include "moduledownloaddialog.h"
+#include "moduleprogressdialog.h"
 
 namespace Ui {
     class ManageDataDialog;
 }
+
+class Module
+{
+public:
+    Module();
+    QString name;
+    QUrl link;
+    int size;
+};
 
 class ManageDataDialog : public QDialog {
     Q_OBJECT
@@ -47,6 +59,7 @@ public:
 public slots:
     void load_songbooks();
     void loadThemes();
+    void setDataDir(QDir &d){dataDir = d;}
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -62,8 +75,19 @@ private:
     BiblesModel *bible_model;
     SongbooksModel *songbook_model;
     ThemeModel *themeModel;
+    QNetworkAccessManager downManager;
+    QNetworkReply *modDownload;
+    QNetworkReply *currentDownload;
+    QQueue<Module> downQueue;
+    QQueue<QString> modQueue;
+    QString downType;
+    QString importType;
+    QDir dataDir;
+    QFile outFile;
+    QList<Module> moduleList;
+    ModuleProgressDialog *progressDia;
+    QTime downTime;
     Ui::ManageDataDialog *ui;
-
 
 private slots:
     QString get3(int i);
@@ -85,7 +109,7 @@ private slots:
     void on_export_songbook_pushButton_clicked();
     void on_import_songbook_pushButton_clicked();
     void deleteBible(Bibles bilbe);
-    void importBible(QString path, QString version);
+    void importBible(QString path);
     void exportBible(QString path, Bibles bible);
     void deleteSongbook(Songbook songbook);
     void importSongbook(QString path);
@@ -108,6 +132,21 @@ private slots:
     void transferThemePassive(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
     void transferThemeSong(QSqlQuery &sqf,QSqlQuery &sqt,int tmId);
     void importTheme(QString path);
+    void on_pushButtonDownBible_clicked();
+    void on_pushButtonDownSong_clicked();
+    void on_pushButtonDownTheme_clicked();
+
+    void downloadModList(QUrl url);
+    void downloadNextMod();
+    QString getSaveFileName(QUrl url);
+    void saveModFile();
+    void downloadModListCompleted();
+    void downloadCompleted();
+    void dowloadProgress(qint64 recBytes,qint64 totBytes);
+    QStringList getModList(QString filepath);
+    void importNextModule();
+    void importModules();
+
 };
 
 
