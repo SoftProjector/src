@@ -165,8 +165,8 @@ private slots:
     void editAnnouncement();
     void copyAnnouncement();
     void deleteAnnoucement();
-    void on_show_button_clicked();
-    void on_clear_button_clicked();
+    void on_actionShow_triggered();
+    void on_actionHide_triggered();
     void on_listShow_currentRowChanged(int currentRow);
     void on_actionClose_triggered();
     void setSongList(Song song, int row);
@@ -228,6 +228,8 @@ private slots:
     void openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s);
     void openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v);
     void openScheduleItem(QSqlQuery &q, const int scid, Announcement &a);
+
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);

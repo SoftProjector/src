@@ -103,7 +103,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(manageDialog, SIGNAL(setMainArrowCursor()), this, SLOT(setArrowCursor()));
     connect(manageDialog, SIGNAL(setMainWaitCursor()), this, SLOT(setWaitCursor()));
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
-    connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_clear_button_clicked()));
+    connect(displayScreen1,SIGNAL(exitSlide()),this,SLOT(on_actionHide_triggered()));
     connect(displayScreen1,SIGNAL(nextSlide()),this,SLOT(nextSlide()));
     connect(displayScreen1,SIGNAL(prevSlide()),this,SLOT(prevSlide()));
     connect(settingsDialog,SIGNAL(updateSettings(GeneralSettings&,Theme&,SlideShowSettings&,
@@ -115,35 +115,37 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
     connect(announceWidget,SIGNAL(addToSchedule(Announcement&)),this,SLOT(addToShcedule(Announcement&)));
 
-    ui->toolBar->addAction(ui->actionNewSchedule);
-    ui->toolBar->addAction(ui->actionOpenSchedule);
-    ui->toolBar->addAction(ui->actionSaveSchedule);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionPrint);
-    ui->toolBar->addSeparator();
-    ui->toolBar_2->addAction(ui->actionMoveScheduleTop);
-    ui->toolBar_2->addAction(ui->actionMoveScheduleUp);
-    ui->toolBar_2->addAction(ui->actionMoveScheduleDown);
-    ui->toolBar_2->addAction(ui->actionMoveScheduleBottom);
-    ui->toolBar_2->addSeparator();
-    ui->toolBar_2->addAction(ui->actionScheduleAdd);
-    ui->toolBar_2->addAction(ui->actionScheduleRemove);
-    ui->toolBar_2->addAction(ui->actionScheduleClear);
+    ui->toolBarFile->addAction(ui->actionNewSchedule);
+    ui->toolBarFile->addAction(ui->actionOpenSchedule);
+    ui->toolBarFile->addAction(ui->actionSaveSchedule);
+    ui->toolBarFile->addSeparator();
+    ui->toolBarFile->addAction(ui->actionPrint);
+//    ui->toolBarFile->addSeparator();
+    ui->toolBarSchedule->addAction(ui->actionMoveScheduleTop);
+    ui->toolBarSchedule->addAction(ui->actionMoveScheduleUp);
+    ui->toolBarSchedule->addAction(ui->actionMoveScheduleDown);
+    ui->toolBarSchedule->addAction(ui->actionMoveScheduleBottom);
+    ui->toolBarSchedule->addSeparator();
+    ui->toolBarSchedule->addAction(ui->actionScheduleAdd);
+    ui->toolBarSchedule->addAction(ui->actionScheduleRemove);
+    ui->toolBarSchedule->addAction(ui->actionScheduleClear);
 //    ui->toolBar_2->setIconSize(QSize(24,24));
     //ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionNew);
-    ui->toolBar->addAction(ui->actionEdit);
-    ui->toolBar->addAction(ui->actionCopy);
-    ui->toolBar->addAction(ui->actionDelete);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionSettings);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionSong_Counter);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->action_Help);
+    ui->toolBarEdit->addAction(ui->actionNew);
+    ui->toolBarEdit->addAction(ui->actionEdit);
+    ui->toolBarEdit->addAction(ui->actionCopy);
+    ui->toolBarEdit->addAction(ui->actionDelete);
+    ui->toolBarEdit->addSeparator();
+    ui->toolBarEdit->addAction(ui->actionSettings);
+    ui->toolBarEdit->addSeparator();
+    ui->toolBarEdit->addAction(ui->actionSong_Counter);
+    ui->toolBarEdit->addSeparator();
+    ui->toolBarEdit->addAction(ui->action_Help);
+    ui->toolBarShow->addAction(ui->actionShow);
+    ui->toolBarShow->addAction(ui->actionHide);
 
-    ui->show_button->setEnabled(false);
-    ui->clear_button->setEnabled(false);
+    ui->actionShow->setEnabled(false);
+    ui->actionHide->setEnabled(false);
 
     // Create and connect shortcuts
     shpgUP = new QShortcut(Qt::Key_PageUp,this);
@@ -152,8 +154,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     shSart2 = new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F5),this);
     connect(shpgUP,SIGNAL(activated()),this,SLOT(prevSlide()));
     connect(shpgDwn,SIGNAL(activated()),this,SLOT(nextSlide()));
-    connect(shSart1,SIGNAL(activated()),this,SLOT(on_show_button_clicked()));
-    connect(shSart2,SIGNAL(activated()),this,SLOT(on_show_button_clicked()));
+    connect(shSart1,SIGNAL(activated()),this,SLOT(on_actionShow_triggered()));
+    connect(shSart2,SIGNAL(activated()),this,SLOT(on_actionShow_triggered()));
 
     // Hide Multi verse selection, only visible to be when showing bible
     ui->widgetMultiVerse->setVisible(false);
@@ -577,7 +579,7 @@ void SoftProjector::on_listShow_itemSelectionChanged()
     // First check if ratio button "Multi Verse" is check. If so, make button "Show"
     // enable and update screen only after show_botton is clicked.
     if(ui->rbMultiVerse->isChecked())
-        ui->show_button->setEnabled(true);
+        ui->actionShow->setEnabled(true);
     else
         updateScreen();
 }
@@ -600,8 +602,8 @@ void SoftProjector::updateScreen()
 
         if(hasDisplayScreen2)
             displayScreen2->renderText(false);
-        ui->show_button->setEnabled(true);
-        ui->clear_button->setEnabled(false);
+        ui->actionShow->setEnabled(true);
+        ui->actionHide->setEnabled(false);
     }
     else if ((currentRow >=0 && !new_list) || (type == "video" && !new_list))
     {
@@ -611,8 +613,8 @@ void SoftProjector::updateScreen()
                 showDisplayScreen(true);
         }
 
-        ui->show_button->setEnabled(false);
-        ui->clear_button->setEnabled(true);
+        ui->actionShow->setEnabled(false);
+        ui->actionHide->setEnabled(true);
 
         if(type=="bible")
         {
@@ -674,15 +676,15 @@ void SoftProjector::updateScreen()
 
 }
 
-void SoftProjector::on_clear_button_clicked()
+void SoftProjector::on_actionShow_triggered()
 {
-    showing = false;
+    showing = true;
     updateScreen();
 }
 
-void SoftProjector::on_show_button_clicked()
+void SoftProjector::on_actionHide_triggered()
 {
-    showing = true;
+    showing = false;
     updateScreen();
 }
 

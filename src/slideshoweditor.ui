@@ -216,6 +216,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditTitle</tabstop>
+  <tabstop>plainTextEditInfo</tabstop>
+  <tabstop>listWidgetSlides</tabstop>
+  <tabstop>pushButtonAddImages</tabstop>
+  <tabstop>pushButtonRemoveImage</tabstop>
+  <tabstop>pushButtonMoveUp</tabstop>
+  <tabstop>pushButtonMoveDown</tabstop>
+  <tabstop>pushButtonSave</tabstop>
+  <tabstop>pushButtonCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

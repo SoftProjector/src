@@ -61,7 +61,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -97,10 +97,22 @@
         <item>
          <widget class="QLabel" name="labelPreview">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>200</height>
+           </size>
           </property>
           <property name="frameShape">
            <enum>QFrame::WinPanel</enum>
@@ -128,7 +140,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="Line" name="line">
@@ -270,14 +282,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>listWidgetSlideShow</tabstop>
+  <tabstop>listWidgetSlides</tabstop>
   <tabstop>pushButtonGoLive</tabstop>
   <tabstop>pushButtonAddImages</tabstop>
   <tabstop>pushButtonRemoveImage</tabstop>
   <tabstop>pushButtonClearImages</tabstop>
   <tabstop>pushButtonMoveUp</tabstop>
   <tabstop>pushButtonMoveDown</tabstop>
-  <tabstop>listWidgetSlideShow</tabstop>
-  <tabstop>listWidgetSlides</tabstop>
  </tabstops>
  <resources>
   <include location="softprojector.qrc"/>

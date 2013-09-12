@@ -239,6 +239,14 @@ We recommend to resize images to display screen size.</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkBoxExpand</tabstop>
+  <tabstop>radioButtonFit</tabstop>
+  <tabstop>radioButtonFitExpand</tabstop>
+  <tabstop>groupBoxResize</tabstop>
+  <tabstop>comboBoxBoundAmount</tabstop>
+  <tabstop>lineEditBound</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

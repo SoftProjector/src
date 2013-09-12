@@ -25,10 +25,10 @@ PictureWidget::PictureWidget(QWidget *parent) :
     ui(new Ui::PictureWidget)
 {
     ui->setupUi(this);
-    QRect r = ui->labelPreview->geometry();
-    r.setWidth(300);
-    r.setHeight(300);
-    ui->labelPreview->setGeometry(r);
+//    QRect r = ui->labelPreview->geometry();
+//    r.setWidth(300);
+//    r.setHeight(300);
+//    ui->labelPreview->setGeometry(r);
     loadSlideShows();
 }
 
@@ -62,13 +62,13 @@ void PictureWidget::on_listWidgetSlides_currentRowChanged(int currentRow)
 {
     if(currentRow>=0)
     {
-        int w,h,pw,ph;
-        w = ui->labelPreview->width()-4;
-        h = ui->labelPreview->height()-4;
+        int /*w,h,*/pw,ph;
+//        w = ui->labelPreview->width()-4;
+//        h = ui->labelPreview->height()-4;
         pw = slides.at(currentRow).imagePreview.width();
         ph = slides.at(currentRow).imagePreview.height();
-        if(pw>w || ph>h)
-            ui->labelPreview->setPixmap(slides.at(currentRow).imagePreview.scaled(w,h,Qt::KeepAspectRatio));
+        if(pw>300 || ph>200)
+            ui->labelPreview->setPixmap(slides.at(currentRow).imagePreview.scaled(300,200,Qt::KeepAspectRatio));
         else
             ui->labelPreview->setPixmap(slides.at(currentRow).imagePreview);
         ui->labelPixInfo->setText(tr("Preview slide: ")+slides.at(currentRow).name);

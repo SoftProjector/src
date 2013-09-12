@@ -372,6 +372,30 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>bibleTableView</tabstop>
+  <tabstop>pushButtonDownBible</tabstop>
+  <tabstop>import_bible_pushButton</tabstop>
+  <tabstop>edit_bible_pushButton</tabstop>
+  <tabstop>export_bible_pushButton</tabstop>
+  <tabstop>delete_bible_pushButton</tabstop>
+  <tabstop>ok_pushButton</tabstop>
+  <tabstop>songbookTableView</tabstop>
+  <tabstop>pushButtonDownSong</tabstop>
+  <tabstop>import_songbook_pushButton</tabstop>
+  <tabstop>edit_songbook_pushButton</tabstop>
+  <tabstop>export_songbook_pushButton</tabstop>
+  <tabstop>delete_songbook_pushButton</tabstop>
+  <tabstop>TableViewTheme</tabstop>
+  <tabstop>pushButtonDownTheme</tabstop>
+  <tabstop>pushButtonThemeImport</tabstop>
+  <tabstop>pushButtonThemeNew</tabstop>
+  <tabstop>pushButtonThemeEdit</tabstop>
+  <tabstop>pushButtonThemeExport</tabstop>
+  <tabstop>pushButtonThemeExportAll</tabstop>
+  <tabstop>pushButtonThemeDelete</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

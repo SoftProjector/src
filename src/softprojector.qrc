@@ -69,6 +69,8 @@
         <file>icons/ExpandSmall.png</file>
         <file>icons/FitToScreen.png</file>
         <file>icons/FitToScreenByExpanding.png</file>
+        <file>icons/hide.png</file>
+        <file>icons/show.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

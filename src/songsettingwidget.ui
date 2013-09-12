@@ -515,6 +515,9 @@
       </item>
       <item>
        <widget class="QSpinBox" name="spinBoxScreenUse">
+        <property name="toolTip">
+         <string>Percent of screen to be used.</string>
+        </property>
         <property name="suffix">
          <string notr="true">%</string>
         </property>
@@ -532,6 +535,9 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxScreenUse">
+        <property name="toolTip">
+         <string>Select to use either top portion of the screen or bottom.</string>
+        </property>
         <item>
          <property name="text">
           <string>Top of screen</string>
@@ -1422,6 +1428,9 @@
          </item>
          <item>
           <widget class="QSpinBox" name="spinBoxScreenUse2">
+           <property name="toolTip">
+            <string>Percent of screen to be used.</string>
+           </property>
            <property name="suffix">
             <string>%</string>
            </property>
@@ -1439,6 +1448,9 @@
          </item>
          <item>
           <widget class="QComboBox" name="comboBoxScreenUse2">
+           <property name="toolTip">
+            <string>Select to use either top portion of the screen or bottom.</string>
+           </property>
            <item>
             <property name="text">
              <string>Top of Screen</string>
@@ -1509,6 +1521,62 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkBoxUseFading</tabstop>
+  <tabstop>checkBoxUseShadow</tabstop>
+  <tabstop>checkBoxUseBlurredShadow</tabstop>
+  <tabstop>checkBoxStanzaTitle</tabstop>
+  <tabstop>checkBoxSongKey</tabstop>
+  <tabstop>checkBoxSongNumber</tabstop>
+  <tabstop>toolButtonInfoColor</tabstop>
+  <tabstop>graphicViewInfoColor</tabstop>
+  <tabstop>toolButtonInfoFont</tabstop>
+  <tabstop>comboBoxInfoAlign</tabstop>
+  <tabstop>groupBoxSongEnding</tabstop>
+  <tabstop>toolButtonEndingColor</tabstop>
+  <tabstop>graphicViewEndingColor</tabstop>
+  <tabstop>toolButtonEndingFont</tabstop>
+  <tabstop>comboBoxEndingType</tabstop>
+  <tabstop>comboBoxEndingPosition</tabstop>
+  <tabstop>groupBoxSongBackground</tabstop>
+  <tabstop>buttonSongBackground</tabstop>
+  <tabstop>lineEditSongBackground</tabstop>
+  <tabstop>toolButtonColor</tabstop>
+  <tabstop>graphicViewTextColor</tabstop>
+  <tabstop>toolButtonFont</tabstop>
+  <tabstop>comboBoxVerticalAling</tabstop>
+  <tabstop>comboBoxHorizontalAling</tabstop>
+  <tabstop>spinBoxScreenUse</tabstop>
+  <tabstop>comboBoxScreenUse</tabstop>
+  <tabstop>groupBoxDisplay2</tabstop>
+  <tabstop>checkBoxUseFading2</tabstop>
+  <tabstop>checkBoxUseShadow2</tabstop>
+  <tabstop>checkBoxUseBlurredShadow2</tabstop>
+  <tabstop>checkBoxStanzaTitle2</tabstop>
+  <tabstop>checkBoxSongKey2</tabstop>
+  <tabstop>checkBoxSongNumber2</tabstop>
+  <tabstop>toolButtonInfoColor2</tabstop>
+  <tabstop>graphicViewInfoColor2</tabstop>
+  <tabstop>toolButtonInfoFont2</tabstop>
+  <tabstop>comboBoxInfoAlign2</tabstop>
+  <tabstop>groupBoxSongEnding2</tabstop>
+  <tabstop>toolButtonEndingColor2</tabstop>
+  <tabstop>graphicViewEndingColor2</tabstop>
+  <tabstop>toolButtonEndingFont2</tabstop>
+  <tabstop>comboBoxEndingType2</tabstop>
+  <tabstop>comboBoxEndingPosition2</tabstop>
+  <tabstop>groupBoxSongBackground2</tabstop>
+  <tabstop>buttonSongBackground2</tabstop>
+  <tabstop>lineEditSongBackground2</tabstop>
+  <tabstop>toolButtonColor2</tabstop>
+  <tabstop>graphicViewTextColor2</tabstop>
+  <tabstop>toolButtonFont2</tabstop>
+  <tabstop>comboBoxVerticalAling2</tabstop>
+  <tabstop>comboBoxHorizontalAling2</tabstop>
+  <tabstop>spinBoxScreenUse2</tabstop>
+  <tabstop>comboBoxScreenUse2</tabstop>
+  <tabstop>pushButtonDefault</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

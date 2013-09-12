@@ -137,6 +137,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditTitle</tabstop>
+  <tabstop>checkBoxUsePrivateSettings</tabstop>
+  <tabstop>checkBoxTimedSlides</tabstop>
+  <tabstop>spinBoxTimeOut</tabstop>
+  <tabstop>checkBoxLoop</tabstop>
+  <tabstop>textEditAnnouncement</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

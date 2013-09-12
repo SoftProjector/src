@@ -370,6 +370,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>songbook_menu</tabstop>
+  <tabstop>song_num_spinbox</tabstop>
+  <tabstop>comboBoxCategory</tabstop>
+  <tabstop>lineEditSearch</tabstop>
+  <tabstop>contains_rbutton</tabstop>
+  <tabstop>begins_rbutton</tabstop>
+  <tabstop>exact_match_rbutton</tabstop>
+  <tabstop>comboBoxSearchType</tabstop>
+  <tabstop>pushButtonSearch</tabstop>
+  <tabstop>listWidgetDummy</tabstop>
+  <tabstop>pushButtonClearResults</tabstop>
+  <tabstop>songs_view</tabstop>
+  <tabstop>listPreview</tabstop>
+  <tabstop>btnLive</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

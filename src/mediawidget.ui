@@ -175,11 +175,11 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>pushButtonGoLive</tabstop>
+  <tabstop>listWidgetMediaFiles</tabstop>
   <tabstop>pushButtonOpen</tabstop>
   <tabstop>pushButtonPlayPause</tabstop>
   <tabstop>comboBoxAspectRatio</tabstop>
-  <tabstop>listWidgetMediaFiles</tabstop>
+  <tabstop>pushButtonGoLive</tabstop>
  </tabstops>
  <resources>
   <include location="softprojector.qrc"/>

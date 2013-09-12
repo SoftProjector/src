@@ -257,6 +257,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>groupBoxBackground</tabstop>
+  <tabstop>buttonBrowseBackgound</tabstop>
+  <tabstop>lineEditBackgroundPath</tabstop>
+  <tabstop>groupBoxDisp2Sets</tabstop>
+  <tabstop>groupBoxBackground2</tabstop>
+  <tabstop>buttonBrowseBackgound2</tabstop>
+  <tabstop>lineEditBackgroundPath2</tabstop>
+  <tabstop>pushButtonDefault</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

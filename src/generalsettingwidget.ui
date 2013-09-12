@@ -333,6 +333,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkBoxDisplayOnTop</tabstop>
+  <tabstop>comboBoxTheme</tabstop>
+  <tabstop>pushButtonAddTheme</tabstop>
+  <tabstop>comboBoxDisplayScreen</tabstop>
+  <tabstop>comboBoxDisplayScreen_2</tabstop>
+  <tabstop>comboBoxIconSize</tabstop>
+  <tabstop>comboBoxControlsAlignV</tabstop>
+  <tabstop>comboBoxControlsAlignH</tabstop>
+  <tabstop>horizontalSliderOpacity</tabstop>
+  <tabstop>pushButtonDefault</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

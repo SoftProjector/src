@@ -586,6 +586,34 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditSongNumber</tabstop>
+  <tabstop>lineEditTitle</tabstop>
+  <tabstop>lineEditWordsBy</tabstop>
+  <tabstop>lineEditMusicBy</tabstop>
+  <tabstop>lineEditKey</tabstop>
+  <tabstop>comboBoxCategory</tabstop>
+  <tabstop>textEditSong</tabstop>
+  <tabstop>plainTextEditNotes</tabstop>
+  <tabstop>pushButtonPrint</tabstop>
+  <tabstop>checkBoxSongSettings</tabstop>
+  <tabstop>toolButtonMainColor</tabstop>
+  <tabstop>graphicsViewTextColor</tabstop>
+  <tabstop>toolButtonMainFont</tabstop>
+  <tabstop>comboBoxVAlignment</tabstop>
+  <tabstop>comboBoxHAlignment</tabstop>
+  <tabstop>toolButtonInfoColor</tabstop>
+  <tabstop>graphicsViewInfoColor</tabstop>
+  <tabstop>toolButtonFont</tabstop>
+  <tabstop>toolButtonEndingColor</tabstop>
+  <tabstop>graphicsViewEndingColor</tabstop>
+  <tabstop>toolButtonEndingFont</tabstop>
+  <tabstop>checkBoxUseBackground</tabstop>
+  <tabstop>toolButtonBrowseBackground</tabstop>
+  <tabstop>lineEditBackgroundPath</tabstop>
+  <tabstop>btnSave</tabstop>
+  <tabstop>btnCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="softprojector.qrc"/>
  </resources>

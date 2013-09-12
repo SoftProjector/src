@@ -71,6 +71,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>listWidget</tabstop>
+  <tabstop>pushButtonSelectAll</tabstop>
+  <tabstop>pushButtonDeselectAll</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -80,8 +86,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>389</x>
+     <y>289</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -96,8 +102,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>389</x>
+     <y>289</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

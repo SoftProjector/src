@@ -460,12 +460,15 @@
         <item>
          <widget class="QLabel" name="labelMaxPercent">
           <property name="text">
-           <string>Use this much of the screen:</string>
+           <string>Amount of screen to use:</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QSpinBox" name="spinBoxMaxScreen">
+          <property name="toolTip">
+           <string>Percent of screen to be used.</string>
+          </property>
           <property name="suffix">
            <string notr="true">%</string>
           </property>
@@ -483,6 +486,9 @@
         </item>
         <item>
          <widget class="QComboBox" name="comboBoxScreenPosition">
+          <property name="toolTip">
+           <string>Select to use either top portion of the screen or bottom.</string>
+          </property>
           <item>
            <property name="text">
             <string>Top of Screen</string>
@@ -1256,12 +1262,15 @@
            <item>
             <widget class="QLabel" name="labelMaxPercent2">
              <property name="text">
-              <string>Use this much of the screen:</string>
+              <string>Amount of screen to use:</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QSpinBox" name="spinBoxMaxScreen2">
+             <property name="toolTip">
+              <string>Percent of screen to be used.</string>
+             </property>
              <property name="suffix">
               <string notr="true">%</string>
              </property>
@@ -1279,6 +1288,9 @@
            </item>
            <item>
             <widget class="QComboBox" name="comboBoxScreenPosition2">
+             <property name="toolTip">
+              <string>Select to use either top portion of the screen or bottom.</string>
+             </property>
              <item>
               <property name="text">
                <string>Top of Screen</string>
@@ -1351,6 +1363,55 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>comboBoxPrimaryBible</tabstop>
+  <tabstop>comboBoxSecondaryBible</tabstop>
+  <tabstop>comboBoxTrinaryBible</tabstop>
+  <tabstop>comboBoxOperatorBible</tabstop>
+  <tabstop>checkBoxUseFading</tabstop>
+  <tabstop>checkBoxUseShadow</tabstop>
+  <tabstop>checkBoxUseBlurredShadow</tabstop>
+  <tabstop>groupBoxBackground</tabstop>
+  <tabstop>buttonBrowseBackground</tabstop>
+  <tabstop>lineEditBackPath</tabstop>
+  <tabstop>toolButtonTextColor</tabstop>
+  <tabstop>graphicViewTextColor</tabstop>
+  <tabstop>toolButtonTextFont</tabstop>
+  <tabstop>comboBoxVerticalAling</tabstop>
+  <tabstop>comboBoxHorizontalAling</tabstop>
+  <tabstop>toolButtonCaptionColor</tabstop>
+  <tabstop>graphicViewCaptionColor</tabstop>
+  <tabstop>toolButtonCaptionFont</tabstop>
+  <tabstop>comboBoxCaptionPosition</tabstop>
+  <tabstop>comboBoxCaptionAlign</tabstop>
+  <tabstop>checkBoxAbbiviations</tabstop>
+  <tabstop>spinBoxMaxScreen</tabstop>
+  <tabstop>comboBoxScreenPosition</tabstop>
+  <tabstop>groupBoxUseDisp2</tabstop>
+  <tabstop>comboBoxPrimaryBible2</tabstop>
+  <tabstop>comboBoxSecondaryBible2</tabstop>
+  <tabstop>comboBoxTrinaryBible2</tabstop>
+  <tabstop>checkBoxUseFading2</tabstop>
+  <tabstop>checkBoxUseShadow2</tabstop>
+  <tabstop>checkBoxUseBlurredShadow2</tabstop>
+  <tabstop>groupBoxBackground2</tabstop>
+  <tabstop>buttonBrowseBackground2</tabstop>
+  <tabstop>lineEditBackPath2</tabstop>
+  <tabstop>toolButtonTextColor2</tabstop>
+  <tabstop>graphicViewTextColor2</tabstop>
+  <tabstop>toolButtonTextFont2</tabstop>
+  <tabstop>comboBoxVerticalAling2</tabstop>
+  <tabstop>comboBoxHorizontalAling2</tabstop>
+  <tabstop>toolButtonCaptionColor2</tabstop>
+  <tabstop>graphicViewCaptionColor2</tabstop>
+  <tabstop>toolButtonCaptionFont2</tabstop>
+  <tabstop>comboBoxCaptionPosition2</tabstop>
+  <tabstop>comboBoxCaptionAlign2</tabstop>
+  <tabstop>checkBoxAbbiviations2</tabstop>
+  <tabstop>spinBoxMaxScreen2</tabstop>
+  <tabstop>comboBoxScreenPosition2</tabstop>
+  <tabstop>pushButtonDefault</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

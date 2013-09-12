@@ -704,6 +704,32 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkBoxUseFading</tabstop>
+  <tabstop>checkBoxUseShadow</tabstop>
+  <tabstop>checkBoxUseBlurredShadow</tabstop>
+  <tabstop>groupBoxBackground</tabstop>
+  <tabstop>buttonBackground</tabstop>
+  <tabstop>lineEditBackground</tabstop>
+  <tabstop>toolButtonColor</tabstop>
+  <tabstop>graphicViewTextColor</tabstop>
+  <tabstop>toolButtonFont</tabstop>
+  <tabstop>comboBoxVerticalAling</tabstop>
+  <tabstop>comboBoxHorizontalAling</tabstop>
+  <tabstop>groupBoxUseDisp2</tabstop>
+  <tabstop>checkBoxUseFading2</tabstop>
+  <tabstop>checkBoxUseShadow2</tabstop>
+  <tabstop>checkBoxUseBlurredShadow2</tabstop>
+  <tabstop>groupBoxBackground2</tabstop>
+  <tabstop>buttonBackground2</tabstop>
+  <tabstop>lineEditBackground2</tabstop>
+  <tabstop>toolButtonColor2</tabstop>
+  <tabstop>graphicViewTextColor2</tabstop>
+  <tabstop>toolButtonFont2</tabstop>
+  <tabstop>comboBoxVerticalAling2</tabstop>
+  <tabstop>comboBoxHorizontalAling2</tabstop>
+  <tabstop>pushButtonDefault</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
