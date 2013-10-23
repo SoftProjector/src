@@ -78,7 +78,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="labelFilter">
            <property name="text">
             <string>Filter:</string>
            </property>
@@ -108,52 +108,6 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QRadioButton" name="contains_rbutton">
-           <property name="toolTip">
-            <string>Matches only songs the song number or title of which contains the entered string.</string>
-           </property>
-           <property name="text">
-            <string>Contains</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="begins_rbutton">
-           <property name="toolTip">
-            <string>Matches only songs the song number or title of which begins with the entered string.</string>
-           </property>
-           <property name="text">
-            <string>Begins</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="exact_match_rbutton">
-           <property name="toolTip">
-            <string>Matches only songs the song number or title of which exactly matches the entered string.</string>
-           </property>
-           <property name="text">
-            <string>Exact match</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QLabel" name="labelSearchType">
            <property name="text">
             <string>Search Type:</string>
@@ -161,7 +115,38 @@
           </widget>
          </item>
          <item>
+          <widget class="QComboBox" name="comboBoxFilterType">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <item>
+            <property name="text">
+             <string>Contains</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Begins</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exact Match</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
           <widget class="QComboBox" name="comboBoxSearchType">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <item>
             <property name="text">
              <string>Contains Phrase</string>
@@ -375,9 +360,6 @@
   <tabstop>song_num_spinbox</tabstop>
   <tabstop>comboBoxCategory</tabstop>
   <tabstop>lineEditSearch</tabstop>
-  <tabstop>contains_rbutton</tabstop>
-  <tabstop>begins_rbutton</tabstop>
-  <tabstop>exact_match_rbutton</tabstop>
   <tabstop>comboBoxSearchType</tabstop>
   <tabstop>pushButtonSearch</tabstop>
   <tabstop>listWidgetDummy</tabstop>

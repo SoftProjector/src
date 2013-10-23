@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>softProjector Print Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/print.png</normaloff>:/icons/icons/print.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -182,6 +186,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

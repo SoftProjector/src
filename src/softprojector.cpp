@@ -55,7 +55,7 @@ SoftProjector::SoftProjector(QWidget *parent)
 
 
     // Create action group for language slections
-    languagePath = "."+QString(QDir::separator())+"translations"+QString(QDir::separator());
+    languagePath = qApp->applicationDirPath()+QString(QDir::separator())+"translations"+QString(QDir::separator());
     createLanguageActions();
 
     // Always place the "Settings" menu item under the application
@@ -67,8 +67,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     // Apply Settings
     applySetting(mySettings.general, theme, mySettings.slideSets, mySettings.bibleSets, mySettings.bibleSets2);
 
-    displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
-    displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
+//    displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
+//    displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
 
     positionDisplayWindow();
 
@@ -94,8 +94,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget, SIGNAL(setArrowCursor()), this, SLOT(setArrowCursor()));
     connect(songWidget, SIGNAL(setWaitCursor()), this, SLOT(setWaitCursor()));
     connect(announceWidget,SIGNAL(sendAnnounce(Announcement,int)), this, SLOT(setAnnounceText(Announcement,int)));
-    connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int)),
-            this, SLOT(setPictureList(QList<SlideShowItem>&,int)));
+    connect(pictureWidget, SIGNAL(sendSlideShow(QList<SlideShowItem>&,int,QString)),
+            this, SLOT(setPictureList(QList<SlideShowItem>&,int,QString)));
     connect(pictureWidget, SIGNAL(sendToSchedule(SlideShow&)),this,SLOT(addToShcedule(SlideShow&)));
     connect(mediaPlayer, SIGNAL(toProjector(VideoInfo&)), this, SLOT(setVideo(VideoInfo&)));
     connect(editWidget, SIGNAL(updateSongFromDatabase(int,int)), songWidget, SLOT(updateSongFromDatabase(int,int)));
@@ -176,7 +176,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->widgetPlayBackControls->setVisible(false);
 
 //    version_string = "2"; // to be used only for official release
-    version_string = "2.Dev.Build: 6"; // to be used between official releases
+    version_string = "2 Alpha"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
 
 }
@@ -380,7 +380,7 @@ void SoftProjector::closeEvent(QCloseEvent *event)
     }
     else
     {
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setWindowTitle(tr("Schedule not saved"));
         mb.setText(tr("Do you want to save current schedule?"));
         mb.setIcon(QMessageBox::Question);
@@ -517,7 +517,7 @@ void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QI
     updateScreen();
 }
 
-void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
+void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row,QString name)
 {
     // Called to show picture list
     type = "pix";
@@ -528,7 +528,7 @@ void SoftProjector::setPictureList(QList<SlideShowItem> &image_list,int row)
     new_list = true;
     pictureShowList = image_list;
     ui->labelIcon->setPixmap(QPixmap(":/icons/icons/photo.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-    ui->labelShow->clear();
+    ui->labelShow->setText(name);
     ui->listShow->clear();
     ui->listShow->setSpacing(1);
     ui->listShow->setIconSize(QSize(100,100));
@@ -612,6 +612,16 @@ void SoftProjector::updateScreen()
             if(displayScreen1->isHidden())
                 showDisplayScreen(true);
         }
+        else
+        {
+            if(displayScreen1->isHidden())
+                displayScreen1->show();
+            if(hasDisplayScreen2)
+            {
+                if(displayScreen2->isHidden())
+                    displayScreen2->show();
+            }
+        }
 
         ui->actionShow->setEnabled(false);
         ui->actionHide->setEnabled(true);
@@ -665,6 +675,8 @@ void SoftProjector::updateScreen()
         else if(type == "pix")
         {
             displayScreen1->renderPicture(pictureShowList.at(currentRow).image,mySettings.slideSets);
+            if(hasDisplayScreen2)
+                displayScreen2->renderPicture(pictureShowList.at(currentRow).image,mySettings.slideSets);
         }
         else if(type == "video")
         {
@@ -931,7 +943,7 @@ void SoftProjector::newSong()
 {
     if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("Cannot create a new song"));
         ms.setText(tr("Another song is already been edited."));
         ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
@@ -952,7 +964,7 @@ void SoftProjector::editSong()
     {
         if(!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
         {
-            QMessageBox ms;
+            QMessageBox ms(this);
             ms.setWindowTitle(tr("Cannot start new edit"));
             ms.setText(tr("Another song is already been edited."));
             ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
@@ -968,7 +980,7 @@ void SoftProjector::editSong()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to edit."));
         ms.setInformativeText(tr("Please select a song to edit."));
@@ -982,7 +994,7 @@ void SoftProjector::copySong()
     if (songWidget->isSongSelected())
     {if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
         {
-            QMessageBox ms;
+            QMessageBox ms(this);
             ms.setWindowTitle(tr("Cannot copy this song"));
             ms.setText(tr("Another song is already been edited."));
             ms.setInformativeText(tr("Please save and/or close current edited song before edited a different song."));
@@ -998,7 +1010,7 @@ void SoftProjector::copySong()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to copy"));
         ms.setInformativeText(tr("Please select a song to copy"));
@@ -1012,7 +1024,7 @@ void SoftProjector::deleteSong()
     if (songWidget->isSongSelected())
     {
         QString song_title = songWidget->currentSong().title;
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("Delete song?"));
         ms.setText(tr("Delete song \"") + song_title + "\"?");
         ms.setInformativeText(tr("This action will permanentrly delete this song"));
@@ -1038,7 +1050,7 @@ void SoftProjector::deleteSong()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No song selected"));
         ms.setText(tr("No song has been selected to delete"));
         ms.setInformativeText(tr("Please select a song to delete"));
@@ -1069,7 +1081,7 @@ void SoftProjector::editSlideShow()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No slideshow selected"));
         ms.setText(tr("No slideshow has been selected to edit."));
         ms.setInformativeText(tr("Please select a slideshow to edit."));
@@ -1083,7 +1095,7 @@ void SoftProjector::deleteSlideShow()
     if(pictureWidget->isSlideShowSelected())
     {
         QString title = pictureWidget->getCurrentSlideshow().name;
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("Delete slideshow?"));
         ms.setText(tr("Delete slideshow: \"") + title + "\"?");
         ms.setInformativeText(tr("This action will permanentrly delete this slideshow"));
@@ -1107,7 +1119,7 @@ void SoftProjector::deleteSlideShow()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No slideshow selected"));
         ms.setText(tr("No slideshow has been selected to delete."));
         ms.setInformativeText(tr("Please select a slideshow to delete."));
@@ -1123,7 +1135,17 @@ void SoftProjector::addMediaToLibrary()
 
 void SoftProjector::removeMediaFromLibrary()
 {
+    if(mediaPlayer->isValidMedia())
     mediaPlayer->removeFromLibrary();
+    else
+    {
+        QMessageBox ms(this);
+        ms.setWindowTitle(tr("No media selected"));
+        ms.setText(tr("No media item has been selected to delete."));
+        ms.setInformativeText(tr("Please select a media item to delete."));
+        ms.setIcon(QMessageBox::Information);
+        ms.exec();
+    }
 }
 
 void SoftProjector::newAnnouncement()
@@ -1137,7 +1159,7 @@ void SoftProjector::editAnnouncement()
         announceWidget->editAnnouncement();
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No Announcement Selected"));
         ms.setText(tr("No announcement has been selected to edit"));
         ms.setInformativeText(tr("Please select an announcement to edit"));
@@ -1152,7 +1174,7 @@ void SoftProjector::copyAnnouncement()
         announceWidget->copyAnnouncement();
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No Announcement Selected"));
         ms.setText(tr("No announcement has been selected to copy"));
         ms.setInformativeText(tr("Please select an announcement to copy"));
@@ -1166,7 +1188,7 @@ void SoftProjector::deleteAnnoucement()
     if(announceWidget->isAnnounceValid())
     {
         QString title = announceWidget->getAnnouncement().title;
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("Delete Announcement?"));
         ms.setText(tr("Delete announcement: \"") + title + "\"?");
         ms.setInformativeText(tr("This action will permanentrly delete this announcement"));
@@ -1190,7 +1212,7 @@ void SoftProjector::deleteAnnoucement()
     }
     else
     {
-        QMessageBox ms;
+        QMessageBox ms(this);
         ms.setWindowTitle(tr("No Announcement Selected"));
         ms.setText(tr("No announcement has been selected to delete"));
         ms.setInformativeText(tr("Please select an announcement to delete"));
@@ -1341,7 +1363,7 @@ void SoftProjector::on_actionPrint_triggered()
         }
         else
         {
-            QMessageBox ms;
+            QMessageBox ms(this);
             ms.setWindowTitle(tr("No song selected"));
             ms.setText(tr("No song has been selected to be printed."));
             ms.setInformativeText(tr("Please select a song to be printed."));
@@ -1358,7 +1380,7 @@ void SoftProjector::on_actionPrint_triggered()
         }
         else
         {
-            QMessageBox ms;
+            QMessageBox ms(this);
             ms.setWindowTitle(tr("No announcement selected"));
             ms.setText(tr("No announcement has been selected to be printed."));
             ms.setInformativeText(tr("Please select a announcement to be printed."));
@@ -1459,28 +1481,41 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     int ctab = ui->projectTab->currentIndex();
     if(ctab == 0) // Bible
     {
+//        if(bibleWidget-)
         BibleHistory b = bibleWidget->getCurrentVerse();
         addToShcedule(b);
     }
     else if(ctab == 1) // Song
     {
-        Song s = songWidget->getSongToEdit();
-        addToShcedule(s);
+        if(songWidget->isSongSelected())
+        {
+            Song s = songWidget->getSongToEdit();
+            addToShcedule(s);
+        }
     }
     else if(ctab == 2) // Slide Show
     {
-        SlideShow ssi = pictureWidget->getCurrentSlideshow();
-        addToShcedule(ssi);
+        if(pictureWidget->isSlideShowSelected())
+        {
+            SlideShow ssi = pictureWidget->getCurrentSlideshow();
+            addToShcedule(ssi);
+        }
     }
     else if(ctab == 3) // Multimedia
     {
-        VideoInfo v = mediaPlayer->getMedia();
-        addToShcedule(v);
+        if(mediaPlayer->isValidMedia())
+        {
+            VideoInfo v = mediaPlayer->getMedia();
+            addToShcedule(v);
+        }
     }
     else if(ctab == 4)
     {
-        Announcement a = announceWidget->getAnnouncement();
-        addToShcedule(a);
+        if(announceWidget->isAnnounceValid())
+        {
+            Announcement a = announceWidget->getAnnouncement();
+            addToShcedule(a);
+        }
     }
     int row_count = ui->listWidgetSchedule->count();
     ui->listWidgetSchedule->setCurrentRow(row_count-1);
@@ -1574,7 +1609,7 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
     {
         ui->projectTab->setCurrentIndex(2);
         pictureWidget->sendToPreviewFromSchedule(s.slideshow);
-        setPictureList(s.slideshow.slides,0);
+        setPictureList(s.slideshow.slides,0,s.slideshow.name);
     }
     else if(s.stype == "media")
     {
@@ -1675,7 +1710,7 @@ void SoftProjector::on_actionNewSchedule_triggered()
 {
     if(!is_schedule_saved && !schedule_file_path.isEmpty())
     {
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setWindowTitle(tr("Save Schedule?"));
         mb.setText(tr("Do you want to save current schedule before creating a new schedule?"));
         mb.setIcon(QMessageBox::Question);
@@ -1712,7 +1747,7 @@ void SoftProjector::on_actionOpenSchedule_triggered()
 {
     if(!is_schedule_saved && !schedule_file_path.isEmpty())
     {
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setWindowTitle(tr("Save Schedule?"));
         mb.setText(tr("Do you want to save current schedule before opening a new schedule?"));
         mb.setIcon(QMessageBox::Question);
@@ -1778,7 +1813,7 @@ void SoftProjector::on_actionCloseSchedule_triggered()
 {
     if(!is_schedule_saved && !schedule_file_path.isEmpty())
     {
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setWindowTitle(tr("Save Schedule?"));
         mb.setText(tr("Do you want to save current schedule before closing it?"));
         mb.setIcon(QMessageBox::Question);
@@ -1824,7 +1859,7 @@ void SoftProjector::saveSchedule(bool overWrite)
         {
             if(!QFile::remove(schedule_file_path))
             {
-                QMessageBox mb;
+                QMessageBox mb(this);
                 mb.setText(tr("An error has ocured when overwriting existing file.\n"
                               "Please try again with different file name."));
                 mb.setIcon(QMessageBox::Information);
@@ -2165,7 +2200,7 @@ void SoftProjector::openSchedule()
             }
             else
             {
-                QMessageBox mb;
+                QMessageBox mb(this);
                 mb.setText(tr("The schedule file you are trying to open is of uncompatible version.\n"
                               "Compatible version: 2\n"
                               "This schedule file version: ") + QString::number(scVer));

@@ -72,10 +72,14 @@ void PassiveSettingWidget::setDispScreen2Visible(bool visible)
 void PassiveSettingWidget::on_buttonBrowseBackgound_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for passive wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -91,10 +95,14 @@ void PassiveSettingWidget::on_groupBoxDisp2Sets_toggled(bool arg1)
 void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for passive wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings2.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings2.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;

@@ -1,7 +1,7 @@
-/***************************************************************************
+﻿/***************************************************************************
 //
 //    softProjector - an open source media projection software
-//    Copyleft (Ɔ) 2013  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
+//    Copyleft (Ж†) 2013  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -278,8 +278,8 @@ void DisplayScreen::renderText(bool text_present)
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint(QPainter::Antialiasing);
 
-    text_painter.setPen(foregroundColor);
-    text_painter.setFont(mainFont);
+//    text_painter.setPen(foregroundColor);
+//    text_painter.setFont(mainFont);
 
     // Request to write its text to the QPainter:
     if(displayType == "bible")
@@ -287,7 +287,7 @@ void DisplayScreen::renderText(bool text_present)
     else if(displayType == "song")
         drawSongText(&text_painter, width(), height(),false);
     else if(displayType == "announce")
-        drawAnnounceText(&text_painter, width(), height());
+        drawAnnounceText(&text_painter, width(), height(),false);
     text_painter.end();
 
     // Draw the shadow image:
@@ -295,7 +295,7 @@ void DisplayScreen::renderText(bool text_present)
     shadow_image.fill(qRgba(0, 0, 0, 0)); //transparent background
     QPainter shadow_painter(&shadow_image);
     shadow_painter.setPen(QColor(Qt::black));
-    shadow_painter.setFont(mainFont);
+//    shadow_painter.setFont(mainFont);
     if(useShadow)
     {
         if(displayType == "bible")
@@ -303,7 +303,7 @@ void DisplayScreen::renderText(bool text_present)
         else if(displayType == "song")
             drawSongText(&shadow_painter, width(), height(),true);
         else if(displayType == "announce")
-            drawAnnounceText(&shadow_painter, width(), height());
+            drawAnnounceText(&shadow_painter, width(), height(),true);
         shadow_painter.end();
     }
 
@@ -348,7 +348,13 @@ void DisplayScreen::renderText(bool text_present)
     //output_painter.setRenderHint(QPainter::Antialiasing);
 
     // Offset the shadow by a fraction of the font size:
-    int shadow_offset = (mainFont.pointSize() / 15 );
+    int shadow_offset(0);
+    if(displayType == "bible")
+        shadow_offset = (bdSets.tFont.pointSize() / 15);
+    else if(displayType == "song")
+        shadow_offset = (songSets.textFont.pointSize() / 15);
+    else if(displayType == "announce")
+        shadow_offset = (annouceSets.textFont.pointSize() / 15 );
 
     // Draw the shadow:
     output_painter.drawImage(shadow_offset, shadow_offset, shadow_image);
@@ -377,6 +383,7 @@ void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
    // mainFont = bibleSets.textFont;
 //    foregroundColor = bibleSets.textColor;
 
+    isTextPrepared = false;
     renderText(true);
 }
 
@@ -409,6 +416,7 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     setNewWallpaper(songSets.background,songSets.useBackground);
    // mainFont = songSets.textFont;
 
+    isTextPrepared = false;
     renderText(true);
 }
 
@@ -422,10 +430,11 @@ void DisplayScreen::renderAnnounceText(AnnounceSlide announce, AnnounceSettings 
     useFading = annouceSets.useFading;
     useShadow = annouceSets.useShadow;
     useBluredShadow = annouceSets.useBlurShadow;
-    setNewWallpaper(annouceSets.backgroundName,annouceSets.useBackground);
-    mainFont = annouceSets.textFont;
-    foregroundColor = annouceSets.textColor;
+    setNewWallpaper(annouceSets.background,annouceSets.useBackground);
+//    mainFont = annouceSets.textFont;
+//    foregroundColor = annouceSets.textColor;
 
+    isTextPrepared = false;
     renderText(true);
 }
 
@@ -572,107 +581,121 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
         cflags += Qt::AlignRight;
 
     bool exit = false;
-    while( !exit )
+    if(!isTextPrepared)
     {
-        if(bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
+        bdSets.clear();
+        while( !exit )
         {
-            // Prepare primary version only, 2nd and 3rd do not exist
-            // Figure out how much space the drawing will take at the current font size:
-            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h, current_size);
+            if(bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
+            {
+                // Prepare primary version only, 2nd and 3rd do not exist
+                // Figure out how much space the drawing will take at the current font size:
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h, current_size);
 
-            // Make sure that all fits into the screen
-            int th = trect1.height()+crect1.height();
-            exit = (th<=h);
+                // Make sure that all fits into the screen
+                int th = trect1.height()+crect1.height();
+                exit = (th<=h);
+            }
+            else if(!bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
+            {
+                // Prepare primary and secondary versions, trinary does not exist
+                // Figure out how much space the drawing will take at the current font size for primary:
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h/2,current_size);
+
+                // set new top for secondary
+                int top2 = crect1.bottom();
+                if(top2<h/2+top)
+                    top2=h/2+top;
+
+                // Figure out how much space the drawing will take at the current font size for secondary:
+                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
+
+                int th1 = trect1.height()+crect1.height();
+                int th2 = trect2.height()+crect2.height();
+
+                // Make sure that primary fits
+                exit = (th1<=h/2);
+                if (exit)
+                    // If primary fits, make sure secondary fits
+                    exit = (th2<=h/2);
+            }
+            else if(!bibleVerse.secondary_text.isEmpty() && !bibleVerse.trinary_text.isEmpty())
+            {
+                // Prepare primary and secondary and trinary versions
+                // Figure out how much space the drawing will take at the current font size for primary:
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h*1/3,current_size);
+
+                // set new top for secondary
+                int top2 = crect1.bottom();
+                if(top2<h*1/3+top)
+                    top2=h*1/3+top;
+
+                // Figure out how much space the drawing will take at the current font size for secondary:
+                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+
+                // set new top for trinaty
+                top2 = crect2.bottom();
+                if(top2<h*2/3+top)
+                    top2 = h*2/3+top;
+
+                // Figure out how much space the drawing will take at the current font size for trinary:
+                drawBibleTextToRect(painter,trect3,crect3,bibleVerse.trinary_text,bibleVerse.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+
+                int th1 = trect1.height()+crect1.height();
+                int th2 = trect2.height()+crect2.height();
+                int th3 = trect3.height()+crect3.height();
+
+                // Make sure that primary fits
+                exit = (th1<=h*1/3);
+                if(exit)
+                    // If primary fits, make sure secondary fits
+                    exit = (th2<=h*1/3);
+                if(exit)
+                    // If also secondary fits, make sure trinary fits
+                    exit = (th3<=h*1/3);
+            }
+
+            if( !exit ) // The current font is too large, decrease and try again:
+                current_size--;
         }
-        else if(!bibleVerse.secondary_text.isEmpty() && bibleVerse.trinary_text.isEmpty())
-        {
-            // Prepare primary and secondary versions, trinary does not exist
-            // Figure out how much space the drawing will take at the current font size for primary:
-            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h/2,current_size);
-
-            // set new top for secondary
-            int top2 = crect1.bottom();
-            if(top2<h/2+top)
-                top2=h/2+top;
-
-            // Figure out how much space the drawing will take at the current font size for secondary:
-            drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
-
-            int th1 = trect1.height()+crect1.height();
-            int th2 = trect2.height()+crect2.height();
-
-            // Make sure that primary fits
-            exit = (th1<=h/2);
-            if (exit)
-                // If primary fits, make sure secondary fits
-                exit = (th2<=h/2);
-        }
-        else if(!bibleVerse.secondary_text.isEmpty() && !bibleVerse.trinary_text.isEmpty())
-        {
-            // Prepare primary and secondary and trinary versions
-            // Figure out how much space the drawing will take at the current font size for primary:
-            drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h*1/3,current_size);
-
-            // set new top for secondary
-            int top2 = crect1.bottom();
-            if(top2<h*1/3+top)
-                top2=h*1/3+top;
-
-            // Figure out how much space the drawing will take at the current font size for secondary:
-            drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
-
-            // set new top for trinaty
-            top2 = crect2.bottom();
-            if(top2<h*2/3+top)
-                top2 = h*2/3+top;
-
-            // Figure out how much space the drawing will take at the current font size for trinary:
-            drawBibleTextToRect(painter,trect3,crect3,bibleVerse.trinary_text,bibleVerse.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
-
-            int th1 = trect1.height()+crect1.height();
-            int th2 = trect2.height()+crect2.height();
-            int th3 = trect3.height()+crect3.height();
-
-            // Make sure that primary fits
-            exit = (th1<=h*1/3);
-            if(exit)
-                // If primary fits, make sure secondary fits
-                exit = (th2<=h*1/3);
-            if(exit)
-                // If also secondary fits, make sure trinary fits
-                exit = (th3<=h*1/3);
-        }
-
-        if( !exit ) // The current font is too large, decrease and try again:
-            current_size--;
+        font.setPointSize(current_size);
+        isTextPrepared = true;
+        bdSets.ptRect = trect1;
+        bdSets.pcRect = crect1;
+        bdSets.stRect = trect2;
+        bdSets.scRect = crect2;
+        bdSets.ttRect = trect3;
+        bdSets.tcRect = crect3;
+        bdSets.tFont = font;
+        bdSets.cFont = bibleSets.captionFont;
     }
 
     // Draw the bible text verse(s) at the final size:
-    font.setPointSize(current_size);
-    mainFont = font;
-    painter->setFont(font);
+
+//    mainFont = font;
+    painter->setFont(bdSets.tFont);
     if(isShadow)
         painter->setPen(QColor(Qt::black));
     else
         painter->setPen(bibleSets.textColor);
-    painter->drawText(trect1, tflags, bibleVerse.primary_text);
+    painter->drawText(bdSets.ptRect, tflags, bibleVerse.primary_text);
     if(!bibleVerse.secondary_text.isNull())
-        painter->drawText(trect2, tflags, bibleVerse.secondary_text);
+        painter->drawText(bdSets.stRect, tflags, bibleVerse.secondary_text);
     if(!bibleVerse.trinary_text.isNull())
-        painter->drawText(trect3, tflags, bibleVerse.trinary_text);
+        painter->drawText(bdSets.ttRect, tflags, bibleVerse.trinary_text);
 
     // Draw the verse caption(s) at the final size:
 //    font.setPointSize(current_size*3/4);
-    painter->setFont(bibleSets.captionFont);
+    painter->setFont(bdSets.cFont);
     if(isShadow)
         painter->setPen(QColor(Qt::black));
     else
         painter->setPen(bibleSets.captionColor);
-    painter->drawText(crect1, cflags, bibleVerse.primary_caption);
+    painter->drawText(bdSets.pcRect, cflags, bibleVerse.primary_caption);
     if(!bibleVerse.secondary_text.isNull())
-        painter->drawText(crect2, cflags, bibleVerse.secondary_caption);
+        painter->drawText(bdSets.scRect, cflags, bibleVerse.secondary_caption);
     if(!bibleVerse.trinary_caption.isNull())
-        painter->drawText(crect3, cflags, bibleVerse.trinary_caption);
+        painter->drawText(bdSets.tcRect, cflags, bibleVerse.trinary_caption);
 
     // Restore the original font:
     font.setPointSize(original_size);
@@ -768,7 +791,7 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
             else if(songSets.endingType == 5)
                 song_ending = QString::fromUtf8("▪    ▪    ▪");
             else if(songSets.endingType == 6)
-                song_ending = QString::fromUtf8("�     �     � ");
+                song_ending = QString::fromUtf8("■    ■    ■");
             else if(songSets.endingType == 7)
             {
                 // First check if copyrigth info exist. If it does show it.
@@ -825,52 +848,34 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
 
     int caph, endh, mainh, mainw, totalh;
 
-    // Prepare Caption
-    painter->setFont(songSets.infoFont);
-    caption_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
-    caph = caption_rect.height();
-
-    // Prepare Ending
-    painter->setFont(songSets.endingFont);
-    ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
-    // Decrease songe ending font size so that it would fit in the screen width
-    while(ending_rect.width()> width)
+    if(!isTextPrepared)
     {
-        songSets.endingFont.setPointSize(songSets.endingFont.pointSize()-1);
+        sdSets.clear();
+
+        // Prepare Caption
+        painter->setFont(songSets.infoFont);
+        caption_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
+        caph = caption_rect.height();
+
+        // Prepare Ending
         painter->setFont(songSets.endingFont);
         ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
-    }
-    endh = ending_rect.height();
+        // Decrease songe ending font size so that it would fit in the screen width
+        while(ending_rect.width()> width)
+        {
+            songSets.endingFont.setPointSize(songSets.endingFont.pointSize()-1);
+            painter->setFont(songSets.endingFont);
+            ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
+        }
+        endh = ending_rect.height();
 
-    // Prepare Main Text
-    painter->setFont(main_font);
-    main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
-    mainh = main_rect.height();
-    mainw = main_rect.width();
-    totalh = caph+endh+mainh;
-
-    // Decrease song text to fit the screen
-    while(mainw > width || totalh > height)
-    {
-        main_font.setPointSize(main_font.pointSize() - 1);
+        // Prepare Main Text
         painter->setFont(main_font);
         main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
         mainh = main_rect.height();
         mainw = main_rect.width();
         totalh = caph+endh+mainh;
-    }
 
-    // Check if main font is less then 4/5 of original. if so, then song preparation again with text wrap
-    if(main_font.pointSize() <(songSets.textFont.pointSize()*4/5))
-    {
-        main_flags += Qt::TextWordWrap;
-        main_font = songSets.textFont;
-        // Prepare Main Text
-        painter->setFont(songSets.textFont);
-        main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
-        mainh = main_rect.height();
-        mainw = main_rect.width();
-        totalh = caph+endh+mainh;
 
         // Decrease song text to fit the screen
         while(mainw > width || totalh > height)
@@ -882,12 +887,47 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
             mainw = main_rect.width();
             totalh = caph+endh+mainh;
         }
+
+        // Check if main font is less then 4/5 of original. if so, then song preparation again with text wrap
+        if(main_font.pointSize() <(songSets.textFont.pointSize()*4/5))
+        {
+            main_flags += Qt::TextWordWrap;
+            main_font = songSets.textFont;
+            // Prepare Main Text
+            painter->setFont(songSets.textFont);
+            main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+            mainh = main_rect.height();
+            mainw = main_rect.width();
+            totalh = caph+endh+mainh;
+
+            // Decrease song text to fit the screen
+            while(mainw > width || totalh > height)
+            {
+                main_font.setPointSize(main_font.pointSize() - 1);
+                painter->setFont(main_font);
+                main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
+                mainh = main_rect.height();
+                mainw = main_rect.width();
+                totalh = caph+endh+mainh;
+            }
+        }
+        songSets.textFont = main_font;
+        isTextPrepared = true;
+        sdSets.cRect = caption_rect;
+        sdSets.tRect = main_rect;
+        sdSets.eRect = ending_rect;
+        sdSets.tFlags = main_flags;
     }
-    songSets.textFont = main_font;
 
     // AT This piont, all sizes should be good.
     // Set object location and DRAW
-    mainFont = songSets.textFont;
+    caption_rect = sdSets.cRect;
+    main_rect = sdSets.tRect;
+    ending_rect = sdSets.eRect;
+    caph = sdSets.cRect.height();
+    endh = sdSets.eRect.height();
+    main_flags = sdSets.tFlags;
+//    mainFont = songSets.textFont;
     mainh = height-caph-endh;
     if(songSets.infoAling == 0 && songSets.endingPosition == 0)
     {
@@ -993,7 +1033,7 @@ QRect DisplayScreen::boundRectOrDrawText(QPainter *painter, bool draw, int left,
     return out_rect;
 }
 
-void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height)
+void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height, bool isShadow)
 {
     // Margins:
     int left = 30;
@@ -1015,33 +1055,17 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height)
     else if(annouceSets.textAlingmentH==2)
         flags += Qt::AlignRight;
 
-    QFont font = painter->font();
+    QFont font = annouceSets.textFont;
     int orig_font_size = font.pointSize();
 
     // Keep decreasing the font size until the text fits into the allocated space:
     QRect rect;
 
-    bool exit = false;
-    while( !exit )
-    {
-        rect = painter->boundingRect(left, top, w, h, flags, announcement.text);
-        exit = ( rect.width() <= w && rect.height() <= h );
-        if( !exit )
-        {
-            font.setPointSize( font.pointSize()-1 );
-            painter->setFont(font);
-        }
-    }
 
-    // Force wrapping of songs that have really wide lines:
-    // (Do not allow font to be shrinked less than a 4/5 of the desired font)
-    if( font.pointSize() < (orig_font_size*4/5) )
+    if(!isTextPrepared)
     {
-        font.setPointSize(orig_font_size);
         painter->setFont(font);
-        flags = (flags | Qt::TextWordWrap);
-        //qDebug() << "DRAWING WITH WRAP";
-        exit = false;
+        bool exit = false;
         while( !exit )
         {
             rect = painter->boundingRect(left, top, w, h, flags, announcement.text);
@@ -1049,12 +1073,42 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height)
             if( !exit )
             {
                 font.setPointSize( font.pointSize()-1 );
-                //qDebug() << "SETTING SIZE:" << font.pointSize();
                 painter->setFont(font);
             }
         }
+
+        // Force wrapping of songs that have really wide lines:
+        // (Do not allow font to be shrinked less than a 4/5 of the desired font)
+        if( font.pointSize() < (orig_font_size*4/5) )
+        {
+            font.setPointSize(orig_font_size);
+            painter->setFont(font);
+            flags = (flags | Qt::TextWordWrap);
+            //qDebug() << "DRAWING WITH WRAP";
+            exit = false;
+            while( !exit )
+            {
+                rect = painter->boundingRect(left, top, w, h, flags, announcement.text);
+                exit = ( rect.width() <= w && rect.height() <= h );
+                if( !exit )
+                {
+                    font.setPointSize( font.pointSize()-1 );
+                    //qDebug() << "SETTING SIZE:" << font.pointSize();
+                    painter->setFont(font);
+                }
+            }
+        }
+        annouceSets.textFont = font;
+        adSets.tRect = rect;
+        isTextPrepared = true;
     }
-    painter->drawText(rect, flags, announcement.text);
+
+    painter->setFont(annouceSets.textFont);
+    if(isShadow)
+        painter->setPen(QColor(Qt::black));
+    else
+        painter->setPen(annouceSets.textColor);
+    painter->drawText(adSets.tRect, flags, announcement.text);
 
 }
 

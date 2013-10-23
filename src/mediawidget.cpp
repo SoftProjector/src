@@ -59,7 +59,8 @@ MediaWidget::MediaWidget(QWidget *parent) :
     connect(&mediaPlayer, SIGNAL(totalTimeChanged(qint64)), this, SLOT(updateTime()));
     connect(&mediaPlayer, SIGNAL(tick(qint64)), this, SLOT(updateTime()));
     connect(&mediaPlayer, SIGNAL(finished()), this, SLOT(finished()));
-    connect(&mediaPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(stateChanged(Phonon::State,Phonon::State)));
+    connect(&mediaPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+            this, SLOT(stateChanged(Phonon::State,Phonon::State)));
     connect(&mediaPlayer, SIGNAL(hasVideoChanged(bool)), this, SLOT(hasVideoChanged(bool)));
 
     connect(videoWidget, SIGNAL(playPause()), this, SLOT(playPause()));
@@ -153,6 +154,7 @@ void MediaWidget::handleDrop(QDropEvent *e)
     fext.replace(" ","$|");
     fext.append("$");
     QRegExp rx(fext);
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
     foreach(const QUrl &url, urls)
     {
         QString fp = url.toLocalFile();
@@ -341,7 +343,8 @@ void MediaWidget::prepareForProjection()
 
 void MediaWidget::on_pushButtonOpen_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(this,tr("Open Music/Video File"),".",tr("Media Files (%1);;Audio Files (%2);;Video Files (%3)")
+    QString file = QFileDialog::getOpenFileName(this,tr("Open Music/Video File"),".",
+                                                tr("Media Files (%1);;Audio Files (%2);;Video Files (%3)")
                                                 .arg(audioExt + " " + videoExt) // media files
                                                 .arg(audioExt) // audio files
                                                 .arg(videoExt)); // video files
@@ -364,7 +367,8 @@ void MediaWidget::on_pushButtonGoLive_clicked()
 
 void MediaWidget::addToLibrary()
 {
-    QStringList mfp = QFileDialog::getOpenFileNames(this,tr("Select Music/Video Files to Open"),".",tr("Media Files (%1);;Audio Files (%2);;Video Files (%3)")
+    QStringList mfp = QFileDialog::getOpenFileNames(this,tr("Select Music/Video Files to Open"),".",
+                                                    tr("Media Files (%1);;Audio Files (%2);;Video Files (%3)")
                                                     .arg(audioExt + " " + videoExt) // media files
                                                     .arg(audioExt) // audio files
                                                     .arg(videoExt)); // video files
@@ -375,17 +379,22 @@ void MediaWidget::addToLibrary()
 
 void MediaWidget::removeFromLibrary()
 {
-    int cm = ui->listWidgetMediaFiles->currentIndex().row();
+    int cm = ui->listWidgetMediaFiles->currentRow();
     if(cm>=0)
     {
         QSqlQuery sq;
         sq.exec("DELETE FROM Media WHERE short_path = '" +mediaFileNames.at(cm)+ "'");
         mediaFilePaths.removeAt(cm);
         mediaFileNames.removeAt(cm);
+
+        ui->listWidgetMediaFiles->setCurrentRow(-1);
         ui->listWidgetMediaFiles->clear();
-        ui->listWidgetMediaFiles->addItems(mediaFileNames);
+        if(mediaFileNames.count()>0)
+            ui->listWidgetMediaFiles->addItems(mediaFileNames);
         mediaPlayer.stop();
+
         hasVideoChanged(false);
+
         ui->labelInfo->setText(tr("<center>No media</center>"));
     }
 }
@@ -440,4 +449,13 @@ void MediaWidget::goLiveFromSchedule()
         prepareForProjection();
     else
         mediaPlayer.play();
+}
+
+bool MediaWidget::isValidMedia()
+{
+    int cm = ui->listWidgetMediaFiles->currentRow();
+    if(cm>=0)
+        return true;
+    else
+        return false;
 }

@@ -77,7 +77,8 @@ SOURCES += main.cpp \
     schedule.cpp \
     picturesettingwidget.cpp \
     moduledownloaddialog.cpp \
-    moduleprogressdialog.cpp
+    moduleprogressdialog.cpp \
+    displaysetting.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -116,7 +117,8 @@ HEADERS += softprojector.h \
     schedule.h \
     picturesettingwidget.h \
     moduledownloaddialog.h \
-    moduleprogressdialog.h
+    moduleprogressdialog.h \
+    displaysetting.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \

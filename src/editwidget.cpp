@@ -59,27 +59,13 @@ void EditWidget::changeEvent(QEvent *e)
 
 void EditWidget::on_btnSave_clicked()
 {
-    /* This will never happen, because song number is automatically
-       set when a songbook is chosen:
-    if( ui->lineEditSongNumber->text().isEmpty() )
-    {
-
-        QMessageBox mb;
-        mb.setText(tr("Please specify a song number to use"));
-        mb.setWindowTitle(tr("Song number is missing"));
-        mb.setIcon(QMessageBox::Warning);
-        mb.exec();
-        return;
-    }
-    */
-
     // Check if song title exists. A song title MUST exits
     QString song_title = ui->lineEditTitle->text();
     song_title = song_title.simplified(); // make sure that its not all empty spaces
 
     if(song_title.isEmpty())
     {
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setText(tr("Song title cannot be left empty.\nPlease enter song title."));
         mb.setWindowTitle(tr("Song title is missing"));
         mb.setIcon(QMessageBox::Warning);
@@ -283,9 +269,10 @@ void EditWidget::setEdit(Song sEdit)
     else
     {
         sEdit.songbook_id="0";//initialize no to be empty
-        addNewSong(sEdit,tr("Cannot find exact match in database"),tr("The exact match of a song you are editing was not found in database.\n"
-                                                         "In order to edit this song, you need to add it to database.\n\n"
-                                                         "Please select a Songbook to which you want to copy this song to:"));
+        addNewSong(sEdit,tr("Cannot find exact match in database"),
+                   tr("The exact match of a song you are editing was not found in database.\n"
+                      "In order to edit this song, you need to add it to database.\n\n"
+                      "Please select a Songbook to which you want to copy this song to:"));
     }
 }
 
@@ -298,7 +285,8 @@ void EditWidget::setNew()
 {
     Song new_song;
     resetUiItems();
-    new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n - words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
+    new_song.songText = tr("Verse 1\n - words of verse go here\n\nRefrain\n"
+                           "- words of Chorus/Refrain\ngo here\n\nVerse 2\n - words of verse go here");
     addNewSong(new_song,tr("Add a new Songbook"),tr("Select a Songbook to which you want to add a song"));
 }
 
@@ -560,13 +548,13 @@ void EditWidget::on_checkBoxUseBackground_toggled(bool checked)
 
 void EditWidget::on_toolButtonBrowseBackground_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Select an image for the wallpaper"),
-                                                    ".", "Images (*.png *.jpg *.jpeg)");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select an image for the wallpaper"),
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
 
     if( !filename.isNull() )
     {
-        editSong.background.load(filename);
+        QPixmap p(filename);
+        editSong.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
         QFileInfo fi(filename);
         filename = fi.fileName();
         editSong.backgroundName = filename;

@@ -23,6 +23,7 @@
 //#include <QWidget>
 #include <QtGui>
 #include "theme.h"
+#include "spfunctions.h"
 
 namespace Ui {
     class AnnouncementSettingWidget;

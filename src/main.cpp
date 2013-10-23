@@ -107,6 +107,8 @@ bool connect(QString database_file)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setApplicationName("SoftProjector");
+
     
 //    #ifndef Q_WS_MAC
 //    QApplication::setStyle("Plastique");

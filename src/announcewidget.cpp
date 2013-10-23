@@ -30,6 +30,7 @@ AnnounceWidget::AnnounceWidget(QWidget *parent) :
 
     editAnounceDialog = new EditAnnouncementDialog(this);
     connect(editAnounceDialog,SIGNAL(announceToAdd(Announcement)),this,SLOT(addNewAnnouncement(Announcement)));
+    connect(editAnounceDialog,SIGNAL(announceToUpdate()),this,SLOT(updateAnnouncement()));
 
     announceModel = new AnnounceModel;
     announceProxy = new AnnounceProxyModel(this);
@@ -140,19 +141,7 @@ void AnnounceWidget::editAnnouncement()
     if(previewAnnounce.idNum>0)
     {
         editAnounceDialog->setEditAnnouce(previewAnnounce);
-        int ret = editAnounceDialog->exec();
-        switch(ret)
-        {
-        case EditAnnouncementDialog::Accepted:
-            announceModel->updateAnnounceFromDatabase(previewAnnounce.idNum);
-            setPreview(currentAnnouncement());
-            loadAnnouncement();
-            break;
-        case EditAnnouncementDialog::Rejected:
-            break;
-        default:
-            break;
-        }
+        editAnounceDialog->exec();
     }
 }
 
@@ -170,6 +159,9 @@ void AnnounceWidget::deleteAnnouncement()
     if(previewAnnounce.idNum>0)
     {
         previewAnnounce.deleteAnnouce();
+        previewAnnounce = Announcement();
+        ui->listWidgetAnnouncement->clear();
+        ui->labelAnnounceTitle->clear();
         int row = ui->tableViewAnnouncements->currentIndex().row();
         announceModel->removeRow(row);
     }
@@ -179,6 +171,13 @@ void AnnounceWidget::addNewAnnouncement(Announcement announce)
 {
     announceModel->addAnnouncement(announce);
     ui->tableViewAnnouncements->selectRow(announceModel->rowCount()-1);
+}
+
+void AnnounceWidget::updateAnnouncement()
+{
+    announceModel->updateAnnounceFromDatabase(previewAnnounce.idNum);
+    setPreview(currentAnnouncement());
+    loadAnnouncement();
 }
 
 bool AnnounceWidget::isAnnounceValid()

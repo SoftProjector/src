@@ -53,3 +53,12 @@ bool isAnnounceTitle(QString string)
     else
         return false;
 }
+
+QString getSupportedImageFormats()
+{
+    QList<QByteArray> im = QImageReader::supportedImageFormats();
+    QString imfor;
+    foreach (QByteArray f,im)
+        imfor += " *." + f;
+    return imfor.trimmed();
+}

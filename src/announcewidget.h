@@ -56,6 +56,7 @@ private slots:
     void setAnnounceList();
     void setPreview(Announcement announce);
     void addNewAnnouncement(Announcement announce);
+    void updateAnnouncement();
     void sendToProjector();
     void on_pushButtonLive_clicked();
     void on_listWidgetAnnouncement_doubleClicked(const QModelIndex &index);

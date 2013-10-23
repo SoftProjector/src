@@ -56,8 +56,8 @@ SlideShowSettings::SlideShowSettings()
     expandSmall = true;
     fitType = 0;
     resize = true;
-    boundType = 1;
-    boundWidth = 1024;
+    boundType = 2;
+    boundWidth = 1280;
 }
 
 Settings::Settings()

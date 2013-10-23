@@ -535,18 +535,22 @@ void ManageDataDialog::importSongbook(QString path)
                     int spsVer = q.value(0).toInt();
                     if(spsVer == 2)
                     {
-                        QSqlDatabase::database().transaction();
+                        max = row = 0;
+                        q.exec("SELECT number FROM Songs");
+                        while(q.next())
+                            ++max;
                         if(importType == "down")
                         {
-                            progressDia->setCurrentValue(0);
-                            progressDia->setCurrentMin(0);
-                            progressDia->setCurrentMax(0);
+                            progressDia->setCurrentMax(max);
+                            progress.close();
                         }
                         else
                         {
-                            progress.setMaximum(0);
+                            progress.setMaximum(max);
                             progress.show();
                         }
+
+                        QSqlDatabase::database().transaction();
                         // Prepare and save songbook
                         q.exec("SELECT title, info from SongBook");
                         q.first();
@@ -592,6 +596,12 @@ void ManageDataDialog::importSongbook(QString path)
                             sq.bindValue(":ct",q.record().value("count"));
                             sq.bindValue(":d",q.record().value("date"));
                             sq.exec();
+
+                            ++row;
+                            if(importType == "down")
+                                progressDia->setCurrentValue(row);
+                            else
+                                progress.setValue(row);
                         }
                         progress.close();
 
@@ -599,23 +609,35 @@ void ManageDataDialog::importSongbook(QString path)
                     }
                     else if(spsVer > 2)
                     {
-                        QMessageBox mb;
-                        mb.setWindowTitle(tr("Unsupported SongBook version."));
-                        mb.setText(tr("The SongBook file you are opening, is of a later release and \n"
-                                      "is not supported by current version of SoftProjector.\n"
-                                      "You are trying to open SongBook version %1.\n"
-                                      "Please upgrade to latest version of SoftProjector and try again.").arg(spsVer));
-                        mb.setIcon(QMessageBox::Information);
-                        mb.exec();
+                        QString errorm = tr("The SongBook file you are opening, is of a later release and \n"
+                                            "is not supported by current version of SoftProjector.\n"
+                                            "You are trying to open SongBook version %1.\n"
+                                            "Please upgrade to latest version of SoftProjector and try again.").arg(spsVer);
+                        if(importType == "down")
+                            progressDia->appendText(errorm);
+                        else
+                        {
+                            QMessageBox mb(this);
+                            mb.setWindowTitle(tr("Unsupported SongBook version."));
+                            mb.setText(errorm);
+                            mb.setIcon(QMessageBox::Information);
+                            mb.exec();
+                        }
                     }
                     else
                     {
-                        QMessageBox mb;
-                        mb.setWindowTitle(tr("Unsupported SongBook version."));
-                        mb.setText(tr("The SongBook file you are opening, is not supported \n"
-                                      "by current version of SoftProjector.\n"));
-                        mb.setIcon(QMessageBox::Information);
-                        mb.exec();
+                        QString errorm = tr("The SongBook file you are opening, is not supported \n"
+                                            "by current version of SoftProjector.\n");
+                        if(importType == "down")
+                            progressDia->appendText(errorm);
+                        else
+                        {
+                            QMessageBox mb(this);
+                            mb.setWindowTitle(tr("Unsupported SongBook version."));
+                            mb.setText(errorm);
+                            mb.setIcon(QMessageBox::Information);
+                            mb.exec();
+                        }
                     }
                 }
             }
@@ -624,13 +646,19 @@ void ManageDataDialog::importSongbook(QString path)
         else// too old file format.
         {
             //User friednly box for incorrect file version
-            QMessageBox mb;
-            mb.setWindowTitle(tr("Too old SongBook file format"));
-            mb.setText(tr("The SongBook file you are opening, is in very old format\n"
-                          "and is no longer supported by current version of SoftProjector.\n"
-                          "You may try to import it with version 1.07 and then export it, and import it again."));
-            mb.setIcon(QMessageBox::Information);
-            mb.exec();
+            QString errorm = tr("The SongBook file you are opening, is in very old format\n"
+                                "and is no longer supported by current version of SoftProjector.\n"
+                                "You may try to import it with version 1.07 and then export it, and import it again.");
+            if(importType == "down")
+                progressDia->appendText(errorm);
+            else
+            {
+                QMessageBox mb(this);
+                mb.setWindowTitle(tr("Too old SongBook file format"));
+                mb.setText(errorm);
+                mb.setIcon(QMessageBox::Information);
+                mb.exec();
+            }
         }
     }
 
@@ -666,7 +694,7 @@ void ManageDataDialog::exportSongbook(QString path)
     {
         if(!QFile::remove(path))
         {
-            QMessageBox mb;
+            QMessageBox mb(this);
             mb.setText(tr("An error has ocured when overwriting existing file.\n"
                           "Please try again with different file name."));
             mb.setIcon(QMessageBox::Information);
@@ -743,7 +771,7 @@ void ManageDataDialog::exportSongbook(QString path)
 
     setArrowCursor();
 
-    QMessageBox mb;
+    QMessageBox mb(this);
     mb.setWindowTitle(tr("Export complete"));
     mb.setText(tr("The songbook \"") + title + tr("\"\nHas been saved to:\n     ") + path);
     mb.setIcon(QMessageBox::Information);
@@ -756,7 +784,7 @@ void ManageDataDialog::on_delete_songbook_pushButton_clicked()
     Songbook songbook = songbook_model->getSongbook(row);
     QString name = songbook.title;
 
-    QMessageBox ms;
+    QMessageBox ms(this);
     ms.setWindowTitle(tr("Delete songbook?"));
     ms.setText(tr("Are you sure that you want to delete: ")+ name);
     ms.setInformativeText(tr("This action will permanentrly delete this songbook"));
@@ -834,13 +862,18 @@ void ManageDataDialog::importBible(QString path)
         // check file format and version
         if (!line.startsWith("##spData")) // Old bible format verison
         {
-            QMessageBox mb;
-            mb.setWindowTitle(tr("Old Bible file format"));
-            mb.setText(tr("The Bible format you are importing is of an old version.\n"
-                          "Your current SoftProjector does not support this format.\n"
-                          "Please download lattest Bibles and import them."));
-            mb.setIcon(QMessageBox::Critical);
-            mb.exec();
+            QString errorm = tr("The Bible format you are importing is of an usupported file version.\n"
+                                "Your current SoftProjector version does not support this format.");
+            if(importType == "down")
+                progressDia->appendText(errorm);
+            else
+            {
+                QMessageBox mb(this);
+                mb.setWindowTitle(tr("Unsupported Bible file format"));
+                mb.setText(errorm);
+                mb.setIcon(QMessageBox::Critical);
+                mb.exec();
+            }
             file.close();
             return;
         }
@@ -850,13 +883,19 @@ void ManageDataDialog::importBible(QString path)
             version = split.at(1);
             if (version.trimmed() != "1") // Version 1
             {
-                QMessageBox mb;
-                mb.setWindowTitle(tr("New Bible file format"));
-                mb.setText(tr("The Bible format you are importing is of an new version.\n"
-                              "Your current SoftProjector does not support this format.\n"
-                              "Please upgrade SoftProjector to latest version."));
-                mb.setIcon(QMessageBox::Critical);
-                mb.exec();
+                QString errorm = tr("The Bible format you are importing is of an new version.\n"
+                                    "Your current SoftProjector does not support this format.\n"
+                                    "Please upgrade SoftProjector to latest version.");
+                if(importType == "down")
+                    progressDia->appendText(errorm);
+                else
+                {
+                    QMessageBox mb(this);
+                    mb.setWindowTitle(tr("New Bible file format"));
+                    mb.setText(errorm);
+                    mb.setIcon(QMessageBox::Critical);
+                    mb.exec();
+                }
                 file.close();
                 return;
             }
@@ -1075,7 +1114,7 @@ void ManageDataDialog::exportBible(QString path, Bibles bible)
     ofile.close();
     setArrowCursor();
 
-    QMessageBox mb;
+    QMessageBox mb(this);
     mb.setWindowTitle(tr("Bible has been exported"));
     mb.setText(tr("Bible:\n     ") + bible.title + tr("\nHas been saved to:\n     " )+ path);
     mb.setIcon(QMessageBox::Information);
@@ -1088,7 +1127,7 @@ void ManageDataDialog::on_delete_bible_pushButton_clicked()
     Bibles bible = bible_model->getBible(row);
     QString name = bible.title;
 
-    QMessageBox ms;
+    QMessageBox ms(this);
     ms.setWindowTitle(tr("Delete Bible?"));
     ms.setText(tr("Are you sure that you want to delete: ")+ name);
     ms.setInformativeText(tr("This action will permanentrly delete this Bible"));
@@ -1336,18 +1375,7 @@ void ManageDataDialog::importTheme(QString path)
         {
             setWaitCursor();
             QProgressDialog progress;
-            if(importType == "down")
-            {
-                progressDia->setCurrentMin(0);
-                progressDia->setCurrentMax(0);
-                progressDia->setCurrentValue(0);
-            }
-            else
-            {
-                progress.setMaximum(0);
-                progress.setLabelText(tr("Importing Themes..."));
-                progress.show();
-            }
+
             QSqlQuery q(db), q2(db);
             QSqlQuery sq;
             q.exec("PRAGMA user_version");
@@ -1355,6 +1383,19 @@ void ManageDataDialog::importTheme(QString path)
             int sptVer = q.value(0).toInt();
             if(sptVer == 2)
             {
+                int max(0),row(0);
+                q.exec("SELECT id FROM Themes");
+                while(q.next())
+                    ++max;
+                max *= 5;
+                if(importType == "down")
+                      progressDia->setCurrentMax(max);
+                else
+                {
+                    progress.setMaximum(max);
+                    progress.setLabelText(tr("Importing Themes..."));
+                    progress.show();
+                }
                 QSqlDatabase::database().transaction();
                 // Get Themes
                 q.exec("SELECT id, name, comment FROM Themes");
@@ -1371,48 +1412,85 @@ void ManageDataDialog::importTheme(QString path)
                     int sptidTo = sq.value(0).toInt();
                     sq.clear();
 
+                    ++row;
+                    if(importType == "down")
+                        progressDia->setCurrentValue(row);
+                    else
+                        progress.setValue(row);
 
                     // Import Announce Theme
                     q2.exec(QString("SELECT * FROM ThemeAnnounce WHERE theme_id = %1").arg(spitidFrom));
                     transferThemeAnnounce(q2,sq,sptidTo);
-//                    progress.setValue(2);
+
+                    ++row;
+                    if(importType == "down")
+                        progressDia->setCurrentValue(row);
+                    else
+                        progress.setValue(row);
 
                     // Import Bible Theme
                     q2.exec(QString("SELECT * FROM ThemeBible WHERE theme_id = %1").arg(spitidFrom));
                     transferThemeBible(q2,sq,sptidTo);
-//                    progress.setValue(3);
+
+                    ++row;
+                    if(importType == "down")
+                        progressDia->setCurrentValue(row);
+                    else
+                        progress.setValue(row);
 
                     // Import Passive Theme
                     q2.exec(QString("SELECT * FROM ThemePassive WHERE theme_id = %1").arg(spitidFrom));
                     transferThemePassive(q2,sq,sptidTo);
-//                    progress.setValue(4);
+
+                    ++row;
+                    if(importType == "down")
+                        progressDia->setCurrentValue(row);
+                    else
+                        progress.setValue(row);
 
                     // Import Songs Theme
                     q2.exec(QString("SELECT * FROM ThemeSong WHERE theme_id = %1").arg(spitidFrom));
                     transferThemeSong(q2,sq,sptidTo);
-//                    progress.setValue(5);
+
+                    ++row;
+                    if(importType == "down")
+                        progressDia->setCurrentValue(row);
+                    else
+                        progress.setValue(row);
                 }
                 QSqlDatabase::database().commit();
             }
             else if(sptVer > 2)
             {
-                QMessageBox mb;
-                mb.setWindowTitle(tr("Unsupported Theme version."));
-                mb.setText(tr("The Theme file you are opening, is of a later release and \n"
-                              "is not supported by current version of SoftProjector.\n"
-                              "You are trying to open Theme version %1.\n"
-                              "Please upgrade to latest version of SoftProjector and try again.").arg(sptVer));
-                mb.setIcon(QMessageBox::Information);
-                mb.exec();
+                QString errorm = tr("The Theme file you are opening, is of a later release and \n"
+                                    "is not supported by current version of SoftProjector.\n"
+                                    "You are trying to open Theme version %1.\n"
+                                    "Please upgrade to latest version of SoftProjector and try again.").arg(sptVer);
+                if(importType == "down")
+                    progressDia->appendText(errorm);
+                else
+                {
+                    QMessageBox mb(this);
+                    mb.setWindowTitle(tr("Unsupported Theme version."));
+                    mb.setText(errorm);
+                    mb.setIcon(QMessageBox::Information);
+                    mb.exec();
+                }
             }
             else
             {
-                QMessageBox mb;
-                mb.setWindowTitle(tr("Unsupported Theme version."));
-                mb.setText(tr("The Theme file you are opening, is not supported \n"
-                              "by current version of SoftProjector.\n"));
-                mb.setIcon(QMessageBox::Information);
-                mb.exec();
+                QString errorm = tr("The Theme file you are opening, is not supported \n"
+                                    "by current version of SoftProjector.\n");
+                if(importType == "down")
+                    progressDia->appendText(errorm);
+                else
+                {
+                    QMessageBox mb(this);
+                    mb.setWindowTitle(tr("Unsupported Theme version."));
+                    mb.setText(errorm);
+                    mb.setIcon(QMessageBox::Information);
+                    mb.exec();
+                }
             }
             setArrowCursor();
             progress.close();
@@ -1488,7 +1566,7 @@ void ManageDataDialog::exportTheme(QString path, bool all)
     {
         if(!QFile::remove(path))
         {
-            QMessageBox mb;
+            QMessageBox mb(this);
             mb.setText(tr("An error has ocured when overwriting existing file.\n"
                           "Please try again with different file name."));
             mb.setIcon(QMessageBox::Information);
@@ -1749,7 +1827,7 @@ void ManageDataDialog::on_pushButtonThemeDelete_clicked()
     ThemeInfo tm = themeModel->getTheme(row);
     QString name = tm.name;
 
-    QMessageBox ms;
+    QMessageBox ms(this);
     ms.setWindowTitle(tr("Delete Theme?"));
     ms.setText(tr("Are you sure that you want to delete theme: ")+ name);
     ms.setInformativeText(tr("This action will permanentrly delete this theme"));

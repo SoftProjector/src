@@ -24,6 +24,7 @@
 #include <QtSql>
 #include "theme.h"
 #include "settings.h"
+#include "spfunctions.h"
 
 namespace Ui {
     class BibleSettingWidget;

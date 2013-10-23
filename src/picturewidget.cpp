@@ -30,6 +30,7 @@ PictureWidget::PictureWidget(QWidget *parent) :
 //    r.setHeight(300);
 //    ui->labelPreview->setGeometry(r);
     loadSlideShows();
+    ui->pushButtonGoLive->setEnabled(false);
 }
 
 PictureWidget::~PictureWidget()
@@ -85,13 +86,12 @@ void PictureWidget::on_pushButtonAddImages_clicked()
 {
 //    imagesPreview.clear();
 //    imagesToShow.clear();
-    QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",tr("Images(*.png *.jpg *.jpeg)"));
-
+    QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",
+                                                               tr("Images(%1)").arg(getSupportedImageFormats()));
 
     if(imageFilePaths.count()>0)
     {
         this->setCursor(Qt::WaitCursor);
-//        ui->listWidgetSlides->clear();
         int i(0);
         QProgressDialog progress(tr("Adding files..."), tr("Cancel"), 0, imageFilePaths.count(), this);
         ui->listWidgetSlides->setIconSize(QSize(100,100));
@@ -142,6 +142,7 @@ void PictureWidget::on_pushButtonAddImages_clicked()
             ui->listWidgetSlides->addItem(itm);
         }
         this->setCursor(Qt::ArrowCursor);
+        ui->pushButtonGoLive->setEnabled(true);
     }
 }
 
@@ -172,6 +173,8 @@ void PictureWidget::on_pushButtonClearImages_clicked()
     ui->labelPreview->clear();
     ui->labelPreview->setText(tr("Picture Preview"));
     ui->labelPixInfo->setText(tr("Preview slide: "));
+    ui->pushButtonGoLive->setEnabled(false);
+    currentSlideShow = SlideShow();
 }
 
 void PictureWidget::on_pushButtonMoveUp_clicked()
@@ -219,7 +222,7 @@ void PictureWidget::on_pushButtonGoLive_clicked()
 
 void PictureWidget::sendToProjector()
 {
-    emit sendSlideShow(slides, ui->listWidgetSlides->currentRow());
+    emit sendSlideShow(slides, ui->listWidgetSlides->currentRow(),currentSlideShow.name);
 }
 
 void PictureWidget::loadSlideShow(int ss_id)
@@ -227,6 +230,7 @@ void PictureWidget::loadSlideShow(int ss_id)
     SlideShow ss;
     ss.loadSlideShow(ss_id);
     sendToPreview(ss);
+    ui->pushButtonGoLive->setEnabled(true);
 }
 
 void PictureWidget::sendToPreview(SlideShow &sshow)
@@ -274,6 +278,7 @@ void PictureWidget::deleteSlideShow()
     sq.exec(QString("DELETE FROM SlideShows WHERE id = %1").arg(ssId));
     sq.exec(QString("DELETE FROM Slides WHERE ss_id = %1").arg(ssId));
     loadSlideShows();
+    on_pushButtonClearImages_clicked();
 }
 
 void PictureWidget::on_listWidgetSlideShow_itemSelectionChanged()

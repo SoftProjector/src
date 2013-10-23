@@ -277,7 +277,6 @@ void BibleSettingWidget::loadBibleVersions()
     ui->comboBoxTrinaryBible2->addItem(tr("None"));
     ui->comboBoxTrinaryBible2->addItems(bibles);
 
-    qDebug()<<"P,S,T,O"<<bversion.primaryBible<<bversion.secondaryBible<<bversion.trinaryBible<<bversion.operatorBible;
     // Set current primary bible
     if(bversion.primaryBible == "none")
         ui->comboBoxPrimaryBible->setCurrentIndex(0);
@@ -495,10 +494,14 @@ void BibleSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
 void BibleSettingWidget::on_buttonBrowseBackground_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -509,10 +512,14 @@ void BibleSettingWidget::on_buttonBrowseBackground_clicked()
 void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings2.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings2.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;

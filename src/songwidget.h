@@ -64,9 +64,6 @@ signals:
 
 private slots:
     void on_comboBoxCategory_currentIndexChanged(int index);
-    void on_exact_match_rbutton_clicked();
-    void on_begins_rbutton_clicked();
-    void on_contains_rbutton_clicked();
     void on_listPreview_doubleClicked(QModelIndex index);
     void on_songs_view_clicked(QModelIndex index);
     void on_song_num_spinbox_editingFinished();
@@ -86,6 +83,8 @@ private slots:
     void on_pushButtonSearch_clicked();
 
     void on_pushButtonClearResults_clicked();
+
+    void on_comboBoxFilterType_currentIndexChanged(int index);
 
 private:
     Ui::SongWidget *ui;

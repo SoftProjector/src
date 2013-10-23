@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dispaly Screen</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="softprojector.qrc">
+    <normaloff>:/icons/icons/display.png</normaloff>:/icons/icons/display.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
@@ -22,6 +26,8 @@
    </property>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

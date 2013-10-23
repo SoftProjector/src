@@ -29,6 +29,7 @@
 #include "song.h"
 #include "announcewidget.h"
 #include "videoinfo.h"
+#include "displaysetting.h"
 
 namespace Ui {
 class DisplayScreen;
@@ -89,7 +90,7 @@ private slots:
     void drawSongText(QPainter *painter, int width, int height, bool isShadow);
 //    QRect drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
-    void drawAnnounceText(QPainter *painter, int width, int height);
+    void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
 
     void updateTimeText();
     void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
@@ -101,6 +102,7 @@ private:
     bool useFading;
     bool useShadow;
     bool useBluredShadow;
+    bool isTextPrepared;
     QFont mainFont;
     QString wallpaperPath; // Wallpaper image file path
 //    QImage wallpaper; // Wallpaper image
@@ -134,6 +136,10 @@ private:
     QLabel *textRenderLabel;
 
     Phonon::VideoWidget *videoWidget;
+
+    BibleDisplaySettings bdSets;
+    SongDisplaySettings sdSets;
+    AnnounceDisplaySettings adSets;
 //    Phonon::VideoPlayer *vidP;
 };
 

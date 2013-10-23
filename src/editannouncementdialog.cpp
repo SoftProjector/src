@@ -66,6 +66,9 @@ void EditAnnouncementDialog::setUiItems()
 void EditAnnouncementDialog::resetUiItems()
 {
     Announcement a;
+    a.text = tr("Announce\n - Text of the announcement goes here\n\n"
+                "Slide\n - Text of the announcement goes here\n"
+                "You can have both Annouce or Slide as announcement block titles.");
     ui->lineEditTitle->setText(a.title);
     ui->labelIdNum->setText(QString::number(a.idNum));
     ui->textEditAnnouncement->setPlainText(a.text);
@@ -75,24 +78,66 @@ void EditAnnouncementDialog::resetUiItems()
     ui->checkBoxLoop->setChecked(a.loop);
 }
 
-void EditAnnouncementDialog::setSave()
+bool EditAnnouncementDialog::setSave()
 {
-    editAnnounce.title = ui->lineEditTitle->text();
-    editAnnounce.text = ui->textEditAnnouncement->toPlainText();
-    editAnnounce.usePrivateSettings = ui->checkBoxUsePrivateSettings->isChecked();
-    editAnnounce.useAutoNext = ui->checkBoxTimedSlides->isChecked();
-    editAnnounce.slideTimer = ui->spinBoxTimeOut->value();
-    editAnnounce.loop = ui->checkBoxLoop->isChecked();
+    QString t = ui->lineEditTitle->text();
+    t = t.simplified();
+    if(!t.isEmpty())
+    {
+        editAnnounce.title = t;
+        editAnnounce.text = ui->textEditAnnouncement->toPlainText();
+        editAnnounce.usePrivateSettings = ui->checkBoxUsePrivateSettings->isChecked();
+        editAnnounce.useAutoNext = ui->checkBoxTimedSlides->isChecked();
+        editAnnounce.slideTimer = ui->spinBoxTimeOut->value();
+        editAnnounce.loop = ui->checkBoxLoop->isChecked();
+        return true;
+    }
+    else
+    {
+        QMessageBox mb(this);
+        mb.setText(tr("Announcement title cannot be left empty.\nPlease enter announcement title."));
+        mb.setWindowTitle(tr("Announcement title is missing"));
+        mb.setIcon(QMessageBox::Warning);
+        mb.exec();
+        ui->lineEditTitle->setFocus();
+        return false;
+    }
 }
 
-void EditAnnouncementDialog::on_buttonBox_accepted()
+//void EditAnnouncementDialog::on_buttonBox_accepted()
+//{
+//    if(!setSave())
+//        return;
+
+//    if(isNew)
+//    {
+//        editAnnounce.saveNew();
+//        emit announceToAdd(editAnnounce);
+//    }
+//    else
+//        editAnnounce.saveUpdate();
+//}
+
+void EditAnnouncementDialog::on_pushButtonSave_clicked()
 {
-    setSave();
+    if(!setSave())
+        return;
+
     if(isNew)
     {
         editAnnounce.saveNew();
         emit announceToAdd(editAnnounce);
     }
     else
+    {
         editAnnounce.saveUpdate();
+        emit announceToUpdate();
+    }
+
+    close();
+}
+
+void EditAnnouncementDialog::on_pushButtonCancel_clicked()
+{
+    close();
 }

@@ -25,6 +25,7 @@
 #include "slideshow.h"
 #include "slideshoweditor.h"
 #include "settings.h"
+#include "spfunctions.h"
 
 namespace Ui {
 class PictureWidget;
@@ -39,7 +40,7 @@ public:
     ~PictureWidget();
     
 signals:
-    void sendSlideShow(QList<SlideShowItem> &slideShow, int row);
+    void sendSlideShow(QList<SlideShowItem> &slideShow, int row,QString name);
     void sendToSchedule(SlideShow &sshow);
 
 public slots:

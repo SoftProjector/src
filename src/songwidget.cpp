@@ -125,7 +125,8 @@ void SongWidget::loadSongbooks()
     if(ui->pushButtonClearResults->isVisible())
         ui->listPreview->setItemDelegate(ui->listWidgetDummy->itemDelegate());
     ui->pushButtonClearResults->setVisible(false);
-    ui->labelSearchType->setVisible(false);
+    ui->labelSearchType->setText(tr("Filter Type:"));
+    ui->labelFilter->setText(tr("Filter:"));
 
     // update the song spin box and redraw the table:
     on_songbook_menu_currentIndexChanged( ui->songbook_menu->currentIndex() );
@@ -147,7 +148,7 @@ Song SongWidget::currentSong()
 
 void SongWidget::selectMatchingSong(QString text)
 {
-    bool startonly = ui->begins_rbutton->isChecked();
+    bool startonly = (ui->comboBoxFilterType->currentIndex() == 1);
     // Look for a song matching <text>. Select it and scroll to show it.
     for (int i = 0; i < songs_model->song_list.size(); i++)
     {
@@ -271,7 +272,7 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
     //if( value > max_num )
     //    ui->song_num_spinbox->setMaximum();
 
-    QMessageBox mb;
+    QMessageBox mb(this);
     mb.setText(tr("Could not find song with number ") + QString::number(value) );
     mb.setWindowTitle(tr("No such song"));
     mb.setIcon(QMessageBox::Warning);
@@ -300,8 +301,8 @@ void SongWidget::on_lineEditSearch_textEdited(QString text)
     if(!ui->pushButtonClearResults->isVisible())
     {
         // These two options are mutually exclusive:
-        bool match_beginning = ui->begins_rbutton->isChecked();
-        bool exact_match = ui->exact_match_rbutton->isChecked();
+        bool match_beginning = (ui->comboBoxFilterType->currentIndex() == 1);
+        bool exact_match = (ui->comboBoxFilterType->currentIndex() == 2);
 
         songs_model->emitLayoutAboutToBeChanged(); // prepares view to be redrawn
         proxy_model->setFilterString(text, match_beginning, exact_match);
@@ -401,6 +402,9 @@ void SongWidget::updateSongFromDatabase(int songid, int initial_sid)
 void SongWidget::deleteSong()
 {
     song_database.deleteSong(currentSong().songID);
+    preview_song = Song();
+    ui->preview_label->clear();
+    ui->listPreview->clear();
     int row = ui->songs_view->currentIndex().row();
     proxy_model->removeRow(row);
 }
@@ -420,17 +424,7 @@ void SongWidget::filterModeChanged()
     on_lineEditSearch_textEdited(new_text);
 }
 
-void SongWidget::on_contains_rbutton_clicked()
-{
-    filterModeChanged();
-}
-
-void SongWidget::on_begins_rbutton_clicked()
-{
-    filterModeChanged();
-}
-
-void SongWidget::on_exact_match_rbutton_clicked()
+void SongWidget::on_comboBoxFilterType_currentIndexChanged(int index)
 {
     filterModeChanged();
 }
@@ -574,10 +568,9 @@ void SongWidget::on_pushButtonSearch_clicked()
 
     // Hide song filter items and show search items
     //ui->pushButtonSearch->setText(tr("Search"));
-    ui->begins_rbutton->setVisible(false);
-    ui->contains_rbutton->setVisible(false);
-    ui->exact_match_rbutton->setVisible(false);
-    ui->labelSearchType->setVisible(true);
+    ui->comboBoxFilterType->setVisible(false);
+    ui->labelSearchType->setText(tr("Search Type:"));
+    ui->labelFilter->setText(tr("Search:"));
     ui->comboBoxSearchType->setVisible(true);
     ui->pushButtonClearResults->setVisible(true);
 
@@ -622,12 +615,11 @@ void SongWidget::on_pushButtonClearResults_clicked()
 
     // Hide song filter items and show search items
     //ui->pushButtonSearch->setText("");
-    ui->begins_rbutton->setVisible(true);
-    ui->contains_rbutton->setVisible(true);
-    ui->exact_match_rbutton->setVisible(true);
+    ui->comboBoxFilterType->setVisible(true);
     ui->comboBoxSearchType->setVisible(false);
     ui->pushButtonClearResults->setVisible(false);
-    ui->labelSearchType->setVisible(false);
+    ui->labelSearchType->setText(tr("Filter Type:"));
+    ui->labelFilter->setText(tr("Filter:"));
     songs_model->setSongs(allSongs);
     ui->lineEditSearch->clear();
     Song s;

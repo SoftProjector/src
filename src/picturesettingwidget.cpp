@@ -95,7 +95,7 @@ void PictureSettingWidget::on_lineEditBound_editingFinished()
         t.toInt(&ok);
         if(!ok)
         {
-            QMessageBox mb;
+            QMessageBox mb(this);
             mb.setWindowTitle(tr("Inalid Numeric Value"));
             mb.setText(tr("Entered '%1' custom width is not numeric. ").arg(t));
             mb.exec();

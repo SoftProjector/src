@@ -25,6 +25,7 @@ public slots:
 
 signals:
     void announceToAdd(Announcement announce);
+    void announceToUpdate();
 
     
 private slots:
@@ -33,10 +34,14 @@ private slots:
 
     void resetUiItems();
     void setUiItems();
-    void setSave();
+    bool setSave();
 
 
-    void on_buttonBox_accepted();
+//    void on_buttonBox_accepted();
+
+    void on_pushButtonSave_clicked();
+
+    void on_pushButtonCancel_clicked();
 
 private:
     Ui::EditAnnouncementDialog *ui;

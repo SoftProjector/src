@@ -44,6 +44,7 @@ public slots:
     VideoInfo getMedia();
     void setMediaFromSchedule(VideoInfo &v);
     void goLiveFromSchedule();
+    bool isValidMedia();
 protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);

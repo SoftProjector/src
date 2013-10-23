@@ -21,11 +21,15 @@
 #define SPFUNCTIONS_H
 
 #include <QString>
+#include <QStringList>
+#include <QImageReader>
 #include <QPixmap>
 #include <QBuffer>
 
+
 QByteArray pixToByte(const QPixmap & pmap);
 bool isAnnounceTitle(QString string);
+QString getSupportedImageFormats();
 //class spFunctions
 //{
 //public:

@@ -172,7 +172,7 @@ private slots:
     void setSongList(Song song, int row);
     void setAnnounceText(Announcement announce, int row);
     void setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems);
-    void setPictureList(QList<SlideShowItem> &image_list, int row);
+    void setPictureList(QList<SlideShowItem> &image_list, int row, QString name);
     void setVideo(VideoInfo &video);
 
     void on_listShow_itemSelectionChanged();

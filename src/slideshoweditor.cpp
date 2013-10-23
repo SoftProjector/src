@@ -74,7 +74,8 @@ void SlideShowEditor::updateButtonState()
 
 void SlideShowEditor::on_pushButtonAddImages_clicked()
 {
-    QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",tr("Images(*.png *.jpg *.jpeg)"));
+    QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",
+                                                              tr("Images(%1)").arg(getSupportedImageFormats()));
     if(imageFilePaths.count()>0)
     {
         this->setCursor(Qt::WaitCursor);
@@ -186,7 +187,12 @@ void SlideShowEditor::on_pushButtonSave_clicked()
     // Make sure that slide show Title is not empty before saving.
     if(editSS.name.isEmpty())
     {
-        //todo: message box saying that title cannot be empty
+        QMessageBox mb(this);
+        mb.setText(tr("Slide show title cannot be left empty.\nPlease enter a title."));
+        mb.setWindowTitle(tr("Slide show title is missing"));
+        mb.setIcon(QMessageBox::Warning);
+        mb.exec();
+        ui->lineEditTitle->setFocus();
         return;
     }
 

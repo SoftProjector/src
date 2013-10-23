@@ -136,10 +136,14 @@ void AnnouncementSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
 void AnnouncementSettingWidget::on_buttonBackground_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for announcement wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -150,10 +154,14 @@ void AnnouncementSettingWidget::on_buttonBackground_clicked()
 void AnnouncementSettingWidget::on_buttonBackground2_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for announcement wallpaper"),
-                                                    ".", tr("Images (*.png *.jpg *.jpeg)"));
+                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
     if(!filename.isNull())
     {
-        mySettings2.background.load(filename);
+        QPixmap p(filename);
+        if(p.width()>1280 || p.height()>1280)
+            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+        else
+            mySettings2.background = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;
