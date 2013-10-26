@@ -52,9 +52,7 @@ void GeneralSettingWidget::loadSettings()
     int screen_count = d.screenCount();
     ui->comboBoxDisplayScreen->clear();
     for(int i(0); i<screen_count;++i)
-    {
         monitors << QString("%1 - %2x%3").arg(i+1).arg(d.screenGeometry(i).width()).arg(d.screenGeometry(i).height());
-    }
 
     if(screen_count>1)
         ui->groupBoxDisplayScreen->setEnabled(true);
@@ -166,54 +164,40 @@ void GeneralSettingWidget::on_comboBoxDisplayScreen_activated(const QString &arg
 void GeneralSettingWidget::on_comboBoxDisplayScreen_2_activated(int index)
 {
     if(index<=0)
-       emit setDisp2Use(false);
+        emit setDisp2Use(false);
     else
         emit setDisp2Use(true);
 }
 
 void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
 {
-        QSqlTableModel sqt;
-        QSqlQuery sq;
-        Theme tm;
-        ThemeInfo tmi;
-        int nId;
+    Theme tm;
+    ThemeInfo tmi;
+    int nId;
 
-        AddSongbookDialog theme_dia;
-        theme_dia.setWindowTitle(tr("Edit Theme"));
-        theme_dia.setWindowText(tr("Theme Name:"),tr("Comments:"));
-        theme_dia.setSongbook(tr("Default"),tr("This theme will contain program default settings."));
-        int ret = theme_dia.exec();
-        switch(ret)
-        {
-        case AddSongbookDialog::Accepted:
-//            sqt.setTable("Themes");
-//            sqt.insertRow(0);
-//            sqt.setData(sqt.index(0,1),theme_dia.title);
-//            sqt.setData(sqt.index(0,2),theme_dia.info);
-//            sqt.submitAll();
+    AddSongbookDialog theme_dia;
+    theme_dia.setWindowTitle(tr("Edit Theme"));
+    theme_dia.setWindowText(tr("Theme Name:"),tr("Comments:"));
+    theme_dia.setSongbook(tr("Default"),tr("This theme will contain program default settings."));
+    int ret = theme_dia.exec();
+    switch(ret)
+    {
+    case AddSongbookDialog::Accepted:
+        tmi.name = theme_dia.title;
+        tmi.comments = theme_dia.info;
+        tm.setThemeInfo(tmi);
+        tm.saveThemeNew();
+        nId = tm.getThemeId();
 
+        loadThemes();
 
-//            sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-//            sq.first();
-//            nId = sq.value(0).toString();
+        ui->comboBoxTheme->setCurrentIndex(themeIdList.indexOf(nId));
+        emit themeChanged(nId);
 
-//            tm.saveNewTheme(nId);
-            tmi.name = theme_dia.title;
-            tmi.comments = theme_dia.info;
-            tm.setThemeInfo(tmi);
-            tm.saveThemeNew();
-            nId = tm.getThemeId();
-
-            loadThemes();
-
-            ui->comboBoxTheme->setCurrentIndex(themeIdList.indexOf(nId));
-            emit themeChanged(nId);
-
-            break;
-        case AddSongbookDialog::Rejected:
-            break;
-        }
+        break;
+    case AddSongbookDialog::Rejected:
+        break;
+    }
 }
 
 void GeneralSettingWidget::on_comboBoxTheme_activated(int index)

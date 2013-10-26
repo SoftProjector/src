@@ -49,7 +49,7 @@ bool connect(QString database_file)
         mb.setWindowTitle("Database Connection Error");
         mb.setIcon(QMessageBox::Critical);
         mb.exec();
-       return false;
+        return false;
     }
     else
     {
@@ -109,11 +109,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("SoftProjector");
 
-    
-//    #ifndef Q_WS_MAC
-//    QApplication::setStyle("Plastique");
-//    #endif
-
     QPixmap pixmap(":icons/icons/splash.png");
     QSplashScreen splash(pixmap);
     splash.setMask(pixmap.mask());
@@ -121,7 +116,6 @@ int main(int argc, char *argv[])
     a.processEvents();
 
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-
 
     // Look for the database in all the same places that the QSql module will look,
     // and display a friendly error if it was not found:
@@ -131,7 +125,7 @@ int main(int argc, char *argv[])
     // If it is installed, then provide proper directory for database.
     QDir d;
     QString cur_app_path = a.applicationDirPath();
-//    if(cur_app_path.contains(QString("C:%1Program Files").arg(d.separator())))
+    //    if(cur_app_path.contains(QString("C:%1Program Files").arg(d.separator())))
     if(cur_app_path.contains("C:/Program Files") || cur_app_path.contains("C:\\Program Files"))
     {
         // Check if it is on Windows Vista and Later or before Vista
@@ -178,7 +172,7 @@ int main(int argc, char *argv[])
             {
                 if(d.cd("Application Data"))
                 {
-                // Check if 'SoftProjector directory exists, if not, create one
+                    // Check if 'SoftProjector directory exists, if not, create one
                     if(d.cd("SoftProjector"))
                         database_dir = d.absolutePath() + d.separator();
                     else
@@ -237,7 +231,6 @@ int main(int argc, char *argv[])
         return 1;
     }
     // Database is of correct version
-
 
     SoftProjector w;
     w.setAppDataDir(QDir(database_dir));

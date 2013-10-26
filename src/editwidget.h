@@ -28,7 +28,7 @@
 #include "printpreviewdialog.h"
 
 namespace Ui {
-    class EditWidget;
+class EditWidget;
 }
 
 class EditWidget : public QWidget {
@@ -65,7 +65,6 @@ private:
     QString add_to_songbook;
     QList<int> cat_ids;
     int song_to_edit_id;
-
 
 private slots:
     void addNewSong(Song song, QString msgNewSongbook, QString msgCaption);

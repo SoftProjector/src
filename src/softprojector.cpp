@@ -53,7 +53,6 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     ui->setupUi(this);
 
-
     // Create action group for language slections
     languagePath = qApp->applicationDirPath()+QString(QDir::separator())+"translations"+QString(QDir::separator());
     createLanguageActions();
@@ -66,9 +65,6 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     // Apply Settings
     applySetting(mySettings.general, theme, mySettings.slideSets, mySettings.bibleSets, mySettings.bibleSets2);
-
-//    displayScreen1->setWindowIcon(QIcon(":icons/icons/display.png"));
-//    displayScreen2->setWindowIcon(QIcon(":icons/icons/display.png"));
 
     positionDisplayWindow();
 
@@ -115,12 +111,13 @@ SoftProjector::SoftProjector(QWidget *parent)
     connect(songWidget,SIGNAL(addToSchedule(Song&)),this,SLOT(addToShcedule(Song&)));
     connect(announceWidget,SIGNAL(addToSchedule(Announcement&)),this,SLOT(addToShcedule(Announcement&)));
 
+    // Add tool bar actions
     ui->toolBarFile->addAction(ui->actionNewSchedule);
     ui->toolBarFile->addAction(ui->actionOpenSchedule);
     ui->toolBarFile->addAction(ui->actionSaveSchedule);
     ui->toolBarFile->addSeparator();
     ui->toolBarFile->addAction(ui->actionPrint);
-//    ui->toolBarFile->addSeparator();
+
     ui->toolBarSchedule->addAction(ui->actionMoveScheduleTop);
     ui->toolBarSchedule->addAction(ui->actionMoveScheduleUp);
     ui->toolBarSchedule->addAction(ui->actionMoveScheduleDown);
@@ -129,8 +126,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBarSchedule->addAction(ui->actionScheduleAdd);
     ui->toolBarSchedule->addAction(ui->actionScheduleRemove);
     ui->toolBarSchedule->addAction(ui->actionScheduleClear);
-//    ui->toolBar_2->setIconSize(QSize(24,24));
-    //ui->toolBar->addSeparator();
+
     ui->toolBarEdit->addAction(ui->actionNew);
     ui->toolBarEdit->addAction(ui->actionEdit);
     ui->toolBarEdit->addAction(ui->actionCopy);
@@ -141,6 +137,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBarEdit->addAction(ui->actionSong_Counter);
     ui->toolBarEdit->addSeparator();
     ui->toolBarEdit->addAction(ui->action_Help);
+
     ui->toolBarShow->addAction(ui->actionShow);
     ui->toolBarShow->addAction(ui->actionHide);
 
@@ -175,10 +172,9 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     ui->widgetPlayBackControls->setVisible(false);
 
-//    version_string = "2"; // to be used only for official release
+    //version_string = "2"; // to be used only for official release
     version_string = "2 Alpha"; // to be used between official releases
     this->setWindowTitle("softProjector " + version_string);
-
 }
 
 SoftProjector::~SoftProjector()
@@ -308,7 +304,6 @@ void SoftProjector::saveSettings()
     }
 
     // save settings
-//    mySettings.general.currentThemeId = theme.getThemeId();
     mySettings.saveSettings();
     theme.saveThemeUpdate();
 }
@@ -482,7 +477,6 @@ void SoftProjector::setSongList(Song song, int row)
     ui->labelShow->setText(song.title);
     ui->listShow->setSpacing(5);
     ui->listShow->setWordWrap(false);
-
     ui->listShow->addItems(song_list);
     ui->listShow->setCurrentRow(row);
     ui->listShow->setFocus();
@@ -493,7 +487,6 @@ void SoftProjector::setSongList(Song song, int row)
 void SoftProjector::setChapterList(QStringList chapter_list, QString caption, QItemSelection selectedItems)
 {
     // Called to show a bible verse from a chapter in the preview list
-
     type = "bible";
     ui->widgetMultiVerse->setVisible(true);
     ui->widgetPlayBackControls->setVisible(false);
@@ -560,8 +553,6 @@ void SoftProjector::setVideo(VideoInfo &video)
     new_list = true;
     ui->listShow->clear();
     ui->labelIcon->setPixmap(QPixmap(":/icons/icons/video.png").scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-//    ui->listShow->addItem(videoPath);
-//    ui->listShow->setCurrentRow(0);
     ui->labelShow->setText(currentVideo.fileName);
     new_list = false;
     updateScreen();
@@ -594,8 +585,6 @@ void SoftProjector::updateScreen()
     {
         // Do not display any text:
         displayScreen1->renderText(false);
-//        if(type == "video")
-//            displayScreen1->videoPlayer->pause();
 
         if(isSingleScreen)
             showDisplayScreen(false);
@@ -685,7 +674,6 @@ void SoftProjector::updateScreen()
                 displayScreen2->renderVideo(currentVideo);
         }
     }
-
 }
 
 void SoftProjector::on_actionShow_triggered()
@@ -835,7 +823,7 @@ void SoftProjector::on_actionCopy_triggered()
     int ctab = ui->projectTab->currentIndex();
     if(ctab == 1)
         copySong();
-    else if(ctab ==4)
+    else if(ctab == 4)
         copyAnnouncement();
 }
 
@@ -992,7 +980,8 @@ void SoftProjector::editSong()
 void SoftProjector::copySong()
 {
     if (songWidget->isSongSelected())
-    {if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
+    {
+        if (!editWidget->isHidden()) //Prohibits editing a song when a different song already been edited.
         {
             QMessageBox ms(this);
             ms.setWindowTitle(tr("Cannot copy this song"));
@@ -1037,7 +1026,6 @@ void SoftProjector::deleteSong()
         {
         case QMessageBox::Yes:
             // Delete a song
-            //        close();
             songWidget->deleteSong();
             break;
         case QMessageBox::No:
@@ -1278,7 +1266,6 @@ void SoftProjector::createLanguageActions()
             languageGroup->addAction(tmpAction);
             ui->menuLanguage->addAction(tmpAction);
         }
-//        connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(switchLanguage(QAction*)));
 }
 
 void SoftProjector::switchLanguage(QAction *action)
@@ -1468,7 +1455,6 @@ void SoftProjector::setButtonPlayIcon(bool isPlaying)
         ui->pushButtonPlay->setIcon(QIcon(":icons/icons/pause.png"));
     else
         ui->pushButtonPlay->setIcon(QIcon(":icons/icons/play.png"));
-
 }
 
 void SoftProjector::setTimeText(QString cTime)
@@ -1481,7 +1467,6 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     int ctab = ui->projectTab->currentIndex();
     if(ctab == 0) // Bible
     {
-//        if(bibleWidget-)
         BibleHistory b = bibleWidget->getCurrentVerse();
         addToShcedule(b);
     }
@@ -1575,7 +1560,6 @@ void SoftProjector::addToShcedule(Announcement &a)
 void SoftProjector::reloadShceduleList()
 {
     ui->listWidgetSchedule->setCurrentRow(-1);
-//    ui->listWidgetSchedule->clearSelection();
     ui->listWidgetSchedule->clear();
     foreach (const Schedule &s, schedule)
     {
@@ -1603,7 +1587,6 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
         songWidget->sendToPreviewFromSchedule(s.song);
         setSongList(s.song,0);
         songWidget->counter.addSongCount(s.song);
-//        songWidget->sendToProjector(s.song,0);
     }
     else if(s.stype == "slideshow")
     {
@@ -1628,7 +1611,6 @@ void SoftProjector::on_listWidgetSchedule_doubleClicked(const QModelIndex &index
 void SoftProjector::on_listWidgetSchedule_itemSelectionChanged()
 {
     int currentRow = ui->listWidgetSchedule->currentRow();
-    //qDebug()<<"cr:"<<currentRow;
     if(currentRow>=0)
     {
         Schedule s = schedule.at(currentRow);
@@ -2056,16 +2038,16 @@ void SoftProjector::saveScheduleUpdate(QSqlQuery &q)
         else    // Update existing schedule item
         {
             q.exec(QString("UPDATE schedule SET sorder = %1 WHERE id = %2").arg(i+1).arg(sc.scid));
-//            if(sc.stype == "bible")
-//                saveScheduleItemUpdate(q,sc.scid,sc.bible);
-//            else if(sc.stype == "song")
-//                saveScheduleItemUpdate(q,sc.scid,sc.song);
-//            else if(sc.stype == "slideshow")
-//                saveScheduleItemUpdate(q,sc.scid,sc.slideshow);
-//            else if(sc.stype == "media")
-//                saveScheduleItemUpdate(q,sc.scid,sc.media);
-//            else if(sc.stype == "announce")
-//                saveScheduleItemUpdate(q,sc.scid,sc.announce);
+            //if(sc.stype == "bible")
+            //    saveScheduleItemUpdate(q,sc.scid,sc.bible);
+            //else if(sc.stype == "song")
+            //    saveScheduleItemUpdate(q,sc.scid,sc.song);
+            //else if(sc.stype == "slideshow")
+            //    saveScheduleItemUpdate(q,sc.scid,sc.slideshow);
+            //else if(sc.stype == "media")
+            //    saveScheduleItemUpdate(q,sc.scid,sc.media);
+            //else if(sc.stype == "announce")
+            //    saveScheduleItemUpdate(q,sc.scid,sc.announce);
         }
     }
 
@@ -2145,7 +2127,6 @@ void SoftProjector::openSchedule()
                 QSqlQuery sqsc = sq;
                 while(sq.next())
                 {
-//                    Schedule sc;
                     int scid = sq.value(0).toInt();
                     QString stype = sq.value(1).toString();
                     QString name = sq.value(2).toString();

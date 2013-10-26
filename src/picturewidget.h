@@ -66,7 +66,6 @@ private slots:
     void sendToPreview(SlideShow &sshow);
     void on_listWidgetSlideShow_doubleClicked(const QModelIndex &index);
 
-
 private:
     Ui::PictureWidget *ui;
     QList<SlideShowInfo> slideShows;

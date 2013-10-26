@@ -33,7 +33,7 @@ SongWidget::SongWidget(QWidget *parent) :
     proxy_model->setDynamicSortFilter(true);
     ui->songs_view->setModel(proxy_model);
     connect(ui->songs_view->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)),
-        this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
+            this, SLOT(songsViewRowChanged(const QModelIndex&, const QModelIndex&)));
 
     // Decrease the row height:
     ui->songs_view->resizeRowsToContents();
@@ -54,7 +54,6 @@ SongWidget::SongWidget(QWidget *parent) :
     // set highligher
     highlight = new HighlighterDelegate(ui->listPreview);
     ui->listWidgetDummy->setVisible(false);
-
 }
 
 SongWidget::~SongWidget()
@@ -87,7 +86,6 @@ void SongWidget::updateButtonStates()
         enable_live = ui->songs_view->currentIndex().isValid();
 
     ui->btnLive->setEnabled(enable_live);
-
 }
 
 void SongWidget::changeEvent(QEvent *e)
@@ -114,10 +112,7 @@ void SongWidget::loadSongbooks()
     }
     ui->songbook_menu->addItem(tr("All songbooks"));
     ui->songbook_menu->addItems(sbor);
-//    QList<Song> song_list = song_database.getSongs();
     allSongs = song_database.getSongs();
-
-    //ui->song_num_spinbox->setEnabled(false);
     songs_model->setSongs(allSongs);
 
     // Hide song search items
@@ -182,7 +177,7 @@ void SongWidget::sendToPreview(Song song)
     else
     {
         ui->label_notes->setText(QString("%1\n%2").arg(tr("Notes:","Notes to songs")).arg(song.notes));
-         ui->label_notes->setVisible(true);
+        ui->label_notes->setVisible(true);
     }
     preview_song = song;
 }
@@ -223,7 +218,6 @@ void SongWidget::on_songbook_menu_currentIndexChanged(int index)
     updateButtonStates();
 
     songs_model->emitLayoutChanged(); // forces the view to redraw
-
 }
 
 void SongWidget::on_song_num_spinbox_valueChanged(int value)
@@ -265,26 +259,19 @@ void SongWidget::on_song_num_spinbox_valueChanged(int value)
             }
             return;
         }
-        //if( s.num > max_num )
-        //    max_num = s.num;
     }
-    // If got here, then no such song
-    //if( value > max_num )
-    //    ui->song_num_spinbox->setMaximum();
 
     QMessageBox mb(this);
     mb.setText(tr("Could not find song with number ") + QString::number(value) );
     mb.setWindowTitle(tr("No such song"));
     mb.setIcon(QMessageBox::Warning);
     mb.exec();
-
 }
 
 void SongWidget::on_song_num_spinbox_editingFinished()
 {
     // Called when the user presses enter after editing the song number
     // At this point, the song is already selected in the songs table
-
     // Resets spin box to non eding mode
     isSpinboxEditing = false;
 }
@@ -624,6 +611,5 @@ void SongWidget::on_pushButtonClearResults_clicked()
     ui->lineEditSearch->clear();
     Song s;
     sendToPreview(s);
-//    ui->listPreview->clear();
     updateButtonStates();
 }

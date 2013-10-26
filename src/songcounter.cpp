@@ -107,7 +107,7 @@ void SongCounter::addSongCount(Song song)
     QDate d(QDate::currentDate());
 
     sq.exec(QString("UPDATE Songs SET count = %1 , date = '%2' WHERE id = %3").arg(QString::number(current_count)).arg(d.toString("MM:dd:yyyy")).arg(QString::number(id)));
-//    sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
+    //    sq.exec("UPDATE Songs SET count = " + QString::number(current_count) + " WHERE id = " + QString::number(id));
 }
 
 //***********************************
@@ -270,8 +270,8 @@ QVariant SongCounterModel::data(const QModelIndex &index, int role) const
 }
 
 QVariant SongCounterModel::headerData(int section,
-                                 Qt::Orientation orientation,
-                                 int role) const
+                                      Qt::Orientation orientation,
+                                      int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
     {

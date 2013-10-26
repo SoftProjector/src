@@ -18,7 +18,6 @@
 ***************************************************************************/
 
 #include <QtSql>
-//#include <QMessageBox>
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 

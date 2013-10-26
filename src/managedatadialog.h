@@ -34,7 +34,7 @@
 #include "moduleprogressdialog.h"
 
 namespace Ui {
-    class ManageDataDialog;
+class ManageDataDialog;
 }
 
 class Module
@@ -146,8 +146,6 @@ private slots:
     QStringList getModList(QString filepath);
     void importNextModule();
     void importModules();
-
 };
-
 
 #endif // MANAGEDATADIALOG_H

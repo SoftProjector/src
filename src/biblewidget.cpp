@@ -20,18 +20,17 @@
 #include "biblewidget.h"
 #include "ui_biblewidget.h"
 #include "song.h"
-#include <time.h>
+//#include <time.h>
 
-double diffclock(clock_t clock1,clock_t clock2)
-{
-        double diffticks=clock1-clock2;
-        double diffms=(diffticks*1000)/CLOCKS_PER_SEC;
-        return diffms;
-}
+//double diffclock(clock_t clock1,clock_t clock2)
+//{
+//        double diffticks=clock1-clock2;
+//        double diffms=(diffticks*1000)/CLOCKS_PER_SEC;
+//        return diffms;
+//}
 
 BibleWidget::BibleWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::BibleWidget)
+    QWidget(parent), ui(new Ui::BibleWidget)
 {
     ui->setupUi(this);
     on_hide_result_button_clicked();
@@ -74,22 +73,15 @@ void BibleWidget::setSettings(BibleVersionSettings &sets)
 
 void BibleWidget::loadBibles(QString initialId)
 {
-
     // if operator bible = "same", then set it to primary bible
     if(mySettings.operatorBible == "same")
         mySettings.operatorBible = mySettings.primaryBible;
 
     // make sure that program does not drop if no bible is present
     if(mySettings.operatorBible == "none")
-    {
-//        ui->add_to_history_pushButton->setEnabled(false);
         ui->btnLive->setEnabled(false);
-    }
     else
-    {
         ui->btnLive->setEnabled(true);
-//        ui->add_to_history_pushButton->setEnabled(true);
-    }
 
     // Check if primary bible is different that what has been loaded already
     // If it is different, then reload the bible list
@@ -100,13 +92,11 @@ void BibleWidget::loadBibles(QString initialId)
         ui->listBook->clear();
         ui->listBook->addItems(bible.getBooks());
         ui->listBook->setCurrentRow(0);
-
     }
 }
 
 void BibleWidget::on_listBook_currentTextChanged(QString currentText)
 {
-
     int s = ui->listBook->currentRow();
     if( s != -1 )
     {
@@ -124,7 +114,6 @@ void BibleWidget::on_listBook_currentTextChanged(QString currentText)
         chapter_validator->setTop(1);
         ui->listChapterNum->clear();
     }
-
 }
 
 void BibleWidget::on_listChapterNum_currentTextChanged(QString currentText)
@@ -156,6 +145,7 @@ QString BibleWidget::getCurrentBook()
 {
     return ui->listBook->currentItem()->text();
 }
+
 int BibleWidget::getCurrentChapter()
 {
     return ui->listChapterNum->currentItem()->text().toInt();
@@ -203,7 +193,6 @@ void BibleWidget::sendToProjector(bool add_to_history)
 void BibleWidget::on_lineEditBook_textChanged(QString text)
 {
     // Called when the bible book filter field is modified.
-
     QStringList all_books = bible.getBooks();
 
     // Remove trailing spaces:
@@ -240,9 +229,7 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
             }
             text = search_words.join(" ");
         }
-
     }
-
 
     // Now search all books to find the matching book:
     if( text.isEmpty() )
@@ -296,10 +283,6 @@ void BibleWidget::on_lineEditBook_textChanged(QString text)
         // a new chapter to be loaded into the preview
         ui->listBook->setCurrentRow(0);
 
-
-//    clock_t begin=clock();
-//    qDebug() << "Time to select first row:" << double(diffclock(clock(), begin)) << " ms";
-
     if( chapter != 0 && chapter <= ui->listChapterNum->count() )
     {
         if( ui->listChapterNum->currentRow() != (chapter-1) )
@@ -347,20 +330,20 @@ void BibleWidget::on_search_button_clicked()
     rx.setCaseSensitivity(Qt::CaseInsensitive);
     search_text.replace(" ","\\W*");
     if(type == 0)
-        // Search text phrase
     {
+        // Search text phrase
         rx.setPattern(search_text);
         rxh.setPattern(search_text);
     }
     else if(type == 1)
-        // Search whole word exsact phrase only
     {
+        // Search whole word exsact phrase only
         rx.setPattern("\\b"+search_text+"\\b");
         rxh.setPattern("\\b"+search_text+"\\b");
     }
     else if(type == 2)
-        // Search begining of every line
     {
+        // Search begining of every line
         rx.setPattern("^"+search_text);
         rxh.setPattern(search_text);
     }
@@ -375,20 +358,15 @@ void BibleWidget::on_search_button_clicked()
     highlight->highlighter->setHighlightText(rxh.pattern()); // set highlighting rule
 
     if(range == 0) // Search entire Bible
-    {
         search_results = bible.searchBible((type == 4),rx);
-    }
     else if(range == 1) // Search current book only
-    {
         search_results = bible.searchBible((type == 4),rx,
                                            bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId.toInt());
-    }
     else if (range == 2) // Search current chapter only
-    {
         search_results = bible.searchBible((type == 4),rx,
                                            bible.books.at(bible.getCurrentBookRow(ui->listBook->currentItem()->text())).bookId.toInt(),
                                            ui->listChapterNum->currentItem()->text().toInt());
-    }
+
     ui->search_results_list->clear();
 
     if (!search_results.isEmpty()) // If have results, then show them
@@ -408,22 +386,14 @@ void BibleWidget::on_search_button_clicked()
         int count = search_results.count();
 
         ui->result_count_label->setText(tr("Total\nresutls:\n%1").arg(count));
-//          ui->result_count_label->setText(tr("Total of ") + QString::number(count) + tr(" search results returned."));
 
         for(int i(0);i<count;i++)
             verse_list.append(search_results.at(i).verse_text);
         ui->search_results_list->addItems(verse_list);
     }
     else // If no relust, notify the user and hide result list
-    {
-//        QMessageBox mb;
-//        mb.setText(tr("No search results have retrieved"));
-//        mb.setWindowTitle(tr("No search results"));
-//        mb.setIcon(QMessageBox::Information);
-//        mb.exec();
-//        on_hide_result_button_clicked();
         ui->result_count_label->setText(tr("No search\nresults."));
-    }
+
     emit setArrowCursor();
 }
 
@@ -452,7 +422,6 @@ void BibleWidget::on_search_results_list_currentRowChanged(int currentRow)
 
         int row = all_books.indexOf(search_results.at(currentRow).book);
         ui->listBook->setCurrentRow(row);
-
 
         ui->chapter_ef->setText(search_results.at(currentRow).chapter);
         ui->verse_ef->setText(search_results.at(currentRow).verse);
@@ -553,7 +522,6 @@ BibleHistory BibleWidget::getCurrentVerse()
 
     QString book = ui->listBook->currentItem()->text();
     QString chapter = ui->chapter_ef->text();
-//    QString verse = ui->verse_ef->text();
 
     int first_selected(-1),last_selected(-1);
     for(int i(0);i<ui->chapter_preview_list->count();++i)

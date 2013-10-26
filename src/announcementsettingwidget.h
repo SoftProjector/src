@@ -20,13 +20,12 @@
 #ifndef ANNOUNCEMENTSETTINGWIDGET_H
 #define ANNOUNCEMENTSETTINGWIDGET_H
 
-//#include <QWidget>
 #include <QtGui>
 #include "theme.h"
 #include "spfunctions.h"
 
 namespace Ui {
-    class AnnouncementSettingWidget;
+class AnnouncementSettingWidget;
 }
 
 class AnnouncementSettingWidget : public QWidget

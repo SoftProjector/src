@@ -27,7 +27,7 @@
 
 QString clean(QString str)
 {
-     //Removes all none alphanumeric characters from the string
+    //Removes all none alphanumeric characters from the string
     str.replace(QRegExp("[\\W*]")," ");
     str = str.simplified();
     return str;
@@ -141,8 +141,8 @@ bool isStanzaSlideTitle(QString string)
         return true;
     else if (string.startsWith(QString::fromUtf8("Вступление")))
         return true;
-    else if (string.startsWith(QString::fromUtf8("Вступ")))
-        return true;
+    //else if (string.startsWith(QString::fromUtf8("Вступ")))
+    //    return true;
     else if (string.startsWith(QString::fromUtf8("Einleitung")))
         return true;
     else if (string.startsWith(QString::fromUtf8("Úvod")))
@@ -263,7 +263,7 @@ QStringList Song::getSongTextList()
     int chorus_block_count=0; // Chorus slide counter.
 
     songlist = songText.split("@$");// Splits song text line that from database into
-                                    // stansas which were delimited by "@$"
+    // stansas which were delimited by "@$"
     
     while(pnum < songlist.size() )
     {
@@ -286,13 +286,16 @@ QStringList Song::getSongTextList()
                 ++j;
             }
             formatedSong += text.trimmed(); // add Verse stansa to the formated list
-            if (has_chorus){ // add Chorus stansa to the formated list if it exists
+            if (has_chorus)
+            {
+                // add Chorus stansa to the formated list if it exists
                 formatedSong.append(chorus);
             }
             has_vstavka=false;
         }
         else if(isStanzaAndVerseTitle(text2))
-        {// Fill Additional parts of the verse
+        {
+            // Fill Additional parts of the verse
             text2.remove("&"); // remove '&' from stansa title
             text += text2 + "\n";
             ++j;
@@ -304,9 +307,10 @@ QStringList Song::getSongTextList()
                     text += split[j] + "\n";
                 ++j;
             }
-            if (has_chorus) // it chorus esits, this means that it was added to the formated list
-                            // and needs to be removed before adding addintion Veres stansas to formated list
+            if (has_chorus)
             {
+                // it chorus esits, this means that it was added to the formated list
+                // and needs to be removed before adding addintion Veres stansas to formated list
                 formatedSong.removeLast();
                 int i(1);
                 while (i<chorus_block_count)
@@ -316,7 +320,9 @@ QStringList Song::getSongTextList()
                 }
             }
             formatedSong += text.trimmed(); // add Verse stansa to the formated list
-            if (has_chorus){ // add Chorus stansa to the formated list if it exists
+            if (has_chorus)
+            {
+                // add Chorus stansa to the formated list if it exists
                 formatedSong.append(chorus);
             }
             has_vstavka=false;
@@ -332,9 +338,9 @@ QStringList Song::getSongTextList()
                 ++j;
             }
             formatedSong += text.trimmed(); // Add Insert stansa to the formated list.
-                                            // Chorus is not added to Insert, if one is needed,
-                                            // it should be added when song is edited, otherwise
-                                            // there is no difirence between Veres and Insert
+            // Chorus is not added to Insert, if one is needed,
+            // it should be added when song is edited, otherwise
+            // there is no difirence between Veres and Insert
             has_vstavka=true;
         }
         else if (isStanzaRefrainTitle(text2))
@@ -355,8 +361,8 @@ QStringList Song::getSongTextList()
             if (chor ==1) // if first Chorus, add chorus to formated list
                 formatedSong.append(chorus);
             else if ((chor ==2) && !has_vstavka ) // if second chorus and Insert was not added
-                                                  // remove exising chorus
-                                                  // and add new chorus to formated list
+                // remove exising chorus
+                // and add new chorus to formated list
             {
                 formatedSong.removeLast();
                 if (chorus_block_count>1)
@@ -373,7 +379,7 @@ QStringList Song::getSongTextList()
                 chor-- ;
             }
             else if ((chor ==2) && has_vstavka ) // if second chorus and Insert was added
-                                                  // and add new chorus to formated list
+                // and add new chorus to formated list
             {
                 formatedSong += chorus;
                 chor-- ;
@@ -382,7 +388,8 @@ QStringList Song::getSongTextList()
             has_vstavka=false;
         }
         else if(isStanzaAndRefrainTitle(text2))
-        { // Fill other chorus parts to Chorus block
+        {
+            // Fill other chorus parts to Chorus block
             ++chorus_block_count; // increase chorus block count
             text2.remove("&");  // remove '&' from stansa title
             text += text2 +"\n";
@@ -407,7 +414,6 @@ QStringList Song::getSongTextList()
                 }
             }
             formatedSong.append(chorus); // replace removed chorus parts with complete chorus list
-
         }
         ++pnum;
     }
@@ -444,7 +450,6 @@ Stanza Song::getStanza(int current)
     }
 
     stanza.stanza = lines_list.join("\n").trimmed();
-
     return stanza;
 }
 
@@ -494,7 +499,8 @@ void SongsModel::updateSongFromDatabase(int songid)
 void SongsModel::updateSongFromDatabase(int newSongId, int oldSongId)
 {
     emit layoutAboutToBeChanged();
-    for( int i=0; i < song_list.size(); i++) {
+    for( int i=0; i < song_list.size(); i++)
+    {
         Song *song = (Song*)&(song_list.at(i));
         if( song->songID == oldSongId )
         {
@@ -502,17 +508,11 @@ void SongsModel::updateSongFromDatabase(int newSongId, int oldSongId)
             // get song number and songbook id
             song->readData();
             QSqlQuery sq;
-//            sq.exec("SELECT song_number, songbook_id FROM SongLink WHERE song_id = " + QString::number(newSongId));
-//            sq.first();
-//            song->number = sq.value(0).toInt();
-//            song->songbook_id = sq.value(1).toString().trimmed();
-//            sq.clear();
             // get songbook name
             sq.exec("SELECT name FROM Songbooks WHERE id = " + song->songbook_id );
             sq.first();
             song->songbook_name = sq.value(0).toString();
 
-//            song->readData();
             emit layoutChanged(); // To redraw the table
             return;
         }
@@ -806,7 +806,6 @@ QList<Song> SongDatabase::getSongs()
 
         songs.append(song);
     }
-
     return songs;
 }
 

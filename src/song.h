@@ -31,8 +31,8 @@ bool isStanzaAndRefrainTitle(QString string);
 bool isStanzaSlideTitle(QString string);
 
 class Stanza
-    // Class to hold current verse text and song info to send to projection
 {
+    // Class to hold current verse text and song info to send to projection
 public:
     int number;
     QString stanza;
@@ -56,10 +56,10 @@ public:
 };
 
 class Song
-// Class for storing song information: number, name, songbook
-// The instance of this class is specific to a song & songbook.
 {
- public:
+    // Class for storing song information: number, name, songbook
+    // The instance of this class is specific to a song & songbook.
+public:
     //functions
     Song();
     Song(int id);
@@ -101,10 +101,9 @@ private:
     void setDefaults();
 };
 
-
 class SongsModel : public QAbstractTableModel
-// Class for storing the data for the song table
 {
+    // Class for storing the data for the song table
     Q_OBJECT
     Q_DISABLE_COPY(SongsModel)
 public:
@@ -118,7 +117,6 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    //void sort(int column, Qt::SortOrder order);
 
     bool removeRows( int row, int count, const QModelIndex & parent = QModelIndex() );
     QList<Song> song_list;
@@ -128,7 +126,6 @@ public:
     void updateSongFromDatabase(int newSongId, int oldSongId);
     bool isInTable(int songid);
 };
-
 
 class SongProxyModel : public QSortFilterProxyModel
 {
@@ -146,7 +143,6 @@ private:
     bool match_beginning, exact_match;
 };
 
-
 class SongDatabase
 {
 public:
@@ -159,7 +155,6 @@ public:
     Song getSong(int id);
     QList<Song> getSongs();
     int lastUser(QString songbook_id);
-//private:
 };
 
 #endif // SONG_H

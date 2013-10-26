@@ -25,10 +25,9 @@
 #include "song.h"
 
 namespace Ui {
-    class SongCounter;
+class SongCounter;
 }
 
-/************************************************************************/
 class Counter
 {
 public:
@@ -42,8 +41,8 @@ public:
 };
 
 class SongCounterModel : public QAbstractTableModel
-//  Class for storing data for Song Use Counter Table
 {
+    //  Class for storing data for Song Use Counter Table
     Q_OBJECT
     Q_DISABLE_COPY(SongCounterModel)
 
@@ -62,13 +61,10 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
 };
-/************************************************************************/
-
 
 class SongCounter : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit SongCounter(QWidget *parent = 0,QString loc = "en");
     ~SongCounter();

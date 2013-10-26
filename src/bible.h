@@ -108,11 +108,6 @@ private:
     void retrieveBooks();
 private slots:
     void addSearchResult(const BibleVerse &bv,QList<BibleSearch> &bsl);
-
-private slots:
-
 };
-
-
 
 #endif // BIBLE_H

@@ -20,9 +20,6 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-
-//#include <QtGui/QDialog>
-//#include <QtGui/QFileDialog>
 #include <QtGui>
 #include "settings.h"
 #include "theme.h"
@@ -75,7 +72,6 @@ private:
     SongSettingWidget *songSettingswidget;
     PictureSettingWidget *pictureSettingWidget;
     AnnouncementSettingWidget *announcementSettingswidget;
-
 
     QPushButton *btnOk;
     QPushButton *btnCancel;

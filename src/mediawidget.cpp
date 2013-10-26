@@ -337,7 +337,6 @@ void MediaWidget::prepareForProjection()
     v.aspectRatio = ui->comboBoxAspectRatio->currentIndex();
     v.fileName = fn.fileName();
     v.filePath = fn.filePath();
-//    qDebug()<<fn.filePath();
     emit toProjector(v);
 }
 
@@ -414,16 +413,6 @@ void MediaWidget::on_listWidgetMediaFiles_doubleClicked(const QModelIndex &index
 
 void MediaWidget::on_comboBoxAspectRatio_currentIndexChanged(int index)
 {
-//    if (index == 0)
-//        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioAuto);
-//    else if (index == 1) // aspect Ratio scaled to widget dimensions
-//        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioWidget);
-//    else if (index == 2) // 16 - 9 ratio scale
-//        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio16_9);
-//    else if (index == 3) // 4-3 ratio scale
-//        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio4_3);
-//    else
-//        videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatioAuto);
     videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(index));
 }
 
@@ -440,7 +429,7 @@ void MediaWidget::setMediaFromSchedule(VideoInfo &v)
 {
     ui->listWidgetMediaFiles->clearSelection();
     playFile(v.filePath);
-        mediaPlayer.pause();
+    mediaPlayer.pause();
 }
 
 void MediaWidget::goLiveFromSchedule()

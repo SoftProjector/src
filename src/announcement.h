@@ -1,9 +1,25 @@
+/***************************************************************************
+//
+//    softProjector - an open source media projection software
+//    Copyleft (Ɔ) 2013  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation version 3 of the License.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+***************************************************************************/
+
 #ifndef ANNOUNCEMENT_H
 #define ANNOUNCEMENT_H
 
-//#include <QString>
-//#include <QFont>
-//#include <QColor>
 #include <QtGui>
 #include "spfunctions.h"
 
@@ -37,7 +53,6 @@ public:
     QString backgroundPath;
     int alignmentV;
     int alignmentH;
-
     int align_flags;
 
     void saveNew();
@@ -53,7 +68,7 @@ private:
 };
 
 class AnnounceModel : public QAbstractTableModel
-// Class to store data from Announcement table
+        // Class to store data from Announcement table
 {
     Q_OBJECT
     Q_DISABLE_COPY(AnnounceModel)
@@ -73,7 +88,7 @@ public:
     void emitLayoutChanged();
     void emitLayoutAboutToBeChanged();
     void updateAnnounceFromDatabase(int annId);
-//    void updateAnnounceFromDatabase(int newAnnId, int oldAnnId);
+    //    void updateAnnounceFromDatabase(int newAnnId, int oldAnnId);
     bool isInTable(int annId);
 
     QList<Announcement> announceList;
@@ -91,6 +106,5 @@ private:
     QString filterString;
     bool matchBeginning, matchExact;
 };
-
 
 #endif // ANNOUNCEMENT_H

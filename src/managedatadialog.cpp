@@ -26,8 +26,7 @@ Module::Module()
 }
 
 ManageDataDialog::ManageDataDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ManageDataDialog)
+    QDialog(parent), ui(new Ui::ManageDataDialog)
 {
     ui->setupUi(this);
 
@@ -209,8 +208,7 @@ void ManageDataDialog::updateThemeButtons()
 void ManageDataDialog::on_import_songbook_pushButton_clicked()
 {
     QString file_path = QFileDialog::getOpenFileName(this,
-                                                     tr("Select a songbook to import"),
-                                                     ".",
+                                                     tr("Select a songbook to import"), ".",
                                                      tr("SoftProjector songbook file ") + "(*.sps)");
 
     importType = "local";
@@ -255,7 +253,6 @@ void ManageDataDialog::importSongbook(QString path)
 
     if (file.open(QIODevice::ReadOnly))
     {
-
         reload_songbook = true;
         //Set Songbook Title and Information
         line = QString::fromUtf8(file.readLine());
@@ -310,7 +307,6 @@ void ManageDataDialog::importSongbook(QString path)
                 if (split.count() > 7)
                 {
                     sq.addBindValue(split[7]);//font
-                    //sq.addBindValue(split[8]);//alignment
                     sq.addBindValue(split[9]);//background
                     if(split.count()>10)
                     {
@@ -324,7 +320,6 @@ void ManageDataDialog::importSongbook(QString path)
                 else
                 {
                     sq.addBindValue("");//font
-                    //sq.addBindValue("");//alignment
                     sq.addBindValue("");//background
                     sq.addBindValue("");//notes
                 }
@@ -477,7 +472,6 @@ void ManageDataDialog::importSongbook(QString path)
                                         xml.readNext();
                                     }
                                 }
-
                                 // Save song
                                 sq.addBindValue(code);
                                 sq.addBindValue(xnum);
@@ -689,7 +683,6 @@ void ManageDataDialog::exportSongbook(QString path)
     QString title;
 
     // First Delete file if one already exists
-
     if(QFile::exists(path))
     {
         if(!QFile::remove(path))
@@ -840,9 +833,7 @@ void ManageDataDialog::on_import_bible_pushButton_clicked()
     importType = "local";
     // if file_path exits or "Open" is clicked, then import Bible
     if( !file_path.isNull() )
-    {
         importBible(file_path);
-    }
 }
 
 void ManageDataDialog::importBible(QString path)
@@ -919,13 +910,11 @@ void ManageDataDialog::importBible(QString path)
         QStringList info_list = info.split("@%");
         info.clear();
         for(int i(0); i<info_list.size();++i)
-        {
             info += info_list[i] + "\n";
-        }
+
         line = QString::fromUtf8(file.readLine()); // read right to left
         split = line.split("\t");
         rtol = split.at(1);
-
 
         QProgressDialog progress(tr("Importing..."), tr("Cancel"), 0, 31200, this);
         if(importType == "down")
@@ -1036,7 +1025,6 @@ void ManageDataDialog::on_export_bible_pushButton_clicked()
             file_path = file_path + ".spb";
         exportBible(file_path,bible);
     }
-
 }
 
 void ManageDataDialog::exportBible(QString path, Bibles bible)
@@ -1066,9 +1054,7 @@ void ManageDataDialog::exportBible(QString path, Bibles bible)
     info = info_list[0];
     qDebug()<< QString::number(info_list.size());
     for(int i(1); i<info_list.size();++i)
-    {
         info += "@%" + info_list[i];
-    }
 
     to_file += "##Title:\t" + title + "\n" +
             "##Abbreviation:\t" + abbr + "\n" +
@@ -1293,9 +1279,8 @@ void ManageDataDialog::toMultiLine(QString &mline)
     QStringList line_list = mline.split("@%");
     mline.clear();
     for(int i(0); i<line_list.size();++i)
-    {
         mline += line_list[i] + "\n";
-    }
+
     mline = mline.trimmed();
 }
 
@@ -1304,19 +1289,15 @@ void ManageDataDialog::toSingleLine(QString &sline)
     QStringList line_list = sline.split("\n");
     sline = line_list[0];
     for(int i(1); i<line_list.size();++i)
-    {
         sline += "@%" + line_list[i];
-    }
+
     sline = sline.trimmed();
 }
 
 void ManageDataDialog::on_pushButtonThemeNew_clicked()
 {
-    QSqlTableModel sqt;
-    QSqlQuery sq;
     Theme tm;
     ThemeInfo tmi;
-    QString nId;
 
     AddSongbookDialog theme_dia;
     theme_dia.setWindowTitle(tr("Edit Theme"));
@@ -1330,25 +1311,11 @@ void ManageDataDialog::on_pushButtonThemeNew_clicked()
         tmi.comments = theme_dia.info;
         tm.setThemeInfo(tmi);
         tm.saveThemeNew();
-//        sqt.setTable("Themes");
-//        sqt.insertRow(0);
-//        sqt.setData(sqt.index(0,1),theme_dia.title);
-//        sqt.setData(sqt.index(0,2),theme_dia.info);
-//        sqt.submitAll();
-
-
-//        sq.exec("SELECT seq FROM sqlite_sequence WHERE name = 'Themes'");
-//        sq.first();
-//        nId = sq.value(0).toString();
-
-//        tm.saveNewTheme(nId);
-
         loadThemes();
         break;
     case AddSongbookDialog::Rejected:
         break;
     }
-
 }
 
 void ManageDataDialog::on_pushButtonThemeImport_clicked()
@@ -1361,9 +1328,7 @@ void ManageDataDialog::on_pushButtonThemeImport_clicked()
 
     // if file_path exits or "Open" is clicked, then import a Songbook
     if( !file_path.isNull() )
-    {
         importTheme(file_path);
-    }
 }
 
 void ManageDataDialog::importTheme(QString path)
@@ -1389,7 +1354,7 @@ void ManageDataDialog::importTheme(QString path)
                     ++max;
                 max *= 5;
                 if(importType == "down")
-                      progressDia->setCurrentMax(max);
+                    progressDia->setCurrentMax(max);
                 else
                 {
                     progress.setMaximum(max);
@@ -1500,7 +1465,6 @@ void ManageDataDialog::importTheme(QString path)
 
     loadThemes();
     importModules();
-
 }
 
 void ManageDataDialog::on_pushButtonThemeEdit_clicked()
@@ -1822,7 +1786,6 @@ void ManageDataDialog::transferThemeSong(QSqlQuery &sqf, QSqlQuery &sqt, int tmI
 
 void ManageDataDialog::on_pushButtonThemeDelete_clicked()
 {
-
     int row = ui->TableViewTheme->currentIndex().row();
     ThemeInfo tm = themeModel->getTheme(row);
     QString name = tm.name;
@@ -1910,7 +1873,6 @@ void ManageDataDialog::downloadModList(QUrl url)
 
     QNetworkRequest request(url);
     currentDownload = downManager.get(request);
-//    connect(currentDownload,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(dowloadProgress(qint64,qint64)));
     connect(currentDownload,SIGNAL(finished()),this,SLOT(downloadModListCompleted()));
     connect(currentDownload,SIGNAL(readyRead()),this,SLOT(saveModFile()));
 }
@@ -1976,11 +1938,11 @@ QString ManageDataDialog::getSaveFileName(QUrl url)
     else if(downType == "theme")
     {
         if(!dir.cd("ThemeModules"))
-            {
-                if(dir.mkdir("ThemeModules"))
-                    dir.cd("ThemeModules");
-            }
-            path = dir.absolutePath() + dir.separator() + basename;
+        {
+            if(dir.mkdir("ThemeModules"))
+                dir.cd("ThemeModules");
+        }
+        path = dir.absolutePath() + dir.separator() + basename;
     }
     else
         path = dir.absolutePath() + dir.separator() + basename;
@@ -2032,9 +1994,7 @@ void ManageDataDialog::downloadModListCompleted()
     QStringList modlist;
     modlist = getModList(outFile.fileName());
     if(modlist.count()<=0)
-    {
         return;
-    }
 
     ModuleDownloadDialog modDia(this);
     if(downType == "bible")
@@ -2050,7 +2010,6 @@ void ManageDataDialog::downloadModListCompleted()
     switch (ret)
     {
     case ModuleDownloadDialog::Accepted:
-
         mods = modDia.getSelected();
         if(mods.count()<=0)
             break;
@@ -2084,16 +2043,13 @@ void ManageDataDialog::downloadCompleted()
 
 void ManageDataDialog::dowloadProgress(qint64 recBytes, qint64 totBytes)
 {
-//    qDebug()<<"Progress:"<<recBytes<<totBytes;
     progressDia->setCurrentValue(recBytes);
 
     // calculate the download speed
     double speed = recBytes * 1000.0 / downTime.elapsed();
     QString unit;
     if (speed < 1024)
-    {
         unit = "bytes/sec";
-    }
     else if (speed < 1024*1024)
     {
         speed /= 1024;
@@ -2113,7 +2069,7 @@ QStringList ManageDataDialog::getModList(QString filepath)
     moduleList.clear();
     QStringList modList;
     QString name,link;
-    int size;
+    int size(0);
     QFile file(filepath);
     Module mod;
     if(file.open(QIODevice::ReadOnly))
@@ -2121,9 +2077,7 @@ QStringList ManageDataDialog::getModList(QString filepath)
         QXmlStreamReader xml(&file);
         while(!xml.atEnd())
         {
-
             xml.readNext();
-//            qDebug()<<"loop1"<<xml.tokenString()<<xml.name();
             if(xml.StartElement && xml.name() == "Modules")
             {
                 xml.readNext();
@@ -2135,7 +2089,7 @@ QStringList ManageDataDialog::getModList(QString filepath)
                         xml.readNext();
                         while(xml.tokenString() != "EndElement")
                         {
-//                            qDebug()<<"loop2";
+                            //                            qDebug()<<"loop2";
                             xml.readNext();
                             if(xml.StartElement && xml.name() == "name")
                             {
@@ -2164,7 +2118,6 @@ QStringList ManageDataDialog::getModList(QString filepath)
                 }
                 xml.readNext();
             }
-
         }
     }
     return modList;

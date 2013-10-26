@@ -25,7 +25,7 @@
 #include "editannouncementdialog.h"
 
 namespace Ui {
-    class AnnounceWidget;
+class AnnounceWidget;
 }
 
 class AnnounceWidget : public QWidget {
@@ -45,8 +45,6 @@ public slots:
     Announcement getAnnouncement();
     void setAnnouncementFromHistory(Announcement &announce);
 
-//    void drawToPainter(QPainter *painter, int width, int height);
-
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -61,7 +59,6 @@ private slots:
     void on_pushButtonLive_clicked();
     void on_listWidgetAnnouncement_doubleClicked(const QModelIndex &index);
     Announcement currentAnnouncement();
-
     void on_tableViewAnnouncements_doubleClicked(const QModelIndex &index);
 
 signals:
@@ -71,10 +68,8 @@ signals:
 private:
     Ui::AnnounceWidget *ui;
     EditAnnouncementDialog * editAnounceDialog;
-
     QList<Announcement> announceList;
     Announcement previewAnnounce;
-
     AnnounceModel *announceModel;
     AnnounceProxyModel * announceProxy;
 };

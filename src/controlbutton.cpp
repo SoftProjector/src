@@ -20,14 +20,22 @@
 #include "controlbutton.h"
 
 ControlButton::ControlButton(QWidget * parent)
-    : QPushButton(parent), m_hovered(false), m_pressed(false), m_opacity(1.0)
+    : QPushButton(parent)
 {
+    m_hovered = false;
+    m_pressed = false;
+    m_opacity = 1.0;
 }
 
 ControlButton::ControlButton(const QIcon & icon, const QIcon &iconHovered, const QIcon &iconPressed, QWidget *parent)
-    : QPushButton(parent), m_icon(icon), m_iconHovered(iconHovered), m_iconPressed(iconPressed),
-      m_hovered(false), m_pressed(false), m_opacity(1.0)
+    : QPushButton(parent)
 {
+    m_icon = icon;
+    m_iconHovered = iconHovered;
+    m_iconPressed = iconPressed;
+    m_hovered = false;
+    m_pressed = false;
+    m_opacity = 1.0;
 }
 
 ControlButton::~ControlButton(){}
@@ -53,9 +61,7 @@ void ControlButton::paintEvent(QPaintEvent * pe)
             button_icon = m_iconPressed;
     }
     else
-    {
         button_color = QColor(50, 50, 50);
-    }
 
     QRect button_rect = this->geometry();
 

@@ -45,7 +45,7 @@ class QActionGroup;
 
 namespace Ui
 {
-    class SoftProjectorClass;
+class SoftProjectorClass;
 }
 
 class SoftProjector : public QMainWindow
@@ -102,10 +102,7 @@ private:
     //QString project_file_path;
     QString schedule_file_path;
     bool is_schedule_saved;
-    //bool is_project_saved;
-
     QString cur_locale;
-
     bool isSingleScreen;
     bool hasDisplayScreen2;
 
@@ -123,7 +120,6 @@ private:
     Phonon::VolumeSlider *volumeSlider;
     VideoInfo currentVideo;
     Phonon::AudioOutput *playerAudioOutput;
-//    Phonon::Path playerAudioOutputPath;
 
     // Schelude list
     QList<Schedule> schedule;
@@ -228,7 +224,6 @@ private slots:
     void openScheduleItem(QSqlQuery &q, const int scid, SlideShow &s);
     void openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v);
     void openScheduleItem(QSqlQuery &q, const int scid, Announcement &a);
-
 
 protected:
     void closeEvent(QCloseEvent *event);

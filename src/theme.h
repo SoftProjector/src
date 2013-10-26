@@ -35,7 +35,8 @@ public:
 };
 
 class BibleSettings
-{    // To store Bible projection related settings
+{
+    // To store Bible projection related settings
 public:
     BibleSettings();
     bool useShadow;
@@ -60,7 +61,8 @@ public:
 };
 
 class SongSettings
-{   // To store Song related settings
+{
+    // To store Song related settings
 public:
     SongSettings();
     bool useFading;
@@ -120,7 +122,6 @@ class Theme
 {
 public:
     Theme();
-    //ThemeInfo info;
     PassiveSettings passive;
     PassiveSettings passive2; // Holds secondary display screen settings
     BibleSettings bible;

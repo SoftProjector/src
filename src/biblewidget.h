@@ -26,9 +26,8 @@
 #include "highlight.h"
 #include "settings.h"
 
-
 namespace Ui {
-    class BibleWidget;
+class BibleWidget;
 }
 
 class BibleWidget : public QWidget {
@@ -60,8 +59,6 @@ public slots:
     void clearHistory();
     void setSelectedHistory(BibleHistory &b);
 
-    //bool eventFilter(QObject *object, QEvent *event);
-
 protected:
     virtual void changeEvent(QEvent *e);
 
@@ -73,7 +70,6 @@ signals:
 private slots:
     void on_history_listWidget_doubleClicked(QModelIndex index);
     void on_history_listWidget_currentRowChanged(int currentRow);
-
     void on_search_results_list_doubleClicked(QModelIndex index);
     void on_search_results_list_currentRowChanged(int currentRow);
     void on_hide_result_button_clicked();
@@ -86,10 +82,7 @@ private slots:
     void on_chapter_preview_list_currentRowChanged(int currentRow);
     void on_listChapterNum_currentTextChanged(QString currentText);
     void on_listBook_currentTextChanged(QString currentText);
-
     void addToHistory();
-//    BibleSearch prepareAddToHistory();
-
 
 private:
     BibleVersionSettings mySettings;
@@ -101,8 +94,5 @@ private:
     QByteArray hidden_splitter_state, shown_splitter_state;
     QButtonGroup search_type_buttongroup;
 };
-//class HighlightSearch;
-//class QTextDocument;
-
 
 #endif // BIBLEWIDGET_H

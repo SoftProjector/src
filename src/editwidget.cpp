@@ -22,8 +22,8 @@
 #include "song.h"
 
 EditWidget::EditWidget(QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::EditWidget)
+    QWidget(parent),
+    ui(new Ui::EditWidget)
 {
     song_database = SongDatabase();
     ui->setupUi(this);
@@ -31,12 +31,10 @@ EditWidget::EditWidget(QWidget *parent) :
 
     //Add caterories to the list
     loadCategories(false);
-//    ui->comboBoxCategory->addItems(categories());
 
     // Allow only positive values for the song number:
     song_num_validator = new QIntValidator(1,10000000,ui->lineEditSongNumber);
     ui->lineEditSongNumber->setValidator(song_num_validator);
-
 }
 
 EditWidget::~EditWidget()
@@ -150,7 +148,6 @@ void EditWidget::resetUiItems()
     ui->lineEditWordsBy->setText(ss.wordsBy);
     ui->lineEditKey->setText(ss.tune);
     ui->comboBoxCategory->setCurrentIndex(cat_ids.indexOf(ss.category));
-//    setSongbook(editSong.songID);
     ui->checkBoxSongSettings->setChecked(ss.usePrivateSettings);
     ui->groupBoxSettings->setVisible(ss.usePrivateSettings);
     ui->comboBoxVAlignment->setCurrentIndex(ss.alignmentV);
@@ -189,11 +186,9 @@ void EditWidget::setUiItems()
     ui->lineEditBackgroundPath->setText(editSong.backgroundName);
     ui->textEditSong->setPlainText(setSongText(editSong.songText));
     ui->plainTextEditNotes->setPlainText(editSong.notes);
-
 }
 
 void EditWidget::setSave(){
-//    newSong.songID = editSong.songID;
     newSong = editSong;
     newSong.number = ui->lineEditSongNumber->text().toInt();
     newSong.songbook_id = song_database.getSongbookIdStringFromName(ui->songbook_label->text());
@@ -242,8 +237,8 @@ void EditWidget::setSongbook(int id)
 
     sq.exec("SELECT songbook_id, number FROM Songs WHERE id = "+QString::number(id));
     sq.first();
-        songbook = sq.value(0).toString();
-        song_num = sq.value(1).toString();
+    songbook = sq.value(0).toString();
+    song_num = sq.value(1).toString();
     sq.clear();
 
     sq.exec("SELECT name FROM Songbooks WHERE id = " + songbook);
@@ -314,7 +309,7 @@ void EditWidget::addNewSong(Song song, QString msgNewSongbook, QString msgCaptio
         current_songbook = 0;
 
     add_to_songbook = QInputDialog::getItem(this,tr("Select Songbook"),msgCaption,
-                                       songbook_list,current_songbook,false,&ok);
+                                            songbook_list,current_songbook,false,&ok);
 
     if (ok && !add_to_songbook.isEmpty())
     {
@@ -331,9 +326,7 @@ void EditWidget::addNewSong(Song song, QString msgNewSongbook, QString msgCaptio
         }
     }
     else
-    {
         close();
-    }
 }
 
 void EditWidget::addSongbook()
@@ -361,19 +354,19 @@ QStringList EditWidget::categories()
 {
     QStringList cat;
     cat<<tr("Other")<<tr("Bible Stories")<<tr("Gospel")<<tr("God, His love and greatness")
-            <<tr("The Resurrection of Christ")<<tr("Time")<<tr("The second coming of Christ and the judgement")
-            <<tr("Children and Family")<<tr("For new converts")<<tr("Spiritual struggle and victory")
-            <<tr("Harvest")<<tr("Jesus Christ")<<tr("Love")<<tr("Mother")<<tr("Prayer")<<tr("Youth")
-            <<tr("Wedding")<<tr("Sunset / Sunrise")<<tr("Baptism")
-            <<tr("New Years")<<tr("Funeral")<<tr("At the ordination")
-            <<tr("On the Lord\'s Supper")<<tr("Heavenly abode")<<tr("Instruction and self-test")
-            <<tr("Holy Ghost")<<tr("Church")<<tr("Before church meeting")
-            <<tr("Last Days")<<tr("Practical life with God")<<tr("At the end of church meeting")
-            <<tr("Welcome and farewell")<<tr("The call to work")<<tr("Call to repentance")
-            <<tr("Journey of faith, faith and hope")<<tr("Various Christian holidays")
-            <<tr("Determination and faithfulness")<<tr("Christmas")<<tr("Following Christ")
-            <<tr("The Word of God")<<tr("Salvation")<<tr("Suffering and death of Christ")
-            <<tr("Consolation and encouragement")<<tr("Praise and thanksgiving")<<tr("Christian Joy");
+      <<tr("The Resurrection of Christ")<<tr("Time")<<tr("The second coming of Christ and the judgement")
+     <<tr("Children and Family")<<tr("For new converts")<<tr("Spiritual struggle and victory")
+    <<tr("Harvest")<<tr("Jesus Christ")<<tr("Love")<<tr("Mother")<<tr("Prayer")<<tr("Youth")
+    <<tr("Wedding")<<tr("Sunset / Sunrise")<<tr("Baptism")
+    <<tr("New Years")<<tr("Funeral")<<tr("At the ordination")
+    <<tr("On the Lord\'s Supper")<<tr("Heavenly abode")<<tr("Instruction and self-test")
+    <<tr("Holy Ghost")<<tr("Church")<<tr("Before church meeting")
+    <<tr("Last Days")<<tr("Practical life with God")<<tr("At the end of church meeting")
+    <<tr("Welcome and farewell")<<tr("The call to work")<<tr("Call to repentance")
+    <<tr("Journey of faith, faith and hope")<<tr("Various Christian holidays")
+    <<tr("Determination and faithfulness")<<tr("Christmas")<<tr("Following Christ")
+    <<tr("The Word of God")<<tr("Salvation")<<tr("Suffering and death of Christ")
+    <<tr("Consolation and encouragement")<<tr("Praise and thanksgiving")<<tr("Christian Joy");
 
     return cat;
 }
@@ -407,9 +400,7 @@ void EditWidget::loadCategories(bool ui_update)
     if(ui_update)// update ui translations
     {
         for(int i(0); i<= ui->comboBoxCategory->count()-1;++i)
-        {
             ui->comboBoxCategory->setItemText(i,cat_list.at(i));
-        }
 
         // reset to selected category
         if(cur_cat_id>=0)
@@ -417,9 +408,7 @@ void EditWidget::loadCategories(bool ui_update)
         ui->comboBoxCategory->setCurrentIndex(cur_index);
     }
     else if(!ui_update)// initialize
-    {
         ui->comboBoxCategory->addItems(cat_list);
-    }
 }
 
 int EditWidget::isInDatabase(Song *song)
@@ -448,9 +437,6 @@ int EditWidget::isInDatabase(Song *song)
     song->songID = s_id.toInt();
 
     // get song title
-//    sq.exec("SELECT title FROM Songs WHERE id = '"+ s_id +"'");
-//    while(sq.next())
-//        s_title = sq.value(0).toString().trimmed();
     if(s_title!=song->title)
         return 0;
     else

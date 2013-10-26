@@ -20,19 +20,18 @@
 #include "highlight.h"
 
 Highlight::Highlight(QTextDocument *parent)
-        : QSyntaxHighlighter(parent)
+    : QSyntaxHighlighter(parent)
 {
     HighlightingRule rule;
-
     QStringList patterns;
 
     // Verse formating
     verseFormat.setForeground(Qt::red);
     verseFormat.setBackground(Qt::yellow);
     patterns << "^Verse[^\n]*" << "^&Verse[^\n]*"
-            << QString::fromUtf8("^Куплет[^\n]*") << QString::fromUtf8("^&Куплет[^\n]*")
-            << QString::fromUtf8("^Strophe[^\n]*") << QString::fromUtf8("^&Strophe[^\n]*")
-            << QString::fromUtf8("^Verš[^\n]*") << QString::fromUtf8("^&Verš[^\n]*");
+             << QString::fromUtf8("^Куплет[^\n]*") << QString::fromUtf8("^&Куплет[^\n]*")
+             << QString::fromUtf8("^Strophe[^\n]*") << QString::fromUtf8("^&Strophe[^\n]*")
+             << QString::fromUtf8("^Verš[^\n]*") << QString::fromUtf8("^&Verš[^\n]*");
     foreach (const QString &pattern, patterns)
     {
         rule.pattern = QRegExp(pattern);
@@ -47,11 +46,11 @@ Highlight::Highlight(QTextDocument *parent)
     chorusFormat.setForeground(Qt::darkBlue);
     chorusFormat.setBackground(QColor(212,240,28,255));
     patterns << "^Chorus[^\n]*" << "^&Chorus[^\n]*"
-            << QString::fromUtf8("^Sbor[^\n]*") << QString::fromUtf8("^&Sbor[^\n]*")
-            << "^Refrain[^\n]*" << "^&Refrain[^\n]*"
-            << QString::fromUtf8("^Припев[^\n]*") << QString::fromUtf8("^&Припев[^\n]*")
-            << QString::fromUtf8("^Приспів[^\n]*") << QString::fromUtf8("^&Приспів[^\n]*")
-            << QString::fromUtf8("^Refrén[^\n]*") << QString::fromUtf8("^&Refrén[^\n]*");
+             << QString::fromUtf8("^Sbor[^\n]*") << QString::fromUtf8("^&Sbor[^\n]*")
+             << "^Refrain[^\n]*" << "^&Refrain[^\n]*"
+             << QString::fromUtf8("^Припев[^\n]*") << QString::fromUtf8("^&Припев[^\n]*")
+             << QString::fromUtf8("^Приспів[^\n]*") << QString::fromUtf8("^&Приспів[^\n]*")
+             << QString::fromUtf8("^Refrén[^\n]*") << QString::fromUtf8("^&Refrén[^\n]*");
     foreach (const QString &pattern, patterns)
     {
         rule.pattern = QRegExp(pattern);
@@ -65,14 +64,14 @@ Highlight::Highlight(QTextDocument *parent)
     vstavkaFormat.setForeground(Qt::darkMagenta);
     vstavkaFormat.setBackground(QColor(255,140,0,255));
     patterns << "^Slide[^\n]*" << "^Insert[^\n]*"
-            << "^Intro[^\n]*" << "^Ending[^\n]*"
-            << QString::fromUtf8("^Слайд[^\n]*") << QString::fromUtf8("^Вставка[^\n]*")
-            << QString::fromUtf8("^Вступление[^\n]*") << QString::fromUtf8("^Окончание[^\n]*")
-            << QString::fromUtf8("^Вступ[^\n]*") << QString::fromUtf8("^Закінчення[^\n]*")
-            << QString::fromUtf8("^Dia[^\n]*") << QString::fromUtf8("^Einfügung[^\n]*")
-            << QString::fromUtf8("^Einleitung[^\n]*") << QString::fromUtf8("^Ende[^\n]*")
-            << QString::fromUtf8("^Snímek[^\n]*") << QString::fromUtf8("^Vložka[^\n]*")
-            << QString::fromUtf8("^Úvod[^\n]*") << QString::fromUtf8("^Závěr[^\n]*");
+             << "^Intro[^\n]*" << "^Ending[^\n]*"
+             << QString::fromUtf8("^Слайд[^\n]*") << QString::fromUtf8("^Вставка[^\n]*")
+             << QString::fromUtf8("^Вступление[^\n]*") << QString::fromUtf8("^Окончание[^\n]*")
+             << QString::fromUtf8("^Закінчення[^\n]*")
+             << QString::fromUtf8("^Dia[^\n]*") << QString::fromUtf8("^Einfügung[^\n]*")
+             << QString::fromUtf8("^Einleitung[^\n]*") << QString::fromUtf8("^Ende[^\n]*")
+             << QString::fromUtf8("^Snímek[^\n]*") << QString::fromUtf8("^Vložka[^\n]*")
+             << QString::fromUtf8("^Úvod[^\n]*") << QString::fromUtf8("^Závěr[^\n]*");
     foreach (const QString &pattern, patterns)
     {
         rule.pattern = QRegExp(pattern);
@@ -83,10 +82,12 @@ Highlight::Highlight(QTextDocument *parent)
 
 void Highlight::highlightBlock(const QString &text)
 {
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    foreach (const HighlightingRule &rule, highlightingRules)
+    {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
-        while (index >= 0) {
+        while (index >= 0)
+        {
             int length = expression.matchedLength();
             setFormat(index, length, rule.format);
             index = expression.indexIn(text, index + length);
@@ -99,10 +100,9 @@ void Highlight::highlightBlock(const QString &text)
 // *** Announcement Editor Highlighter
 
 HighlightAnnounce::HighlightAnnounce(QTextDocument *parent)
-        : QSyntaxHighlighter(parent)
+    : QSyntaxHighlighter(parent)
 {
     HighlightingRule rule;
-
     QStringList patterns;
 
     // Verse formating
@@ -123,10 +123,12 @@ HighlightAnnounce::HighlightAnnounce(QTextDocument *parent)
 
 void HighlightAnnounce::highlightBlock(const QString &text)
 {
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    foreach (const HighlightingRule &rule, highlightingRules)
+    {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
-        while (index >= 0) {
+        while (index >= 0)
+        {
             int length = expression.matchedLength();
             setFormat(index, length, rule.format);
             index = expression.indexIn(text, index + length);
@@ -138,17 +140,18 @@ void HighlightAnnounce::highlightBlock(const QString &text)
 
 // *** Highligting for search results ***
 HighlightSearch::HighlightSearch(QTextDocument *parent)
-        : QSyntaxHighlighter(parent)
+    : QSyntaxHighlighter(parent)
 {
-
 }
 
 void HighlightSearch::highlightBlock(const QString &text)
 {
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    foreach (const HighlightingRule &rule, highlightingRules)
+    {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
-        while (index >= 0) {
+        while (index >= 0)
+        {
             int length = expression.matchedLength();
             setFormat(index, length, rule.format);
             index = expression.indexIn(text, index + length);
@@ -163,7 +166,6 @@ void HighlightSearch::setHighlightText(QString text)
     HighlightingRule rule;
     highlightingRules.clear();
     resultFormat.setForeground(Qt::red);
-//    resultFormat.setBackground(Qt::yellow);
     rule.pattern = QRegExp(text,Qt::CaseInsensitive);
     rule.format = resultFormat;
     highlightingRules.append(rule);

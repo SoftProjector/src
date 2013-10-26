@@ -25,13 +25,12 @@
 #include "theme.h"
 
 namespace Ui {
-    class SongSettingWidget;
+class SongSettingWidget;
 }
 
 class SongSettingWidget : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit SongSettingWidget(QWidget *parent = 0);
     ~SongSettingWidget();

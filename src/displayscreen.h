@@ -66,8 +66,6 @@ public slots:
     void renderPicture(QPixmap image, SlideShowSettings ssSets);
     void renderVideo(VideoInfo &vid);
 
-
-
 signals:
     void exitSlide();
     void nextSlide();
@@ -88,7 +86,6 @@ private slots:
     void drawBibleText(QPainter *painter, int width, int height, bool isShadow);
     void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
     void drawSongText(QPainter *painter, int width, int height, bool isShadow);
-//    QRect drawSongTextToRect(QPainter *painter, QRect bound_rect, bool draw, bool wrap, QString main_text, QString caption_str, QString song_num_str, QString ending_str);
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
 
@@ -98,14 +95,12 @@ private slots:
 private:
     Ui::DisplayScreen *ui;
     DisplayControlsSettings controlsSettings;
-//    DisplaySettings displaySettings;
     bool useFading;
     bool useShadow;
     bool useBluredShadow;
     bool isTextPrepared;
     QFont mainFont;
     QString wallpaperPath; // Wallpaper image file path
-//    QImage wallpaper; // Wallpaper image
     QPixmap wallpaper;
     QString passiveWallpaperPath;
     QImage passiveWallpaper;
@@ -132,15 +127,12 @@ private:
     AnnounceSlide announcement;
 
     QString displayType;
-
     QLabel *textRenderLabel;
-
     Phonon::VideoWidget *videoWidget;
 
     BibleDisplaySettings bdSets;
     SongDisplaySettings sdSets;
     AnnounceDisplaySettings adSets;
-//    Phonon::VideoPlayer *vidP;
 };
 
 #endif // DISPLAYSCREEN_H

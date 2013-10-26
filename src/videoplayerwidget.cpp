@@ -39,22 +39,19 @@ void VideoPlayerWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
 void VideoPlayerWidget::keyPressEvent(QKeyEvent *e)
 {
-//    if(!e->modifiers())
-//    {
-        int key = e->key();
-        if (key == Qt::Key_Space)
-        {
-          emit playPause();
-            e->accept();
-            return;
-        }
-        else if (key == Qt::Key_Escape)
-        {
-            setFullScreen(false);
-            e->accept();
-            return;
-        }
-//    }
+    int key = e->key();
+    if (key == Qt::Key_Space)
+    {
+        emit playPause();
+        e->accept();
+        return;
+    }
+    else if (key == Qt::Key_Escape)
+    {
+        setFullScreen(false);
+        e->accept();
+        return;
+    }
     Phonon::VideoWidget::keyPressEvent(e);
 }
 
@@ -73,17 +70,17 @@ bool VideoPlayerWidget::event(QEvent *e)
 #endif
         //fall through
     case QEvent::WindowStateChange:
+    {
+        if (windowState() & Qt::WindowFullScreen)
+            m_timer.start(1000, this);
+        else
         {
-//            const Qt::WindowFlags flags = m_player->windowFlags();
-            if (windowState() & Qt::WindowFullScreen) {
-                m_timer.start(1000, this);
-            } else {
-                m_timer.stop();
+            m_timer.stop();
 #ifndef QT_NO_CURSOR
-                unsetCursor();
+            unsetCursor();
 #endif
-            }
         }
+    }
         break;
     default:
         break;
@@ -94,7 +91,8 @@ bool VideoPlayerWidget::event(QEvent *e)
 
 void VideoPlayerWidget::timerEvent(QTimerEvent *e)
 {
-    if (e->timerId() == m_timer.timerId()) {
+    if (e->timerId() == m_timer.timerId())
+    {
         //let's store the cursor shape
 #ifndef QT_NO_CURSOR
         setCursor(Qt::BlankCursor);

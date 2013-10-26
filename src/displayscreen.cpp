@@ -62,8 +62,6 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
-
-
 }
 
 DisplayScreen::~DisplayScreen()
@@ -112,8 +110,6 @@ void DisplayScreen::positionOpjects()
 {
     videoWidget->setGeometry(0,0,width(),height());
     textRenderLabel->setGeometry(0,0,width(),height());
-//    videoWidget->setGeometry(200,200,width()/2,height()/2);
-//    textRenderLabel->setGeometry(0,0,width()/2,height()/2);
 }
 
 void DisplayScreen::setControlsSettings(DisplayControlsSettings &settings)
@@ -261,9 +257,8 @@ void DisplayScreen::renderText(bool text_present)
     {
         acounter[0]=0;
     }
-        // Save the previous image for fade-out effect:
-        previous_image_pixmap = QPixmap::fromImage(output_image);
-
+    // Save the previous image for fade-out effect:
+    previous_image_pixmap = QPixmap::fromImage(output_image);
 
     // For later determening which background to draw, and whether to transition to it:
     background_needs_transition = ( use_active_background != text_present );
@@ -271,15 +266,13 @@ void DisplayScreen::renderText(bool text_present)
 
     // Render the foreground text:
     QImage text_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
+
     // Fill transparent background instead of initial garbage (fixes issues on MacOSX):
     text_image.fill(qRgba(0, 0, 0, 0)); //transparent background
 
     QPainter text_painter(&text_image);
     //text_painter.setRenderHint(QPainter::TextAntialiasing);
     //text_painter.setRenderHint(QPainter::Antialiasing);
-
-//    text_painter.setPen(foregroundColor);
-//    text_painter.setFont(mainFont);
 
     // Request to write its text to the QPainter:
     if(displayType == "bible")
@@ -295,7 +288,7 @@ void DisplayScreen::renderText(bool text_present)
     shadow_image.fill(qRgba(0, 0, 0, 0)); //transparent background
     QPainter shadow_painter(&shadow_image);
     shadow_painter.setPen(QColor(Qt::black));
-//    shadow_painter.setFont(mainFont);
+
     if(useShadow)
     {
         if(displayType == "bible")
@@ -308,40 +301,13 @@ void DisplayScreen::renderText(bool text_present)
     }
 
     // Set the blured image to the produced text image:
-    if(useBluredShadow)
-    {
-        /*
-        Produces a text with a blurred drop shadow using QGraphicsView.
-        This experiment failed, though, as the quality was a little unsatisfactory.
-
-        QPixmap shadow_pixmap = QPixmap::fromImage(text_image);
-
-        QGraphicsPixmapItem *shadow_pixmap_item;
-        shadow_pixmap_item = new QGraphicsPixmapItem(shadow_pixmap);
-
-        QGraphicsDropShadowEffect *shadow_effect;
-        shadow_effect = new QGraphicsDropShadowEffect();
-        shadow_effect->setColor(QColor(20, 20, 20, 240));//qRgba(0, 0, 0, 90));//Qt::black);
-        shadow_effect->setOffset(4.0);
-        shadow_effect->setBlurRadius(10.0);
-        shadow_pixmap_item->setGraphicsEffect( shadow_effect );
-
-        QGraphicsScene scene;
-        // The scene will take owndership of the item:
-        scene.addItem(shadow_pixmap_item);
-
-        QGraphicsView view(&scene);
-        view.show();
-        view.render(&output_painter);
-        */
-
-        // Blur the shadow:
+    if(useBluredShadow) // Blur the shadow:
         fastbluralpha(shadow_image, BLUR_RADIUS);
-    }
 
     QImage temp_image(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     output_image = temp_image;
     output_image.fill(qRgba(0, 0, 0, 0)); //transparent background
+
     // Painter for drawing the final image:
     QPainter output_painter(&output_image);
     //output_painter.setRenderHint(QPainter::TextAntialiasing);
@@ -380,8 +346,6 @@ void DisplayScreen::renderBibleText(Verse verse, BibleSettings &bibleSetings)
     useShadow = bibleSets.useShadow;
     useBluredShadow = bibleSets.useBlurShadow;
     setNewWallpaper(bibleSets.background,bibleSets.useBackground);
-   // mainFont = bibleSets.textFont;
-//    foregroundColor = bibleSets.textColor;
 
     isTextPrepared = false;
     renderText(true);
@@ -414,7 +378,6 @@ void DisplayScreen::renderSongText(Stanza stanza, SongSettings &songSettings)
     }
 
     setNewWallpaper(songSets.background,songSets.useBackground);
-   // mainFont = songSets.textFont;
 
     isTextPrepared = false;
     renderText(true);
@@ -431,8 +394,6 @@ void DisplayScreen::renderAnnounceText(AnnounceSlide announce, AnnounceSettings 
     useShadow = annouceSets.useShadow;
     useBluredShadow = annouceSets.useBlurShadow;
     setNewWallpaper(annouceSets.background,annouceSets.useBackground);
-//    mainFont = annouceSets.textFont;
-//    foregroundColor = annouceSets.textColor;
 
     isTextPrepared = false;
     renderText(true);
@@ -500,7 +461,6 @@ void DisplayScreen::updateTimeText()
     }
 
     emit sendTimeText(timeString);
-
 }
 
 void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State oldstate)
@@ -558,6 +518,7 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
     // Flags to be used for drawing verse text and caption:
     int tflags = Qt::TextWordWrap;
     tflags = Qt::TextWordWrap;
+
     if(bibleSets.textAlingmentV==0)
         tflags += Qt::AlignTop;
     else if(bibleSets.textAlingmentV==1)
@@ -672,7 +633,6 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
 
     // Draw the bible text verse(s) at the final size:
 
-//    mainFont = font;
     painter->setFont(bdSets.tFont);
     if(isShadow)
         painter->setPen(QColor(Qt::black));
@@ -685,7 +645,6 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
         painter->drawText(bdSets.ttRect, tflags, bibleVerse.trinary_text);
 
     // Draw the verse caption(s) at the final size:
-//    font.setPointSize(current_size*3/4);
     painter->setFont(bdSets.cFont);
     if(isShadow)
         painter->setPen(QColor(Qt::black));
@@ -700,7 +659,6 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
     // Restore the original font:
     font.setPointSize(original_size);
     painter->setFont(font);
-
 }
 
 void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size)
@@ -708,7 +666,6 @@ void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& 
     QFont font = painter->font();
 
     // prepare caption
-//    font.setPointSize(font_size * 3/4);
     painter->setFont(bibleSets.captionFont);
     crect = painter->boundingRect(left, top, width, height, cflags, ctext);
 
@@ -860,6 +817,7 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
         // Prepare Ending
         painter->setFont(songSets.endingFont);
         ending_rect = boundRectOrDrawText(painter, false, left, top, width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
+
         // Decrease songe ending font size so that it would fit in the screen width
         while(ending_rect.width()> width)
         {
@@ -875,7 +833,6 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
         mainh = main_rect.height();
         mainw = main_rect.width();
         totalh = caph+endh+mainh;
-
 
         // Decrease song text to fit the screen
         while(mainw > width || totalh > height)
@@ -893,6 +850,7 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
         {
             main_flags += Qt::TextWordWrap;
             main_font = songSets.textFont;
+
             // Prepare Main Text
             painter->setFont(songSets.textFont);
             main_rect = boundRectOrDrawText(painter, false, left, top, width, height, main_flags, main_text);
@@ -927,7 +885,6 @@ void DisplayScreen::drawSongText(QPainter *painter, int width, int height, bool 
     caph = sdSets.cRect.height();
     endh = sdSets.eRect.height();
     main_flags = sdSets.tFlags;
-//    mainFont = songSets.textFont;
     mainh = height-caph-endh;
     if(songSets.infoAling == 0 && songSets.endingPosition == 0)
     {
@@ -1061,7 +1018,6 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height, b
     // Keep decreasing the font size until the text fits into the allocated space:
     QRect rect;
 
-
     if(!isTextPrepared)
     {
         painter->setFont(font);
@@ -1084,7 +1040,6 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height, b
             font.setPointSize(orig_font_size);
             painter->setFont(font);
             flags = (flags | Qt::TextWordWrap);
-            //qDebug() << "DRAWING WITH WRAP";
             exit = false;
             while( !exit )
             {
@@ -1093,7 +1048,6 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height, b
                 if( !exit )
                 {
                     font.setPointSize( font.pointSize()-1 );
-                    //qDebug() << "SETTING SIZE:" << font.pointSize();
                     painter->setFont(font);
                 }
             }
@@ -1109,7 +1063,6 @@ void DisplayScreen::drawAnnounceText(QPainter *painter, int width, int height, b
     else
         painter->setPen(annouceSets.textColor);
     painter->drawText(adSets.tRect, flags, announcement.text);
-
 }
 
 void DisplayScreen::setFading(bool fade)
@@ -1119,7 +1072,6 @@ void DisplayScreen::setFading(bool fade)
 
 void DisplayScreen::setDisplaySettings(DisplaySettings sets)
 {
-    //    mySettings = sets;
 }
 
 void DisplayScreen::setNewWallpaper(QString path, bool isToUse)
@@ -1152,24 +1104,11 @@ void DisplayScreen::setNewPassiveWallpaper(QPixmap wallPix, bool isToUse)
         passiveWallpaper = wallPix.toImage();
     else
         passiveWallpaper = QImage();
-//    if(isToUse)
-//        passiveWallpaperPath = path;
-//    else
-//        passiveWallpaperPath.clear();
-
-//    if(passiveWallpaperPath.simplified().isEmpty() )
-//        passiveWallpaper = QImage();
-//    else
-//    {
-//        passiveWallpaper.load(passiveWallpaperPath);
-//        passiveWallpaper = passiveWallpaper.scaled(width(), height());
-//    }
 }
 
 void DisplayScreen::paintEvent(QPaintEvent *event )
 {
     QPainter painter(this);
-//    QSiza sz();
     QImage txtPix(width(), height(), QImage::Format_ARGB32);//_Premultiplied);
     txtPix.fill(qRgba(0, 0, 0, 0)); //transparent background
     QPainter txtPainter(&txtPix);
@@ -1205,7 +1144,6 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
                 painter.drawPixmap(0,(height()-wh)/2,wallpaper);
             else
                 painter.drawPixmap(0,0,wallpaper);
-
         }
         else
         {
@@ -1217,8 +1155,6 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     else
     {
         // Draw the passive wallpaper if set:
-        //qDebug() << "no text present, passive path:" << passiveWallpaperPath;
-
         if (passiveWallpaper.width()!=width() || passiveWallpaper.isNull())
         {
             passiveWallpaper.load(passiveWallpaperPath);
@@ -1238,22 +1174,16 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     // Draw the previous image into the window, at decreasing opacity:
     txtPainter.setOpacity(prev_opacity);
     txtPainter.drawPixmap(0, 0, previous_image_pixmap);
-//    painter.setOpacity(prev_opacity);
-//    painter.drawPixmap(0, 0, previous_image_pixmap);
 
     // Draw the output_image into the window, at increasing opacity:
-//    painter.setOpacity(curr_opacity);
-//    painter.drawImage(0, 0, output_image);
     txtPainter.setOpacity(curr_opacity);
     txtPainter.drawImage(0, 0, output_image);
 
-//    textRenderLabel->setPixmap(QPixmap::fromImage(output_image.scaled(width()/2,height()/2)));
     textRenderLabel->setPixmap(QPixmap::fromImage(txtPix));
 
     // Reset the opacity to default opaque:
     painter.setOpacity(1.0);
     txtPainter.setOpacity(1.0);
-//    txtPainter.end();
 }
 
 // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>

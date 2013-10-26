@@ -124,7 +124,6 @@ void BibleSettingWidget::getBibleVersions(BibleVersionSettings &bver, BibleVersi
             bversion.operatorBible = "same";
         else
             bversion.operatorBible = operator_id_list.at(obx-1);
-
     }
     else
     {
@@ -224,7 +223,6 @@ void BibleSettingWidget::loadSettings()
 
     // Set abbriviations use
     ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviations);
-
     ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviations);
 
     // Set max screen use
@@ -233,7 +231,6 @@ void BibleSettingWidget::loadSettings()
 
     ui->spinBoxMaxScreen2->setValue(mySettings2.screenUse);
     ui->comboBoxScreenPosition2->setCurrentIndex(mySettings2.screenPosition);
-
 
     // Set if to use secondary screen settings
     ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2settings);
@@ -249,7 +246,8 @@ void BibleSettingWidget::loadBibleVersions()
     // Get Bibles that exist in the database
     QSqlQuery sq;
     sq.exec("SELECT bible_name, id FROM BibleVersions");
-    while(sq.next()){
+    while(sq.next())
+    {
         bibles << sq.value(0).toString();
         bible_id_list << sq.value(1).toString();
     }
@@ -355,8 +353,7 @@ void BibleSettingWidget::updateSecondaryBibleMenu2()
     ui->comboBoxSecondaryBible2->addItems(secondary_bibles2);
 
     int i = ui->comboBoxSecondaryBible2->findText(sbible);
-    if( i != -1 )
-        // The same secondary bible is still available
+    if( i != -1 ) // The same secondary bible is still available
         ui->comboBoxSecondaryBible2->setCurrentIndex(i);
 
     updateTrinaryBibleMenu2();
@@ -364,7 +361,6 @@ void BibleSettingWidget::updateSecondaryBibleMenu2()
 
 void BibleSettingWidget::updateTrinaryBibleMenu()
 {
-
     if (ui->comboBoxSecondaryBible->currentIndex() == 0)
     {
         ui->comboBoxTrinaryBible->setCurrentIndex(0);
@@ -377,7 +373,6 @@ void BibleSettingWidget::updateTrinaryBibleMenu()
         QString tbible = ui->comboBoxTrinaryBible->currentText();
         QStringList trinary_bibles = secondary_bibles;
         trinary_bibles.removeOne(sbible);
-
 
         trinary_id_list = secondary_id_list;
         trinary_id_list.removeAt(ui->comboBoxSecondaryBible->currentIndex()-1);
@@ -394,7 +389,6 @@ void BibleSettingWidget::updateTrinaryBibleMenu()
 
 void BibleSettingWidget::updateTrinaryBibleMenu2()
 {
-
     if (ui->comboBoxSecondaryBible2->currentIndex() == 0)
     {
         ui->comboBoxTrinaryBible2->setCurrentIndex(0);
@@ -407,7 +401,6 @@ void BibleSettingWidget::updateTrinaryBibleMenu2()
         QString tbible = ui->comboBoxTrinaryBible2->currentText();
         QStringList trinary_bibles = secondary_bibles2;
         trinary_bibles.removeOne(sbible);
-
 
         trinary_id_list2 = secondary_id_list2;
         trinary_id_list2.removeAt(ui->comboBoxSecondaryBible2->currentIndex()-1);
@@ -439,7 +432,6 @@ void BibleSettingWidget::updateOperatorBibleMenu()
     if( i != -1 )
         // The same operaotr bible is still available
         ui->comboBoxOperatorBible->setCurrentIndex(i);
-
 }
 
 void BibleSettingWidget::setDispScreen2Visible(bool visible)

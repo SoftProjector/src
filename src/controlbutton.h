@@ -51,7 +51,6 @@ private:
     bool m_pressed;
 
     qreal m_opacity;
-
     QIcon m_icon;
     QIcon m_iconHovered;
     QIcon m_iconPressed;

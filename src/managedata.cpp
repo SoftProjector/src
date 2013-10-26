@@ -168,8 +168,8 @@ QVariant SongbooksModel::data(const QModelIndex &index, int role) const
 }
 
 QVariant SongbooksModel::headerData(int section,
-                                 Qt::Orientation orientation,
-                                 int role) const
+                                    Qt::Orientation orientation,
+                                    int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
     {
@@ -243,8 +243,8 @@ QVariant ThemeModel::data(const QModelIndex &index, int role) const
 }
 
 QVariant ThemeModel::headerData(int section,
-                                 Qt::Orientation orientation,
-                                 int role) const
+                                Qt::Orientation orientation,
+                                int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal )
     {
@@ -267,7 +267,6 @@ bool ThemeModel::removeRows(int row, int count, const QModelIndex &parent)
     endRemoveRows();
     return true;
 }
-
 
 //***************************************/
 //****        Database               ****/
@@ -296,7 +295,7 @@ QList<Bibles> Database::getBibles()
 {
     QList<Bibles> bibles;
     Bibles bible;
-        QSqlQuery sq;
+    QSqlQuery sq;
     sq.exec("SELECT bible_name, id, abbreviation, information, right_to_left FROM BibleVersions");
     while (sq.next())
     {

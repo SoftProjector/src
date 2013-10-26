@@ -26,7 +26,7 @@
 #include "theme.h"
 
 namespace Ui {
-    class GeneralSettingWidget;
+class GeneralSettingWidget;
 }
 
 class GeneralSettingWidget : public QWidget

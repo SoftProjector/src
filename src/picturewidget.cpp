@@ -25,10 +25,6 @@ PictureWidget::PictureWidget(QWidget *parent) :
     ui(new Ui::PictureWidget)
 {
     ui->setupUi(this);
-//    QRect r = ui->labelPreview->geometry();
-//    r.setWidth(300);
-//    r.setHeight(300);
-//    ui->labelPreview->setGeometry(r);
     loadSlideShows();
     ui->pushButtonGoLive->setEnabled(false);
 }
@@ -63,9 +59,7 @@ void PictureWidget::on_listWidgetSlides_currentRowChanged(int currentRow)
 {
     if(currentRow>=0)
     {
-        int /*w,h,*/pw,ph;
-//        w = ui->labelPreview->width()-4;
-//        h = ui->labelPreview->height()-4;
+        int pw,ph;
         pw = slides.at(currentRow).imagePreview.width();
         ph = slides.at(currentRow).imagePreview.height();
         if(pw>300 || ph>200)
@@ -79,13 +73,10 @@ void PictureWidget::on_listWidgetSlides_currentRowChanged(int currentRow)
 void PictureWidget::on_listWidgetSlides_doubleClicked(const QModelIndex &index)
 {
     sendToProjector();
-//    emit sendImageList(imagesToShow, index.row());
 }
 
 void PictureWidget::on_pushButtonAddImages_clicked()
 {
-//    imagesPreview.clear();
-//    imagesToShow.clear();
     QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",
                                                                tr("Images(%1)").arg(getSupportedImageFormats()));
 
@@ -103,6 +94,7 @@ void PictureWidget::on_pushButtonAddImages_clicked()
             QPixmap img;
             SlideShowItem sd;
             img.load(file);
+
             // set display image. If to resize, resize them
             if(mySettings.resize)
             {

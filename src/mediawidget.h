@@ -51,7 +51,6 @@ protected:
     void dropEvent(QDropEvent *e);
 
 signals:
-//    void toProjector(QString vidPath, int aspectRatio);
     void toProjector(VideoInfo &vid);
 
 private slots:
@@ -83,21 +82,15 @@ private:
     QIcon pauseIcon;
 
     Phonon::SeekSlider *timeSlider;
-
     Phonon::VolumeSlider *volumeSlider;
-
     Phonon::MediaObject mediaPlayer;
     Phonon::AudioOutput m_AudioOutput;
-
     VideoPlayerWidget *videoWidget;
-//    Phonon::Path m_audioOutputPath;
 
     QString audioExt;
     QString videoExt;
-
     QStringList mediaFilePaths;
     QStringList mediaFileNames;
-
 };
 
 #endif // MEDIAWIDGET_H

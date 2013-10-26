@@ -280,4 +280,3 @@ QByteArray Settings::textToByt(QString text)
     b = b.fromHex(b);
     return b;
 }
-

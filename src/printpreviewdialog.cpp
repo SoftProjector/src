@@ -30,7 +30,6 @@ PrintPreviewDialog::PrintPreviewDialog(QWidget *parent) :
     ui->spinBoxFontSize->setValue(ui->textEdit->font().pointSize());
 
     // set default margins
-//    ui->comboBox->setCurrentIndex(0);//Inches
     on_comboBox_currentIndexChanged("Inch");
     ui->doubleSpinBoxLeft->setValue(0.5);
     ui->doubleSpinBoxTop->setValue(0.5);
@@ -64,7 +63,7 @@ void PrintPreviewDialog::on_spinBoxFontSize_valueChanged(int arg1)
 }
 
 void PrintPreviewDialog::setText(Song song)
-    // This will prepare print text edit for current song
+// This will prepare print text edit for current song
 {
     QString s;
     s = QString("%1 %2\n%3\n").arg(song.songbook_name).arg(song.number).arg(song.title);
@@ -92,7 +91,7 @@ void PrintPreviewDialog::setText(Song song)
 }
 
 void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
-    // This will prepare print text edit for Current chapter
+// This will prepare print text edit for Current chapter
 {
     QString s;
 
@@ -103,11 +102,10 @@ void PrintPreviewDialog::setText(QString bible, QString book, int chapter)
     else
         bible = bb.at(0); // operator bible
 
-
     Bible b;
-
     b.setBiblesId(bible);
     b.loadOperatorBible();
+
     // get bible name instead of id
     bible = b.getBibleName();
 
@@ -166,7 +164,6 @@ void PrintPreviewDialog::setSchedule(QString scheduleName, const QList<Schedule>
 
     ui->textEdit->setText(s);
     ui->spinBoxFontSize->setValue(11); // default font size for spftProjector Schedule
-
 }
 
 void PrintPreviewDialog::on_pushButtonPDF_clicked()

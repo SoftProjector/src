@@ -40,7 +40,6 @@ protected:
 
 private:
     Ui::HelpDialog *ui;
-    //QWebView *helpView;
 
 private slots:
     void on_close_pushButton_clicked();

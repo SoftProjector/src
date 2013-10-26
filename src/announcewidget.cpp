@@ -45,9 +45,6 @@ AnnounceWidget::AnnounceWidget(QWidget *parent) :
 
     // Derease row height
     ui->tableViewAnnouncements->resizeRowsToContents();
-
-//    setAnnounceList();
-//    loadAnnouncements();
 }
 
 AnnounceWidget::~AnnounceWidget()
@@ -236,8 +233,3 @@ void AnnounceWidget::setAnnouncementFromHistory(Announcement &announce)
     ui->tableViewAnnouncements->clearSelection();
     setPreview(announce);
 }
-
-
-
-
-

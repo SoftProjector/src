@@ -27,7 +27,7 @@
 #include "spfunctions.h"
 
 namespace Ui {
-    class BibleSettingWidget;
+class BibleSettingWidget;
 }
 
 class BibleSettingWidget : public QWidget

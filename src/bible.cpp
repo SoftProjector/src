@@ -61,20 +61,23 @@ QStringList Bible::getBooks()
     if( books.count() == 0 )
         retrieveBooks();
     for(int i(0); books.count()>i;++i)
-    {
         book_list.append(books.at(i).book);
-//        qDebug()<< books.at(i).book;
-    }
+
     return book_list;
 }
 
 QString Bible::getBookName(int id)
 {
+    QString book;
     foreach (const BibleBook bk, books)
     {
         if(bk.bookId.toInt() == id)
-            return bk.book;
+        {
+            book = bk.book;
+            break;
+        }
     }
+    return book;
 }
 
 void Bible::getVerseRef(QString vId, QString &book, int &chapter, int &verse)
@@ -101,14 +104,19 @@ void Bible::getVerseRef(QString vId, QString &book, int &chapter, int &verse)
 
 int Bible::getVerseNumberLast(QString vId)
 {
+    int vernum(0);
     if(vId.contains(","))
         vId = vId.split(",").last();
 
     foreach(const BibleVerse &bv, operatorBible)
     {
         if(bv.verseId == vId)
-            return bv.verseNumber;
+        {
+            vernum = bv.verseNumber;
+            break;
+        }
     }
+    return vernum;
 }
 
 int Bible::getCurrentBookRow(QString book)
@@ -168,6 +176,7 @@ Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& s
     verse_id.chop(1);
 
     Verse v;
+
     // get primary verse
     getVerseAndCaption(v.primary_text,v.primary_caption,verse_id,bv.primaryBible,sets.useAbbriviations);
 
@@ -180,7 +189,6 @@ Verse Bible::getCurrentVerseAndCaption(QList<int>  currentRows, BibleSettings& s
         getVerseAndCaption(v.trinary_text,v.trinary_caption,verse_id,bv.trinaryBible,sets.useAbbriviations);
 
     return v;
-
 }
 
 void Bible::getVerseAndCaption(QString& verse, QString& caption, QString verId, QString& bibId, bool useAbbr)
@@ -350,7 +358,6 @@ QList<BibleSearch> Bible::searchBible(bool allWords, QRegExp searchExp, int book
             else
                 addSearchResult(bv,return_results);
         }
-
     }
 
     return return_results;
@@ -385,7 +392,6 @@ QList<BibleSearch> Bible::searchBible(bool allWords, QRegExp searchExp, int book
             else
                 addSearchResult(bv,return_results);
         }
-
     }
 
     return return_results;
@@ -406,7 +412,6 @@ void Bible::addSearchResult(const BibleVerse &bv, QList<BibleSearch> &bsl)
     results.verse = QString::number(bv.verseNumber);
     results.verse_text = QString("%1 %2:%3 %4").arg(results.book).arg(results.chapter).arg(results.verse).arg(bv.verseText);
 
-
     bsl.append(results);
 }
 
@@ -425,5 +430,4 @@ void Bible::loadOperatorBible()
         bv.verseText = sq.value(4).toString().trimmed();
         operatorBible.append(bv);
     }
-
 }

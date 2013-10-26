@@ -24,10 +24,9 @@
 #include "song.h"
 #include "songcounter.h"
 #include "editwidget.h"
-//#include "softprojector.h"
 
 namespace Ui {
-    class SongWidget;
+class SongWidget;
 }
 
 class SongWidget : public QWidget {
@@ -37,6 +36,8 @@ public:
     explicit SongWidget(QWidget *parent = 0);
     virtual ~SongWidget();
     Song currentSong();
+    SongsModel *songs_model;
+    SongCounter counter;
 
 public slots:
     void retranslateUis();
@@ -44,13 +45,13 @@ public slots:
     Song getSongToEdit();
     void updateSongbooks();
     bool isSongSelected();
-    // will be called by the edit widget:
     void updateSongFromDatabase(int songid, int initial_sid);
     void addNewSong(Song song, int initial_sid);
     QByteArray getSplitterState();
     void setSplitterState(QByteArray& state);
     void sendToPreviewFromSchedule(Song &song);
     void sendToProjector(Song song, int row);
+    void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -58,7 +59,6 @@ protected:
 signals:
     void setWaitCursor();
     void setArrowCursor();
-    // To be used ONLY by SongWidget::sendToProjector():
     void sendSong(Song song, int currentItem);
     void addToSchedule(Song &song);
 
@@ -74,16 +74,12 @@ private slots:
     void on_songbook_menu_currentIndexChanged(int index);
     void selectMatchingSong(QString title);
     void sendToPreview(Song song);
-    //void sendToProjector(Song song, int row);
     void loadSongbooks();
     void updateButtonStates();
     void filterModeChanged();
     void loadCategories(bool ui_update);
-
     void on_pushButtonSearch_clicked();
-
     void on_pushButtonClearResults_clicked();
-
     void on_comboBoxFilterType_currentIndexChanged(int index);
 
 private:
@@ -97,18 +93,11 @@ private:
     bool isSpinboxEditing;
     bool isSongFromSchelude;
     bool isScheduleSongEdited;
-//    bool allSongs;
     Song preview_song;
 
     QList<int> cat_ids;
-//    QStringList searchResults;
     QList<Song> allSongs;
     HighlighterDelegate *highlight;
-public:
-    SongsModel *songs_model;
-    SongCounter counter;
-public slots:
-    void songsViewRowChanged(const QModelIndex &current, const QModelIndex &previous);
 };
 
 #endif // SONGWIDGET_H

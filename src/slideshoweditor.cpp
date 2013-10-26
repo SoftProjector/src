@@ -21,7 +21,7 @@
 #include "ui_slideshoweditor.h"
 
 SlideShowEditor::SlideShowEditor(QWidget *parent) :
-//    QWidget(parent),
+    //    QWidget(parent),
     QDialog(parent),
     ui(new Ui::SlideShowEditor)
 {
@@ -75,7 +75,7 @@ void SlideShowEditor::updateButtonState()
 void SlideShowEditor::on_pushButtonAddImages_clicked()
 {
     QStringList imageFilePaths = QFileDialog::getOpenFileNames(this,tr("Select Images to Open"),".",
-                                                              tr("Images(%1)").arg(getSupportedImageFormats()));
+                                                               tr("Images(%1)").arg(getSupportedImageFormats()));
     if(imageFilePaths.count()>0)
     {
         this->setCursor(Qt::WaitCursor);
