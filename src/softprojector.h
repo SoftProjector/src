@@ -225,6 +225,10 @@ private slots:
     void openScheduleItem(QSqlQuery &q, const int scid, VideoInfo &v);
     void openScheduleItem(QSqlQuery &q, const int scid, Announcement &a);
 
+    void on_actionClear_triggered();
+
+    void on_actionCloseDisplay_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);

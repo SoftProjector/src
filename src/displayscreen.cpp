@@ -433,6 +433,12 @@ void DisplayScreen::renderVideo(VideoInfo &vid)
     videoPlayer->play();
 }
 
+void DisplayScreen::renderClear()
+{
+    displayType = "clear";
+    renderText(true);
+}
+
 void DisplayScreen::updateTimeText()
 {
     long len = videoPlayer->totalTime();
@@ -507,10 +513,6 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
     h=maxh;
     top=maxtop;
 
-    QFont font = bibleSets.textFont;
-    int original_size = font.pointSize();
-    int current_size = original_size;
-
     // Keep decreasing the font size until the text fits into the allocated space:
 
     // Rects for storing the position of the text and caption drawing:
@@ -551,7 +553,8 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
             {
                 // Prepare primary version only, 2nd and 3rd do not exist
                 // Figure out how much space the drawing will take at the current font size:
-                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h, current_size);
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,
+                                    tflags,cflags,top,left,w,h);
 
                 // Make sure that all fits into the screen
                 int th = trect1.height()+crect1.height();
@@ -561,7 +564,8 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
             {
                 // Prepare primary and secondary versions, trinary does not exist
                 // Figure out how much space the drawing will take at the current font size for primary:
-                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h/2,current_size);
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,
+                                    tflags,cflags,top,left,w,h/2);
 
                 // set new top for secondary
                 int top2 = crect1.bottom();
@@ -569,7 +573,8 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
                     top2=h/2+top;
 
                 // Figure out how much space the drawing will take at the current font size for secondary:
-                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h/2,current_size);
+                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,
+                                    tflags,cflags,top2,left,w,h/2);
 
                 int th1 = trect1.height()+crect1.height();
                 int th2 = trect2.height()+crect2.height();
@@ -577,14 +582,15 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
                 // Make sure that primary fits
                 exit = (th1<=h/2);
                 if (exit)
-                    // If primary fits, make sure secondary fits
+                    // If secondary fits, make sure secondary fits
                     exit = (th2<=h/2);
             }
             else if(!bibleVerse.secondary_text.isEmpty() && !bibleVerse.trinary_text.isEmpty())
             {
                 // Prepare primary and secondary and trinary versions
                 // Figure out how much space the drawing will take at the current font size for primary:
-                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,tflags,cflags,top,left,w,h*1/3,current_size);
+                drawBibleTextToRect(painter,trect1,crect1,bibleVerse.primary_text,bibleVerse.primary_caption,
+                                    tflags,cflags,top,left,w,h*1/3);
 
                 // set new top for secondary
                 int top2 = crect1.bottom();
@@ -592,7 +598,8 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
                     top2=h*1/3+top;
 
                 // Figure out how much space the drawing will take at the current font size for secondary:
-                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+                drawBibleTextToRect(painter,trect2,crect2,bibleVerse.secondary_text,bibleVerse.secondary_caption,
+                                    tflags,cflags,top2,left,w,h*1/3);
 
                 // set new top for trinaty
                 top2 = crect2.bottom();
@@ -600,7 +607,8 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
                     top2 = h*2/3+top;
 
                 // Figure out how much space the drawing will take at the current font size for trinary:
-                drawBibleTextToRect(painter,trect3,crect3,bibleVerse.trinary_text,bibleVerse.trinary_caption,tflags,cflags,top2,left,w,h*1/3,current_size);
+                drawBibleTextToRect(painter,trect3,crect3,bibleVerse.trinary_text,bibleVerse.trinary_caption,
+                                    tflags,cflags,top2,left,w,h*1/3);
 
                 int th1 = trect1.height()+crect1.height();
                 int th2 = trect2.height()+crect2.height();
@@ -609,17 +617,22 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
                 // Make sure that primary fits
                 exit = (th1<=h*1/3);
                 if(exit)
-                    // If primary fits, make sure secondary fits
+                    // If secondary fits, make sure secondary fits
                     exit = (th2<=h*1/3);
                 if(exit)
-                    // If also secondary fits, make sure trinary fits
+                    // If also trinary fits, make sure trinary fits
                     exit = (th3<=h*1/3);
+
             }
 
             if( !exit ) // The current font is too large, decrease and try again:
+            {
+                int current_size = bibleSets.textFont.pointSize();
                 current_size--;
+                bibleSets.textFont.setPointSize(current_size);
+            }
         }
-        font.setPointSize(current_size);
+
         isTextPrepared = true;
         bdSets.ptRect = trect1;
         bdSets.pcRect = crect1;
@@ -627,7 +640,7 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
         bdSets.scRect = crect2;
         bdSets.ttRect = trect3;
         bdSets.tcRect = crect3;
-        bdSets.tFont = font;
+        bdSets.tFont = bibleSets.textFont;
         bdSets.cFont = bibleSets.captionFont;
     }
 
@@ -655,23 +668,18 @@ void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool
         painter->drawText(bdSets.scRect, cflags, bibleVerse.secondary_caption);
     if(!bibleVerse.trinary_caption.isNull())
         painter->drawText(bdSets.tcRect, cflags, bibleVerse.trinary_caption);
-
-    // Restore the original font:
-    font.setPointSize(original_size);
-    painter->setFont(font);
 }
 
-void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size)
+void DisplayScreen::drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext,
+                                        QString ctext, int tflags, int cflags, int top, int left,
+                                        int width, int height)
 {
-    QFont font = painter->font();
-
     // prepare caption
     painter->setFont(bibleSets.captionFont);
     crect = painter->boundingRect(left, top, width, height, cflags, ctext);
 
     // prepare text
-    font.setPointSize(font_size);
-    painter->setFont(font);
+    painter->setFont(bibleSets.textFont);
     trect = painter->boundingRect(left, top, width, height-crect.height(), tflags, ttext);
 
     // reset capion location
@@ -982,6 +990,7 @@ QRect DisplayScreen::boundRectOrDrawText(QPainter *painter, bool draw, int left,
     // If draw is false, calculate the rectangle that the specified text would be
     // drawn into if it was draw. If draw is true, draw as well.
     // Output rect is returned.
+
     QRect out_rect;
     if(draw)
         painter->drawText(left, top, width, height, flags, text, &out_rect);

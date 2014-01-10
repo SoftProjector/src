@@ -71,6 +71,8 @@
         <file>icons/FitToScreenByExpanding.png</file>
         <file>icons/hide.png</file>
         <file>icons/show.png</file>
+        <file>icons/clear.png</file>
+        <file>icons/close_display.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

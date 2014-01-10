@@ -106,7 +106,16 @@
            </sizepolicy>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -151,7 +160,16 @@
         <item>
          <widget class="QWidget" name="widgetMultiVerse" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -275,7 +293,9 @@
      <string>Display Screen</string>
     </property>
     <addaction name="actionShow"/>
+    <addaction name="actionClear"/>
     <addaction name="actionHide"/>
+    <addaction name="actionCloseDisplay"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSchedule"/>
@@ -626,7 +646,7 @@
     <string>Show</string>
    </property>
    <property name="toolTip">
-    <string>Dsiplay to the screen.</string>
+    <string>Dsiplay to the screen (F4)</string>
    </property>
    <property name="shortcut">
     <string>F4</string>
@@ -641,10 +661,37 @@
     <string>Hide</string>
    </property>
    <property name="toolTip">
-    <string>Stop displaying to the screen.</string>
+    <string>Show Passive Screen (Stop displaying to the screen) (Esc)</string>
    </property>
    <property name="shortcut">
     <string>Esc</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/clear.png</normaloff>:/icons/icons/clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear Display Text (Shift+Esc)</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Esc</string>
+   </property>
+  </action>
+  <action name="actionCloseDisplay">
+   <property name="icon">
+    <iconset resource="softprojector.qrc">
+     <normaloff>:/icons/icons/close_display.png</normaloff>:/icons/icons/close_display.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="toolTip">
+    <string>Close Display Window</string>
    </property>
   </action>
  </widget>

@@ -65,6 +65,7 @@ public slots:
     void renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings);
     void renderPicture(QPixmap image, SlideShowSettings ssSets);
     void renderVideo(VideoInfo &vid);
+    void renderClear();
 
 signals:
     void exitSlide();
@@ -84,7 +85,7 @@ private slots:
     void btnExitClicked();
 
     void drawBibleText(QPainter *painter, int width, int height, bool isShadow);
-    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height, int font_size);
+    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height);
     void drawSongText(QPainter *painter, int width, int height, bool isShadow);
     QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
     void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
@@ -99,7 +100,6 @@ private:
     bool useShadow;
     bool useBluredShadow;
     bool isTextPrepared;
-    QFont mainFont;
     QString wallpaperPath; // Wallpaper image file path
     QPixmap wallpaper;
     QString passiveWallpaperPath;

@@ -139,10 +139,14 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->toolBarEdit->addAction(ui->action_Help);
 
     ui->toolBarShow->addAction(ui->actionShow);
+    ui->toolBarShow->addAction(ui->actionClear);
     ui->toolBarShow->addAction(ui->actionHide);
+    ui->toolBarShow->addAction(ui->actionCloseDisplay);
 
     ui->actionShow->setEnabled(false);
     ui->actionHide->setEnabled(false);
+    ui->actionClear->setEnabled(false);
+    ui->actionCloseDisplay->setEnabled(false);
 
     // Create and connect shortcuts
     shpgUP = new QShortcut(Qt::Key_PageUp,this);
@@ -227,6 +231,7 @@ void SoftProjector::positionDisplayWindow()
             displayScreen1->move(top_left);
         }
         displayScreen1->showFullScreen();
+        ui->actionCloseDisplay->setEnabled(true);
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
         displayScreen1->positionOpjects();
         displayScreen1->setControlButtonsVisible(false);
@@ -270,10 +275,14 @@ void SoftProjector::showDisplayScreen(bool show)
     if(show)
     {
         displayScreen1->showFullScreen();
+        ui->actionCloseDisplay->setEnabled(true);
         displayScreen1->positionOpjects();
     }
     else
+    {
         displayScreen1->hide();
+        ui->actionCloseDisplay->setEnabled(false);
+    }
     displayScreen1->setControlsSettings(mySettings.general.displayControls);
     displayScreen1->setControlButtonsVisible(true);
 }
@@ -593,6 +602,7 @@ void SoftProjector::updateScreen()
             displayScreen2->renderText(false);
         ui->actionShow->setEnabled(true);
         ui->actionHide->setEnabled(false);
+        ui->actionClear->setEnabled(false);
     }
     else if ((currentRow >=0 && !new_list) || (type == "video" && !new_list))
     {
@@ -604,16 +614,26 @@ void SoftProjector::updateScreen()
         else
         {
             if(displayScreen1->isHidden())
-                displayScreen1->show();
+            {
+                displayScreen1->showFullScreen();
+                ui->actionCloseDisplay->setEnabled(true);
+            }
             if(hasDisplayScreen2)
             {
                 if(displayScreen2->isHidden())
-                    displayScreen2->show();
+                {
+                    displayScreen2->showFullScreen();
+                    ui->actionCloseDisplay->setEnabled(true);
+                }
             }
         }
 
         ui->actionShow->setEnabled(false);
         ui->actionHide->setEnabled(true);
+        if(type=="bible" || type=="song" || type=="announce")
+            ui->actionClear->setEnabled(true);
+        else
+            ui->actionClear->setEnabled(false);
 
         if(type=="bible")
         {
@@ -686,6 +706,23 @@ void SoftProjector::on_actionHide_triggered()
 {
     showing = false;
     updateScreen();
+}
+
+void SoftProjector::on_actionClear_triggered()
+{
+    displayScreen1->renderClear();
+    if(hasDisplayScreen2)
+        displayScreen2->renderClear();
+    ui->actionClear->setEnabled(false);
+    ui->actionShow->setEnabled(true);
+}
+
+void SoftProjector::on_actionCloseDisplay_triggered()
+{
+    displayScreen1->hide();
+    if(hasDisplayScreen2)
+        displayScreen2->hide();
+    ui->actionCloseDisplay->setEnabled(false);
 }
 
 void SoftProjector::on_actionSettings_triggered()
