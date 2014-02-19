@@ -146,7 +146,6 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->actionShow->setEnabled(false);
     ui->actionHide->setEnabled(false);
     ui->actionClear->setEnabled(false);
-    //ui->actionCloseDisplay->setEnabled(false);
 
     // Create and connect shortcuts
     shpgUP = new QShortcut(Qt::Key_PageUp,this);
@@ -231,7 +230,6 @@ void SoftProjector::positionDisplayWindow()
             displayScreen1->move(top_left);
         }
         displayScreen1->showFullScreen();
-       // ui->actionCloseDisplay->setEnabled(true);
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
         displayScreen1->positionOpjects();
         displayScreen1->setControlButtonsVisible(false);
@@ -275,7 +273,6 @@ void SoftProjector::showDisplayScreen(bool show)
     if(show)
     {
         displayScreen1->showFullScreen();
-        //ui->actionCloseDisplay->setEnabled(true);
         displayScreen1->positionOpjects();
     }
     else
@@ -614,17 +611,12 @@ void SoftProjector::updateScreen()
         else
         {
             if(displayScreen1->isHidden())
-            {
                 displayScreen1->showFullScreen();
-               // ui->actionCloseDisplay->setEnabled(true);
-            }
+
             if(hasDisplayScreen2)
             {
                 if(displayScreen2->isHidden())
-                {
                     displayScreen2->showFullScreen();
-                    //ui->actionCloseDisplay->setEnabled(true);
-                }
             }
             if(!ui->actionCloseDisplay->isEnabled())
                 ui->actionCloseDisplay->setEnabled(true);
@@ -722,7 +714,6 @@ void SoftProjector::on_actionClear_triggered()
 
 void SoftProjector::on_actionCloseDisplay_triggered()
 {
-   // on_actionClear_triggered();
     displayScreen1->hide();
     if(hasDisplayScreen2)
         displayScreen2->hide();
