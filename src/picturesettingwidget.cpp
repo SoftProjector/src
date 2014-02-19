@@ -32,6 +32,18 @@ PictureSettingWidget::~PictureSettingWidget()
     delete ui;
 }
 
+void PictureSettingWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 void PictureSettingWidget::setSettings(SlideShowSettings &settings)
 {
     mySettings = settings;

@@ -36,6 +36,18 @@ EditAnnouncementDialog::~EditAnnouncementDialog()
     delete ui;
 }
 
+void EditAnnouncementDialog::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 void EditAnnouncementDialog::on_checkBoxUsePrivateSettings_stateChanged(int arg1)
 {
     ui->groupBoxPrivateSettings->setVisible(arg1 == 2);

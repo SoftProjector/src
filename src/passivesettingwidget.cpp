@@ -32,6 +32,18 @@ PassiveSettingWidget::~PassiveSettingWidget()
     delete ui;
 }
 
+void PassiveSettingWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 void PassiveSettingWidget::setSetings(PassiveSettings &settings, PassiveSettings &settings2)
 {
     mySettings = settings;

@@ -81,6 +81,8 @@ private:
     BibleSettings mySettings, mySettings2;
     BibleVersionSettings bversion,bversion2;
     Ui::BibleSettingWidget *ui;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // BIBLESETTINGWIDGET_H

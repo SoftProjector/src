@@ -32,6 +32,18 @@ BibleSettingWidget::~BibleSettingWidget()
     delete ui;
 }
 
+void BibleSettingWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 void BibleSettingWidget::setSettings(BibleSettings &settings, BibleSettings &settings2)
 {
     mySettings = settings;

@@ -66,6 +66,8 @@ private:
     SongSettings mySettings2;
 
     Ui::SongSettingWidget *ui;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // SONGSETTINGWIDGET_H

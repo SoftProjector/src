@@ -52,6 +52,8 @@ private slots:
 private:
     Ui::PassiveSettingWidget *ui;
     PassiveSettings mySettings,mySettings2;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // PASSIVESETTINGWIDGET_H

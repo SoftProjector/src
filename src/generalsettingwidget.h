@@ -62,6 +62,8 @@ private slots:
     void on_comboBoxDisplayScreen_2_activated(int index);
     void on_pushButtonAddTheme_clicked();
     void on_comboBoxTheme_activated(int index);
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // GENERALSETTINGWIDGET_H

@@ -32,6 +32,18 @@ AnnouncementSettingWidget::~AnnouncementSettingWidget()
     delete ui;
 }
 
+void AnnouncementSettingWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 void AnnouncementSettingWidget::setSettings(AnnounceSettings &settings, AnnounceSettings &settings2)
 {
     mySettings = settings;

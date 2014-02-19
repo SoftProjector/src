@@ -61,6 +61,8 @@ private:
     Announcement editAnnounce;
     bool isNew;
     HighlightAnnounce * highlight;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // EDITANNOUNCEMENTDIALOG_H

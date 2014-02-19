@@ -46,6 +46,8 @@ private slots:
 private:
     SlideShowSettings mySettings;
     Ui::PictureSettingWidget *ui;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // PICTURESETTINGWIDGET_H

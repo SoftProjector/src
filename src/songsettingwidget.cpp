@@ -27,6 +27,18 @@ SongSettingWidget::SongSettingWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
+void SongSettingWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+     switch ( e->type() ) {
+     case QEvent::LanguageChange:
+         ui->retranslateUi(this);
+         break;
+     default:
+         break;
+     }
+}
+
 SongSettingWidget::~SongSettingWidget()
 {
     delete ui;

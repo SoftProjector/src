@@ -58,6 +58,8 @@ private slots:
 private:
     AnnounceSettings mySettings, mySettings2;
     Ui::AnnouncementSettingWidget *ui;
+protected:
+    virtual void changeEvent(QEvent *e);
 };
 
 #endif // ANNOUNCEMENTSETTINGWIDGET_H
