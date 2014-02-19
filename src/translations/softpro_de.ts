@@ -1088,22 +1088,22 @@ results.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayscreen.cpp" line="473"/>
+        <location filename="../displayscreen.cpp" line="479"/>
         <source>Video Player Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayscreen.cpp" line="757"/>
+        <location filename="../displayscreen.cpp" line="765"/>
         <source>Words by: %1, Music by: %2</source>
         <translation type="unfinished">Text: %1, Komponist: %2</translation>
     </message>
     <message>
-        <location filename="../displayscreen.cpp" line="759"/>
+        <location filename="../displayscreen.cpp" line="767"/>
         <source>Words by: %1</source>
         <translation type="unfinished">Text: %1</translation>
     </message>
     <message>
-        <location filename="../displayscreen.cpp" line="761"/>
+        <location filename="../displayscreen.cpp" line="769"/>
         <source>Music by: %1</source>
         <translation type="unfinished">Komponist: %1</translation>
     </message>
@@ -2621,7 +2621,7 @@ Gespeichert als:
         <translation type="obsolete">Deutsch</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1250"/>
+        <location filename="../softprojector.cpp" line="1282"/>
         <source>English</source>
         <comment>Do not change</comment>
         <translation>Deutsch</translation>
@@ -3264,31 +3264,31 @@ Please enter a title.</source>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="77"/>
-        <location filename="../softprojector.cpp" line="1289"/>
+        <location filename="../softprojector.cpp" line="1321"/>
         <source>Bible (F6)</source>
         <translation>Bibel (F6)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="78"/>
-        <location filename="../softprojector.cpp" line="1290"/>
+        <location filename="../softprojector.cpp" line="1322"/>
         <source>Songs (F7)</source>
         <translation>Lieder (F7)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="79"/>
-        <location filename="../softprojector.cpp" line="1291"/>
+        <location filename="../softprojector.cpp" line="1323"/>
         <source>Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="80"/>
-        <location filename="../softprojector.cpp" line="1292"/>
+        <location filename="../softprojector.cpp" line="1324"/>
         <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="81"/>
-        <location filename="../softprojector.cpp" line="1293"/>
+        <location filename="../softprojector.cpp" line="1325"/>
         <source>Announcements (F8)</source>
         <translation>Ankündigungen (F8)</translation>
     </message>
@@ -3319,105 +3319,105 @@ Please enter a title.</source>
         <translation type="obsolete">Komponist: %1</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="956"/>
+        <location filename="../softprojector.cpp" line="988"/>
         <source>Cannot start new edit</source>
         <translation>Kann nicht strarten neue Bearbeitung</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="936"/>
-        <location filename="../softprojector.cpp" line="957"/>
-        <location filename="../softprojector.cpp" line="988"/>
+        <location filename="../softprojector.cpp" line="968"/>
+        <location filename="../softprojector.cpp" line="989"/>
+        <location filename="../softprojector.cpp" line="1020"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Ein weiteres Lied ist bereits bearbeitet.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="379"/>
+        <location filename="../softprojector.cpp" line="385"/>
         <source>Schedule not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="380"/>
+        <location filename="../softprojector.cpp" line="386"/>
         <source>Do you want to save current schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="726"/>
+        <location filename="../softprojector.cpp" line="758"/>
         <source>&amp;New Song...</source>
         <translation type="unfinished">&amp;Neues Lied...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="727"/>
+        <location filename="../softprojector.cpp" line="759"/>
         <source>&amp;Edit Song...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="728"/>
+        <location filename="../softprojector.cpp" line="760"/>
         <source>&amp;Copy Song...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="729"/>
+        <location filename="../softprojector.cpp" line="761"/>
         <source>&amp;Delete Song</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="737"/>
+        <location filename="../softprojector.cpp" line="769"/>
         <source>&amp;New Slide Show...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="738"/>
+        <location filename="../softprojector.cpp" line="770"/>
         <source>&amp;Edit Slide Show...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="740"/>
+        <location filename="../softprojector.cpp" line="772"/>
         <source>&amp;Delete Slide Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="748"/>
+        <location filename="../softprojector.cpp" line="780"/>
         <source>&amp;Add Media Files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="751"/>
+        <location filename="../softprojector.cpp" line="783"/>
         <source>&amp;Remove Media Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="759"/>
+        <location filename="../softprojector.cpp" line="791"/>
         <source>&amp;New Announcement...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="760"/>
+        <location filename="../softprojector.cpp" line="792"/>
         <source>&amp;Edit Announcement...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="761"/>
+        <location filename="../softprojector.cpp" line="793"/>
         <source>&amp;Copy Announcement...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="762"/>
+        <location filename="../softprojector.cpp" line="794"/>
         <source>&amp;Delete Announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="937"/>
-        <location filename="../softprojector.cpp" line="958"/>
-        <location filename="../softprojector.cpp" line="989"/>
+        <location filename="../softprojector.cpp" line="969"/>
+        <location filename="../softprojector.cpp" line="990"/>
+        <location filename="../softprojector.cpp" line="1021"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Bitte speichern und/oder schließen Sie das aktuell bearbeitete Lied vor einer neuen Liedbearbeitung.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="972"/>
-        <location filename="../softprojector.cpp" line="1003"/>
-        <location filename="../softprojector.cpp" line="1042"/>
-        <location filename="../softprojector.cpp" line="1354"/>
+        <location filename="../softprojector.cpp" line="1004"/>
+        <location filename="../softprojector.cpp" line="1035"/>
+        <location filename="../softprojector.cpp" line="1074"/>
+        <location filename="../softprojector.cpp" line="1386"/>
         <source>No song selected</source>
         <translation>Ein Lied wurde nicht ausgewählt</translation>
     </message>
@@ -3430,234 +3430,234 @@ Please enter a title.</source>
         <translation type="obsolete">Zum Bearbeiten wählen Sie bitte ein Lied.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="935"/>
+        <location filename="../softprojector.cpp" line="967"/>
         <source>Cannot create a new song</source>
         <translation>Ein neues Lied kann nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="973"/>
+        <location filename="../softprojector.cpp" line="1005"/>
         <source>No song has been selected to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="974"/>
+        <location filename="../softprojector.cpp" line="1006"/>
         <source>Please select a song to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="987"/>
+        <location filename="../softprojector.cpp" line="1019"/>
         <source>Cannot copy this song</source>
         <translation>Dieses Lied kann nicht kopiert werden</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1004"/>
+        <location filename="../softprojector.cpp" line="1036"/>
         <source>No song has been selected to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1005"/>
+        <location filename="../softprojector.cpp" line="1037"/>
         <source>Please select a song to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1043"/>
+        <location filename="../softprojector.cpp" line="1075"/>
         <source>No song has been selected to delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1044"/>
+        <location filename="../softprojector.cpp" line="1076"/>
         <source>Please select a song to delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1073"/>
-        <location filename="../softprojector.cpp" line="1111"/>
+        <location filename="../softprojector.cpp" line="1105"/>
+        <location filename="../softprojector.cpp" line="1143"/>
         <source>No slideshow selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1074"/>
+        <location filename="../softprojector.cpp" line="1106"/>
         <source>No slideshow has been selected to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1075"/>
+        <location filename="../softprojector.cpp" line="1107"/>
         <source>Please select a slideshow to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1087"/>
+        <location filename="../softprojector.cpp" line="1119"/>
         <source>Delete slideshow?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1088"/>
+        <location filename="../softprojector.cpp" line="1120"/>
         <source>Delete slideshow: &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1089"/>
+        <location filename="../softprojector.cpp" line="1121"/>
         <source>This action will permanentrly delete this slideshow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1112"/>
+        <location filename="../softprojector.cpp" line="1144"/>
         <source>No slideshow has been selected to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1113"/>
+        <location filename="../softprojector.cpp" line="1145"/>
         <source>Please select a slideshow to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1131"/>
+        <location filename="../softprojector.cpp" line="1163"/>
         <source>No media selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1132"/>
+        <location filename="../softprojector.cpp" line="1164"/>
         <source>No media item has been selected to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1133"/>
+        <location filename="../softprojector.cpp" line="1165"/>
         <source>Please select a media item to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1151"/>
-        <location filename="../softprojector.cpp" line="1166"/>
-        <location filename="../softprojector.cpp" line="1204"/>
+        <location filename="../softprojector.cpp" line="1183"/>
+        <location filename="../softprojector.cpp" line="1198"/>
+        <location filename="../softprojector.cpp" line="1236"/>
         <source>No Announcement Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1152"/>
+        <location filename="../softprojector.cpp" line="1184"/>
         <source>No announcement has been selected to edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1153"/>
+        <location filename="../softprojector.cpp" line="1185"/>
         <source>Please select an announcement to edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1167"/>
+        <location filename="../softprojector.cpp" line="1199"/>
         <source>No announcement has been selected to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1168"/>
+        <location filename="../softprojector.cpp" line="1200"/>
         <source>Please select an announcement to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1180"/>
+        <location filename="../softprojector.cpp" line="1212"/>
         <source>Delete Announcement?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1181"/>
+        <location filename="../softprojector.cpp" line="1213"/>
         <source>Delete announcement: &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1182"/>
+        <location filename="../softprojector.cpp" line="1214"/>
         <source>This action will permanentrly delete this announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1205"/>
+        <location filename="../softprojector.cpp" line="1237"/>
         <source>No announcement has been selected to delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1206"/>
+        <location filename="../softprojector.cpp" line="1238"/>
         <source>Please select an announcement to delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1355"/>
+        <location filename="../softprojector.cpp" line="1387"/>
         <source>No song has been selected to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1356"/>
+        <location filename="../softprojector.cpp" line="1388"/>
         <source>Please select a song to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1371"/>
+        <location filename="../softprojector.cpp" line="1403"/>
         <source>No announcement selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1372"/>
+        <location filename="../softprojector.cpp" line="1404"/>
         <source>No announcement has been selected to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1373"/>
+        <location filename="../softprojector.cpp" line="1405"/>
         <source>Please select a announcement to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1696"/>
-        <location filename="../softprojector.cpp" line="1733"/>
-        <location filename="../softprojector.cpp" line="1799"/>
+        <location filename="../softprojector.cpp" line="1728"/>
+        <location filename="../softprojector.cpp" line="1765"/>
+        <location filename="../softprojector.cpp" line="1831"/>
         <source>Save Schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1697"/>
+        <location filename="../softprojector.cpp" line="1729"/>
         <source>Do you want to save current schedule before creating a new schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1734"/>
+        <location filename="../softprojector.cpp" line="1766"/>
         <source>Do you want to save current schedule before opening a new schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1758"/>
+        <location filename="../softprojector.cpp" line="1790"/>
         <source>Open softProjector schedule:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1759"/>
-        <location filename="../softprojector.cpp" line="1781"/>
+        <location filename="../softprojector.cpp" line="1791"/>
+        <location filename="../softprojector.cpp" line="1813"/>
         <source>softProjector schedule file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1780"/>
+        <location filename="../softprojector.cpp" line="1812"/>
         <source>Save softProjector schedule as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1800"/>
+        <location filename="../softprojector.cpp" line="1832"/>
         <source>Do you want to save current schedule before closing it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1836"/>
+        <location filename="../softprojector.cpp" line="1868"/>
         <source>Saving schedule file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1845"/>
+        <location filename="../softprojector.cpp" line="1877"/>
         <source>An error has ocured when overwriting existing file.
 Please try again with different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2112"/>
+        <location filename="../softprojector.cpp" line="2144"/>
         <source>Opening schedule file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2185"/>
+        <location filename="../softprojector.cpp" line="2217"/>
         <source>The schedule file you are trying to open is of uncompatible version.
 Compatible version: 2
 This schedule file version: </source>
@@ -3732,12 +3732,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Wählen Sie ein Lied zum speichern</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1017"/>
+        <location filename="../softprojector.cpp" line="1049"/>
         <source>Delete song?</source>
         <translation>Lied löschen?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1018"/>
+        <location filename="../softprojector.cpp" line="1050"/>
         <source>Delete song &quot;</source>
         <translation>Löschen des Liedes &quot;</translation>
     </message>
@@ -3754,7 +3754,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1019"/>
+        <location filename="../softprojector.cpp" line="1051"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Diese Aktion wird dieses Lied unwiderruflich löschen</translation>
     </message>
@@ -3775,7 +3775,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Verstecken (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="647"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -3788,12 +3788,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Anzeigen (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="632"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="163"/>
+        <location filename="../softprojector.ui" line="181"/>
         <source>Use Multi Verse</source>
         <translation>Mehrere Verse anzeigen</translation>
     </message>
@@ -3803,231 +3803,256 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="160"/>
+        <location filename="../softprojector.ui" line="178"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="213"/>
+        <location filename="../softprojector.ui" line="231"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="228"/>
+        <location filename="../softprojector.ui" line="246"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="241"/>
-        <location filename="../softprojector.ui" line="400"/>
+        <location filename="../softprojector.ui" line="259"/>
+        <location filename="../softprojector.ui" line="420"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="250"/>
+        <location filename="../softprojector.ui" line="268"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="255"/>
+        <location filename="../softprojector.ui" line="273"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="262"/>
+        <location filename="../softprojector.ui" line="280"/>
         <source>Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="275"/>
+        <location filename="../softprojector.ui" line="293"/>
         <source>Display Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="290"/>
+        <location filename="../softprojector.ui" line="310"/>
         <source>File Tool Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="304"/>
+        <location filename="../softprojector.ui" line="324"/>
         <source>Schedule Tool Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="315"/>
+        <location filename="../softprojector.ui" line="335"/>
         <source>Edit Tool Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="332"/>
+        <location filename="../softprojector.ui" line="352"/>
         <source>Display Control Tool Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="388"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="403"/>
+        <location filename="../softprojector.ui" line="423"/>
         <source>Open Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="424"/>
+        <location filename="../softprojector.ui" line="444"/>
         <source>&amp;Open Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="436"/>
+        <location filename="../softprojector.ui" line="456"/>
         <source>&amp;Save Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="444"/>
+        <location filename="../softprojector.ui" line="464"/>
         <source>Save Schedule &amp;As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="447"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Save Schedule with different name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="456"/>
+        <location filename="../softprojector.ui" line="476"/>
         <source>&amp;New Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="459"/>
+        <location filename="../softprojector.ui" line="479"/>
         <source>Start new Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
-        <location filename="../softprojector.ui" line="470"/>
+        <location filename="../softprojector.ui" line="487"/>
+        <location filename="../softprojector.ui" line="490"/>
         <source>Close Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="479"/>
+        <location filename="../softprojector.ui" line="499"/>
         <source>&amp;Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="482"/>
+        <location filename="../softprojector.ui" line="502"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="490"/>
-        <location filename="../softprojector.ui" line="493"/>
+        <location filename="../softprojector.ui" line="510"/>
+        <location filename="../softprojector.ui" line="513"/>
         <source>Print Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="496"/>
+        <location filename="../softprojector.ui" line="516"/>
         <source>Ctrl+Shift+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="528"/>
+        <location filename="../softprojector.ui" line="548"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="533"/>
+        <location filename="../softprojector.ui" line="553"/>
         <source>Donate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="536"/>
+        <location filename="../softprojector.ui" line="556"/>
         <source>Donate to softProjector development team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="545"/>
+        <location filename="../softprojector.ui" line="565"/>
         <source>Add to Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="548"/>
+        <location filename="../softprojector.ui" line="568"/>
         <source>F2</source>
         <translation type="unfinished">F2</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="557"/>
+        <location filename="../softprojector.ui" line="577"/>
         <source>Remove from Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="560"/>
+        <location filename="../softprojector.ui" line="580"/>
         <source>F3</source>
         <translation type="unfinished">F3</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="569"/>
+        <location filename="../softprojector.ui" line="589"/>
         <source>Clear Schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="578"/>
+        <location filename="../softprojector.ui" line="598"/>
         <source>Move Item To Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="581"/>
+        <location filename="../softprojector.ui" line="601"/>
         <source>Move Schedule item to top of the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="590"/>
+        <location filename="../softprojector.ui" line="610"/>
         <source>Move Item Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="593"/>
+        <location filename="../softprojector.ui" line="613"/>
         <source>Move Schedule item up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="602"/>
+        <location filename="../softprojector.ui" line="622"/>
         <source>Mode Item Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="605"/>
+        <location filename="../softprojector.ui" line="625"/>
         <source>Move Schedule item down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="614"/>
+        <location filename="../softprojector.ui" line="634"/>
         <source>Move Item To Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="617"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="626"/>
+        <location filename="../softprojector.ui" line="646"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="629"/>
-        <source>Dsiplay to the screen.</source>
+        <location filename="../softprojector.ui" line="649"/>
+        <source>Dsiplay to the screen (F4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="641"/>
+        <location filename="../softprojector.ui" line="664"/>
+        <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="676"/>
+        <source>Clear</source>
+        <translation type="unfinished">Entfernen</translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="679"/>
+        <source>Clear Display Text (Shift+Esc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="682"/>
+        <source>Shift+Esc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="691"/>
+        <source>Close</source>
+        <translation type="unfinished">Schließen</translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="694"/>
+        <source>Close Display Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="661"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../softprojector.ui" line="644"/>
-        <source>Stop displaying to the screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4039,37 +4064,37 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Symbolleiste</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="346"/>
+        <location filename="../softprojector.ui" line="366"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="355"/>
+        <location filename="../softprojector.ui" line="375"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="358"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>Open settings dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="361"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="370"/>
+        <location filename="../softprojector.ui" line="390"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="373"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>Exit SoftProjector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="376"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -4078,7 +4103,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Aktuelles Lied bearbeiten...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="512"/>
+        <location filename="../softprojector.ui" line="532"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -4087,12 +4112,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Neues Lied...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="504"/>
+        <location filename="../softprojector.ui" line="524"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="385"/>
+        <location filename="../softprojector.ui" line="405"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Datenbank verwalten...</translation>
     </message>
@@ -4101,7 +4126,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Import und Export von Lieder-Sammlungen und Bibeln</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="391"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
@@ -4114,7 +4139,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="406"/>
+        <location filename="../softprojector.ui" line="426"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
@@ -4127,12 +4152,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Lied speichern in das neue Gesangbuch</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="520"/>
+        <location filename="../softprojector.ui" line="540"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="415"/>
+        <location filename="../softprojector.ui" line="435"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Lied-Zähler...</translation>
@@ -4142,7 +4167,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Öffnen Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="427"/>
+        <location filename="../softprojector.ui" line="447"/>
         <source>Ctrl+O</source>
         <translation>Strg+Ö</translation>
     </message>
@@ -4151,7 +4176,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Speichern Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="439"/>
+        <location filename="../softprojector.ui" line="459"/>
         <source>Ctrl+S</source>
         <translation>Ctrg+S</translation>
     </message>
@@ -4164,7 +4189,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Neues Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="462"/>
+        <location filename="../softprojector.ui" line="482"/>
         <source>Ctrl+Shift+N</source>
         <translation></translation>
     </message>
@@ -4173,7 +4198,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Schließen Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="485"/>
+        <location filename="../softprojector.ui" line="505"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
