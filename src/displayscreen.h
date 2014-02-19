@@ -103,7 +103,7 @@ private:
     QString wallpaperPath; // Wallpaper image file path
     QPixmap wallpaper;
     QString passiveWallpaperPath;
-    QImage passiveWallpaper;
+    QPixmap passiveWallpaper;
     QColor foregroundColor;
 
     QPixmap previous_image_pixmap;

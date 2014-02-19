@@ -1110,9 +1110,10 @@ void DisplayScreen::setNewWallpaper(QPixmap wallPix, bool isToUse)
 void DisplayScreen::setNewPassiveWallpaper(QPixmap wallPix, bool isToUse)
 {
     if(isToUse)
-        passiveWallpaper = wallPix.toImage();
+        //passiveWallpaper = wallPix.scaled(width(),height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+        passiveWallpaper = wallPix;
     else
-        passiveWallpaper = QImage();
+        passiveWallpaper = QPixmap();
 }
 
 void DisplayScreen::paintEvent(QPaintEvent *event )
@@ -1164,20 +1165,34 @@ void DisplayScreen::paintEvent(QPaintEvent *event )
     else
     {
         // Draw the passive wallpaper if set:
-        if (passiveWallpaper.width()!=width() || passiveWallpaper.isNull())
+        if(!passiveWallpaper.isNull())
         {
-            passiveWallpaper.load(passiveWallpaperPath);
-            if( !passiveWallpaper.isNull() )
+            if(passiveWallpaper.width()!=width() || passiveWallpaper.height()!=height())
                 passiveWallpaper = passiveWallpaper.scaled(width(),height());
+
+            painter.drawPixmap(0,0, passiveWallpaper);
         }
-        if( ! passiveWallpaper.isNull() )
-            painter.drawImage(0,0, passiveWallpaper);
         else
         {
             // Use black for the background:
             painter.setPen(QColor(Qt::black));
             painter.drawRect( 0, 0, width(), height() );
         }
+//        if (passiveWallpaper.width()!=width() || passiveWallpaper.isNull())
+//        {
+//            passiveWallpaper.load(passiveWallpaperPath);
+//            if( !passiveWallpaper.isNull() )
+//                //passiveWallpaper = passiveWallpaper.scaled(width(),height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+//                passiveWallpaper = passiveWallpaper.scaled(width(),height());
+//        }
+//        if( ! passiveWallpaper.isNull() )
+//            painter.drawPixmap(0,0, passiveWallpaper);
+//        else
+//        {
+//            // Use black for the background:
+//            painter.setPen(QColor(Qt::black));
+//            painter.drawRect( 0, 0, width(), height() );
+//        }
     }
 
     // Draw the previous image into the window, at decreasing opacity:
