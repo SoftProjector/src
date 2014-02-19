@@ -65,6 +65,11 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
 
     //  Progress Dialog
     progressDia = new ModuleProgressDialog(this);
+
+    // Temporary disable "Download & Import" until server will be figured out.
+    ui->pushButtonDownBible->setEnabled(false);
+    ui->pushButtonDownSong->setEnabled(false);
+    ui->pushButtonDownTheme->setEnabled(false);
 }
 
 ManageDataDialog::~ManageDataDialog()
