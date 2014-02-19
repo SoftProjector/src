@@ -3364,6 +3364,11 @@ Please enter a title.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../softprojector.cpp" line="750"/>
+        <source>&amp;Clear Bible History List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../softprojector.cpp" line="758"/>
         <source>&amp;New Song...</source>
         <translation type="unfinished">&amp;Новая песня...</translation>
@@ -3439,7 +3444,7 @@ Please enter a title.</source>
         <location filename="../softprojector.cpp" line="1004"/>
         <location filename="../softprojector.cpp" line="1035"/>
         <location filename="../softprojector.cpp" line="1074"/>
-        <location filename="../softprojector.cpp" line="1386"/>
+        <location filename="../softprojector.cpp" line="1387"/>
         <source>No song selected</source>
         <translation>Ни одна песня не выбрана</translation>
     </message>
@@ -3600,86 +3605,86 @@ Please enter a title.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1387"/>
+        <location filename="../softprojector.cpp" line="1388"/>
         <source>No song has been selected to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1388"/>
+        <location filename="../softprojector.cpp" line="1389"/>
         <source>Please select a song to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1403"/>
+        <location filename="../softprojector.cpp" line="1404"/>
         <source>No announcement selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1404"/>
+        <location filename="../softprojector.cpp" line="1405"/>
         <source>No announcement has been selected to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1405"/>
+        <location filename="../softprojector.cpp" line="1406"/>
         <source>Please select a announcement to be printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1728"/>
-        <location filename="../softprojector.cpp" line="1765"/>
-        <location filename="../softprojector.cpp" line="1831"/>
+        <location filename="../softprojector.cpp" line="1729"/>
+        <location filename="../softprojector.cpp" line="1766"/>
+        <location filename="../softprojector.cpp" line="1832"/>
         <source>Save Schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1729"/>
+        <location filename="../softprojector.cpp" line="1730"/>
         <source>Do you want to save current schedule before creating a new schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1766"/>
+        <location filename="../softprojector.cpp" line="1767"/>
         <source>Do you want to save current schedule before opening a new schedule?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1790"/>
+        <location filename="../softprojector.cpp" line="1791"/>
         <source>Open softProjector schedule:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1791"/>
-        <location filename="../softprojector.cpp" line="1813"/>
+        <location filename="../softprojector.cpp" line="1792"/>
+        <location filename="../softprojector.cpp" line="1814"/>
         <source>softProjector schedule file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1812"/>
+        <location filename="../softprojector.cpp" line="1813"/>
         <source>Save softProjector schedule as:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1832"/>
+        <location filename="../softprojector.cpp" line="1833"/>
         <source>Do you want to save current schedule before closing it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1868"/>
+        <location filename="../softprojector.cpp" line="1869"/>
         <source>Saving schedule file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1877"/>
+        <location filename="../softprojector.cpp" line="1878"/>
         <source>An error has ocured when overwriting existing file.
 Please try again with different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2144"/>
+        <location filename="../softprojector.cpp" line="2145"/>
         <source>Opening schedule file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2217"/>
+        <location filename="../softprojector.cpp" line="2218"/>
         <source>The schedule file you are trying to open is of uncompatible version.
 Compatible version: 2
 This schedule file version: </source>

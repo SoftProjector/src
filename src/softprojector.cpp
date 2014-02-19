@@ -747,7 +747,7 @@ void SoftProjector::updateEditActions()
         ui->actionNew->setText("");
         ui->actionEdit->setText("");
         ui->actionCopy->setText("");
-        ui->actionDelete->setText("&Clear Bible History List");
+        ui->actionDelete->setText(tr("&Clear Bible History List"));
         ui->actionNew->setIcon(QIcon());
         ui->actionEdit->setIcon(QIcon());
         ui->actionCopy->setIcon(QIcon());
@@ -1323,6 +1323,7 @@ void SoftProjector::retranslateUis()
     ui->projectTab->setTabText(2, tr("Pictures"));
     ui->projectTab->setTabText(3, tr("Media"));
     ui->projectTab->setTabText(4, tr("Announcements (F8)"));
+    updateEditActions();
     songWidget->retranslateUis();
     editWidget->retranslateUis();
 }
