@@ -67,9 +67,9 @@ ManageDataDialog::ManageDataDialog(QWidget *parent) :
     progressDia = new ModuleProgressDialog(this);
 
     // Temporary disable "Download & Import" until server will be figured out.
-    ui->pushButtonDownBible->setEnabled(false);
-    ui->pushButtonDownSong->setEnabled(false);
-    ui->pushButtonDownTheme->setEnabled(false);
+//    ui->pushButtonDownBible->setEnabled(false);
+//    ui->pushButtonDownSong->setEnabled(false);
+//    ui->pushButtonDownTheme->setEnabled(false);
 }
 
 ManageDataDialog::~ManageDataDialog()
@@ -1849,21 +1849,21 @@ void ManageDataDialog::on_pushButtonDownBible_clicked()
 {
     downType = "bible";
     importType = "down";
-    downloadModList(QUrl("http://softprojector.sourceforge.net/bibles/bible.xml"));
+    downloadModList(QUrl("http://softprojector.org/bibles/bible.xml"));
 }
 
 void ManageDataDialog::on_pushButtonDownSong_clicked()
 {
     downType = "song";
     importType = "down";
-    downloadModList(QUrl("http://softprojector.sourceforge.net/songbooks/songbooks.xml"));
+    downloadModList(QUrl("http://softprojector.org/songbooks/songbooks.xml"));
 }
 
 void ManageDataDialog::on_pushButtonDownTheme_clicked()
 {
     downType = "theme";
     importType = "down";
-    downloadModList(QUrl("http://softprojector.sourceforge.net/themes/themes.xml"));
+    downloadModList(QUrl("http://softprojector.org/themes/themes.xml"));
 }
 
 void ManageDataDialog::downloadModList(QUrl url)
@@ -1873,6 +1873,12 @@ void ManageDataDialog::downloadModList(QUrl url)
     if(!outFile.open(QIODevice::WriteOnly))
     {
         //Fixme: need error message
+        QMessageBox mb(this);
+        mb.setWindowTitle(tr("Error opening module list."));
+        mb.setIcon(QMessageBox::Critical);
+        mb.setText(tr("Failed to open mod list"));
+        mb.exec();
+        currentDownload->deleteLater();
         return;
     }
 
