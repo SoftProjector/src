@@ -3454,7 +3454,7 @@ Zadejte, prosím, název promítání obrázků.</translation>
     <message>
         <location filename="../softprojector.cpp" line="750"/>
         <source>&amp;Clear Bible History List</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Smazat seznam s historií Bible</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="758"/>
@@ -4106,37 +4106,37 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
     <message>
         <location filename="../softprojector.ui" line="649"/>
         <source>Dsiplay to the screen (F4)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit na obrazovce (F4)</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="664"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat pasivní obrazovku (Zastavit zobrazení na obrazovce) (Esc)</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="676"/>
         <source>Clear</source>
-        <translation type="unfinished">Vyprázdnit</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="679"/>
         <source>Clear Display Text (Shift+Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat promítaný text (Shift+Esc)</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="682"/>
         <source>Shift+Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Esc</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="691"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location filename="../softprojector.ui" line="694"/>
         <source>Close Display Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít promítací plochu</translation>
     </message>
     <message>
         <source>Dsiplay to the screen.</source>
