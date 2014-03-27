@@ -106,16 +106,7 @@
            </sizepolicy>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -160,16 +151,7 @@
         <item>
          <widget class="QWidget" name="widgetMultiVerse" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -223,7 +205,7 @@
      <x>0</x>
      <y>0</y>
      <width>1055</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -683,15 +665,18 @@
    </property>
   </action>
   <action name="actionCloseDisplay">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="softprojector.qrc">
-     <normaloff>:/icons/icons/close_display.png</normaloff>:/icons/icons/close_display.png</iconset>
+     <normaloff>:/icons/icons/display_off.png</normaloff>:/icons/icons/display_off.png</iconset>
    </property>
    <property name="text">
-    <string>Close</string>
+    <string>On / Off</string>
    </property>
    <property name="toolTip">
-    <string>Close Display Window</string>
+    <string>Turn Display Screen On/Off</string>
    </property>
   </action>
  </widget>

@@ -8,7 +8,9 @@
         <file>icons/announce_edit.png</file>
         <file>icons/announce_new.png</file>
         <file>icons/base-22x22-actions-application-exit.png</file>
+        <file>icons/bibleHistoryDelete.png</file>
         <file>icons/book.png</file>
+        <file>icons/clear.png</file>
         <file>icons/controlExit.png</file>
         <file>icons/controlExitHovered.png</file>
         <file>icons/controlExitPressed.png</file>
@@ -20,11 +22,17 @@
         <file>icons/controlPrevPressed.png</file>
         <file>icons/database.png</file>
         <file>icons/display.png</file>
+        <file>icons/display_off.png</file>
+        <file>icons/display_on.png</file>
         <file>icons/down.png</file>
         <file>icons/edit.png</file>
+        <file>icons/ExpandSmall.png</file>
+        <file>icons/FitToScreen.png</file>
+        <file>icons/FitToScreenByExpanding.png</file>
         <file>icons/flag_uk.png</file>
         <file>icons/go_live.png</file>
         <file>icons/help.png</file>
+        <file>icons/hide.png</file>
         <file>icons/new.png</file>
         <file>icons/open.png</file>
         <file>icons/pause.png</file>
@@ -35,14 +43,26 @@
         <file>icons/remove.png</file>
         <file>icons/remove_all.png</file>
         <file>icons/save.png</file>
+        <file>icons/scheduleAdd.png</file>
+        <file>icons/scheduleClear.png</file>
+        <file>icons/scheduleDown.png</file>
+        <file>icons/scheduleDownM.png</file>
+        <file>icons/scheduleNew.png</file>
+        <file>icons/scheduleOpen.png</file>
+        <file>icons/scheduleRemove.png</file>
+        <file>icons/scheduleSave.png</file>
+        <file>icons/scheduleUp.png</file>
+        <file>icons/scheduleUpM.png</file>
         <file>icons/screen.png</file>
         <file>icons/search.png</file>
         <file>icons/settings.png</file>
+        <file>icons/show.png</file>
         <file>icons/slideshow_delete.png</file>
         <file>icons/slideshow_edit.png</file>
         <file>icons/slideshow_new.png</file>
         <file>icons/softprojector.png</file>
         <file>icons/softprojector_cloud.png</file>
+        <file>icons/softprojector11.png</file>
         <file>icons/song_copy.png</file>
         <file>icons/song_count.png</file>
         <file>icons/song_delete.png</file>
@@ -55,24 +75,5 @@
         <file>icons/video.png</file>
         <file>icons/video_add.png</file>
         <file>icons/video_remove.png</file>
-        <file>icons/scheduleAdd.png</file>
-        <file>icons/scheduleClear.png</file>
-        <file>icons/scheduleRemove.png</file>
-        <file>icons/scheduleUpM.png</file>
-        <file>icons/bibleHistoryDelete.png</file>
-        <file>icons/scheduleDown.png</file>
-        <file>icons/scheduleDownM.png</file>
-        <file>icons/scheduleUp.png</file>
-        <file>icons/scheduleSave.png</file>
-        <file>icons/scheduleNew.png</file>
-        <file>icons/scheduleOpen.png</file>
-        <file>icons/ExpandSmall.png</file>
-        <file>icons/FitToScreen.png</file>
-        <file>icons/FitToScreenByExpanding.png</file>
-        <file>icons/hide.png</file>
-        <file>icons/show.png</file>
-        <file>icons/clear.png</file>
-        <file>icons/close_display.png</file>
     </qresource>
-    <qresource prefix="/"/>
 </RCC>

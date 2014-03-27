@@ -226,10 +226,14 @@ void SoftProjector::positionDisplayWindow()
         if (desktop->isVirtualDesktop())
         {
             // Move the display widget to screen 1 (secondary screen):
-            QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen).topLeft();
-            displayScreen1->move(top_left);
+//            QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen).topLeft();
+//            displayScreen1->move(top_left);
+            displayScreen1->setGeometry(desktop->screenGeometry(mySettings.general.displayScreen));
         }
         displayScreen1->showFullScreen();
+//        if(!ui->actionCloseDisplay->isChecked())
+//            ui->actionCloseDisplay->trigger();
+        ui->actionCloseDisplay->setChecked(true);
         displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
         displayScreen1->positionOpjects();
         displayScreen1->setControlButtonsVisible(false);
@@ -241,8 +245,9 @@ void SoftProjector::positionDisplayWindow()
             if (desktop->isVirtualDesktop())
             {
                 // Move the display widget to screen 1 (secondary screen):
-                QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen2).topLeft();
-                displayScreen2->move(top_left);
+//                QPoint top_left = desktop->screenGeometry(mySettings.general.displayScreen2).topLeft();
+//                displayScreen2->move(top_left);
+                displayScreen2->setGeometry(desktop->screenGeometry(mySettings.general.displayScreen2));
             }
             displayScreen2->showFullScreen();
             displayScreen2->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
@@ -262,6 +267,7 @@ void SoftProjector::positionDisplayWindow()
     {
         // Single monitor only: Do not show on strat up.
         // Will be shown only when items were sent to the projector.
+        displayScreen1->setGeometry(desktop->screenGeometry());
         showDisplayScreen(false);
         isSingleScreen = true;
         hasDisplayScreen2 = false;
@@ -610,16 +616,18 @@ void SoftProjector::updateScreen()
         }
         else
         {
-            if(displayScreen1->isHidden())
-                displayScreen1->showFullScreen();
+            if(displayScreen1->isHidden() || !ui->actionCloseDisplay->isChecked())
+//                displayScreen1->showFullScreen();
 
-            if(hasDisplayScreen2)
-            {
-                if(displayScreen2->isHidden())
-                    displayScreen2->showFullScreen();
-            }
-            if(!ui->actionCloseDisplay->isEnabled())
-                ui->actionCloseDisplay->setEnabled(true);
+                    ui->actionCloseDisplay->trigger();
+
+//            if(hasDisplayScreen2)
+//            {
+//                if(displayScreen2->isHidden())
+//                    displayScreen2->showFullScreen();
+//            }
+//            if(!ui->actionCloseDisplay->isEnabled())
+//                ui->actionCloseDisplay->setEnabled(true);
         }
 
         ui->actionShow->setEnabled(false);
@@ -709,15 +717,27 @@ void SoftProjector::on_actionClear_triggered()
         displayScreen2->renderClear();
     ui->actionClear->setEnabled(false);
     ui->actionShow->setEnabled(true);
-    ui->actionHide->setEnabled(false);
+//    ui->actionHide->setEnabled(false);
 }
 
 void SoftProjector::on_actionCloseDisplay_triggered()
 {
-    displayScreen1->hide();
-    if(hasDisplayScreen2)
-        displayScreen2->hide();
-    ui->actionCloseDisplay->setEnabled(false);
+    if(ui->actionCloseDisplay->isChecked())
+    {
+        // If ui->actionCloseDisplay->isChecked() == true, turn it ON
+        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_on.png"));
+        displayScreen1->showFullScreen();
+        if(hasDisplayScreen2)
+            displayScreen2->showFullScreen();
+    }
+    else
+    {
+        // If ui->actionCloseDisplay->isChecked() == true, turn it OFF
+        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_off.png"));
+        displayScreen1->hide();
+        if(hasDisplayScreen2)
+            displayScreen2->hide();
+    }
 }
 
 void SoftProjector::on_actionSettings_triggered()
@@ -1500,8 +1520,11 @@ void SoftProjector::on_actionScheduleAdd_triggered()
     int ctab = ui->projectTab->currentIndex();
     if(ctab == 0) // Bible
     {
-        BibleHistory b = bibleWidget->getCurrentVerse();
-        addToShcedule(b);
+        if(bibleWidget->isVerseSelected())
+        {
+            BibleHistory b = bibleWidget->getCurrentVerse();
+            addToShcedule(b);
+        }
     }
     else if(ctab == 1) // Song
     {

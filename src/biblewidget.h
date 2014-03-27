@@ -58,6 +58,7 @@ public slots:
     void addToHistory(BibleHistory &b);
     void clearHistory();
     void setSelectedHistory(BibleHistory &b);
+    bool isVerseSelected();
 
 protected:
     virtual void changeEvent(QEvent *e);

@@ -558,3 +558,11 @@ BibleHistory BibleWidget::getCurrentVerse()
 
     return b;
 }
+
+bool BibleWidget::isVerseSelected()
+{
+    if(ui->chapter_preview_list->selectedItems().count() >= 1)
+        return true;
+    else
+        return false;
+}
