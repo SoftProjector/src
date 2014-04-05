@@ -119,7 +119,7 @@ void MediaWidget::stateChanged(Phonon::State newstate, Phonon::State oldstate)
 
     case Phonon::StoppedState:
         ui->pushButtonPlayPause->setIcon(playIcon);
-        ui->pushButtonPlayPause->setEnabled(false);
+        ui->pushButtonPlayPause->setEnabled(true);
         break;
     case Phonon::PausedState:
         ui->pushButtonPlayPause->setIcon(playIcon);
@@ -213,9 +213,9 @@ void MediaWidget::playPause()
 
 void MediaWidget::playFile(QString filePath)
 {
-    mediaPlayer.stop();
+    //mediaPlayer.stop();
     mediaPlayer.setCurrentSource(Phonon::MediaSource(filePath));
-    mediaPlayer.play();
+    //mediaPlayer.play();
 }
 
 void MediaWidget::updateInfo()
