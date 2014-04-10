@@ -62,7 +62,6 @@
         <file>icons/slideshow_new.png</file>
         <file>icons/softprojector.png</file>
         <file>icons/softprojector_cloud.png</file>
-        <file>icons/softprojector11.png</file>
         <file>icons/song_copy.png</file>
         <file>icons/song_count.png</file>
         <file>icons/song_delete.png</file>
@@ -75,6 +74,5 @@
         <file>icons/video.png</file>
         <file>icons/video_add.png</file>
         <file>icons/video_remove.png</file>
-        <file>icons/globe.png</file>
     </qresource>
 </RCC>
