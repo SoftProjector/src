@@ -99,6 +99,8 @@ public:
 
 private:
     void setDefaults();
+    QString getStanzaBlock(int &i, QStringList &list);
+    void removeLastChorus(QStringList ct, QStringList &list);
 };
 
 class SongsModel : public QAbstractTableModel

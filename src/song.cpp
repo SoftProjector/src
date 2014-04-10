@@ -253,171 +253,130 @@ QStringList Song::getSongTextList()
     // This function prepares a song list that will be shown in the song preview and show list.
     // It will it will automatically prepare correct sining order of verses and choruses.
     QStringList formatedSong; // List container for correctely ordered item. This item will be returned.
-    QString text, text2;
-    QStringList split, songlist;
+    QString text, line;
+    QStringList songlist;
     QStringList chorus;
     bool has_chorus=false;
     bool has_vstavka=false;
     int pnum = 0;
     int chor = 0;
-    int chorus_block_count=0; // Chorus slide counter.
+    int listcount(0);
 
-    songlist = songText.split("@$");// Splits song text line that from database into
-    // stansas which were delimited by "@$"
-    
-    while(pnum < songlist.size() )
+    songlist = songText.split("\n");
+    listcount = songlist.count();
+    while(pnum < listcount)
     {
-        text = songlist[pnum];
-        split = text.split("@%"); // Split each stansa into rythmic line delimited by @%
-        int split_size = split.size();
-        text=""; // clear text
-        int j = 0;
-        text2 = split[0];
-
-        // From here on, the program will determine what each stasa it: Verse, Chorus or Slide
-        if(isStanzaVerseTitle(text2))
-        {// Fill Verse
-            while (j<split_size) // convert form list to string
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            formatedSong += text.trimmed(); // add Verse stansa to the formated list
-            if (has_chorus)
-            {
-                // add Chorus stansa to the formated list if it exists
-                formatedSong.append(chorus);
-            }
-            has_vstavka=false;
-        }
-        else if(isStanzaAndVerseTitle(text2))
+        line = songlist.at(pnum);
+        if(isStanzaVerseTitle(line))
         {
-            // Fill Additional parts of the verse
-            text2.remove("&"); // remove '&' from stansa title
-            text += text2 + "\n";
-            ++j;
-            while (j < split_size) // convert form list to string
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            if (has_chorus)
-            {
-                // it chorus esits, this means that it was added to the formated list
-                // and needs to be removed before adding addintion Veres stansas to formated list
-                formatedSong.removeLast();
-                int i(1);
-                while (i<chorus_block_count)
-                {
-                    ++i;
-                    formatedSong.removeLast();
-                }
-            }
-            formatedSong += text.trimmed(); // add Verse stansa to the formated list
-            if (has_chorus)
-            {
-                // add Chorus stansa to the formated list if it exists
+            // Fill Verse
+            text = getStanzaBlock(pnum,songlist);
+            formatedSong.append(text);
+
+            if (has_chorus)// add Chorus stansa to the formated list if it exists
                 formatedSong.append(chorus);
-            }
-            has_vstavka=false;
+
+            has_vstavka = false;
         }
-        else if (isStanzaSlideTitle(text2))
-        {// Fill Insert
-            while (j < split_size) // convert form list to string
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            formatedSong += text.trimmed(); // Add Insert stansa to the formated list.
+        else if(isStanzaAndVerseTitle(line))
+        {
+
+            // Fill Additional parts of the verse
+            text = getStanzaBlock(pnum,songlist);
+            // it chorus esits, this means that it was added to the formated list
+            // and needs to be removed before adding addintion Veres stansas to formated list
+            if(has_chorus)
+                removeLastChorus(chorus,formatedSong);
+
+            formatedSong.append(text);
+
+            if (has_chorus)// add Chorus stansa to the formated list if it exists
+                formatedSong.append(chorus);
+
+            has_vstavka = false;
+        }
+        else if (isStanzaSlideTitle(line))
+        {
+            // Fill Insert
+            text = getStanzaBlock(pnum,songlist);
+            formatedSong.append(text);
+
             // Chorus is not added to Insert, if one is needed,
             // it should be added when song is edited, otherwise
             // there is no difirence between Veres and Insert
-            has_vstavka=true;
+            has_vstavka = true;
         }
-        else if (isStanzaRefrainTitle(text2))
-        { // Fill Chorus
-
-            while (j<split_size)  // convert form list to string
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            chorus.clear(); // clear chorus list
-            chorus += text.trimmed(); // add chorus text to chorus list
-            has_chorus=true; // let getSongTextList function know that chorus exists
+        else if (isStanzaRefrainTitle(line))
+        {
+            // Fill Chorus
+            text = getStanzaBlock(pnum,songlist);
+            QStringList chorusold = chorus;
+            chorus.clear();
+            chorus.append(text);
+            has_chorus = true;
             ++chor;
-            if (chor ==1) // if first Chorus, add chorus to formated list
-                formatedSong.append(chorus);
-            else if ((chor ==2) && !has_vstavka ) // if second chorus and Insert was not added
-                // remove exising chorus
-                // and add new chorus to formated list
-            {
-                formatedSong.removeLast();
-                if (chorus_block_count>1)
-                {
-                    int i(1);
-                    while (i<chorus_block_count)
-                    {
-                        ++i;
-                        formatedSong.removeLast();
-                    }
-                }
 
+            if (chor == 1) // if first Chorus, add chorus to formated list
                 formatedSong.append(chorus);
-                chor-- ;
-            }
-            else if ((chor ==2) && has_vstavka ) // if second chorus and Insert was added
-                // and add new chorus to formated list
+            else if ((chor == 2) && !has_vstavka ) // if second chorus and Insert was not added
             {
+                // remove exising chorus
+                removeLastChorus(chorusold,formatedSong);
+
+                // and add new chorus to formated list
+                formatedSong.append(chorus);
+                chor--;
+            }
+            else if ((chor == 2) && has_vstavka ) // if second chorus and Insert was added
+            {
+                // and add new chorus to formated list
                 formatedSong += chorus;
                 chor-- ;
             }
-            chorus_block_count=1; // set chorus_block_count to 1 because its the first chorus item count
-            has_vstavka=false;
+            has_vstavka = false;
         }
-        else if(isStanzaAndRefrainTitle(text2))
+        else if(isStanzaAndRefrainTitle(line))
         {
             // Fill other chorus parts to Chorus block
-            ++chorus_block_count; // increase chorus block count
-            text2.remove("&");  // remove '&' from stansa title
-            text += text2 +"\n";
-            ++j;
-            while (j<split_size) // convert form list to string
-            {
-                if (j==split_size-1)
-                    text += split[j];
-                else
-                    text += split[j] + "\n";
-                ++j;
-            }
-            chorus += text.trimmed();
+            text = getStanzaBlock(pnum,songlist);
 
-            if (chorus_block_count>1) // remove existing chorus parts
-            {
-                int i(1);
-                while (i<chorus_block_count)
-                {
-                    ++i;
-                    formatedSong.removeLast();
-                }
-            }
-            formatedSong.append(chorus); // replace removed chorus parts with complete chorus list
+            removeLastChorus(chorus,formatedSong);
+            chorus.append(text);
+            formatedSong.append(chorus);// replace removed chorus parts with complete chorus list
         }
         ++pnum;
     }
+
     return formatedSong;
+}
+
+QString Song::getStanzaBlock(int &i, QStringList &list)
+{
+    QString line,block;
+    int j(i);
+
+    while(i < list.count())
+    {
+        line = list.at(i);
+        if(line.contains(QRegExp("^&")))
+            line.remove("&");
+
+        if(isStanzaTitle(line) && (i!=j))
+        {
+                i--;
+            break;
+        }
+        block += line + "\n";
+        ++i;
+    }
+
+    return block.trimmed();
+}
+
+void Song::removeLastChorus(QStringList ct, QStringList &list)
+{
+    for(int i(0);i<ct.count();++i)
+        list.removeLast();
 }
 
 Stanza Song::getStanza(int current)

@@ -519,7 +519,7 @@ void SongWidget::on_pushButtonSearch_clicked()
         rx.setPattern("\\b"+search_text+"\\b");
     else if(type == 2) // contains all words
         // Search begining of every line
-        rx.setPattern("@%"+search_text);
+        rx.setPattern("\n"+search_text);
     else if(type == 3 || type == 4)
     {
         // Search for any of the search words

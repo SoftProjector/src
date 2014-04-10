@@ -146,6 +146,7 @@ private slots:
     QStringList getModList(QString filepath);
     void importNextModule();
     void importModules();
+    QString cleanSongLines(QString songText);
 };
 
 #endif // MANAGEDATADIALOG_H

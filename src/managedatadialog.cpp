@@ -308,7 +308,10 @@ void ManageDataDialog::importSongbook(QString path)
                 sq.addBindValue(split[3]);//tune
                 sq.addBindValue(split[4]);//words
                 sq.addBindValue(split[5]);//music
-                sq.addBindValue(split[6]);//song text
+                QString st = split[6];
+                if(st.contains(QRegExp("@$|@%")))
+                    st = cleanSongLines(st);
+                sq.addBindValue(st);//song text
                 if (split.count() > 7)
                 {
                     sq.addBindValue(split[7]);//font
@@ -485,6 +488,8 @@ void ManageDataDialog::importSongbook(QString path)
                                 sq.addBindValue(xtune);
                                 sq.addBindValue(xwords);
                                 sq.addBindValue(xmusic);
+                                if(xtext.contains(QRegExp("@$|@%")))
+                                    xtext = cleanSongLines(xtext);
                                 sq.addBindValue(xtext);
                                 sq.addBindValue(xnotes);
                                 sq.addBindValue(xuse);
@@ -578,7 +583,10 @@ void ManageDataDialog::importSongbook(QString path)
                             sq.bindValue(":tu",q.record().value("tune"));
                             sq.bindValue(":wo",q.record().value("words"));
                             sq.bindValue(":mu",q.record().value("music"));
-                            sq.bindValue(":st",q.record().value("song_text"));
+                            QString st = q.record().value("song_text").toString();
+                            if(st.contains(QRegExp("@$|@%")))
+                                st = cleanSongLines(st);
+                            sq.bindValue(":st",st);
                             sq.bindValue(":no",q.record().value("notes"));
                             sq.bindValue(":up",q.record().value("use_private"));
                             sq.bindValue(":av",q.record().value("alignment_v"));
@@ -2166,4 +2174,32 @@ void ManageDataDialog::importModules()
         progressDia->increaseTotal();
         importNextModule();
     }
+}
+
+QString ManageDataDialog::cleanSongLines(QString songText)
+{
+    QString text, text2, verselist;
+    QStringList split, editlist;
+    int i(0),j(0),k(0);
+
+    editlist = songText.split("@$");// split the text into verses seperated by @$
+
+    while (i <editlist.size()){
+        text = editlist[i];
+        split = text.split("@%"); // split the text into rythmic line seperated by @%
+        k=split.size();
+        text=""; // clear text
+        j=0;
+        text2=split[0];
+        while (j<k){
+            if (j==k-1)
+                text += split[j];
+            else
+                text += split[j] + "\n";
+            ++j;
+        }
+        verselist += text.trimmed() + "\n\n";
+        ++i;
+    }
+    return verselist.trimmed();
 }
