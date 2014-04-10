@@ -21,7 +21,9 @@
 #define DISPLAYSCREEN_H
 
 #include <QtGui>
-#include <phonon>
+//#include <phonon>
+#include <phonon/MediaObject>
+#include <phonon/VideoWidget>
 #include "settings.h"
 #include "theme.h"
 #include "controlbutton.h"

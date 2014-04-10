@@ -21,7 +21,8 @@
 #define VIDEOPLAYERWIDGET_H
 
 #include <QtGui>
-#include <phonon>
+//#include <phonon>
+#include <phonon/VideoWidget>
 
 class VideoPlayerWidget : public Phonon::VideoWidget
 {

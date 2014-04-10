@@ -21,7 +21,7 @@
 #define SOFTPROJECTOR_H
 
 #include <QtGui/QMainWindow>
-#include <phonon>
+//#include <phonon>
 #include "songwidget.h"
 #include "biblewidget.h"
 #include "announcewidget.h"

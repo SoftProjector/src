@@ -22,7 +22,11 @@
 
 #include <QtGui>
 #include <QtSql>
-#include <phonon>
+//#include <phonon>
+#include <phonon/MediaObject>
+#include <phonon/AudioOutput>
+#include <phonon/SeekSlider>
+#include <phonon/VolumeSlider>
 #include "videoplayerwidget.h"
 #include "videoinfo.h"
 

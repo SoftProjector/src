@@ -161,7 +161,8 @@ void EditWidget::resetUiItems()
     ui->graphicsViewEndingColor->setPalette(p);
     ui->checkBoxUseBackground->setChecked(ss.useBackground);
     ui->lineEditBackgroundPath->setText(ss.backgroundName);
-    ui->textEditSong->setPlainText(setSongText(ss.songText));
+    //ui->textEditSong->setPlainText(setSongText(ss.songText));
+    ui->textEditSong->setPlainText(ss.songText);
     ui->plainTextEditNotes->setPlainText(ss.notes);
 }
 
@@ -184,7 +185,8 @@ void EditWidget::setUiItems()
     ui->lineEditBackgroundPath->setEnabled(editSong.useBackground);
     ui->toolButtonBrowseBackground->setEnabled(editSong.useBackground);
     ui->lineEditBackgroundPath->setText(editSong.backgroundName);
-    ui->textEditSong->setPlainText(setSongText(editSong.songText));
+//    ui->textEditSong->setPlainText(setSongText(editSong.songText));
+    ui->textEditSong->setPlainText(editSong.songText);
     ui->plainTextEditNotes->setPlainText(editSong.notes);
 }
 
@@ -198,7 +200,8 @@ void EditWidget::setSave(){
     newSong.tune = ui->lineEditKey->text();
     newSong.wordsBy = ui->lineEditWordsBy->text();
     newSong.musicBy = ui->lineEditMusicBy->text();
-    newSong.songText = resetLyric(ui->textEditSong->toPlainText());
+//    newSong.songText = resetLyric(ui->textEditSong->toPlainText());
+    newSong.songText = ui->textEditSong->toPlainText().trimmed();
     newSong.alignmentV = ui->comboBoxVAlignment->currentIndex();
     newSong.alignmentH = ui->comboBoxHAlignment->currentIndex();
     newSong.usePrivateSettings = ui->checkBoxSongSettings->isChecked();
