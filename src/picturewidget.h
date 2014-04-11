@@ -43,6 +43,9 @@ signals:
     void sendSlideShow(QList<SlideShowItem> &slideShow, int row,QString name);
     void sendToSchedule(SlideShow &sshow);
 
+protected:
+    virtual void changeEvent(QEvent *e);
+
 public slots:
     void loadSlideShows();
     SlideShow getCurrentSlideshow();

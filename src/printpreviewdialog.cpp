@@ -30,7 +30,7 @@ PrintPreviewDialog::PrintPreviewDialog(QWidget *parent) :
     ui->spinBoxFontSize->setValue(ui->textEdit->font().pointSize());
 
     // set default margins
-    on_comboBox_currentIndexChanged("Inch");
+    on_comboBox_currentIndexChanged(0);
     ui->doubleSpinBoxLeft->setValue(0.5);
     ui->doubleSpinBoxTop->setValue(0.5);
     ui->doubleSpinBoxRight->setValue(0.5);
@@ -78,8 +78,8 @@ void PrintPreviewDialog::setText(Song song)
         s+= tr("Music By: %1\n\n").arg(song.musicBy);
     else
         s+= "\n";
-    song.songText=song.songText.split("@$").join("\n\n");
-    song.songText=song.songText.split("@%").join("\n");
+//    song.songText=song.songText.split("@$").join("\n\n");
+//    song.songText=song.songText.split("@%").join("\n");
     s += song.songText;
 
     //Check for notes
@@ -148,7 +148,7 @@ void PrintPreviewDialog::setSchedule(QString scheduleName, const QList<Schedule>
     if(scheduleName.isEmpty())
         s = "";
     else
-        s = "softProject Schedule: " + scheduleName + "\n\n";
+        s = tr("SoftProject Schedule: ") + scheduleName + "\n\n";
 
     if(printDetail)
     {
@@ -188,21 +188,26 @@ void PrintPreviewDialog::on_pushButtonPrint_clicked()
 
     ui->textEdit->document()->print(printer);
 }
-
-void PrintPreviewDialog::on_comboBox_currentIndexChanged(const QString &arg1)
+void PrintPreviewDialog::on_comboBox_currentIndexChanged(int index)
 {
+
+//}
+
+//void PrintPreviewDialog::on_comboBox_currentIndexChanged(const QString &arg1)
+//{
     // set margin boxes
-    double l,t,r,b;
-    if(arg1 == "Inch")
+    double l(0),t(0),r(0),b(0);
+
+    if(index == 0)
         printer->getPageMargins(&l,&t,&r,&b,QPrinter::Inch);
-    else if (arg1 == "Millimeter")
+    else if(index == 1)
         printer->getPageMargins(&l,&t,&r,&b,QPrinter::Millimeter);
-    else if (arg1 == "Pixel")
+    else if(index == 2)
         printer->getPageMargins(&l,&t,&r,&b,QPrinter::DevicePixel);
-    else if (arg1 == "Point")
+    else if(index == 3)
         printer->getPageMargins(&l,&t,&r,&b,QPrinter::Point);
 
-    if(arg1 == "Inch")
+    if(index == 0)
     {
         ui->doubleSpinBoxLeft->setDecimals(2);
         ui->doubleSpinBoxLeft->setSingleStep(0.01);
@@ -238,13 +243,13 @@ void PrintPreviewDialog::updateMargins()
     double r = ui->doubleSpinBoxRight->value();
     double b = ui->doubleSpinBoxBottom->value();
 
-    if(ui->comboBox->currentText() == "Inch")
+    if(ui->comboBox->currentIndex() == 0)
         printer->setPageMargins(l,t,r,b,QPrinter::Inch);
-    else if (ui->comboBox->currentText() == "Millimeter")
+    else if(ui->comboBox->currentIndex() == 1)
         printer->setPageMargins(l,t,r,b,QPrinter::Millimeter);
-    else if (ui->comboBox->currentText() == "Pixel")
+    else if(ui->comboBox->currentIndex() == 2)
         printer->setPageMargins(l,t,r,b,QPrinter::DevicePixel);
-    else if (ui->comboBox->currentText() == "Point")
+    else if(ui->comboBox->currentIndex() == 3)
         printer->setPageMargins(l,t,r,b,QPrinter::Point);
 }
 
@@ -267,3 +272,4 @@ void PrintPreviewDialog::on_doubleSpinBoxBottom_editingFinished()
 {
     updateMargins();
 }
+

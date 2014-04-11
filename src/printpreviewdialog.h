@@ -50,7 +50,8 @@ private slots:
     void on_spinBoxFontSize_valueChanged(int arg1);
     void on_pushButtonPDF_clicked();
     void on_pushButtonPrint_clicked();
-    void on_comboBox_currentIndexChanged(const QString &arg1);
+//    void on_comboBox_currentIndexChanged(const QString &arg1);
+    void on_comboBox_currentIndexChanged(int index);
 
     void updateMargins();
     void on_doubleSpinBoxLeft_editingFinished();

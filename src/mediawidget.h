@@ -53,6 +53,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
+    void changeEvent(QEvent *e);
 
 signals:
     void toProjector(VideoInfo &vid);

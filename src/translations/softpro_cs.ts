@@ -40,21 +40,31 @@ Matvey Adzhigirey</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="310"/>
+        <source>Mac Build:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.ui" line="322"/>
+        <source>Volodimir Vasuk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.ui" line="352"/>
         <source>Special Thanks To:</source>
         <translation>Poděkování:</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="322"/>
+        <location filename="../aboutdialog.ui" line="364"/>
         <source>Vitaliy Zhaborovskyy</source>
         <translation>Vitaliy Zhaborovskyy</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="352"/>
+        <location filename="../aboutdialog.ui" line="394"/>
         <source>Translators:</source>
         <translation>Překladatelé:</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="364"/>
+        <location filename="../aboutdialog.ui" line="406"/>
         <source>Russian:
 German:
 Czech:
@@ -65,7 +75,7 @@ Němčina:
 Ukrajinština:</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="382"/>
+        <location filename="../aboutdialog.ui" line="424"/>
         <source>Vladimir Zinchenko
 Eduard Schlak
 Pavel Fric
@@ -76,7 +86,20 @@ Pavel Fric
 Vitaliy Zhaborovskyy</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="476"/>
+        <location filename="../aboutdialog.ui" line="483"/>
+        <source>If you would like to help developing this program&lt;br&gt;
+or would like to contribute data, please visit:&lt;br&gt;
+&lt;a href=&quot;http://softprojector.org/&quot;&gt;http://softprojector.org/&lt;/a&gt;
+&lt;br&gt;
+&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/a&gt;</source>
+        <translation>V případě že byste chtěli pomoci s vývojem nebo přispět&lt;br&gt;
+materiálem, prosím, navštivte:&lt;br&gt;
+&lt;a href=&quot;http://softprojector.org/&quot;&gt;http://softprojector.org/&lt;/a&gt;
+&lt;br&gt;
+&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.ui" line="518"/>
         <source>&lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FPCLPXFMH9XP4&quot;&gt;Donate&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FPCLPXFMH9XP4&quot;&gt;Darovat&lt;/a&gt;</translation>
     </message>
@@ -93,13 +116,12 @@ Němčina:
         <translation type="obsolete">Zvláštní poděkování:</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="441"/>
         <source>If you would like to help developing this program&lt;br&gt;
 or would like to contribute data, please visit:&lt;br&gt;
 &lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
 &lt;br&gt;
 &lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/a&gt;</source>
-        <translation>V případě že byste chtěli pomoci s vývojem nebo přispět&lt;br&gt;
+        <translation type="obsolete">V případě že byste chtěli pomoci s vývojem nebo přispět&lt;br&gt;
 materiálem, prosím, navštivte:&lt;br&gt;
 &lt;a href=&quot;http://softprojector.sourceforge.net/&quot;&gt;http://softprojector.sourceforge.net/&lt;/a&gt;
 &lt;br&gt;
@@ -132,7 +154,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://sourceforge.net/projects/softprojector/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sourceforge.net/projects/softprojector/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="499"/>
+        <location filename="../aboutdialog.ui" line="541"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
@@ -425,34 +447,34 @@ p, li { white-space: pre-wrap; }
         <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="139"/>
-        <location filename="../announcementsettingwidget.cpp" line="157"/>
+        <location filename="../announcementsettingwidget.cpp" line="151"/>
+        <location filename="../announcementsettingwidget.cpp" line="169"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="236"/>
+        <location filename="../announcementsettingwidget.cpp" line="248"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="238"/>
+        <location filename="../announcementsettingwidget.cpp" line="250"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="240"/>
+        <location filename="../announcementsettingwidget.cpp" line="252"/>
         <source>StrikeOut</source>
         <translation>Přeškrtnutí</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="242"/>
+        <location filename="../announcementsettingwidget.cpp" line="254"/>
         <source>Underline</source>
         <translation>Podtržení</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.cpp" line="138"/>
-        <location filename="../announcementsettingwidget.cpp" line="156"/>
+        <location filename="../announcementsettingwidget.cpp" line="150"/>
+        <location filename="../announcementsettingwidget.cpp" line="168"/>
         <source>Select a image for announcement wallpaper</source>
         <translation>Vyberte obrázek pro obrázek na pozadí s oznámením</translation>
     </message>
@@ -770,52 +792,52 @@ Autorské právo:</translation>
         <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="260"/>
-        <location filename="../biblesettingwidget.cpp" line="263"/>
         <location filename="../biblesettingwidget.cpp" line="272"/>
         <location filename="../biblesettingwidget.cpp" line="275"/>
-        <location filename="../biblesettingwidget.cpp" line="331"/>
-        <location filename="../biblesettingwidget.cpp" line="352"/>
-        <location filename="../biblesettingwidget.cpp" line="380"/>
-        <location filename="../biblesettingwidget.cpp" line="408"/>
+        <location filename="../biblesettingwidget.cpp" line="284"/>
+        <location filename="../biblesettingwidget.cpp" line="287"/>
+        <location filename="../biblesettingwidget.cpp" line="343"/>
+        <location filename="../biblesettingwidget.cpp" line="364"/>
+        <location filename="../biblesettingwidget.cpp" line="392"/>
+        <location filename="../biblesettingwidget.cpp" line="420"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="266"/>
-        <location filename="../biblesettingwidget.cpp" line="428"/>
+        <location filename="../biblesettingwidget.cpp" line="278"/>
+        <location filename="../biblesettingwidget.cpp" line="440"/>
         <source>Same as primary Bible</source>
         <translation>Stejný jako hlavní Bible</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="489"/>
-        <location filename="../biblesettingwidget.cpp" line="507"/>
+        <location filename="../biblesettingwidget.cpp" line="501"/>
+        <location filename="../biblesettingwidget.cpp" line="519"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="625"/>
+        <location filename="../biblesettingwidget.cpp" line="637"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="627"/>
+        <location filename="../biblesettingwidget.cpp" line="639"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="629"/>
+        <location filename="../biblesettingwidget.cpp" line="641"/>
         <source>StrikeOut</source>
         <translation>Přeškrtnutí</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="631"/>
+        <location filename="../biblesettingwidget.cpp" line="643"/>
         <source>Underline</source>
         <translation>Podtržení</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.cpp" line="488"/>
-        <location filename="../biblesettingwidget.cpp" line="506"/>
+        <location filename="../biblesettingwidget.cpp" line="500"/>
+        <location filename="../biblesettingwidget.cpp" line="518"/>
         <source>Select a image for Bible wallpaper</source>
         <translation>Vyberte obrázek pro pozadí Bible</translation>
     </message>
@@ -1179,7 +1201,7 @@ Zkuste změnit hlavní Bibli a otevřete soubor s projektem znovu.</translation>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../editannouncementdialog.cpp" line="85"/>
+        <location filename="../editannouncementdialog.cpp" line="97"/>
         <source>Announce
  - Text of the announcement goes here
 
@@ -1194,14 +1216,14 @@ Snímek
 Můžete mít jak oznámení tak snímek jako názvy bloku oznámení.</translation>
     </message>
     <message>
-        <location filename="../editannouncementdialog.cpp" line="114"/>
+        <location filename="../editannouncementdialog.cpp" line="126"/>
         <source>Announcement title cannot be left empty.
 Please enter announcement title.</source>
         <translation>Název oznámení nelze nechat prázdný.
 Zadejte, prosím, název oznámení.</translation>
     </message>
     <message>
-        <location filename="../editannouncementdialog.cpp" line="115"/>
+        <location filename="../editannouncementdialog.cpp" line="127"/>
         <source>Announcement title is missing</source>
         <translation>Název oznámení chybí</translation>
     </message>
@@ -1316,7 +1338,7 @@ Zadejte, prosím, název oznámení.</translation>
         <translation type="obsolete">Zarovnat vodorovně</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="356"/>
+        <location filename="../editwidget.cpp" line="359"/>
         <source>Other</source>
         <translation>Jiné</translation>
     </message>
@@ -1394,17 +1416,17 @@ Zadejte, prosím, název oznámení.</translation>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="285"/>
+        <location filename="../editwidget.cpp" line="288"/>
         <source>Add a new Songbook</source>
         <translation>Přidat nový zpěvník</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="311"/>
+        <location filename="../editwidget.cpp" line="314"/>
         <source>Select Songbook</source>
         <translation>Vybrat zpěvník</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="285"/>
+        <location filename="../editwidget.cpp" line="288"/>
         <source>Select a Songbook to which you want to add a song</source>
         <translation>Vyberte zpěvník, do kterého chcete přidat píseň</translation>
     </message>
@@ -1421,12 +1443,12 @@ Zadejte, prosím, název písně.</translation>
         <translation>Název písně chybí</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="267"/>
+        <location filename="../editwidget.cpp" line="270"/>
         <source>Cannot find exact match in database</source>
         <translation>V databázi nelze najít přesnou shodu</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="268"/>
+        <location filename="../editwidget.cpp" line="271"/>
         <source>The exact match of a song you are editing was not found in database.
 In order to edit this song, you need to add it to database.
 
@@ -1437,12 +1459,12 @@ Abyste tuto píseň mohl upravit, musíte ji přidat do databáze.
 Vyberte, prosím, zpěvník, do kterého tuto píseň chcete zkopírovat:</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="276"/>
+        <location filename="../editwidget.cpp" line="279"/>
         <source>Copy to a new Songbook</source>
         <translation>Kopírovat do nového zpěvníku</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="276"/>
+        <location filename="../editwidget.cpp" line="279"/>
         <source>Select a Songbook to which you want to copy this song to</source>
         <translation>Vybrat zpěvník, do kterého chcete píseň kopírovat</translation>
     </message>
@@ -1466,7 +1488,7 @@ Verš 2
  -  Slova verše zde</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="335"/>
+        <location filename="../editwidget.cpp" line="338"/>
         <source>Add a Songbook</source>
         <translation>Přidat zpěvník</translation>
     </message>
@@ -1475,7 +1497,7 @@ Verš 2
         <translation type="obsolete">Vyberte obrázek pro pozadí</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="283"/>
+        <location filename="../editwidget.cpp" line="286"/>
         <source>Verse 1
  - words of verse go here
 
@@ -1495,232 +1517,232 @@ Verš 2
  -  Slova verše zde</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="356"/>
+        <location filename="../editwidget.cpp" line="359"/>
         <source>Bible Stories</source>
         <translation>Biblické příběhy</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="356"/>
+        <location filename="../editwidget.cpp" line="359"/>
         <source>Gospel</source>
         <translation>Slovo Boží</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="356"/>
+        <location filename="../editwidget.cpp" line="359"/>
         <source>God, His love and greatness</source>
         <translation>Bůh, Jeho láska a velikost</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="357"/>
+        <location filename="../editwidget.cpp" line="360"/>
         <source>The Resurrection of Christ</source>
         <translation>Zmrtvýchvstání Kristovo</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="357"/>
+        <location filename="../editwidget.cpp" line="360"/>
         <source>Time</source>
         <translation>Čas</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="357"/>
+        <location filename="../editwidget.cpp" line="360"/>
         <source>The second coming of Christ and the judgement</source>
         <translation>Druhý příchod Krista a soud</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="358"/>
+        <location filename="../editwidget.cpp" line="361"/>
         <source>Children and Family</source>
         <translation>Děti a rodina</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="358"/>
+        <location filename="../editwidget.cpp" line="361"/>
         <source>For new converts</source>
         <translation>Pro nové konvertity</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="358"/>
+        <location filename="../editwidget.cpp" line="361"/>
         <source>Spiritual struggle and victory</source>
         <translation>Duchovní boj a vítězství</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Harvest</source>
         <translation>Žně</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Jesus Christ</source>
         <translation>Ježíš Kristus</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Love</source>
         <translation>Láska</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Prayer</source>
         <translation>Modlitebník</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Youth</source>
         <translation>Mládí</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="359"/>
+        <location filename="../editwidget.cpp" line="362"/>
         <source>Mother</source>
         <translation>Matka</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="360"/>
+        <location filename="../editwidget.cpp" line="363"/>
         <source>Wedding</source>
         <translation>Svatba</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="360"/>
+        <location filename="../editwidget.cpp" line="363"/>
         <source>Baptism</source>
         <translation>Křest</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="360"/>
+        <location filename="../editwidget.cpp" line="363"/>
         <source>Sunset / Sunrise</source>
         <translation>Západ/Východ slunce</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="361"/>
+        <location filename="../editwidget.cpp" line="364"/>
         <source>New Years</source>
         <translation>Nové roky</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="361"/>
+        <location filename="../editwidget.cpp" line="364"/>
         <source>Funeral</source>
         <translation>Pohřeb</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="361"/>
+        <location filename="../editwidget.cpp" line="364"/>
         <source>At the ordination</source>
         <translation>Svěcení</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="362"/>
+        <location filename="../editwidget.cpp" line="365"/>
         <source>On the Lord&apos;s Supper</source>
         <translation>Pánova večeře</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="362"/>
+        <location filename="../editwidget.cpp" line="365"/>
         <source>Heavenly abode</source>
         <translation>Nebeský příbytek</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="362"/>
+        <location filename="../editwidget.cpp" line="365"/>
         <source>Instruction and self-test</source>
         <translation>Pokyn a zkouška sebe</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="363"/>
+        <location filename="../editwidget.cpp" line="366"/>
         <source>Holy Ghost</source>
         <translation>Duch svatý</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="363"/>
+        <location filename="../editwidget.cpp" line="366"/>
         <source>Church</source>
         <translation>Kostel</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="363"/>
+        <location filename="../editwidget.cpp" line="366"/>
         <source>Before church meeting</source>
         <translation>Před shromáždění věřících v kostele</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="364"/>
+        <location filename="../editwidget.cpp" line="367"/>
         <source>Last Days</source>
         <translation>Poslední dny</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="364"/>
+        <location filename="../editwidget.cpp" line="367"/>
         <source>Practical life with God</source>
         <translation>Skutečný život s Bohem</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="364"/>
+        <location filename="../editwidget.cpp" line="367"/>
         <source>At the end of church meeting</source>
         <translation>Na konci shromáždění věřících v kostele</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="365"/>
+        <location filename="../editwidget.cpp" line="368"/>
         <source>Welcome and farewell</source>
         <translation>Uvítání a rozloučení</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="365"/>
+        <location filename="../editwidget.cpp" line="368"/>
         <source>The call to work</source>
         <translation>Volání do práce</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="365"/>
+        <location filename="../editwidget.cpp" line="368"/>
         <source>Call to repentance</source>
         <translation>Volání k lítosti</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="366"/>
+        <location filename="../editwidget.cpp" line="369"/>
         <source>Journey of faith, faith and hope</source>
         <translation>Cesta víry, víra a naděje</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="366"/>
+        <location filename="../editwidget.cpp" line="369"/>
         <source>Various Christian holidays</source>
         <translation>Různé křesťanské svátky</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="367"/>
+        <location filename="../editwidget.cpp" line="370"/>
         <source>Determination and faithfulness</source>
         <translation>Odhodlání a věrnost</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="367"/>
+        <location filename="../editwidget.cpp" line="370"/>
         <source>Christmas</source>
         <translation>Vánoce</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="367"/>
+        <location filename="../editwidget.cpp" line="370"/>
         <source>Following Christ</source>
         <translation>Následování Krista</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="368"/>
+        <location filename="../editwidget.cpp" line="371"/>
         <source>The Word of God</source>
         <translation>Slovo boží</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="368"/>
+        <location filename="../editwidget.cpp" line="371"/>
         <source>Salvation</source>
         <translation>Spása</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="368"/>
+        <location filename="../editwidget.cpp" line="371"/>
         <source>Suffering and death of Christ</source>
         <translation>Utrpení a smrt Krista</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="369"/>
+        <location filename="../editwidget.cpp" line="372"/>
         <source>Consolation and encouragement</source>
         <translation>Útěcha a povzbuzení</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="369"/>
+        <location filename="../editwidget.cpp" line="372"/>
         <source>Praise and thanksgiving</source>
         <translation>Chvála a díkůvzdání</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="369"/>
+        <location filename="../editwidget.cpp" line="372"/>
         <source>Christian Joy</source>
         <translation>Křesťanská radost</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="537"/>
+        <location filename="../editwidget.cpp" line="540"/>
         <source>Select an image for the wallpaper</source>
         <translation>Vyberte obrázek pro pozadí</translation>
     </message>
     <message>
-        <location filename="../editwidget.cpp" line="538"/>
+        <location filename="../editwidget.cpp" line="541"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
@@ -1931,37 +1953,37 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="66"/>
+        <location filename="../generalsettingwidget.cpp" line="78"/>
         <source>none</source>
         <translation>žádné</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="146"/>
+        <location filename="../generalsettingwidget.cpp" line="158"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="179"/>
+        <location filename="../generalsettingwidget.cpp" line="191"/>
         <source>Edit Theme</source>
         <translation>Upravit motiv</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="180"/>
+        <location filename="../generalsettingwidget.cpp" line="192"/>
         <source>Theme Name:</source>
         <translation>Název motivu:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="180"/>
+        <location filename="../generalsettingwidget.cpp" line="192"/>
         <source>Comments:</source>
         <translation>Poznámky:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="181"/>
+        <location filename="../generalsettingwidget.cpp" line="193"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.cpp" line="181"/>
+        <location filename="../generalsettingwidget.cpp" line="193"/>
         <source>This theme will contain program default settings.</source>
         <translation>Tento motiv bude obsahovat výchozí nastavení programu.</translation>
     </message>
@@ -2150,7 +2172,7 @@ a zavedení...</translation>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="211"/>
+        <location filename="../managedatadialog.cpp" line="216"/>
         <source>Select a songbook to import</source>
         <translation>Vybrat zpěvník k zavedení</translation>
     </message>
@@ -2159,15 +2181,15 @@ a zavedení...</translation>
         <translation type="obsolete">Soubor se zpěvníkem pro softProjector</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="244"/>
-        <location filename="../managedatadialog.cpp" line="919"/>
+        <location filename="../managedatadialog.cpp" line="249"/>
+        <location filename="../managedatadialog.cpp" line="932"/>
         <source>Importing...</source>
         <translation>Zavádí se...</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="244"/>
-        <location filename="../managedatadialog.cpp" line="919"/>
-        <location filename="../managedatadialog.cpp" line="1033"/>
+        <location filename="../managedatadialog.cpp" line="249"/>
+        <location filename="../managedatadialog.cpp" line="932"/>
+        <location filename="../managedatadialog.cpp" line="1046"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -2180,7 +2202,7 @@ a zavedení...</translation>
         <translation type="obsolete">Zpěvník zavedený uživatelem</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="651"/>
+        <location filename="../managedatadialog.cpp" line="664"/>
         <source>Too old SongBook file format</source>
         <translation>Příliš starý souborový formát zpěvníku</translation>
     </message>
@@ -2193,7 +2215,7 @@ která současnou verzí softProjectoru už není podporována.
 Můžete zkusit jeho zavedení s verzí 1.07, a potom jej vyvést a znovu zavést.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="667"/>
+        <location filename="../managedatadialog.cpp" line="680"/>
         <source>Save the songbook as:</source>
         <translation>Uložit zpěvník jako:</translation>
     </message>
@@ -2202,17 +2224,17 @@ Můžete zkusit jeho zavedení s verzí 1.07, a potom jej vyvést a znovu zavés
         <translation type="obsolete">Soubor se zpěvníkem pro softProjector (*.sps)</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="768"/>
+        <location filename="../managedatadialog.cpp" line="781"/>
         <source>Export complete</source>
         <translation>Vyvedení dokončeno</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="769"/>
+        <location filename="../managedatadialog.cpp" line="782"/>
         <source>The songbook &quot;</source>
         <translation>Zpěvník &quot;</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="769"/>
+        <location filename="../managedatadialog.cpp" line="782"/>
         <source>&quot;
 Has been saved to:
      </source>
@@ -2221,29 +2243,29 @@ Uložen jako:
      </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="781"/>
+        <location filename="../managedatadialog.cpp" line="794"/>
         <source>Delete songbook?</source>
         <translation>Smazat zpěvník?</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="782"/>
-        <location filename="../managedatadialog.cpp" line="1118"/>
+        <location filename="../managedatadialog.cpp" line="795"/>
+        <location filename="../managedatadialog.cpp" line="1131"/>
         <source>Are you sure that you want to delete: </source>
         <translation>Jste si jistý, že chcete smazat: </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="783"/>
+        <location filename="../managedatadialog.cpp" line="796"/>
         <source>This action will permanentrly delete this songbook</source>
         <translation>Tímto krokem bude zpěvník neodvolatelně smazán</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="830"/>
+        <location filename="../managedatadialog.cpp" line="843"/>
         <source>Select Bible file to import</source>
         <translation>Vybrat soubor s Biblí k zavedení</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="831"/>
-        <location filename="../managedatadialog.cpp" line="1021"/>
+        <location filename="../managedatadialog.cpp" line="844"/>
+        <location filename="../managedatadialog.cpp" line="1034"/>
         <source>SoftProjector Bible file </source>
         <translation>Soubor s Biblí pro softProjector </translation>
     </message>
@@ -2263,12 +2285,12 @@ SoftProjector, který používáte nyní, tento formát nepodporuje.
 Stáhněte si, prosím, Bible v posledním formátu a zaveďte je.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="885"/>
+        <location filename="../managedatadialog.cpp" line="898"/>
         <source>New Bible file format</source>
         <translation>Nový formát souboru s Biblí</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="877"/>
+        <location filename="../managedatadialog.cpp" line="890"/>
         <source>The Bible format you are importing is of an new version.
 Your current SoftProjector does not support this format.
 Please upgrade SoftProjector to latest version.</source>
@@ -2277,12 +2299,12 @@ SoftProjector, který používáte nyní, tento formát nepodporuje.
 Povyšte, prosím, SoftProjector na poslední verzi.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="212"/>
+        <location filename="../managedatadialog.cpp" line="217"/>
         <source>SoftProjector songbook file </source>
         <translation>Soubor se zpěvníkem pro softProjector </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="606"/>
+        <location filename="../managedatadialog.cpp" line="619"/>
         <source>The SongBook file you are opening, is of a later release and 
 is not supported by current version of SoftProjector.
 You are trying to open SongBook version %1.
@@ -2293,13 +2315,13 @@ Pokoušíte se o otevření zpěvníku verze %1.
 Povyšte, prosím, na nejnovější verzi SoftProjectoru a zkuste to znovu.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="615"/>
-        <location filename="../managedatadialog.cpp" line="630"/>
+        <location filename="../managedatadialog.cpp" line="628"/>
+        <location filename="../managedatadialog.cpp" line="643"/>
         <source>Unsupported SongBook version.</source>
         <translation>Nepodporovaná verze zpěvníku.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="623"/>
+        <location filename="../managedatadialog.cpp" line="636"/>
         <source>The SongBook file you are opening, is not supported 
 by current version of SoftProjector.
 </source>
@@ -2308,7 +2330,7 @@ verzí SoftProjectoru podporován.
 </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="643"/>
+        <location filename="../managedatadialog.cpp" line="656"/>
         <source>The SongBook file you are opening, is in very old format
 and is no longer supported by current version of SoftProjector.
 You may try to import it with version 1.07 and then export it, and import it again.</source>
@@ -2317,76 +2339,76 @@ který současnou verzí softProjectoru už není podporován.
 Můžete zkusit jeho zavedení s verzí 1.07, a potom jej vyvést a znovu zavést.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="668"/>
+        <location filename="../managedatadialog.cpp" line="681"/>
         <source>SoftProjector songbook file (*.sps)</source>
         <translation>Soubor se zpěvníkem pro softProjector (*.sps)</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="691"/>
-        <location filename="../managedatadialog.cpp" line="1534"/>
+        <location filename="../managedatadialog.cpp" line="704"/>
+        <location filename="../managedatadialog.cpp" line="1547"/>
         <source>An error has ocured when overwriting existing file.
 Please try again with different file name.</source>
         <translation>Při přepisování stávajícího souboru se vyskytla chyba.
 Zkuste to, prosím, znovu s jiným názvem souboru.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="856"/>
+        <location filename="../managedatadialog.cpp" line="869"/>
         <source>The Bible format you are importing is of an usupported file version.
 Your current SoftProjector version does not support this format.</source>
         <translation>Formát Bible, který zavádíte, je v nepodporované verzi.
 SoftProjector, který používáte nyní, tento formát nepodporuje.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="863"/>
+        <location filename="../managedatadialog.cpp" line="876"/>
         <source>Unsupported Bible file format</source>
         <translation>Nepodporovaný formát souboru s Biblí</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1303"/>
-        <location filename="../managedatadialog.cpp" line="1477"/>
+        <location filename="../managedatadialog.cpp" line="1316"/>
+        <location filename="../managedatadialog.cpp" line="1490"/>
         <source>Edit Theme</source>
         <translation>Upravit motiv</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1304"/>
-        <location filename="../managedatadialog.cpp" line="1478"/>
+        <location filename="../managedatadialog.cpp" line="1317"/>
+        <location filename="../managedatadialog.cpp" line="1491"/>
         <source>Theme Name:</source>
         <translation>Název motivu:</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1304"/>
-        <location filename="../managedatadialog.cpp" line="1478"/>
+        <location filename="../managedatadialog.cpp" line="1317"/>
+        <location filename="../managedatadialog.cpp" line="1491"/>
         <source>Comments:</source>
         <translation>Poznámky:</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1305"/>
+        <location filename="../managedatadialog.cpp" line="1318"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1305"/>
+        <location filename="../managedatadialog.cpp" line="1318"/>
         <source>This theme will contain program default settings.</source>
         <translation>Tento motiv bude obsahovat výchozí nastavení programu.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1324"/>
+        <location filename="../managedatadialog.cpp" line="1337"/>
         <source>Select a Theme to import</source>
         <translation>Vybrat motiv k zavedení</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1326"/>
-        <location filename="../managedatadialog.cpp" line="1504"/>
+        <location filename="../managedatadialog.cpp" line="1339"/>
+        <location filename="../managedatadialog.cpp" line="1517"/>
         <source>SoftProjector Theme file </source>
         <translation>Soubor se vzhledem pro softProjector </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1361"/>
+        <location filename="../managedatadialog.cpp" line="1374"/>
         <source>Importing Themes...</source>
         <translation>Zavádí se témata vzhledu...</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1430"/>
+        <location filename="../managedatadialog.cpp" line="1443"/>
         <source>The Theme file you are opening, is of a later release and 
 is not supported by current version of SoftProjector.
 You are trying to open Theme version %1.
@@ -2397,13 +2419,13 @@ Pokoušíte se o otevření tématu vzhledu verze %1.
 Povyšte, prosím, na nejnovější verzi SoftProjectoru a zkuste to znovu.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1439"/>
-        <location filename="../managedatadialog.cpp" line="1454"/>
+        <location filename="../managedatadialog.cpp" line="1452"/>
+        <location filename="../managedatadialog.cpp" line="1467"/>
         <source>Unsupported Theme version.</source>
         <translation>Nepodporovaná verze tématu vzhledu.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1447"/>
+        <location filename="../managedatadialog.cpp" line="1460"/>
         <source>The Theme file you are opening, is not supported 
 by current version of SoftProjector.
 </source>
@@ -2412,12 +2434,22 @@ verzí SoftProjectoru podporován.
 </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1516"/>
+        <location filename="../managedatadialog.cpp" line="1529"/>
         <source>softProjector Theme file </source>
         <translation>Soubor s motivem pro softProjector </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1890"/>
+        <location filename="../managedatadialog.cpp" line="1885"/>
+        <source>Error opening module list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../managedatadialog.cpp" line="1887"/>
+        <source>Failed to open mod list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../managedatadialog.cpp" line="1909"/>
         <source>
 Downloading: %1
 From: %2</source>
@@ -2426,76 +2458,76 @@ Stahuje se: %1
 Z: %2</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1897"/>
+        <location filename="../managedatadialog.cpp" line="1916"/>
         <source>Error opening save file %1 for download %2
 Error: %3</source>
         <translation>Chyba při otevírání uloženého souboru %1 pro stažení %2
 Chyba: %3</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1984"/>
+        <location filename="../managedatadialog.cpp" line="2003"/>
         <source>Error downloading module list.</source>
         <translation>Chyba při stahování seznamu modulů.</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2001"/>
+        <location filename="../managedatadialog.cpp" line="2020"/>
         <source>Bible Module Download</source>
         <translation>Stažení modulu Bible</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2003"/>
+        <location filename="../managedatadialog.cpp" line="2022"/>
         <source>Songbook Module Download</source>
         <translation>Stažení modulu zpěvníku</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2005"/>
+        <location filename="../managedatadialog.cpp" line="2024"/>
         <source>Theme Module Download</source>
         <translation>Stažení modulu motivu</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2033"/>
+        <location filename="../managedatadialog.cpp" line="2052"/>
         <source>Download Error: %1</source>
         <translation>Chyba při stahování: %1</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2037"/>
+        <location filename="../managedatadialog.cpp" line="2056"/>
         <source>Saved to: %1</source>
         <translation>Uloženo do: %1</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="2142"/>
+        <location filename="../managedatadialog.cpp" line="2161"/>
         <source>
 Importing: %1</source>
         <translation>
 Zavádí se: %1</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1502"/>
+        <location filename="../managedatadialog.cpp" line="1515"/>
         <source>Export Theme as:</source>
         <translation>Vyvést motiv jako:</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1515"/>
+        <location filename="../managedatadialog.cpp" line="1528"/>
         <source>Export all theme as:</source>
         <translation>Vyvést všechny motivy jako:</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1546"/>
+        <location filename="../managedatadialog.cpp" line="1559"/>
         <source>Exporting Themes...</source>
         <translation>Vyvádí se témata vzhledu...</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1794"/>
+        <location filename="../managedatadialog.cpp" line="1807"/>
         <source>Delete Theme?</source>
         <translation>Smazat motiv?</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1795"/>
+        <location filename="../managedatadialog.cpp" line="1808"/>
         <source>Are you sure that you want to delete theme: </source>
         <translation>Jste si jistý, že chcete smazat motiv: </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1796"/>
+        <location filename="../managedatadialog.cpp" line="1809"/>
         <source>This action will permanentrly delete this theme</source>
         <translation>Tímto krokem bude motiv neodvolatelně smazán</translation>
     </message>
@@ -2512,29 +2544,29 @@ Zavádí se: %1</translation>
         <translation type="obsolete">Soubor s Biblí Unbound </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1019"/>
+        <location filename="../managedatadialog.cpp" line="1032"/>
         <source>Save exported Bible as:</source>
         <translation>Uložit vyvedenou Bibli jako:</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1033"/>
+        <location filename="../managedatadialog.cpp" line="1046"/>
         <source>Exporting...</source>
         <translation>Vyvádí se...</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1104"/>
+        <location filename="../managedatadialog.cpp" line="1117"/>
         <source>Bible has been exported</source>
         <translation>Bibel byla vyvedena</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1105"/>
+        <location filename="../managedatadialog.cpp" line="1118"/>
         <source>Bible:
      </source>
         <translation>Bible:
      </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1105"/>
+        <location filename="../managedatadialog.cpp" line="1118"/>
         <source>
 Has been saved to:
      </source>
@@ -2543,17 +2575,17 @@ Byla uložena jako:
      </translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1117"/>
+        <location filename="../managedatadialog.cpp" line="1130"/>
         <source>Delete Bible?</source>
         <translation>Smazat Bibli?</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1119"/>
+        <location filename="../managedatadialog.cpp" line="1132"/>
         <source>This action will permanentrly delete this Bible</source>
         <translation>Tímto krokem bude Bible neodvolatelně smazána</translation>
     </message>
     <message>
-        <location filename="../managedatadialog.cpp" line="1170"/>
+        <location filename="../managedatadialog.cpp" line="1183"/>
         <source>Edit Songbook</source>
         <translation>Upravit zpěvník</translation>
     </message>
@@ -2620,28 +2652,28 @@ Byla uložena jako:
     </message>
     <message>
         <location filename="../mediawidget.cpp" line="50"/>
-        <location filename="../mediawidget.cpp" line="397"/>
+        <location filename="../mediawidget.cpp" line="409"/>
         <source>&lt;center&gt;No media&lt;/center&gt;</source>
         <translation>&lt;center&gt;Žádná multimédia&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../mediawidget.cpp" line="112"/>
+        <location filename="../mediawidget.cpp" line="124"/>
         <source>No Media</source>
         <translation>Žádná multimédia</translation>
     </message>
     <message>
-        <location filename="../mediawidget.cpp" line="345"/>
+        <location filename="../mediawidget.cpp" line="357"/>
         <source>Open Music/Video File</source>
         <translation>Otevřít soubor s hudbou/obrazovým záznamem</translation>
     </message>
     <message>
-        <location filename="../mediawidget.cpp" line="346"/>
-        <location filename="../mediawidget.cpp" line="370"/>
+        <location filename="../mediawidget.cpp" line="358"/>
+        <location filename="../mediawidget.cpp" line="382"/>
         <source>Media Files (%1);;Audio Files (%2);;Video Files (%3)</source>
         <translation>Multimediální soubory (%1);;Soubory se zvukem (%2);;Soubory s obrazovým záznamem (%3)</translation>
     </message>
     <message>
-        <location filename="../mediawidget.cpp" line="369"/>
+        <location filename="../mediawidget.cpp" line="381"/>
         <source>Select Music/Video Files to Open</source>
         <translation>Vybrat soubory s hudbou/obrazovým záznamem k otevření</translation>
     </message>
@@ -2699,7 +2731,7 @@ Byla uložena jako:
         <translation type="obsolete">Český</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1282"/>
+        <location filename="../softprojector.cpp" line="1302"/>
         <source>English</source>
         <comment>Do not change</comment>
         <translation>Český</translation>
@@ -2735,14 +2767,14 @@ Byla uložena jako:
         <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.cpp" line="74"/>
-        <location filename="../passivesettingwidget.cpp" line="97"/>
+        <location filename="../passivesettingwidget.cpp" line="86"/>
+        <location filename="../passivesettingwidget.cpp" line="109"/>
         <source>Select a image for passive wallpaper</source>
         <translation>Vyberte obrázek pro nehybné pozadí</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.cpp" line="75"/>
-        <location filename="../passivesettingwidget.cpp" line="98"/>
+        <location filename="../passivesettingwidget.cpp" line="87"/>
+        <location filename="../passivesettingwidget.cpp" line="110"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
@@ -2836,12 +2868,12 @@ Doporučuje se změna velikosti obrázků na velikost zobrazovací obrazovky.</t
         <translation>Vlastní</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.cpp" line="118"/>
+        <location filename="../picturesettingwidget.cpp" line="130"/>
         <source>Inalid Numeric Value</source>
         <translation>Neplatná číselná hodnota</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.cpp" line="119"/>
+        <location filename="../picturesettingwidget.cpp" line="131"/>
         <source>Entered &apos;%1&apos; custom width is not numeric. </source>
         <translation>Zadaná vlastní šířka &apos;%1&apos; není číselná. </translation>
     </message>
@@ -2870,7 +2902,7 @@ Doporučuje se změna velikosti obrázků na velikost zobrazovací obrazovky.</t
     </message>
     <message>
         <location filename="../picturewidget.ui" line="124"/>
-        <location filename="../picturewidget.cpp" line="166"/>
+        <location filename="../picturewidget.cpp" line="178"/>
         <source>Picture Preview</source>
         <translation>Náhled na obrázek</translation>
     </message>
@@ -2913,13 +2945,13 @@ Doporučuje se změna velikosti obrázků na velikost zobrazovací obrazovky.</t
         <translation>Upravením promítání snímků zde se v databázi nic nezmění. Pro uložení změn použijte Nové promítání snímků nebo Upravit promítání snímků. </translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="69"/>
-        <location filename="../picturewidget.cpp" line="167"/>
+        <location filename="../picturewidget.cpp" line="81"/>
+        <location filename="../picturewidget.cpp" line="179"/>
         <source>Preview slide: </source>
         <translation>Náhled na snímek: </translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="80"/>
+        <location filename="../picturewidget.cpp" line="92"/>
         <source>Select Images to Open</source>
         <translation>Vybrat obrázky k otevření</translation>
     </message>
@@ -2928,22 +2960,22 @@ Doporučuje se změna velikosti obrázků na velikost zobrazovací obrazovky.</t
         <translation type="obsolete">Obrázky (*.png *.jpg *.jpeg)</translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="81"/>
+        <location filename="../picturewidget.cpp" line="93"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="87"/>
+        <location filename="../picturewidget.cpp" line="99"/>
         <source>Adding files...</source>
         <translation>Přidávají se soubory...</translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="87"/>
+        <location filename="../picturewidget.cpp" line="99"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../picturewidget.cpp" line="233"/>
+        <location filename="../picturewidget.cpp" line="245"/>
         <source>Slide Show: %1</source>
         <translation>Promítání snímků: %1</translation>
     </message>
@@ -3039,7 +3071,8 @@ Doporučuje se změna velikosti obrázků na velikost zobrazovací obrazovky.</t
         <location filename="../printpreviewdialog.cpp" line="72"/>
         <source>Tune: %1
 </source>
-        <translation>Vyladit: %1</translation>
+        <translation>Vyladit: %1
+</translation>
     </message>
     <message>
         <location filename="../printpreviewdialog.cpp" line="74"/>
@@ -3086,6 +3119,11 @@ Poznámky:
 </source>
         <translation>Oznámení: %1
 </translation>
+    </message>
+    <message>
+        <location filename="../printpreviewdialog.cpp" line="151"/>
+        <source>SoftProject Schedule: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../printpreviewdialog.cpp" line="171"/>
@@ -3374,31 +3412,31 @@ Zadejte, prosím, název promítání obrázků.</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="77"/>
-        <location filename="../softprojector.cpp" line="1321"/>
+        <location filename="../softprojector.cpp" line="1341"/>
         <source>Bible (F6)</source>
         <translation>Bible (F6)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="78"/>
-        <location filename="../softprojector.cpp" line="1322"/>
+        <location filename="../softprojector.cpp" line="1342"/>
         <source>Songs (F7)</source>
         <translation>Písně (F7)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="79"/>
-        <location filename="../softprojector.cpp" line="1323"/>
+        <location filename="../softprojector.cpp" line="1343"/>
         <source>Pictures</source>
         <translation>Obrázky</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="80"/>
-        <location filename="../softprojector.cpp" line="1324"/>
+        <location filename="../softprojector.cpp" line="1344"/>
         <source>Media</source>
         <translation>Média</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="81"/>
-        <location filename="../softprojector.cpp" line="1325"/>
+        <location filename="../softprojector.cpp" line="1345"/>
         <source>Announcements (F8)</source>
         <translation>Oznámení (F8)</translation>
     </message>
@@ -3429,110 +3467,110 @@ Zadejte, prosím, název promítání obrázků.</translation>
         <translation type="obsolete">Hudba od: %1</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="988"/>
+        <location filename="../softprojector.cpp" line="1008"/>
         <source>Cannot start new edit</source>
         <translation>Nelze začít novou úpravu</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="968"/>
-        <location filename="../softprojector.cpp" line="989"/>
-        <location filename="../softprojector.cpp" line="1020"/>
+        <location filename="../softprojector.cpp" line="988"/>
+        <location filename="../softprojector.cpp" line="1009"/>
+        <location filename="../softprojector.cpp" line="1040"/>
         <source>Another song is already been edited.</source>
         <oldsource>Another song is already beeb edited.</oldsource>
         <translation>Již je upravována jiná píseň.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="385"/>
+        <location filename="../softprojector.cpp" line="391"/>
         <source>Schedule not saved</source>
         <translation>Rozvrh neuložen</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="386"/>
+        <location filename="../softprojector.cpp" line="392"/>
         <source>Do you want to save current schedule?</source>
         <translation>Chcete uložit nynější rozvrh?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="750"/>
+        <location filename="../softprojector.cpp" line="770"/>
         <source>&amp;Clear Bible History List</source>
         <translation>&amp;Smazat seznam s historií Bible</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="758"/>
+        <location filename="../softprojector.cpp" line="778"/>
         <source>&amp;New Song...</source>
         <translation>&amp;Nová píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="759"/>
+        <location filename="../softprojector.cpp" line="779"/>
         <source>&amp;Edit Song...</source>
         <translation>&amp;Upravit píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="760"/>
+        <location filename="../softprojector.cpp" line="780"/>
         <source>&amp;Copy Song...</source>
         <translation>&amp;Kopírovat píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="761"/>
+        <location filename="../softprojector.cpp" line="781"/>
         <source>&amp;Delete Song</source>
         <translation>&amp;Smazat píseň</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="769"/>
+        <location filename="../softprojector.cpp" line="789"/>
         <source>&amp;New Slide Show...</source>
         <translation>&amp;Nové promítání snímků...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="770"/>
+        <location filename="../softprojector.cpp" line="790"/>
         <source>&amp;Edit Slide Show...</source>
         <translation>&amp;Upravit promítání snímků...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="772"/>
+        <location filename="../softprojector.cpp" line="792"/>
         <source>&amp;Delete Slide Show</source>
         <translation>&amp;Smazat promítání snímků</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="780"/>
+        <location filename="../softprojector.cpp" line="800"/>
         <source>&amp;Add Media Files...</source>
         <translation>&amp;Přidat multimediální soubory...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="783"/>
+        <location filename="../softprojector.cpp" line="803"/>
         <source>&amp;Remove Media Files</source>
         <translation>&amp;Odstranit multimediální soubory</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="791"/>
+        <location filename="../softprojector.cpp" line="811"/>
         <source>&amp;New Announcement...</source>
         <translation>&amp;Nové oznámení...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="792"/>
+        <location filename="../softprojector.cpp" line="812"/>
         <source>&amp;Edit Announcement...</source>
         <translation>&amp;Upravit oznámení...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="793"/>
+        <location filename="../softprojector.cpp" line="813"/>
         <source>&amp;Copy Announcement...</source>
         <translation>&amp;Kopírovat oznámení...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="794"/>
+        <location filename="../softprojector.cpp" line="814"/>
         <source>&amp;Delete Announcement</source>
         <translation>&amp;Smazat oznámení</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="969"/>
-        <location filename="../softprojector.cpp" line="990"/>
-        <location filename="../softprojector.cpp" line="1021"/>
+        <location filename="../softprojector.cpp" line="989"/>
+        <location filename="../softprojector.cpp" line="1010"/>
+        <location filename="../softprojector.cpp" line="1041"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Uložte, prosím, a/nebo zavřete nyní upravovanou píseň, předtím než začnete upravovat jinou píseň.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1004"/>
-        <location filename="../softprojector.cpp" line="1035"/>
-        <location filename="../softprojector.cpp" line="1074"/>
-        <location filename="../softprojector.cpp" line="1387"/>
+        <location filename="../softprojector.cpp" line="1024"/>
+        <location filename="../softprojector.cpp" line="1055"/>
+        <location filename="../softprojector.cpp" line="1094"/>
+        <location filename="../softprojector.cpp" line="1407"/>
         <source>No song selected</source>
         <translation>Nebyla vybrána žádná píseň</translation>
     </message>
@@ -3545,235 +3583,235 @@ Zadejte, prosím, název promítání obrázků.</translation>
         <translation type="obsolete">Vyberte, prosím, píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="967"/>
+        <location filename="../softprojector.cpp" line="987"/>
         <source>Cannot create a new song</source>
         <translation>Nelze vytvořit novou píseň</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1005"/>
+        <location filename="../softprojector.cpp" line="1025"/>
         <source>No song has been selected to edit.</source>
         <translation>Nebyla vybrána žádná píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1006"/>
+        <location filename="../softprojector.cpp" line="1026"/>
         <source>Please select a song to edit.</source>
         <translation>Vyberte, prosím, píseň pro úpravy.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1019"/>
+        <location filename="../softprojector.cpp" line="1039"/>
         <source>Cannot copy this song</source>
         <translation>Nelze kopírovat tento píseň</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1036"/>
+        <location filename="../softprojector.cpp" line="1056"/>
         <source>No song has been selected to copy</source>
         <translation>Nebyla vybrána žádná píseň ke kopírování</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1037"/>
+        <location filename="../softprojector.cpp" line="1057"/>
         <source>Please select a song to copy</source>
         <translation>Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1075"/>
+        <location filename="../softprojector.cpp" line="1095"/>
         <source>No song has been selected to delete</source>
         <translation>Nebyla vybrána žádná píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1076"/>
+        <location filename="../softprojector.cpp" line="1096"/>
         <source>Please select a song to delete</source>
         <translation>Vyberte, prosím, píseň ke smazání</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1105"/>
-        <location filename="../softprojector.cpp" line="1143"/>
+        <location filename="../softprojector.cpp" line="1125"/>
+        <location filename="../softprojector.cpp" line="1163"/>
         <source>No slideshow selected</source>
         <translation>Nebylo vybráno žádné promítání snímků</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1106"/>
+        <location filename="../softprojector.cpp" line="1126"/>
         <source>No slideshow has been selected to edit.</source>
         <translation>Nebylo vybráno žádné promítání snímků pro úpravy.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1107"/>
+        <location filename="../softprojector.cpp" line="1127"/>
         <source>Please select a slideshow to edit.</source>
         <translation>Vyberte, prosím, promítání snímků pro úpravy.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1119"/>
+        <location filename="../softprojector.cpp" line="1139"/>
         <source>Delete slideshow?</source>
         <translation>Smazat promítání snímků?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1120"/>
+        <location filename="../softprojector.cpp" line="1140"/>
         <source>Delete slideshow: &quot;</source>
         <translation>Smazat promítání snímků: &quot;</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1121"/>
+        <location filename="../softprojector.cpp" line="1141"/>
         <source>This action will permanentrly delete this slideshow</source>
         <translation>Tímto krokem bude promítání snímků neodvolatelně smazáno</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1144"/>
+        <location filename="../softprojector.cpp" line="1164"/>
         <source>No slideshow has been selected to delete.</source>
         <translation>Nebylo vybráno žádné promítání snímků ke smazání.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1145"/>
+        <location filename="../softprojector.cpp" line="1165"/>
         <source>Please select a slideshow to delete.</source>
         <translation>Vyberte, prosím, promítání snímků ke smazání.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1163"/>
+        <location filename="../softprojector.cpp" line="1183"/>
         <source>No media selected</source>
         <translation>Nebyla vybrána žádná multimédia</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1164"/>
+        <location filename="../softprojector.cpp" line="1184"/>
         <source>No media item has been selected to delete.</source>
         <translation>Nebyla vybrána žádná multimédiální položka ke smazání.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1165"/>
+        <location filename="../softprojector.cpp" line="1185"/>
         <source>Please select a media item to delete.</source>
         <translation>Vyberte, prosím, multimédiální položku ke smazání.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1183"/>
-        <location filename="../softprojector.cpp" line="1198"/>
-        <location filename="../softprojector.cpp" line="1236"/>
+        <location filename="../softprojector.cpp" line="1203"/>
+        <location filename="../softprojector.cpp" line="1218"/>
+        <location filename="../softprojector.cpp" line="1256"/>
         <source>No Announcement Selected</source>
         <translation>Nebylo vybráno žádné oznámení</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1184"/>
+        <location filename="../softprojector.cpp" line="1204"/>
         <source>No announcement has been selected to edit</source>
         <translation>Nebylo vybráno žádné oznámení pro úpravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1185"/>
+        <location filename="../softprojector.cpp" line="1205"/>
         <source>Please select an announcement to edit</source>
         <translation>Vyberte, prosím, oznámení pro úpravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1199"/>
+        <location filename="../softprojector.cpp" line="1219"/>
         <source>No announcement has been selected to copy</source>
         <translation>Nebylo vybráno žádné oznámení ke kopírování</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1200"/>
+        <location filename="../softprojector.cpp" line="1220"/>
         <source>Please select an announcement to copy</source>
         <translation>Vyberte, prosím, oznámení ke kopírování</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1212"/>
+        <location filename="../softprojector.cpp" line="1232"/>
         <source>Delete Announcement?</source>
         <translation>Smazat oznámení?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1213"/>
+        <location filename="../softprojector.cpp" line="1233"/>
         <source>Delete announcement: &quot;</source>
         <translation>Smazat oznámení: &quot;</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1214"/>
+        <location filename="../softprojector.cpp" line="1234"/>
         <source>This action will permanentrly delete this announcement</source>
         <translation>Tímto krokem bude oznámení neodvolatelně smazáno</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1237"/>
+        <location filename="../softprojector.cpp" line="1257"/>
         <source>No announcement has been selected to delete</source>
         <translation>Nebylo vybráno žádné oznámení ke smazání</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1238"/>
+        <location filename="../softprojector.cpp" line="1258"/>
         <source>Please select an announcement to delete</source>
         <translation>Vyberte, prosím, oznámení ke smazání</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1388"/>
+        <location filename="../softprojector.cpp" line="1408"/>
         <source>No song has been selected to be printed.</source>
         <translation>Nebyla vybrána žádná píseň k vytištění.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1389"/>
+        <location filename="../softprojector.cpp" line="1409"/>
         <source>Please select a song to be printed.</source>
         <translation>Vyberte, prosím, píseň pro tisk.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1404"/>
+        <location filename="../softprojector.cpp" line="1424"/>
         <source>No announcement selected</source>
         <translation>Nebylo vybráno žádné oznámení</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1405"/>
+        <location filename="../softprojector.cpp" line="1425"/>
         <source>No announcement has been selected to be printed.</source>
         <translation>Nebylo vybráno žádné oznámení k vytištění.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1406"/>
+        <location filename="../softprojector.cpp" line="1426"/>
         <source>Please select a announcement to be printed.</source>
         <translation>Vyberte, prosím, oznámení pro tisk.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1729"/>
-        <location filename="../softprojector.cpp" line="1766"/>
-        <location filename="../softprojector.cpp" line="1832"/>
+        <location filename="../softprojector.cpp" line="1752"/>
+        <location filename="../softprojector.cpp" line="1789"/>
+        <location filename="../softprojector.cpp" line="1855"/>
         <source>Save Schedule?</source>
         <translation>Uložit rozvrh?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1730"/>
+        <location filename="../softprojector.cpp" line="1753"/>
         <source>Do you want to save current schedule before creating a new schedule?</source>
         <translation>Chcete uložit nynější rozvrh před vytvořením nového rozvrhu?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1767"/>
+        <location filename="../softprojector.cpp" line="1790"/>
         <source>Do you want to save current schedule before opening a new schedule?</source>
         <translation>Chcete uložit nynější rozvrh před otevřením nového rozvrhu?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1791"/>
+        <location filename="../softprojector.cpp" line="1814"/>
         <source>Open softProjector schedule:</source>
         <translation>Otevřít rozvrh softProjectoru:</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1792"/>
-        <location filename="../softprojector.cpp" line="1814"/>
+        <location filename="../softprojector.cpp" line="1815"/>
+        <location filename="../softprojector.cpp" line="1837"/>
         <source>softProjector schedule file </source>
         <translation>Soubor s rozvrhem pro softProjector </translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1813"/>
+        <location filename="../softprojector.cpp" line="1836"/>
         <source>Save softProjector schedule as:</source>
         <translation>Uložit rozvrh softProjectoru jako:</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1833"/>
+        <location filename="../softprojector.cpp" line="1856"/>
         <source>Do you want to save current schedule before closing it?</source>
         <translation>Chcete uložit nynější rozvrh před jeho zavřením?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1869"/>
+        <location filename="../softprojector.cpp" line="1892"/>
         <source>Saving schedule file...</source>
         <translation>Ukládá se soubor s rozvrhem...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1878"/>
+        <location filename="../softprojector.cpp" line="1901"/>
         <source>An error has ocured when overwriting existing file.
 Please try again with different file name.</source>
         <translation>Při přepisování stávajícího souboru se vyskytla chyba.
 Zkuste to, prosím, znovu s jiným názvem souboru.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2145"/>
+        <location filename="../softprojector.cpp" line="2168"/>
         <source>Opening schedule file...</source>
         <translation>Otevírá se soubor s rozvrhem...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2218"/>
+        <location filename="../softprojector.cpp" line="2241"/>
         <source>The schedule file you are trying to open is of uncompatible version.
 Compatible version: 2
 This schedule file version: </source>
@@ -3850,12 +3888,12 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Vyberte, prosím, píseň pro kopírování</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1049"/>
+        <location filename="../softprojector.cpp" line="1069"/>
         <source>Delete song?</source>
         <translation>Smazat píseň?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1050"/>
+        <location filename="../softprojector.cpp" line="1070"/>
         <source>Delete song &quot;</source>
         <translation>Smazat píseň &quot;</translation>
     </message>
@@ -3872,7 +3910,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Sind Sie sich sicher, dass Sie ein Lied loschen mochten?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1051"/>
+        <location filename="../softprojector.cpp" line="1071"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Tímto krokem bude tato píseň neodvolatelně smazána</translation>
     </message>
@@ -3893,7 +3931,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Skrýt (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="667"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -3906,12 +3944,12 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Ukázat (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="652"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="181"/>
+        <location filename="../softprojector.ui" line="163"/>
         <source>Use Multi Verse</source>
         <translation>Použít více veršů</translation>
     </message>
@@ -3921,229 +3959,242 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation>Rozvrh služby:</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="178"/>
+        <location filename="../softprojector.ui" line="160"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation>Je-li vybráno, umožní vám to vybrat více veršů najednou. Bude potřeba pokaždé stisknout Ukázat.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="231"/>
+        <location filename="../softprojector.ui" line="213"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="246"/>
+        <location filename="../softprojector.ui" line="228"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="259"/>
-        <location filename="../softprojector.ui" line="420"/>
+        <location filename="../softprojector.ui" line="241"/>
+        <location filename="../softprojector.ui" line="405"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="268"/>
+        <location filename="../softprojector.ui" line="250"/>
+        <source>Select Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="253"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="280"/>
+        <location filename="../softprojector.ui" line="265"/>
         <source>Schedule</source>
         <translation>Rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="293"/>
+        <location filename="../softprojector.ui" line="278"/>
         <source>Display Screen</source>
         <translation>Zobrazovací obrazovka</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="310"/>
+        <location filename="../softprojector.ui" line="295"/>
         <source>File Tool Bar</source>
         <translation>Nástrojový pruh pro soubor</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="324"/>
+        <location filename="../softprojector.ui" line="309"/>
         <source>Schedule Tool Bar</source>
         <translation>Nástrojový pruh pro rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="335"/>
+        <location filename="../softprojector.ui" line="320"/>
         <source>Edit Tool Bar</source>
         <translation>Nástrojový pruh pro úpravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="352"/>
+        <location filename="../softprojector.ui" line="337"/>
         <source>Display Control Tool Bar</source>
         <translation>Nástrojový pruh pro ovládání zobrazení</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="408"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation>Zavést a vyvést Bible, zpěvníky a motivy vzhledu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="423"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>Open Help</source>
         <translation>Otevřít nápovědu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="444"/>
+        <location filename="../softprojector.ui" line="429"/>
         <source>&amp;Open Schedule</source>
         <translation>&amp;Otevřít rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="456"/>
+        <location filename="../softprojector.ui" line="441"/>
         <source>&amp;Save Schedule</source>
         <translation>&amp;Uložit rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="464"/>
+        <location filename="../softprojector.ui" line="449"/>
         <source>Save Schedule &amp;As</source>
         <translation>Uložit rozvrh &amp;jako</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
+        <location filename="../softprojector.ui" line="452"/>
         <source>Save Schedule with different name</source>
         <translation>Uložit rozvrh pod jiným názvem</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="476"/>
+        <location filename="../softprojector.ui" line="461"/>
         <source>&amp;New Schedule</source>
         <translation>&amp;Nový rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="479"/>
+        <location filename="../softprojector.ui" line="464"/>
         <source>Start new Schedule</source>
         <translation>Začít nový rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="487"/>
-        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="472"/>
+        <location filename="../softprojector.ui" line="475"/>
         <source>Close Schedule</source>
         <translation>Zavřít rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="502"/>
+        <location filename="../softprojector.ui" line="487"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation>Vytiskne vybranou kapitolu Bible, vybranou píseň a vybrané oznámení.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="510"/>
-        <location filename="../softprojector.ui" line="513"/>
+        <location filename="../softprojector.ui" line="495"/>
+        <location filename="../softprojector.ui" line="498"/>
         <source>Print Schedule</source>
         <translation>Vytisknout rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="565"/>
+        <location filename="../softprojector.ui" line="550"/>
         <source>Add to Schedule</source>
         <translation>Přidat do rozvrhu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="568"/>
+        <location filename="../softprojector.ui" line="553"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="577"/>
+        <location filename="../softprojector.ui" line="562"/>
         <source>Remove from Schedule</source>
         <translation>Odstranit z  rozvrhu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="580"/>
+        <location filename="../softprojector.ui" line="565"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="589"/>
+        <location filename="../softprojector.ui" line="574"/>
         <source>Clear Schedule</source>
         <translation>Vyprázdnit rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="598"/>
+        <location filename="../softprojector.ui" line="583"/>
         <source>Move Item To Top</source>
         <translation>Posunout položku úplně nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="601"/>
+        <location filename="../softprojector.ui" line="586"/>
         <source>Move Schedule item to top of the list</source>
         <translation>Posunout položku rozvrhu v seznamu úplně nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="610"/>
+        <location filename="../softprojector.ui" line="595"/>
         <source>Move Item Up</source>
         <translation>Posunout položku nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="613"/>
+        <location filename="../softprojector.ui" line="598"/>
         <source>Move Schedule item up</source>
         <translation>Posunout položku rozvrhu nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="622"/>
+        <location filename="../softprojector.ui" line="607"/>
         <source>Mode Item Down</source>
         <translation>Posunout položku dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="625"/>
+        <location filename="../softprojector.ui" line="610"/>
         <source>Move Schedule item down</source>
         <translation>Posunout položku rozvrhu dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="634"/>
+        <location filename="../softprojector.ui" line="619"/>
         <source>Move Item To Bottom</source>
         <translation>Posunout položku úplně dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="637"/>
+        <location filename="../softprojector.ui" line="622"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation>Posunout položku rozvrhu v seznamu úplně dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="646"/>
+        <location filename="../softprojector.ui" line="631"/>
         <source>Show</source>
         <translation>Ukázat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="649"/>
+        <location filename="../softprojector.ui" line="634"/>
         <source>Dsiplay to the screen (F4)</source>
         <translation>Zobrazit na obrazovce (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="664"/>
+        <location filename="../softprojector.ui" line="649"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
         <translation>Ukázat pasivní obrazovku (Zastavit zobrazení na obrazovce) (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="676"/>
+        <location filename="../softprojector.ui" line="661"/>
         <source>Clear</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="679"/>
+        <location filename="../softprojector.ui" line="664"/>
         <source>Clear Display Text (Shift+Esc)</source>
         <translation>Smazat promítaný text (Shift+Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="682"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Shift+Esc</source>
         <translation>Shift+Esc</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="691"/>
-        <source>Close</source>
-        <translation>Zavřít</translation>
+        <location filename="../softprojector.ui" line="679"/>
+        <source>On / Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="694"/>
+        <location filename="../softprojector.ui" line="682"/>
+        <source>Turn Display Screen On/Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Zavřít</translation>
+    </message>
+    <message>
         <source>Close Display Window</source>
-        <translation>Zavřít promítací plochu</translation>
+        <translation type="obsolete">Zavřít promítací plochu</translation>
     </message>
     <message>
         <source>Dsiplay to the screen.</source>
         <translation type="obsolete">Zobrazit na obrazovce</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="661"/>
+        <location filename="../softprojector.ui" line="646"/>
         <source>Hide</source>
         <translation>Skrýt</translation>
     </message>
@@ -4156,7 +4207,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Nový projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="499"/>
+        <location filename="../softprojector.ui" line="484"/>
         <source>&amp;Print</source>
         <translation>&amp;Tisk</translation>
     </message>
@@ -4169,22 +4220,22 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Vytisknout projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="516"/>
+        <location filename="../softprojector.ui" line="501"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="548"/>
+        <location filename="../softprojector.ui" line="533"/>
         <source>Del</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="553"/>
+        <location filename="../softprojector.ui" line="538"/>
         <source>Donate</source>
         <translation>Darovat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="556"/>
+        <location filename="../softprojector.ui" line="541"/>
         <source>Donate to softProjector development team</source>
         <translation>Dejte dar vývojářům softProjectoru</translation>
     </message>
@@ -4197,37 +4248,37 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Nástrojový pruh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="366"/>
+        <location filename="../softprojector.ui" line="351"/>
         <source>&amp;About</source>
         <translation>&amp;O programu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="375"/>
+        <location filename="../softprojector.ui" line="360"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Nastavení...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="378"/>
+        <location filename="../softprojector.ui" line="363"/>
         <source>Open settings dialog</source>
         <translation>Otevřít dialog nastavení</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="381"/>
+        <location filename="../softprojector.ui" line="366"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="390"/>
+        <location filename="../softprojector.ui" line="375"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="393"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>Exit SoftProjector</source>
         <translation>Ukončit softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="396"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -4236,7 +4287,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Upravit nynější píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="532"/>
+        <location filename="../softprojector.ui" line="517"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -4245,12 +4296,12 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Nová píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="524"/>
+        <location filename="../softprojector.ui" line="509"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="405"/>
+        <location filename="../softprojector.ui" line="390"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Spravovat databázi...</translation>
     </message>
@@ -4259,7 +4310,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Zavést a vyvést sbírky písní a Biblí</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="411"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
@@ -4272,7 +4323,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="426"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
@@ -4285,18 +4336,18 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Kopírovat nynější píseň do nového zpěvníku</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="540"/>
+        <location filename="../softprojector.ui" line="525"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="435"/>
+        <location filename="../softprojector.ui" line="420"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Počítadlo písní...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="273"/>
+        <location filename="../softprojector.ui" line="258"/>
         <source>View</source>
         <translation>Pohled</translation>
     </message>
@@ -4305,7 +4356,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Otevřít projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="447"/>
+        <location filename="../softprojector.ui" line="432"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
@@ -4314,7 +4365,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Uložit projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="459"/>
+        <location filename="../softprojector.ui" line="444"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -4327,7 +4378,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Nový projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="482"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Ctrl+Shift+N</source>
         <translation></translation>
     </message>
@@ -4336,7 +4387,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Zavřít projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="505"/>
+        <location filename="../softprojector.ui" line="490"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -4816,34 +4867,34 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation>Nastavit vše znovu na výchozí</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="286"/>
-        <location filename="../songsettingwidget.cpp" line="304"/>
+        <location filename="../songsettingwidget.cpp" line="298"/>
+        <location filename="../songsettingwidget.cpp" line="316"/>
         <source>Images(%1)</source>
         <translation>Obrázky (%1)</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="381"/>
+        <location filename="../songsettingwidget.cpp" line="393"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="383"/>
+        <location filename="../songsettingwidget.cpp" line="395"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="385"/>
+        <location filename="../songsettingwidget.cpp" line="397"/>
         <source>StrikeOut</source>
         <translation>Přeškrtnutí</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="387"/>
+        <location filename="../songsettingwidget.cpp" line="399"/>
         <source>Underline</source>
         <translation>Podtržení</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.cpp" line="285"/>
-        <location filename="../songsettingwidget.cpp" line="303"/>
+        <location filename="../songsettingwidget.cpp" line="297"/>
+        <location filename="../songsettingwidget.cpp" line="315"/>
         <source>Select a image for song wallpaper</source>
         <translation>Vyberte obrázek pro pozadí písně</translation>
     </message>
@@ -5083,17 +5134,17 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="../song.cpp" line="575"/>
+        <location filename="../song.cpp" line="534"/>
         <source>Num</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="577"/>
+        <location filename="../song.cpp" line="536"/>
         <source>Title</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="579"/>
+        <location filename="../song.cpp" line="538"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
     </message>

@@ -34,6 +34,18 @@ PictureWidget::~PictureWidget()
     delete ui;
 }
 
+void PictureWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+
 void PictureWidget::loadSlideShows()
 {
     QSqlQuery sq;
