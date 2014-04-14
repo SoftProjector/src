@@ -454,8 +454,7 @@ void MediaWidget::goLiveFromSchedule()
 
 bool MediaWidget::isValidMedia()
 {
-    int cm = ui->listWidgetMediaFiles->currentRow();
-    if(cm>=0)
+    if(ui->listWidgetMediaFiles->selectionModel()->selectedRows().count() > 0)
         return true;
     else
         return false;

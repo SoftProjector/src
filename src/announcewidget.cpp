@@ -179,7 +179,7 @@ void AnnounceWidget::updateAnnouncement()
 
 bool AnnounceWidget::isAnnounceValid()
 {
-    if(previewAnnounce.idNum>0)
+    if(ui->tableViewAnnouncements->selectionModel()->selectedRows().count()>0)
         return true;
     else
         return false;

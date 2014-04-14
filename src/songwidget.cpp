@@ -434,7 +434,10 @@ void SongWidget::retranslateUis()
 
 bool SongWidget::isSongSelected()
 {
-    return  preview_song.isValid();
+    if(ui->songs_view->selectionModel()->selectedRows().count() > 0)
+        return true;
+    else
+        return false;
 }
 
 void SongWidget::loadCategories(bool ui_update)
