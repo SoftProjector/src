@@ -1,7 +1,7 @@
 ##**************************************************************************
 ##
 ##    softProjector - an open source media projection software
-##    Copyleft (Ɔ) 2013  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
+##    Copyright (C) 2014  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
 ##
 ##    This program is free software: you can redistribute it and/or modify
 ##    it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ QT += sql \
     phonon \
     webkit \
     network
-TARGET = softProjector
+TARGET = SoftProjector
 TEMPLATE = app
 CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
 
-RES_DIR = $${PWD}/unknownsys_bild
-win32: RES_DIR = $${PWD}/win32_bild
-unix:  RES_DIR = $${PWD}/unix_bild
-macx: RES_DIR = $${PWD}/mac_bild
+RES_DIR = $${PWD}/unknownsys_build
+win32: RES_DIR = $${PWD}/win32_build
+unix:  RES_DIR = $${PWD}/unix_build
+macx: RES_DIR = $${PWD}/mac_build
 
 DESTDIR = $${RES_DIR}/bin
 OBJECTS_DIR = $${RES_DIR}/obj
@@ -155,34 +155,3 @@ RESOURCES += softprojector.qrc
 win32 {
     RC_FILE = softprojector.rc
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
