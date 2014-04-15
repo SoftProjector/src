@@ -1,188 +1,128 @@
-﻿body {
-	background-color: #FFFFCC;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 24px;
-	color: #333333;
+﻿body
+{
+				background: #114E7B url('images/bg.jpg') no-repeat top center;
+				color: #666666;
+				font: normal 14px Arial, Helvetica, sans-serfi;
+				position: relative;
 }
 
-th {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 24px;
-	color: #330000;
+img{
+				border:none;
+				padding:1px;
+}
+.fixed{
+				display:block;
+				min-height:1%;
+}
+*html .fixed{
+				height:1%;
+}
+.fixed:after{
+				content:".";
+				display:block;
+				height:0;
+				clear:both;
+				visibility:hidden;
 }
 
-td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 24px;
-	color: #330000;
+
+/* TYPES */
+#header{
+				width: 90%;
+				padding: 0px 30px;
+				margin: 0 auto;
+				border: none;
+				color: #C0C0C0;
+}
+#header a{
+				color: #C0C0C0;
 }
 
-a {
-	color: #330000;
+#content{
+				background-color:#FFF;
+				width:90%;
+				color:#383F47;
+				min-height:300px;
+				padding:0px 30px;
+				margin: 0 auto;
+				line-height:20px;
+				border-radius:10px;
+}
+#content h2{
+				padding:10px 5px;
+				font-size: 24px;
+				text-align:center;
+}
+#content h3{
+				padding:6px 4px;
+				font-size: 18px;
+}
+#content h4{
+				padding:5px 0px 0px 0px;
+				font-size: 16px;
+				font-weight:bold;
 }
 
-form {
-	background-color: #CCCC99;
+
+#main{
+				width: 75%;
+				float: right;
+				padding: 0;
+				clear: none;
+}
+#main a {
+				color:#114E7B ;
 }
 
-.title {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 18px;
-	line-height: 30px;
-  	background-color: #990000; color: #FFFF66;
+#mainbody{
+				padding: 30px;
+}
+#mainbody a {
+				color:#114E7B ;
 }
 
-.important{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 24px;
-	color: #FF0000;
+
+#menu{
+				width:25%;
+				float:left;
+				padding:0;
+				line-height:24px;
+}
+#menu a {
+				color:#383F47;
+				text-decoration:none;
+}
+#menu a:hover{
+				color:#114E7B;
+				text-decoration: underline;
+}
+#menu a.current{
+				text-decoration: underline;
+				color: #114E7B;
+				font-weight: bold;
 }
 
-.subtitle {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: large;
-	line-height: 20px;
-	font-weight: bold;
-	color: #660000;
-	font-style: normal;
-	text-decoration: underline overline;
+/* CLASSES */
+.cap{
+				font-size:12px;
+				font-style:italic;
 }
-
-.header {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 24px;
-	background-color: #990000;
-  	color: #FFFF66;
-}
-
-.nav {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	font-weight: bold;
-	background-color: #CCCC66;
-}
-
-.navLink {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	background-color: #DEDECA;
-}
-a:hover {
-	color: #330000;
-	background-color: #4899b0;
-}
-
-.sidebar {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 18px;
-	padding: 3px;
-	color: #006600;
-	font-style: normal;
-	font-weight: bold;
-}
-
-.sidebarHeader {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 14px;
-	line-height: 18px;
-	color: #FFFF99;
-	background-color: #999933;
-	font-weight: bold;
-}
-
 .verse{
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	line-height: 18px;
-	background-color: #FFFF99;
-	color: #FF0000;
+				background-color: #FFFF99;
+				color: #FF0000;
 }
 
 .chorus{
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	font-style: italic;
-	line-height: 18px;
-	background-color: #d4f01c;
-	color: #000090;
+				font-style: italic;
+				background-color: #d4f01c;
+				color: #000090;
 }
 
 .insert{
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	line-height: 18px;
-	background-color: #e08c00;
-	color: #800080;
+				background-color: #e08c00;
+				color: #800080;
 }
-
-.footer {
-  	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 22px;
-	color: #333333;
-	background-color: #FFFF99;
-}
-
-.HeadingMain {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12pt;
-	color: #333333;
-	font-weight: bold;
-}
-
-.box1 {
-	border-width: 2px;
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-  	border-style: dotted;
-	}
-
-.promo {
-	font-family: "Times New Roman", Times, serif;
-	color: #000033;
-}
-
-.style1 {
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.red {
-	color: #FF0000;
-}
-
-.passage {
-	font-style: italic;
-	color: #003366;
-}
-
-
-.titlebar {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 9px;
-	color: #FFFFFF;
-	background-color: #336699;
-}
-
-.dingbat {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	background-color: #CCCC99;
-	color: #660000;
-	font-weight: bold;
-	font-size: 13px;
-}
-
-input.big {
-	width: 100px;
-}
-
-input.small {
-	width: 50px;
+.imglist{
+				list-style:none;
 }
 
