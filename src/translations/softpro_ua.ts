@@ -38,12 +38,12 @@ Vladislav Kobzar</oldsource>
     <message>
         <location filename="../aboutdialog.ui" line="310"/>
         <source>Mac Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>Збірка для Mac:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="322"/>
         <source>Volodimir Vasuk</source>
-        <translation type="unfinished"></translation>
+        <translation>Володимир Васюк</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="352"/>
@@ -2365,12 +2365,12 @@ by current version of SoftProjector.
     <message>
         <location filename="../managedatadialog.cpp" line="1885"/>
         <source>Error opening module list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка відкриття списку модулів.</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1887"/>
         <source>Failed to open mod list</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося відкрити сисок модулів</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1909"/>
@@ -2982,7 +2982,7 @@ Notes:
     <message>
         <location filename="../printpreviewdialog.cpp" line="151"/>
         <source>SoftProject Schedule: </source>
-        <translation type="unfinished"></translation>
+        <translation>Програма служіння SoftProjector: </translation>
     </message>
     <message>
         <location filename="../printpreviewdialog.cpp" line="171"/>
@@ -3282,7 +3282,7 @@ Please enter a title.</source>
         <location filename="../softprojector.cpp" line="80"/>
         <location filename="../softprojector.cpp" line="1344"/>
         <source>Media</source>
-        <translation></translation>
+        <translation>Медіа</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="81"/>
@@ -3767,7 +3767,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Приховати (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="652"/>
+        <location filename="../softprojector.ui" line="670"/>
         <source>Esc</source>
         <translation></translation>
     </message>
@@ -3780,12 +3780,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Показати (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="637"/>
+        <location filename="../softprojector.ui" line="655"/>
         <source>F4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="163"/>
+        <location filename="../softprojector.ui" line="181"/>
         <source>Use Multi Verse</source>
         <translation>Використовувати декілька віршів</translation>
     </message>
@@ -3795,258 +3795,258 @@ You may try upgrading your version of softProjector.</source>
         <translation>ПРограма служіння:</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="160"/>
+        <location filename="../softprojector.ui" line="178"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation>Дозволяє показувати декільька віршів за раз. Потребує натискання &quot;Показати&quot; кожного разу при зміні віршів.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="213"/>
+        <location filename="../softprojector.ui" line="231"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="228"/>
+        <location filename="../softprojector.ui" line="246"/>
         <source>&amp;Edit</source>
         <translation>&amp;Редагувати</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="241"/>
-        <location filename="../softprojector.ui" line="405"/>
+        <location filename="../softprojector.ui" line="259"/>
+        <location filename="../softprojector.ui" line="423"/>
         <source>&amp;Help</source>
         <translation>&amp;Допомога</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="250"/>
+        <location filename="../softprojector.ui" line="268"/>
         <source>Select Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть мову</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="253"/>
+        <location filename="../softprojector.ui" line="271"/>
         <source>Language</source>
         <translation>Мови</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="258"/>
+        <location filename="../softprojector.ui" line="276"/>
         <source>View</source>
         <translation>Вигляд</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="265"/>
+        <location filename="../softprojector.ui" line="283"/>
         <source>Schedule</source>
         <translation>Програма</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="278"/>
+        <location filename="../softprojector.ui" line="296"/>
         <source>Display Screen</source>
         <translation>Дислей</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="295"/>
+        <location filename="../softprojector.ui" line="313"/>
         <source>File Tool Bar</source>
         <translation>Файлова панель інструментів</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="309"/>
+        <location filename="../softprojector.ui" line="327"/>
         <source>Schedule Tool Bar</source>
         <translation>Панель інструментів програми</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="320"/>
+        <location filename="../softprojector.ui" line="338"/>
         <source>Edit Tool Bar</source>
         <translation>Панель інструментів для редагування</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="337"/>
+        <location filename="../softprojector.ui" line="355"/>
         <source>Display Control Tool Bar</source>
         <translation>Панель інструментів контролю дисплею</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="393"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation>Імпорт та експорт Біблій, пісенників та тем</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="408"/>
+        <location filename="../softprojector.ui" line="426"/>
         <source>Open Help</source>
         <translatorcomment>Открыть справку</translatorcomment>
         <translation>Відкрити довідку</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="429"/>
+        <location filename="../softprojector.ui" line="447"/>
         <source>&amp;Open Schedule</source>
         <translation>&amp;Відкрити програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="441"/>
+        <location filename="../softprojector.ui" line="459"/>
         <source>&amp;Save Schedule</source>
         <translation>&amp;Зберегти програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="449"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Save Schedule &amp;As</source>
         <translation>Зберегти програму &amp;як</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="452"/>
+        <location filename="../softprojector.ui" line="470"/>
         <source>Save Schedule with different name</source>
         <translation>Зберегти програму з іншим ім’ям</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="461"/>
+        <location filename="../softprojector.ui" line="479"/>
         <source>&amp;New Schedule</source>
         <translation>&amp;Нова програма</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="464"/>
+        <location filename="../softprojector.ui" line="482"/>
         <source>Start new Schedule</source>
         <translation>Створити нову програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="472"/>
-        <location filename="../softprojector.ui" line="475"/>
+        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="493"/>
         <source>Close Schedule</source>
         <translation>Зкрити програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="484"/>
+        <location filename="../softprojector.ui" line="502"/>
         <source>&amp;Print</source>
         <translation>&amp;Надрукувати</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="487"/>
+        <location filename="../softprojector.ui" line="505"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation>Друкувати обраний розділ Біблії, обрану піснб та оголошення.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="495"/>
-        <location filename="../softprojector.ui" line="498"/>
+        <location filename="../softprojector.ui" line="513"/>
+        <location filename="../softprojector.ui" line="516"/>
         <source>Print Schedule</source>
         <translation>Друкувати програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="501"/>
+        <location filename="../softprojector.ui" line="519"/>
         <source>Ctrl+Shift+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="533"/>
+        <location filename="../softprojector.ui" line="551"/>
         <source>Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="538"/>
+        <location filename="../softprojector.ui" line="556"/>
         <source>Donate</source>
         <translation>Пожертвувати</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="541"/>
+        <location filename="../softprojector.ui" line="559"/>
         <source>Donate to softProjector development team</source>
         <translation>Пожертвувати для команди softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="550"/>
+        <location filename="../softprojector.ui" line="568"/>
         <source>Add to Schedule</source>
         <translation>Додати в програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="553"/>
+        <location filename="../softprojector.ui" line="571"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="562"/>
+        <location filename="../softprojector.ui" line="580"/>
         <source>Remove from Schedule</source>
         <translation>Видалити з програми</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="565"/>
-        <source>F3</source>
+        <location filename="../softprojector.ui" line="583"/>
+        <source>Ctrl+Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="574"/>
+        <location filename="../softprojector.ui" line="592"/>
         <source>Clear Schedule</source>
         <translation>Очистити програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="583"/>
+        <location filename="../softprojector.ui" line="601"/>
         <source>Move Item To Top</source>
         <translation>Рухати наверх</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="586"/>
+        <location filename="../softprojector.ui" line="604"/>
         <source>Move Schedule item to top of the list</source>
         <translation>Перемістити елемент на верх списку</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="595"/>
+        <location filename="../softprojector.ui" line="613"/>
         <source>Move Item Up</source>
         <translation>Рухати догори</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="598"/>
+        <location filename="../softprojector.ui" line="616"/>
         <source>Move Schedule item up</source>
         <translation>Рухати елемент програми догори</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="607"/>
+        <location filename="../softprojector.ui" line="625"/>
         <source>Mode Item Down</source>
         <translation>Рухати вниз</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="610"/>
+        <location filename="../softprojector.ui" line="628"/>
         <source>Move Schedule item down</source>
         <translation>Рухає елемент програми вних</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="619"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>Move Item To Bottom</source>
         <translation>Перемістити елемент в низ</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="622"/>
+        <location filename="../softprojector.ui" line="640"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation>Переміщає елемент програми вниз списку</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="631"/>
+        <location filename="../softprojector.ui" line="649"/>
         <source>Show</source>
         <translation>Показати</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="634"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>Dsiplay to the screen (F4)</source>
         <translation>Показати на дисплеї (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="649"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
         <translation>Показати пасивний дисплей (припинити показувати) (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="661"/>
+        <location filename="../softprojector.ui" line="679"/>
         <source>Clear</source>
         <translation>Очистити</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="664"/>
+        <location filename="../softprojector.ui" line="682"/>
         <source>Clear Display Text (Shift+Esc)</source>
         <translation>Очистити текст на дисплеї (Shift+Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="667"/>
+        <location filename="../softprojector.ui" line="685"/>
         <source>Shift+Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="679"/>
+        <location filename="../softprojector.ui" line="697"/>
         <source>On / Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Увмкн. / Вмкн.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="682"/>
+        <location filename="../softprojector.ui" line="700"/>
         <source>Turn Display Screen On/Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути / Вимкнути дисплей</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4057,7 +4057,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Закрити вікно дисплею</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="646"/>
+        <location filename="../softprojector.ui" line="664"/>
         <source>Hide</source>
         <translation>Сховати</translation>
     </message>
@@ -4070,37 +4070,37 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Панель інструментів</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="351"/>
+        <location filename="../softprojector.ui" line="369"/>
         <source>&amp;About</source>
         <translation>Про &amp;програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="360"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Налаштування...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="363"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Open settings dialog</source>
         <translation>Відкрити вікно налаштувань</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="366"/>
+        <location filename="../softprojector.ui" line="384"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="375"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>E&amp;xit</source>
         <translation>Ви&amp;хід</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="378"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Exit SoftProjector</source>
         <translation>Вийти з softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="381"/>
+        <location filename="../softprojector.ui" line="399"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
@@ -4109,7 +4109,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Редагувати поточну пісню...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="517"/>
+        <location filename="../softprojector.ui" line="535"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
@@ -4118,12 +4118,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Нова &amp;пісня...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="509"/>
+        <location filename="../softprojector.ui" line="527"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="390"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>&amp;Manage Database...</source>
         <translation>Керування &amp;базами...</translation>
     </message>
@@ -4132,7 +4132,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Іпортування та експортування збірниками пісень та Біблій</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="396"/>
+        <location filename="../softprojector.ui" line="414"/>
         <source>Ctrl+M</source>
         <translation></translation>
     </message>
@@ -4141,7 +4141,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Вилучити поточну пісню</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="411"/>
+        <location filename="../softprojector.ui" line="429"/>
         <source>F1</source>
         <translation></translation>
     </message>
@@ -4154,12 +4154,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Копіювати поточну пісню до нового збірника</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="525"/>
+        <location filename="../softprojector.ui" line="543"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="420"/>
+        <location filename="../softprojector.ui" line="438"/>
         <source>Song Counter...</source>
         <translation>Лічильник пісень...</translation>
     </message>
@@ -4168,7 +4168,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Відкрити проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="432"/>
+        <location filename="../softprojector.ui" line="450"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
@@ -4177,7 +4177,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Зберегти проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="444"/>
+        <location filename="../softprojector.ui" line="462"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
@@ -4190,7 +4190,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Новий проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
+        <location filename="../softprojector.ui" line="485"/>
         <source>Ctrl+Shift+N</source>
         <translation></translation>
     </message>
@@ -4199,7 +4199,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Зачинити проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="508"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
@@ -4735,8 +4735,8 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="../songwidget.ui" line="83"/>
-        <location filename="../songwidget.cpp" line="124"/>
-        <location filename="../songwidget.cpp" line="609"/>
+        <location filename="../songwidget.cpp" line="125"/>
+        <location filename="../songwidget.cpp" line="613"/>
         <source>Filter:</source>
         <translation>Фільтр:</translation>
     </message>
@@ -4747,7 +4747,7 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="../songwidget.ui" line="113"/>
-        <location filename="../songwidget.cpp" line="559"/>
+        <location filename="../songwidget.cpp" line="563"/>
         <source>Search Type:</source>
         <translation>Тип пошуку:</translation>
     </message>
@@ -4858,8 +4858,8 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Попередній перегляд: нічого немає</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="113"/>
-        <location filename="../songwidget.cpp" line="431"/>
+        <location filename="../songwidget.cpp" line="114"/>
+        <location filename="../songwidget.cpp" line="432"/>
         <source>All songbooks</source>
         <translation>Усі збірники</translation>
     </message>
@@ -4873,40 +4873,40 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Коментарі:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="123"/>
-        <location filename="../songwidget.cpp" line="608"/>
+        <location filename="../songwidget.cpp" line="124"/>
+        <location filename="../songwidget.cpp" line="612"/>
         <source>Filter Type:</source>
         <translation>Тип фільтру:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="179"/>
+        <location filename="../songwidget.cpp" line="180"/>
         <source>Notes:</source>
         <comment>Notes to songs</comment>
         <translation>Замітки:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="265"/>
+        <location filename="../songwidget.cpp" line="266"/>
         <source>Could not find song with number </source>
         <translation>О-о, пісня з таким номером відсутня</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="266"/>
+        <location filename="../songwidget.cpp" line="267"/>
         <source>No such song</source>
         <translation>Опа, така пісня відсутня</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="465"/>
-        <location filename="../songwidget.cpp" line="480"/>
+        <location filename="../songwidget.cpp" line="469"/>
+        <location filename="../songwidget.cpp" line="484"/>
         <source>All song categories</source>
         <translation>Усі категорії</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="509"/>
+        <location filename="../songwidget.cpp" line="513"/>
         <source>Please enter search text</source>
         <translation>Будьте ласкаві, введіть текст, що бажаєте його віднайти</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="560"/>
+        <location filename="../songwidget.cpp" line="564"/>
         <source>Search:</source>
         <translation>Пошук:</translation>
     </message>
@@ -4927,19 +4927,24 @@ You may try upgrading your version of softProjector.</source>
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="../song.cpp" line="534"/>
+        <location filename="../song.cpp" line="536"/>
         <source>Num</source>
         <translation>Номер</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="536"/>
+        <location filename="../song.cpp" line="538"/>
         <source>Title</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="538"/>
+        <location filename="../song.cpp" line="540"/>
         <source>Songbook</source>
         <translation>Збірник</translation>
+    </message>
+    <message>
+        <location filename="../song.cpp" line="542"/>
+        <source>Tune</source>
+        <translation>Тональність</translation>
     </message>
 </context>
 <context>

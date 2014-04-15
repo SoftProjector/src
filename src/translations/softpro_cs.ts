@@ -41,12 +41,12 @@ Matvey Adzhigirey</translation>
     <message>
         <location filename="../aboutdialog.ui" line="310"/>
         <source>Mac Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sestavení pro OS X (Mac):</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="322"/>
         <source>Volodimir Vasuk</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="352"/>
@@ -2441,12 +2441,12 @@ verzí SoftProjectoru podporován.
     <message>
         <location filename="../managedatadialog.cpp" line="1885"/>
         <source>Error opening module list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při otevírání seznamu modulů.</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1887"/>
         <source>Failed to open mod list</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se otevřít seznam modulů</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1909"/>
@@ -3123,7 +3123,7 @@ Poznámky:
     <message>
         <location filename="../printpreviewdialog.cpp" line="151"/>
         <source>SoftProject Schedule: </source>
-        <translation type="unfinished"></translation>
+        <translation>Plán SoftProjectoru: </translation>
     </message>
     <message>
         <location filename="../printpreviewdialog.cpp" line="171"/>
@@ -3931,7 +3931,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Skrýt (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="652"/>
+        <location filename="../softprojector.ui" line="670"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -3944,12 +3944,12 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Ukázat (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="637"/>
+        <location filename="../softprojector.ui" line="655"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="163"/>
+        <location filename="../softprojector.ui" line="181"/>
         <source>Use Multi Verse</source>
         <translation>Použít více veršů</translation>
     </message>
@@ -3959,227 +3959,231 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation>Rozvrh služby:</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="160"/>
+        <location filename="../softprojector.ui" line="178"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation>Je-li vybráno, umožní vám to vybrat více veršů najednou. Bude potřeba pokaždé stisknout Ukázat.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="213"/>
+        <location filename="../softprojector.ui" line="231"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="228"/>
+        <location filename="../softprojector.ui" line="246"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="241"/>
-        <location filename="../softprojector.ui" line="405"/>
+        <location filename="../softprojector.ui" line="259"/>
+        <location filename="../softprojector.ui" line="423"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="250"/>
+        <location filename="../softprojector.ui" line="268"/>
         <source>Select Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat jazyk</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="253"/>
+        <location filename="../softprojector.ui" line="271"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="265"/>
+        <location filename="../softprojector.ui" line="283"/>
         <source>Schedule</source>
         <translation>Rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="278"/>
+        <location filename="../softprojector.ui" line="296"/>
         <source>Display Screen</source>
         <translation>Zobrazovací obrazovka</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="295"/>
+        <location filename="../softprojector.ui" line="313"/>
         <source>File Tool Bar</source>
         <translation>Nástrojový pruh pro soubor</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="309"/>
+        <location filename="../softprojector.ui" line="327"/>
         <source>Schedule Tool Bar</source>
         <translation>Nástrojový pruh pro rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="320"/>
+        <location filename="../softprojector.ui" line="338"/>
         <source>Edit Tool Bar</source>
         <translation>Nástrojový pruh pro úpravy</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="337"/>
+        <location filename="../softprojector.ui" line="355"/>
         <source>Display Control Tool Bar</source>
         <translation>Nástrojový pruh pro ovládání zobrazení</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="393"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation>Zavést a vyvést Bible, zpěvníky a motivy vzhledu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="408"/>
+        <location filename="../softprojector.ui" line="426"/>
         <source>Open Help</source>
         <translation>Otevřít nápovědu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="429"/>
+        <location filename="../softprojector.ui" line="447"/>
         <source>&amp;Open Schedule</source>
         <translation>&amp;Otevřít rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="441"/>
+        <location filename="../softprojector.ui" line="459"/>
         <source>&amp;Save Schedule</source>
         <translation>&amp;Uložit rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="449"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Save Schedule &amp;As</source>
         <translation>Uložit rozvrh &amp;jako</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="452"/>
+        <location filename="../softprojector.ui" line="470"/>
         <source>Save Schedule with different name</source>
         <translation>Uložit rozvrh pod jiným názvem</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="461"/>
+        <location filename="../softprojector.ui" line="479"/>
         <source>&amp;New Schedule</source>
         <translation>&amp;Nový rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="464"/>
+        <location filename="../softprojector.ui" line="482"/>
         <source>Start new Schedule</source>
         <translation>Začít nový rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="472"/>
-        <location filename="../softprojector.ui" line="475"/>
+        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="493"/>
         <source>Close Schedule</source>
         <translation>Zavřít rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="487"/>
+        <location filename="../softprojector.ui" line="505"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation>Vytiskne vybranou kapitolu Bible, vybranou píseň a vybrané oznámení.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="495"/>
-        <location filename="../softprojector.ui" line="498"/>
+        <location filename="../softprojector.ui" line="513"/>
+        <location filename="../softprojector.ui" line="516"/>
         <source>Print Schedule</source>
         <translation>Vytisknout rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="550"/>
+        <location filename="../softprojector.ui" line="568"/>
         <source>Add to Schedule</source>
         <translation>Přidat do rozvrhu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="553"/>
+        <location filename="../softprojector.ui" line="571"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="562"/>
+        <location filename="../softprojector.ui" line="580"/>
         <source>Remove from Schedule</source>
         <translation>Odstranit z  rozvrhu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="565"/>
-        <source>F3</source>
-        <translation>F3</translation>
+        <location filename="../softprojector.ui" line="583"/>
+        <source>Ctrl+Del</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="574"/>
+        <source>F3</source>
+        <translation type="obsolete">F3</translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="592"/>
         <source>Clear Schedule</source>
         <translation>Vyprázdnit rozvrh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="583"/>
+        <location filename="../softprojector.ui" line="601"/>
         <source>Move Item To Top</source>
         <translation>Posunout položku úplně nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="586"/>
+        <location filename="../softprojector.ui" line="604"/>
         <source>Move Schedule item to top of the list</source>
         <translation>Posunout položku rozvrhu v seznamu úplně nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="595"/>
+        <location filename="../softprojector.ui" line="613"/>
         <source>Move Item Up</source>
         <translation>Posunout položku nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="598"/>
+        <location filename="../softprojector.ui" line="616"/>
         <source>Move Schedule item up</source>
         <translation>Posunout položku rozvrhu nahoru</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="607"/>
+        <location filename="../softprojector.ui" line="625"/>
         <source>Mode Item Down</source>
         <translation>Posunout položku dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="610"/>
+        <location filename="../softprojector.ui" line="628"/>
         <source>Move Schedule item down</source>
         <translation>Posunout položku rozvrhu dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="619"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>Move Item To Bottom</source>
         <translation>Posunout položku úplně dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="622"/>
+        <location filename="../softprojector.ui" line="640"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation>Posunout položku rozvrhu v seznamu úplně dolů</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="631"/>
+        <location filename="../softprojector.ui" line="649"/>
         <source>Show</source>
         <translation>Ukázat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="634"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>Dsiplay to the screen (F4)</source>
         <translation>Zobrazit na obrazovce (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="649"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
         <translation>Ukázat pasivní obrazovku (Zastavit zobrazení na obrazovce) (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="661"/>
+        <location filename="../softprojector.ui" line="679"/>
         <source>Clear</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="664"/>
+        <location filename="../softprojector.ui" line="682"/>
         <source>Clear Display Text (Shift+Esc)</source>
         <translation>Smazat promítaný text (Shift+Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="667"/>
+        <location filename="../softprojector.ui" line="685"/>
         <source>Shift+Esc</source>
         <translation>Shift+Esc</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="679"/>
+        <location filename="../softprojector.ui" line="697"/>
         <source>On / Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnuto/Vypnuto</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="682"/>
+        <location filename="../softprojector.ui" line="700"/>
         <source>Turn Display Screen On/Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnout/Vypnout zobrazení obrazovky</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4194,7 +4198,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Zobrazit na obrazovce</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="646"/>
+        <location filename="../softprojector.ui" line="664"/>
         <source>Hide</source>
         <translation>Skrýt</translation>
     </message>
@@ -4207,7 +4211,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Nový projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="484"/>
+        <location filename="../softprojector.ui" line="502"/>
         <source>&amp;Print</source>
         <translation>&amp;Tisk</translation>
     </message>
@@ -4220,22 +4224,22 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Vytisknout projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="501"/>
+        <location filename="../softprojector.ui" line="519"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="533"/>
+        <location filename="../softprojector.ui" line="551"/>
         <source>Del</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="538"/>
+        <location filename="../softprojector.ui" line="556"/>
         <source>Donate</source>
         <translation>Darovat</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="541"/>
+        <location filename="../softprojector.ui" line="559"/>
         <source>Donate to softProjector development team</source>
         <translation>Dejte dar vývojářům softProjectoru</translation>
     </message>
@@ -4248,37 +4252,37 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Nástrojový pruh</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="351"/>
+        <location filename="../softprojector.ui" line="369"/>
         <source>&amp;About</source>
         <translation>&amp;O programu</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="360"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Nastavení...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="363"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Open settings dialog</source>
         <translation>Otevřít dialog nastavení</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="366"/>
+        <location filename="../softprojector.ui" line="384"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="375"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="378"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Exit SoftProjector</source>
         <translation>Ukončit softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="381"/>
+        <location filename="../softprojector.ui" line="399"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -4287,7 +4291,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Upravit nynější píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="517"/>
+        <location filename="../softprojector.ui" line="535"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -4296,12 +4300,12 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Nová píseň...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="509"/>
+        <location filename="../softprojector.ui" line="527"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="390"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Spravovat databázi...</translation>
     </message>
@@ -4310,7 +4314,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Zavést a vyvést sbírky písní a Biblí</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="396"/>
+        <location filename="../softprojector.ui" line="414"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
@@ -4323,7 +4327,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="411"/>
+        <location filename="../softprojector.ui" line="429"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
@@ -4336,18 +4340,18 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Kopírovat nynější píseň do nového zpěvníku</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="525"/>
+        <location filename="../softprojector.ui" line="543"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="420"/>
+        <location filename="../softprojector.ui" line="438"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Počítadlo písní...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="258"/>
+        <location filename="../softprojector.ui" line="276"/>
         <source>View</source>
         <translation>Pohled</translation>
     </message>
@@ -4356,7 +4360,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Otevřít projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="432"/>
+        <location filename="../softprojector.ui" line="450"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
@@ -4365,7 +4369,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">&amp;Uložit projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="444"/>
+        <location filename="../softprojector.ui" line="462"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -4378,7 +4382,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Nový projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
+        <location filename="../softprojector.ui" line="485"/>
         <source>Ctrl+Shift+N</source>
         <translation></translation>
     </message>
@@ -4387,7 +4391,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Zavřít projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="508"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -4927,8 +4931,8 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
     </message>
     <message>
         <location filename="../songwidget.ui" line="83"/>
-        <location filename="../songwidget.cpp" line="124"/>
-        <location filename="../songwidget.cpp" line="609"/>
+        <location filename="../songwidget.cpp" line="125"/>
+        <location filename="../songwidget.cpp" line="613"/>
         <source>Filter:</source>
         <translation>Filtr:</translation>
     </message>
@@ -4970,7 +4974,7 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
     </message>
     <message>
         <location filename="../songwidget.ui" line="113"/>
-        <location filename="../songwidget.cpp" line="559"/>
+        <location filename="../songwidget.cpp" line="563"/>
         <source>Search Type:</source>
         <translation>Typ hledání:</translation>
     </message>
@@ -5064,8 +5068,8 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="113"/>
-        <location filename="../songwidget.cpp" line="431"/>
+        <location filename="../songwidget.cpp" line="114"/>
+        <location filename="../songwidget.cpp" line="432"/>
         <source>All songbooks</source>
         <translation>Všechny zpěvníky</translation>
     </message>
@@ -5079,40 +5083,40 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
         <translation type="obsolete">Poznámky:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="123"/>
-        <location filename="../songwidget.cpp" line="608"/>
+        <location filename="../songwidget.cpp" line="124"/>
+        <location filename="../songwidget.cpp" line="612"/>
         <source>Filter Type:</source>
         <translation>Typ filtru:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="179"/>
+        <location filename="../songwidget.cpp" line="180"/>
         <source>Notes:</source>
         <comment>Notes to songs</comment>
         <translation>Bere na vědomí:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="265"/>
+        <location filename="../songwidget.cpp" line="266"/>
         <source>Could not find song with number </source>
         <translation>Číslo písně se nepodařilo najít</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="266"/>
+        <location filename="../songwidget.cpp" line="267"/>
         <source>No such song</source>
         <translation>Není žádná taková píseň</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="465"/>
-        <location filename="../songwidget.cpp" line="480"/>
+        <location filename="../songwidget.cpp" line="469"/>
+        <location filename="../songwidget.cpp" line="484"/>
         <source>All song categories</source>
         <translation>Všechny skupiny písní</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="509"/>
+        <location filename="../songwidget.cpp" line="513"/>
         <source>Please enter search text</source>
         <translation>Zadejte, prosím, hledaný text</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="560"/>
+        <location filename="../songwidget.cpp" line="564"/>
         <source>Search:</source>
         <translation>Hledat:</translation>
     </message>
@@ -5134,19 +5138,24 @@ Můžete zkusit povýšit svou verzi softProjectoru.</translation>
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="../song.cpp" line="534"/>
+        <location filename="../song.cpp" line="536"/>
         <source>Num</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="536"/>
+        <location filename="../song.cpp" line="538"/>
         <source>Title</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="538"/>
+        <location filename="../song.cpp" line="540"/>
         <source>Songbook</source>
         <translation>Zpěvník</translation>
+    </message>
+    <message>
+        <location filename="../song.cpp" line="542"/>
+        <source>Tune</source>
+        <translation>Tónina</translation>
     </message>
 </context>
 <context>

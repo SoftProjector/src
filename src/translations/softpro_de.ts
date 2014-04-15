@@ -41,12 +41,12 @@ Matvey Adzhigirey</translation>
     <message>
         <location filename="../aboutdialog.ui" line="310"/>
         <source>Mac Build:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mac Aufbau:</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="322"/>
         <source>Volodimir Vasuk</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="352"/>
@@ -2398,12 +2398,12 @@ durch aktuelle Version des softProjectors unterstützt.</translation>
     <message>
         <location filename="../managedatadialog.cpp" line="1885"/>
         <source>Error opening module list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Öffnen der Modulliste.</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1887"/>
         <source>Failed to open mod list</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen der Modulliste gescheitert</translation>
     </message>
     <message>
         <location filename="../managedatadialog.cpp" line="1909"/>
@@ -3062,7 +3062,7 @@ Notizen:
     <message>
         <location filename="../printpreviewdialog.cpp" line="151"/>
         <source>SoftProject Schedule: </source>
-        <translation type="unfinished"></translation>
+        <translation>SoftProjector Plan: </translation>
     </message>
     <message>
         <location filename="../printpreviewdialog.cpp" line="171"/>
@@ -3866,7 +3866,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Verstecken (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="652"/>
+        <location filename="../softprojector.ui" line="670"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
@@ -3879,12 +3879,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Anzeigen (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="637"/>
+        <location filename="../softprojector.ui" line="655"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="163"/>
+        <location filename="../softprojector.ui" line="181"/>
         <source>Use Multi Verse</source>
         <translation>Mehrere Verse anzeigen</translation>
     </message>
@@ -3894,257 +3894,261 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation>Serviceplan:</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="160"/>
+        <location filename="../softprojector.ui" line="178"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation>Wenn aktiviert, ermöglicht es, mehrere Verse auf einmal auswählen. Sie müssen jedes Mal die Taste &quot;Anzeigen&quot; drücken.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="213"/>
+        <location filename="../softprojector.ui" line="231"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="228"/>
+        <location filename="../softprojector.ui" line="246"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="241"/>
-        <location filename="../softprojector.ui" line="405"/>
+        <location filename="../softprojector.ui" line="259"/>
+        <location filename="../softprojector.ui" line="423"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="250"/>
+        <location filename="../softprojector.ui" line="268"/>
         <source>Select Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache wählen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="253"/>
+        <location filename="../softprojector.ui" line="271"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="258"/>
+        <location filename="../softprojector.ui" line="276"/>
         <source>View</source>
         <translation>Ansicht</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="265"/>
+        <location filename="../softprojector.ui" line="283"/>
         <source>Schedule</source>
         <translation>Plan</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="278"/>
+        <location filename="../softprojector.ui" line="296"/>
         <source>Display Screen</source>
         <translation>Bildschirm</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="295"/>
+        <location filename="../softprojector.ui" line="313"/>
         <source>File Tool Bar</source>
         <translation>Datei-Symbolleiste</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="309"/>
+        <location filename="../softprojector.ui" line="327"/>
         <source>Schedule Tool Bar</source>
         <translation>Plan-Symbolleiste</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="320"/>
+        <location filename="../softprojector.ui" line="338"/>
         <source>Edit Tool Bar</source>
         <translation>Symbolleiste bearbeiten</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="337"/>
+        <location filename="../softprojector.ui" line="355"/>
         <source>Display Control Tool Bar</source>
         <translation>Kontrolsymbolleiste-Anzeige</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="393"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation>Bibeln, Gesangbücher und Themen importieren und exportieren</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="408"/>
+        <location filename="../softprojector.ui" line="426"/>
         <source>Open Help</source>
         <translation>Hilfe öffnen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="429"/>
+        <location filename="../softprojector.ui" line="447"/>
         <source>&amp;Open Schedule</source>
         <translation>&amp;Plan öffnen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="441"/>
+        <location filename="../softprojector.ui" line="459"/>
         <source>&amp;Save Schedule</source>
         <translation>&amp;Plan speichern</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="449"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Save Schedule &amp;As</source>
         <translation>Plan speichern &amp;als</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="452"/>
+        <location filename="../softprojector.ui" line="470"/>
         <source>Save Schedule with different name</source>
         <translation>Plan unter einem anderen Namen speichern</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="461"/>
+        <location filename="../softprojector.ui" line="479"/>
         <source>&amp;New Schedule</source>
         <translation>&amp;Neuer Plan</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="464"/>
+        <location filename="../softprojector.ui" line="482"/>
         <source>Start new Schedule</source>
         <translation>Neuen Plan starten</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="472"/>
-        <location filename="../softprojector.ui" line="475"/>
+        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="493"/>
         <source>Close Schedule</source>
         <translation>Plan schließen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="484"/>
+        <location filename="../softprojector.ui" line="502"/>
         <source>&amp;Print</source>
         <translation>&amp;Drucken</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="487"/>
+        <location filename="../softprojector.ui" line="505"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation>Druckt ausgewählte Bibel-Kapitel, Lieder und Ankündigung.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="495"/>
-        <location filename="../softprojector.ui" line="498"/>
+        <location filename="../softprojector.ui" line="513"/>
+        <location filename="../softprojector.ui" line="516"/>
         <source>Print Schedule</source>
         <translation>Druckt Plan</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="501"/>
+        <location filename="../softprojector.ui" line="519"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="533"/>
+        <location filename="../softprojector.ui" line="551"/>
         <source>Del</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="538"/>
+        <location filename="../softprojector.ui" line="556"/>
         <source>Donate</source>
         <translation>Spende</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="541"/>
+        <location filename="../softprojector.ui" line="559"/>
         <source>Donate to softProjector development team</source>
         <translation>Spende für das softProjector-Entwicklungsteam</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="550"/>
+        <location filename="../softprojector.ui" line="568"/>
         <source>Add to Schedule</source>
         <translation>Zum Plan hinzufügen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="553"/>
+        <location filename="../softprojector.ui" line="571"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="562"/>
+        <location filename="../softprojector.ui" line="580"/>
         <source>Remove from Schedule</source>
         <translation>Vom Plan entfernen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="565"/>
-        <source>F3</source>
-        <translation>F3</translation>
+        <location filename="../softprojector.ui" line="583"/>
+        <source>Ctrl+Del</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="574"/>
+        <source>F3</source>
+        <translation type="obsolete">F3</translation>
+    </message>
+    <message>
+        <location filename="../softprojector.ui" line="592"/>
         <source>Clear Schedule</source>
         <translation>Plan entfernen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="583"/>
+        <location filename="../softprojector.ui" line="601"/>
         <source>Move Item To Top</source>
         <translation>Nach oben verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="586"/>
+        <location filename="../softprojector.ui" line="604"/>
         <source>Move Schedule item to top of the list</source>
         <translation>Plan in der Liste nach oben verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="595"/>
+        <location filename="../softprojector.ui" line="613"/>
         <source>Move Item Up</source>
         <translation>Nach oben verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="598"/>
+        <location filename="../softprojector.ui" line="616"/>
         <source>Move Schedule item up</source>
         <translation>Plan nach oben verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="607"/>
+        <location filename="../softprojector.ui" line="625"/>
         <source>Mode Item Down</source>
         <translation>Nach unten verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="610"/>
+        <location filename="../softprojector.ui" line="628"/>
         <source>Move Schedule item down</source>
         <translation>Plan nach unten verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="619"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>Move Item To Bottom</source>
         <translation>Nach unten verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="622"/>
+        <location filename="../softprojector.ui" line="640"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation>Plan in der Liste nach unten verschieben</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="631"/>
+        <location filename="../softprojector.ui" line="649"/>
         <source>Show</source>
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="634"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>Dsiplay to the screen (F4)</source>
         <translation>Auf dem Bildschirm anzeigen (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="649"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
         <translation>Passiven Bildschirm anzeigen (Beenden der Anzeige auf dem Bildschirm) (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="661"/>
+        <location filename="../softprojector.ui" line="679"/>
         <source>Clear</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="664"/>
+        <location filename="../softprojector.ui" line="682"/>
         <source>Clear Display Text (Shift+Esc)</source>
         <translation>Bildschirm-Text entfernen (Shift+Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="667"/>
+        <location filename="../softprojector.ui" line="685"/>
         <source>Shift+Esc</source>
         <translation>Shift+Esc</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="679"/>
+        <location filename="../softprojector.ui" line="697"/>
         <source>On / Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein / Aus</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="682"/>
+        <location filename="../softprojector.ui" line="700"/>
         <source>Turn Display Screen On/Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmanzeige ein- bzw. ausschalten</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4155,7 +4159,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Bildschirm-Fenster schließen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="646"/>
+        <location filename="../softprojector.ui" line="664"/>
         <source>Hide</source>
         <translation>Verstecken</translation>
     </message>
@@ -4168,37 +4172,37 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Symbolleiste</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="351"/>
+        <location filename="../softprojector.ui" line="369"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="360"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="363"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Open settings dialog</source>
         <translation>Einstellungen-Dialog öffnen</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="366"/>
+        <location filename="../softprojector.ui" line="384"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="375"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="378"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Exit SoftProjector</source>
         <translation>softProjector beenden</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="381"/>
+        <location filename="../softprojector.ui" line="399"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -4207,7 +4211,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Aktuelles Lied bearbeiten...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="517"/>
+        <location filename="../softprojector.ui" line="535"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
@@ -4216,12 +4220,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Neues Lied...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="509"/>
+        <location filename="../softprojector.ui" line="527"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="390"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Datenbank verwalten...</translation>
     </message>
@@ -4230,7 +4234,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Import und Export von Lieder-Sammlungen und Bibeln</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="396"/>
+        <location filename="../softprojector.ui" line="414"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
@@ -4243,7 +4247,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="411"/>
+        <location filename="../softprojector.ui" line="429"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
@@ -4256,12 +4260,12 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Lied speichern in das neue Gesangbuch</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="525"/>
+        <location filename="../softprojector.ui" line="543"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="420"/>
+        <location filename="../softprojector.ui" line="438"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Lied-Zähler...</translation>
@@ -4271,7 +4275,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Öffnen Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="432"/>
+        <location filename="../softprojector.ui" line="450"/>
         <source>Ctrl+O</source>
         <translation>Ctrl-O</translation>
     </message>
@@ -4280,7 +4284,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">&amp;Speichern Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="444"/>
+        <location filename="../softprojector.ui" line="462"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
@@ -4293,7 +4297,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Neues Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
+        <location filename="../softprojector.ui" line="485"/>
         <source>Ctrl+Shift+N</source>
         <translation>Ctrl+Shift+N</translation>
     </message>
@@ -4302,7 +4306,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Schließen Projekt</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="490"/>
+        <location filename="../softprojector.ui" line="508"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -4838,8 +4842,8 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
     </message>
     <message>
         <location filename="../songwidget.ui" line="83"/>
-        <location filename="../songwidget.cpp" line="124"/>
-        <location filename="../songwidget.cpp" line="609"/>
+        <location filename="../songwidget.cpp" line="125"/>
+        <location filename="../songwidget.cpp" line="613"/>
         <source>Filter:</source>
         <translation>Filter:</translation>
     </message>
@@ -4850,7 +4854,7 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
     </message>
     <message>
         <location filename="../songwidget.ui" line="113"/>
-        <location filename="../songwidget.cpp" line="559"/>
+        <location filename="../songwidget.cpp" line="563"/>
         <source>Search Type:</source>
         <translation>Suchart:</translation>
     </message>
@@ -4975,8 +4979,8 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="113"/>
-        <location filename="../songwidget.cpp" line="431"/>
+        <location filename="../songwidget.cpp" line="114"/>
+        <location filename="../songwidget.cpp" line="432"/>
         <source>All songbooks</source>
         <translation>Alle Gesangbücher</translation>
     </message>
@@ -4990,41 +4994,41 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
         <translation type="obsolete">Kommentare zum Lied:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="123"/>
-        <location filename="../songwidget.cpp" line="608"/>
+        <location filename="../songwidget.cpp" line="124"/>
+        <location filename="../songwidget.cpp" line="612"/>
         <source>Filter Type:</source>
         <translation>Filter-Art:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="179"/>
+        <location filename="../songwidget.cpp" line="180"/>
         <source>Notes:</source>
         <comment>Notes to songs</comment>
         <translatorcomment>Notizen für Lieder</translatorcomment>
         <translation>Notizen:</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="265"/>
+        <location filename="../songwidget.cpp" line="266"/>
         <source>Could not find song with number </source>
         <translation>Die Nummer des Liedes konnte nicht gefunden werden</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="266"/>
+        <location filename="../songwidget.cpp" line="267"/>
         <source>No such song</source>
         <translation>Dieses Lied gibt es nicht</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="465"/>
-        <location filename="../songwidget.cpp" line="480"/>
+        <location filename="../songwidget.cpp" line="469"/>
+        <location filename="../songwidget.cpp" line="484"/>
         <source>All song categories</source>
         <translation>Alle Lied-Kategorien</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="509"/>
+        <location filename="../songwidget.cpp" line="513"/>
         <source>Please enter search text</source>
         <translation>Bitte Such-Text eingeben</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="560"/>
+        <location filename="../songwidget.cpp" line="564"/>
         <source>Search:</source>
         <translation>Suche:</translation>
     </message>
@@ -5046,19 +5050,24 @@ Bitte versuchen Sie, ein Upgrade Ihrer Version von softProjector zu machen.</tra
 <context>
     <name>SongsModel</name>
     <message>
-        <location filename="../song.cpp" line="534"/>
+        <location filename="../song.cpp" line="536"/>
         <source>Num</source>
         <translation>Nr.</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="536"/>
+        <location filename="../song.cpp" line="538"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../song.cpp" line="538"/>
+        <location filename="../song.cpp" line="540"/>
         <source>Songbook</source>
         <translation>Gesangbuch</translation>
+    </message>
+    <message>
+        <location filename="../song.cpp" line="542"/>
+        <source>Tune</source>
+        <translation>Tonart</translation>
     </message>
 </context>
 <context>
