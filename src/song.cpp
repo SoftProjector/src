@@ -502,7 +502,7 @@ int SongsModel::rowCount(const QModelIndex &parent) const
 
 int SongsModel::columnCount(const QModelIndex &parent) const
 {
-    return 4;
+    return 5;
 }
 
 QVariant SongsModel::data(const QModelIndex &index, int role) const
@@ -513,14 +513,16 @@ QVariant SongsModel::data(const QModelIndex &index, int role) const
     if( role == Qt::DisplayRole )
     {
         Song song = song_list.at(index.row());
-        if( index.column() == 0 )//Category
+        if( index.column() == 0 )       //Category
             return QVariant(song.category);
-        else if( index.column() == 1 )//Song Number
+        else if( index.column() == 1 )  //Song Number
             return QVariant(song.number);
-        else if( index.column() == 2)//Song Title
+        else if( index.column() == 2)   //Song Title
             return QVariant(song.title);
-        else                        //Songbook
+        else if( index.column() == 3)   //Songbook
             return QVariant(song.getSongbookName());
+        else if( index.column() == 4)   //Tune
+            return QVariant(song.tune);
     }
     return QVariant();
 }
@@ -536,6 +538,8 @@ QVariant SongsModel::headerData(int section, Qt::Orientation orientation,int rol
             return QVariant(tr("Title"));
         case 3:
             return QVariant(tr("Songbook"));
+        case 4:
+            return QVariant(tr("Tune"));
         }
     }
     return QVariant();

@@ -40,9 +40,10 @@ SongWidget::SongWidget(QWidget *parent) :
 
     // Modify the column widths:
     ui->songs_view->setColumnWidth(0, 0);//Category
-    ui->songs_view->setColumnWidth(1, 60);//Song Number
+    ui->songs_view->setColumnWidth(1, 40);//Song Number
     ui->songs_view->setColumnWidth(2, 150);//Song Title
-    ui->songs_view->setColumnWidth(3, 70);//Songbook
+    ui->songs_view->setColumnWidth(3, 80);//Songbook
+    ui->songs_view->setColumnWidth(4, 50);//Tune
 
     proxy_model->setSongbookFilter("ALL");
     proxy_model->setCategoryFilter(-1);
