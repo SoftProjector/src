@@ -1,50 +1,91 @@
-SoftProjector 1.07 - November 9, 2012
-New: 
-	New Setting dialog:Separate background, font, font color, text alignment settings for bible, songs and announcement
-		Ability to display up to 3 versions
-		Ability to have separate version for the operator
-		Ability to set how much of screen to use 
-		Ability to show bible version abbreviations
-		Ability to select which screen to use for display
-		Ability to show song copyright information as song ending
-	Song number and date to song counter
-	Ability to add comments to songs
-Improvements:
-	Ability to remove all shadowing
-	Ability to remove showing of song ending
-	Dynamic UI translations
+Please Note: That releases from now on will not include pre-build database. SoftProjector will create database if one does not exist. Also softProjector 2 will not work with older databases that came with 1.07 and earlier. 
+
+SoftProjector 2.0 - Beta
+New:
+	Added "Tune" column to song view
+Improved:
+	Updated UI translations
+	Changed shortcut for "Remove from schedule" from "F3" to "Ctrl+Del"
+	Removed "@$" and "@%" charechters from song text
+	Removed auto play from media
+	Modified "Close Display Screen" to Turn display screen On/Off
 Bug Fixes:
-	Song text overlapping song key/number 
-	Excessive song shrinking when using song ending "* * *"
-	Program crash when creating/opening project 
-	Automatic file extension if not already exist when saving files (know to Linux systems)
+	Improper deleting when "Delete" action pressed when schedule item was viewed.
+	Code improvement for Unix/Linux phonon libraries
+	Initial screen geometry on Linux
+	Sending bible to schedule with no bible loaded
+	Printing Marings with UI tranlations
+
+SoftProjector 2.0 - Alpha
+New: Service Schedule, includes Bible verses, songs, sideshows, media and announcements. (replacement for project)
+Removed: song playlist (now part of schedule)
+Improved: Song ending alignment in settings
+New: Settings for Bible: font, color, alignment for caption
+New: Settings for Songs: font, color, alignment for song info(key, verse, song number). 
+New: Settings for Songs: fort, color, type for song ending.
+Improved: Render logic
+Rework: themes from xml to sqlite format
+Update: songbook export format
+Improved: background images are saved in settings instead of its origin location
+New: Picture slide show settings
+Bug Fix: Picture preview window
+Improved/Bug fix: For installed on windows, database file will be saved in shared folder for all user
+New: Download and import from online Bibles, Songs, Themes. (Need to solve server/hosting issue)
+Bug Fix: last Song/Picture/Announcement delete in the list
+Improved: open all supported image formats for backgrounds
+Bug Fix: media player crash
+New: Display screen control buttons now include close screen/show no text(on active background)
+NOTE: Not all additions/improvements/bug fixes may be included in the list above
+
+SoftProjector 2.0 - Development Build 5 (2db5) 
+Improved: Faster Bible text search with more search options
+Improved: Faster Bible chapter lookup
+Improved: Added ability to save Announcement in database
+Improved: Multi Slide announcements
+Bug Fix: Language translation and Help Dialog loading
+New: Picture Slide Show
+New: Video/Music Player **
+Bug Fix: Bible search double click issue (bug ticket #6)
+
+** Multimedia playback will depend on the back-end codecs installed on the computer. 
+
+SoftProjector 2.0 - Development Build 4 (2db4) 
+New: Themes
+Improved: Song search to handle properly non Alphanumeric characters
+Improved: Can handle non Alphanumeric characters in song titles
+Improved: Presentation contol shortcuts w/wo usb-presentors*
+Bug Fix: SongCounter number sorting
+Bug Fix/New: Check for proper database version before it starts the softProjector
+Bug Fix: Printing of Song copyright info
+
+* Support for Usb-Presentors works partially. It may or may not work depending on the usb presenter. Following button from should work, next/previous slide and stop(pause/hide) button.
+
+SoftProjector 2.0 - Development Build 3 (2db3) 
+Improved full song text search
+
+SoftProjector 2.0 - Development Build 2 (2db2) 
+Support for two separate display screens
+
+SoftProjector 2.0 - Development Build 1 
+New:
+	New SongBook format
+	Added private song settings.
+	Full-text song search
+	Printing:
+		Current preview song & edited song
+		Current preview Bible chapter
+		Announcement list
+		Project (Bible histories, Song playlist, Announcement list)
+	Display Screen controls 
+	Few shortcuts to control next/previous slides(PageUp/PageDown/Enter/Return/Arrow(Up/Down/Right/Left))
+		
+Improvements:
+	Faster load/import/export/delete of songbooks
+	User Friendly projection when only one monitor is available
+Bug Fix:
+	When new/copy/edit song, Is_song_being_edited validation
 
 -----
 NOTE:
-If upgrading from version 1.06 or earlier, you need to udate the database too.
-A note about upgrading to softProjector 1.04 from earlier versions. This release will not import any Bible that were exported or provided by our developers and it will not import any Bibles download form http://www.unboundbible.org/. There was a data format changed and all Bibles including from http://www.unboundbible.org/ are available from our Bible module download page.
-
-All songbooks exported from previous releases of softProjector will be imported by softProjector 1.04
-
-
-----
-To Upgrade
-1. Export all songbooks 
-1. Go to Edit>ManageDatabase 
-2. Select Songbooks tab 
-3. Select one by one all songbooks you have created and/or changed and export them. Songbooks that are offered be updated by downloading latest from Songbook module download page. 
-2. Download upgrade version of softSprojector (comes with empty database) 
-3. Download Bibles that will be used 
-4. Download any additional songbook will be used 
-5. If downloaded an installer, run it. It will replace and update all file in the ProgramFiles folder for softProjecor. 
-6. if downloaded a portable version, extract all file in know location. 
-7. Extract Bibles and songbook into the folder from downloaded zip archives. 
-
-
-Once you have downloaded and extracted all Bibles or songbooks, you are ready to import data.
-
-Importing data
-1. Open Manage Database Dialog. Edit>Manage Database 
-2. Click on Import button. (To import Bibles, use Bibles tab, for songbooks, use Songbooks tab) 
-3. Select the file you want to import and click open 
-4. Repeat steps 2 and 3 for any additional Bibles or songbooks that needs to be imported. 
+This is development release. May have serious bug. If any found, please report on bug tracker including build version.
+This release is for testing only.

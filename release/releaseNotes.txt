@@ -1,0 +1,120 @@
+SoftProjector 2.0 - 
+New:
+	New SongBook format(Sqlite3)
+	Added private song settings.
+	Full-text song search
+	Printing:
+		Current preview song & edited song
+		Current preview Bible chapter
+	Display Screen controls 
+	Few shortcuts to control next/previous slides(Enter/Return/Arrow(Up/Down/Right/Left)/PageUp/PageDown)
+	Support for usb-presentor controls*
+	Support for two separate display screens
+	Themes
+	Picture Slide Show
+	Video/Music Player **
+	Multi slide Announcements
+	Service Schedule, includes Bible verses, songs, sideshows, media and announcements. (replacement for project)
+	Separate font/color/alignment for Bible captions
+	Separate font/color/alignment for Song Info(key/tune, verse, song number)
+	Separate font/color/alignment/type for Song Ending
+	Download and import from online Bibles, Songs, Themes.
+	Display screen control buttons now also include "Screen On/Off" and "Show no text"(on active background)
+	Added "Tune" column to song view
+	
+* Support for Usb-Presentors works partially. It may or may not work depending on the usb presenter. Following button from should work, next/previous slide and hide button.
+
+** Multimedia playback will depend on the back-end codecs installed on the computer. 
+
+Improvements:
+	Faster load/import/export/delete of songbooks
+	User Friendly projection when only one monitor is available
+	Text Effects are set separately for Bible/Songs/Announcements
+	Can handle non Alphanumeric characters in song titles
+	Faster Bible text search with more search options
+	Faster Bible chapter lookup
+	Added ability to save Announcements in database
+	Removed song playlist (now part of schedule)
+	Background images are saved in settings instead of its origin location
+	Rendering logic
+	Open all supported image formats for backgrounds
+	
+Bug Fix:
+	When new/copy/edit song, Is_song_being_edited validation
+	If text color selection was cancelled, it used to return "black" color
+	SongCounter number sorting
+	Check for proper database version before it starts the softProjector
+	Bible search double click issue (bug ticket #6)
+	For installed on windows, database file will be saved in shared folder for all user
+	Last Song/Picture/Announcement delete in the list
+	
+NOTE: Not all additions/improvements/bug fixes may be included in the list above
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+SoftProjector 1.07 - November 9, 2012
+New: 
+	New Setting dialog:Separate background, font, font color, text alignment settings for bible, songs and announcement
+		Ability to display up to 3 versions
+		Ability to have separate version for the operator
+		Ability to set how much of screen to use 
+		Ability to show bible version abbreviations
+		Ability to select which screen to use for display
+		Ability to show song copyright information as song ending
+	Song number and date to song counter
+	Ability to add comments to songs
+Improvements:
+	Ability to remove all shadowing
+	Ability to remove showing of song ending
+	Dynamic UI translations
+Bug Fixes:
+	Song text overlapping song key/number 
+	Excessive song shrinking when using song ending "* * *"
+	Program crash when creating/opening project 
+	Automatic file extension if not already exist when saving files (know to Linux systems)
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+		
+SoftProjector 1.06 - December 30, 2011
+	New:
+		Added ability to display multiple Bible verses.
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+		
+SoftProjector 1.05 - November 23, 2011
+    New:
+        Song categories
+        Added Toolbar
+        Save and open SoftProjector projects (Bible history items, playlist songs, and announcements)
+        Added Ukrainian, German, And Czech song stanza titles
+    Bug Fix:
+        Faster song table refresh when adding/deleting/copping songs.
+        Only one song at a time can be edited. Previously you could start a new song edit/create new song/copy a song, when another song was been edited.
+        Properly update song information in the playlist after song has been edited.
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+		
+SoftProjector 1.04 - April 7, 2011
+
+    New:
+        Bible information dialog that includes additional Bible information besides the name
+        Display screen can be shown either to the right or left of the primary monitor (previously only to the right)
+    Bug Fix:
+        Program crash when table information changed (applies to songs table, playlist table, and song counter table)
+        Program crash when exiting with no Bibles
+        Cleaner layout on Mac OS X
+    Improvements
+        Faster bible search
+        Unlimited search results (previously only 280)
+        Smaller database size
+        Added ability to set 'Desktop window always on top' without restarting
+
+
+New:
+Bible information dialog that includes additional Bible informaiton besides the name
+Display screen can be shown either to the right or left of the primary monitor (prevously only to the right)
+
