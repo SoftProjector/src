@@ -644,3 +644,18 @@ QString BibleSettingWidget::getFontText(QFont font)
 
     return st;
 }
+
+void BibleSettingWidget::on_pushButtonApplyToAll_clicked()
+{
+    emit applyBackToAll(1,mySettings.backgroundName,mySettings.background);
+}
+
+void BibleSettingWidget::setBackgroungds(QString name, QPixmap back)
+{
+    mySettings.backgroundName = name;
+    mySettings.background = back;
+    mySettings2.backgroundName = name;
+    mySettings2.background = back;
+    ui->lineEditBackPath->setText(name);
+    ui->lineEditBackPath2->setText(name);
+}

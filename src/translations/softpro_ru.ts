@@ -295,63 +295,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>AnnouncementSettingWidget</name>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="20"/>
-        <location filename="../announcementsettingwidget.ui" line="395"/>
+        <location filename="../announcementsettingwidget.ui" line="17"/>
+        <location filename="../announcementsettingwidget.ui" line="403"/>
         <source>Effects</source>
         <translation>Эфекты</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="26"/>
-        <location filename="../announcementsettingwidget.ui" line="401"/>
+        <location filename="../announcementsettingwidget.ui" line="23"/>
+        <location filename="../announcementsettingwidget.ui" line="409"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
         <translation>Плавное затухание при переходе с одного стиха на другой.</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="29"/>
-        <location filename="../announcementsettingwidget.ui" line="404"/>
+        <location filename="../announcementsettingwidget.ui" line="26"/>
+        <location filename="../announcementsettingwidget.ui" line="412"/>
         <source>Use fading effects</source>
         <translation>Эффект затухания</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="36"/>
-        <location filename="../announcementsettingwidget.ui" line="49"/>
-        <location filename="../announcementsettingwidget.ui" line="411"/>
-        <location filename="../announcementsettingwidget.ui" line="424"/>
+        <location filename="../announcementsettingwidget.ui" line="33"/>
+        <location filename="../announcementsettingwidget.ui" line="46"/>
+        <location filename="../announcementsettingwidget.ui" line="419"/>
+        <location filename="../announcementsettingwidget.ui" line="432"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
         <translation>Полезно при использовании фоновых рисунков. Получаются интересные теневые эффекты.</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="39"/>
-        <location filename="../announcementsettingwidget.ui" line="414"/>
+        <location filename="../announcementsettingwidget.ui" line="36"/>
+        <location filename="../announcementsettingwidget.ui" line="422"/>
         <source>Use shadow</source>
         <translation>Использовать тени</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="52"/>
-        <location filename="../announcementsettingwidget.ui" line="427"/>
+        <location filename="../announcementsettingwidget.ui" line="49"/>
+        <location filename="../announcementsettingwidget.ui" line="435"/>
         <source>Use blurred shadow</source>
         <translation>Размытая тень</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="62"/>
-        <location filename="../announcementsettingwidget.ui" line="474"/>
+        <location filename="../announcementsettingwidget.ui" line="59"/>
+        <location filename="../announcementsettingwidget.ui" line="482"/>
         <source>Use Background Image</source>
         <translation>Использовать рисунок фона</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="78"/>
-        <location filename="../announcementsettingwidget.ui" line="490"/>
+        <location filename="../announcementsettingwidget.ui" line="75"/>
+        <location filename="../announcementsettingwidget.ui" line="498"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="96"/>
-        <location filename="../announcementsettingwidget.ui" line="545"/>
+        <location filename="../announcementsettingwidget.ui" line="82"/>
+        <source>Apply this background to all active backgrounds.</source>
+        <translation>Применить этот фон ко всем активным фоном.</translation>
+    </message>
+    <message>
+        <location filename="../announcementsettingwidget.ui" line="104"/>
+        <location filename="../announcementsettingwidget.ui" line="553"/>
         <source>Color...</source>
         <translation>Цвет...</translation>
     </message>
@@ -368,44 +372,44 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Горизонтальное:</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="164"/>
-        <location filename="../announcementsettingwidget.ui" line="613"/>
+        <location filename="../announcementsettingwidget.ui" line="172"/>
+        <location filename="../announcementsettingwidget.ui" line="621"/>
         <source>Top</source>
         <translation>Верх</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="169"/>
-        <location filename="../announcementsettingwidget.ui" line="618"/>
+        <location filename="../announcementsettingwidget.ui" line="177"/>
+        <location filename="../announcementsettingwidget.ui" line="626"/>
         <source>Middle</source>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="174"/>
-        <location filename="../announcementsettingwidget.ui" line="623"/>
+        <location filename="../announcementsettingwidget.ui" line="182"/>
+        <location filename="../announcementsettingwidget.ui" line="631"/>
         <source>Bottom</source>
         <translation>Нижний</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="183"/>
-        <location filename="../announcementsettingwidget.ui" line="632"/>
+        <location filename="../announcementsettingwidget.ui" line="191"/>
+        <location filename="../announcementsettingwidget.ui" line="640"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="188"/>
-        <location filename="../announcementsettingwidget.ui" line="637"/>
+        <location filename="../announcementsettingwidget.ui" line="196"/>
+        <location filename="../announcementsettingwidget.ui" line="645"/>
         <source>Center</source>
         <translation>Центр</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="193"/>
-        <location filename="../announcementsettingwidget.ui" line="642"/>
+        <location filename="../announcementsettingwidget.ui" line="201"/>
+        <location filename="../announcementsettingwidget.ui" line="650"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="88"/>
-        <location filename="../announcementsettingwidget.ui" line="537"/>
+        <location filename="../announcementsettingwidget.ui" line="96"/>
+        <location filename="../announcementsettingwidget.ui" line="545"/>
         <source>Text Properties</source>
         <translation>Свойства текста</translation>
     </message>
@@ -418,25 +422,25 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Выбрать цвет...</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="132"/>
-        <location filename="../announcementsettingwidget.ui" line="581"/>
+        <location filename="../announcementsettingwidget.ui" line="140"/>
+        <location filename="../announcementsettingwidget.ui" line="589"/>
         <source>Font...</source>
         <oldsource>Font</oldsource>
         <translation>Шрифт...</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="156"/>
-        <location filename="../announcementsettingwidget.ui" line="605"/>
+        <location filename="../announcementsettingwidget.ui" line="164"/>
+        <location filename="../announcementsettingwidget.ui" line="613"/>
         <source>Alignment:</source>
         <translation>Выровнять к:</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="337"/>
+        <location filename="../announcementsettingwidget.ui" line="345"/>
         <source>Use Separate Secondary Display Screen Settings</source>
         <translation>Особые настройки для дополнительного экрана</translation>
     </message>
     <message>
-        <location filename="../announcementsettingwidget.ui" line="686"/>
+        <location filename="../announcementsettingwidget.ui" line="694"/>
         <source>Reset All To Default</source>
         <translation>Сбросить на умолчания</translation>
     </message>
@@ -510,133 +514,137 @@ Copyright:</source>
 <context>
     <name>BibleSettingWidget</name>
     <message>
-        <location filename="../biblesettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="31"/>
-        <location filename="../biblesettingwidget.ui" line="670"/>
+        <location filename="../biblesettingwidget.ui" line="28"/>
+        <location filename="../biblesettingwidget.ui" line="678"/>
         <source>Primary Bible:</source>
         <translation>Первая Библия:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="51"/>
-        <location filename="../biblesettingwidget.ui" line="690"/>
+        <location filename="../biblesettingwidget.ui" line="48"/>
+        <location filename="../biblesettingwidget.ui" line="698"/>
         <source>Secondary Bible:</source>
         <translation>Вторая Библия:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="71"/>
-        <location filename="../biblesettingwidget.ui" line="710"/>
+        <location filename="../biblesettingwidget.ui" line="68"/>
+        <location filename="../biblesettingwidget.ui" line="718"/>
         <source>Trinary Bible:</source>
         <translation>Третья Библия:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="91"/>
+        <location filename="../biblesettingwidget.ui" line="88"/>
         <source>Operator Screen Bible:</source>
         <translation>Библия оператора:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="107"/>
+        <location filename="../biblesettingwidget.ui" line="104"/>
         <source>This bible version will be used for the operator to select verses and search bible</source>
         <translation>Эта версия Библии используется оператором для выбора и поиска стихов</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="116"/>
-        <location filename="../biblesettingwidget.ui" line="770"/>
+        <location filename="../biblesettingwidget.ui" line="113"/>
+        <location filename="../biblesettingwidget.ui" line="778"/>
         <source>Effects</source>
         <translation>Эфекты</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="122"/>
-        <location filename="../biblesettingwidget.ui" line="776"/>
+        <location filename="../biblesettingwidget.ui" line="119"/>
+        <location filename="../biblesettingwidget.ui" line="784"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
         <translation>Плавное затухание при переходе с одного стиха на другой.</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="125"/>
-        <location filename="../biblesettingwidget.ui" line="779"/>
+        <location filename="../biblesettingwidget.ui" line="122"/>
+        <location filename="../biblesettingwidget.ui" line="787"/>
         <source>Use fading effects</source>
         <translation>Эффект затухания</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="132"/>
-        <location filename="../biblesettingwidget.ui" line="145"/>
-        <location filename="../biblesettingwidget.ui" line="786"/>
-        <location filename="../biblesettingwidget.ui" line="799"/>
+        <location filename="../biblesettingwidget.ui" line="129"/>
+        <location filename="../biblesettingwidget.ui" line="142"/>
+        <location filename="../biblesettingwidget.ui" line="794"/>
+        <location filename="../biblesettingwidget.ui" line="807"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
         <translation>Полезно при использовании фоновых рисунков. Получаются интересные теневые эффекты.</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="135"/>
-        <location filename="../biblesettingwidget.ui" line="789"/>
+        <location filename="../biblesettingwidget.ui" line="132"/>
+        <location filename="../biblesettingwidget.ui" line="797"/>
         <source>Use shadow</source>
         <translation>Использовать тени</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="148"/>
-        <location filename="../biblesettingwidget.ui" line="802"/>
+        <location filename="../biblesettingwidget.ui" line="145"/>
+        <location filename="../biblesettingwidget.ui" line="810"/>
         <source>Use blurred shadow</source>
         <translation>Размытая тень</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="158"/>
-        <location filename="../biblesettingwidget.ui" line="849"/>
+        <location filename="../biblesettingwidget.ui" line="155"/>
+        <location filename="../biblesettingwidget.ui" line="857"/>
         <source>Use Background Image</source>
         <translation>Использовать рисунок фона</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="174"/>
-        <location filename="../biblesettingwidget.ui" line="865"/>
+        <location filename="../biblesettingwidget.ui" line="171"/>
+        <location filename="../biblesettingwidget.ui" line="873"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="192"/>
-        <location filename="../biblesettingwidget.ui" line="323"/>
-        <location filename="../biblesettingwidget.ui" line="920"/>
-        <location filename="../biblesettingwidget.ui" line="1088"/>
+        <location filename="../biblesettingwidget.ui" line="178"/>
+        <source>Apply this background to all active backgrounds.</source>
+        <translation>Применить этот фон ко всем активным фоном.</translation>
+    </message>
+    <message>
+        <location filename="../biblesettingwidget.ui" line="200"/>
+        <location filename="../biblesettingwidget.ui" line="331"/>
+        <location filename="../biblesettingwidget.ui" line="928"/>
+        <location filename="../biblesettingwidget.ui" line="1096"/>
         <source>Color...</source>
         <translation>Цвет...</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="463"/>
-        <location filename="../biblesettingwidget.ui" line="1265"/>
+        <location filename="../biblesettingwidget.ui" line="471"/>
+        <location filename="../biblesettingwidget.ui" line="1273"/>
         <source>Amount of screen to use:</source>
         <translation>Размер используемого экрана:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="470"/>
-        <location filename="../biblesettingwidget.ui" line="1272"/>
+        <location filename="../biblesettingwidget.ui" line="478"/>
+        <location filename="../biblesettingwidget.ui" line="1280"/>
         <source>Percent of screen to be used.</source>
         <translation>Размер используемого экрана.</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="490"/>
-        <location filename="../biblesettingwidget.ui" line="1292"/>
+        <location filename="../biblesettingwidget.ui" line="498"/>
+        <location filename="../biblesettingwidget.ui" line="1300"/>
         <source>Select to use either top portion of the screen or bottom.</source>
         <translatorcomment>а я и дом мой будем...</translatorcomment>
         <translation>Выберете ныне себе, какую часть экрана использовать.</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="494"/>
-        <location filename="../biblesettingwidget.ui" line="1296"/>
+        <location filename="../biblesettingwidget.ui" line="502"/>
+        <location filename="../biblesettingwidget.ui" line="1304"/>
         <source>Top of Screen</source>
         <translation>Вверху экрана</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="499"/>
+        <location filename="../biblesettingwidget.ui" line="507"/>
         <source>Botton of Screen</source>
         <translation>Внизу экрана</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="643"/>
+        <location filename="../biblesettingwidget.ui" line="651"/>
         <source>Use Separate Secondary Display Screen Settings</source>
         <translation>Особые настройки для дополнительного экрана</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="1301"/>
+        <location filename="../biblesettingwidget.ui" line="1309"/>
         <source>Bottom of Screen</source>
         <translation>Внизу экрана</translation>
     </message>
@@ -649,20 +657,20 @@ Copyright:</source>
         <translation type="obsolete">Вертикальное:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="260"/>
-        <location filename="../biblesettingwidget.ui" line="988"/>
+        <location filename="../biblesettingwidget.ui" line="268"/>
+        <location filename="../biblesettingwidget.ui" line="996"/>
         <source>Top</source>
         <translation>Верх</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="265"/>
-        <location filename="../biblesettingwidget.ui" line="993"/>
+        <location filename="../biblesettingwidget.ui" line="273"/>
+        <location filename="../biblesettingwidget.ui" line="1001"/>
         <source>Middle</source>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="270"/>
-        <location filename="../biblesettingwidget.ui" line="998"/>
+        <location filename="../biblesettingwidget.ui" line="278"/>
+        <location filename="../biblesettingwidget.ui" line="1006"/>
         <source>Bottom</source>
         <translation>Нижний</translation>
     </message>
@@ -671,32 +679,32 @@ Copyright:</source>
         <translation type="obsolete">Горизонтальное:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="279"/>
-        <location filename="../biblesettingwidget.ui" line="412"/>
-        <location filename="../biblesettingwidget.ui" line="1007"/>
-        <location filename="../biblesettingwidget.ui" line="1177"/>
+        <location filename="../biblesettingwidget.ui" line="287"/>
+        <location filename="../biblesettingwidget.ui" line="420"/>
+        <location filename="../biblesettingwidget.ui" line="1015"/>
+        <location filename="../biblesettingwidget.ui" line="1185"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="284"/>
-        <location filename="../biblesettingwidget.ui" line="417"/>
-        <location filename="../biblesettingwidget.ui" line="1012"/>
-        <location filename="../biblesettingwidget.ui" line="1182"/>
+        <location filename="../biblesettingwidget.ui" line="292"/>
+        <location filename="../biblesettingwidget.ui" line="425"/>
+        <location filename="../biblesettingwidget.ui" line="1020"/>
+        <location filename="../biblesettingwidget.ui" line="1190"/>
         <source>Center</source>
         <translation>Центр</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="289"/>
-        <location filename="../biblesettingwidget.ui" line="422"/>
-        <location filename="../biblesettingwidget.ui" line="1017"/>
-        <location filename="../biblesettingwidget.ui" line="1187"/>
+        <location filename="../biblesettingwidget.ui" line="297"/>
+        <location filename="../biblesettingwidget.ui" line="430"/>
+        <location filename="../biblesettingwidget.ui" line="1025"/>
+        <location filename="../biblesettingwidget.ui" line="1195"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="184"/>
-        <location filename="../biblesettingwidget.ui" line="912"/>
+        <location filename="../biblesettingwidget.ui" line="192"/>
+        <location filename="../biblesettingwidget.ui" line="920"/>
         <source>Text Properties</source>
         <translation>Свойства текста</translation>
     </message>
@@ -709,57 +717,57 @@ Copyright:</source>
         <translation type="obsolete">Изменить цвет...</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="228"/>
-        <location filename="../biblesettingwidget.ui" line="359"/>
-        <location filename="../biblesettingwidget.ui" line="956"/>
-        <location filename="../biblesettingwidget.ui" line="1124"/>
+        <location filename="../biblesettingwidget.ui" line="236"/>
+        <location filename="../biblesettingwidget.ui" line="367"/>
+        <location filename="../biblesettingwidget.ui" line="964"/>
+        <location filename="../biblesettingwidget.ui" line="1132"/>
         <source>Font...</source>
         <oldsource>Font</oldsource>
         <translation>Шрифт...</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="252"/>
-        <location filename="../biblesettingwidget.ui" line="404"/>
-        <location filename="../biblesettingwidget.ui" line="980"/>
-        <location filename="../biblesettingwidget.ui" line="1169"/>
+        <location filename="../biblesettingwidget.ui" line="260"/>
+        <location filename="../biblesettingwidget.ui" line="412"/>
+        <location filename="../biblesettingwidget.ui" line="988"/>
+        <location filename="../biblesettingwidget.ui" line="1177"/>
         <source>Alignment:</source>
         <translation>Выровнять к:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="315"/>
-        <location filename="../biblesettingwidget.ui" line="1080"/>
+        <location filename="../biblesettingwidget.ui" line="323"/>
+        <location filename="../biblesettingwidget.ui" line="1088"/>
         <source>Caption Properties</source>
         <translation>Свойства оглавления</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="383"/>
-        <location filename="../biblesettingwidget.ui" line="483"/>
-        <location filename="../biblesettingwidget.ui" line="1148"/>
-        <location filename="../biblesettingwidget.ui" line="1285"/>
+        <location filename="../biblesettingwidget.ui" line="391"/>
+        <location filename="../biblesettingwidget.ui" line="491"/>
+        <location filename="../biblesettingwidget.ui" line="1156"/>
+        <location filename="../biblesettingwidget.ui" line="1293"/>
         <source>Position:</source>
         <translation>Положение:</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="391"/>
-        <location filename="../biblesettingwidget.ui" line="1156"/>
+        <location filename="../biblesettingwidget.ui" line="399"/>
+        <location filename="../biblesettingwidget.ui" line="1164"/>
         <source>Above Text</source>
         <translation>Перед текстом</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="396"/>
-        <location filename="../biblesettingwidget.ui" line="1161"/>
+        <location filename="../biblesettingwidget.ui" line="404"/>
+        <location filename="../biblesettingwidget.ui" line="1169"/>
         <source>Below Text</source>
         <translation>После текста</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="448"/>
-        <location filename="../biblesettingwidget.ui" line="1213"/>
+        <location filename="../biblesettingwidget.ui" line="456"/>
+        <location filename="../biblesettingwidget.ui" line="1221"/>
         <source>Show Bible Version Abbriviation</source>
         <translation>Показывать абревиатуру Библии</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="455"/>
-        <location filename="../biblesettingwidget.ui" line="1257"/>
+        <location filename="../biblesettingwidget.ui" line="463"/>
+        <location filename="../biblesettingwidget.ui" line="1265"/>
         <source>Amount Of Screen To Use</source>
         <oldsource>Amount Of Sceen To Use</oldsource>
         <translation>Размер используемого экрана</translation>
@@ -791,7 +799,7 @@ Copyright:</source>
         <translation type="obsolete">По нижнему краю</translation>
     </message>
     <message>
-        <location filename="../biblesettingwidget.ui" line="1345"/>
+        <location filename="../biblesettingwidget.ui" line="1353"/>
         <source>Reset All To Default</source>
         <translation>Сбросить на умолчания</translation>
     </message>
@@ -1732,132 +1740,131 @@ Verse 2
 <context>
     <name>GeneralSettingWidget</name>
     <message>
-        <location filename="../generalsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="20"/>
+        <location filename="../generalsettingwidget.ui" line="17"/>
         <source>If checked, the screen &quot;window&quot; is always drawn on top of other windows. This prevents the user from accidently drawing a window onto the projector&apos;s screen.</source>
         <translation>Окно экрана сверху других окон (требуется перезапуск программы). Эта опция предохраняет от случайного вывода информации на экран.</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="23"/>
+        <location filename="../generalsettingwidget.ui" line="20"/>
         <source>Display window always on top</source>
         <translation>Окно экрана всегда сверху</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="32"/>
+        <location filename="../generalsettingwidget.ui" line="29"/>
         <source>Theme:</source>
         <translation>Тема:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="49"/>
+        <location filename="../generalsettingwidget.ui" line="46"/>
         <source>Add New Theme</source>
         <translation>Добавить новую тему</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="68"/>
+        <location filename="../generalsettingwidget.ui" line="65"/>
         <source>Primary Display Screen:</source>
         <translation>Главный экран:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="104"/>
+        <location filename="../generalsettingwidget.ui" line="101"/>
         <source>Secondary Display Screen:</source>
         <translation>Дополнителный экран:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="143"/>
+        <location filename="../generalsettingwidget.ui" line="140"/>
         <source>Primary Display Screen Controls</source>
         <translation>Клавиши управление основным экраном</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="151"/>
+        <location filename="../generalsettingwidget.ui" line="148"/>
         <source>Button Size:</source>
         <translation>Размер клавиш:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="159"/>
+        <location filename="../generalsettingwidget.ui" line="156"/>
         <source>16x16</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="164"/>
+        <location filename="../generalsettingwidget.ui" line="161"/>
         <source>24x24</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="169"/>
+        <location filename="../generalsettingwidget.ui" line="166"/>
         <source>32x32</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="174"/>
+        <location filename="../generalsettingwidget.ui" line="171"/>
         <source>48x48</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="179"/>
+        <location filename="../generalsettingwidget.ui" line="176"/>
         <source>64x64</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="184"/>
+        <location filename="../generalsettingwidget.ui" line="181"/>
         <source>96x96</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="205"/>
+        <location filename="../generalsettingwidget.ui" line="202"/>
         <source>Alignment:</source>
         <translation>Выровнять к:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="213"/>
+        <location filename="../generalsettingwidget.ui" line="210"/>
         <source>Top</source>
         <translation>Верх</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="218"/>
+        <location filename="../generalsettingwidget.ui" line="215"/>
         <source>Middle</source>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="223"/>
+        <location filename="../generalsettingwidget.ui" line="220"/>
         <source>Bottom</source>
         <translation>Нижний</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="232"/>
+        <location filename="../generalsettingwidget.ui" line="229"/>
         <source>Left</source>
         <translation>По левому краю</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="237"/>
+        <location filename="../generalsettingwidget.ui" line="234"/>
         <source>Center</source>
         <translation>По центру</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="242"/>
+        <location filename="../generalsettingwidget.ui" line="239"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="254"/>
+        <location filename="../generalsettingwidget.ui" line="251"/>
         <source>Opacity:</source>
         <translation>Прозрачность:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="261"/>
+        <location filename="../generalsettingwidget.ui" line="258"/>
         <source>Transparent</source>
         <translation>Прозрачный</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="278"/>
+        <location filename="../generalsettingwidget.ui" line="275"/>
         <source>Opaque</source>
         <translation>темный</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="287"/>
+        <location filename="../generalsettingwidget.ui" line="284"/>
         <source>NOTE: Display screen controls will be visible on the primary display screen only when one monitor is avaliable.</source>
         <translation>Обратите внимание, что клавиши управления экраном будуть видимы на основном экране только если один монитор используеться.</translation>
     </message>
@@ -1890,7 +1897,7 @@ Verse 2
         <translation type="obsolete">Обзор...</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="62"/>
+        <location filename="../generalsettingwidget.ui" line="59"/>
         <source>Display Screen Selection</source>
         <translation>Выбрать экран</translation>
     </message>
@@ -1899,8 +1906,8 @@ Verse 2
         <translation type="obsolete">Экран:</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="84"/>
-        <location filename="../generalsettingwidget.ui" line="120"/>
+        <location filename="../generalsettingwidget.ui" line="81"/>
+        <location filename="../generalsettingwidget.ui" line="117"/>
         <source>Select onto which screen to dispaly</source>
         <translation>Выбор экрана для отображения</translation>
     </message>
@@ -1922,7 +1929,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600; color:#ff0000;&quot;&gt;ОБРАТИТЕ ВНИМАНИЕ:&lt;/span&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Опция выбора экрана в разработке.&lt;br /&gt;Смена номер экрана позволяет задать рабочий стол,&lt;br /&gt;на который будет выводиться изображение&lt;br /&gt;В Windows рабочие столы в порядке слева направо&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../generalsettingwidget.ui" line="315"/>
+        <location filename="../generalsettingwidget.ui" line="312"/>
         <source>Reset All To Default</source>
         <translation>Сбросить все на умолчания</translation>
     </message>
@@ -2713,29 +2720,28 @@ Has been saved to:
 <context>
     <name>PassiveSettingWidget</name>
     <message>
-        <location filename="../passivesettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.ui" line="20"/>
-        <location filename="../passivesettingwidget.ui" line="195"/>
+        <location filename="../passivesettingwidget.ui" line="17"/>
+        <location filename="../passivesettingwidget.ui" line="192"/>
         <source>Use Passive Background Image</source>
         <translation>Использовать пасивный фон</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.ui" line="36"/>
-        <location filename="../passivesettingwidget.ui" line="211"/>
+        <location filename="../passivesettingwidget.ui" line="33"/>
+        <location filename="../passivesettingwidget.ui" line="208"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.ui" line="137"/>
+        <location filename="../passivesettingwidget.ui" line="134"/>
         <source>Use Separate Secondary Display Screen Settings</source>
         <translation>Особо для дополнительного экрана</translation>
     </message>
     <message>
-        <location filename="../passivesettingwidget.ui" line="239"/>
+        <location filename="../passivesettingwidget.ui" line="236"/>
         <source>Reset All To Default</source>
         <translation>Сбросить на умолчания</translation>
     </message>
@@ -2755,84 +2761,83 @@ Has been saved to:
 <context>
     <name>PictureSettingWidget</name>
     <message>
-        <location filename="../picturesettingwidget.ui" line="14"/>
         <source>Picture Settings</source>
-        <translation>НАстройка изображений</translation>
+        <translation type="obsolete">НАстройка изображений</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="20"/>
+        <location filename="../picturesettingwidget.ui" line="17"/>
         <source>When Displaying Slideshows:</source>
         <translation>Для слайдшоу:</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="29"/>
+        <location filename="../picturesettingwidget.ui" line="26"/>
         <source>Expand Small Images</source>
         <translation>Розтягивать маленькие изображения</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="60"/>
+        <location filename="../picturesettingwidget.ui" line="57"/>
         <source>Fit Images To Screen</source>
         <translation>Фитировать изображения</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="91"/>
+        <location filename="../picturesettingwidget.ui" line="88"/>
         <source>Fit Images To Screen By Expanding</source>
         <translation>Фитировать по наименшей стороне</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="120"/>
+        <location filename="../picturesettingwidget.ui" line="117"/>
         <source>Resize Large Images on Import</source>
         <translation>Масштабировать большие изображения перед импортом</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="129"/>
+        <location filename="../picturesettingwidget.ui" line="126"/>
         <source>It is highly recommended to reduce large images on import. This will improve load, save and display time of slideshows.
 We recommend to resize images to display screen size.</source>
         <translation>Для оптимизации показа и смены слайдов очень рекомендуется перед импортом
 изменять размеры изображений соответствено размерам экрана.</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="142"/>
+        <location filename="../picturesettingwidget.ui" line="139"/>
         <source>Bound Box:</source>
         <translation>Граничные размеры:</translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="150"/>
+        <location filename="../picturesettingwidget.ui" line="147"/>
         <source>800 x 800</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="155"/>
+        <location filename="../picturesettingwidget.ui" line="152"/>
         <source>1024 x 1024</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="160"/>
+        <location filename="../picturesettingwidget.ui" line="157"/>
         <source>1280 x 1280</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="165"/>
+        <location filename="../picturesettingwidget.ui" line="162"/>
         <source>1366 x 1366</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="170"/>
+        <location filename="../picturesettingwidget.ui" line="167"/>
         <source>1440 x 1440</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="175"/>
+        <location filename="../picturesettingwidget.ui" line="172"/>
         <source>1600 x 1600</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="180"/>
+        <location filename="../picturesettingwidget.ui" line="177"/>
         <source>1920 x 1920</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../picturesettingwidget.ui" line="185"/>
+        <location filename="../picturesettingwidget.ui" line="182"/>
         <source>Custom</source>
         <translation>Другие</translation>
     </message>
@@ -3886,7 +3891,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Скрыть (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="670"/>
+        <location filename="../softprojector.ui" line="652"/>
         <source>Esc</source>
         <translation></translation>
     </message>
@@ -3899,12 +3904,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Показать (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="655"/>
+        <location filename="../softprojector.ui" line="637"/>
         <source>F4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="181"/>
+        <location filename="../softprojector.ui" line="163"/>
         <source>Use Multi Verse</source>
         <translation>Показать несколько стихов</translation>
     </message>
@@ -3914,255 +3919,255 @@ You may try upgrading your version of softProjector.</source>
         <translation>Програма служения:</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="178"/>
+        <location filename="../softprojector.ui" line="160"/>
         <source>If selected, this will allow to select multiple verses at one time. Will need to press &quot;Show&quot; each time.</source>
         <translation>Позволяет показывать несколько стихов за раз. При смене стихов нужно нажимать &quot;Показать&quot;.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="231"/>
+        <location filename="../softprojector.ui" line="213"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="246"/>
+        <location filename="../softprojector.ui" line="228"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="259"/>
-        <location filename="../softprojector.ui" line="423"/>
+        <location filename="../softprojector.ui" line="241"/>
+        <location filename="../softprojector.ui" line="405"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="268"/>
+        <location filename="../softprojector.ui" line="250"/>
         <source>Select Language</source>
         <translation>Выберите язык</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="271"/>
+        <location filename="../softprojector.ui" line="253"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="276"/>
+        <location filename="../softprojector.ui" line="258"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="283"/>
+        <location filename="../softprojector.ui" line="265"/>
         <source>Schedule</source>
         <translation>Програма</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="296"/>
+        <location filename="../softprojector.ui" line="278"/>
         <source>Display Screen</source>
         <translation>Экран</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="313"/>
+        <location filename="../softprojector.ui" line="295"/>
         <source>File Tool Bar</source>
         <translation>Файловая панель инструментов</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="327"/>
+        <location filename="../softprojector.ui" line="309"/>
         <source>Schedule Tool Bar</source>
         <translation>Панель управления програмы</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="338"/>
+        <location filename="../softprojector.ui" line="320"/>
         <source>Edit Tool Bar</source>
         <translation>Панельинструментов для редактирования</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="355"/>
+        <location filename="../softprojector.ui" line="337"/>
         <source>Display Control Tool Bar</source>
         <translation>Панель управления инструментов контроля экрана</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="411"/>
+        <location filename="../softprojector.ui" line="393"/>
         <source>Import and export Bibles, songbooks and themes</source>
         <translation>Импорт и экспорт Библий, песенников и тем</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="426"/>
+        <location filename="../softprojector.ui" line="408"/>
         <source>Open Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="447"/>
+        <location filename="../softprojector.ui" line="429"/>
         <source>&amp;Open Schedule</source>
         <translation>&amp;Открыть програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="459"/>
+        <location filename="../softprojector.ui" line="441"/>
         <source>&amp;Save Schedule</source>
         <translation>&amp;Сохранить програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="467"/>
+        <location filename="../softprojector.ui" line="449"/>
         <source>Save Schedule &amp;As</source>
         <translation>Сохранить програму &amp;как</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="470"/>
+        <location filename="../softprojector.ui" line="452"/>
         <source>Save Schedule with different name</source>
         <translation>Сохранить програму с другим именем</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="479"/>
+        <location filename="../softprojector.ui" line="461"/>
         <source>&amp;New Schedule</source>
         <translation>&amp;Новая програма</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="482"/>
+        <location filename="../softprojector.ui" line="464"/>
         <source>Start new Schedule</source>
         <translation>Создать новую програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="490"/>
-        <location filename="../softprojector.ui" line="493"/>
+        <location filename="../softprojector.ui" line="472"/>
+        <location filename="../softprojector.ui" line="475"/>
         <source>Close Schedule</source>
         <translation>Закрыть програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="502"/>
+        <location filename="../softprojector.ui" line="484"/>
         <source>&amp;Print</source>
         <translation>&amp;Печать</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="505"/>
+        <location filename="../softprojector.ui" line="487"/>
         <source>Prints selected Bible chapter, selected song and selected announcement.</source>
         <translation>Печатать выбраную главу Библии, песню и обьявление.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="513"/>
-        <location filename="../softprojector.ui" line="516"/>
+        <location filename="../softprojector.ui" line="495"/>
+        <location filename="../softprojector.ui" line="498"/>
         <source>Print Schedule</source>
         <translation>Печатать програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="519"/>
+        <location filename="../softprojector.ui" line="501"/>
         <source>Ctrl+Shift+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="551"/>
+        <location filename="../softprojector.ui" line="565"/>
         <source>Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="556"/>
+        <location filename="../softprojector.ui" line="538"/>
         <source>Donate</source>
         <translation>Пожертвовать</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="559"/>
+        <location filename="../softprojector.ui" line="541"/>
         <source>Donate to softProjector development team</source>
         <translation>Пожертвовать команде softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="568"/>
+        <location filename="../softprojector.ui" line="550"/>
         <source>Add to Schedule</source>
         <translation>Добавить в програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="571"/>
+        <location filename="../softprojector.ui" line="553"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="580"/>
+        <location filename="../softprojector.ui" line="562"/>
         <source>Remove from Schedule</source>
         <translation>Удалить с програмы</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="583"/>
+        <location filename="../softprojector.ui" line="533"/>
         <source>Ctrl+Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="592"/>
+        <location filename="../softprojector.ui" line="574"/>
         <source>Clear Schedule</source>
         <translation>Очистить програму</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="601"/>
+        <location filename="../softprojector.ui" line="583"/>
         <source>Move Item To Top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="604"/>
+        <location filename="../softprojector.ui" line="586"/>
         <source>Move Schedule item to top of the list</source>
         <translation>Переместить элемент на верх списка</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="613"/>
+        <location filename="../softprojector.ui" line="595"/>
         <source>Move Item Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="616"/>
+        <location filename="../softprojector.ui" line="598"/>
         <source>Move Schedule item up</source>
         <translation>Перемещать элемент програмы вверх</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="625"/>
+        <location filename="../softprojector.ui" line="607"/>
         <source>Mode Item Down</source>
         <translation>Перемещать вниз</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="628"/>
+        <location filename="../softprojector.ui" line="610"/>
         <source>Move Schedule item down</source>
         <translation>Перемещает элемент програмы вниз</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="637"/>
+        <location filename="../softprojector.ui" line="619"/>
         <source>Move Item To Bottom</source>
         <translation>Переместить элемент вниз</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="640"/>
+        <location filename="../softprojector.ui" line="622"/>
         <source>Move Schedule item to bottom of the list</source>
         <translation>Перемещает элемент програмы вниз списка</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="649"/>
+        <location filename="../softprojector.ui" line="631"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="652"/>
+        <location filename="../softprojector.ui" line="634"/>
         <source>Dsiplay to the screen (F4)</source>
         <translation>Показать на экране (F4)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="667"/>
+        <location filename="../softprojector.ui" line="649"/>
         <source>Show Passive Screen (Stop displaying to the screen) (Esc)</source>
         <translation>Показать пасивный экран (остановить презентацию) (Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="679"/>
+        <location filename="../softprojector.ui" line="661"/>
         <source>Clear</source>
         <translation>Очистить</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="682"/>
+        <location filename="../softprojector.ui" line="664"/>
         <source>Clear Display Text (Shift+Esc)</source>
         <translation>Очистить текст на дисплее (Shift+Esc)</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="685"/>
+        <location filename="../softprojector.ui" line="667"/>
         <source>Shift+Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="697"/>
+        <location filename="../softprojector.ui" line="679"/>
         <source>On / Off</source>
         <translation>Вкл. / Выкл.</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="700"/>
+        <location filename="../softprojector.ui" line="682"/>
         <source>Turn Display Screen On/Off</source>
         <translation>Включить / Выключить экран дисплея</translation>
     </message>
@@ -4175,7 +4180,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Закрыть окно экрана</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="664"/>
+        <location filename="../softprojector.ui" line="646"/>
         <source>Hide</source>
         <translation>Спрятать</translation>
     </message>
@@ -4188,37 +4193,37 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Панель инструментов</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="369"/>
+        <location filename="../softprojector.ui" line="351"/>
         <source>&amp;About</source>
         <translation>&amp;О программе</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="378"/>
+        <location filename="../softprojector.ui" line="360"/>
         <source>&amp;Settings...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="381"/>
+        <location filename="../softprojector.ui" line="363"/>
         <source>Open settings dialog</source>
         <translation>Открыть диалог настроек</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="384"/>
+        <location filename="../softprojector.ui" line="366"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="393"/>
+        <location filename="../softprojector.ui" line="375"/>
         <source>E&amp;xit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="396"/>
+        <location filename="../softprojector.ui" line="378"/>
         <source>Exit SoftProjector</source>
         <translation>Выйти с softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="399"/>
+        <location filename="../softprojector.ui" line="381"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
@@ -4227,7 +4232,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Редактировать песню...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="535"/>
+        <location filename="../softprojector.ui" line="517"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
@@ -4236,12 +4241,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Новая песня...</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="527"/>
+        <location filename="../softprojector.ui" line="509"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="408"/>
+        <location filename="../softprojector.ui" line="390"/>
         <source>&amp;Manage Database...</source>
         <translation>&amp;Управление базой данных...</translation>
     </message>
@@ -4250,7 +4255,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Импортирование и экспортирование сборников и Библий</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="414"/>
+        <location filename="../softprojector.ui" line="396"/>
         <source>Ctrl+M</source>
         <translation></translation>
     </message>
@@ -4259,7 +4264,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Удалить песню</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="429"/>
+        <location filename="../softprojector.ui" line="411"/>
         <source>F1</source>
         <translation></translation>
     </message>
@@ -4272,12 +4277,12 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Копировать песню в новый сборник</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="543"/>
+        <location filename="../softprojector.ui" line="525"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="438"/>
+        <location filename="../softprojector.ui" line="420"/>
         <source>Song Counter...</source>
         <oldsource>Song Counter</oldsource>
         <translation>Счетчик Песен...</translation>
@@ -4287,7 +4292,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Открыть проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="450"/>
+        <location filename="../softprojector.ui" line="432"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
@@ -4296,7 +4301,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">&amp;Сохранить проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="462"/>
+        <location filename="../softprojector.ui" line="444"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
@@ -4309,7 +4314,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Новый проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="485"/>
+        <location filename="../softprojector.ui" line="467"/>
         <source>Ctrl+Shift+N</source>
         <translation></translation>
     </message>
@@ -4318,7 +4323,7 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Закрыть проект</translation>
     </message>
     <message>
-        <location filename="../softprojector.ui" line="508"/>
+        <location filename="../softprojector.ui" line="490"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
@@ -4472,104 +4477,103 @@ You may try upgrading your version of softProjector.</source>
 <context>
     <name>SongSettingWidget</name>
     <message>
-        <location filename="../songsettingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="20"/>
-        <location filename="../songsettingwidget.ui" line="748"/>
+        <location filename="../songsettingwidget.ui" line="17"/>
+        <location filename="../songsettingwidget.ui" line="756"/>
         <source>Effects</source>
         <translation>Эфекты</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="26"/>
-        <location filename="../songsettingwidget.ui" line="754"/>
+        <location filename="../songsettingwidget.ui" line="23"/>
+        <location filename="../songsettingwidget.ui" line="762"/>
         <source>If checked, when switching displayed text, fades the old text out and fades the new text in .</source>
         <translation>Плавное затухание при переходе с одного стиха на другой.</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="29"/>
-        <location filename="../songsettingwidget.ui" line="757"/>
+        <location filename="../songsettingwidget.ui" line="26"/>
+        <location filename="../songsettingwidget.ui" line="765"/>
         <source>Use fading effects</source>
         <translation>Эффект затухания</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="36"/>
-        <location filename="../songsettingwidget.ui" line="49"/>
-        <location filename="../songsettingwidget.ui" line="764"/>
-        <location filename="../songsettingwidget.ui" line="777"/>
+        <location filename="../songsettingwidget.ui" line="33"/>
+        <location filename="../songsettingwidget.ui" line="46"/>
+        <location filename="../songsettingwidget.ui" line="772"/>
+        <location filename="../songsettingwidget.ui" line="785"/>
         <source>Useful when using a wallpaper image. Displays a fancy shadow effect.</source>
         <translation>Полезно при использовании фоновых рисунков. Получаются интересные теневые эффекты.</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="39"/>
-        <location filename="../songsettingwidget.ui" line="767"/>
+        <location filename="../songsettingwidget.ui" line="36"/>
+        <location filename="../songsettingwidget.ui" line="775"/>
         <source>Use shadow</source>
         <translation>Использовать тени</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="52"/>
-        <location filename="../songsettingwidget.ui" line="780"/>
+        <location filename="../songsettingwidget.ui" line="49"/>
+        <location filename="../songsettingwidget.ui" line="788"/>
         <source>Use blurred shadow</source>
         <translation>Размытая тень</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="62"/>
-        <location filename="../songsettingwidget.ui" line="827"/>
+        <location filename="../songsettingwidget.ui" line="59"/>
+        <location filename="../songsettingwidget.ui" line="835"/>
         <source>Song Information</source>
         <translation>Информация о песне</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="70"/>
-        <location filename="../songsettingwidget.ui" line="835"/>
+        <location filename="../songsettingwidget.ui" line="67"/>
+        <location filename="../songsettingwidget.ui" line="843"/>
         <source>Show Stanza Title</source>
         <translation>Показывать номер куплета</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="77"/>
-        <location filename="../songsettingwidget.ui" line="842"/>
+        <location filename="../songsettingwidget.ui" line="74"/>
+        <location filename="../songsettingwidget.ui" line="850"/>
         <source>Show Song Key</source>
         <translation>Показывать тональность песни</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="84"/>
-        <location filename="../songsettingwidget.ui" line="849"/>
+        <location filename="../songsettingwidget.ui" line="81"/>
+        <location filename="../songsettingwidget.ui" line="857"/>
         <source>Show Song Number</source>
         <translation>Показывать номер песни</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="95"/>
-        <location filename="../songsettingwidget.ui" line="199"/>
-        <location filename="../songsettingwidget.ui" line="383"/>
-        <location filename="../songsettingwidget.ui" line="860"/>
-        <location filename="../songsettingwidget.ui" line="1001"/>
-        <location filename="../songsettingwidget.ui" line="1259"/>
+        <location filename="../songsettingwidget.ui" line="92"/>
+        <location filename="../songsettingwidget.ui" line="196"/>
+        <location filename="../songsettingwidget.ui" line="391"/>
+        <location filename="../songsettingwidget.ui" line="868"/>
+        <location filename="../songsettingwidget.ui" line="1009"/>
+        <location filename="../songsettingwidget.ui" line="1267"/>
         <source>Color...</source>
         <translation>Цвет...</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="149"/>
-        <location filename="../songsettingwidget.ui" line="914"/>
-        <location filename="../songsettingwidget.ui" line="1319"/>
+        <location filename="../songsettingwidget.ui" line="146"/>
+        <location filename="../songsettingwidget.ui" line="922"/>
+        <location filename="../songsettingwidget.ui" line="1327"/>
         <source>Alignment:</source>
         <translation>Выровнять к:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="157"/>
-        <location filename="../songsettingwidget.ui" line="922"/>
+        <location filename="../songsettingwidget.ui" line="154"/>
+        <location filename="../songsettingwidget.ui" line="930"/>
         <source>Above Text</source>
         <translation>Перед текстом</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="162"/>
-        <location filename="../songsettingwidget.ui" line="927"/>
+        <location filename="../songsettingwidget.ui" line="159"/>
+        <location filename="../songsettingwidget.ui" line="935"/>
         <source>Below Text</source>
         <translation>После текста</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="188"/>
-        <location filename="../songsettingwidget.ui" line="990"/>
+        <location filename="../songsettingwidget.ui" line="185"/>
+        <location filename="../songsettingwidget.ui" line="998"/>
         <source>Show Song Ending</source>
         <translation>Показывать конец песни</translation>
     </message>
@@ -4582,41 +4586,41 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Будет отображаться информация о авторах слов и музыки</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="302"/>
-        <location filename="../songsettingwidget.ui" line="1104"/>
+        <location filename="../songsettingwidget.ui" line="299"/>
+        <location filename="../songsettingwidget.ui" line="1112"/>
         <source>Song Copyright Info</source>
         <translation>Копирайт песни</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="310"/>
-        <location filename="../songsettingwidget.ui" line="532"/>
-        <location filename="../songsettingwidget.ui" line="1112"/>
-        <location filename="../songsettingwidget.ui" line="1445"/>
+        <location filename="../songsettingwidget.ui" line="307"/>
+        <location filename="../songsettingwidget.ui" line="540"/>
+        <location filename="../songsettingwidget.ui" line="1120"/>
+        <location filename="../songsettingwidget.ui" line="1453"/>
         <source>Position:</source>
         <translation>Положение:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="318"/>
-        <location filename="../songsettingwidget.ui" line="1120"/>
+        <location filename="../songsettingwidget.ui" line="315"/>
+        <location filename="../songsettingwidget.ui" line="1128"/>
         <source>Below Song Text</source>
         <translation>После текста песни</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="323"/>
-        <location filename="../songsettingwidget.ui" line="1125"/>
-        <location filename="../songsettingwidget.ui" line="1461"/>
+        <location filename="../songsettingwidget.ui" line="320"/>
+        <location filename="../songsettingwidget.ui" line="1133"/>
+        <location filename="../songsettingwidget.ui" line="1469"/>
         <source>Bottom of Screen</source>
         <translation>Внизу экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="349"/>
-        <location filename="../songsettingwidget.ui" line="1188"/>
+        <location filename="../songsettingwidget.ui" line="346"/>
+        <location filename="../songsettingwidget.ui" line="1196"/>
         <source>Use Background Image</source>
         <translation>Использовать рисунок фона</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="365"/>
-        <location filename="../songsettingwidget.ui" line="1204"/>
+        <location filename="../songsettingwidget.ui" line="362"/>
+        <location filename="../songsettingwidget.ui" line="1212"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
@@ -4633,38 +4637,38 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Горизонтальное:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="451"/>
-        <location filename="../songsettingwidget.ui" line="1327"/>
+        <location filename="../songsettingwidget.ui" line="459"/>
+        <location filename="../songsettingwidget.ui" line="1335"/>
         <source>Top</source>
         <translation>Верх</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="456"/>
-        <location filename="../songsettingwidget.ui" line="1332"/>
+        <location filename="../songsettingwidget.ui" line="464"/>
+        <location filename="../songsettingwidget.ui" line="1340"/>
         <source>Middle</source>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="461"/>
-        <location filename="../songsettingwidget.ui" line="1337"/>
+        <location filename="../songsettingwidget.ui" line="469"/>
+        <location filename="../songsettingwidget.ui" line="1345"/>
         <source>Bottom</source>
         <translation>Нижний</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="470"/>
-        <location filename="../songsettingwidget.ui" line="1346"/>
+        <location filename="../songsettingwidget.ui" line="478"/>
+        <location filename="../songsettingwidget.ui" line="1354"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="475"/>
-        <location filename="../songsettingwidget.ui" line="1351"/>
+        <location filename="../songsettingwidget.ui" line="483"/>
+        <location filename="../songsettingwidget.ui" line="1359"/>
         <source>Center</source>
         <translation>Центр</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="480"/>
-        <location filename="../songsettingwidget.ui" line="1356"/>
+        <location filename="../songsettingwidget.ui" line="488"/>
+        <location filename="../songsettingwidget.ui" line="1364"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
@@ -4681,123 +4685,128 @@ You may try upgrading your version of softProjector.</source>
         <translation type="obsolete">Изменить цвет...</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="131"/>
-        <location filename="../songsettingwidget.ui" line="235"/>
-        <location filename="../songsettingwidget.ui" line="419"/>
-        <location filename="../songsettingwidget.ui" line="896"/>
-        <location filename="../songsettingwidget.ui" line="1037"/>
-        <location filename="../songsettingwidget.ui" line="1295"/>
+        <location filename="../songsettingwidget.ui" line="128"/>
+        <location filename="../songsettingwidget.ui" line="232"/>
+        <location filename="../songsettingwidget.ui" line="427"/>
+        <location filename="../songsettingwidget.ui" line="904"/>
+        <location filename="../songsettingwidget.ui" line="1045"/>
+        <location filename="../songsettingwidget.ui" line="1303"/>
         <source>Font...</source>
         <oldsource>Font</oldsource>
         <translation>Шрифт...</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="253"/>
-        <location filename="../songsettingwidget.ui" line="1055"/>
+        <location filename="../songsettingwidget.ui" line="250"/>
+        <location filename="../songsettingwidget.ui" line="1063"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="375"/>
-        <location filename="../songsettingwidget.ui" line="1251"/>
+        <location filename="../songsettingwidget.ui" line="369"/>
+        <source>Apply this background to all active backgrounds.</source>
+        <translation>Применить этот фон ко всем активным фоном.</translation>
+    </message>
+    <message>
+        <location filename="../songsettingwidget.ui" line="383"/>
+        <location filename="../songsettingwidget.ui" line="1259"/>
         <source>Song Text Properties</source>
         <translation>Свойства текста песни</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="443"/>
+        <location filename="../songsettingwidget.ui" line="451"/>
         <source>Alingment:</source>
         <translation>Выровнять к:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="506"/>
-        <location filename="../songsettingwidget.ui" line="1419"/>
+        <location filename="../songsettingwidget.ui" line="514"/>
+        <location filename="../songsettingwidget.ui" line="1427"/>
         <source>Amount Of Screen To Use</source>
         <translation>Размер используемого экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="512"/>
+        <location filename="../songsettingwidget.ui" line="520"/>
         <source>Vertical Screen Use:</source>
         <translation>Использувать по-вертикали экрана:</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="519"/>
-        <location filename="../songsettingwidget.ui" line="1432"/>
+        <location filename="../songsettingwidget.ui" line="527"/>
+        <location filename="../songsettingwidget.ui" line="1440"/>
         <source>Percent of screen to be used.</source>
         <translation>Размер используемого экрана.</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="539"/>
-        <location filename="../songsettingwidget.ui" line="1452"/>
+        <location filename="../songsettingwidget.ui" line="547"/>
+        <location filename="../songsettingwidget.ui" line="1460"/>
         <source>Select to use either top portion of the screen or bottom.</source>
         <translation>Выберете, какую часть экрана использовать.</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="543"/>
+        <location filename="../songsettingwidget.ui" line="551"/>
         <source>Top of screen</source>
         <translation>Вверху экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="548"/>
+        <location filename="../songsettingwidget.ui" line="556"/>
         <source>Bottom of screen</source>
         <translation>Внизу экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="690"/>
+        <location filename="../songsettingwidget.ui" line="698"/>
         <source>Use Separate Secondary Display Screen Settings</source>
         <translation>Особые настройки для дополнительного экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1069"/>
+        <location filename="../songsettingwidget.ui" line="1077"/>
         <source>*   *   *</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1074"/>
+        <location filename="../songsettingwidget.ui" line="1082"/>
         <source>-   -   -</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1079"/>
+        <location filename="../songsettingwidget.ui" line="1087"/>
         <source>°   °   °</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1084"/>
+        <location filename="../songsettingwidget.ui" line="1092"/>
         <source>•   •   •</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1089"/>
+        <location filename="../songsettingwidget.ui" line="1097"/>
         <source>●   ●   ●</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1094"/>
+        <location filename="../songsettingwidget.ui" line="1102"/>
         <source>▪   ▪   ▪</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1099"/>
+        <location filename="../songsettingwidget.ui" line="1107"/>
         <source>■   ■   ■</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1425"/>
+        <location filename="../songsettingwidget.ui" line="1433"/>
         <source>Vertical Screen Use</source>
         <translation>Использувать по-вертикали экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1435"/>
+        <location filename="../songsettingwidget.ui" line="1443"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1456"/>
+        <location filename="../songsettingwidget.ui" line="1464"/>
         <source>Top of Screen</source>
         <translation>Вверху экрана</translation>
     </message>
     <message>
-        <location filename="../songsettingwidget.ui" line="1503"/>
+        <location filename="../songsettingwidget.ui" line="1511"/>
         <source>Reset All To Default</source>
         <translation>Сбросить все на умолчания</translation>
     </message>

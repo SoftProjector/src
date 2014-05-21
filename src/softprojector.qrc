@@ -74,5 +74,6 @@
         <file>icons/video.png</file>
         <file>icons/video_add.png</file>
         <file>icons/video_remove.png</file>
+        <file>icons/apply_to_all.png</file>
     </qresource>
 </RCC>

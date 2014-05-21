@@ -175,9 +175,9 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     ui->widgetPlayBackControls->setVisible(false);
 
-    //version_string = "2"; // to be used only for official release
-    version_string = "2 Beta"; // to be used between official releases
-    this->setWindowTitle("softProjector " + version_string);
+    version_string = "2"; // to be used only for official release
+    //version_string = "2 Beta"; // to be used between official releases
+    this->setWindowTitle("SoftProjector " + version_string);
 }
 
 SoftProjector::~SoftProjector()
@@ -976,7 +976,8 @@ void SoftProjector::on_actionAbout_triggered()
 
 void SoftProjector::on_action_Help_triggered()
 {
-    helpDialog->show();
+    //helpDialog->show();
+     QDesktopServices::openUrl(QUrl("http://softprojector.org/help/index.html"));
 }
 
 void SoftProjector::newSong()

@@ -40,6 +40,10 @@ public slots:
     void setSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
     void getSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
     void setDispScreen2Visible(bool visible);
+    void setBackgroungds(QString name, QPixmap back);
+
+signals:
+    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
@@ -54,6 +58,8 @@ private slots:
     void on_toolButtonFont_clicked();
     void on_toolButtonFont2_clicked();
     QString getFontText(QFont font);
+
+    void on_pushButtonApplyToAll_clicked();
 
 private:
     AnnounceSettings mySettings, mySettings2;

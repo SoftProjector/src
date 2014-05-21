@@ -400,3 +400,18 @@ QString SongSettingWidget::getFontText(QFont font)
 
     return st;
 }
+
+void SongSettingWidget::on_pushButtonApplyToAll_clicked()
+{
+    emit applyBackToAll(2,mySettings.backgroundName,mySettings.background);
+}
+
+void SongSettingWidget::setBackgroungds(QString name, QPixmap back)
+{
+    mySettings.backgroundName = name;
+    mySettings.background = back;
+    mySettings2.backgroundName = name;
+    mySettings2.background = back;
+    ui->lineEditSongBackground->setText(name);
+    ui->lineEditSongBackground2->setText(name);
+}

@@ -106,16 +106,7 @@
            </sizepolicy>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -160,16 +151,7 @@
         <item>
          <widget class="QWidget" name="widgetMultiVerse" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -548,7 +530,7 @@
     <string/>
    </property>
    <property name="shortcut">
-    <string>Del</string>
+    <string>Ctrl+Del</string>
    </property>
   </action>
   <action name="actionDonate">
@@ -580,7 +562,7 @@
     <string>Remove from Schedule</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Del</string>
+    <string>Del</string>
    </property>
   </action>
   <action name="actionScheduleClear">

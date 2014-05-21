@@ -255,3 +255,18 @@ QString AnnouncementSettingWidget::getFontText(QFont font)
 
     return st;
 }
+
+void AnnouncementSettingWidget::on_pushButtonApplyToAll_clicked()
+{
+    emit applyBackToAll(3,mySettings.backgroundName,mySettings.background);
+}
+
+void AnnouncementSettingWidget::setBackgroungds(QString name, QPixmap back)
+{
+    mySettings.backgroundName = name;
+    mySettings.background = back;
+    mySettings2.backgroundName = name;
+    mySettings2.background = back;
+    ui->lineEditBackground->setText(name);
+    ui->lineEditBackground2->setText(name);
+}

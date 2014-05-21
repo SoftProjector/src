@@ -44,6 +44,10 @@ public slots:
     void setBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2);
     void getBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2);
     void setDispScreen2Visible(bool visible);
+    void setBackgroungds(QString name, QPixmap back);
+
+signals:
+    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
@@ -74,6 +78,8 @@ private slots:
     void on_pushButtonDefault_clicked();
 
     QString getFontText(QFont font);
+    void on_pushButtonApplyToAll_clicked();
+
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;

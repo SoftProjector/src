@@ -39,6 +39,10 @@ public slots:
     void getSettings(SongSettings &settings, SongSettings &settings2);
     void setSettings(SongSettings &settings, SongSettings &settings2);
     void setDispScreen2Visible(bool visible);
+    void setBackgroungds(QString name, QPixmap back);
+
+signals:
+    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
@@ -61,6 +65,8 @@ private slots:
     void on_groupBoxDisplay2_toggled(bool arg1);
     void on_pushButtonDefault_clicked();
     QString getFontText(QFont font);
+    void on_pushButtonApplyToAll_clicked();
+
 private:
     SongSettings mySettings;
     SongSettings mySettings2;
