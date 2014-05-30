@@ -400,6 +400,7 @@ void SongWidget::deleteSong()
 void SongWidget::addNewSong(Song song, int initial_sid)
 {
     songs_model->addSong(song);
+    allSongs.append(song);
     ui->songs_view->selectRow(songs_model->rowCount()-1);
 
     sendToPreview(song);

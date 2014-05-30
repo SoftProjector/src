@@ -1,6 +1,6 @@
 /***************************************************************************
 //
-//    softProjector - an open source media projection software
+//    SoftProjector - an open source media projection software
 //    Copyright (C) 2014  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
 //
 //    This program is free software: you can redistribute it and/or modify
@@ -1366,13 +1366,13 @@ void SoftProjector::updateWindowText()
     {
         file.remove(".spsc");
         if(is_schedule_saved)
-            this->setWindowTitle(file + " - softProjector " + version_string);
+            this->setWindowTitle(file + " - SoftProjector " + version_string);
         else
-            this->setWindowTitle(file + "* - softProjector " + version_string);
+            this->setWindowTitle(file + "* - SoftProjector " + version_string);
     }
     else
     {
-        this->setWindowTitle("softProjector " + version_string);
+        this->setWindowTitle("SoftProjector " + version_string);
     }
 }
 
@@ -1812,8 +1812,8 @@ void SoftProjector::on_actionOpenSchedule_triggered()
         }
     }
 
-    QString path = QFileDialog::getOpenFileName(this,tr("Open softProjector schedule:"),".",
-                                                tr("softProjector schedule file ") + "(*.spsc)");
+    QString path = QFileDialog::getOpenFileName(this,tr("Open SoftProjector schedule:"),".",
+                                                tr("SoftProjector schedule file ") + "(*.spsc)");
     if(!path.isEmpty())
     {
         schedule_file_path = path;
@@ -1834,8 +1834,8 @@ void SoftProjector::on_actionSaveSchedule_triggered()
 
 void SoftProjector::on_actionSaveScheduleAs_triggered()
 {
-    QString path = QFileDialog::getSaveFileName(this,tr("Save softProjector schedule as:"),".",
-                                                tr("softProjector schedule file ") + "(*.spsc)");
+    QString path = QFileDialog::getSaveFileName(this,tr("Save SoftProjector schedule as:"),".",
+                                                tr("SoftProjector schedule file ") + "(*.spsc)");
     if(!path.isEmpty())
     {
         if(path.endsWith(".spsc"))

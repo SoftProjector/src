@@ -2612,7 +2612,7 @@ Has been saved to:
         <translation type="obsolete">Українська</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1302"/>
+        <location filename="../softprojector.cpp" line="1303"/>
         <source>English</source>
         <comment>Do not change</comment>
         <translation>Українська</translation>
@@ -3267,31 +3267,31 @@ Please enter a title.</source>
     <name>SoftProjector</name>
     <message>
         <location filename="../softprojector.cpp" line="77"/>
-        <location filename="../softprojector.cpp" line="1341"/>
+        <location filename="../softprojector.cpp" line="1342"/>
         <source>Bible (F6)</source>
         <translation>Біблія (F6)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="78"/>
-        <location filename="../softprojector.cpp" line="1342"/>
+        <location filename="../softprojector.cpp" line="1343"/>
         <source>Songs (F7)</source>
         <translation>Пісні (F7)</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="79"/>
-        <location filename="../softprojector.cpp" line="1343"/>
+        <location filename="../softprojector.cpp" line="1344"/>
         <source>Pictures</source>
         <translation>Зображення</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="80"/>
-        <location filename="../softprojector.cpp" line="1344"/>
+        <location filename="../softprojector.cpp" line="1345"/>
         <source>Media</source>
         <translation>Медіа</translation>
     </message>
     <message>
         <location filename="../softprojector.cpp" line="81"/>
-        <location filename="../softprojector.cpp" line="1345"/>
+        <location filename="../softprojector.cpp" line="1346"/>
         <source>Announcements (F8)</source>
         <translation>Оголошення (F8)</translation>
     </message>
@@ -3322,14 +3322,14 @@ Please enter a title.</source>
         <translation type="obsolete">Музика: %1</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1008"/>
+        <location filename="../softprojector.cpp" line="1009"/>
         <source>Cannot start new edit</source>
         <translation>Відсутня можливість розпочати нове редагування</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="988"/>
-        <location filename="../softprojector.cpp" line="1009"/>
-        <location filename="../softprojector.cpp" line="1040"/>
+        <location filename="../softprojector.cpp" line="989"/>
+        <location filename="../softprojector.cpp" line="1010"/>
+        <location filename="../softprojector.cpp" line="1041"/>
         <source>Another song is already been edited.</source>
         <translation>О-о, інша пісня уже редагується.</translation>
     </message>
@@ -3414,220 +3414,232 @@ Please enter a title.</source>
         <translation>&amp;Видалити оголошення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="989"/>
-        <location filename="../softprojector.cpp" line="1010"/>
-        <location filename="../softprojector.cpp" line="1041"/>
+        <location filename="../softprojector.cpp" line="990"/>
+        <location filename="../softprojector.cpp" line="1011"/>
+        <location filename="../softprojector.cpp" line="1042"/>
         <source>Please save and/or close current edited song before edited a different song.</source>
         <translation>Будьте ласкаві, збережіть і(або) закрийте поточну пісню перед тим, як братися редагувати іншу.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1024"/>
-        <location filename="../softprojector.cpp" line="1055"/>
-        <location filename="../softprojector.cpp" line="1094"/>
-        <location filename="../softprojector.cpp" line="1407"/>
+        <location filename="../softprojector.cpp" line="1025"/>
+        <location filename="../softprojector.cpp" line="1056"/>
+        <location filename="../softprojector.cpp" line="1095"/>
+        <location filename="../softprojector.cpp" line="1408"/>
         <source>No song selected</source>
         <translation>Не обрано жодної пісні</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1056"/>
+        <location filename="../softprojector.cpp" line="1057"/>
         <source>No song has been selected to copy</source>
         <translation>Не обрано жодної пісні для копіювання</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1057"/>
+        <location filename="../softprojector.cpp" line="1058"/>
         <source>Please select a song to copy</source>
         <translation>Будьте такі ласкаві, оберіть пісню</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1095"/>
+        <location filename="../softprojector.cpp" line="1096"/>
         <source>No song has been selected to delete</source>
         <translation>Не обрано жодної пісні для вилучення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1096"/>
+        <location filename="../softprojector.cpp" line="1097"/>
         <source>Please select a song to delete</source>
         <translation>Будьте такі ласкаві, оберіть пісню для вилучення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1125"/>
-        <location filename="../softprojector.cpp" line="1163"/>
+        <location filename="../softprojector.cpp" line="1126"/>
+        <location filename="../softprojector.cpp" line="1164"/>
         <source>No slideshow selected</source>
         <translation>Не обрано слайдшоу</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1126"/>
+        <location filename="../softprojector.cpp" line="1127"/>
         <source>No slideshow has been selected to edit.</source>
         <translation>Жодне слайдшоу не обрано для редагування.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1127"/>
+        <location filename="../softprojector.cpp" line="1128"/>
         <source>Please select a slideshow to edit.</source>
         <translation>Будьте ласкаві, оберіть слайдшоу для редагування.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1139"/>
+        <location filename="../softprojector.cpp" line="1140"/>
         <source>Delete slideshow?</source>
         <translation>Дійсно видалити слайдшоу?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1140"/>
+        <location filename="../softprojector.cpp" line="1141"/>
         <source>Delete slideshow: &quot;</source>
         <translation>Видалити слайдшоу: &quot;</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1141"/>
+        <location filename="../softprojector.cpp" line="1142"/>
         <source>This action will permanentrly delete this slideshow</source>
         <translation>Слфйдшоу буде вилучено аж до закінчення Вічості</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1164"/>
+        <location filename="../softprojector.cpp" line="1165"/>
         <source>No slideshow has been selected to delete.</source>
         <translation>Жодне слайдшоу не обрано для видалення.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1165"/>
+        <location filename="../softprojector.cpp" line="1166"/>
         <source>Please select a slideshow to delete.</source>
         <translation>Будьте такі ласкаві, оберіть слайдшоу для видалення.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1183"/>
+        <location filename="../softprojector.cpp" line="1184"/>
         <source>No media selected</source>
         <translation>Не обрано медіа</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1184"/>
+        <location filename="../softprojector.cpp" line="1185"/>
         <source>No media item has been selected to delete.</source>
         <translation>Жодного медіа не обрано для видалення.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1185"/>
+        <location filename="../softprojector.cpp" line="1186"/>
         <source>Please select a media item to delete.</source>
         <translation>Будьте такі ласкаві, оберіть медиа для видалення.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1203"/>
-        <location filename="../softprojector.cpp" line="1218"/>
-        <location filename="../softprojector.cpp" line="1256"/>
+        <location filename="../softprojector.cpp" line="1204"/>
+        <location filename="../softprojector.cpp" line="1219"/>
+        <location filename="../softprojector.cpp" line="1257"/>
         <source>No Announcement Selected</source>
         <translation>Не обрано оголошення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1204"/>
+        <location filename="../softprojector.cpp" line="1205"/>
         <source>No announcement has been selected to edit</source>
         <translation>Жодного оголошення не обрано для редагування</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1205"/>
+        <location filename="../softprojector.cpp" line="1206"/>
         <source>Please select an announcement to edit</source>
         <translation>Будьте такі ласкаві, оберіть оголошення для редагування</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1219"/>
+        <location filename="../softprojector.cpp" line="1220"/>
         <source>No announcement has been selected to copy</source>
         <translation>Жодного оголошення не обрано для копіювання</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1220"/>
+        <location filename="../softprojector.cpp" line="1221"/>
         <source>Please select an announcement to copy</source>
         <translation>Будьте такі ласкаві, оберіть оголошення для копіювання</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1232"/>
+        <location filename="../softprojector.cpp" line="1233"/>
         <source>Delete Announcement?</source>
         <translation>Дійсно видалити оголошення?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1233"/>
+        <location filename="../softprojector.cpp" line="1234"/>
         <source>Delete announcement: &quot;</source>
         <translation>Видалити оголошення: &quot;</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1234"/>
+        <location filename="../softprojector.cpp" line="1235"/>
         <source>This action will permanentrly delete this announcement</source>
         <translation>Оголошення буде вилучено аж до закінчення Вічості</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1257"/>
+        <location filename="../softprojector.cpp" line="1258"/>
         <source>No announcement has been selected to delete</source>
         <translation>Жодного оголошення не обрано для видалення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1258"/>
+        <location filename="../softprojector.cpp" line="1259"/>
         <source>Please select an announcement to delete</source>
         <translation>Будьте такі ласкаві, оберіть оголошення для видалення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1424"/>
+        <location filename="../softprojector.cpp" line="1425"/>
         <source>No announcement selected</source>
         <translation>Не обрано оголошення</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1425"/>
+        <location filename="../softprojector.cpp" line="1426"/>
         <source>No announcement has been selected to be printed.</source>
         <translation>Жодного оголошення не обрано для друку.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1426"/>
+        <location filename="../softprojector.cpp" line="1427"/>
         <source>Please select a announcement to be printed.</source>
         <translation>Будьте такі ласкаві, оберіть оголошення для друку.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1752"/>
-        <location filename="../softprojector.cpp" line="1789"/>
-        <location filename="../softprojector.cpp" line="1855"/>
+        <location filename="../softprojector.cpp" line="1753"/>
+        <location filename="../softprojector.cpp" line="1790"/>
+        <location filename="../softprojector.cpp" line="1856"/>
         <source>Save Schedule?</source>
         <translation>Зберегти прораму?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1753"/>
+        <location filename="../softprojector.cpp" line="1754"/>
         <source>Do you want to save current schedule before creating a new schedule?</source>
         <translation>Ви бажаєте збереги поточну програму перед створенням нової?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1790"/>
+        <location filename="../softprojector.cpp" line="1791"/>
         <source>Do you want to save current schedule before opening a new schedule?</source>
         <translation>Ви бажаєте збереги поточну програму перед тим, як відккрити іншу?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1814"/>
-        <source>Open softProjector schedule:</source>
-        <translation>Відкрити програму softProjector:</translation>
-    </message>
-    <message>
         <location filename="../softprojector.cpp" line="1815"/>
+        <source>Open SoftProjector schedule:</source>
+        <translation>Відкрити програму SoftProjector:</translation>
+    </message>
+    <message>
+        <location filename="../softprojector.cpp" line="1816"/>
+        <location filename="../softprojector.cpp" line="1838"/>
+        <source>SoftProjector schedule file </source>
+        <translation>Файли прорам SoftProjector </translation>
+    </message>
+    <message>
         <location filename="../softprojector.cpp" line="1837"/>
+        <source>Save SoftProjector schedule as:</source>
+        <translation>Зберегти програму SoftProjector як:</translation>
+    </message>
+    <message>
+        <source>Open softProjector schedule:</source>
+        <translation type="obsolete">Відкрити програму softProjector:</translation>
+    </message>
+    <message>
         <source>softProjector schedule file </source>
-        <translation>Файли прорам softProjector</translation>
+        <translation type="obsolete">Файли прорам softProjector</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1836"/>
         <source>Save softProjector schedule as:</source>
-        <translation>Зберегти програму softProjector як:</translation>
+        <translation type="obsolete">Зберегти програму softProjector як:</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1856"/>
+        <location filename="../softprojector.cpp" line="1857"/>
         <source>Do you want to save current schedule before closing it?</source>
         <translation>Стоп, можливо було б доцільно зберегти цю програму перед тим як її закрити?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1892"/>
+        <location filename="../softprojector.cpp" line="1893"/>
         <source>Saving schedule file...</source>
         <translation>Зберегти програму у файл...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1901"/>
+        <location filename="../softprojector.cpp" line="1902"/>
         <source>An error has ocured when overwriting existing file.
 Please try again with different file name.</source>
         <translation>Виникла помилка перезапису фалу.
 Будь ласка, спробуйте інше ім’я для цього фалу.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2168"/>
+        <location filename="../softprojector.cpp" line="2169"/>
         <source>Opening schedule file...</source>
         <translation>Відкрити файл програми...</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="2241"/>
+        <location filename="../softprojector.cpp" line="2242"/>
         <source>The schedule file you are trying to open is of uncompatible version.
 Compatible version: 2
 This schedule file version: </source>
@@ -3644,22 +3656,22 @@ This schedule file version: </source>
         <translation type="obsolete">Будьте ласкаві, оберіть пісню для редагування.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="987"/>
+        <location filename="../softprojector.cpp" line="988"/>
         <source>Cannot create a new song</source>
         <translation>Відсутня можливість створити нову пісню</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1025"/>
+        <location filename="../softprojector.cpp" line="1026"/>
         <source>No song has been selected to edit.</source>
         <translation>Не обрано жодної пісні для редагування.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1026"/>
+        <location filename="../softprojector.cpp" line="1027"/>
         <source>Please select a song to edit.</source>
         <translation>Будьте такі ласкаві, оберіть пісню для редагування.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1039"/>
+        <location filename="../softprojector.cpp" line="1040"/>
         <source>Cannot copy this song</source>
         <translation>Відсутня можливість скопіювати цю пісню</translation>
     </message>
@@ -3672,17 +3684,17 @@ This schedule file version: </source>
         <translation type="obsolete">Будьте ласкаві, оберіть пісню для копіювання</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1069"/>
+        <location filename="../softprojector.cpp" line="1070"/>
         <source>Delete song?</source>
         <translation>А якщо подумати?</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1070"/>
+        <location filename="../softprojector.cpp" line="1071"/>
         <source>Delete song &quot;</source>
         <translation>Вилучення пісні &quot;</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1071"/>
+        <location filename="../softprojector.cpp" line="1072"/>
         <source>This action will permanentrly delete this song</source>
         <translation>Пісня буде вилучена аж до закінчення Вічості</translation>
     </message>
@@ -3742,12 +3754,12 @@ You may try upgrading your version of softProjector.</source>
 Рекомендується оновити програму.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1408"/>
+        <location filename="../softprojector.cpp" line="1409"/>
         <source>No song has been selected to be printed.</source>
         <translation>Не обрано жодної пісні для лруку.</translation>
     </message>
     <message>
-        <location filename="../softprojector.cpp" line="1409"/>
+        <location filename="../softprojector.cpp" line="1410"/>
         <source>Please select a song to be printed.</source>
         <translation>Будьте ласкаві, оберіть пісню для друку.</translation>
     </message>
@@ -4745,7 +4757,7 @@ You may try upgrading your version of softProjector.</source>
     <message>
         <location filename="../songwidget.ui" line="83"/>
         <location filename="../songwidget.cpp" line="125"/>
-        <location filename="../songwidget.cpp" line="613"/>
+        <location filename="../songwidget.cpp" line="614"/>
         <source>Filter:</source>
         <translation>Фільтр:</translation>
     </message>
@@ -4756,7 +4768,7 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="../songwidget.ui" line="113"/>
-        <location filename="../songwidget.cpp" line="563"/>
+        <location filename="../songwidget.cpp" line="564"/>
         <source>Search Type:</source>
         <translation>Тип пошуку:</translation>
     </message>
@@ -4868,7 +4880,7 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="../songwidget.cpp" line="114"/>
-        <location filename="../songwidget.cpp" line="432"/>
+        <location filename="../songwidget.cpp" line="433"/>
         <source>All songbooks</source>
         <translation>Усі збірники</translation>
     </message>
@@ -4883,7 +4895,7 @@ You may try upgrading your version of softProjector.</source>
     </message>
     <message>
         <location filename="../songwidget.cpp" line="124"/>
-        <location filename="../songwidget.cpp" line="612"/>
+        <location filename="../songwidget.cpp" line="613"/>
         <source>Filter Type:</source>
         <translation>Тип фільтру:</translation>
     </message>
@@ -4904,18 +4916,18 @@ You may try upgrading your version of softProjector.</source>
         <translation>Опа, така пісня відсутня</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="469"/>
-        <location filename="../songwidget.cpp" line="484"/>
+        <location filename="../songwidget.cpp" line="470"/>
+        <location filename="../songwidget.cpp" line="485"/>
         <source>All song categories</source>
         <translation>Усі категорії</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="513"/>
+        <location filename="../songwidget.cpp" line="514"/>
         <source>Please enter search text</source>
         <translation>Будьте ласкаві, введіть текст, що бажаєте його віднайти</translation>
     </message>
     <message>
-        <location filename="../songwidget.cpp" line="564"/>
+        <location filename="../songwidget.cpp" line="565"/>
         <source>Search:</source>
         <translation>Пошук:</translation>
     </message>
