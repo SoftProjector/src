@@ -1,4 +1,4 @@
-SoftProjector 2.0 - 
+SoftProjector 2.0 - June 1, 2014
 New:
 	New SongBook format(Sqlite3)
 	Added private song settings.
