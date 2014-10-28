@@ -44,20 +44,20 @@ void PassiveSettingWidget::changeEvent(QEvent *e)
      }
 }
 
-void PassiveSettingWidget::setSetings(PassiveSettings &settings, PassiveSettings &settings2)
+void PassiveSettingWidget::setSetings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings = settings;
     mySettings2 = settings2;
     loadSettings();
 }
 
-void PassiveSettingWidget::getSettings(PassiveSettings &settings, PassiveSettings &settings2)
+void PassiveSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
     mySettings.backgroundName = ui->lineEditBackgroundPath->text();
 
     // Get display two settings
-    mySettings2.useDisp2settings = ui->groupBoxDisp2Sets->isChecked();
+    mySettings2.useDisp2Settings = ui->groupBoxDisp2Sets->isChecked();
     mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
     mySettings2.backgroundName = ui->lineEditBackgroundPath2->text();
 
@@ -71,7 +71,7 @@ void PassiveSettingWidget::loadSettings()
     ui->lineEditBackgroundPath->setText(mySettings.backgroundName);
 
     // Displpay screen two
-    ui->groupBoxDisp2Sets->setChecked(mySettings2.useDisp2settings);
+    ui->groupBoxDisp2Sets->setChecked(mySettings2.useDisp2Settings);
     ui->groupBoxBackground2->setChecked(mySettings.useBackground);
     ui->lineEditBackgroundPath2->setText(mySettings.backgroundName);
 }
@@ -124,7 +124,7 @@ void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
 
 void PassiveSettingWidget::on_pushButtonDefault_clicked()
 {
-    PassiveSettings p;
+    TextSettings p;
     mySettings = p;
     mySettings2 = p;
     loadSettings();

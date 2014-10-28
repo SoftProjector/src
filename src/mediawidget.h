@@ -20,13 +20,13 @@
 #ifndef MEDIAWIDGET_H
 #define MEDIAWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSql>
 //#include <phonon>
-#include <phonon/MediaObject>
-#include <phonon/AudioOutput>
-#include <phonon/SeekSlider>
-#include <phonon/VolumeSlider>
+//#include <phonon/MediaObject>
+//#include <phonon/AudioOutput>
+//#include <phonon/SeekSlider>
+//#include <phonon/VolumeSlider>
 #include "videoplayerwidget.h"
 #include "videoinfo.h"
 
@@ -67,7 +67,7 @@ private slots:
 
     void handleDrop(QDropEvent *e);
     void loadMediaLibrary();
-    void stateChanged(Phonon::State newstate, Phonon::State oldstate);
+//    void stateChanged(Phonon::State newstate, Phonon::State oldstate);
 
     void hasVideoChanged(bool);
     void insertFiles(QStringList &files);
@@ -86,10 +86,10 @@ private:
     QIcon playIcon;
     QIcon pauseIcon;
 
-    Phonon::SeekSlider *timeSlider;
-    Phonon::VolumeSlider *volumeSlider;
-    Phonon::MediaObject mediaPlayer;
-    Phonon::AudioOutput m_AudioOutput;
+//    Phonon::SeekSlider *timeSlider;
+//    Phonon::VolumeSlider *volumeSlider;
+//    Phonon::MediaObject mediaPlayer;
+//    Phonon::AudioOutput m_AudioOutput;
     VideoPlayerWidget *videoWidget;
 
     QString audioExt;

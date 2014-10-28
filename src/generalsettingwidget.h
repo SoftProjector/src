@@ -20,7 +20,7 @@
 #ifndef GENERALSETTINGWIDGET_H
 #define GENERALSETTINGWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "settings.h"
 #include "addsongbookdialog.h"
 #include "theme.h"

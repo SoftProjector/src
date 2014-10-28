@@ -56,11 +56,11 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
     mySettings.useFading = ui->checkBoxUseFading->isChecked();
-    mySettings.useBlurShadow = ui->checkBoxUseBlurredShadow->isChecked();
+    mySettings.useBluredShadow = ui->checkBoxUseBlurredShadow->isChecked();
 
     mySettings2.useShadow = ui->checkBoxUseShadow2->isChecked();
     mySettings2.useFading = ui->checkBoxUseFading2->isChecked();
-    mySettings2.useBlurShadow = ui->checkBoxUseBlurredShadow2->isChecked();
+    mySettings2.useBluredShadow = ui->checkBoxUseBlurredShadow2->isChecked();
 
     // Save Song info
     mySettings.showStanzaTitle = ui->checkBoxStanzaTitle->isChecked();
@@ -98,13 +98,13 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
 
     // Screen use
     mySettings.screenUse = ui->spinBoxScreenUse->value();
-    mySettings.screenPositon = ui->comboBoxScreenUse->currentIndex();
+    mySettings.screenPosition = ui->comboBoxScreenUse->currentIndex();
 
     mySettings2.screenUse = ui->spinBoxScreenUse2->value();
-    mySettings2.screenPositon = ui->comboBoxScreenUse2->currentIndex();
+    mySettings2.screenPosition = ui->comboBoxScreenUse2->currentIndex();
 
     // Use secondary display screen settings
-    mySettings2.useDisp2settings = ui->groupBoxDisplay2->isChecked();
+    mySettings2.useDisp2Settings = ui->groupBoxDisplay2->isChecked();
 
     settings = mySettings;
     settings2 = mySettings2;
@@ -116,11 +116,11 @@ void SongSettingWidget::loadSettings()
     // Set Effects
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
     ui->checkBoxUseFading->setChecked(mySettings.useFading);
-    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBlurShadow);
+    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBluredShadow);
 
     ui->checkBoxUseShadow2->setChecked(mySettings2.useShadow);
     ui->checkBoxUseFading2->setChecked(mySettings2.useFading);
-    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBlurShadow);
+    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBluredShadow);
 
     // Set Song Information
     ui->checkBoxStanzaTitle->setChecked(mySettings.showStanzaTitle);
@@ -176,14 +176,14 @@ void SongSettingWidget::loadSettings()
 
     // Set Screen Use
     ui->spinBoxScreenUse->setValue(mySettings.screenUse);
-    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenPositon);
+    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenPosition);
 
     ui->spinBoxScreenUse2->setValue(mySettings2.screenUse);
-    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenPositon);
+    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenPosition);
 
     // Set secondary screen
-    ui->groupBoxDisplay2->setChecked(mySettings2.useDisp2settings);
-    on_groupBoxDisplay2_toggled(mySettings2.useDisp2settings);
+    ui->groupBoxDisplay2->setChecked(mySettings2.useDisp2Settings);
+    on_groupBoxDisplay2_toggled(mySettings2.useDisp2Settings);
 }
 
 void SongSettingWidget::setDispScreen2Visible(bool visible)

@@ -57,11 +57,11 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
     mySettings.useFading = ui->checkBoxUseFading->isChecked();
-    mySettings.useBlurShadow = ui->checkBoxUseBlurredShadow->isChecked();
+    mySettings.useBluredShadow = ui->checkBoxUseBlurredShadow->isChecked();
 
     mySettings2.useShadow = ui->checkBoxUseShadow2->isChecked();
     mySettings2.useFading = ui->checkBoxUseFading2->isChecked();
-    mySettings2.useBlurShadow = ui->checkBoxUseBlurredShadow2->isChecked();
+    mySettings2.useBluredShadow = ui->checkBoxUseBlurredShadow2->isChecked();
 
     // Backgroud
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
@@ -85,8 +85,8 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
 
     // Version Abbreviations
-    mySettings.useAbbriviations = ui->checkBoxAbbiviations->isChecked();
-    mySettings2.useAbbriviations = ui->checkBoxAbbiviations2->isChecked();
+    mySettings.useAbbriviation = ui->checkBoxAbbiviations->isChecked();
+    mySettings2.useAbbriviation = ui->checkBoxAbbiviations2->isChecked();
 
     // Max screen use
     mySettings.screenUse = ui->spinBoxMaxScreen->value();
@@ -96,7 +96,7 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
 
     // Get if to use secodary screen settings
-    mySettings2.useDisp2settings = ui->groupBoxUseDisp2->isChecked();
+    mySettings2.useDisp2Settings = ui->groupBoxUseDisp2->isChecked();
 
     settings = mySettings;
     settings2 = mySettings2;
@@ -183,11 +183,11 @@ void BibleSettingWidget::loadSettings()
     // Set Effects
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
     ui->checkBoxUseFading->setChecked(mySettings.useFading);
-    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBlurShadow);
+    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBluredShadow);
 
     ui->checkBoxUseShadow2->setChecked(mySettings2.useShadow);
     ui->checkBoxUseFading2->setChecked(mySettings2.useFading);
-    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBlurShadow);
+    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBluredShadow);
 
     // Set background use
     ui->groupBoxBackground->setChecked(mySettings.useBackground);
@@ -234,8 +234,8 @@ void BibleSettingWidget::loadSettings()
     ui->comboBoxCaptionAlign2->setCurrentIndex(mySettings2.captionAlingment);
 
     // Set abbriviations use
-    ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviations);
-    ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviations);
+    ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviation);
+    ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviation);
 
     // Set max screen use
     ui->spinBoxMaxScreen->setValue(mySettings.screenUse);
@@ -245,8 +245,8 @@ void BibleSettingWidget::loadSettings()
     ui->comboBoxScreenPosition2->setCurrentIndex(mySettings2.screenPosition);
 
     // Set if to use secondary screen settings
-    ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2settings);
-    on_groupBoxUseDisp2_toggled(mySettings2.useDisp2settings);
+    ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2Settings);
+    on_groupBoxUseDisp2_toggled(mySettings2.useDisp2Settings);
 }
 
 void BibleSettingWidget::loadBibleVersions()

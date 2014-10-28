@@ -1,7 +1,7 @@
 ##**************************************************************************
 ##
 ##    softProjector - an open source media projection software
-##    Copyright (C) 2014  Vladislav Kobzar, Matvey Adzhigirey and Ilya Spivakov
+##    Copyright (C) 2014  Vladislav Kobzar
 ##
 ##    This program is free software: you can redistribute it and/or modify
 ##    it under the terms of the GNU General Public License as published by
@@ -18,10 +18,14 @@
 ##**************************************************************************
 
 
-QT += sql \
-    phonon \
-    webkit \
-    network
+QT += core \
+    gui \
+    webkitwidgets \
+    network \
+    sql \
+    qml \
+    quick
+
 TARGET = SoftProjector
 TEMPLATE = app
 CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
@@ -78,7 +82,10 @@ SOURCES += main.cpp \
     picturesettingwidget.cpp \
     moduledownloaddialog.cpp \
     moduleprogressdialog.cpp \
-    displaysetting.cpp
+    displaysetting.cpp \
+    projectordisplayscreen.cpp \
+    spimageprovider.cpp \
+    imagegenerator.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -118,7 +125,10 @@ HEADERS += softprojector.h \
     picturesettingwidget.h \
     moduledownloaddialog.h \
     moduleprogressdialog.h \
-    displaysetting.h
+    displaysetting.h \
+    projectordisplayscreen.h \
+    spimageprovider.h \
+    imagegenerator.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -144,12 +154,13 @@ FORMS += softprojector.ui \
     editannouncementdialog.ui \
     picturesettingwidget.ui \
     moduledownloaddialog.ui \
-    moduleprogressdialog.ui
+    moduleprogressdialog.ui \
+    projectordisplayscreen.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\
     translations/softpro_ua.ts
-CODECFORTR = UTF-8
+#CODECFORTR = UTF-8
 RESOURCES += softprojector.qrc
 
 win32 {

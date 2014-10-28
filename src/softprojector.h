@@ -20,12 +20,11 @@
 #ifndef SOFTPROJECTOR_H
 #define SOFTPROJECTOR_H
 
-#include <QtGui/QMainWindow>
-//#include <phonon>
+#include <QMainWindow>
 #include "songwidget.h"
 #include "biblewidget.h"
 #include "announcewidget.h"
-#include "displayscreen.h"
+//#include "displayscreen.h"
 #include "editwidget.h"
 #include "bible.h"
 #include "managedatadialog.h"
@@ -40,6 +39,8 @@
 #include "videoinfo.h"
 #include "slideshoweditor.h"
 #include "schedule.h"
+#include "projectordisplayscreen.h"
+#include "imagegenerator.h"
 
 class QActionGroup;
 
@@ -61,8 +62,9 @@ public:
     ManageDataDialog *manageDialog;
     QDesktopWidget *desktop;
     EditWidget *editWidget;
-    DisplayScreen *displayScreen1;
-    DisplayScreen *displayScreen2;
+//    DisplayScreen *displayScreen1;
+//    DisplayScreen *displayScreen2;
+    ProjectorDisplayScreen *pds1;//, *pds2;
     PictureWidget *pictureWidget;
     MediaWidget *mediaPlayer;
 
@@ -94,15 +96,19 @@ private:
     HelpDialog *helpDialog;
     QString type;
     bool new_list;
+    bool isStartup;
     QActionGroup *languageGroup;
     QString languagePath;
     QTranslator translator;
+
+    ImageGenerator imGen;
 
     //For saving and opening schedule files
     //QString project_file_path;
     QString schedule_file_path;
     bool is_schedule_saved;
     QString cur_locale;
+
     bool isSingleScreen;
     bool hasDisplayScreen2;
 
@@ -116,10 +122,10 @@ private:
     QList<SlideShowItem> pictureShowList;
 
     // video items
-    Phonon::SeekSlider *playerSlider;
-    Phonon::VolumeSlider *volumeSlider;
+//    Phonon::SeekSlider *playerSlider;
+//    Phonon::VolumeSlider *volumeSlider;
     VideoInfo currentVideo;
-    Phonon::AudioOutput *playerAudioOutput;
+//    Phonon::AudioOutput *playerAudioOutput;
 
     // Schelude list
     QList<Schedule> schedule;

@@ -19,7 +19,7 @@
 
 #ifndef SONG_H
 #define SONG_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSql>
 
 QString clean(QString str);

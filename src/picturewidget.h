@@ -20,7 +20,7 @@
 #ifndef PICTUREWIDGET_H
 #define PICTUREWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSql>
 #include "slideshow.h"
 #include "slideshoweditor.h"

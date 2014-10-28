@@ -20,8 +20,10 @@
 #ifndef PRINTPREVIEWDIALOG_H
 #define PRINTPREVIEWDIALOG_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtCore>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
 #include "song.h"
 #include "bible.h"
 #include "announcewidget.h"

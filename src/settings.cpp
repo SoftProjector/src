@@ -19,6 +19,48 @@
 
 #include "settings.h"
 
+TextSettings::TextSettings()
+{
+    textFont.fromString("Arial,48,-1,5,50,0,0,0,0,0");
+    textColor = QColor(Qt::white);
+    textShadowColor = QColor(Qt::black);
+    textAlingmentV = 0;
+    textAlingmentH = 0;
+    useBackground = false;
+    backgroundName = "";
+    background = QPixmap(1,1);
+    screenUse = 100;
+    screenPosition = 1;
+    useShadow = true;
+    useFading = true;
+    useBluredShadow = false;
+    useDisp2Settings = false;
+}
+
+BibleSettings::BibleSettings()//:TextSettings()
+{
+    captionFont.fromString("Arial,36,-1,5,50,0,0,0,0,0");
+    captionColor = QColor(Qt::white);
+    captionAlingment = 2;
+    captionPosition = 1;
+    useAbbriviation = false;
+}
+
+SongSettings::SongSettings()//:TextSettings()
+{
+    showStanzaTitle = false;
+    showSongKey = false;
+    showSongNumber = false;
+    showSongEnding = true;
+    infoColor = QColor(Qt::white);
+    infoFont.fromString("Arial,36,-1,5,50,0,0,0,0,0");
+    infoAling = 0;
+    endingColor = QColor(Qt::white);
+    endingFont.fromString("Arial,48,-1,5,50,0,0,0,0,0");
+    endingType = 0;
+    endingPosition = 1;
+}
+
 GeneralSettings::GeneralSettings()
 {
     // Apply General Defauls

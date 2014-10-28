@@ -20,8 +20,8 @@
 #ifndef EDITWIDGET_H
 #define EDITWIDGET_H
 
-#include <QtGui/QWidget>
-#include <QtGui>
+#include <QWidget>
+#include <QtWidgets>
 #include "song.h"
 #include "addsongbookdialog.h"
 #include "highlight.h"

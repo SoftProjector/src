@@ -20,10 +20,10 @@
 #ifndef DISPLAYSCREEN_H
 #define DISPLAYSCREEN_H
 
-#include <QtGui>
+#include <QtWidgets>
 //#include <phonon>
-#include <phonon/MediaObject>
-#include <phonon/VideoWidget>
+//#include <phonon/MediaObject>
+//#include <phonon/VideoWidget>
 #include "settings.h"
 #include "theme.h"
 #include "controlbutton.h"
@@ -44,97 +44,97 @@ class DisplayScreen : public QWidget
 public:
     explicit DisplayScreen(QWidget *parent = 0);
     ~DisplayScreen();
-    Phonon::MediaObject *videoPlayer;
+//    Phonon::MediaObject *videoPlayer;
 
-public slots:
-    void setNewWallpaper(QString path, bool isToUse);
-    void setNewWallpaper(QPixmap wallPix, bool isToUse);
-    void setNewPassiveWallpaper(QPixmap wallPix, bool isToUse);
+//public slots:
+//    void setNewWallpaper(QString path, bool isToUse);
+//    void setNewWallpaper(QPixmap wallPix, bool isToUse);
+//    void setNewPassiveWallpaper(QPixmap wallPix, bool isToUse);
 
-    void fadeIn();
-    void fadeOut();
-    void setDisplaySettings(DisplaySettings sets);
-    void setFading(bool fade);
+//    void fadeIn();
+//    void fadeOut();
+//    void setDisplaySettings(DisplaySettings sets);
+//    void setFading(bool fade);
 
-    void fastbluralpha(QImage &img, int radius);
-    void setControlsSettings(DisplayControlsSettings &settings);
-    void setControlButtonsVisible(bool visible);
-    void positionOpjects();
+//    void fastbluralpha(QImage &img, int radius);
+//    void setControlsSettings(DisplayControlsSettings &settings);
+//    void setControlButtonsVisible(bool visible);
+//    void positionOpjects();
 
-    void renderText(bool text_present);
-    void renderBibleText(Verse verse, BibleSettings &bibleSetings);
-    void renderSongText(Stanza stanza, SongSettings &songSettings);
-    void renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings);
-    void renderPicture(QPixmap image, SlideShowSettings ssSets);
-    void renderVideo(VideoInfo &vid);
-    void renderClear();
+//    void renderText(bool text_present);
+//    void renderBibleText(Verse verse, BibleSettings &bibleSetings);
+//    void renderSongText(Stanza stanza, SongSettings &songSettings);
+//    void renderAnnounceText(AnnounceSlide announce, TextSettings &announceSettings);
+//    void renderPicture(QPixmap image, SlideShowSettings ssSets);
+//    void renderVideo(VideoInfo &vid);
+//    void renderClear();
 
-signals:
-    void exitSlide();
-    void nextSlide();
-    void prevSlide();
-    void sendTimeText(QString cTime);
-    void updatePlayButton(bool isPlaying);
+//signals:
+//    void exitSlide();
+//    void nextSlide();
+//    void prevSlide();
+//    void sendTimeText(QString cTime);
+//    void updatePlayButton(bool isPlaying);
 
-protected:
-    void paintEvent(QPaintEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+//protected:
+//    void paintEvent(QPaintEvent *event);
+//    void keyReleaseEvent(QKeyEvent *event);
     
-private slots:
-    void positionControlButtons();
-    void btnNextClicked();
-    void btnPrevClicked();
-    void btnExitClicked();
+//private slots:
+//    void positionControlButtons();
+//    void btnNextClicked();
+//    void btnPrevClicked();
+//    void btnExitClicked();
 
-    void drawBibleText(QPainter *painter, int width, int height, bool isShadow);
-    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height);
-    void drawSongText(QPainter *painter, int width, int height, bool isShadow);
-    QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
-    void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
+//    void drawBibleText(QPainter *painter, int width, int height, bool isShadow);
+//    void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height);
+//    void drawSongText(QPainter *painter, int width, int height, bool isShadow);
+//    QRect boundRectOrDrawText(QPainter *painter, bool draw, int left, int top, int width, int height, int flags, QString text);
+//    void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
 
-    void updateTimeText();
-    void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
+//    void updateTimeText();
+////    void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
 
 private:
     Ui::DisplayScreen *ui;
-    DisplayControlsSettings controlsSettings;
-    bool useFading;
-    bool useShadow;
-    bool useBluredShadow;
-    bool isTextPrepared;
-    QString wallpaperPath; // Wallpaper image file path
-    QPixmap wallpaper;
-    QString passiveWallpaperPath;
-    QPixmap passiveWallpaper;
-    QColor foregroundColor;
+//    DisplayControlsSettings controlsSettings;
+//    bool useFading;
+//    bool useShadow;
+//    bool useBluredShadow;
+//    bool isTextPrepared;
+//    QString wallpaperPath; // Wallpaper image file path
+//    QPixmap wallpaper;
+//    QString passiveWallpaperPath;
+//    QPixmap passiveWallpaper;
+//    QColor foregroundColor;
 
-    QPixmap previous_image_pixmap;
-    QImage output_image;
-    bool use_active_background;
-    bool background_needs_transition;
-    int acounter[2];
-    QTimer *timer;
-    QTimer *timer_out;
+//    QPixmap previous_image_pixmap;
+//    QImage output_image;
+//    bool use_active_background;
+//    bool background_needs_transition;
+//    int acounter[2];
+//    QTimer *timer;
+//    QTimer *timer_out;
 
-    ControlButton *btnNext;
-    ControlButton *btnPrev;
-    ControlButton *btnExit;
+//    ControlButton *btnNext;
+//    ControlButton *btnPrev;
+//    ControlButton *btnExit;
 
-    SongSettings songSets;
-    BibleSettings bibleSets;
-    AnnounceSettings annouceSets;
+//    SongSettings songSets;
+//    BibleSettings bibleSets;
+//    TextSettings annouceSets;
 
-    Verse bibleVerse;
-    Stanza songStanza;
-    AnnounceSlide announcement;
+//    Verse bibleVerse;
+//    Stanza songStanza;
+//    AnnounceSlide announcement;
 
-    QString displayType;
-    QLabel *textRenderLabel;
-    Phonon::VideoWidget *videoWidget;
+//    QString displayType;
+//    QLabel *textRenderLabel;
+////    Phonon::VideoWidget *videoWidget;
 
-    BibleDisplaySettings bdSets;
-    SongDisplaySettings sdSets;
-    AnnounceDisplaySettings adSets;
+//    BibleDisplaySettings bdSets;
+//    SongDisplaySettings sdSets;
+//    AnnounceDisplaySettings adSets;
 };
 
 #endif // DISPLAYSCREEN_H

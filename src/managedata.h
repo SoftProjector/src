@@ -20,7 +20,7 @@
 #ifndef MANAGEDATA_H
 #define MANAGEDATA_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSql>
 #include "theme.h"
 

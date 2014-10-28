@@ -21,7 +21,7 @@
 #define CONTROLBUTTON_H
 
 #include <QtCore>
-#include <QtGui>
+#include <QtWidgets>
 
 class ControlButton : public QPushButton
 {

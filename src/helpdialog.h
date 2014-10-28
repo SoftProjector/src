@@ -20,8 +20,8 @@
 #ifndef HELPDIALOG_H
 #define HELPDIALOG_H
 
-#include <QtGui/QDialog>
-#include <QtGui>
+#include <QDialog>
+#include <QtWidgets>
 //#include <QtWebKit>
 
 namespace Ui {

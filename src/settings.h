@@ -20,8 +20,77 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QtCore>
+//#include <QtCore>
 #include <QtSql>
+#include <QPixmap>
+
+class TextSettings
+{
+public:
+    TextSettings();
+    //Text
+    QFont textFont;
+    QColor textColor;
+    QColor textShadowColor;
+    int textAlingmentV;
+    int textAlingmentH;
+    //Background
+    bool useBackground;
+    QString backgroundName;
+    QPixmap background;
+    //Layout
+    int screenUse;
+    int screenPosition;
+    //Effects
+    bool useFading;
+    bool useShadow;
+    bool useBluredShadow;
+
+    bool useDisp2Settings;
+};
+
+//class MainScreenSettings : TextSettings
+//{
+//public:
+//    MainScreenSettings();
+//};
+
+class BibleSettings : public TextSettings
+{
+public:
+    BibleSettings();
+    QFont captionFont;
+    QColor captionColor;
+    int captionAlingment;
+    int captionPosition;
+    bool useAbbriviation;
+};
+
+class SongSettings : public TextSettings
+{
+public:
+    SongSettings();
+    // Stanza Details
+    bool showStanzaTitle;
+    bool showSongKey;
+    bool showSongNumber;
+    bool showSongEnding;
+    // Info
+    QColor infoColor;
+    QFont infoFont;
+    int infoAling; // 0 = Top, 1 = Bottom
+    //Ending
+    QColor endingColor;
+    QFont endingFont;
+    int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
+    int endingPosition;
+};
+
+//class AnnounceSettings : TextSettings
+//{
+//public:
+//    AnnounceSettings();
+//};
 
 class DisplayControlsSettings
 {

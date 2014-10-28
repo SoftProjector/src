@@ -20,7 +20,7 @@
 #ifndef SONGWIDGET_H
 #define SONGWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include "song.h"
 #include "songcounter.h"
 #include "editwidget.h"

@@ -20,7 +20,7 @@
 #ifndef ANNOUNCEWIDGET_H
 #define ANNOUNCEWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "announcement.h"
 #include "editannouncementdialog.h"
 

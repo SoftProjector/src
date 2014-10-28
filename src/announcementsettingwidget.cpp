@@ -44,7 +44,7 @@ void AnnouncementSettingWidget::changeEvent(QEvent *e)
      }
 }
 
-void AnnouncementSettingWidget::setSettings(AnnounceSettings &settings, AnnounceSettings &settings2)
+void AnnouncementSettingWidget::setSettings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings = settings;
     mySettings2 = settings2;
@@ -56,11 +56,11 @@ void AnnouncementSettingWidget::loadSettings()
     // Set Effects
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
     ui->checkBoxUseFading->setChecked(mySettings.useFading);
-    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBlurShadow);
+    ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBluredShadow);
 
     ui->checkBoxUseShadow2->setChecked(mySettings2.useShadow);
     ui->checkBoxUseFading2->setChecked(mySettings2.useFading);
-    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBlurShadow);
+    ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBluredShadow);
 
     // Set background
     ui->groupBoxBackground->setChecked(mySettings.useBackground);
@@ -88,20 +88,20 @@ void AnnouncementSettingWidget::loadSettings()
     ui->labelFont->setText(getFontText(mySettings.textFont));
     ui->labelFont2->setText(getFontText(mySettings2.textFont));
 
-    ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2settings);
-    on_groupBoxUseDisp2_toggled(mySettings2.useDisp2settings);
+    ui->groupBoxUseDisp2->setChecked(mySettings2.useDisp2Settings);
+    on_groupBoxUseDisp2_toggled(mySettings2.useDisp2Settings);
 }
 
-void AnnouncementSettingWidget::getSettings(AnnounceSettings &settings, AnnounceSettings &settings2)
+void AnnouncementSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
     mySettings.useFading = ui->checkBoxUseFading->isChecked();
-    mySettings.useBlurShadow = ui->checkBoxUseBlurredShadow->isChecked();
+    mySettings.useBluredShadow = ui->checkBoxUseBlurredShadow->isChecked();
 
     mySettings2.useShadow = ui->checkBoxUseShadow2->isChecked();
     mySettings2.useFading = ui->checkBoxUseFading2->isChecked();
-    mySettings2.useBlurShadow = ui->checkBoxUseBlurredShadow2->isChecked();
+    mySettings2.useBluredShadow = ui->checkBoxUseBlurredShadow2->isChecked();
 
     // Get Background
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
@@ -117,7 +117,7 @@ void AnnouncementSettingWidget::getSettings(AnnounceSettings &settings, Announce
     mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
     mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
 
-    mySettings2.useDisp2settings = ui->groupBoxUseDisp2->isChecked();
+    mySettings2.useDisp2Settings = ui->groupBoxUseDisp2->isChecked();
 
     settings = mySettings;
     settings2 = mySettings2;
@@ -235,7 +235,7 @@ void AnnouncementSettingWidget::on_groupBoxUseDisp2_toggled(bool arg1)
 
 void AnnouncementSettingWidget::on_pushButtonDefault_clicked()
 {
-    AnnounceSettings a;
+    TextSettings a;
     mySettings = a;
     mySettings2 = a;
     loadSettings();

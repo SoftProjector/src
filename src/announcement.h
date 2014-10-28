@@ -20,7 +20,7 @@
 #ifndef ANNOUNCEMENT_H
 #define ANNOUNCEMENT_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "spfunctions.h"
 
 class AnnounceSlide
