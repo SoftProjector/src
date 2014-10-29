@@ -55,7 +55,8 @@ void AnnouncementSettingWidget::loadSettings()
 {
     // Set Effects
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
-    ui->checkBoxUseFading->setChecked(mySettings.useFading);
+//    ui->checkBoxUseFading->setChecked(mySettings.useFading);
+//    ui->comboBoxTransitionType->setCurrentIndex(mySettings.transitionType);
     ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBluredShadow);
 
     ui->checkBoxUseShadow2->setChecked(mySettings2.useShadow);
@@ -96,7 +97,8 @@ void AnnouncementSettingWidget::getSettings(TextSettings &settings, TextSettings
 {
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
-    mySettings.useFading = ui->checkBoxUseFading->isChecked();
+//    mySettings.useFading = ui->checkBoxUseFading->isChecked();
+    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex();
     mySettings.useBluredShadow = ui->checkBoxUseBlurredShadow->isChecked();
 
     mySettings2.useShadow = ui->checkBoxUseShadow2->isChecked();

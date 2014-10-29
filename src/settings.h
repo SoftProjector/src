@@ -42,6 +42,9 @@ public:
     int screenUse;
     int screenPosition;
     //Effects
+    int transitionType;
+    // 0 - None, 1 - Fade, 2 - Fade out->in,
+    // 3 - Move Right, 4 - Move Left, 5 - Move Up, 6 - Move Down
     bool useFading;
     bool useShadow;
     bool useBluredShadow;

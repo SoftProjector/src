@@ -20,11 +20,13 @@
 
 QT += core \
     gui \
-    webkitwidgets \
+    widgets \
     network \
     sql \
     qml \
-    quick
+    quick \
+    printsupport \
+    multimedia
 
 TARGET = SoftProjector
 TEMPLATE = app

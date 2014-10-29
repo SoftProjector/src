@@ -22,8 +22,8 @@
 
 #include <QtWidgets>
 #include <QtCore>
-#include <QtPrintSupport/QPrinter>
-#include <QtPrintSupport/QPrintDialog>
+#include <QPrinter>
+#include <QPrintDialog>
 #include "song.h"
 #include "bible.h"
 #include "announcewidget.h"

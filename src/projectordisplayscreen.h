@@ -50,6 +50,7 @@ private:
     ImageGenerator imGen;
     bool backImSwitch1, textImSwitch1, backImSwitch2, textImSwitch2;
     bool isNewBack, back1to2, text1to2;
+    int tranType;
     QColor m_color;
 
     QPixmap back;

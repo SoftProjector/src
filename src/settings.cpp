@@ -31,8 +31,9 @@ TextSettings::TextSettings()
     background = QPixmap(1,1);
     screenUse = 100;
     screenPosition = 1;
-    useShadow = true;
+    transitionType = 0;
     useFading = true;
+    useShadow = true;
     useBluredShadow = false;
     useDisp2Settings = false;
 }

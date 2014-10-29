@@ -21,7 +21,7 @@
 #define VIDEOPLAYERWIDGET_H
 
 #include <QtWidgets>
-#include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlayer>
 //#include <phonon>
 //#include <phonon/VideoWidget>
 

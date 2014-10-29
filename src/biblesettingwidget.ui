@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>426</width>
-    <height>1015</height>
+    <height>1016</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -114,13 +114,42 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QCheckBox" name="checkBoxUseFading">
-        <property name="toolTip">
-         <string>If checked, when switching displayed text, fades the old text out and fades the new text in .</string>
-        </property>
-        <property name="text">
-         <string>Use fading effects</string>
-        </property>
+       <widget class="QComboBox" name="comboBoxTransitionType">
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Fade</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Fade Out-In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Move Right</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Move Left</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Move Up</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Move Down</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>
@@ -669,7 +698,16 @@
       <item>
        <widget class="QWidget" name="widgetBibles2" native="true">
         <layout class="QGridLayout" name="gridLayout_3">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item row="0" column="0">
@@ -1376,7 +1414,6 @@
   <tabstop>comboBoxSecondaryBible</tabstop>
   <tabstop>comboBoxTrinaryBible</tabstop>
   <tabstop>comboBoxOperatorBible</tabstop>
-  <tabstop>checkBoxUseFading</tabstop>
   <tabstop>checkBoxUseShadow</tabstop>
   <tabstop>checkBoxUseBlurredShadow</tabstop>
   <tabstop>groupBoxBackground</tabstop>

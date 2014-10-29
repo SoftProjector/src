@@ -56,7 +56,8 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
 {
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
-    mySettings.useFading = ui->checkBoxUseFading->isChecked();
+    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex();
+//    mySettings.useFading = ui->checkBoxUseFading->isChecked();
     mySettings.useBluredShadow = ui->checkBoxUseBlurredShadow->isChecked();
 
     mySettings2.useShadow = ui->checkBoxUseShadow2->isChecked();
@@ -181,8 +182,9 @@ void BibleSettingWidget::getBibleVersions(BibleVersionSettings &bver, BibleVersi
 void BibleSettingWidget::loadSettings()
 {
     // Set Effects
+    ui->comboBoxTransitionType->setCurrentIndex(mySettings.transitionType);
     ui->checkBoxUseShadow->setChecked(mySettings.useShadow);
-    ui->checkBoxUseFading->setChecked(mySettings.useFading);
+//    ui->checkBoxUseFading->setChecked(mySettings.useFading);
     ui->checkBoxUseBlurredShadow->setChecked(mySettings.useBluredShadow);
 
     ui->checkBoxUseShadow2->setChecked(mySettings2.useShadow);

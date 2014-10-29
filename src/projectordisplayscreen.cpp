@@ -131,7 +131,7 @@ void ProjectorDisplayScreen::updateScreen()
 {
     QObject *root = dispView->rootObject();
     QMetaObject::invokeMethod(root,"stopTransitions");
-    QString tranType = "seq";
+//    QString tranType = "seq";
     
     if(text1to2 && back1to2)
     {
@@ -183,6 +183,7 @@ void ProjectorDisplayScreen::renderBibleText(Verse bVerse, BibleSettings &bSets)
         setBackPixmap(bSets.background,0);
     else
         setBackPixmap(imGen.generateColorImage(m_color),0);
+    tranType = bSets.transitionType;
     
     updateScreen();
 }
@@ -194,7 +195,7 @@ void ProjectorDisplayScreen::renderSongText(Stanza stanza, SongSettings &sSets)
         setBackPixmap(sSets.background,0);
     else
         setBackPixmap(imGen.generateColorImage(m_color),0);
-    
+    tranType = sSets.transitionType;
     updateScreen();
 }
 
@@ -205,7 +206,7 @@ void ProjectorDisplayScreen::renderAnnounceText(AnnounceSlide announce, TextSett
         setBackPixmap(aSets.background,0);
     else
         setBackPixmap(imGen.generateColorImage(m_color),0);
-    
+    tranType = aSets.transitionType;
     updateScreen();
 }
 

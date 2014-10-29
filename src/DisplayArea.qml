@@ -237,28 +237,17 @@ Rectangle {
 
     function transitionText1to2(tranType)
     {
-        if(tranType === "seq")
-        {
-            textImage2.opacity = 0.0
-            seqFade1to2.start()
-        }
-        else if(tranType === "par")
+        if(tranType === 1)
         {
             textImage2.opacity = 0.0
             parFade1to2.start()
         }
-        else if(tranType === "left")
+        else if(tranType === 2)
         {
-            mTox = mx - parent.width
-            textImage1.y = my
-            textImage1.x = mx
-            textImage2.y = my
-            textImage2.x = mx + parent.width
-            textImage1.opacity = 1.0
-            textImage2.opacity = 1.0
-            moveTextX1to2.start()
+            textImage2.opacity = 0.0
+            seqFade1to2.start()
         }
-        else if(tranType === "right")
+        else if(tranType === 3)
         {
             mTox = mx + parent.width
             textImage1.y = my
@@ -269,7 +258,18 @@ Rectangle {
             textImage2.opacity = 1.0
             moveTextX1to2.start()
         }
-        else if(tranType === "up")
+        else if(tranType === 4)
+        {
+            mTox = mx - parent.width
+            textImage1.y = my
+            textImage1.x = mx
+            textImage2.y = my
+            textImage2.x = mx + parent.width
+            textImage1.opacity = 1.0
+            textImage2.opacity = 1.0
+            moveTextX1to2.start()
+        }
+        else if(tranType === 5)
         {
             mToy = my - parent.height
             textImage1.y = my
@@ -280,7 +280,7 @@ Rectangle {
             textImage2.opacity = 1.0
             moveTextY1to2.start()
         }
-        else if(tranType === "down")
+        else if(tranType === 6)
         {
             mToy = my + parent.height
             textImage1.y = my
@@ -314,28 +314,17 @@ Rectangle {
 
     function transitionText2to1(tranType)
     {
-        if(tranType === "seq")
-        {
-            textImage1.opacity = 0.0
-            seqFade2to1.start()
-        }
-        else if(tranType === "par")
+        if(tranType === 1)
         {
             textImage1.opacity = 0.0
             parFade2to1.start()
         }
-        else if(tranType === "left")
+        else if(tranType === 2)
         {
-            mTox = mx - parent.width
-            textImage1.y = my
-            textImage1.x = mx + parent.width
-            textImage2.y = my
-            textImage2.x = mx
-            textImage1.opacity = 1.0
-            textImage2.opacity = 1.0
-            moveTextX2to1.start()
+            textImage1.opacity = 0.0
+            seqFade2to1.start()
         }
-        else if(tranType === "right")
+        else if(tranType === 3)
         {
             mTox = mx + parent.width
             textImage1.y = my
@@ -346,7 +335,18 @@ Rectangle {
             textImage2.opacity = 1.0
             moveTextX2to1.start()
         }
-        else if(tranType === "up")
+        else if(tranType === 4)
+        {
+            mTox = mx - parent.width
+            textImage1.y = my
+            textImage1.x = mx + parent.width
+            textImage2.y = my
+            textImage2.x = mx
+            textImage1.opacity = 1.0
+            textImage2.opacity = 1.0
+            moveTextX2to1.start()
+        }
+        else if(tranType === 5)
         {
             mToy = my - parent.height
             textImage1.y = my + parent.height
@@ -357,7 +357,7 @@ Rectangle {
             textImage2.opacity = 1.0
             moveTextY2to1.start()
         }
-        else if(tranType === "down")
+        else if(tranType === 6)
         {
             mToy = my + parent.height
             textImage1.y = my - parent.height
@@ -391,23 +391,12 @@ Rectangle {
     
     function transitionBack1to2(tranType)
     {
-        if(tranType === "seq" || tranType === "par")
+        if(tranType === 1 || tranType === 2)
         {
             backImage2.opacity = 0.0
             parBackFade1to2.start()
         }
-        else if(tranType === "left")
-        {
-            mTox = mx - parent.width
-            backImage1.y = my
-            backImage1.x = mx
-            backImage2.y = my
-            backImage2.x = mx + parent.width
-            backImage1.opacity = 1.0
-            backImage2.opacity = 1.0
-            moveBackX1to2.start()
-        }
-        else if(tranType === "right")
+        else if(tranType === 3)
         {
             mTox = mx + parent.width
             backImage1.y = my
@@ -418,7 +407,18 @@ Rectangle {
             backImage2.opacity = 1.0
             moveBackX1to2.start()
         }
-        else if(tranType === "up")
+        else if(tranType === 4)
+        {
+            mTox = mx - parent.width
+            backImage1.y = my
+            backImage1.x = mx
+            backImage2.y = my
+            backImage2.x = mx + parent.width
+            backImage1.opacity = 1.0
+            backImage2.opacity = 1.0
+            moveBackX1to2.start()
+        }
+        else if(tranType === 5)
         {
             mToy = my - parent.height
             backImage1.y = my
@@ -429,7 +429,7 @@ Rectangle {
             backImage2.opacity = 1.0
             moveBackY1to2.start()
         }
-        else if(tranType === "down")
+        else if(tranType === 6)
         {
             mToy = my + parent.height
             backImage1.y = my
@@ -453,23 +453,12 @@ Rectangle {
     
     function transitionBack2to1(tranType)
     {
-        if(tranType === "seq" || tranType === "par")
+        if(tranType === 1 || tranType === 2)
         {
             backImage1.opacity = 0.0
             parBackFade2to1.start()
         }
-        else if(tranType === "left")
-        {
-            mTox = mx - parent.width
-            backImage1.y = my
-            backImage1.x = mx + parent.width
-            backImage2.y = my
-            backImage2.x = mx
-            backImage1.opacity = 1.0
-            backImage2.opacity = 1.0
-            moveBackX2to1.start()
-        }
-        else if(tranType === "right")
+        else if(tranType === 3)
         {
             mTox = mx + parent.width
             backImage1.y = my
@@ -480,7 +469,18 @@ Rectangle {
             backImage2.opacity = 1.0
             moveBackX2to1.start()
         }
-        else if(tranType === "up")
+        else if(tranType === 4)
+        {
+            mTox = mx - parent.width
+            backImage1.y = my
+            backImage1.x = mx + parent.width
+            backImage2.y = my
+            backImage2.x = mx
+            backImage1.opacity = 1.0
+            backImage2.opacity = 1.0
+            moveBackX2to1.start()
+        }
+        else if(tranType === 5)
         {
             mToy = my - parent.height
             backImage1.y = my + parent.height
@@ -491,7 +491,7 @@ Rectangle {
             backImage2.opacity = 1.0
             moveBackY2to1.start()
         }
-        else if(tranType === "down")
+        else if(tranType === 6)
         {
             mToy = my + parent.height
             backImage1.y = my - parent.height
