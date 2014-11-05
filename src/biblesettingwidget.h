@@ -80,6 +80,28 @@ private slots:
     QString getFontText(QFont font);
     void on_pushButtonApplyToAll_clicked();
 
+    void on_comboBoxBackgoundType_currentIndexChanged(int index);
+
+    void on_checkBoxCommonFont_stateChanged(int arg1);
+
+    void on_checkBoxCommonColor_stateChanged(int arg1);
+
+    void on_toolButtonShadowColor_clicked();
+
+    void on_checkBoxSameFont_stateChanged(int arg1);
+
+    void on_checkBoxSameColor_stateChanged(int arg1);
+
+    void on_toolButtonCaptionShadowColor_clicked();
+
+    void on_comboBoxTransitionType_currentIndexChanged(int index);
+
+    void on_comboBoxTextEffects_currentIndexChanged(int index);
+
+    void on_checkBoxCommonLayout_stateChanged(int arg1);
+
+    void on_checkBoxDisp2_stateChanged(int arg1);
+
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;

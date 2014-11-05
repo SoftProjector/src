@@ -1,5 +1,7 @@
+#include <QMediaPlaylist>
 #include "projectordisplayscreen.h"
 #include "ui_projectordisplayscreen.h"
+
 
 ProjectorDisplayScreen::ProjectorDisplayScreen(QWidget *parent) :
     QWidget(parent),
@@ -11,6 +13,7 @@ ProjectorDisplayScreen::ProjectorDisplayScreen(QWidget *parent) :
     dispView->engine()->addImageProvider(QLatin1String("improvider"),imProvider);
     QWidget *w = QWidget::createWindowContainer(dispView,this);
     dispView->setSource(QUrl("qrc:/DisplayArea.qml"));
+//    dispView->setSource(QUrl("../../DisplayArea.qml"));
     ui->verticalLayout->addWidget(w);
 
     backImSwitch1 = backImSwitch2 = textImSwitch1 = textImSwitch2 = false;
@@ -99,6 +102,16 @@ void ProjectorDisplayScreen::setBackPixmap(QPixmap p, int fillMode)
     }
 }
 
+void ProjectorDisplayScreen::setBackPixmap(QPixmap p, QColor c)
+{
+    if(backType == 0)
+        setBackPixmap(imGen.generateColorImage(c),0);
+    else if(backType == 1)
+        setBackPixmap(p,0);
+    else if(backType ==2)
+        setBackPixmap(imGen.generateEmptyImage(),0);
+}
+
 void ProjectorDisplayScreen::setTextPixmap(QPixmap p)
 {
     imProvider->setPixMap(p);
@@ -127,12 +140,29 @@ void ProjectorDisplayScreen::setTextPixmap(QPixmap p)
     }
 }
 
+void ProjectorDisplayScreen::setVideoSource(QString path)
+{
+    QObject *item = dispView->rootObject()->findChild<QObject*>("player");
+    QObject *item2 = dispView->rootObject()->findChild<QObject*>("vidOut");
+
+    item->setProperty("volume",0.0);
+    item->setProperty("source",path);
+    item->setProperty("loops",QMediaPlaylist::Loop);
+    item2->setProperty("fillMode",Qt::IgnoreAspectRatio);
+}
+
 void ProjectorDisplayScreen::updateScreen()
 {
     QObject *root = dispView->rootObject();
     QMetaObject::invokeMethod(root,"stopTransitions");
 //    QString tranType = "seq";
     
+    // if background is a video, play video, else stop it.
+    if(backType == 2)
+        QMetaObject::invokeMethod(root,"playVideo");
+    else
+        QMetaObject::invokeMethod(root,"stopVideo");
+
     if(text1to2 && back1to2)
     {
         if(isNewBack)
@@ -178,12 +208,17 @@ void ProjectorDisplayScreen::renderPassiveText(QPixmap &back, bool useBack)
 
 void ProjectorDisplayScreen::renderBibleText(Verse bVerse, BibleSettings &bSets)
 {
-    setTextPixmap(imGen.generateBibleImage(bVerse,bSets));
-    if(bSets.useBackground)
-        setBackPixmap(bSets.background,0);
-    else
-        setBackPixmap(imGen.generateColorImage(m_color),0);
     tranType = bSets.transitionType;
+    backType = bSets.backgroundType;
+    setTextPixmap(imGen.generateBibleImage(bVerse,bSets));
+    setBackPixmap(bSets.background,bSets.backgroundColor);
+    if(backType ==2)
+        setVideoSource(bSets.backgroundVideoPath);
+//    if(bSets.useBackground)
+//        setBackPixmap(bSets.background,0);
+//    else
+//        setBackPixmap(imGen.generateColorImage(m_color),0);
+
     
     updateScreen();
 }

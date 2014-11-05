@@ -25,11 +25,13 @@
 #include <QImageReader>
 #include <QPixmap>
 #include <QBuffer>
+#include <QFont>
 
 
 QByteArray pixToByte(const QPixmap & pmap);
 bool isAnnounceTitle(QString string);
 QString getSupportedImageFormats();
+//QString getFontText(QFont font);
 //class spFunctions
 //{
 //public:

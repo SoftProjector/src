@@ -21,25 +21,36 @@
 
 TextSettings::TextSettings()
 {
-    textFont.fromString("Arial,48,-1,5,50,0,0,0,0,0");
+    textFont.fromString("Arial,15,-1,5,50,0,0,0,0,0");
+    commonFont = true;
     textColor = QColor(Qt::white);
     textShadowColor = QColor(Qt::black);
+    commonColor = true;
     textAlingmentV = 0;
     textAlingmentH = 0;
     useBackground = false;
+    backgroundType = 0;
+    backgroundColor = QColor(Qt::black);
     backgroundName = "";
     background = QPixmap(1,1);
+    backgroundVideoPath = "";
     screenUse = 100;
     screenPosition = 1;
+    commonLayout = true;
     transitionType = 0;
     useFading = true;
+    effectsType = 1;
     useShadow = true;
     useBluredShadow = false;
+    useSameForDisp2 = true;
     useDisp2Settings = false;
 }
 
 BibleSettings::BibleSettings()//:TextSettings()
 {
+    transitionType = -1;
+    effectsType = -1;
+    backgroundType = -1;
     captionFont.fromString("Arial,36,-1,5,50,0,0,0,0,0");
     captionColor = QColor(Qt::white);
     captionAlingment = 2;
@@ -49,6 +60,11 @@ BibleSettings::BibleSettings()//:TextSettings()
 
 SongSettings::SongSettings()//:TextSettings()
 {
+    textAlingmentV = 1;
+    textAlingmentH = 1;
+    transitionType = -1;
+    effectsType = -1;
+    backgroundType = -1;
     showStanzaTitle = false;
     showSongKey = false;
     showSongNumber = false;
@@ -76,7 +92,7 @@ DisplayControlsSettings::DisplayControlsSettings()
     buttonSize = 3; // 0=16,1=24,2=32,3=48,4=64,5=96
     alignmentV = 2;
     alignmentH = 1;
-    opacity = .3;
+    opacity = 0.3;
 }
 
 SpSettings::SpSettings()

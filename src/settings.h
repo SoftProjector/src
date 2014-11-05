@@ -29,27 +29,43 @@ class TextSettings
 public:
     TextSettings();
     //Text
+    bool commonFont;
     QFont textFont;
+    bool commonColor;
     QColor textColor;
     QColor textShadowColor;
     int textAlingmentV;
+    // 0 - Top, 1 - Middle, 3 - Botton
     int textAlingmentH;
-    //Background
-    bool useBackground;
-    QString backgroundName;
-    QPixmap background;
-    //Layout
-    int screenUse;
-    int screenPosition;
+    // 0 - Left, 1 - Center, 3 - Right
+
     //Effects
     int transitionType;
-    // 0 - None, 1 - Fade, 2 - Fade out->in,
+    // -1 - Common, 0 - None, 1 - Fade, 2 - Fade out->in,
     // 3 - Move Right, 4 - Move Left, 5 - Move Up, 6 - Move Down
-    bool useFading;
-    bool useShadow;
-    bool useBluredShadow;
+    bool useFading;// TODO: REMOVE
+    int effectsType;
+    // -1 - Common, 0 - None, 1 - Shadow, 2 - Blurred Shadow
+    bool useShadow;// TODO: REMOVE
+    bool useBluredShadow;// TODO: REMOVE
 
-    bool useDisp2Settings;
+    //Background
+    bool useBackground;// TODO: REMOVE
+    int backgroundType;
+    // -1 - Common, 0 - Solid Color, 1 - Picture, 2 - Video
+    QColor backgroundColor;
+    QString backgroundName;
+    QPixmap background; //TODO: Rename to backgroundPix
+    QString backgroundVideoPath;
+
+    //Layout
+    bool commonLayout;
+    int screenUse;
+    int screenPosition;
+    // 0 - Top of Screen, 1 - Botton of Screen
+
+    bool useSameForDisp2;
+    bool useDisp2Settings; // TODO: REMOVE
 };
 
 //class MainScreenSettings : TextSettings

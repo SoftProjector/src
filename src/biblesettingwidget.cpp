@@ -65,8 +65,8 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     mySettings2.useBluredShadow = ui->checkBoxUseBlurredShadow2->isChecked();
 
     // Backgroud
-    mySettings.useBackground = ui->groupBoxBackground->isChecked();
-    mySettings.backgroundName = ui->lineEditBackPath->text();
+//    mySettings.useBackground = ui->groupBoxBackground->isChecked();
+//    mySettings.backgroundName = ui->lineEditBackPath->text();
 
     mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
     mySettings2.backgroundName = ui->lineEditBackPath2->text();
@@ -192,14 +192,18 @@ void BibleSettingWidget::loadSettings()
     ui->checkBoxUseBlurredShadow2->setChecked(mySettings2.useBluredShadow);
 
     // Set background use
-    ui->groupBoxBackground->setChecked(mySettings.useBackground);
-    ui->lineEditBackPath->setText(mySettings.backgroundName);
+    QPalette p;
+    ui->comboBoxBackgoundType->setCurrentIndex(mySettings.backgroundType);
+//    ui->groupBoxBackground->setChecked(mySettings.useBackground);
+//    ui->lineEditBackPath->setText(mySettings.backgroundName);
+    p.setColor(QPalette::Base,mySettings.backgroundColor);
+    ui->graphicsViewBackgroundColor->setPalette(p);
 
     ui->groupBoxBackground2->setChecked(mySettings2.useBackground);
     ui->lineEditBackPath2->setText(mySettings2.backgroundName);
 
     // Set text color
-    QPalette p;
+
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicViewTextColor->setPalette(p);
 
@@ -499,20 +503,47 @@ void BibleSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
 
 void BibleSettingWidget::on_buttonBrowseBackground_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
-                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
-    if(!filename.isNull())
+    QString filename;
+    if (mySettings.backgroundType == 0)
     {
-        QPixmap p(filename);
-        if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
-        else
-            mySettings.background = p;
-        QFileInfo fi(filename);
-        filename = fi.fileName();
-        mySettings.backgroundName = filename;
-        ui->lineEditBackPath->setText(filename);
+        QColor c(QColorDialog::getColor(mySettings.backgroundColor,this));
+        if(c.isValid())
+            mySettings.backgroundColor = c;
+        QPalette p;
+        p.setColor(QPalette::Base,mySettings.backgroundColor);
+        ui->graphicsViewBackgroundColor->setPalette(p);
     }
+    else if (mySettings.backgroundType == 1)
+    {
+        filename = QFileDialog::getOpenFileName(this, tr("Select a image for Bible wallpaper"),
+                                                ".", tr("Images(%1)").arg(getSupportedImageFormats()));
+        if(!filename.isNull())
+        {
+            QPixmap pix(filename);
+            if(pix.width()>1280 || pix.height()>1280)
+                mySettings.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+            else
+                mySettings.background = pix;
+            QFileInfo fip(filename);
+            filename = fip.fileName();
+            mySettings.backgroundName = filename;
+            ui->lineEditBackPath->setText(filename);
+        }
+    }
+    else if (mySettings.backgroundType == 2)
+    {
+        filename = QFileDialog::getOpenFileName(this, tr("Select a video for Bible wallpaper"),
+                                                ".", "*");
+        if(!filename.isNull())
+        {
+            mySettings.backgroundVideoPath = filename;
+            QFileInfo fiv(filename);
+            filename = fiv.fileName();
+
+            ui->lineEditBackPath->setText(filename);
+        }
+    }
+
 }
 
 void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
@@ -660,4 +691,75 @@ void BibleSettingWidget::setBackgroungds(QString name, QPixmap back)
     mySettings2.background = back;
     ui->lineEditBackPath->setText(name);
     ui->lineEditBackPath2->setText(name);
+}
+
+void BibleSettingWidget::on_comboBoxBackgoundType_currentIndexChanged(int index)
+{
+    mySettings.backgroundType = index;
+    if(index == 0)
+    {
+        ui->graphicsViewBackgroundColor->setVisible(true);
+        ui->lineEditBackPath->setVisible(false);
+        ui->buttonBrowseBackground->setText(tr("Select Color..."));
+    }
+    else
+    {
+        if(index == 1)
+            ui->lineEditBackPath->setText(mySettings.backgroundName);
+        else if(index == 2)
+            ui->lineEditBackPath->setText(mySettings.backgroundVideoPath);
+        ui->graphicsViewBackgroundColor->setVisible(false);
+        ui->lineEditBackPath->setVisible(true);
+        ui->buttonBrowseBackground->setText(tr("Browse..."));
+    }
+}
+
+void BibleSettingWidget::on_checkBoxCommonFont_stateChanged(int arg1)
+{
+
+}
+
+void BibleSettingWidget::on_checkBoxCommonColor_stateChanged(int arg1)
+{
+
+}
+
+void BibleSettingWidget::on_toolButtonShadowColor_clicked()
+{
+
+}
+
+void BibleSettingWidget::on_checkBoxSameFont_stateChanged(int arg1)
+{
+
+}
+
+void BibleSettingWidget::on_checkBoxSameColor_stateChanged(int arg1)
+{
+
+}
+
+void BibleSettingWidget::on_toolButtonCaptionShadowColor_clicked()
+{
+
+}
+
+void BibleSettingWidget::on_comboBoxTransitionType_currentIndexChanged(int index)
+{
+
+}
+
+void BibleSettingWidget::on_comboBoxTextEffects_currentIndexChanged(int index)
+{
+
+}
+
+void BibleSettingWidget::on_checkBoxCommonLayout_stateChanged(int arg1)
+{
+
+}
+
+void BibleSettingWidget::on_checkBoxDisp2_stateChanged(int arg1)
+{
+
 }

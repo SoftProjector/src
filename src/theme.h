@@ -127,6 +127,8 @@ class Theme
 {
 public:
     Theme();
+    TextSettings common;
+    TextSettings common2; // Holds secondary display screen settings
     TextSettings passive;
     TextSettings passive2; // Holds secondary display screen settings
     BibleSettings bible;

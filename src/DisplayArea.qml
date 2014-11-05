@@ -20,12 +20,19 @@ Rectangle {
     MediaPlayer
     {
         id: player
+        objectName: "player"
+        autoPlay: false
+        onSourceChanged: console.debug(player.source)
+
     }
 
     VideoOutput
     {
         id: vidOut
+        objectName: "vidOut"
+        source:player
         anchors.fill: parent
+//        fillMode: VideoOutput.Stretch
     }
 
     Image
@@ -91,7 +98,113 @@ Rectangle {
 //            origin {x:textImage2/2; y:textImage2/2}
 //        }
     }
+    Rectangle
+    {
+        id: controls
+        objectName: "controls"
+//        opacity: 0.5
+        color: "#00000000"
+        height: 128
+        width: height*3 +20
 
+        x:20; y:50
+
+        Image
+        {
+            id: prevBtn
+            objectName: "prevBtn"
+            source: "qrc:/icons/icons/controlPrev.png"
+            width: parent.height; height: parent.height
+
+            MouseArea
+            {
+                id: maPrev
+                anchors.fill: parent
+                hoverEnabled: true
+                onHoveredChanged:
+                {
+                    if(maPrev.containsMouse)
+                        prevBtn.source = "qrc:/icons/icons/controlPrevHovered.png"
+                    else
+                        prevBtn.source= "qrc:/icons/icons/controlPrev.png"
+                }
+                onPressed:
+                {
+                    prevBtn.source = "qrc:/icons/icons/controlPrevPressed.png"
+                }
+                onReleased:
+                {
+                    prevBtn.source = "qrc:/icons/icons/controlPrevHovered.png"
+                }
+            }
+        }
+
+        Image
+        {
+            id: nextBtn
+            objectName: "nextBtn"
+            source: "qrc:/icons/icons/controlNext.png"
+            width: prevBtn.width; height: prevBtn.height
+            anchors.left: prevBtn.right
+            anchors.leftMargin: 10
+            anchors.top: prevBtn.top
+            opacity: prevBtn.opacity
+            MouseArea
+            {
+                id: maNext
+                anchors.fill: parent
+                hoverEnabled: true
+                onHoveredChanged:
+                {
+                    if(maNext.containsMouse)
+                        nextBtn.source = "qrc:/icons/icons/controlNextHovered.png"
+                    else
+                        nextBtn.source= "qrc:/icons/icons/controlNext.png"
+                }
+                onPressed:
+                {
+                    nextBtn.source = "qrc:/icons/icons/controlNextPressed.png"
+                }
+                onReleased:
+                {
+                    nextBtn.source = "qrc:/icons/icons/controlNextHovered.png"
+                }
+            }
+        }
+
+        Image
+        {
+            id: exitBtn
+            objectName: "exitBtn"
+            source: "qrc:/icons/icons/controlExit.png"
+            width: prevBtn.width; height: prevBtn.height
+            anchors.left: nextBtn.right
+            anchors.leftMargin: 10
+            anchors.top: prevBtn.top
+            opacity: prevBtn.opacity
+            MouseArea
+            {
+                id: maExit
+                anchors.fill: parent
+                hoverEnabled: true
+                onHoveredChanged:
+                {
+                    if(maExit.containsMouse)
+                        exitBtn.source = "qrc:/icons/icons/controlExitHovered.png"
+                    else
+                        exitBtn.source= "qrc:/icons/icons/controlExit.png"
+                }
+                onPressed:
+                {
+                    exitBtn.source = "qrc:/icons/icons/controlExitPressed.png"
+                }
+                onReleased:
+                {
+                    exitBtn.source = "qrc:/icons/icons/controlExitHovered.png"
+                }
+            }
+        }
+    }
     SequentialAnimation
     {
         id:seqFade1to2
@@ -512,4 +625,30 @@ Rectangle {
             backImage2.y = parent.y
         }
     }
+
+//    function setVideoSource(vidSource)
+//    {
+//        player.source = vidSource
+//    }
+
+    function playVideo()
+    {
+        if(player.playbackState === MediaPlayer.StoppedState
+                || player.playbackState === MediaPlayer.PausedState)
+            player.play()
+
+    }
+
+    function stopVideo()
+    {
+        if(player.playbackState === MediaPlayer.PlayingState
+                || player.playbackState === MediaPlayer.PausedState)
+            player.stop()
+    }
+
+    function pauseVideo()
+    {
+        player.pause()
+    }
 }
+

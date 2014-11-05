@@ -62,3 +62,4 @@ QString getSupportedImageFormats()
         imfor += " *." + f;
     return imfor.trimmed();
 }
+

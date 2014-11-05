@@ -40,7 +40,9 @@ public slots:
 
 private slots:
     void setBackPixmap(QPixmap p,int fillMode); // 0 = Strech, 1 = keep aspect, 2 = keep aspect by expanding
+    void setBackPixmap(QPixmap p, QColor c);
     void setTextPixmap(QPixmap p);
+    void setVideoSource(QString path);
     void updateScreen();
 
 private:
@@ -50,7 +52,7 @@ private:
     ImageGenerator imGen;
     bool backImSwitch1, textImSwitch1, backImSwitch2, textImSwitch2;
     bool isNewBack, back1to2, text1to2;
-    int tranType;
+    int tranType,backType;
     QColor m_color;
 
     QPixmap back;

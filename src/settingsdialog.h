@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "theme.h"
 #include "generalsettingwidget.h"
+#include "commonsettingswidget.h"
 #include "passivesettingwidget.h"
 #include "biblesettingwidget.h"
 #include "songsettingwidget.h"
@@ -67,6 +68,7 @@ private:
     SlideShowSettings ssettings;
 
     GeneralSettingWidget *generalSettingswidget;
+    CommonSettingsWidget *commonSettingsWidget;
     PassiveSettingWidget *passiveSettingwidget;
     BibleSettingWidget *bibleSettingswidget;
     SongSettingWidget *songSettingswidget;

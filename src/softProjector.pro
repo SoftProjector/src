@@ -87,7 +87,8 @@ SOURCES += main.cpp \
     displaysetting.cpp \
     projectordisplayscreen.cpp \
     spimageprovider.cpp \
-    imagegenerator.cpp
+    imagegenerator.cpp \
+    commonsettingswidget.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -130,7 +131,8 @@ HEADERS += softprojector.h \
     displaysetting.h \
     projectordisplayscreen.h \
     spimageprovider.h \
-    imagegenerator.h
+    imagegenerator.h \
+    commonsettingswidget.h
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -157,7 +159,8 @@ FORMS += softprojector.ui \
     picturesettingwidget.ui \
     moduledownloaddialog.ui \
     moduleprogressdialog.ui \
-    projectordisplayscreen.ui
+    projectordisplayscreen.ui \
+    commonsettingswidget.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

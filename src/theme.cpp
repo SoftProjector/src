@@ -111,6 +111,9 @@ Theme::Theme()
 //    themeId = 0;
 //    name = "Default";
 //    comments  = "Default SoftProjector Theme";
+    announce.transitionType = -1;
+    announce.effectsType = -1;
+    announce.backgroundType = -1;
 }
 
 void Theme::saveThemeNew()
