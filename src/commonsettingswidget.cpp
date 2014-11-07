@@ -1,5 +1,5 @@
 #include "commonsettingswidget.h"
-#include "ui_commonsettings.h"
+#include "ui_commonsettingswidget.h"
 
 CommonSettingsWidget::CommonSettingsWidget(QWidget *parent) :
     QWidget(parent),

@@ -243,22 +243,29 @@
          <widget class="QComboBox" name="comboBoxVerticalAling">
           <item>
            <property name="text">
-            <string>Common</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
             <string>Top</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingTop.png</normaloff>:/icons/icons/alingTop.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Middle</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingMiddle.png</normaloff>:/icons/icons/alingMiddle.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Bottom</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingBottom.png</normaloff>:/icons/icons/alingBottom.png</iconset>
            </property>
           </item>
          </widget>
@@ -267,22 +274,29 @@
          <widget class="QComboBox" name="comboBoxHorizontalAling">
           <item>
            <property name="text">
-            <string>Common</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
             <string>Left</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingLeft.png</normaloff>:/icons/icons/alingLeft.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Center</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingCenter.png</normaloff>:/icons/icons/alingCenter.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Right</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingRight.png</normaloff>:/icons/icons/alingRight.png</iconset>
            </property>
           </item>
          </widget>
@@ -374,13 +388,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>50</width>
+            <width>75</width>
             <height>20</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>50</width>
+            <width>75</width>
             <height>20</height>
            </size>
           </property>
@@ -452,10 +466,18 @@
            <property name="text">
             <string>Above Text</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/aboveText.png</normaloff>:/icons/icons/aboveText.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Below Text</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/belowText.png</normaloff>:/icons/icons/belowText.png</iconset>
            </property>
           </item>
          </widget>
@@ -473,15 +495,27 @@
            <property name="text">
             <string>Left</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingLeft.png</normaloff>:/icons/icons/alingLeft.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Center</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingCenter.png</normaloff>:/icons/icons/alingCenter.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Right</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingRight.png</normaloff>:/icons/icons/alingRight.png</iconset>
            </property>
           </item>
          </widget>
@@ -505,7 +539,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QLabel" name="labelTextAlign_2">
        <property name="text">
@@ -519,40 +553,72 @@
         <property name="text">
          <string>Common</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>None</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranNone.png</normaloff>:/icons/icons/tranNone.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Fade</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFade.png</normaloff>:/icons/icons/tranFade.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Fade Out-In</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFadeOutIn.png</normaloff>:/icons/icons/tranFadeOutIn.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Move Right</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveRight.png</normaloff>:/icons/icons/tranMoveRight.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Move Left</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveLeft.png</normaloff>:/icons/icons/tranMoveLeft.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Move Up</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveUp.png</normaloff>:/icons/icons/tranMoveUp.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Move Down</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveDown.png</normaloff>:/icons/icons/tranMoveDown.png</iconset>
         </property>
        </item>
       </widget>
@@ -577,20 +643,36 @@
         <property name="text">
          <string>Common</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>None</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsNone.png</normaloff>:/icons/icons/effectsNone.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Shadow</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsShadow.png</normaloff>:/icons/icons/effectsShadow.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Blurred Shadow</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsBlurredShadow.png</normaloff>:/icons/icons/effectsBlurredShadow.png</iconset>
         </property>
        </item>
       </widget>
@@ -602,7 +684,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>405</width>
          <height>20</height>
         </size>
        </property>
@@ -611,7 +693,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QLabel" name="labelTextAlign_4">
        <property name="text">
@@ -625,20 +707,36 @@
         <property name="text">
          <string>Common</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Solid Color</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/solidColor.png</normaloff>:/icons/icons/solidColor.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Picture</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Video</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/video.png</normaloff>:/icons/icons/video.png</iconset>
         </property>
        </item>
       </widget>
@@ -736,10 +834,18 @@
         <property name="text">
          <string>Top of Screen</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/toTopOfScreen.png</normaloff>:/icons/icons/toTopOfScreen.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Botton of Screen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/toBottomOfScreen.png</normaloff>:/icons/icons/toBottomOfScreen.png</iconset>
         </property>
        </item>
       </widget>
@@ -1125,22 +1231,29 @@
             <widget class="QComboBox" name="comboBoxVerticalAling2">
              <item>
               <property name="text">
-               <string>Common</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string>Top</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingTop.png</normaloff>:/icons/icons/alingTop.png</iconset>
               </property>
              </item>
              <item>
               <property name="text">
                <string>Middle</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingMiddle.png</normaloff>:/icons/icons/alingMiddle.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Bottom</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingBottom.png</normaloff>:/icons/icons/alingBottom.png</iconset>
               </property>
              </item>
             </widget>
@@ -1149,22 +1262,29 @@
             <widget class="QComboBox" name="comboBoxHorizontalAling2">
              <item>
               <property name="text">
-               <string>Common</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string>Left</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingLeft.png</normaloff>:/icons/icons/alingLeft.png</iconset>
               </property>
              </item>
              <item>
               <property name="text">
                <string>Center</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingCenter.png</normaloff>:/icons/icons/alingCenter.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Right</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingRight.png</normaloff>:/icons/icons/alingRight.png</iconset>
               </property>
              </item>
             </widget>
@@ -1387,7 +1507,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
         <item>
          <widget class="QLabel" name="labelTextAlign_5">
           <property name="text">
@@ -1401,40 +1521,72 @@
            <property name="text">
             <string>Common</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>None</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranNone.png</normaloff>:/icons/icons/tranNone.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Fade</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranFade.png</normaloff>:/icons/icons/tranFade.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Fade Out-In</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranFadeOutIn.png</normaloff>:/icons/icons/tranFadeOutIn.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Move Right</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveRight.png</normaloff>:/icons/icons/tranMoveRight.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Move Left</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveLeft.png</normaloff>:/icons/icons/tranMoveLeft.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Move Up</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveDown.png</normaloff>:/icons/icons/tranMoveDown.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Move Down</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveUp.png</normaloff>:/icons/icons/tranMoveUp.png</iconset>
            </property>
           </item>
          </widget>
@@ -1459,20 +1611,36 @@
            <property name="text">
             <string>Common</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>None</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsNone.png</normaloff>:/icons/icons/effectsNone.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Shadow</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsShadow.png</normaloff>:/icons/icons/effectsShadow.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Blurred Shadow</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsBlurredShadow.png</normaloff>:/icons/icons/effectsBlurredShadow.png</iconset>
            </property>
           </item>
          </widget>
@@ -1493,7 +1661,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
          <widget class="QLabel" name="labelTextAlign_7">
           <property name="text">
@@ -1507,20 +1675,36 @@
            <property name="text">
             <string>Common</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Solid Color</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/solidColor.png</normaloff>:/icons/icons/solidColor.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Picture</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Video</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/video.png</normaloff>:/icons/icons/video.png</iconset>
            </property>
           </item>
          </widget>
@@ -1572,6 +1756,16 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QCheckBox" name="checkBoxCommonLayout2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QLabel" name="labelMaxPercent2">
           <property name="text">
@@ -1681,6 +1875,8 @@
   <tabstop>comboBoxScreenPosition2</tabstop>
   <tabstop>pushButtonDefault</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

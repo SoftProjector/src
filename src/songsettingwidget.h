@@ -39,33 +39,72 @@ public slots:
     void getSettings(SongSettings &settings, SongSettings &settings2);
     void setSettings(SongSettings &settings, SongSettings &settings2);
     void setDispScreen2Visible(bool visible);
-    void setBackgroungds(QString name, QPixmap back);
+//    void setBackgroungds(QString name, QPixmap back);
 
-signals:
-    void applyBackToAll(int t, QString backName, QPixmap background);
+//signals:
+//    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
-    void on_checkBoxUseShadow_stateChanged(int arg1);
-    void on_checkBoxUseShadow2_stateChanged(int arg1);
-    void on_toolButtonInfoColor_clicked();
-    void on_toolButtonInfoColor2_clicked();
+
+    void on_checkBoxCommonFont_stateChanged(int arg1);
+    void on_checkBoxCommonFont2_stateChanged(int arg1);
+    void on_toolButtonTextFont_clicked();
+    void on_toolButtonTextFont2_clicked();
+    void on_checkBoxCommonColor_stateChanged(int arg1);
+    void on_checkBoxCommonColor2_stateChanged(int arg1);
+    void on_toolButtonTextColor_clicked();
+    void on_toolButtonTextColor2_clicked();
+    void on_toolButtonShadowColor_clicked();
+    void on_toolButtonShadowColor2_clicked();
+    void on_checkBoxStanzaTitle_stateChanged(int arg1);
+    void on_checkBoxStanzaTitle2_stateChanged(int arg1);
+    void on_checkBoxSongKey_stateChanged(int arg1);
+    void on_checkBoxSongKey2_stateChanged(int arg1);
+    void on_checkBoxSongNumber_stateChanged(int arg1);
+    void on_checkBoxSongNumber2_stateChanged(int arg1);
+    void on_checkBoxSameInfoFont_stateChanged(int arg1);
+    void on_checkBoxSameInfoFont2_stateChanged(int arg1);
     void on_toolButtonInfoFont_clicked();
     void on_toolButtonInfoFont2_clicked();
-    void on_toolButtonEndingColor_clicked();
-    void on_toolButtonEndingColor2_clicked();
+    void on_checkBoxSameInfoColor_stateChanged(int arg1);
+    void on_checkBoxSameInfoColor2_stateChanged(int arg1);
+    void on_toolButtonInfoColor_clicked();
+    void on_toolButtonInfoColor2_clicked();
+    void on_toolButtonInfoShadowColor_clicked();
+    void on_toolButtonInfoShadowColor2_clicked();
+    void on_checkBoxSameEndingFont_stateChanged(int arg1);
+    void on_checkBoxSameEndingFont2_stateChanged(int arg1);
     void on_toolButtonEndingFont_clicked();
     void on_toolButtonEndingFont2_clicked();
-    void on_buttonSongBackground_clicked();
-    void on_buttonSongBackground2_clicked();
-    void on_toolButtonColor_clicked();
-    void on_toolButtonColor2_clicked();
-    void on_toolButtonFont_clicked();
-    void on_toolButtonFont2_clicked();
-    void on_groupBoxDisplay2_toggled(bool arg1);
+    void on_checkBoxSameEndingColor_stateChanged(int arg1);
+    void on_checkBoxSameEndingColor2_stateChanged(int arg1);
+    void on_toolButtonEndingColor_clicked();
+    void on_toolButtonEndingColor2_clicked();
+    void on_toolButtonEndingShadowColor_clicked();
+    void on_toolButtonEndingShadowColor2_clicked();
+    void on_comboBoxBackgoundType_currentIndexChanged(int index);
+    void on_comboBoxBackgoundType2_currentIndexChanged(int index);
+    void on_buttonBrowseBackground_clicked();
+    void on_buttonBrowseBackground2_clicked();
+    void on_checkBoxCommonLayout_stateChanged(int arg1);
+    void on_checkBoxCommonLayout2_stateChanged(int arg1);
+    void on_checkBoxDisp2_stateChanged(int arg1);
     void on_pushButtonDefault_clicked();
     QString getFontText(QFont font);
-    void on_pushButtonApplyToAll_clicked();
+    void updateInfoButtons();
+    void updateInfoButtons2();
+
+
+//    void on_buttonSongBackground_clicked(); // Rep
+//    void on_buttonSongBackground2_clicked(); // Rep
+//    void on_toolButtonColor_clicked(); //REp
+//    void on_toolButtonColor2_clicked(); //REp
+//    void on_toolButtonFont_clicked(); //REp
+//    void on_toolButtonFont2_clicked(); //REp
+//    void on_groupBoxDisplay2_toggled(bool arg1);//Rem
+
+//    void on_pushButtonApplyToAll_clicked();//rem
 
 private:
     SongSettings mySettings;

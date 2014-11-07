@@ -55,9 +55,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(generalSettingswidget,SIGNAL(themeChanged(int)),this,SLOT(changeTheme(int)));
 
     // Connect Apply to all
-    connect(bibleSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
-    connect(songSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
-    connect(announcementSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
+//    connect(bibleSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
+//    connect(songSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
+//    connect(announcementSettingswidget,SIGNAL(applyBackToAll(int,QString,QPixmap)),this,SLOT(applyToAllActive(int,QString,QPixmap)));
 
 }
 
@@ -194,25 +194,25 @@ void SettingsDialog::changeTheme(int theme_id)
     setThemes();
 }
 
-void SettingsDialog::applyToAllActive(int t, QString backName, QPixmap background)
-{
-    switch (t)
-    {
-    case 1:
-        songSettingswidget->setBackgroungds(backName,background);
-        announcementSettingswidget->setBackgroungds(backName,background);
-        break;
-    case 2:
-        bibleSettingswidget->setBackgroungds(backName,background);
-        announcementSettingswidget->setBackgroungds(backName,background);
-        break;
-    case 3:
-        bibleSettingswidget->setBackgroungds(backName,background);
-        songSettingswidget->setBackgroungds(backName,background);
-        break;
-    default:
-        bibleSettingswidget->setBackgroungds(backName,background);
-        songSettingswidget->setBackgroungds(backName,background);
-        announcementSettingswidget->setBackgroungds(backName,background);
-    }
-}
+//void SettingsDialog::applyToAllActive(int t, QString backName, QPixmap background)
+//{
+//    switch (t)
+//    {
+//    case 1:
+////        songSettingswidget->setBackgroungds(backName,background);
+////        announcementSettingswidget->setBackgroungds(backName,background);
+//        break;
+//    case 2:
+////        bibleSettingswidget->setBackgroungds(backName,background);
+////        announcementSettingswidget->setBackgroungds(backName,background);
+//        break;
+//    case 3:
+////        bibleSettingswidget->setBackgroungds(backName,background);
+////        songSettingswidget->setBackgroungds(backName,background);
+//        break;
+//    default:
+////        bibleSettingswidget->setBackgroungds(backName,background);
+////        songSettingswidget->setBackgroungds(backName,background);
+////        announcementSettingswidget->setBackgroungds(backName,background);
+//    }
+//}

@@ -29,9 +29,9 @@ class TextSettings
 public:
     TextSettings();
     //Text
-    bool commonFont;
+    bool isNotCommonFont;
     QFont textFont;
-    bool commonColor;
+    bool isNotCommonColor;
     QColor textColor;
     QColor textShadowColor;
     int textAlingmentV;
@@ -59,7 +59,7 @@ public:
     QString backgroundVideoPath;
 
     //Layout
-    bool commonLayout;
+    bool isNotCommonLayout;
     int screenUse;
     int screenPosition;
     // 0 - Top of Screen, 1 - Botton of Screen
@@ -79,7 +79,10 @@ class BibleSettings : public TextSettings
 public:
     BibleSettings();
     QFont captionFont;
+    bool isNotSameFont;
     QColor captionColor;
+    bool isNotSameColor;
+    QColor captionShadowColor;
     int captionAlingment;
     int captionPosition;
     bool useAbbriviation;
@@ -95,12 +98,18 @@ public:
     bool showSongNumber;
     bool showSongEnding;
     // Info
-    QColor infoColor;
     QFont infoFont;
+    QColor infoColor;
+    QColor infoShadowColor;
+    bool isNotSameInfoFont;
+    bool isNotSameInfoColor;
     int infoAling; // 0 = Top, 1 = Bottom
     //Ending
-    QColor endingColor;
     QFont endingFont;
+    QColor endingColor;
+    QColor endingShadowColor;
+    bool isNotSameEndingFont;
+    bool isNotSameEndingColor;
     int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
     int endingPosition;
 };

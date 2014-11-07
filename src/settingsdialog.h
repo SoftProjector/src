@@ -87,7 +87,7 @@ private slots:
     void changeTheme(int theme_id);
     void getThemes();
     void setThemes();
-    void applyToAllActive(int t, QString backName, QPixmap background);
+//    void applyToAllActive(int t, QString backName, QPixmap background);
 
 protected:
     virtual void changeEvent(QEvent *e);

@@ -6,12 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
-    <height>472</height>
+    <width>419</width>
+    <height>492</height>
    </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -141,15 +138,27 @@
            <property name="text">
             <string>Top</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingTop.png</normaloff>:/icons/icons/alingTop.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Middle</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingMiddle.png</normaloff>:/icons/icons/alingMiddle.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Bottom</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingBottom.png</normaloff>:/icons/icons/alingBottom.png</iconset>
            </property>
           </item>
          </widget>
@@ -160,15 +169,27 @@
            <property name="text">
             <string>Left</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingLeft.png</normaloff>:/icons/icons/alingLeft.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Center</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingCenter.png</normaloff>:/icons/icons/alingCenter.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Right</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/alingRight.png</normaloff>:/icons/icons/alingRight.png</iconset>
            </property>
           </item>
          </widget>
@@ -206,35 +227,63 @@
         <property name="text">
          <string>None</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranNone.png</normaloff>:/icons/icons/tranNone.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Fade</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFade.png</normaloff>:/icons/icons/tranFade.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Fade Out-In</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFadeOutIn.png</normaloff>:/icons/icons/tranFadeOutIn.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Move Right</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveRight.png</normaloff>:/icons/icons/tranMoveRight.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Move Left</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveLeft.png</normaloff>:/icons/icons/tranMoveLeft.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Move Up</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveUp.png</normaloff>:/icons/icons/tranMoveUp.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Move Down</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveDown.png</normaloff>:/icons/icons/tranMoveDown.png</iconset>
         </property>
        </item>
       </widget>
@@ -259,15 +308,27 @@
         <property name="text">
          <string>None</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsNone.png</normaloff>:/icons/icons/effectsNone.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Shadow</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsShadow.png</normaloff>:/icons/icons/effectsShadow.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Blurred Shadow</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/effectsBlurredShadow.png</normaloff>:/icons/icons/effectsBlurredShadow.png</iconset>
         </property>
        </item>
       </widget>
@@ -299,21 +360,33 @@
      <item>
       <widget class="QComboBox" name="comboBoxBackgoundType">
        <property name="currentIndex">
-        <number>-1</number>
+        <number>0</number>
        </property>
        <item>
         <property name="text">
          <string>Solid Color</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/solidColor.png</normaloff>:/icons/icons/solidColor.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Picture</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Video</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/video.png</normaloff>:/icons/icons/video.png</iconset>
         </property>
        </item>
       </widget>
@@ -394,10 +467,18 @@
         <property name="text">
          <string>Top of Screen</string>
         </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/toTopOfScreen.png</normaloff>:/icons/icons/toTopOfScreen.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Botton of Screen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/toBottomOfScreen.png</normaloff>:/icons/icons/toBottomOfScreen.png</iconset>
         </property>
        </item>
       </widget>
@@ -727,15 +808,27 @@
               <property name="text">
                <string>Top</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingTop.png</normaloff>:/icons/icons/alingTop.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Middle</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingMiddle.png</normaloff>:/icons/icons/alingMiddle.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Bottom</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingBottom.png</normaloff>:/icons/icons/alingBottom.png</iconset>
               </property>
              </item>
             </widget>
@@ -746,15 +839,27 @@
               <property name="text">
                <string>Left</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingLeft.png</normaloff>:/icons/icons/alingLeft.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Center</string>
               </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingCenter.png</normaloff>:/icons/icons/alingCenter.png</iconset>
+              </property>
              </item>
              <item>
               <property name="text">
                <string>Right</string>
+              </property>
+              <property name="icon">
+               <iconset resource="softprojector.qrc">
+                <normaloff>:/icons/icons/alingRight.png</normaloff>:/icons/icons/alingRight.png</iconset>
               </property>
              </item>
             </widget>
@@ -792,35 +897,63 @@
            <property name="text">
             <string>None</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranNone.png</normaloff>:/icons/icons/tranNone.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Fade</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranFade.png</normaloff>:/icons/icons/tranFade.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Fade Out-In</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranFadeOutIn.png</normaloff>:/icons/icons/tranFadeOutIn.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Move Right</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveRight.png</normaloff>:/icons/icons/tranMoveRight.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Move Left</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveLeft.png</normaloff>:/icons/icons/tranMoveLeft.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Move Up</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveUp.png</normaloff>:/icons/icons/tranMoveUp.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Move Down</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/tranMoveDown.png</normaloff>:/icons/icons/tranMoveDown.png</iconset>
            </property>
           </item>
          </widget>
@@ -845,15 +978,27 @@
            <property name="text">
             <string>None</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsNone.png</normaloff>:/icons/icons/effectsNone.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Shadow</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsShadow.png</normaloff>:/icons/icons/effectsShadow.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Blurred Shadow</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/effectsBlurredShadow.png</normaloff>:/icons/icons/effectsBlurredShadow.png</iconset>
            </property>
           </item>
          </widget>
@@ -885,21 +1030,33 @@
         <item>
          <widget class="QComboBox" name="comboBoxBackgoundType2">
           <property name="currentIndex">
-           <number>-1</number>
+           <number>0</number>
           </property>
           <item>
            <property name="text">
             <string>Solid Color</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/solidColor.png</normaloff>:/icons/icons/solidColor.png</iconset>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Picture</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Video</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/video.png</normaloff>:/icons/icons/video.png</iconset>
            </property>
           </item>
          </widget>
@@ -980,10 +1137,18 @@
            <property name="text">
             <string>Top of Screen</string>
            </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/toTopOfScreen.png</normaloff>:/icons/icons/toTopOfScreen.png</iconset>
+           </property>
           </item>
           <item>
            <property name="text">
             <string>Botton of Screen</string>
+           </property>
+           <property name="icon">
+            <iconset resource="softprojector.qrc">
+             <normaloff>:/icons/icons/toBottomOfScreen.png</normaloff>:/icons/icons/toBottomOfScreen.png</iconset>
            </property>
           </item>
          </widget>
@@ -1045,6 +1210,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="softprojector.qrc"/>
+ </resources>
  <connections/>
 </ui>

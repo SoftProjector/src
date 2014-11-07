@@ -21,11 +21,11 @@
 
 TextSettings::TextSettings()
 {
-    textFont.fromString("Arial,15,-1,5,50,0,0,0,0,0");
-    commonFont = true;
+    textFont.fromString("Arial,16,-1,5,50,0,0,0,0,0");
+    isNotCommonFont = false;
     textColor = QColor(Qt::white);
     textShadowColor = QColor(Qt::black);
-    commonColor = true;
+    isNotCommonColor = false;
     textAlingmentV = 0;
     textAlingmentH = 0;
     useBackground = false;
@@ -35,8 +35,8 @@ TextSettings::TextSettings()
     background = QPixmap(1,1);
     backgroundVideoPath = "";
     screenUse = 100;
-    screenPosition = 1;
-    commonLayout = true;
+    screenPosition = 0;
+    isNotCommonLayout = false;
     transitionType = 0;
     useFading = true;
     effectsType = 1;
@@ -51,8 +51,11 @@ BibleSettings::BibleSettings()//:TextSettings()
     transitionType = -1;
     effectsType = -1;
     backgroundType = -1;
-    captionFont.fromString("Arial,36,-1,5,50,0,0,0,0,0");
+    captionFont.fromString("Arial,15,-1,5,50,0,0,0,0,0");
+    isNotSameFont = true;
     captionColor = QColor(Qt::white);
+    isNotSameColor = false;
+    captionShadowColor = QColor(Qt::black);
     captionAlingment = 2;
     captionPosition = 1;
     useAbbriviation = false;
@@ -69,13 +72,19 @@ SongSettings::SongSettings()//:TextSettings()
     showSongKey = false;
     showSongNumber = false;
     showSongEnding = true;
+    isNotSameInfoFont = false;
+    isNotSameInfoColor = false;
     infoColor = QColor(Qt::white);
-    infoFont.fromString("Arial,36,-1,5,50,0,0,0,0,0");
+    infoShadowColor = QColor(Qt::black);
+    infoFont.fromString("Arial,15,-1,5,50,0,0,0,0,0");
     infoAling = 0;
+    isNotSameEndingFont = false;
+    isNotSameEndingColor = false;
     endingColor = QColor(Qt::white);
-    endingFont.fromString("Arial,48,-1,5,50,0,0,0,0,0");
+    endingShadowColor = QColor(Qt::black);
+    endingFont.fromString("Arial,16,-1,5,50,0,0,0,0,0");
     endingType = 0;
-    endingPosition = 1;
+    endingPosition = 0;
 }
 
 GeneralSettings::GeneralSettings()

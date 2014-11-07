@@ -62,7 +62,7 @@
       </property>
       <property name="icon">
        <iconset resource="softprojector.qrc">
-        <normaloff>:/icons/icons/apply_to_all.png</normaloff>:/icons/icons/apply_to_all.png</iconset>
+        <normaloff>:/icons/icons/common.png</normaloff>:/icons/icons/common.png</iconset>
       </property>
      </item>
      <item>
