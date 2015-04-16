@@ -26,41 +26,22 @@ void CommonSettingsWidget::changeEvent(QEvent *e)
      }
 }
 
-void CommonSettingsWidget::setSettings(TextSettings &settings, TextSettings &settings2)
+void CommonSettingsWidget::setSettings(TextSettingsBase &settings, TextSettingsBase &settings2)
 {
     mySettings = settings;
     mySettings2 = settings2;
 
     loadSettings();
+    mySettings.resetBaseChangeHandles();
+    mySettings2.resetBaseChangeHandles();
 }
 
-void CommonSettingsWidget::getSettings(TextSettings &settings, TextSettings &settings2)
+void CommonSettingsWidget::getSettings(TextSettingsBase &settings, TextSettingsBase &settings2)
 {
-    // Alingment
-    mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
-    mySettings.textAlingmentH = ui->comboBoxHorizontalAling->currentIndex();
-    mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
-    mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
-
-    // Transition type
-    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex();
-    mySettings2.transitionType = ui->comboBoxTransitionType2->currentIndex();
-
-    // Effect Type
-    mySettings.effectsType = ui->comboBoxTextEffects->currentIndex();
-    mySettings2.effectsType = ui->comboBoxTextEffects2->currentIndex();
-    // Background???
-    // ScreenUse
-    mySettings.screenUse = ui->spinBoxMaxScreen->value();
-    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
-    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
-    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
-
-    // Secondary Screen
-    mySettings.useSameForDisp2 = ui->checkBoxDisp2->isChecked();
-
     settings = mySettings;
     settings2 = mySettings2;
+    mySettings.resetBaseChangeHandles();
+    mySettings2.resetBaseChangeHandles();
 }
 
 void CommonSettingsWidget::loadSettings()
@@ -153,7 +134,10 @@ void CommonSettingsWidget::on_toolButtonTextFont_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
+    {
         mySettings.textFont = font;
+        mySettings.isChangedTextFont = true;
+    }
 
     ui->labelFont->setText(getFontText(mySettings.textFont));
 }
@@ -163,7 +147,10 @@ void CommonSettingsWidget::on_toolButtonTextFont2_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings2.textFont,this);
     if(ok)
+    {
         mySettings2.textFont = font;
+        mySettings2.isChangedTextFont = true;
+    }
 
     ui->labelFont2->setText(getFontText(mySettings2.textFont));
 }
@@ -172,7 +159,10 @@ void CommonSettingsWidget::on_toolButtonTextColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textColor,this));
     if(c.isValid())
+{
         mySettings.textColor = c;
+        mySettings.isChangedTextColor = true;
+}
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicViewTextColor->setPalette(p);
@@ -182,7 +172,10 @@ void CommonSettingsWidget::on_toolButtonTextColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textColor,this));
     if(c.isValid())
+{
         mySettings2.textColor = c;
+        mySettings2.isChangedTextColor = true;
+}
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textColor);
     ui->graphicViewTextColor2->setPalette(p);
@@ -192,7 +185,10 @@ void CommonSettingsWidget::on_toolButtonShadowColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textShadowColor,this));
     if(c.isValid())
+{
         mySettings.textShadowColor = c;
+        mySettings.isChangedTextShadowColor = true;
+}
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textShadowColor);
     ui->graphicViewShadowColor->setPalette(p);
@@ -202,10 +198,61 @@ void CommonSettingsWidget::on_toolButtonShadowColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textShadowColor,this));
     if(c.isValid())
+{
         mySettings2.textShadowColor = c;
+        mySettings2.isChangedTextShadowColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textShadowColor);
     ui->graphicViewShadowColor2->setPalette(p);
+}
+
+void CommonSettingsWidget::on_comboBoxVerticalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentV = index;
+    mySettings.isChangedAlingV = true;
+}
+
+void CommonSettingsWidget::on_comboBoxVerticalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentV = index;
+    mySettings2.isChangedAlingV = true;
+}
+
+void CommonSettingsWidget::on_comboBoxHorizontalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentH = index;
+    mySettings.isChangedAlingH = true;
+}
+
+void CommonSettingsWidget::on_comboBoxHorizontalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentH = index;
+    mySettings2.isChangedAlingH = true;
+}
+
+void CommonSettingsWidget::on_comboBoxTransitionType_currentIndexChanged(int index)
+{
+    mySettings.transitionType = index;
+    mySettings.isChangesTranType = true;
+}
+
+void CommonSettingsWidget::on_comboBoxTransitionType2_currentIndexChanged(int index)
+{
+    mySettings2.transitionType = index;
+    mySettings2.isChangesTranType = true;
+}
+
+void CommonSettingsWidget::on_comboBoxTextEffects_currentIndexChanged(int index)
+{
+    mySettings.effectsType = index;
+    mySettings.isChangedEffectType = true;
+}
+
+void CommonSettingsWidget::on_comboBoxTextEffects2_currentIndexChanged(int index)
+{
+    mySettings2.effectsType = index;
+    mySettings2.isChangedEffectType = true;
 }
 
 void CommonSettingsWidget::on_comboBoxBackgoundType_currentIndexChanged(int index)
@@ -227,6 +274,7 @@ void CommonSettingsWidget::on_comboBoxBackgoundType_currentIndexChanged(int inde
         ui->lineEditBackPath->setVisible(true);
         ui->buttonBrowseBackground->setText(tr("Browse..."));
     }
+    mySettings.isChangedBackType = true;
 }
 
 void CommonSettingsWidget::on_comboBoxBackgoundType2_currentIndexChanged(int index)
@@ -248,6 +296,7 @@ void CommonSettingsWidget::on_comboBoxBackgoundType2_currentIndexChanged(int ind
         ui->lineEditBackPath2->setVisible(true);
         ui->buttonBrowseBackground2->setText(tr("Browse..."));
     }
+     mySettings2.isChangedBackType = true;
 }
 
 void CommonSettingsWidget::on_buttonBrowseBackground_clicked()
@@ -257,7 +306,10 @@ void CommonSettingsWidget::on_buttonBrowseBackground_clicked()
     {
         QColor c(QColorDialog::getColor(mySettings.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings.backgroundColor = c;
+            mySettings.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings.backgroundColor);
         ui->graphicsViewBackgroundColor->setPalette(p);
@@ -270,13 +322,14 @@ void CommonSettingsWidget::on_buttonBrowseBackground_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings.background = pix;
+                mySettings.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings.backgroundName = filename;
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackPix = true;
         }
     }
     else if (mySettings.backgroundType == 2)
@@ -290,9 +343,9 @@ void CommonSettingsWidget::on_buttonBrowseBackground_clicked()
             filename = fiv.fileName();
 
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackVid = true;
         }
     }
-
 }
 
 void CommonSettingsWidget::on_buttonBrowseBackground2_clicked()
@@ -302,7 +355,10 @@ void CommonSettingsWidget::on_buttonBrowseBackground2_clicked()
     {
         QColor c(QColorDialog::getColor(mySettings2.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings2.backgroundColor = c;
+            mySettings2.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings2.backgroundColor);
         ui->graphicsViewBackgroundColor2->setPalette(p);
@@ -315,13 +371,14 @@ void CommonSettingsWidget::on_buttonBrowseBackground2_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings2.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings2.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings.background = pix;
+                mySettings.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings2.backgroundName = filename;
             ui->lineEditBackPath2->setText(filename);
+            mySettings2.isChangedBackPix = true;
         }
     }
     else if (mySettings2.backgroundType == 2)
@@ -333,21 +390,46 @@ void CommonSettingsWidget::on_buttonBrowseBackground2_clicked()
             mySettings2.backgroundVideoPath = filename;
             QFileInfo fiv(filename);
             filename = fiv.fileName();
-
             ui->lineEditBackPath2->setText(filename);
+            mySettings2.isChangedBackVid = true;
         }
     }
+}
+
+void CommonSettingsWidget::on_spinBoxMaxScreen_editingFinished()
+{
+    mySettings.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings.isChangedScreenUse = true;
+}
+
+void CommonSettingsWidget::on_spinBoxMaxScreen2_editingFinished()
+{
+    mySettings2.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings2.isChangedScreenUse = true;
+}
+
+void CommonSettingsWidget::on_comboBoxScreenPosition_currentIndexChanged(int index)
+{
+    mySettings.screenPosition = index;
+    mySettings.isChangedScreenPos = true;
+}
+
+void CommonSettingsWidget::on_comboBoxScreenPosition2_currentIndexChanged(int index)
+{
+    mySettings2.screenPosition = index;
+    mySettings2.isChangedScreenPos = true;
 }
 
 void CommonSettingsWidget::on_checkBoxDisp2_stateChanged(int arg1)
 {
     mySettings.useSameForDisp2 = arg1;
+    mySettings.isChangedSameDisp2 = true;
     ui->groupBoxUseDisp2->setVisible(!arg1);
 }
 
 void CommonSettingsWidget::on_pushButtonDefault_clicked()
 {
-    TextSettings t;
+    TextSettingsBase t;
     mySettings = t;
     mySettings2 = t;
     loadSettings();

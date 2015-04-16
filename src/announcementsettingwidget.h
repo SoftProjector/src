@@ -40,26 +40,52 @@ public slots:
     void setSettings(TextSettings& settings, TextSettings &settings2);
     void getSettings(TextSettings& settings, TextSettings &settings2);
     void setDispScreen2Visible(bool visible);
-    void setBackgroungds(QString name, QPixmap back);
+//    void setBackgroungds(QString name, QPixmap back);
 
-signals:
-    void applyBackToAll(int t, QString backName, QPixmap background);
+//signals:
+//    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
-    void on_buttonBackground_clicked();
-    void on_pushButtonDefault_clicked();
-    void on_checkBoxUseShadow_stateChanged(int arg1);
-    void on_groupBoxUseDisp2_toggled(bool arg1);
-    void on_checkBoxUseShadow2_stateChanged(int arg1);
-    void on_buttonBackground2_clicked();
-    void on_toolButtonColor_clicked();
-    void on_toolButtonColor2_clicked();
-    void on_toolButtonFont_clicked();
-    void on_toolButtonFont2_clicked();
-    QString getFontText(QFont font);
+//    void on_buttonBackground_clicked();
 
-    void on_pushButtonApplyToAll_clicked();
+//    void on_checkBoxUseShadow_stateChanged(int arg1);
+//    void on_groupBoxUseDisp2_toggled(bool arg1);
+//    void on_checkBoxUseShadow2_stateChanged(int arg1);
+//    void on_buttonBackground2_clicked();
+//    void on_toolButtonColor_clicked();
+//    void on_toolButtonColor2_clicked();
+//    void on_toolButtonFont_clicked();
+//    void on_toolButtonFont2_clicked();
+
+
+//    void on_pushButtonApplyToAll_clicked();
+
+
+
+    void on_checkBoxCommonFont_stateChanged(int arg1);
+    void on_checkBoxCommonFont2_stateChanged(int arg1);
+    void on_toolButtonTextFont_clicked();
+    void on_toolButtonTextFont2_clicked();
+    void on_checkBoxCommonColor_stateChanged(int arg1);
+    void on_checkBoxCommonColor2_stateChanged(int arg1);
+    void on_toolButtonTextColor_clicked();
+    void on_toolButtonTextColor2_clicked();
+    void on_toolButtonShadowColor_clicked();
+    void on_toolButtonShadowColor2_clicked();
+
+    void on_comboBoxBackgoundType_currentIndexChanged(int index);
+    void on_comboBoxBackgoundType2_currentIndexChanged(int index);
+    void on_buttonBrowseBackground_clicked();
+    void on_buttonBrowseBackground2_clicked();
+    void on_checkBoxCommonLayout_stateChanged(int arg1);
+    void on_checkBoxCommonLayout2_stateChanged(int arg1);
+
+    void on_checkBoxDisp2_stateChanged(int arg1);
+
+        void on_pushButtonDefault_clicked();
+
+        QString getFontText(QFont font);
 
 private:
     TextSettings mySettings, mySettings2;

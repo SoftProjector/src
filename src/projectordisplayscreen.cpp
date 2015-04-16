@@ -211,7 +211,7 @@ void ProjectorDisplayScreen::renderBibleText(Verse bVerse, BibleSettings &bSets)
     tranType = bSets.transitionType;
     backType = bSets.backgroundType;
     setTextPixmap(imGen.generateBibleImage(bVerse,bSets));
-    setBackPixmap(bSets.background,bSets.backgroundColor);
+    setBackPixmap(bSets.backgroundPix,bSets.backgroundColor);
     if(backType ==2)
         setVideoSource(bSets.backgroundVideoPath);
 //    if(bSets.useBackground)
@@ -226,8 +226,8 @@ void ProjectorDisplayScreen::renderBibleText(Verse bVerse, BibleSettings &bSets)
 void ProjectorDisplayScreen::renderSongText(Stanza stanza, SongSettings &sSets)
 {
     setTextPixmap(imGen.generateSongImage(stanza,sSets));
-    if(sSets.useBackground)
-        setBackPixmap(sSets.background,0);
+    if(sSets.backgroundType == 1)
+        setBackPixmap(sSets.backgroundPix,0);
     else
         setBackPixmap(imGen.generateColorImage(m_color),0);
     tranType = sSets.transitionType;
@@ -237,8 +237,8 @@ void ProjectorDisplayScreen::renderSongText(Stanza stanza, SongSettings &sSets)
 void ProjectorDisplayScreen::renderAnnounceText(AnnounceSlide announce, TextSettings &aSets)
 {
     setTextPixmap(imGen.generateAnnounceImage(announce,aSets));
-    if(aSets.useBackground)
-        setBackPixmap(aSets.background,0);
+    if(aSets.transitionType == 1)
+        setBackPixmap(aSets.backgroundPix,0);
     else
         setBackPixmap(imGen.generateColorImage(m_color),0);
     tranType = aSets.transitionType;

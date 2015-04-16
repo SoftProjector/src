@@ -23,15 +23,27 @@
 //#include <QtCore>
 #include <QtSql>
 #include <QPixmap>
+#include "spfunctions.h"
 
-class TextSettings
+void saveIndividualSettings(QSqlQuery &sq, QString sId, int tId, QString name, const QVariant &value);
+void updateIndividualSettings(QSqlQuery &sq, QString sId, int tId, QString name, const QVariant &value);
+
+class TextSettingsBase
 {
 public:
-    TextSettings();
+    TextSettingsBase();
+
+    QString id;
+    int themeId;
+
+    // if to update bool handles
+    bool isChangedTextFont, isChangedTextColor, isChangedTextShadowColor;
+    bool isChangedAlingV, isChangedAlingH, isChangesTranType, isChangedEffectType;
+    bool isChangedBackType, isChangedBackColor, isChangedBackPix, isChangedBackVid;
+    bool isChangedScreenUse, isChangedScreenPos, isChangedSameDisp2;
+
     //Text
-    bool isNotCommonFont;
     QFont textFont;
-    bool isNotCommonColor;
     QColor textColor;
     QColor textShadowColor;
     int textAlingmentV;
@@ -43,36 +55,60 @@ public:
     int transitionType;
     // -1 - Common, 0 - None, 1 - Fade, 2 - Fade out->in,
     // 3 - Move Right, 4 - Move Left, 5 - Move Up, 6 - Move Down
-    bool useFading;// TODO: REMOVE
     int effectsType;
     // -1 - Common, 0 - None, 1 - Shadow, 2 - Blurred Shadow
-    bool useShadow;// TODO: REMOVE
-    bool useBluredShadow;// TODO: REMOVE
 
     //Background
-    bool useBackground;// TODO: REMOVE
     int backgroundType;
     // -1 - Common, 0 - Solid Color, 1 - Picture, 2 - Video
     QColor backgroundColor;
     QString backgroundName;
-    QPixmap background; //TODO: Rename to backgroundPix
+    QPixmap backgroundPix; //TODO: Rename to backgroundPix
     QString backgroundVideoPath;
 
     //Layout
-    bool isNotCommonLayout;
     int screenUse;
     int screenPosition;
     // 0 - Top of Screen, 1 - Botton of Screen
 
     bool useSameForDisp2;
-    bool useDisp2Settings; // TODO: REMOVE
+
+    void saveBase();
+    void saveBase(QSqlQuery &sq);
+    void updateBase();
+    void updateBase(QSqlQuery &sq);
+    void loadBase();
+    void loadBase(QSqlQuery &sq);
+
+    void setBaseChangeHandles();
+    void resetBaseChangeHandles();
 };
 
-//class MainScreenSettings : TextSettings
-//{
-//public:
-//    MainScreenSettings();
-//};
+class TextSettings : public TextSettingsBase
+{
+public:
+    TextSettings();
+    //Text
+    bool isNotCommonFont;
+    bool isNotCommonColor;
+
+    //Layout
+    bool isNotCommonLayout;
+
+    // Change Handles
+    bool isChangedNotFont, isChangedNotColor, isChangedNotLayout;
+
+    void saveMain();
+    void saveMain(QSqlQuery &sq);
+    void updateMain();
+    void updateMain(QSqlQuery &sq);
+    void loadMain();
+    void loadMain(QSqlQuery &sq);
+
+    void setMainChangeHandles();
+    void resetMainChangeHandles();
+
+};
 
 class BibleSettings : public TextSettings
 {
@@ -86,6 +122,20 @@ public:
     int captionAlingment;
     int captionPosition;
     bool useAbbriviation;
+
+    // Change Handles
+    bool isChangedCapFont, isChangedCapColor, isChangedCapShadColor, isChangedNotSameFont;
+    bool isChangedNotSameColor, isChangedCapAlign, isChangedCapPos, isChangedUseAbbriv;
+
+    void save();
+    void save(QSqlQuery &sq);
+    void update();
+    void update(QSqlQuery &sq);
+    void load();
+    void load(QSqlQuery &sq);
+
+    void setChangeHandes();
+    void resetChangeHandles();
 };
 
 class SongSettings : public TextSettings
@@ -112,13 +162,24 @@ public:
     bool isNotSameEndingColor;
     int endingType; // 0 = ***, 1 = ---, 2 = °°°, 3 = •••, 4 = ●●●, 5 = ▪▪▪, 6 = ■■■, 7 = for song copyright info
     int endingPosition;
-};
 
-//class AnnounceSettings : TextSettings
-//{
-//public:
-//    AnnounceSettings();
-//};
+    // Change Handles
+    bool isChangedShowTitle, isChangedShowKey, isChangedShowNum, isChangedShowEnding;
+    bool isChangedInfoFont, isChangedInfoColor, isChangedInfoShadColor, isChangedNotSameInfoFont;
+    bool isChangedNotSameInfoColor, isChangedInfoAlign, isChangedEndingFont, isChangedEndingColor;
+    bool isChangedEndingShadColor, isChangedNotSameEndingFont, isChangedNotSameEndingColor;
+    bool isChangedEndingType, isChangedEndingPosition;
+
+    void save();
+    void save(QSqlQuery &sq);
+    void update();
+    void update(QSqlQuery &sq);
+    void load();
+    void load(QSqlQuery &sq);
+
+    void setChangeHandes();
+    void resetChangeHandles();
+};
 
 class DisplayControlsSettings
 {

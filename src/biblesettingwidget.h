@@ -69,6 +69,10 @@ private slots:
     void on_toolButtonTextColor2_clicked();
     void on_toolButtonShadowColor_clicked();
     void on_toolButtonShadowColor2_clicked();
+    void on_comboBoxVerticalAling_currentIndexChanged(int index);
+    void on_comboBoxVerticalAling2_currentIndexChanged(int index);
+    void on_comboBoxHorizontalAling_currentIndexChanged(int index);
+    void on_comboBoxHorizontalAling2_currentIndexChanged(int index);
     void on_checkBoxSameFont_stateChanged(int arg1);
     void on_checkBoxSameFont2_stateChanged(int arg1);
     void on_toolButtonCaptionFont_clicked();
@@ -79,16 +83,34 @@ private slots:
     void on_toolButtonCaptionColor2_clicked();
     void on_toolButtonCaptionShadowColor_clicked();
     void on_toolButtonCaptionShadowColor2_clicked();
+    void on_comboBoxCaptionPosition_currentIndexChanged(int index);
+    void on_comboBoxCaptionPosition2_currentIndexChanged(int index);
+    void on_comboBoxCaptionAlign_currentIndexChanged(int index);
+    void on_comboBoxCaptionAlign2_currentIndexChanged(int index);
+    void on_comboBoxTransitionType_currentIndexChanged(int index);
+    void on_comboBoxTransitionType2_currentIndexChanged(int index);
+    void on_comboBoxTextEffects_currentIndexChanged(int index);
+    void on_comboBoxTextEffects2_currentIndexChanged(int index);
     void on_comboBoxBackgoundType_currentIndexChanged(int index);
     void on_comboBoxBackgoundType2_currentIndexChanged(int index);
-    void on_buttonBrowseBackground_clicked();
-    void on_buttonBrowseBackground2_clicked();
+    void on_toolButtonBrowseBackground_clicked();
+    void on_toolButtonBrowseBackground2_clicked();
+    void on_checkBoxAbbiviations_stateChanged(int arg1);
+    void on_checkBoxAbbiviations2_stateChanged(int arg1);
     void on_checkBoxCommonLayout_stateChanged(int arg1);
     void on_checkBoxCommonLayout2_stateChanged(int arg1);
+    void on_spinBoxMaxScreen_editingFinished();
+    void on_spinBoxMaxScreen2_editingFinished();
+    void on_comboBoxScreenPosition_currentIndexChanged(int index);
+    void on_comboBoxScreenPosition2_currentIndexChanged(int index);
     void on_checkBoxDisp2_stateChanged(int arg1);
     void on_pushButtonDefault_clicked();
 
     QString getFontText(QFont font);
+
+
+
+
 
 private:
     QStringList bibles, secondary_bibles;

@@ -241,7 +241,7 @@ void SoftProjector::positionDisplayWindow()
 //        displayScreen1->showFullScreen();
         pds1->showFullScreen();
         pds1->resetImGenSize();
-        pds1->renderPassiveText(theme.passive.background,theme.passive.useBackground);
+        pds1->renderPassiveText(theme.passive.backgroundPix,true);//TODO:FIX
 //        imGen.setScreenSize(QSize(pds1->width(),pds1->height()));
 //        if(!ui->actionCloseDisplay->isChecked())
 //            ui->actionCloseDisplay->trigger();
@@ -619,7 +619,7 @@ void SoftProjector::updateScreen()
     {
         // Do not display any text:
 //        displayScreen1->renderText(false);
-        pds1->renderPassiveText(theme.passive.background,theme.passive.useBackground);
+        pds1->renderPassiveText(theme.passive.backgroundPix,true);//TODO:Fix
 //        pds1->setTextPixmap(imGen.generateEmptyImage());
 //        pds1->setBackPixmap(theme.passive.background);
 

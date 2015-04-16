@@ -50,61 +50,65 @@ void BibleSettingWidget::setSettings(BibleSettings &settings, BibleSettings &set
     mySettings2 = settings2;
 
     loadSettings();
+    mySettings.resetChangeHandles();
+    mySettings2.resetChangeHandles();
 }
 
 void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &settings2)
 {
     // Text
-    mySettings.isNotCommonFont = ui->checkBoxCommonFont->isChecked();
-    mySettings2.isNotCommonFont = ui->checkBoxCommonFont2->isChecked();
-    mySettings.isNotCommonColor = ui->checkBoxCommonColor->isChecked();
-    mySettings2.isNotCommonColor = ui->checkBoxCommonColor2->isChecked();
+//    mySettings.isNotCommonFont = ui->checkBoxCommonFont->isChecked();
+//    mySettings2.isNotCommonFont = ui->checkBoxCommonFont2->isChecked();
+//    mySettings.isNotCommonColor = ui->checkBoxCommonColor->isChecked();
+//    mySettings2.isNotCommonColor = ui->checkBoxCommonColor2->isChecked();
 
     // Alingment
-    mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
-    mySettings.textAlingmentH = ui->comboBoxHorizontalAling->currentIndex();
-    mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
-    mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
+//    mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
+//    mySettings.textAlingmentH = ui->comboBoxHorizontalAling->currentIndex();
+//    mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
+//    mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
 
     //Caption
-    mySettings.isNotSameFont = ui->checkBoxSameFont->isChecked();
-    mySettings2.isNotSameFont = ui->checkBoxSameFont2->isChecked();
-    mySettings.isNotSameColor = ui->checkBoxSameColor->isChecked();
-    mySettings2.isNotSameColor = ui->checkBoxSameColor2->isChecked();
+//    mySettings.isNotSameFont = ui->checkBoxSameFont->isChecked();
+//    mySettings2.isNotSameFont = ui->checkBoxSameFont2->isChecked();
+//    mySettings.isNotSameColor = ui->checkBoxSameColor->isChecked();
+//    mySettings2.isNotSameColor = ui->checkBoxSameColor2->isChecked();
 
     //Caption Alignment
-    mySettings.captionPosition = ui->comboBoxCaptionPosition->currentIndex();
-    mySettings.captionAlingment = ui->comboBoxCaptionAlign->currentIndex();
-    mySettings2.captionPosition = ui->comboBoxCaptionPosition2->currentIndex();
-    mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
+//    mySettings.captionPosition = ui->comboBoxCaptionPosition->currentIndex();
+//    mySettings.captionAlingment = ui->comboBoxCaptionAlign->currentIndex();
+//    mySettings2.captionPosition = ui->comboBoxCaptionPosition2->currentIndex();
+//    mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
 
     // Transition
-    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex() - 1;
-    mySettings2.transitionType = ui->comboBoxTransitionType2->currentIndex() - 1;
+//    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex() - 1;
+//    mySettings2.transitionType = ui->comboBoxTransitionType2->currentIndex() - 1;
 
     // Effects
-    mySettings.transitionType = ui->comboBoxTextEffects->currentIndex() - 1;
-    mySettings2.transitionType = ui->comboBoxTextEffects2->currentIndex() - 1;
+//    mySettings.transitionType = ui->comboBoxTextEffects->currentIndex() - 1;
+//    mySettings2.transitionType = ui->comboBoxTextEffects2->currentIndex() - 1;
 
 //     Backgroud
 
     // Version Abbreviations
-    mySettings.useAbbriviation = ui->checkBoxAbbiviations->isChecked();
-    mySettings2.useAbbriviation = ui->checkBoxAbbiviations2->isChecked();
+//    mySettings.useAbbriviation = ui->checkBoxAbbiviations->isChecked();
+//    mySettings2.useAbbriviation = ui->checkBoxAbbiviations2->isChecked();
 
     // Max screen use
-    mySettings.isNotCommonLayout = ui->checkBoxCommonLayout->isChecked();
-    mySettings.screenUse = ui->spinBoxMaxScreen->value();
-    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
-    mySettings2.isNotCommonLayout = ui->checkBoxCommonLayout2->isChecked();
-    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
-    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
+//    mySettings.isNotCommonLayout = ui->checkBoxCommonLayout->isChecked();
+//    mySettings.screenUse = ui->spinBoxMaxScreen->value();
+//    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
+//    mySettings2.isNotCommonLayout = ui->checkBoxCommonLayout2->isChecked();
+//    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
+//    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
 
     // Get if to use secodary screen settings
-    mySettings2.useDisp2Settings = ui->checkBoxDisp2->isChecked();
+//    mySettings2.useSameForDisp2 = ui->checkBoxDisp2->isChecked();
 
     settings = mySettings;
     settings2 = mySettings2;
+    mySettings.resetChangeHandles();
+    mySettings2.resetChangeHandles();
 }
 
 void BibleSettingWidget::setBibleVersions(BibleVersionSettings &bver, BibleVersionSettings &bver2)
@@ -236,9 +240,9 @@ void BibleSettingWidget::loadSettings()
     ui->graphicViewCaptionColor2->setPalette(p);
 
     // Caption Shadow Color
-    p.setColor(QPalette::Base,mySettings.captionColor);
+    p.setColor(QPalette::Base,mySettings.captionShadowColor);
     ui->graphicViewCaptionShadowColor->setPalette(p);
-    p.setColor(QPalette::Base,mySettings2.textShadowColor);
+    p.setColor(QPalette::Base,mySettings2.captionShadowColor);
     ui->graphicViewCaptionShadowColor2->setPalette(p);
 
     // Caption Alingment
@@ -257,6 +261,7 @@ void BibleSettingWidget::loadSettings()
 
     // Background
     ui->comboBoxBackgoundType->setCurrentIndex(mySettings.backgroundType + 1);
+    on_comboBoxBackgoundType_currentIndexChanged(mySettings.backgroundType + 1);
     p.setColor(QPalette::Base,mySettings.backgroundColor);
     ui->graphicsViewBackgroundColor->setPalette(p);
     if(mySettings.backgroundType == 1)
@@ -265,6 +270,7 @@ void BibleSettingWidget::loadSettings()
         ui->lineEditBackPath->setText(mySettings.backgroundVideoPath);
 
     ui->comboBoxBackgoundType2->setCurrentIndex(mySettings2.backgroundType + 1);
+    on_comboBoxBackgoundType2_currentIndexChanged(mySettings2.backgroundType + 1);
     p.setColor(QPalette::Base,mySettings2.backgroundColor);
     ui->graphicsViewBackgroundColor2->setPalette(p);
     if(mySettings2.backgroundType == 1)
@@ -520,11 +526,16 @@ void BibleSettingWidget::on_comboBoxSecondaryBible2_activated(const QString &arg
 void BibleSettingWidget::on_checkBoxCommonFont_stateChanged(int arg1)
 {
     ui->toolButtonTextFont->setEnabled(arg1);
+    mySettings.isNotCommonFont = arg1;
+    mySettings.isChangedNotFont = true;
 }
 
 void BibleSettingWidget::on_checkBoxCommonFont2_stateChanged(int arg1)
 {
     ui->toolButtonTextFont2->setEnabled(arg1);
+    mySettings2.isNotCommonFont = arg1;
+    mySettings2.isChangedNotFont = true;
+
 }
 
 void BibleSettingWidget::on_toolButtonTextFont_clicked()
@@ -532,7 +543,10 @@ void BibleSettingWidget::on_toolButtonTextFont_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
+    {
         mySettings.textFont = font;
+        mySettings.isChangedTextFont = true;
+    }
 
     ui->labelFont->setText(getFontText(mySettings.textFont));
 }
@@ -540,30 +554,40 @@ void BibleSettingWidget::on_toolButtonTextFont_clicked()
 void BibleSettingWidget::on_toolButtonTextFont2_clicked()
 {
     bool ok;
-    QFont font = QFontDialog::getFont(&ok,mySettings2.textFont,this);
+    QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
+    {
         mySettings2.textFont = font;
+        mySettings2.isChangedTextFont = true;
+    }
 
-    ui->labelFont2->setText(getFontText(mySettings2.textFont));
+    ui->labelFont->setText(getFontText(mySettings2.textFont));
 }
 
 void BibleSettingWidget::on_checkBoxCommonColor_stateChanged(int arg1)
 {
     ui->toolButtonTextColor->setEnabled(arg1);
     ui->toolButtonShadowColor->setEnabled(arg1);
+    mySettings.isNotCommonColor = arg1;
+    mySettings.isChangedNotColor = true;
 }
 
 void BibleSettingWidget::on_checkBoxCommonColor2_stateChanged(int arg1)
 {
     ui->toolButtonTextColor2->setEnabled(arg1);
     ui->toolButtonShadowColor2->setEnabled(arg1);
+    mySettings2.isNotCommonColor = arg1;
+    mySettings2.isChangedNotColor = true;
 }
 
 void BibleSettingWidget::on_toolButtonTextColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textColor,this));
     if(c.isValid())
+    {
         mySettings.textColor = c;
+        mySettings.isChangedTextColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicViewTextColor->setPalette(p);
@@ -573,7 +597,10 @@ void BibleSettingWidget::on_toolButtonTextColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textColor,this));
     if(c.isValid())
+    {
         mySettings2.textColor = c;
+        mySettings2.isChangedTextColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textColor);
     ui->graphicViewTextColor2->setPalette(p);
@@ -583,7 +610,10 @@ void BibleSettingWidget::on_toolButtonShadowColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textShadowColor,this));
     if(c.isValid())
+    {
         mySettings.textShadowColor = c;
+        mySettings.isChangedTextShadowColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textShadowColor);
     ui->graphicViewShadowColor->setPalette(p);
@@ -593,20 +623,51 @@ void BibleSettingWidget::on_toolButtonShadowColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textShadowColor,this));
     if(c.isValid())
+    {
         mySettings2.textShadowColor = c;
+        mySettings2.isChangedTextShadowColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textShadowColor);
     ui->graphicViewShadowColor2->setPalette(p);
 }
 
+void BibleSettingWidget::on_comboBoxVerticalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentV = index;
+    mySettings.isChangedAlingV = true;
+}
+
+void BibleSettingWidget::on_comboBoxVerticalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentV = index;
+    mySettings2.isChangedAlingV = true;
+}
+
+void BibleSettingWidget::on_comboBoxHorizontalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentH = index;
+    mySettings.isChangedAlingH = true;
+}
+
+void BibleSettingWidget::on_comboBoxHorizontalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentH = index;
+    mySettings2.isChangedAlingH = true;
+}
+
 void BibleSettingWidget::on_checkBoxSameFont_stateChanged(int arg1)
 {
     ui->toolButtonCaptionFont->setEnabled(arg1);
+    mySettings.isNotSameFont = arg1;
+    mySettings.isChangedNotSameFont = true;
 }
 
 void BibleSettingWidget::on_checkBoxSameFont2_stateChanged(int arg1)
 {
     ui->toolButtonCaptionFont2->setEnabled(arg1);
+    mySettings2.isNotSameFont = arg1;
+    mySettings2.isChangedNotSameFont = true;
 }
 
 void BibleSettingWidget::on_toolButtonCaptionFont_clicked()
@@ -614,7 +675,10 @@ void BibleSettingWidget::on_toolButtonCaptionFont_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings.captionFont,this);
     if(ok)
+    {
         mySettings.captionFont = font;
+        mySettings.isChangedCapFont = true;
+    }
 
     ui->labelFontCaption->setText(getFontText(mySettings.captionFont));
 }
@@ -624,7 +688,10 @@ void BibleSettingWidget::on_toolButtonCaptionFont2_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings2.captionFont,this);
     if(ok)
+    {
         mySettings2.captionFont = font;
+        mySettings2.isChangedCapFont = true;
+    }
 
     ui->labelFontCaption2->setText(getFontText(mySettings2.captionFont));
 }
@@ -633,19 +700,26 @@ void BibleSettingWidget::on_checkBoxSameColor_stateChanged(int arg1)
 {
     ui->toolButtonCaptionColor->setEnabled(arg1);
     ui->toolButtonCaptionShadowColor->setEnabled(arg1);
+    mySettings.isNotSameColor = arg1;
+    mySettings.isChangedNotSameColor = true;
 }
 
 void BibleSettingWidget::on_checkBoxSameColor2_stateChanged(int arg1)
 {
     ui->toolButtonCaptionColor2->setEnabled(arg1);
     ui->toolButtonCaptionShadowColor2->setEnabled(arg1);
+    mySettings.isNotSameColor = arg1;
+    mySettings.isChangedNotSameColor = true;
 }
 
 void BibleSettingWidget::on_toolButtonCaptionColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.captionColor,this));
     if(c.isValid())
+    {
         mySettings.captionColor = c;
+        mySettings.isChangedCapColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.captionColor);
     ui->graphicViewCaptionColor->setPalette(p);
@@ -655,7 +729,10 @@ void BibleSettingWidget::on_toolButtonCaptionColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.captionColor,this));
     if(c.isValid())
+    {
         mySettings2.captionColor = c;
+        mySettings2.isChangedCapColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.captionColor);
     ui->graphicViewCaptionColor2->setPalette(p);
@@ -665,7 +742,10 @@ void BibleSettingWidget::on_toolButtonCaptionShadowColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.captionShadowColor,this));
     if(c.isValid())
+    {
         mySettings.captionShadowColor = c;
+        mySettings.isChangedCapShadColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.captionShadowColor);
     ui->graphicViewCaptionShadowColor->setPalette(p);
@@ -675,23 +755,76 @@ void BibleSettingWidget::on_toolButtonCaptionShadowColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.captionShadowColor,this));
     if(c.isValid())
+    {
         mySettings2.captionShadowColor = c;
+        mySettings2.isChangedCapShadColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.captionShadowColor);
     ui->graphicViewCaptionShadowColor2->setPalette(p);
+}
+
+void BibleSettingWidget::on_comboBoxCaptionPosition_currentIndexChanged(int index)
+{
+    mySettings.captionPosition = index;
+    mySettings.isChangedCapPos = true;
+}
+
+void BibleSettingWidget::on_comboBoxCaptionPosition2_currentIndexChanged(int index)
+{
+    mySettings2.captionPosition = index;
+    mySettings2.isChangedCapPos = true;
+}
+
+void BibleSettingWidget::on_comboBoxCaptionAlign_currentIndexChanged(int index)
+{
+    mySettings.captionAlingment = index;
+    mySettings.isChangedCapAlign = true;
+}
+
+void BibleSettingWidget::on_comboBoxCaptionAlign2_currentIndexChanged(int index)
+{
+    mySettings2.captionAlingment = index;
+    mySettings2.isChangedCapAlign = true;
+}
+
+void BibleSettingWidget::on_comboBoxTransitionType_currentIndexChanged(int index)
+{
+    mySettings.transitionType = index - 1;
+    mySettings.isChangesTranType = true;
+}
+
+void BibleSettingWidget::on_comboBoxTransitionType2_currentIndexChanged(int index)
+{
+    mySettings2.transitionType = index - 1;
+    mySettings2.isChangesTranType = true;
+}
+
+void BibleSettingWidget::on_comboBoxTextEffects_currentIndexChanged(int index)
+{
+    mySettings.effectsType = index;
+    mySettings.isChangedEffectType = true;
+}
+
+void BibleSettingWidget::on_comboBoxTextEffects2_currentIndexChanged(int index)
+{
+    mySettings2.effectsType = index;
+    mySettings2.isChangedEffectType = true;
 }
 
 void BibleSettingWidget::on_comboBoxBackgoundType_currentIndexChanged(int index)
 {
     mySettings.backgroundType = index - 1;
 
-    ui->buttonBrowseBackground->setEnabled(mySettings.backgroundType != -1);
+    ui->toolButtonBrowseBackground->setVisible(mySettings.backgroundType != -1);
+    ui->graphicsViewBackgroundColor->setVisible(mySettings.backgroundType != -1);
+    ui->lineEditBackPath->setVisible(mySettings.backgroundType != -1);
 
     if(mySettings.backgroundType == 0)
     {
         ui->graphicsViewBackgroundColor->setVisible(true);
         ui->lineEditBackPath->setVisible(false);
-        ui->buttonBrowseBackground->setText(tr("Select Color..."));
+        ui->toolButtonBrowseBackground->setText(tr("Select Color..."));
     }
     else if(mySettings.backgroundType >= 1)
     {
@@ -701,21 +834,24 @@ void BibleSettingWidget::on_comboBoxBackgoundType_currentIndexChanged(int index)
             ui->lineEditBackPath->setText(mySettings.backgroundVideoPath);
         ui->graphicsViewBackgroundColor->setVisible(false);
         ui->lineEditBackPath->setVisible(true);
-        ui->buttonBrowseBackground->setText(tr("Browse..."));
+        ui->toolButtonBrowseBackground->setText(tr("Browse..."));
     }
+    mySettings.isChangedBackType = true;
 }
 
 void BibleSettingWidget::on_comboBoxBackgoundType2_currentIndexChanged(int index)
 {
     mySettings2.backgroundType = index - 1;
 
-    ui->buttonBrowseBackground2->setEnabled(mySettings.backgroundType != -1);
+    ui->toolButtonBrowseBackground2->setVisible(mySettings2.backgroundType != -1);
+    ui->graphicsViewBackgroundColor2->setVisible(mySettings2.backgroundType != -1);
+    ui->lineEditBackPath2->setVisible(mySettings2.backgroundType != -1);
 
     if(mySettings2.backgroundType == 0)
     {
         ui->graphicsViewBackgroundColor2->setVisible(true);
         ui->lineEditBackPath2->setVisible(false);
-        ui->buttonBrowseBackground2->setText(tr("Select Color..."));
+        ui->toolButtonBrowseBackground2->setText(tr("Select Color..."));
     }
     else if(mySettings2.backgroundType >= 1)
     {
@@ -725,18 +861,22 @@ void BibleSettingWidget::on_comboBoxBackgoundType2_currentIndexChanged(int index
             ui->lineEditBackPath2->setText(mySettings2.backgroundVideoPath);
         ui->graphicsViewBackgroundColor2->setVisible(false);
         ui->lineEditBackPath2->setVisible(true);
-        ui->buttonBrowseBackground2->setText(tr("Browse..."));
+        ui->toolButtonBrowseBackground2->setText(tr("Browse..."));
     }
+ mySettings2.isChangedBackType = true;
 }
 
-void BibleSettingWidget::on_buttonBrowseBackground_clicked()
+void BibleSettingWidget::on_toolButtonBrowseBackground_clicked()
 {
     QString filename;
     if (mySettings.backgroundType == 0)
     {
         QColor c(QColorDialog::getColor(mySettings.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings.backgroundColor = c;
+            mySettings.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings.backgroundColor);
         ui->graphicsViewBackgroundColor->setPalette(p);
@@ -749,13 +889,14 @@ void BibleSettingWidget::on_buttonBrowseBackground_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings.background = pix;
+                mySettings.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings.backgroundName = filename;
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackPix = true;
         }
     }
     else if (mySettings.backgroundType == 2)
@@ -769,18 +910,22 @@ void BibleSettingWidget::on_buttonBrowseBackground_clicked()
             filename = fiv.fileName();
 
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackVid = true;
         }
     }
 }
 
-void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
+void BibleSettingWidget::on_toolButtonBrowseBackground2_clicked()
 {
     QString filename;
     if (mySettings2.backgroundType == 0)
     {
         QColor c(QColorDialog::getColor(mySettings2.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings2.backgroundColor = c;
+            mySettings2.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings2.backgroundColor);
         ui->graphicsViewBackgroundColor2->setPalette(p);
@@ -793,13 +938,14 @@ void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings2.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings2.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings2.background = pix;
+                mySettings2.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings2.backgroundName = filename;
             ui->lineEditBackPath2->setText(filename);
+            mySettings2.isChangedBackPix = true;
         }
     }
     else if (mySettings2.backgroundType == 2)
@@ -813,25 +959,67 @@ void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
             filename = fiv.fileName();
 
             ui->lineEditBackPath2->setText(filename);
+            mySettings2.isChangedBackVid = true;
         }
     }
+}
+
+void BibleSettingWidget::on_checkBoxAbbiviations_stateChanged(int arg1)
+{
+    mySettings.useAbbriviation = arg1;
+    mySettings.isChangedUseAbbriv = true;
+}
+
+void BibleSettingWidget::on_checkBoxAbbiviations2_stateChanged(int arg1)
+{
+    mySettings2.useAbbriviation = arg1;
+    mySettings2.isChangedUseAbbriv = true;
 }
 
 void BibleSettingWidget::on_checkBoxCommonLayout_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen->setEnabled(arg1);
     ui->comboBoxScreenPosition->setEnabled(arg1);
+    mySettings.isNotCommonLayout = arg1;
+    mySettings.isChangedNotLayout = true;
 }
 
 void BibleSettingWidget::on_checkBoxCommonLayout2_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen2->setEnabled(arg1);
     ui->comboBoxScreenPosition2->setEnabled(arg1);
+    mySettings2.isNotCommonLayout = arg1;
+    mySettings2.isChangedNotLayout = true;
+}
+
+void BibleSettingWidget::on_spinBoxMaxScreen_editingFinished()
+{
+    mySettings.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings.isChangedScreenUse = true;
+}
+
+void BibleSettingWidget::on_spinBoxMaxScreen2_editingFinished()
+{
+    mySettings2.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings2.isChangedScreenUse = true;
+}
+
+void BibleSettingWidget::on_comboBoxScreenPosition_currentIndexChanged(int index)
+{
+    mySettings.screenPosition = index;
+    mySettings.isChangedScreenPos = true;
+}
+
+void BibleSettingWidget::on_comboBoxScreenPosition2_currentIndexChanged(int index)
+{
+    mySettings2.screenPosition = index;
+    mySettings2.isChangedScreenPos = true;
 }
 
 void BibleSettingWidget::on_checkBoxDisp2_stateChanged(int arg1)
 {
     mySettings.useSameForDisp2 = arg1;
+    mySettings.isChangedSameDisp2 = true;
     ui->groupBoxUseDisp2->setVisible(!arg1);
 }
 
@@ -858,3 +1046,6 @@ QString BibleSettingWidget::getFontText(QFont font)
 
     return st;
 }
+
+
+

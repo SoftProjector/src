@@ -53,12 +53,12 @@ void PassiveSettingWidget::setSetings(TextSettings &settings, TextSettings &sett
 
 void PassiveSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
-    mySettings.useBackground = ui->groupBoxBackground->isChecked();
+//    mySettings.useBackground = ui->groupBoxBackground->isChecked();
     mySettings.backgroundName = ui->lineEditBackgroundPath->text();
 
     // Get display two settings
-    mySettings2.useDisp2Settings = ui->groupBoxDisp2Sets->isChecked();
-    mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
+    mySettings2.useSameForDisp2 = ui->groupBoxDisp2Sets->isChecked();
+//    mySettings2.useBackground = ui->groupBoxBackground2->isChecked();
     mySettings2.backgroundName = ui->lineEditBackgroundPath2->text();
 
     settings = mySettings;
@@ -67,12 +67,12 @@ void PassiveSettingWidget::getSettings(TextSettings &settings, TextSettings &set
 
 void PassiveSettingWidget::loadSettings()
 {
-    ui->groupBoxBackground->setChecked(mySettings.useBackground);
+//    ui->groupBoxBackground->setChecked(mySettings.useBackground);
     ui->lineEditBackgroundPath->setText(mySettings.backgroundName);
 
     // Displpay screen two
-    ui->groupBoxDisp2Sets->setChecked(mySettings2.useDisp2Settings);
-    ui->groupBoxBackground2->setChecked(mySettings.useBackground);
+    ui->groupBoxDisp2Sets->setChecked(mySettings2.useSameForDisp2);
+//    ui->groupBoxBackground2->setChecked(mySettings.useBackground);
     ui->lineEditBackgroundPath2->setText(mySettings.backgroundName);
 }
 
@@ -89,9 +89,9 @@ void PassiveSettingWidget::on_buttonBrowseBackgound_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings.background = p;
+            mySettings.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -112,9 +112,9 @@ void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings2.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings2.background = p;
+            mySettings2.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;

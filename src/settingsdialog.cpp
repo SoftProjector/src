@@ -152,11 +152,11 @@ void SettingsDialog::applySettings()
             || currentDisplayScreen2!=gsettings.displayScreen2)
         emit positionsDisplayWindow();
 
-    // Redraw the screen:
-    emit updateScreen();
-
     // Save Settings
     theme.saveThemeUpdate();
+
+    // Redraw the screen:
+    emit updateScreen();
 
     // reset display holders
     is_always_on_top = gsettings.displayIsOnTop;

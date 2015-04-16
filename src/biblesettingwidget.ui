@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>426</width>
-    <height>945</height>
+    <height>957</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -771,11 +771,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonBrowseBackground">
+      <widget class="QToolButton" name="toolButtonBrowseBackground">
        <property name="text">
         <string>Browse...</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_14">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -1739,11 +1752,24 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="buttonBrowseBackground2">
+         <widget class="QToolButton" name="toolButtonBrowseBackground2">
           <property name="text">
            <string>Browse...</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_15">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>

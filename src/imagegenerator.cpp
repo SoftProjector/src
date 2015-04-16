@@ -47,8 +47,9 @@ QPixmap ImageGenerator::generateBibleImage(Verse verse, BibleSettings &bSets)
     m_verse = verse;
     m_bSets = bSets;
 
-    m_shadow = m_bSets.useShadow;
-    m_blurShadow = m_bSets.useBluredShadow;
+    // TODO:FIX
+//    m_shadow = m_bSets.useShadow;
+//    m_blurShadow = m_bSets.useBluredShadow;
 
     m_isTextPrepared = false;
     return renderText();
@@ -60,8 +61,9 @@ QPixmap ImageGenerator::generateSongImage(Stanza stanza, SongSettings &sSets)
     m_stanza = stanza;
     m_sSets = sSets;
 
-    m_shadow = m_sSets.useShadow;
-    m_blurShadow = m_sSets.useBluredShadow;
+    // TODO:FIX
+//    m_shadow = m_sSets.useShadow;
+//    m_blurShadow = m_sSets.useBluredShadow;
 
     m_isTextPrepared = false;
     return renderText();
@@ -72,9 +74,9 @@ QPixmap ImageGenerator::generateAnnounceImage(AnnounceSlide announce, TextSettin
     m_type = 3;
     m_announce = announce;
     m_aSets = aSets;
-
-    m_shadow = m_aSets.useShadow;
-    m_blurShadow = m_aSets.useBluredShadow;
+// TODO:FIX
+//    m_shadow = m_aSets.useShadow;
+//    m_blurShadow = m_aSets.useBluredShadow;
 
     m_isTextPrepared = false;
     return renderText();

@@ -108,7 +108,7 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
     mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
 
     // Get if to use secodary screen settings
-    mySettings2.useDisp2Settings = ui->checkBoxDisp2->isChecked();
+    mySettings2.useSameForDisp2 = ui->checkBoxDisp2->isChecked();
 
     settings = mySettings;
     settings2 = mySettings2;
@@ -601,9 +601,9 @@ void SongSettingWidget::on_buttonBrowseBackground_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings.background = pix;
+                mySettings.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings.backgroundName = filename;
@@ -645,9 +645,9 @@ void SongSettingWidget::on_buttonBrowseBackground2_clicked()
         {
             QPixmap pix(filename);
             if(pix.width()>1280 || pix.height()>1280)
-                mySettings2.background = pix.scaled(1280,1280,Qt::KeepAspectRatio);
+                mySettings2.backgroundPix = pix.scaled(1280,1280,Qt::KeepAspectRatio);
             else
-                mySettings2.background = pix;
+                mySettings2.backgroundPix = pix;
             QFileInfo fip(filename);
             filename = fip.fileName();
             mySettings2.backgroundName = filename;
