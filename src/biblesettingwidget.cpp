@@ -56,55 +56,6 @@ void BibleSettingWidget::setSettings(BibleSettings &settings, BibleSettings &set
 
 void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &settings2)
 {
-    // Text
-//    mySettings.isNotCommonFont = ui->checkBoxCommonFont->isChecked();
-//    mySettings2.isNotCommonFont = ui->checkBoxCommonFont2->isChecked();
-//    mySettings.isNotCommonColor = ui->checkBoxCommonColor->isChecked();
-//    mySettings2.isNotCommonColor = ui->checkBoxCommonColor2->isChecked();
-
-    // Alingment
-//    mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
-//    mySettings.textAlingmentH = ui->comboBoxHorizontalAling->currentIndex();
-//    mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
-//    mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
-
-    //Caption
-//    mySettings.isNotSameFont = ui->checkBoxSameFont->isChecked();
-//    mySettings2.isNotSameFont = ui->checkBoxSameFont2->isChecked();
-//    mySettings.isNotSameColor = ui->checkBoxSameColor->isChecked();
-//    mySettings2.isNotSameColor = ui->checkBoxSameColor2->isChecked();
-
-    //Caption Alignment
-//    mySettings.captionPosition = ui->comboBoxCaptionPosition->currentIndex();
-//    mySettings.captionAlingment = ui->comboBoxCaptionAlign->currentIndex();
-//    mySettings2.captionPosition = ui->comboBoxCaptionPosition2->currentIndex();
-//    mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
-
-    // Transition
-//    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex() - 1;
-//    mySettings2.transitionType = ui->comboBoxTransitionType2->currentIndex() - 1;
-
-    // Effects
-//    mySettings.transitionType = ui->comboBoxTextEffects->currentIndex() - 1;
-//    mySettings2.transitionType = ui->comboBoxTextEffects2->currentIndex() - 1;
-
-//     Backgroud
-
-    // Version Abbreviations
-//    mySettings.useAbbriviation = ui->checkBoxAbbiviations->isChecked();
-//    mySettings2.useAbbriviation = ui->checkBoxAbbiviations2->isChecked();
-
-    // Max screen use
-//    mySettings.isNotCommonLayout = ui->checkBoxCommonLayout->isChecked();
-//    mySettings.screenUse = ui->spinBoxMaxScreen->value();
-//    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
-//    mySettings2.isNotCommonLayout = ui->checkBoxCommonLayout2->isChecked();
-//    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
-//    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
-
-    // Get if to use secodary screen settings
-//    mySettings2.useSameForDisp2 = ui->checkBoxDisp2->isChecked();
-
     settings = mySettings;
     settings2 = mySettings2;
     mySettings.resetChangeHandles();
@@ -535,7 +486,6 @@ void BibleSettingWidget::on_checkBoxCommonFont2_stateChanged(int arg1)
     ui->toolButtonTextFont2->setEnabled(arg1);
     mySettings2.isNotCommonFont = arg1;
     mySettings2.isChangedNotFont = true;
-
 }
 
 void BibleSettingWidget::on_toolButtonTextFont_clicked()
@@ -1000,7 +950,7 @@ void BibleSettingWidget::on_spinBoxMaxScreen_editingFinished()
 
 void BibleSettingWidget::on_spinBoxMaxScreen2_editingFinished()
 {
-    mySettings2.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
     mySettings2.isChangedScreenUse = true;
 }
 

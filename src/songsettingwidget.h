@@ -39,10 +39,6 @@ public slots:
     void getSettings(SongSettings &settings, SongSettings &settings2);
     void setSettings(SongSettings &settings, SongSettings &settings2);
     void setDispScreen2Visible(bool visible);
-//    void setBackgroungds(QString name, QPixmap back);
-
-//signals:
-//    void applyBackToAll(int t, QString backName, QPixmap background);
 
 private slots:
     void loadSettings();
@@ -57,6 +53,10 @@ private slots:
     void on_toolButtonTextColor2_clicked();
     void on_toolButtonShadowColor_clicked();
     void on_toolButtonShadowColor2_clicked();
+    void on_comboBoxVerticalAling_currentIndexChanged(int index);
+    void on_comboBoxVerticalAling2_currentIndexChanged(int index);
+    void on_comboBoxHorizontalAling_currentIndexChanged(int index);
+    void on_comboBoxHorizontalAling2_currentIndexChanged(int index);
     void on_checkBoxStanzaTitle_stateChanged(int arg1);
     void on_checkBoxStanzaTitle2_stateChanged(int arg1);
     void on_checkBoxSongKey_stateChanged(int arg1);
@@ -73,6 +73,10 @@ private slots:
     void on_toolButtonInfoColor2_clicked();
     void on_toolButtonInfoShadowColor_clicked();
     void on_toolButtonInfoShadowColor2_clicked();
+    void on_comboBoxInfoAlign_currentIndexChanged(int index);
+    void on_comboBoxInfoAlign2_currentIndexChanged(int index);
+    void on_groupBoxSongEnding_toggled(bool arg1);
+    void on_groupBoxSongEnding2_toggled(bool arg1);
     void on_checkBoxSameEndingFont_stateChanged(int arg1);
     void on_checkBoxSameEndingFont2_stateChanged(int arg1);
     void on_toolButtonEndingFont_clicked();
@@ -83,28 +87,30 @@ private slots:
     void on_toolButtonEndingColor2_clicked();
     void on_toolButtonEndingShadowColor_clicked();
     void on_toolButtonEndingShadowColor2_clicked();
+    void on_comboBoxEndingType_currentIndexChanged(int index);
+    void on_comboBoxEndingType2_currentIndexChanged(int index);
+    void on_comboBoxEndingPosition_currentIndexChanged(int index);
+    void on_comboBoxEndingPosition2_currentIndexChanged(int index);
+    void on_comboBoxTransitionType_currentIndexChanged(int index);
+    void on_comboBoxTransitionType2_currentIndexChanged(int index);
+    void on_comboBoxTextEffects_currentIndexChanged(int index);
+    void on_comboBoxTextEffects2_currentIndexChanged(int index);
     void on_comboBoxBackgoundType_currentIndexChanged(int index);
     void on_comboBoxBackgoundType2_currentIndexChanged(int index);
-    void on_buttonBrowseBackground_clicked();
-    void on_buttonBrowseBackground2_clicked();
+    void on_toolButtonBrowseBackround_clicked();
+    void on_toolButtonBrowseBackround2_clicked();
     void on_checkBoxCommonLayout_stateChanged(int arg1);
     void on_checkBoxCommonLayout2_stateChanged(int arg1);
+    void on_spinBoxMaxScreen_editingFinished();
+    void on_spinBoxMaxScreen2_editingFinished();
+    void on_comboBoxScreenPosition_currentIndexChanged(int index);
+    void on_comboBoxScreenPosition2_currentIndexChanged(int index);
     void on_checkBoxDisp2_stateChanged(int arg1);
     void on_pushButtonDefault_clicked();
+
     QString getFontText(QFont font);
     void updateInfoButtons();
     void updateInfoButtons2();
-
-
-//    void on_buttonSongBackground_clicked(); // Rep
-//    void on_buttonSongBackground2_clicked(); // Rep
-//    void on_toolButtonColor_clicked(); //REp
-//    void on_toolButtonColor2_clicked(); //REp
-//    void on_toolButtonFont_clicked(); //REp
-//    void on_toolButtonFont2_clicked(); //REp
-//    void on_groupBoxDisplay2_toggled(bool arg1);//Rem
-
-//    void on_pushButtonApplyToAll_clicked();//rem
 
 private:
     SongSettings mySettings;

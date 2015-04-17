@@ -683,6 +683,7 @@ GeneralSettings::GeneralSettings()
     displayScreen = 0;
     displayScreen2 = -1; // interger "-1" mean "None" or not to display
     currentThemeId = 0;
+    displayOnStartUp = false;
 }
 
 DisplayControlsSettings::DisplayControlsSettings()

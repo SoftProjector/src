@@ -200,6 +200,7 @@ public:
     int displayScreen2; // stores secondary display screen location
     DisplayControlsSettings displayControls;
     int currentThemeId;
+    bool displayOnStartUp;
 };
 
 class DisplaySettings

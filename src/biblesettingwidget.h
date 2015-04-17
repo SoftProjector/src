@@ -108,16 +108,13 @@ private slots:
 
     QString getFontText(QFont font);
 
-
-
-
-
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;
     QStringList secondary_bibles2, secondary_id_list2, trinary_id_list2;
     BibleSettings mySettings, mySettings2;
     BibleVersionSettings bversion,bversion2;
+
     Ui::BibleSettingWidget *ui;
 protected:
     virtual void changeEvent(QEvent *e);

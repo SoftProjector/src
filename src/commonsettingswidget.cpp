@@ -404,7 +404,7 @@ void CommonSettingsWidget::on_spinBoxMaxScreen_editingFinished()
 
 void CommonSettingsWidget::on_spinBoxMaxScreen2_editingFinished()
 {
-    mySettings2.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
     mySettings2.isChangedScreenUse = true;
 }
 

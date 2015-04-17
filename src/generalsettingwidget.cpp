@@ -91,6 +91,9 @@ void GeneralSettingWidget::loadSettings()
         ui->comboBoxDisplayScreen_2->setCurrentIndex(mySettings.displayScreen2+1);
     updateSecondaryDisplayScreen();
 
+    // Dispalay on Start Up
+    ui->checkBoxDisplayOnStartUp->setChecked(mySettings.displayOnStartUp);
+
     // Set Display Controls
     if(screen_count>1)
         ui->groupBoxDisplayControls->setEnabled(false);
@@ -215,4 +218,9 @@ void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
 void GeneralSettingWidget::on_comboBoxTheme_activated(int index)
 {
     emit themeChanged(themeIdList.at(index));
+}
+
+void GeneralSettingWidget::on_checkBoxDisplayOnStartUp_toggled(bool checked)
+{
+    mySettings.displayOnStartUp = checked;
 }

@@ -123,54 +123,32 @@ void AnnouncementSettingWidget::loadSettings()
     // Secondary Screen
     ui->checkBoxDisp2->setChecked(mySettings.useSameForDisp2);
     on_checkBoxDisp2_stateChanged(mySettings.useSameForDisp2);
+
+    mySettings.resetMainChangeHandles();
+    mySettings2.resetMainChangeHandles();
 }
 
 void AnnouncementSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
-    // Text
-    mySettings.isNotCommonFont = ui->checkBoxCommonFont->isChecked();
-    mySettings2.isNotCommonFont = ui->checkBoxCommonFont2->isChecked();
-    mySettings.isNotCommonColor = ui->checkBoxCommonColor->isChecked();
-    mySettings2.isNotCommonColor = ui->checkBoxCommonColor2->isChecked();
-
-    // Alingment
-    mySettings.textAlingmentV = ui->comboBoxVerticalAling->currentIndex();
-    mySettings.textAlingmentH = ui->comboBoxHorizontalAling->currentIndex();
-    mySettings2.textAlingmentV = ui->comboBoxVerticalAling2->currentIndex();
-    mySettings2.textAlingmentH = ui->comboBoxHorizontalAling2->currentIndex();
-
-    // Transition
-    mySettings.transitionType = ui->comboBoxTransitionType->currentIndex() - 1;
-    mySettings2.transitionType = ui->comboBoxTransitionType2->currentIndex() - 1;
-
-    // Effects
-    mySettings.transitionType = ui->comboBoxTextEffects->currentIndex() - 1;
-    mySettings2.transitionType = ui->comboBoxTextEffects2->currentIndex() - 1;
-
-    // Max screen use
-    mySettings.isNotCommonLayout = ui->checkBoxCommonLayout->isChecked();
-    mySettings.screenUse = ui->spinBoxMaxScreen->value();
-    mySettings.screenPosition = ui->comboBoxScreenPosition->currentIndex();
-    mySettings2.isNotCommonLayout = ui->checkBoxCommonLayout2->isChecked();
-    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
-    mySettings2.screenPosition = ui->comboBoxScreenPosition2->currentIndex();
-
-    // Get if to use secodary screen settings
-    mySettings2.useSameForDisp2 = ui->checkBoxDisp2->isChecked();
-
     settings = mySettings;
     settings2 = mySettings2;
+    mySettings.resetMainChangeHandles();
+    mySettings2.resetMainChangeHandles();
 }
 
 
 void AnnouncementSettingWidget::on_checkBoxCommonFont_stateChanged(int arg1)
 {
     ui->toolButtonTextFont->setEnabled(arg1);
+    mySettings.isNotCommonFont = arg1;
+    mySettings.isChangedNotFont = true;
 }
 
 void AnnouncementSettingWidget::on_checkBoxCommonFont2_stateChanged(int arg1)
 {
     ui->toolButtonTextFont2->setEnabled(arg1);
+    mySettings2.isNotCommonFont = arg1;
+    mySettings2.isChangedNotFont = true;
 }
 
 void AnnouncementSettingWidget::on_toolButtonTextFont_clicked()
@@ -178,7 +156,10 @@ void AnnouncementSettingWidget::on_toolButtonTextFont_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
+    {
         mySettings.textFont = font;
+        mySettings.isChangedTextFont = true;
+    }
 
     ui->labelFont->setText(getFontText(mySettings.textFont));
 }
@@ -188,7 +169,10 @@ void AnnouncementSettingWidget::on_toolButtonTextFont2_clicked()
     bool ok;
     QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
     if(ok)
+    {
         mySettings.textFont = font;
+        mySettings.isChangedTextFont = true;
+    }
 
     ui->labelFont->setText(getFontText(mySettings.textFont));
 }
@@ -197,19 +181,26 @@ void AnnouncementSettingWidget::on_checkBoxCommonColor_stateChanged(int arg1)
 {
     ui->toolButtonTextColor->setEnabled(arg1);
     ui->toolButtonShadowColor->setEnabled(arg1);
+    mySettings.isNotCommonColor = arg1;
+    mySettings.isChangedNotColor = true;
 }
 
 void AnnouncementSettingWidget::on_checkBoxCommonColor2_stateChanged(int arg1)
 {
     ui->toolButtonTextColor2->setEnabled(arg1);
     ui->toolButtonShadowColor2->setEnabled(arg1);
+    mySettings2.isNotCommonColor = arg1;
+    mySettings2.isChangedNotColor = true;
 }
 
 void AnnouncementSettingWidget::on_toolButtonTextColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textColor,this));
     if(c.isValid())
+    {
         mySettings.textColor = c;
+        mySettings.isChangedTextColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textColor);
     ui->graphicViewTextColor->setPalette(p);
@@ -219,7 +210,10 @@ void AnnouncementSettingWidget::on_toolButtonTextColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textColor,this));
     if(c.isValid())
+    {
         mySettings2.textColor = c;
+        mySettings2.isChangedTextColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textColor);
     ui->graphicViewTextColor2->setPalette(p);
@@ -229,7 +223,10 @@ void AnnouncementSettingWidget::on_toolButtonShadowColor_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings.textShadowColor,this));
     if(c.isValid())
+    {
         mySettings.textShadowColor = c;
+        mySettings.isChangedTextShadowColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings.textShadowColor);
     ui->graphicViewShadowColor->setPalette(p);
@@ -239,23 +236,76 @@ void AnnouncementSettingWidget::on_toolButtonShadowColor2_clicked()
 {
     QColor c(QColorDialog::getColor(mySettings2.textShadowColor,this));
     if(c.isValid())
+    {
         mySettings2.textShadowColor = c;
+        mySettings.isChangedTextShadowColor = true;
+    }
     QPalette p;
     p.setColor(QPalette::Base,mySettings2.textShadowColor);
     ui->graphicViewShadowColor2->setPalette(p);
+}
+
+void AnnouncementSettingWidget::on_comboBoxVerticalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentV = index;
+    mySettings.isChangedAlingV = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxVerticalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentV = index;
+    mySettings2.isChangedAlingV = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxHorizontalAling_currentIndexChanged(int index)
+{
+    mySettings.textAlingmentH = index;
+    mySettings.isChangedAlingH = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxHorizontalAling2_currentIndexChanged(int index)
+{
+    mySettings2.textAlingmentH = index;
+    mySettings2.isChangedAlingH = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxTransitionType_currentIndexChanged(int index)
+{
+    mySettings.transitionType = index - 1;
+    mySettings.isChangesTranType = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxTransitionType2_currentIndexChanged(int index)
+{
+    mySettings2.transitionType = index - 1;
+    mySettings2.isChangesTranType = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxTextEffects_currentIndexChanged(int index)
+{
+    mySettings.effectsType = index - 1;
+    mySettings.isChangedEffectType = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxTextEffects2_currentIndexChanged(int index)
+{
+    mySettings2.effectsType = index - 1;
+    mySettings2.isChangedEffectType = true;
 }
 
 void AnnouncementSettingWidget::on_comboBoxBackgoundType_currentIndexChanged(int index)
 {
     mySettings.backgroundType = index - 1;
 
-    ui->buttonBrowseBackground->setEnabled(mySettings.backgroundType != -1);
+    ui->toolButtonBrowseBackground->setVisible(mySettings.backgroundType != -1);
+    ui->graphicsViewBackgroundColor->setVisible(mySettings.backgroundType != -1);
+    ui->lineEditBackPath->setVisible(mySettings.backgroundType != -1);
 
     if(mySettings.backgroundType == 0)
     {
         ui->graphicsViewBackgroundColor->setVisible(true);
         ui->lineEditBackPath->setVisible(false);
-        ui->buttonBrowseBackground->setText(tr("Select Color..."));
+        ui->toolButtonBrowseBackground->setText(tr("Select Color..."));
     }
     else if(mySettings.backgroundType >= 1)
     {
@@ -265,21 +315,24 @@ void AnnouncementSettingWidget::on_comboBoxBackgoundType_currentIndexChanged(int
             ui->lineEditBackPath->setText(mySettings.backgroundVideoPath);
         ui->graphicsViewBackgroundColor->setVisible(false);
         ui->lineEditBackPath->setVisible(true);
-        ui->buttonBrowseBackground->setText(tr("Browse..."));
+        ui->toolButtonBrowseBackground->setText(tr("Browse..."));
     }
+    mySettings.isChangedBackType = true;
 }
 
 void AnnouncementSettingWidget::on_comboBoxBackgoundType2_currentIndexChanged(int index)
 {
     mySettings2.backgroundType = index - 1;
 
-    ui->buttonBrowseBackground2->setEnabled(mySettings.backgroundType != -1);
+    ui->toolButtonBrowseBackground->setVisible(mySettings.backgroundType != -1);
+    ui->graphicsViewBackgroundColor->setVisible(mySettings.backgroundType != -1);
+    ui->lineEditBackPath->setVisible(mySettings.backgroundType != -1);
 
     if(mySettings2.backgroundType == 0)
     {
         ui->graphicsViewBackgroundColor2->setVisible(true);
         ui->lineEditBackPath2->setVisible(false);
-        ui->buttonBrowseBackground2->setText(tr("Select Color..."));
+        ui->toolButtonBrowseBackground2->setText(tr("Select Color..."));
     }
     else if(mySettings2.backgroundType >= 1)
     {
@@ -289,18 +342,22 @@ void AnnouncementSettingWidget::on_comboBoxBackgoundType2_currentIndexChanged(in
             ui->lineEditBackPath2->setText(mySettings2.backgroundVideoPath);
         ui->graphicsViewBackgroundColor2->setVisible(false);
         ui->lineEditBackPath2->setVisible(true);
-        ui->buttonBrowseBackground2->setText(tr("Browse..."));
+        ui->toolButtonBrowseBackground2->setText(tr("Browse..."));
     }
+    mySettings2.isChangedBackType = true;
 }
 
-void AnnouncementSettingWidget::on_buttonBrowseBackground_clicked()
+void AnnouncementSettingWidget::on_toolButtonBrowseBackground_clicked()
 {
     QString filename;
     if (mySettings.backgroundType == 0)
     {
         QColor c(QColorDialog::getColor(mySettings.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings.backgroundColor = c;
+            mySettings.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings.backgroundColor);
         ui->graphicsViewBackgroundColor->setPalette(p);
@@ -320,6 +377,7 @@ void AnnouncementSettingWidget::on_buttonBrowseBackground_clicked()
             filename = fip.fileName();
             mySettings.backgroundName = filename;
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackPix = true;
         }
     }
     else if (mySettings.backgroundType == 2)
@@ -333,18 +391,22 @@ void AnnouncementSettingWidget::on_buttonBrowseBackground_clicked()
             filename = fiv.fileName();
 
             ui->lineEditBackPath->setText(filename);
+            mySettings.isChangedBackVid = true;
         }
     }
 }
 
-void AnnouncementSettingWidget::on_buttonBrowseBackground2_clicked()
+void AnnouncementSettingWidget::on_toolButtonBrowseBackground2_clicked()
 {
     QString filename;
     if (mySettings2.backgroundType == 0)
     {
         QColor c(QColorDialog::getColor(mySettings2.backgroundColor,this));
         if(c.isValid())
+        {
             mySettings2.backgroundColor = c;
+            mySettings2.isChangedBackColor = true;
+        }
         QPalette p;
         p.setColor(QPalette::Base,mySettings2.backgroundColor);
         ui->graphicsViewBackgroundColor2->setPalette(p);
@@ -364,6 +426,7 @@ void AnnouncementSettingWidget::on_buttonBrowseBackground2_clicked()
             filename = fip.fileName();
             mySettings2.backgroundName = filename;
             ui->lineEditBackPath2->setText(filename);
+            mySettings2.isChangedBackPix = true;
         }
     }
     else if (mySettings2.backgroundType == 2)
@@ -377,6 +440,7 @@ void AnnouncementSettingWidget::on_buttonBrowseBackground2_clicked()
             filename = fiv.fileName();
 
             ui->lineEditBackPath2->setText(filename);
+            mySettings.isChangedBackVid = true;
         }
     }
 }
@@ -385,78 +449,48 @@ void AnnouncementSettingWidget::on_checkBoxCommonLayout_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen->setEnabled(arg1);
     ui->comboBoxScreenPosition->setEnabled(arg1);
+    mySettings.isNotCommonLayout = arg1;
+    mySettings.isChangedNotLayout = true;
 }
 
 void AnnouncementSettingWidget::on_checkBoxCommonLayout2_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen2->setEnabled(arg1);
     ui->comboBoxScreenPosition2->setEnabled(arg1);
+    mySettings2.isNotCommonLayout = arg1;
+    mySettings2.isChangedNotLayout = true;
+}
+
+void AnnouncementSettingWidget::on_spinBoxMaxScreen_editingFinished()
+{
+    mySettings.screenUse = ui->spinBoxMaxScreen->value();
+    mySettings.isChangedScreenUse = true;
+}
+
+void AnnouncementSettingWidget::on_spinBoxMaxScreen2_editingFinished()
+{
+    mySettings2.screenUse = ui->spinBoxMaxScreen2->value();
+    mySettings2.isChangedScreenUse = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxScreenPosition_currentIndexChanged(int index)
+{
+    mySettings.screenPosition = index;
+    mySettings.isChangedScreenPos = true;
+}
+
+void AnnouncementSettingWidget::on_comboBoxScreenPosition2_currentIndexChanged(int index)
+{
+    mySettings2.screenPosition = index;
+    mySettings2.isChangedScreenPos = true;
 }
 
 void AnnouncementSettingWidget::on_checkBoxDisp2_stateChanged(int arg1)
 {
     mySettings.useSameForDisp2 = arg1;
+    mySettings.isChangedSameDisp2 = true;
     ui->groupBoxUseDisp2->setVisible(!arg1);
 }
-
-
-//void AnnouncementSettingWidget::on_checkBoxUseShadow_stateChanged(int arg1)
-//{
-//    if(arg1==2)
-//        ui->checkBoxUseBlurredShadow->setEnabled(true);
-//    else
-//    {
-//        ui->checkBoxUseBlurredShadow->setChecked(false);
-//        ui->checkBoxUseBlurredShadow->setEnabled(false);
-//    }
-//}
-
-//void AnnouncementSettingWidget::on_checkBoxUseShadow2_stateChanged(int arg1)
-//{
-//    if(arg1==2)
-//        ui->checkBoxUseBlurredShadow2->setEnabled(true);
-//    else
-//    {
-//        ui->checkBoxUseBlurredShadow2->setChecked(false);
-//        ui->checkBoxUseBlurredShadow2->setEnabled(false);
-//    }
-//}
-
-//void AnnouncementSettingWidget::on_buttonBackground_clicked()
-//{
-//    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for announcement wallpaper"),
-//                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
-//    if(!filename.isNull())
-//    {
-//        QPixmap p(filename);
-//        if(p.width()>1280 || p.height()>1280)
-//            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
-//        else
-//            mySettings.background = p;
-//        QFileInfo fi(filename);
-//        filename = fi.fileName();
-//        mySettings.backgroundName = filename;
-//        ui->lineEditBackground->setText(filename);
-//    }
-//}
-
-//void AnnouncementSettingWidget::on_buttonBackground2_clicked()
-//{
-//    QString filename = QFileDialog::getOpenFileName(this, tr("Select a image for announcement wallpaper"),
-//                                                    ".", tr("Images(%1)").arg(getSupportedImageFormats()));
-//    if(!filename.isNull())
-//    {
-//        QPixmap p(filename);
-//        if(p.width()>1280 || p.height()>1280)
-//            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
-//        else
-//            mySettings2.background = p;
-//        QFileInfo fi(filename);
-//        filename = fi.fileName();
-//        mySettings2.backgroundName = filename;
-//        ui->lineEditBackground2->setText(filename);
-//    }
-//}
 
 void AnnouncementSettingWidget::setDispScreen2Visible(bool visible)
 {
@@ -464,53 +498,6 @@ void AnnouncementSettingWidget::setDispScreen2Visible(bool visible)
     if(!mySettings.useSameForDisp2)
         ui->groupBoxUseDisp2->setVisible(visible);
 }
-
-//void AnnouncementSettingWidget::on_toolButtonColor_clicked()
-//{
-//    QColor c(QColorDialog::getColor(mySettings.textColor,this));
-//    if(c.isValid())
-//        mySettings.textColor = c;
-//    QPalette p;
-//    p.setColor(QPalette::Base,mySettings.textColor);
-//    ui->graphicViewTextColor->setPalette(p);
-//}
-
-//void AnnouncementSettingWidget::on_toolButtonColor2_clicked()
-//{
-//    QColor c(QColorDialog::getColor(mySettings2.textColor,this));
-//    if(c.isValid())
-//        mySettings2.textColor = c;
-//    QPalette p;
-//    p.setColor(QPalette::Base,mySettings2.textColor);
-//    ui->graphicViewTextColor2->setPalette(p);
-//}
-
-//void AnnouncementSettingWidget::on_toolButtonFont_clicked()
-//{
-//    bool ok;
-//    QFont font = QFontDialog::getFont(&ok,mySettings.textFont,this);
-//    if(ok)
-//        mySettings.textFont = font;
-
-//    ui->labelFont->setText(getFontText(mySettings.textFont));
-//}
-
-//void AnnouncementSettingWidget::on_toolButtonFont2_clicked()
-//{
-//    bool ok;
-//    QFont font = QFontDialog::getFont(&ok,mySettings2.textFont,this);
-//    if(ok)
-//        mySettings2.textFont = font;
-
-//    ui->labelFont2->setText(getFontText(mySettings2.textFont));
-//}
-
-//void AnnouncementSettingWidget::on_groupBoxUseDisp2_toggled(bool arg1)
-//{
-//    ui->groupBoxBackground2->setVisible(arg1);
-//    ui->groupBoxEffects2->setVisible(arg1);
-//    ui->groupBoxTextProperties2->setVisible(arg1);
-//}
 
 void AnnouncementSettingWidget::on_pushButtonDefault_clicked()
 {
@@ -535,19 +522,3 @@ QString AnnouncementSettingWidget::getFontText(QFont font)
 
     return st;
 }
-
-//void AnnouncementSettingWidget::on_pushButtonApplyToAll_clicked()
-//{
-//    emit applyBackToAll(3,mySettings.backgroundName,mySettings.background);
-//}
-
-//void AnnouncementSettingWidget::setBackgroungds(QString name, QPixmap back)
-//{
-//    mySettings.backgroundName = name;
-//    mySettings.background = back;
-//    mySettings2.backgroundName = name;
-//    mySettings2.background = back;
-//    ui->lineEditBackground->setText(name);
-//    ui->lineEditBackground2->setText(name);
-//}
-
