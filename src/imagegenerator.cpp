@@ -1,9 +1,12 @@
 #include "imagegenerator.h"
 
+
 ImageGenerator::ImageGenerator()
 {
     m_type = 0;
-
+    m_shadow = m_blurShadow = false;
+    m_shadowOffset = 3;
+    m_blurRadius = 5;
     m_screenSize = QSize(1280,960);
 }
 
@@ -47,9 +50,13 @@ QPixmap ImageGenerator::generateBibleImage(Verse verse, BibleSettings &bSets)
     m_verse = verse;
     m_bSets = bSets;
 
+
+    m_bSets.textFont.setPointSize(m_bSets.textFont.pointSize() * 3);
+    m_bSets.captionFont.setPointSize(m_bSets.captionFont.pointSize() * 3);
+
     // TODO:FIX
-//    m_shadow = m_bSets.useShadow;
-//    m_blurShadow = m_bSets.useBluredShadow;
+    m_shadow = (m_bSets.effectsType == 1 || m_bSets.effectsType == 2);
+    m_blurShadow = (m_bSets.effectsType == 2);
 
     m_isTextPrepared = false;
     return renderText();
@@ -60,10 +67,13 @@ QPixmap ImageGenerator::generateSongImage(Stanza stanza, SongSettings &sSets)
     m_type = 2;
     m_stanza = stanza;
     m_sSets = sSets;
+    m_sSets.textFont.setPointSize(m_sSets.textFont.pointSize() * 3);
+    m_sSets.endingFont.setPointSize(m_sSets.endingFont.pointSize() * 3);
+    m_sSets.infoFont.setPointSize(m_sSets.infoFont.pointSize() * 3);
 
     // TODO:FIX
-//    m_shadow = m_sSets.useShadow;
-//    m_blurShadow = m_sSets.useBluredShadow;
+    m_shadow = (m_sSets.effectsType == 1 || m_sSets.effectsType == 2);
+    m_blurShadow = (m_sSets.effectsType == 2);
 
     m_isTextPrepared = false;
     return renderText();
@@ -75,8 +85,8 @@ QPixmap ImageGenerator::generateAnnounceImage(AnnounceSlide announce, TextSettin
     m_announce = announce;
     m_aSets = aSets;
 // TODO:FIX
-//    m_shadow = m_aSets.useShadow;
-//    m_blurShadow = m_aSets.useBluredShadow;
+    m_shadow = (m_aSets.effectsType == 1 || m_aSets.effectsType == 2);
+    m_blurShadow = (m_aSets.effectsType == 2);
 
     m_isTextPrepared = false;
     return renderText();
@@ -94,7 +104,7 @@ QPixmap ImageGenerator::renderText()
     QPainter textPaint(&textMap), shadowPaint(&shadowMap), outPaint(&outMap);
     //TODO: remove set paint for shadow and make it as an option in settings.
 
-    int shadowOffset(0);
+   // int shadowOffset(0);
 
     // Draw main text
     switch (m_type) {
@@ -104,7 +114,7 @@ QPixmap ImageGenerator::renderText()
         if(m_shadow)
         {
             // prepare and draw bible shadow
-            shadowOffset = (m_bdSets.tFont.pointSize() / 15);
+            //shadowOffset = (m_bdSets.tFont.pointSize() / 15);
             drawBibleText(&shadowPaint,true);
         }
         break;
@@ -114,7 +124,7 @@ QPixmap ImageGenerator::renderText()
         if(m_shadow)
         {
             // prepare and draw song shadow
-            shadowOffset = (m_sSets.textFont.pointSize() / 15);
+            //shadowOffset = (m_sSets.textFont.pointSize() / 15);
             drawSongText(&shadowPaint,true);
         }
         break;
@@ -124,24 +134,30 @@ QPixmap ImageGenerator::renderText()
         if(m_shadow)
         {
             // prepare and draw announcement shadow
-            shadowOffset = (m_aSets.textFont.pointSize() / 15);
+            //shadowOffset = (m_aSets.textFont.pointSize() / 15);
             drawAnnounceText(&shadowPaint,true);
         }
         break;
     default:
         break;
     }
+
     textPaint.end();
     shadowPaint.end();
 
-//    // Set the blured image to the produced text image:
-//    if(useBluredShadow) // Blur the shadow:
-//        fastbluralpha(shadow_image, BLUR_RADIUS);
+
+    // Set the blured image to the produced text image:
+    if(m_blurShadow) // Blur the shadow:
+    {
+        QGraphicsBlurEffect* beff = new QGraphicsBlurEffect;
+        beff->setBlurRadius(m_blurRadius);
+        shadowMap = applyEffectToImage(shadowMap,beff);
+    }
 
     // draw shadow onto output pixmap
-//    qDebug()<<m_shadow<<"Shadow";
-    if(m_shadow)
-        outPaint.drawPixmap(shadowOffset,shadowOffset,shadowMap);
+
+    if(m_shadow || m_blurShadow)
+        outPaint.drawPixmap(m_shadowOffset,m_shadowOffset,shadowMap);
 
     // draw text onto output pixmap
     outPaint.drawPixmap(0,0,textMap);
@@ -301,8 +317,14 @@ void ImageGenerator::drawBibleText(QPainter *painter, bool isShadow)
             if( !exit ) // The current font is too large, decrease and try again:
             {
                 int current_size = m_bSets.textFont.pointSize();
+                int curCap_size = m_bSets.captionFont.pointSize();
                 current_size--;
                 m_bSets.textFont.setPointSize(current_size);
+                if (curCap_size > current_size)
+                {
+                    curCap_size--;
+                    m_bSets.captionFont.setPointSize(curCap_size);
+                }
             }
         }
 
@@ -321,7 +343,7 @@ void ImageGenerator::drawBibleText(QPainter *painter, bool isShadow)
 
     painter->setFont(m_bdSets.tFont);
     if(isShadow)
-        painter->setPen(QColor(Qt::black));
+        painter->setPen(m_bSets.textShadowColor);
     else
         painter->setPen(m_bSets.textColor);
     painter->drawText(m_bdSets.ptRect, tflags, m_verse.primary_text);
@@ -333,7 +355,7 @@ void ImageGenerator::drawBibleText(QPainter *painter, bool isShadow)
     // Draw the verse caption(s) at the final size:
     painter->setFont(m_bdSets.cFont);
     if(isShadow)
-        painter->setPen(QColor(Qt::black));
+        painter->setPen(m_bSets.captionShadowColor);
     else
         painter->setPen(m_bSets.captionColor);
     painter->drawText(m_bdSets.pcRect, cflags, m_verse.primary_caption);
@@ -573,20 +595,20 @@ void ImageGenerator::drawSongText(QPainter *painter, bool isShadow)
     {
         painter->setFont(m_sSets.infoFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.infoShadowColor);
         else
             painter->setPen(m_sSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
         painter->setFont(m_sSets.textFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.textShadowColor);
         else
             painter->setPen(m_sSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
         painter->setFont(m_sSets.endingFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.endingShadowColor);
         else
             painter->setPen(m_sSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
@@ -595,20 +617,20 @@ void ImageGenerator::drawSongText(QPainter *painter, bool isShadow)
     {
         painter->setFont(m_sSets.infoFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.infoShadowColor);
         else
             painter->setPen(m_sSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignTop, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignTop, song_num_str);
         painter->setFont(m_sSets.endingFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.endingShadowColor);
         else
             painter->setPen(m_sSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
         painter->setFont(m_sSets.textFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.textShadowColor);
         else
             painter->setPen(m_sSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, caption_rect.bottom(), width, mainh, main_flags, main_text);
@@ -617,20 +639,20 @@ void ImageGenerator::drawSongText(QPainter *painter, bool isShadow)
     {
         painter->setFont(m_sSets.textFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.textShadowColor);
         else
             painter->setPen(m_sSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
         painter->setFont(m_sSets.infoFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.infoShadowColor);
         else
             painter->setPen(m_sSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
         painter->setFont(m_sSets.endingFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.endingShadowColor);
         else
             painter->setPen(m_sSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, main_rect.bottom(), width, height, Qt::AlignHCenter | Qt::AlignTop, song_ending);
@@ -640,20 +662,20 @@ void ImageGenerator::drawSongText(QPainter *painter, bool isShadow)
         endh = height-caph;
         painter->setFont(m_sSets.textFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.textShadowColor);
         else
             painter->setPen(m_sSets.textColor);
         main_rect = boundRectOrDrawText(painter, true, left, top, width, mainh, main_flags, main_text);
         painter->setFont(m_sSets.infoFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.infoShadowColor);
         else
             painter->setPen(m_sSets.infoColor);
         caption_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignLeft | Qt::AlignBottom, caption_str);
         num_rect = boundRectOrDrawText(painter, true, left, top, width, height, Qt::AlignRight | Qt::AlignBottom, song_num_str);
         painter->setFont(m_sSets.endingFont);
         if(isShadow)
-            painter->setPen(QColor(Qt::black));
+            painter->setPen(m_sSets.endingShadowColor);
         else
             painter->setPen(m_sSets.endingColor);
         ending_rect = boundRectOrDrawText(painter, true, left, top, width, endh, Qt::AlignHCenter | Qt::AlignBottom, song_ending);
@@ -734,3 +756,278 @@ void ImageGenerator::drawAnnounceText(QPainter *painter, bool isShadow)
         painter->setPen(m_aSets.textColor);
     painter->drawText(m_adSets.tRect, flags, m_announce.text);
 }
+
+
+QPixmap ImageGenerator::applyEffectToImage(QPixmap src, QGraphicsEffect *effect)
+{
+if(src.isNull()) return QPixmap(); //No need to do anything else!
+if(!effect) return src; //No need to do anything else!
+QGraphicsScene scene;
+QGraphicsPixmapItem item;
+item.setPixmap(src);
+item.setGraphicsEffect(effect);
+scene.addItem(&item);
+QPixmap res(src.size());
+res.fill(Qt::transparent);
+QPainter ptr(&res);
+scene.render(&ptr);
+return res;
+}
+
+// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
+//void ImageGenerator::fastbluralpha(QImage &img, int radius)
+//{
+//    if (radius < 1)
+//        return;
+
+//    QRgb *pix = (QRgb*)img.bits();
+//    int w   = img.width();
+//    int h   = img.height();
+//    int wm  = w-1;
+//    int hm  = h-1;
+//    int wh  = w*h;
+//    int div = radius+radius+1;
+//    double junk;
+
+//    int *r = new int[wh];
+//    int *g = new int[wh];
+//    int *b = new int[wh];
+//    int *a = new int[wh];
+//    int rsum, gsum, bsum, asum, x, y, i, yp, yi, yw;
+//    QRgb p;
+//    int *vmin = new int[qMax(w,h)];
+
+//    int divsum = (div+1)>>1;
+//    divsum *= divsum;
+//    int *dv = new int[256*divsum];
+//    for (i=0; i < 256*divsum; ++i)
+//    {
+//        dv[i] = (i/divsum);
+//    }
+
+//    yw = yi = 0;
+
+//    int **stack = new int*[div];
+//    for (int i = 0; i < div; ++i)
+//    {
+//        stack[i] = new int[4];
+//    }
+
+//    int stackpointer;
+//    int stackstart;
+//    int *sir;
+//    int rbs;
+//    int r1 = radius+1;
+//    int routsum, goutsum, boutsum, aoutsum;
+//    int rinsum, ginsum, binsum, ainsum;
+
+//    for (y = 0; y < h; ++y)
+//    {
+//        rinsum = ginsum = binsum = ainsum
+//                = routsum = goutsum = boutsum = aoutsum
+//                = rsum = gsum = bsum = asum = 0;
+//        for (i =- radius; i <= radius; ++i)
+//        {
+//            p = pix[yi+qMin(wm,qMax(i,0))];
+//            sir = stack[i+radius];
+//            sir[0] = qRed(p);
+//            sir[1] = qGreen(p);
+//            sir[2] = qBlue(p);
+//            sir[3] = qAlpha(p);
+
+//            rbs = r1-abs(i);
+//            rsum += sir[0]*rbs;
+//            gsum += sir[1]*rbs;
+//            bsum += sir[2]*rbs;
+//            asum += sir[3]*rbs;
+
+//            if (i > 0)
+//            {
+//                rinsum += sir[0];
+//                ginsum += sir[1];
+//                binsum += sir[2];
+//                ainsum += sir[3];
+//            }
+//            else
+//            {
+//                routsum += sir[0];
+//                goutsum += sir[1];
+//                boutsum += sir[2];
+//                aoutsum += sir[3];
+//            }
+//        }
+//        stackpointer = radius;
+
+//        for (x=0; x < w; ++x)
+//        {
+//            r[yi] = dv[rsum];
+//            g[yi] = dv[gsum];
+//            b[yi] = dv[bsum];
+//            a[yi] = dv[asum];
+
+//            rsum -= routsum;
+//            gsum -= goutsum;
+//            bsum -= boutsum;
+//            asum -= aoutsum;
+
+//            stackstart = stackpointer-radius+div;
+//            sir = stack[stackstart%div];
+
+//            routsum -= sir[0];
+//            goutsum -= sir[1];
+//            boutsum -= sir[2];
+//            aoutsum -= sir[3];
+
+//            if (y == 0)
+//            {
+//                vmin[x] = qMin(x+radius+1,wm);
+//            }
+//            p = pix[yw+vmin[x]];
+
+//            sir[0] = qRed(p);
+//            sir[1] = qGreen(p);
+//            sir[2] = qBlue(p);
+//            sir[3] = qAlpha(p);
+
+//            rinsum += sir[0];
+//            ginsum += sir[1];
+//            binsum += sir[2];
+//            ainsum += sir[3];
+
+//            rsum += rinsum;
+//            gsum += ginsum;
+//            bsum += binsum;
+//            asum += ainsum;
+
+//            stackpointer = (stackpointer+1)%div;
+//            sir = stack[(stackpointer)%div];
+
+//            routsum += sir[0];
+//            goutsum += sir[1];
+//            boutsum += sir[2];
+//            aoutsum += sir[3];
+
+//            rinsum -= sir[0];
+//            ginsum -= sir[1];
+//            binsum -= sir[2];
+//            ainsum -= sir[3];
+
+//            ++yi;
+//        }
+//        yw += w;
+//    }
+//    for (x=0; x < w; ++x)
+//    {
+//        rinsum = ginsum = binsum = ainsum
+//                = routsum = goutsum = boutsum = aoutsum
+//                = rsum = gsum = bsum = asum = 0;
+
+//        yp =- radius * w;
+
+//        for (i=-radius; i <= radius; ++i)
+//        {
+//            yi=qMax(0,yp)+x;
+
+//            sir = stack[i+radius];
+
+//            sir[0] = r[yi];
+//            sir[1] = g[yi];
+//            sir[2] = b[yi];
+//            sir[3] = a[yi];
+
+//            rbs = r1-abs(i);
+
+//            rsum += r[yi]*rbs;
+//            gsum += g[yi]*rbs;
+//            bsum += b[yi]*rbs;
+//            asum += a[yi]*rbs;
+
+//            if (i > 0)
+//            {
+//                rinsum += sir[0];
+//                ginsum += sir[1];
+//                binsum += sir[2];
+//                ainsum += sir[3];
+//            }
+//            else
+//            {
+//                routsum += sir[0];
+//                goutsum += sir[1];
+//                boutsum += sir[2];
+//                aoutsum += sir[3];
+//            }
+
+//            if (i < hm)
+//            {
+//                yp += w;
+//            }
+//        }
+
+//        yi = x;
+//        stackpointer = radius;
+
+//        for (y=0; y < h; ++y)
+//        {
+//            junk=dv[asum];
+//            junk=junk*2.4;
+//            if (junk>255)junk=255;
+//            pix[yi] = qRgba(dv[rsum], dv[gsum], dv[bsum], int(junk));///dv[asum]);
+
+//            rsum -= routsum;
+//            gsum -= goutsum;
+//            bsum -= boutsum;
+//            asum -= aoutsum;
+
+//            stackstart = stackpointer-radius+div;
+//            sir = stack[stackstart%div];
+
+//            routsum -= sir[0];
+//            goutsum -= sir[1];
+//            boutsum -= sir[2];
+//            aoutsum -= sir[3];
+
+//            if (x==0)
+//            {
+//                vmin[y] = qMin(y+r1,hm)*w;
+//            }
+//            p = x+vmin[y];
+
+//            sir[0] = r[p];
+//            sir[1] = g[p];
+//            sir[2] = b[p];
+//            sir[3] = a[p];
+
+//            rinsum += sir[0];
+//            ginsum += sir[1];
+//            binsum += sir[2];
+//            ainsum += sir[3];
+
+//            rsum += rinsum;
+//            gsum += ginsum;
+//            bsum += binsum;
+//            asum += ainsum;
+
+//            stackpointer = (stackpointer+1)%div;
+//            sir = stack[stackpointer];
+
+//            routsum += sir[0];
+//            goutsum += sir[1];
+//            boutsum += sir[2];
+//            aoutsum += sir[3];
+
+//            rinsum -= sir[0];
+//            ginsum -= sir[1];
+//            binsum -= sir[2];
+//            ainsum -= sir[3];
+
+//            yi += w;
+//        }
+//    }
+//    delete [] r;
+//    delete [] g;
+//    delete [] b;
+//    delete [] a;
+//    delete [] vmin;
+//    delete [] dv;
+//}
+

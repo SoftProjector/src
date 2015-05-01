@@ -261,3 +261,61 @@ void ProjectorDisplayScreen::renderSlideShow(QPixmap slide, SlideShowSettings &s
     updateScreen();
 
 }
+
+void ProjectorDisplayScreen::positionControls(DisplayControlsSettings &dSettings)
+{
+    //mySettings = dSettings;
+
+    // set icon size
+    int buttonSize(dSettings.buttonSize);
+    if(buttonSize == 0)
+        buttonSize = 16;
+    else if(buttonSize == 1)
+        buttonSize = 24;
+    else if(buttonSize == 2)
+        buttonSize = 32;
+    else if(buttonSize == 3)
+        buttonSize = 48;
+    else if(buttonSize == 4)
+        buttonSize = 64;
+    else if(buttonSize == 5)
+        buttonSize = 96;
+    else
+        buttonSize = 48;
+
+
+    // calculate button position
+    int y(this->height()), x(this->width()), margin(20);
+
+    // calculate y position
+    if(dSettings.alignmentV==0)//top
+        y = margin;
+    else if(dSettings.alignmentV==1)//middle
+        y = (y-buttonSize)/2;
+    else if(dSettings.alignmentV==2)//buttom
+        y = y-buttonSize-margin;
+    else
+        y = y-buttonSize-margin;
+
+    // calculate x position
+    int xt((buttonSize*3)+20); //total width of the button group
+    if(dSettings.alignmentH==0)
+        x = margin;
+    else if(dSettings.alignmentH==1)
+        x = (x-xt)/2;
+    else if (dSettings.alignmentH==2)
+        x = x-xt-margin;
+    else
+        x = (x-xt)/2;
+
+    QObject *root = dispView->rootObject();
+    QMetaObject::invokeMethod(root,"positionControls",Q_ARG(QVariant,x),Q_ARG(QVariant,y),Q_ARG(QVariant,buttonSize),Q_ARG(QVariant,dSettings.opacity));
+
+}
+
+void ProjectorDisplayScreen::setControlsVisible(bool visible)
+{
+    QObject *root = dispView->rootObject();
+    QMetaObject::invokeMethod(root,"setControlsVisible",Q_ARG(QVariant,visible));
+}
+

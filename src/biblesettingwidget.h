@@ -58,7 +58,9 @@ private slots:
     void on_comboBoxPrimaryBible2_activated(const QString &arg1);
     void on_comboBoxSecondaryBible_activated(const QString &arg1);
     void on_comboBoxSecondaryBible2_activated(const QString &arg1);
-
+    void on_comboBoxTrinaryBible_activated(const QString &arg1);
+    void on_comboBoxTrinaryBible2_activated(const QString &arg1);
+    void on_comboBoxOperatorBible_activated(const QString &arg1);
     void on_checkBoxCommonFont_stateChanged(int arg1);
     void on_checkBoxCommonFont2_stateChanged(int arg1);
     void on_toolButtonTextFont_clicked();
@@ -108,12 +110,17 @@ private slots:
 
     QString getFontText(QFont font);
 
+
+
+
+
 private:
     QStringList bibles, secondary_bibles;
     QStringList bible_id_list, secondary_id_list, trinary_id_list, operator_id_list;
     QStringList secondary_bibles2, secondary_id_list2, trinary_id_list2;
     BibleSettings mySettings, mySettings2;
     BibleVersionSettings bversion,bversion2;
+    bool isLoading;
 
     Ui::BibleSettingWidget *ui;
 protected:

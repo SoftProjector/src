@@ -38,9 +38,8 @@ SoftProjector::SoftProjector(QWidget *parent)
     desktop = new QDesktopWidget();
     // NOTE: With virtual desktop, desktop->screen() will always return the main screen,
     // so this will initialize the Display1 widget on the main screen:
-    pds1 = new ProjectorDisplayScreen(desktop->screen(2));
-//    displayScreen1 = new DisplayScreen(desktop->screen(0));
-//    displayScreen2 = new DisplayScreen(desktop->screen(0)); //for future
+    pds1 = new ProjectorDisplayScreen(desktop->screen(0));
+    //pds2 = new ProjectorDisplayScreen(desktop->screen(0));
     // Don't worry, we'll move it later
 
     bibleWidget = new BibleWidget;
@@ -66,6 +65,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     // display window (Mac OS X)
 
     // Apply Settings
+
     applySetting(mySettings.general, theme, mySettings.slideSets, mySettings.bibleSets, mySettings.bibleSets2);
 
     positionDisplayWindow();
@@ -185,6 +185,7 @@ SoftProjector::SoftProjector(QWidget *parent)
 
 SoftProjector::~SoftProjector()
 {
+    mySettings.isSpClosing = true;
     saveSettings();
     delete songWidget;
     delete editWidget;
@@ -195,8 +196,6 @@ SoftProjector::~SoftProjector()
 //    delete playerAudioOutput;
 //    delete volumeSlider;
     delete mediaPlayer;
-//    delete displayScreen1;
-//    delete displayScreen2;
     delete desktop;
     delete languageGroup;
     delete settingsDialog;
@@ -218,14 +217,12 @@ void SoftProjector::positionDisplayWindow()
     if (mySettings.general.displayIsOnTop)
     {
         pds1->setWindowFlags(Qt::WindowStaysOnTopHint);
-//        displayScreen1->setWindowFlags(Qt::WindowStaysOnTopHint);
-//        displayScreen2->setWindowFlags(Qt::WindowStaysOnTopHint);
+//        pds2->setWindowFlags(Qt::WindowStaysOnTopHint);
     }
     else
     {
-        pds1->setWindowFlags(0);
-//        displayScreen1->setWindowFlags(0); // Do not show always on top
-//        displayScreen2->setWindowFlags(0); // Do not show always on top
+        pds1->setWindowFlags(0); // Do not show always on top
+//        pds2->setWindowFlags(0); // Do not show always on top
     }
 
     if(desktop->screenCount() > 1)
@@ -239,17 +236,24 @@ void SoftProjector::positionDisplayWindow()
             pds1->setGeometry(desktop->screenGeometry(mySettings.general.displayScreen));
         }
 //        displayScreen1->showFullScreen();
-        pds1->showFullScreen();
+        pds1->setCursor(Qt::BlankCursor);
         pds1->resetImGenSize();
-        pds1->renderPassiveText(theme.passive.backgroundPix,true);//TODO:FIX
-//        imGen.setScreenSize(QSize(pds1->width(),pds1->height()));
+         pds1->renderPassiveText(theme.passive.backgroundPix,true);
+        if(mySettings.general.displayOnStartUp)
+{
+        pds1->showFullScreen();
+
+       //TODO:FIX
 //        if(!ui->actionCloseDisplay->isChecked())
 //            ui->actionCloseDisplay->trigger();
         ui->actionCloseDisplay->setChecked(true);
-        pds1->setCursor(Qt::BlankCursor);
+        updateCloseDisplayButtons(true);
+
+        }
 //        displayScreen1->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
 //        displayScreen1->positionOpjects();
 //        displayScreen1->setControlButtonsVisible(false);
+        pds1->setControlsVisible(false);
 
         // check if to display secondary display screen
         if(mySettings.general.displayScreen2>=0)
@@ -303,6 +307,8 @@ void SoftProjector::showDisplayScreen(bool show)
         pds1->hide();
         ui->actionCloseDisplay->setEnabled(false);
     }
+    pds1->positionControls(mySettings.general.displayControls);
+    pds1->setControlsVisible(true);
 //    displayScreen1->setControlsSettings(mySettings.general.displayControls);
 //    displayScreen1->setControlButtonsVisible(true);
 }
@@ -340,32 +346,252 @@ void SoftProjector::saveSettings()
 void SoftProjector::updateSetting(GeneralSettings &g, Theme &t, SlideShowSettings &ssets,
                                   BibleVersionSettings &bsets, BibleVersionSettings &bsets2)
 {
-    mySettings.general = g;
-    mySettings.slideSets = ssets;
-    mySettings.bibleSets = bsets;
-    mySettings.bibleSets2 = bsets2;
-    mySettings.saveSettings();
-    theme = t;
+    if(!isStartup)
+    {
+        mySettings.general = g;
+        mySettings.slideSets = ssets;
+        mySettings.bibleSets = bsets;
+        mySettings.bibleSets2 = bsets2;
+        mySettings.saveSettings();
+        theme = t;
+
+        // Apply display settings;
+        pds1->resetImGenSize();
+    //    pds1->renderPassiveText(theme.passive.background,theme.passive.useBackground);
+    //    displayScreen1->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
+    //    if(theme.passive2.useDisp2settings)
+    //        displayScreen2->setNewPassiveWallpaper(theme.passive2.background,theme.passive2.useBackground);
+    //    else
+    //        displayScreen2->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
+    }
+
+    updateThemeForDisp();
     bibleWidget->setSettings(mySettings.bibleSets);
     pictureWidget->setSettings(mySettings.slideSets);
     
-    // Apply display settings;
-    if(!isStartup)
+}
+
+void SoftProjector::updateThemeForDisp()
+{
+    themeForDisp = theme;
+
+    //Update common
+    if(theme.common.useSameForDisp2)
+        themeForDisp.common2 = theme.common;
+
+    // Update Bible 1 settings for Common
+    if(!theme.bible.isNotCommonFont)
+        themeForDisp.bible.textFont = theme.common.textFont;
+    if(!theme.bible.isNotCommonColor)
     {
-    pds1->resetImGenSize();
-//    pds1->renderPassiveText(theme.passive.background,theme.passive.useBackground);
-//    displayScreen1->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
-//    if(theme.passive2.useDisp2settings)
-//        displayScreen2->setNewPassiveWallpaper(theme.passive2.background,theme.passive2.useBackground);
-//    else
-//        displayScreen2->setNewPassiveWallpaper(theme.passive.background,theme.passive.useBackground);
+        themeForDisp.bible.textColor = theme.common.textColor;
+        themeForDisp.bible.textShadowColor = theme.common.textShadowColor;
+    }
+    if(!theme.bible.isNotSameFont)
+        themeForDisp.bible.captionFont = themeForDisp.bible.textFont;
+    if(!theme.bible.isNotSameColor)
+    {
+        themeForDisp.bible.captionColor = themeForDisp.bible.textColor;
+        themeForDisp.bible.captionShadowColor = themeForDisp.bible.textShadowColor;
+    }
+    if(theme.bible.transitionType == -1)
+        themeForDisp.bible.transitionType = theme.common.transitionType;
+    if(theme.bible.effectsType == -1)
+        themeForDisp.bible.effectsType = theme.common.effectsType;
+    if(theme.bible.backgroundType == -1)
+    {
+        themeForDisp.bible.backgroundType = theme.common.backgroundType;
+        themeForDisp.bible.backgroundColor = theme.common.backgroundColor;
+        themeForDisp.bible.backgroundPix = theme.common.backgroundPix;
+        themeForDisp.bible.backgroundVideoPath = theme.common.backgroundVideoPath;
+    }
+    if(!theme.bible.isNotCommonLayout)
+    {
+        themeForDisp.bible.screenUse = theme.common.screenUse;
+        themeForDisp.bible.screenPosition = theme.common.screenPosition;
+    }
+
+    // Update Bible 2 settings for Common
+    if(theme.bible.useSameForDisp2)
+        themeForDisp.bible2 = themeForDisp.bible;
+    else
+    {
+        if(!theme.bible2.isNotCommonFont)
+            themeForDisp.bible2.textFont = theme.common2.textFont;
+        if(!theme.bible2.isNotCommonColor)
+        {
+            themeForDisp.bible2.textColor = theme.common2.textColor;
+            themeForDisp.bible2.textShadowColor = theme.common2.textShadowColor;
+        }
+        if(!theme.bible2.isNotSameFont)
+            themeForDisp.bible2.captionFont = themeForDisp.bible2.textFont;
+        if(!theme.bible2.isNotSameColor)
+        {
+            themeForDisp.bible2.captionColor = themeForDisp.bible2.textColor;
+            themeForDisp.bible2.captionShadowColor = themeForDisp.bible2.textShadowColor;
+        }
+        if(theme.bible2.transitionType == -1)
+            themeForDisp.bible2.transitionType = theme.common2.transitionType;
+        if(theme.bible2.effectsType == -1)
+            themeForDisp.bible2.effectsType = theme.common2.effectsType;
+        if(theme.bible2.backgroundType == -1)
+        {
+            themeForDisp.bible2.backgroundType = theme.common2.backgroundType;
+            themeForDisp.bible2.backgroundColor = theme.common2.backgroundColor;
+            themeForDisp.bible2.backgroundPix = theme.common2.backgroundPix;
+            themeForDisp.bible2.backgroundVideoPath = theme.common2.backgroundVideoPath;
+        }
+        if(!theme.bible2.isNotCommonLayout)
+        {
+            themeForDisp.bible2.screenUse = theme.common2.screenUse;
+            themeForDisp.bible2.screenPosition = theme.common2.screenPosition;
+        }
+    }
+
+    // Update Song 1 settings for Common
+    if(!theme.song.isNotCommonFont)
+        themeForDisp.song.textFont = theme.common.textFont;
+    if(!theme.song.isNotCommonColor)
+    {
+        themeForDisp.song.textColor = theme.common.textColor;
+        themeForDisp.song.textShadowColor = theme.common.textShadowColor;
+    }
+    if(!theme.song.isNotSameInfoFont)
+        themeForDisp.song.infoFont = themeForDisp.song.textFont;
+    if(!theme.song.isNotSameInfoColor)
+    {
+        themeForDisp.song.infoColor = themeForDisp.song.textColor;
+        themeForDisp.song.infoShadowColor = themeForDisp.song.textShadowColor;
+    }
+    if(!theme.song.isNotSameEndingFont)
+        themeForDisp.song.endingFont = themeForDisp.song.textFont;
+    if(!theme.song.isNotSameEndingColor)
+    {
+        themeForDisp.song.endingColor = themeForDisp.song.textColor;
+        themeForDisp.song.endingShadowColor = themeForDisp.song.textShadowColor;
+    }
+    if(theme.song.transitionType == -1)
+        themeForDisp.song.transitionType = theme.common.transitionType;
+    if(theme.song.effectsType == -1)
+        themeForDisp.song.effectsType = theme.common.effectsType;
+    if(theme.song.backgroundType == -1)
+    {
+        themeForDisp.song.backgroundType = theme.common.backgroundType;
+        themeForDisp.song.backgroundColor = theme.common.backgroundColor;
+        themeForDisp.song.backgroundPix = theme.common.backgroundPix;
+        themeForDisp.song.backgroundVideoPath = theme.common.backgroundVideoPath;
+    }
+    if(!theme.song.isNotCommonLayout)
+    {
+        themeForDisp.song.screenUse = theme.common.screenUse;
+        themeForDisp.song.screenPosition = theme.common.screenPosition;
+    }
+
+    // Update Song 2 settings for Common
+    if (theme.song.useSameForDisp2)
+        themeForDisp.song2 = themeForDisp.song;
+    else
+    {
+        if(!theme.song2.isNotCommonFont)
+            themeForDisp.song2.textFont = theme.common2.textFont;
+        if(!theme.song2.isNotCommonColor)
+        {
+            themeForDisp.song2.textColor = theme.common2.textColor;
+            themeForDisp.song2.textShadowColor = theme.common2.textShadowColor;
+        }
+        if(!theme.song2.isNotSameInfoFont)
+            themeForDisp.song2.infoFont = themeForDisp.song2.textFont;
+        if(!theme.song2.isNotSameInfoColor)
+        {
+            themeForDisp.song2.infoColor = themeForDisp.song2.textColor;
+            themeForDisp.song2.infoShadowColor = themeForDisp.song2.textShadowColor;
+        }
+        if(!theme.song2.isNotSameEndingFont)
+            themeForDisp.song2.endingFont = themeForDisp.song2.textFont;
+        if(!theme.song2.isNotSameEndingColor)
+        {
+            themeForDisp.song2.endingColor = themeForDisp.song2.textColor;
+            themeForDisp.song2.endingShadowColor = themeForDisp.song2.textShadowColor;
+        }
+        if(theme.song2.transitionType == -1)
+            themeForDisp.song2.transitionType = theme.common2.transitionType;
+        if(theme.song2.effectsType == -1)
+            themeForDisp.song2.effectsType = theme.common2.effectsType;
+        if(theme.song2.backgroundType == -1)
+        {
+            themeForDisp.song2.backgroundType = theme.common2.backgroundType;
+            themeForDisp.song2.backgroundColor = theme.common2.backgroundColor;
+            themeForDisp.song2.backgroundPix = theme.common2.backgroundPix;
+            themeForDisp.song2.backgroundVideoPath = theme.common2.backgroundVideoPath;
+        }
+        if(!theme.song2.isNotCommonLayout)
+        {
+            themeForDisp.song2.screenUse = theme.common2.screenUse;
+            themeForDisp.song2.screenPosition = theme.common2.screenPosition;
+        }
+    }
+
+    // Update Announce 1 settings for Common
+    if(!theme.announce.isNotCommonFont)
+        themeForDisp.announce.textFont = theme.common.textFont;
+    if(!theme.announce.isNotCommonColor)
+    {
+        themeForDisp.announce.textColor = theme.common.textColor;
+        themeForDisp.announce.textShadowColor = theme.common.textShadowColor;
+    }
+    if(theme.announce.transitionType == -1)
+        themeForDisp.announce.transitionType = theme.common.transitionType;
+    if(theme.announce.effectsType == -1)
+        themeForDisp.announce.effectsType = theme.common.effectsType;
+    if(theme.announce.backgroundType == -1)
+    {
+        themeForDisp.announce.backgroundType = theme.common.backgroundType;
+        themeForDisp.announce.backgroundColor = theme.common.backgroundColor;
+        themeForDisp.announce.backgroundPix = theme.common.backgroundPix;
+        themeForDisp.announce.backgroundVideoPath = theme.common.backgroundVideoPath;
+    }
+    if(!theme.announce.isNotCommonLayout)
+    {
+        themeForDisp.announce.screenUse = theme.common.screenUse;
+        themeForDisp.announce.screenPosition = theme.common.screenPosition;
+    }
+
+    // Update Announce 2 settings for Common
+    if(theme.announce.useSameForDisp2)
+        theme.announce2 = theme.announce;
+    else
+    {
+        if(!theme.announce2.isNotCommonFont)
+            themeForDisp.announce2.textFont = theme.common2.textFont;
+        if(!theme.announce2.isNotCommonColor)
+        {
+            themeForDisp.announce2.textColor = theme.common2.textColor;
+            themeForDisp.announce2.textShadowColor = theme.common2.textShadowColor;
+        }
+        if(theme.announce2.transitionType == -1)
+            themeForDisp.announce2.transitionType = theme.common2.transitionType;
+        if(theme.announce2.effectsType == -1)
+            themeForDisp.announce2.effectsType = theme.common2.effectsType;
+        if(theme.announce2.backgroundType == -1)
+        {
+            themeForDisp.announce2.backgroundType = theme.common2.backgroundType;
+            themeForDisp.announce2.backgroundColor = theme.common2.backgroundColor;
+            themeForDisp.announce2.backgroundPix = theme.common2.backgroundPix;
+            themeForDisp.announce2.backgroundVideoPath = theme.common2.backgroundVideoPath;
+        }
+        if(!theme.announce2.isNotCommonLayout)
+        {
+            themeForDisp.announce2.screenUse = theme.common2.screenUse;
+            themeForDisp.announce2.screenPosition = theme.common2.screenPosition;
+        }
     }
 }
 
 void SoftProjector::applySetting(GeneralSettings &g, Theme &t, SlideShowSettings &s,
                                  BibleVersionSettings &b1, BibleVersionSettings &b2)
 {
-    updateSetting(g,t,s,b1,b2);
+//    if(!isStartup)
+        updateSetting(g,t,s,b1,b2);
 
     // Apply splitter states
     ui->splitter->restoreState(mySettings.spMain.spSplitter);
@@ -634,27 +860,28 @@ void SoftProjector::updateScreen()
     }
     else if ((currentRow >=0 && !new_list) || (type == "video" && !new_list))
     {
-        if(isSingleScreen)
+        if(isSingleScreen && pds1->isHidden())
         {
-            if(pds1->isHidden())
-                showDisplayScreen(true);
+            showDisplayScreen(true);
+            ui->actionCloseDisplay->setChecked(true);
+            updateCloseDisplayButtons(true);
         }
         else
         {
             if(pds1->isHidden() || !ui->actionCloseDisplay->isChecked())
-//                displayScreen1->showFullScreen();
+            {
                 pds1->showFullScreen();
+                ui->actionCloseDisplay->setChecked(true);
+                updateCloseDisplayButtons(true);
+            }
 
 // TODO: Fix next line
-//                    ui->actionCloseDisplay->trigger();
-
 //            if(hasDisplayScreen2)
 //            {
 //                if(displayScreen2->isHidden())
 //                    displayScreen2->showFullScreen();
 //            }
-//            if(!ui->actionCloseDisplay->isEnabled())
-//                ui->actionCloseDisplay->setEnabled(true);
+
         }
 
         ui->actionShow->setEnabled(false);
@@ -673,53 +900,27 @@ void SoftProjector::updateScreen()
                 if(ui->listShow->item(i)->isSelected())
                     currentRows.append(i);
             }
-//            displayScreen1->renderBibleText(bibleWidget->bible.
-//                                            getCurrentVerseAndCaption(currentRows,theme.bible,mySettings.bibleSets)
-//                                            ,theme.bible);
-            pds1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,theme.bible,mySettings.bibleSets),theme.bible);
-
+            pds1->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,themeForDisp.bible,mySettings.bibleSets),themeForDisp.bible);
 //            if(hasDisplayScreen2)
-//            {
-//                if(theme.bible2.useDisp2settings)
-//                    displayScreen2->renderBibleText(bibleWidget->bible.
-//                                                    getCurrentVerseAndCaption(currentRows,theme.bible2,
-//                                                                              mySettings.bibleSets2),theme.bible2);
-//                else
-//                    displayScreen2->renderBibleText(bibleWidget->bible.
-//                                                    getCurrentVerseAndCaption(currentRows,theme.bible,
-//                                                                              mySettings.bibleSets),theme.bible);
-//            }
+//                pds2->renderBibleText(bibleWidget->bible.getCurrentVerseAndCaption(currentRows,themeForDisp.bible2,mySettings.bibleSets2),themeForDisp.bible2);
         }
         else if(type=="song")
         {
-            pds1->renderSongText(current_song.getStanza(currentRow),theme.song);
-//            displayScreen1->renderSongText(current_song.getStanza(currentRow),theme.song);
-//            if(hasDisplayScreen2)
-//            {
-//                if(theme.song2.useDisp2settings)
-//                    displayScreen2->renderSongText(current_song.getStanza(currentRow),theme.song2);
-//                else
-//                    displayScreen2->renderSongText(current_song.getStanza(currentRow),theme.song);
-//            }
+            pds1->renderSongText(current_song.getStanza(currentRow),themeForDisp.song);
+//            if(hasDisplaySreen2)
+//                pds2->renderSongText(current_song.getStanza(currentRow),themeForDisp.song2);
         }
         else if(type == "announce")
         {
-            pds1->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce);
-//            displayScreen1->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce);
+            pds1->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),themeForDisp.announce);
 //            if(hasDisplayScreen2)
-//            {
-//                if(theme.announce2.useDisp2settings)
-//                    displayScreen2->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce2);
-//                else
-//                    displayScreen2->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),theme.announce);
-//            }
-        }
+//               pds2->renderAnnounceText(currentAnnounce.getAnnounceSlide(currentRow),themeForDisp.announce2);
+       }
         else if(type == "pix")
         {
             pds1->renderSlideShow(pictureShowList.at(currentRow).image,mySettings.slideSets);
-//            displayScreen1->renderPicture(pictureShowList.at(currentRow).image,mySettings.slideSets);
 //            if(hasDisplayScreen2)
-//                displayScreen2->renderPicture(pictureShowList.at(currentRow).image,mySettings.slideSets);
+//                pds2->renderSlideShow(pictureShowList.at(currentRow).image,mySettings.slideSets);
         }
         else if(type == "video")
         {
@@ -760,7 +961,7 @@ void SoftProjector::on_actionCloseDisplay_triggered()
     if(ui->actionCloseDisplay->isChecked())
     {
         // If ui->actionCloseDisplay->isChecked() == true, turn it ON
-        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_on.png"));
+        updateCloseDisplayButtons(true);
 //        displayScreen1->showFullScreen();
         pds1->showFullScreen();
 //        if(hasDisplayScreen2)
@@ -769,12 +970,20 @@ void SoftProjector::on_actionCloseDisplay_triggered()
     else
     {
         // If ui->actionCloseDisplay->isChecked() == true, turn it OFF
-        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_off.png"));
+        updateCloseDisplayButtons(false);
 //        displayScreen1->hide();
         pds1->hide();
 //        if(hasDisplayScreen2)
 //            displayScreen2->hide();
     }
+}
+
+void SoftProjector::updateCloseDisplayButtons(bool isOn)
+{
+    if(isOn)
+        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_on.png"));
+    else
+        ui->actionCloseDisplay->setIcon(QIcon(":/icons/icons/display_off.png"));
 }
 
 void SoftProjector::on_actionSettings_triggered()

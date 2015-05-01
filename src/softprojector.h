@@ -74,7 +74,7 @@ public:
     Verse current_verse;
     Announcement currentAnnounce;
     QString version_string;
-    Theme theme;
+    Theme theme, themeForDisp;
     Settings mySettings;
 
     SoftProjector *softProjector;
@@ -136,6 +136,7 @@ private slots:
 
     void applySetting(GeneralSettings &g, Theme &t, SlideShowSettings &s,
                       BibleVersionSettings &b1, BibleVersionSettings &b2);
+    void updateThemeForDisp();
     void on_actionSong_Counter_triggered();
     void on_projectTab_currentChanged(int index);
     void updateEditActions();
@@ -234,6 +235,7 @@ private slots:
     void on_actionClear_triggered();
 
     void on_actionCloseDisplay_triggered();
+    void updateCloseDisplayButtons(bool isOn);
 
 protected:
     void closeEvent(QCloseEvent *event);

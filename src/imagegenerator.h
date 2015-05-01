@@ -30,6 +30,7 @@ private:
     QSize m_screenSize;
     bool m_shadow, m_blurShadow, m_isTextPrepared;
     int m_type; // 0 = empty, 1 = bible, 2 = song, 3 = announce
+    int m_shadowOffset, m_blurRadius;
 
     Verse m_verse;
     BibleSettings m_bSets;
@@ -51,6 +52,8 @@ private:
     void drawBibleTextToRect(QPainter *painter, QRect& trect, QRect& crect, QString ttext, QString ctext, int tflags, int cflags, int top, int left, int width, int height);
     void drawSongText(QPainter *painter, bool isShadow);
     void drawAnnounceText(QPainter *painter, bool isShadow);
+//    void fastbluralpha(QImage &img, int radius);
+    QPixmap applyEffectToImage(QPixmap src, QGraphicsEffect *effect);
 
 };
 

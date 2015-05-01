@@ -201,6 +201,9 @@ public:
     DisplayControlsSettings displayControls;
     int currentThemeId;
     bool displayOnStartUp;
+    bool settingsChangedAll;
+    bool settingsChangedMulti;
+    bool settingsChangedSingle;
 };
 
 class DisplaySettings
@@ -234,6 +237,7 @@ public:
     QString secondaryBible;
     QString trinaryBible;
     QString operatorBible;
+    bool settingsChanged;
 
 };
 
@@ -246,6 +250,8 @@ public:
     bool resize;
     int boundType;
     int boundWidth;
+    bool settingsChanged;
+    int transitionType;
 };
 
 class Settings
@@ -258,13 +264,12 @@ public:
     BibleVersionSettings bibleSets2;
     SlideShowSettings slideSets;
 
+    bool isSpClosing;
+
 public slots:
     void loadSettings();
     void saveSettings();
     void saveNewSettings();
-
-private slots:
-    QByteArray textToByt(QString text);
 };
 
 #endif // SETTINGS_H

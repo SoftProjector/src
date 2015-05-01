@@ -56,7 +56,7 @@
    <item>
     <widget class="QGroupBox" name="groupBoxDisplayScreen">
      <property name="title">
-      <string>Display Screen Selection</string>
+      <string>Display Screen Selection for Projectors</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="2">
@@ -75,7 +75,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_displayScreen_2">
         <property name="text">
-         <string>Secondary Display Screen:</string>
+         <string>Secondary Projector:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -111,7 +111,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_displayScreen">
         <property name="text">
-         <string>Primary Display Screen:</string>
+         <string>Primary Projector:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -134,7 +134,7 @@
       <item row="3" column="0" colspan="3">
        <widget class="QCheckBox" name="checkBoxDisplayOnStartUp">
         <property name="text">
-         <string>Show Display Screens when SoftProjector Starts</string>
+         <string>Show Projector Display Screens when SoftProjector Starts</string>
         </property>
        </widget>
       </item>
@@ -144,9 +144,44 @@
    <item>
     <widget class="QGroupBox" name="groupBoxDisplayControls">
      <property name="title">
-      <string>Primary Display Screen Controls</string>
+      <string>Display Screen Controls</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="labelOpacity">
+          <property name="text">
+           <string>Opacity:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelTransparent">
+          <property name="text">
+           <string>Transparent</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="horizontalSliderOpacity">
+          <property name="maximum">
+           <number>102</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelOpaque">
+          <property name="text">
+           <string>Opaque</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
@@ -249,51 +284,6 @@
          </widget>
         </item>
        </layout>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="labelOpacity">
-          <property name="text">
-           <string>Opacity:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelTransparent">
-          <property name="text">
-           <string>Transparent</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSlider" name="horizontalSliderOpacity">
-          <property name="maximum">
-           <number>102</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelOpaque">
-          <property name="text">
-           <string>Opaque</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelControlsInfo">
-        <property name="text">
-         <string>NOTE: Display screen controls will be visible on the primary display screen only when one monitor is avaliable.</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>

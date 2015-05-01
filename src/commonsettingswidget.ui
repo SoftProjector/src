@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
+    <width>422</width>
     <height>492</height>
    </rect>
   </property>
@@ -217,7 +217,7 @@
      <item>
       <widget class="QLabel" name="labelTextAlign_2">
        <property name="text">
-        <string>Slide Transitioin:</string>
+        <string>Animation:</string>
        </property>
       </widget>
      </item>
@@ -501,7 +501,7 @@
    <item>
     <widget class="QCheckBox" name="checkBoxDisp2">
      <property name="text">
-      <string>Use Same Settings for Secondary Display Screen.</string>
+      <string>Use Same Settings for Secondary Projector.</string>
      </property>
     </widget>
    </item>
@@ -887,7 +887,7 @@
         <item>
          <widget class="QLabel" name="labelTextAlign_7">
           <property name="text">
-           <string>Slide Transitioin:</string>
+           <string>Animation:</string>
           </property>
          </widget>
         </item>

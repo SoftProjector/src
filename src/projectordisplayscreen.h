@@ -38,6 +38,9 @@ public slots:
     void renderSlideShow(QPixmap slide,SlideShowSettings &ssSets);
 //    void renderVideo();
 
+    void positionControls(DisplayControlsSettings & dSettings);
+    void setControlsVisible(bool visible);
+
 private slots:
     void setBackPixmap(QPixmap p,int fillMode); // 0 = Strech, 1 = keep aspect, 2 = keep aspect by expanding
     void setBackPixmap(QPixmap p, QColor c);
@@ -54,6 +57,7 @@ private:
     bool isNewBack, back1to2, text1to2;
     int tranType,backType;
     QColor m_color;
+   // DisplayControlsSettings mySettings;
 
     QPixmap back;
 };

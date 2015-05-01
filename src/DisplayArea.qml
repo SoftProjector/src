@@ -98,6 +98,7 @@ Rectangle {
 //            origin {x:textImage2/2; y:textImage2/2}
 //        }
     }
+
     Rectangle
     {
         id: controls
@@ -107,7 +108,7 @@ Rectangle {
         height: 128
         width: height*3 +20
 
-        x:20; y:50
+        x:20; y:20
 
         Image
         {
@@ -205,6 +206,7 @@ Rectangle {
             }
         }
     }
+
     SequentialAnimation
     {
         id:seqFade1to2
@@ -649,6 +651,20 @@ Rectangle {
     function pauseVideo()
     {
         player.pause()
+    }
+
+    function positionControls(iX,iY,iSize,dOpacity)
+    {
+        controls.height = iSize;
+        controls.opacity = dOpacity;
+        controls.x = iX;
+        controls.y = iY;
+    }
+
+    function setControlsVisible(isVisible)
+    {
+        //controls.opacity = dOpacity;
+        controls.visible = isVisible;
     }
 }
 

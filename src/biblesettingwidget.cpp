@@ -25,6 +25,7 @@ BibleSettingWidget::BibleSettingWidget(QWidget *parent) :
     ui(new Ui::BibleSettingWidget)
 {
     ui->setupUi(this);
+    isLoading = false;
 }
 
 BibleSettingWidget::~BibleSettingWidget()
@@ -46,12 +47,14 @@ void BibleSettingWidget::changeEvent(QEvent *e)
 
 void BibleSettingWidget::setSettings(BibleSettings &settings, BibleSettings &settings2)
 {
+    isLoading = true;
     mySettings = settings;
     mySettings2 = settings2;
 
     loadSettings();
     mySettings.resetChangeHandles();
     mySettings2.resetChangeHandles();
+    isLoading = false;
 }
 
 void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &settings2)
@@ -456,36 +459,61 @@ void BibleSettingWidget::on_comboBoxPrimaryBible_activated(const QString &arg1)
 {
     updateSecondaryBibleMenu();
     updateOperatorBibleMenu();
+    bversion.settingsChanged = true;
 }
 
 void BibleSettingWidget::on_comboBoxPrimaryBible2_activated(const QString &arg1)
 {
     updateSecondaryBibleMenu2();
     updateTrinaryBibleMenu2();
+    bversion2.settingsChanged = true;
 }
 
 void BibleSettingWidget::on_comboBoxSecondaryBible_activated(const QString &arg1)
 {
     updateTrinaryBibleMenu();
+    bversion.settingsChanged = true;
 }
 
 void BibleSettingWidget::on_comboBoxSecondaryBible2_activated(const QString &arg1)
 {
     updateTrinaryBibleMenu2();
+    bversion2.settingsChanged = true;
+}
+
+void BibleSettingWidget::on_comboBoxTrinaryBible_activated(const QString &arg1)
+{
+    bversion2.settingsChanged = true;
+}
+
+void BibleSettingWidget::on_comboBoxTrinaryBible2_activated(const QString &arg1)
+{
+    bversion2.settingsChanged = true;
+}
+
+void BibleSettingWidget::on_comboBoxOperatorBible_activated(const QString &arg1)
+{
+    bversion2.settingsChanged = true;
 }
 
 void BibleSettingWidget::on_checkBoxCommonFont_stateChanged(int arg1)
 {
     ui->toolButtonTextFont->setEnabled(arg1);
-    mySettings.isNotCommonFont = arg1;
-    mySettings.isChangedNotFont = true;
+    if(!isLoading)
+    {
+        mySettings.isNotCommonFont = arg1;
+        mySettings.isChangedNotFont = true;
+    }
 }
 
 void BibleSettingWidget::on_checkBoxCommonFont2_stateChanged(int arg1)
 {
     ui->toolButtonTextFont2->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings2.isNotCommonFont = arg1;
     mySettings2.isChangedNotFont = true;
+    }
 }
 
 void BibleSettingWidget::on_toolButtonTextFont_clicked()
@@ -518,16 +546,22 @@ void BibleSettingWidget::on_checkBoxCommonColor_stateChanged(int arg1)
 {
     ui->toolButtonTextColor->setEnabled(arg1);
     ui->toolButtonShadowColor->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings.isNotCommonColor = arg1;
     mySettings.isChangedNotColor = true;
+    }
 }
 
 void BibleSettingWidget::on_checkBoxCommonColor2_stateChanged(int arg1)
 {
     ui->toolButtonTextColor2->setEnabled(arg1);
     ui->toolButtonShadowColor2->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings2.isNotCommonColor = arg1;
     mySettings2.isChangedNotColor = true;
+    }
 }
 
 void BibleSettingWidget::on_toolButtonTextColor_clicked()
@@ -609,15 +643,21 @@ void BibleSettingWidget::on_comboBoxHorizontalAling2_currentIndexChanged(int ind
 void BibleSettingWidget::on_checkBoxSameFont_stateChanged(int arg1)
 {
     ui->toolButtonCaptionFont->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings.isNotSameFont = arg1;
     mySettings.isChangedNotSameFont = true;
+    }
 }
 
 void BibleSettingWidget::on_checkBoxSameFont2_stateChanged(int arg1)
 {
     ui->toolButtonCaptionFont2->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings2.isNotSameFont = arg1;
     mySettings2.isChangedNotSameFont = true;
+    }
 }
 
 void BibleSettingWidget::on_toolButtonCaptionFont_clicked()
@@ -650,16 +690,22 @@ void BibleSettingWidget::on_checkBoxSameColor_stateChanged(int arg1)
 {
     ui->toolButtonCaptionColor->setEnabled(arg1);
     ui->toolButtonCaptionShadowColor->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings.isNotSameColor = arg1;
     mySettings.isChangedNotSameColor = true;
+    }
 }
 
 void BibleSettingWidget::on_checkBoxSameColor2_stateChanged(int arg1)
 {
     ui->toolButtonCaptionColor2->setEnabled(arg1);
     ui->toolButtonCaptionShadowColor2->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings.isNotSameColor = arg1;
     mySettings.isChangedNotSameColor = true;
+    }
 }
 
 void BibleSettingWidget::on_toolButtonCaptionColor_clicked()
@@ -752,13 +798,13 @@ void BibleSettingWidget::on_comboBoxTransitionType2_currentIndexChanged(int inde
 
 void BibleSettingWidget::on_comboBoxTextEffects_currentIndexChanged(int index)
 {
-    mySettings.effectsType = index;
+    mySettings.effectsType = index - 1;
     mySettings.isChangedEffectType = true;
 }
 
 void BibleSettingWidget::on_comboBoxTextEffects2_currentIndexChanged(int index)
 {
-    mySettings2.effectsType = index;
+    mySettings2.effectsType = index - 1;
     mySettings2.isChangedEffectType = true;
 }
 
@@ -930,16 +976,22 @@ void BibleSettingWidget::on_checkBoxCommonLayout_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen->setEnabled(arg1);
     ui->comboBoxScreenPosition->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings.isNotCommonLayout = arg1;
     mySettings.isChangedNotLayout = true;
+    }
 }
 
 void BibleSettingWidget::on_checkBoxCommonLayout2_stateChanged(int arg1)
 {
     ui->spinBoxMaxScreen2->setEnabled(arg1);
     ui->comboBoxScreenPosition2->setEnabled(arg1);
+    if(!isLoading)
+    {
     mySettings2.isNotCommonLayout = arg1;
     mySettings2.isChangedNotLayout = true;
+    }
 }
 
 void BibleSettingWidget::on_spinBoxMaxScreen_editingFinished()
@@ -996,6 +1048,3 @@ QString BibleSettingWidget::getFontText(QFont font)
 
     return st;
 }
-
-
-

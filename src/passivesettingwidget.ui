@@ -131,7 +131,7 @@
       </palette>
      </property>
      <property name="title">
-      <string>Use Separate Secondary Display Screen Settings</string>
+      <string>Use Same Settings for Secondary Projector.</string>
      </property>
      <property name="flat">
       <bool>true</bool>

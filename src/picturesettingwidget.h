@@ -43,6 +43,16 @@ private slots:
     void on_lineEditBound_textChanged(const QString &arg1);
     void on_lineEditBound_editingFinished();
 
+    void on_checkBoxExpand_toggled(bool checked);
+
+    void on_radioButtonFit_toggled(bool checked);
+
+    void on_radioButtonFitExpand_toggled(bool checked);
+
+    void on_groupBoxResize_toggled(bool arg1);
+
+    void on_comboBoxTransitionType_currentIndexChanged(int index);
+
 private:
     SlideShowSettings mySettings;
     Ui::PictureSettingWidget *ui;

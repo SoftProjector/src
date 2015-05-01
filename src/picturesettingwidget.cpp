@@ -60,56 +60,33 @@ void PictureSettingWidget::setSettings(SlideShowSettings &settings)
         ui->lineEditBound->setText(QString::number(mySettings.boundWidth));
     else
         ui->lineEditBound->clear();
+    ui->comboBoxTransitionType->setCurrentIndex(mySettings.transitionType);
+
+    mySettings.settingsChanged = false;
 }
 
 void PictureSettingWidget::getSettings(SlideShowSettings &settings)
 {
-    mySettings.expandSmall = ui->checkBoxExpand->isChecked();
-
-    if(ui->radioButtonFit->isChecked())
-        mySettings.fitType = 0;
-    else if(ui->radioButtonFitExpand->isChecked())
-        mySettings.fitType = 1;
-
-    mySettings.resize = ui->groupBoxResize->isChecked();
-    mySettings.boundType = ui->comboBoxBoundAmount->currentIndex();
-    if(mySettings.boundType == 0)
-        mySettings.boundWidth = 800;
-    else if(mySettings.boundType == 1)
-        mySettings.boundWidth = 1024;
-    else if(mySettings.boundType == 2)
-        mySettings.boundWidth = 1280;
-    else if(mySettings.boundType == 3)
-        mySettings.boundWidth = 1366;
-    else if(mySettings.boundType == 4)
-        mySettings.boundWidth = 1440;
-    else if(mySettings.boundType == 5)
-        mySettings.boundWidth = 1600;
-    else if(mySettings.boundType == 6)
-        mySettings.boundWidth = 1920;
-    else if(mySettings.boundType == 7)
-    {
-        bool ok;
-        mySettings.boundWidth = ui->lineEditBound->text().toInt(&ok);
-        if(!ok)
-        {
-            mySettings.boundType = 1;
-            mySettings.boundWidth = 1024;
-        }
-    }
-
     settings = mySettings;
 }
 
 void PictureSettingWidget::on_comboBoxBoundAmount_currentIndexChanged(int index)
 {
+    mySettings.boundType = index;
     if(index == 7)
     {
         ui->lineEditBound->setEnabled(true);
         ui->lineEditBound->setFocus();
     }
     else
+    {
         ui->lineEditBound->setEnabled(false);
+        QList<int> bts;
+        bts<<800<<1024<<1280<<1366<<1440<<1660<<1920;
+        mySettings.boundWidth = bts.at(index);
+    }
+
+    mySettings.settingsChanged = true;
 }
 
 void PictureSettingWidget::on_lineEditBound_textChanged(const QString &arg1)
@@ -123,7 +100,8 @@ void PictureSettingWidget::on_lineEditBound_editingFinished()
     QString t = ui->lineEditBound->text();
     if(!t.isEmpty())
     {
-        t.toInt(&ok);
+        int bw;
+        bw = t.toInt(&ok);
         if(!ok)
         {
             QMessageBox mb(this);
@@ -133,5 +111,45 @@ void PictureSettingWidget::on_lineEditBound_editingFinished()
             ui->lineEditBound->setFocus();
             ui->lineEditBound->selectAll();
         }
+        else
+        {
+            mySettings.boundWidth = bw;
+            mySettings.settingsChanged = true;
+        }
     }
+}
+
+void PictureSettingWidget::on_checkBoxExpand_toggled(bool checked)
+{
+    mySettings.expandSmall = checked;
+    mySettings.settingsChanged = true;
+}
+
+void PictureSettingWidget::on_radioButtonFit_toggled(bool checked)
+{
+    if(checked)
+        mySettings.fitType = 0;
+    else
+        mySettings.fitType = 1;
+    mySettings.settingsChanged = true;
+}
+
+void PictureSettingWidget::on_radioButtonFitExpand_toggled(bool checked)
+{
+    if(checked)
+        mySettings.fitType = 1;
+    else
+        mySettings.fitType = 0;
+    mySettings.settingsChanged = true;
+}
+
+void PictureSettingWidget::on_groupBoxResize_toggled(bool arg1)
+{
+    mySettings.resize = arg1;
+}
+
+void PictureSettingWidget::on_comboBoxTransitionType_currentIndexChanged(int index)
+{
+    mySettings.transitionType = index;
+    mySettings.settingsChanged = true;
 }

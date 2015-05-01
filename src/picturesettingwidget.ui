@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>381</width>
-    <height>456</height>
+    <height>455</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -220,6 +220,97 @@ We recommend to resize images to display screen size.</string>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="labelTextAlign_2">
+       <property name="text">
+        <string>Animation:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTransitionType">
+       <item>
+        <property name="text">
+         <string>None</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranNone.png</normaloff>:/icons/icons/tranNone.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fade</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFade.png</normaloff>:/icons/icons/tranFade.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fade Out-In</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranFadeOutIn.png</normaloff>:/icons/icons/tranFadeOutIn.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Move Right</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveRight.png</normaloff>:/icons/icons/tranMoveRight.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Move Left</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveLeft.png</normaloff>:/icons/icons/tranMoveLeft.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Move Up</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveUp.png</normaloff>:/icons/icons/tranMoveUp.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Move Down</string>
+        </property>
+        <property name="icon">
+         <iconset resource="softprojector.qrc">
+          <normaloff>:/icons/icons/tranMoveDown.png</normaloff>:/icons/icons/tranMoveDown.png</iconset>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer">

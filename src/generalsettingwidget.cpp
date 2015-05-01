@@ -67,9 +67,9 @@ void GeneralSettingWidget::loadSettings()
         monitors << QString("%1 - %2x%3").arg(i+1).arg(d.screenGeometry(i).width()).arg(d.screenGeometry(i).height());
 
     if(screen_count>1)
-        ui->groupBoxDisplayScreen->setEnabled(true);
+        ui->groupBoxDisplayScreen->setVisible(true);
     else
-        ui->groupBoxDisplayScreen->setEnabled(false);
+        ui->groupBoxDisplayScreen->setVisible(false);
 
     // Fill display screen comboBoxes
     ui->comboBoxDisplayScreen->clear();
@@ -96,9 +96,10 @@ void GeneralSettingWidget::loadSettings()
 
     // Set Display Controls
     if(screen_count>1)
-        ui->groupBoxDisplayControls->setEnabled(false);
+        ui->groupBoxDisplayControls->setVisible(false);
     else
-        ui->groupBoxDisplayControls->setEnabled(true);
+        ui->groupBoxDisplayControls->setVisible(true);
+
     ui->comboBoxIconSize->setCurrentIndex(mySettings.displayControls.buttonSize);
     ui->comboBoxControlsAlignV->setCurrentIndex(mySettings.displayControls.alignmentV);
     ui->comboBoxControlsAlignH->setCurrentIndex(mySettings.displayControls.alignmentH);
@@ -147,6 +148,9 @@ void GeneralSettingWidget::on_pushButtonDefault_clicked()
 {
     GeneralSettings g;
     mySettings = g;
+    mySettings.settingsChangedAll = true;
+    mySettings.settingsChangedMulti = true;
+    mySettings.settingsChangedSingle = true;
     loadSettings();
 }
 
@@ -174,6 +178,7 @@ void GeneralSettingWidget::updateSecondaryDisplayScreen()
 void GeneralSettingWidget::on_comboBoxDisplayScreen_activated(const QString &arg1)
 {
     updateSecondaryDisplayScreen();
+    mySettings.settingsChangedMulti = true;
 }
 
 void GeneralSettingWidget::on_comboBoxDisplayScreen_2_activated(int index)
@@ -182,6 +187,7 @@ void GeneralSettingWidget::on_comboBoxDisplayScreen_2_activated(int index)
         emit setDisp2Use(false);
     else
         emit setDisp2Use(true);
+    mySettings.settingsChangedMulti = true;
 }
 
 void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
@@ -208,6 +214,7 @@ void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
 
         ui->comboBoxTheme->setCurrentIndex(themeIdList.indexOf(nId));
         emit themeChanged(nId);
+        mySettings.settingsChangedAll = true;
 
         break;
     case AddSongbookDialog::Rejected:
@@ -218,9 +225,36 @@ void GeneralSettingWidget::on_pushButtonAddTheme_clicked()
 void GeneralSettingWidget::on_comboBoxTheme_activated(int index)
 {
     emit themeChanged(themeIdList.at(index));
+    mySettings.settingsChangedAll = true;
 }
 
 void GeneralSettingWidget::on_checkBoxDisplayOnStartUp_toggled(bool checked)
 {
     mySettings.displayOnStartUp = checked;
+    mySettings.settingsChangedMulti = true;
+}
+
+void GeneralSettingWidget::on_comboBoxIconSize_activated(const QString &arg1)
+{
+    mySettings.settingsChangedSingle = true;
+}
+
+void GeneralSettingWidget::on_comboBoxControlsAlignV_activated(const QString &arg1)
+{
+    mySettings.settingsChangedSingle = true;
+}
+
+void GeneralSettingWidget::on_comboBoxControlsAlignH_activated(const QString &arg1)
+{
+    mySettings.settingsChangedSingle = true;
+}
+
+void GeneralSettingWidget::on_horizontalSliderOpacity_actionTriggered(int action)
+{
+    mySettings.settingsChangedSingle = true;
+}
+
+void GeneralSettingWidget::on_checkBoxDisplayOnTop_toggled(bool checked)
+{
+    mySettings.settingsChangedAll = true;
 }

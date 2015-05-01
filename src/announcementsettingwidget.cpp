@@ -136,7 +136,6 @@ void AnnouncementSettingWidget::getSettings(TextSettings &settings, TextSettings
     mySettings2.resetMainChangeHandles();
 }
 
-
 void AnnouncementSettingWidget::on_checkBoxCommonFont_stateChanged(int arg1)
 {
     ui->toolButtonTextFont->setEnabled(arg1);

@@ -64,6 +64,16 @@ private slots:
     void on_comboBoxTheme_activated(int index);
     void on_checkBoxDisplayOnStartUp_toggled(bool checked);
 
+    void on_comboBoxIconSize_activated(const QString &arg1);
+
+    void on_comboBoxControlsAlignV_activated(const QString &arg1);
+
+    void on_comboBoxControlsAlignH_activated(const QString &arg1);
+
+    void on_horizontalSliderOpacity_actionTriggered(int action);
+
+    void on_checkBoxDisplayOnTop_toggled(bool checked);
+
 protected:
     virtual void changeEvent(QEvent *e);
 };
