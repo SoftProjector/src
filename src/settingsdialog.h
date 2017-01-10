@@ -61,6 +61,11 @@ private:
     int currentDisplayScreen2;
     bool is_always_on_top;
 
+    QTabWidget *commonTab;
+    QTabWidget *bibleTab;
+    QTabWidget *songTab;
+    QTabWidget *announceTab;
+
     GeneralSettings gsettings;
     Theme theme;
     BibleVersionSettings bsettings;
@@ -94,3 +99,4 @@ protected:
 };
 
 #endif // SETTINGSDIALOG_H
+
