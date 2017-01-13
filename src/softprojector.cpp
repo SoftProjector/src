@@ -77,7 +77,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->projectTab->addTab(bibleWidget,QIcon(":/icons/icons/book.png"), tr("Bible (F6)"));
     ui->projectTab->addTab(songWidget,QIcon(":/icons/icons/song_tab.png"), tr("Songs (F7)"));
     ui->projectTab->addTab(pictureWidget,QIcon(":/icons/icons/photo.png"),tr("Pictures"));
-    ui->projectTab->addTab(mediaPlayer,QIcon(":/icons/icons/video.png"),tr("Media"));
+//    ui->projectTab->addTab(mediaPlayer,QIcon(":/icons/icons/video.png"),tr("Media"));
     ui->projectTab->addTab(announceWidget,QIcon(":/icons/icons/announce.png"), tr("Announcements (F8)"));
     ui->projectTab->setCurrentIndex(0);
 
@@ -161,6 +161,7 @@ SoftProjector::SoftProjector(QWidget *parent)
     ui->widgetMultiVerse->setVisible(false);
 
     // Set up video controls
+    /*
     playerSlider = new Phonon::SeekSlider(this);
     playerSlider->setMediaObject(displayScreen1->videoPlayer);
     ui->horizontalLayoutPlayBackTime->insertWidget(1,playerSlider);
@@ -172,7 +173,7 @@ SoftProjector::SoftProjector(QWidget *parent)
 
     connect(displayScreen1, SIGNAL(sendTimeText(QString)),this, SLOT(setTimeText(QString)));
     connect(displayScreen1, SIGNAL(updatePlayButton(bool)),this,SLOT(setButtonPlayIcon(bool)));
-
+    */
     ui->widgetPlayBackControls->setVisible(false);
 
     version_string = "2"; // to be used only for official release
@@ -188,9 +189,9 @@ SoftProjector::~SoftProjector()
     delete bibleWidget;
     delete announceWidget;
     delete manageDialog;
-    delete playerSlider;
-    delete playerAudioOutput;
-    delete volumeSlider;
+//    delete playerSlider;
+//    delete playerAudioOutput;
+//    delete volumeSlider;
     delete mediaPlayer;
     delete displayScreen1;
     delete displayScreen2;
@@ -1483,7 +1484,8 @@ void SoftProjector::prevSlide()
 
 void SoftProjector::on_pushButtonPlay_clicked()
 {
-    if(displayScreen1->videoPlayer->state() == Phonon::PlayingState)
+    /*
+     * if(displayScreen1->videoPlayer->state() == Phonon::PlayingState)
     {
         displayScreen1->videoPlayer->pause();
         if(hasDisplayScreen2)
@@ -1500,7 +1502,7 @@ void SoftProjector::on_pushButtonPlay_clicked()
         displayScreen1->videoPlayer->play();
         if(hasDisplayScreen2)
             displayScreen2->videoPlayer->play();
-    }
+    }*/
 }
 
 void SoftProjector::setButtonPlayIcon(bool isPlaying)

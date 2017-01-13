@@ -20,10 +20,10 @@
 #ifndef DISPLAYSCREEN_H
 #define DISPLAYSCREEN_H
 
-#include <QtGui>
+#include <QtWidgets>
 //#include <phonon>
-#include <phonon/MediaObject>
-#include <phonon/VideoWidget>
+//#include <phonon/MediaObject>
+//#include <phonon/VideoWidget>
 #include "settings.h"
 #include "theme.h"
 #include "controlbutton.h"
@@ -44,7 +44,7 @@ class DisplayScreen : public QWidget
 public:
     explicit DisplayScreen(QWidget *parent = 0);
     ~DisplayScreen();
-    Phonon::MediaObject *videoPlayer;
+//    Phonon::MediaObject *videoPlayer;
 
 public slots:
     void setNewWallpaper(QString path, bool isToUse);
@@ -93,7 +93,7 @@ private slots:
     void drawAnnounceText(QPainter *painter, int width, int height, bool isShadow);
 
     void updateTimeText();
-    void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
+//    void playerStateChanged(Phonon::State newstate, Phonon::State oldstate);
 
 private:
     Ui::DisplayScreen *ui;
@@ -130,7 +130,7 @@ private:
 
     QString displayType;
     QLabel *textRenderLabel;
-    Phonon::VideoWidget *videoWidget;
+//    Phonon::VideoWidget *videoWidget;
 
     BibleDisplaySettings bdSets;
     SongDisplaySettings sdSets;

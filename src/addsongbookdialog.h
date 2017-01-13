@@ -20,7 +20,7 @@
 #ifndef ADDSONGBOOKDIALOG_H
 #define ADDSONGBOOKDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 
 namespace Ui {
     class AddSongbookDialog;

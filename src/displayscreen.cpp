@@ -35,6 +35,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     acounter[0]=255;
 
     // add video player
+    /*
     videoPlayer = new Phonon::MediaObject;
     videoWidget = new Phonon::VideoWidget(this);
     videoWidget->setVisible(false);
@@ -43,6 +44,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(videoPlayer, SIGNAL(tick(qint64)),this,SLOT(updateTimeText()));
     connect(videoPlayer, SIGNAL(totalTimeChanged(qint64)),this,SLOT(updateTimeText()));
     connect(videoPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),this,SLOT(playerStateChanged(Phonon::State,Phonon::State)));
+    */
 
     // add text render lable
     textRenderLabel = new QLabel(this);
@@ -68,8 +70,8 @@ DisplayScreen::~DisplayScreen()
 {
     delete timer;
     delete timer_out;
-    delete videoPlayer;
-    delete videoWidget;
+//    delete videoPlayer;
+//    delete videoWidget;
     delete textRenderLabel;
     delete btnPrev;
     delete btnNext;
@@ -108,7 +110,7 @@ void DisplayScreen::keyReleaseEvent(QKeyEvent *event)
 
 void DisplayScreen::positionOpjects()
 {
-    videoWidget->setGeometry(0,0,width(),height());
+//    videoWidget->setGeometry(0,0,width(),height());
     textRenderLabel->setGeometry(0,0,width(),height());
 }
 
@@ -233,23 +235,24 @@ void DisplayScreen::fadeOut() // For future
 
 void DisplayScreen::renderText(bool text_present)
 {
-    if(displayType=="video")
-    {
-        if(!videoWidget->isVisible())
-            videoWidget->setVisible(true);
-        if(textRenderLabel->isVisible())    // Need to remove when text lable on top of video properly works
-            textRenderLabel->setVisible(false);
-    }
-    else
-    {
+//    if(displayType=="video")
+//    {
+//        if(!videoWidget->isVisible())
+//            videoWidget->setVisible(true);
+//        if(textRenderLabel->isVisible())    // Need to remove when text lable on top of video properly works
+//            textRenderLabel->setVisible(false);
+//    }
+//    else
+//    {
         if(!textRenderLabel->isVisible())   // Need to remove when text lable on top of video properly works
             textRenderLabel->setVisible(true);
-        if(videoWidget->isVisible())
-        {
-            videoPlayer->stop();
-            videoWidget->setVisible(false);
-        }
-    }
+//        if(videoWidget->isVisible())
+//        {
+//            videoPlayer->stop();
+//            videoWidget->setVisible(false);
+//        }
+//    }
+
     if(!text_present)
         displayType.clear();
 
@@ -425,12 +428,12 @@ void DisplayScreen::renderPicture(QPixmap image, SlideShowSettings ssSets)
 
 void DisplayScreen::renderVideo(VideoInfo &vid)
 {
-    displayType = "video";
-    renderText(false);
-    videoPlayer->stop();
-    videoPlayer->setCurrentSource(Phonon::MediaSource(vid.filePath));
-    videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(vid.aspectRatio));
-    videoPlayer->play();
+//    displayType = "video";
+//    renderText(false);
+//    videoPlayer->stop();
+//    videoPlayer->setCurrentSource(Phonon::MediaSource(vid.filePath));
+//    videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(vid.aspectRatio));
+//    videoPlayer->play();
 }
 
 void DisplayScreen::renderClear()
@@ -441,8 +444,8 @@ void DisplayScreen::renderClear()
 
 void DisplayScreen::updateTimeText()
 {
-    long len = videoPlayer->totalTime();
-    long pos = videoPlayer->currentTime();
+    long len = 0;//videoPlayer->totalTime();
+    long pos = 0;//videoPlayer->currentTime();
     QString timeString;
     if (pos || len)
     {
@@ -468,7 +471,7 @@ void DisplayScreen::updateTimeText()
 
     emit sendTimeText(timeString);
 }
-
+/*
 void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State oldstate)
 {
     Q_UNUSED(oldstate);
@@ -490,6 +493,7 @@ void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State old
         break;
     }
 }
+*/
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool isShadow)
 {

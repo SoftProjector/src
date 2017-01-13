@@ -20,8 +20,8 @@
 #ifndef MANAGEDATADIALOG_H
 #define MANAGEDATADIALOG_H
 
-#include <QtGui/QDialog>
-#include <QtGui>
+#include <QDialog>
+#include <QtWidgets>
 #include <QtSql>
 #include <QtNetwork/QtNetwork>
 

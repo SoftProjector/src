@@ -20,7 +20,7 @@
 #ifndef ANNOUNCEMENTSETTINGWIDGET_H
 #define ANNOUNCEMENTSETTINGWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "theme.h"
 #include "spfunctions.h"
 

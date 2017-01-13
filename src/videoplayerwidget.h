@@ -20,11 +20,12 @@
 #ifndef VIDEOPLAYERWIDGET_H
 #define VIDEOPLAYERWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
+#include <QMediaPlayer>
 //#include <phonon>
-#include <phonon/VideoWidget>
+//#include <phonon/VideoWidget>
 
-class VideoPlayerWidget : public Phonon::VideoWidget
+class VideoPlayerWidget :QMediaPlayer//: public Phonon::VideoWidget
 {
     Q_OBJECT
 public:

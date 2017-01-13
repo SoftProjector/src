@@ -20,7 +20,7 @@
 #ifndef HELPDIALOG_H
 #define HELPDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 #include <QtGui>
 //#include <QtWebKit>
 

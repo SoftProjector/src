@@ -17,7 +17,7 @@
 //
 ***************************************************************************/
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QMessageBox>
 #include <QtSql>
 #include "softprojector.h"
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     splash.show();
     a.processEvents();
 
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     // Look for the database in all the same places that the QSql module will look,
     // and display a friendly error if it was not found:

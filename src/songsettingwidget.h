@@ -21,7 +21,7 @@
 #define SONGSETTINGWIDGET_H
 
 //#include <QWidget>
-#include <QtGui>
+#include <QtWidgets>
 #include "theme.h"
 
 namespace Ui {

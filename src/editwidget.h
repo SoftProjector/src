@@ -20,7 +20,7 @@
 #ifndef EDITWIDGET_H
 #define EDITWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QtGui>
 #include "song.h"
 #include "addsongbookdialog.h"

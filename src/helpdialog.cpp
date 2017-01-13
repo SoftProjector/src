@@ -27,7 +27,7 @@ HelpDialog::HelpDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     QString d = QString(QDir::separator());
-    ui->webViewHelp->load(QString(".%1help%2index.html").arg(d).arg(d));
+//    ui->webViewHelp->load(QString(".%1help%2index.html").arg(d).arg(d));
 }
 
 HelpDialog::~HelpDialog()

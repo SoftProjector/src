@@ -20,8 +20,8 @@
 #ifndef CONTROLBUTTON_H
 #define CONTROLBUTTON_H
 
-#include <QtCore>
-#include <QtGui>
+#include <QtWidgets>
+//#include <QtGui>
 
 class ControlButton : public QPushButton
 {

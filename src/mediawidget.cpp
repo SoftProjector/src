@@ -22,14 +22,14 @@
 
 MediaWidget::MediaWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MediaWidget),
-    m_AudioOutput(Phonon::VideoCategory)
+    ui(new Ui::MediaWidget)//,
+//    m_AudioOutput(Phonon::VideoCategory)
 {
     ui->setupUi(this);
     videoWidget = new VideoPlayerWidget(this);
 
-    ui->verticalLayoutMedia->addWidget(videoWidget);
-    videoWidget->setVisible(false);
+//    ui->verticalLayoutMedia->addWidget(videoWidget);
+//    videoWidget->setVisible(false);
     ui->pushButtonGoLive->setEnabled(false);
 
     playIcon = QIcon(":icons/icons/play.png");
@@ -38,9 +38,9 @@ MediaWidget::MediaWidget(QWidget *parent) :
     ui->pushButtonPlayPause->setIcon(playIcon);
     ui->comboBoxAspectRatio->setEnabled(false);
 
-    timeSlider = new Phonon::SeekSlider(this);
-    timeSlider->setMediaObject(&mediaPlayer);
-    volumeSlider = new Phonon::VolumeSlider(&m_AudioOutput);
+//    timeSlider = new Phonon::SeekSlider(this);
+//    timeSlider->setMediaObject(&mediaPlayer);
+//    volumeSlider = new Phonon::VolumeSlider(&m_AudioOutput);
 
     QPalette palette;
     palette.setBrush(QPalette::WindowText, Qt::white);
@@ -49,28 +49,28 @@ MediaWidget::MediaWidget(QWidget *parent) :
     ui->labelInfo->setPalette(palette);
     ui->labelInfo->setText(tr("<center>No media</center>"));
 
-    volumeSlider->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
+//    volumeSlider->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 
-    ui->horizontalLayoutControls->addWidget(volumeSlider);
+//    ui->horizontalLayoutControls->addWidget(volumeSlider);
 
-    ui->horizontalLayoutTime->insertWidget(0,timeSlider);
+//    ui->horizontalLayoutTime->insertWidget(0,timeSlider);
 
-    connect(&mediaPlayer, SIGNAL(metaDataChanged()), this, SLOT(updateInfo()));
-    connect(&mediaPlayer, SIGNAL(totalTimeChanged(qint64)), this, SLOT(updateTime()));
-    connect(&mediaPlayer, SIGNAL(tick(qint64)), this, SLOT(updateTime()));
-    connect(&mediaPlayer, SIGNAL(finished()), this, SLOT(finished()));
-    connect(&mediaPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-            this, SLOT(stateChanged(Phonon::State,Phonon::State)));
-    connect(&mediaPlayer, SIGNAL(hasVideoChanged(bool)), this, SLOT(hasVideoChanged(bool)));
+//    connect(&mediaPlayer, SIGNAL(metaDataChanged()), this, SLOT(updateInfo()));
+//    connect(&mediaPlayer, SIGNAL(totalTimeChanged(qint64)), this, SLOT(updateTime()));
+//    connect(&mediaPlayer, SIGNAL(tick(qint64)), this, SLOT(updateTime()));
+//    connect(&mediaPlayer, SIGNAL(finished()), this, SLOT(finished()));
+//    connect(&mediaPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+//            this, SLOT(stateChanged(Phonon::State,Phonon::State)));
+//    connect(&mediaPlayer, SIGNAL(hasVideoChanged(bool)), this, SLOT(hasVideoChanged(bool)));
 
-    connect(videoWidget, SIGNAL(playPause()), this, SLOT(playPause()));
-    connect(videoWidget, SIGNAL(handleDrops(QDropEvent*)), this, SLOT(handleDrop(QDropEvent*)));
+//    connect(videoWidget, SIGNAL(playPause()), this, SLOT(playPause()));
+//    connect(videoWidget, SIGNAL(handleDrops(QDropEvent*)), this, SLOT(handleDrop(QDropEvent*)));
 
     ui->pushButtonPlayPause->setEnabled(false);
     setAcceptDrops(true);
 
-    Phonon::createPath(&mediaPlayer, &m_AudioOutput);
-    Phonon::createPath(&mediaPlayer, videoWidget);
+//    Phonon::createPath(&mediaPlayer, &m_AudioOutput);
+//    Phonon::createPath(&mediaPlayer, videoWidget);
 
     audioExt = "*.mp3 *.acc *.ogg *.oga *.wma *.wav *.asf *.mka";
     videoExt = "*.wmv *.avi *.mkv *.flv *.mp4 *.mpg *.mpeg *.mov *.ogv *.ts";
@@ -80,8 +80,8 @@ MediaWidget::MediaWidget(QWidget *parent) :
 MediaWidget::~MediaWidget()
 {
     delete videoWidget;
-    delete timeSlider;
-    delete volumeSlider;
+//    delete timeSlider;
+//    delete volumeSlider;
     delete ui;
 }
 
@@ -110,6 +110,7 @@ void MediaWidget::loadMediaLibrary()
     }
 }
 
+/*
 void MediaWidget::stateChanged(Phonon::State newstate, Phonon::State oldstate)
 {
     Q_UNUSED(oldstate);
@@ -153,6 +154,7 @@ void MediaWidget::stateChanged(Phonon::State newstate, Phonon::State oldstate)
         break;
     }
 }
+*/
 
 void MediaWidget::handleDrop(QDropEvent *e)
 {
@@ -213,20 +215,20 @@ void MediaWidget::dragMoveEvent(QDragMoveEvent *e)
 
 void MediaWidget::playPause()
 {
-    if (mediaPlayer.state() == Phonon::PlayingState)
-        mediaPlayer.pause();
-    else
-    {
-        if (mediaPlayer.currentTime() == mediaPlayer.totalTime())
-            mediaPlayer.seek(0);
-        mediaPlayer.play();
-    }
+//    if (mediaPlayer.state() == Phonon::PlayingState)
+//        mediaPlayer.pause();
+//    else
+//    {
+//        if (mediaPlayer.currentTime() == mediaPlayer.totalTime())
+//            mediaPlayer.seek(0);
+//        mediaPlayer.play();
+//    }
 }
 
 void MediaWidget::playFile(QString filePath)
 {
     //mediaPlayer.stop();
-    mediaPlayer.setCurrentSource(Phonon::MediaSource(filePath));
+//    mediaPlayer.setCurrentSource(Phonon::MediaSource(filePath));
     //mediaPlayer.play();
 }
 
@@ -235,10 +237,10 @@ void MediaWidget::updateInfo()
     int maxLength = 50;
     QString font = "<font color=#49fff9>";
 
-    QString fileName = mediaPlayer.currentSource().fileName();
+    QString fileName;// = mediaPlayer.currentSource().fileName();
     QFileInfo f(fileName);
     QString fName = f.fileName();
-
+/*
     QMap <QString, QString> metaData = mediaPlayer.metaData();
     QString tAlbum = metaData.value("ALBUM");
     QString tTitle = metaData.value("TITLE");
@@ -281,6 +283,7 @@ void MediaWidget::updateInfo()
         bitrate = "Bitrate: " + font + QString::number(tBitrate/1000) + "kbit</font>";
 
     ui->labelInfo->setText(file + album + title + artist + bitrate);
+    */
 }
 
 void MediaWidget::insertFiles(QStringList &files)
@@ -299,8 +302,8 @@ void MediaWidget::insertFiles(QStringList &files)
 
 void MediaWidget::updateTime()
 {
-    long len = mediaPlayer.totalTime();
-    long pos = mediaPlayer.currentTime();
+    long len = 0;//mediaPlayer.totalTime();
+    long pos = 0;//mediaPlayer.currentTime();
     QString timeString;
     if (pos || len)
     {
@@ -333,23 +336,23 @@ void MediaWidget::finished()
 
 void MediaWidget::hasVideoChanged(bool bHasVideo)
 {
-    if(!bHasVideo && videoWidget->isFullScreen())
-        videoWidget->setFullScreen(false);
-    ui->labelInfo->setVisible(!bHasVideo);
-    ui->pushButtonGoLive->setEnabled(bHasVideo);
-    videoWidget->setVisible(bHasVideo);
-    ui->comboBoxAspectRatio->setEnabled(bHasVideo);
+//    if(!bHasVideo && videoWidget->isFullScreen())
+//        videoWidget->setFullScreen(false);
+//    ui->labelInfo->setVisible(!bHasVideo);
+//    ui->pushButtonGoLive->setEnabled(bHasVideo);
+//    videoWidget->setVisible(bHasVideo);
+//    ui->comboBoxAspectRatio->setEnabled(bHasVideo);
 }
 
 void MediaWidget::prepareForProjection()
 {
-    mediaPlayer.pause();
-    QFileInfo fn( mediaPlayer.currentSource().fileName());
-    VideoInfo v;
-    v.aspectRatio = ui->comboBoxAspectRatio->currentIndex();
-    v.fileName = fn.fileName();
-    v.filePath = fn.filePath();
-    emit toProjector(v);
+//    mediaPlayer.pause();
+//    QFileInfo fn( mediaPlayer.currentSource().fileName());
+//    VideoInfo v;
+//    v.aspectRatio = ui->comboBoxAspectRatio->currentIndex();
+//    v.fileName = fn.fileName();
+//    v.filePath = fn.filePath();
+//    emit toProjector(v);
 }
 
 void MediaWidget::on_pushButtonOpen_clicked()
@@ -402,7 +405,7 @@ void MediaWidget::removeFromLibrary()
         ui->listWidgetMediaFiles->clear();
         if(mediaFileNames.count()>0)
             ui->listWidgetMediaFiles->addItems(mediaFileNames);
-        mediaPlayer.stop();
+//        mediaPlayer.stop();
 
         hasVideoChanged(false);
 
@@ -425,7 +428,7 @@ void MediaWidget::on_listWidgetMediaFiles_doubleClicked(const QModelIndex &index
 
 void MediaWidget::on_comboBoxAspectRatio_currentIndexChanged(int index)
 {
-    videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(index));
+//    videoWidget->setAspectRatio(Phonon::VideoWidget::AspectRatio(index));
 }
 
 VideoInfo MediaWidget::getMedia()
@@ -441,15 +444,15 @@ void MediaWidget::setMediaFromSchedule(VideoInfo &v)
 {
     ui->listWidgetMediaFiles->clearSelection();
     playFile(v.filePath);
-    mediaPlayer.pause();
+//    mediaPlayer.pause();
 }
 
 void MediaWidget::goLiveFromSchedule()
 {
     if(ui->pushButtonGoLive->isEnabled())
         prepareForProjection();
-    else
-        mediaPlayer.play();
+//    else
+//        mediaPlayer.play();
 }
 
 bool MediaWidget::isValidMedia()

@@ -20,7 +20,7 @@
 #ifndef HIGHLIGHT_H
 #define HIGHLIGHT_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QSyntaxHighlighter>
 #include <QHash>
 #include <QTextCharFormat>

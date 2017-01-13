@@ -20,7 +20,7 @@
 #ifndef SOFTPROJECTOR_H
 #define SOFTPROJECTOR_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 //#include <phonon>
 #include "songwidget.h"
 #include "biblewidget.h"
@@ -116,10 +116,10 @@ private:
     QList<SlideShowItem> pictureShowList;
 
     // video items
-    Phonon::SeekSlider *playerSlider;
-    Phonon::VolumeSlider *volumeSlider;
+//    Phonon::SeekSlider *playerSlider;
+//    Phonon::VolumeSlider *volumeSlider;
     VideoInfo currentVideo;
-    Phonon::AudioOutput *playerAudioOutput;
+//    Phonon::AudioOutput *playerAudioOutput;
 
     // Schelude list
     QList<Schedule> schedule;

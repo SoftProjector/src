@@ -22,6 +22,7 @@
 
 #include <QtGui>
 #include <QtCore>
+#include <QtPrintSupport>
 #include "song.h"
 #include "bible.h"
 #include "announcewidget.h"

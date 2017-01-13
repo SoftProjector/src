@@ -20,7 +20,7 @@
 #ifndef BIBLESETTINGWIDGET_H
 #define BIBLESETTINGWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtSql>
 #include "theme.h"
 #include "settings.h"

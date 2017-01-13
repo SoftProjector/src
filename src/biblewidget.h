@@ -20,7 +20,8 @@
 #ifndef BIBLEWIDGET_H
 #define BIBLEWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
+#include <QButtonGroup>
 #include <QtGui>
 #include "bible.h"
 #include "highlight.h"

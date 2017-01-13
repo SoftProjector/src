@@ -20,7 +20,7 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "settings.h"
 #include "theme.h"
 #include "generalsettingwidget.h"

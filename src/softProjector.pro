@@ -18,10 +18,16 @@
 ##**************************************************************************
 
 
-QT += sql \
-    phonon \
-    webkit \
-    network
+QT += core \
+    gui \
+    widgets \
+    network \
+    sql \
+    qml \
+    quick \
+    printsupport \
+    multimedia
+
 TARGET = SoftProjector
 TEMPLATE = app
 CONFIG += x86 ppc x86_64 ppc64 # Compile a universal build
