@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include "theme.h"
+#include "settings.h"
 
 namespace Ui {
 class PassiveSettingWidget;
@@ -38,8 +39,8 @@ public:
     ~PassiveSettingWidget();
 
 public slots:
-    void setSetings(PassiveSettings &settings, PassiveSettings &settings2);
-    void getSettings(PassiveSettings &settings, PassiveSettings &settings2);
+    void setSetings(TextSettings &settings, TextSettings &settings2);
+    void getSettings(TextSettings &settings, TextSettings &settings2);
     void setDispScreen2Visible(bool visible);
 
 private slots:
@@ -51,7 +52,7 @@ private slots:
 
 private:
     Ui::PassiveSettingWidget *ui;
-    PassiveSettings mySettings,mySettings2;
+    TextSettings mySettings,mySettings2;
 protected:
     virtual void changeEvent(QEvent *e);
 };

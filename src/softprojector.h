@@ -25,7 +25,8 @@
 #include "songwidget.h"
 #include "biblewidget.h"
 #include "announcewidget.h"
-#include "displayscreen.h"
+//#include "displayscreen.h"
+#include "projectordisplayscreen.hpp"
 #include "editwidget.h"
 #include "bible.h"
 #include "managedatadialog.h"
@@ -61,8 +62,8 @@ public:
     ManageDataDialog *manageDialog;
     QDesktopWidget *desktop;
     EditWidget *editWidget;
-    DisplayScreen *displayScreen1;
-    DisplayScreen *displayScreen2;
+    ProjectorDisplayScreen *pds1;
+    ProjectorDisplayScreen *pds2;
     PictureWidget *pictureWidget;
     MediaWidget *mediaPlayer;
 
@@ -228,6 +229,7 @@ private slots:
     void on_actionClear_triggered();
 
     void on_actionCloseDisplay_triggered();
+    void updateCloseDisplayButtons(bool isOn);
 
 protected:
     void closeEvent(QCloseEvent *event);

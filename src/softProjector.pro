@@ -67,7 +67,6 @@ SOURCES += main.cpp \
     songsettingwidget.cpp \
     announcementsettingwidget.cpp \
     printpreviewdialog.cpp \
-    displayscreen.cpp \
     controlbutton.cpp \
     passivesettingwidget.cpp \
     theme.cpp \
@@ -84,7 +83,10 @@ SOURCES += main.cpp \
     picturesettingwidget.cpp \
     moduledownloaddialog.cpp \
     moduleprogressdialog.cpp \
-    displaysetting.cpp
+    displaysetting.cpp \
+    projectordisplayscreen.cpp \
+    imagegenerator.cpp \
+    spimageprovider.cpp
 HEADERS += softprojector.h \
     songwidget.h \
     biblewidget.h \
@@ -107,7 +109,6 @@ HEADERS += softprojector.h \
     songsettingwidget.h \
     announcementsettingwidget.h \
     printpreviewdialog.h \
-    displayscreen.h \
     controlbutton.h \
     passivesettingwidget.h \
     theme.h \
@@ -124,7 +125,10 @@ HEADERS += softprojector.h \
     picturesettingwidget.h \
     moduledownloaddialog.h \
     moduleprogressdialog.h \
-    displaysetting.h
+    displaysetting.h \
+    projectordisplayscreen.hpp \
+    imagegenerator.hpp \
+    spimageprovider.hpp
 FORMS += softprojector.ui \
     songwidget.ui \
     biblewidget.ui \
@@ -142,7 +146,6 @@ FORMS += softprojector.ui \
     songsettingwidget.ui \
     announcementsettingwidget.ui \
     printpreviewdialog.ui \
-    displayscreen.ui \
     passivesettingwidget.ui \
     picturewidget.ui \
     mediawidget.ui \
@@ -150,7 +153,8 @@ FORMS += softprojector.ui \
     editannouncementdialog.ui \
     picturesettingwidget.ui \
     moduledownloaddialog.ui \
-    moduleprogressdialog.ui
+    moduleprogressdialog.ui \
+    projectordisplayscreen.ui
 TRANSLATIONS += translations/softpro_de.ts\
     translations/softpro_ru.ts\
     translations/softpro_cs.ts\

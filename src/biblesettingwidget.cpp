@@ -85,8 +85,8 @@ void BibleSettingWidget::getSettings(BibleSettings &settings, BibleSettings &set
     mySettings2.captionAlingment = ui->comboBoxCaptionAlign2->currentIndex();
 
     // Version Abbreviations
-    mySettings.useAbbriviations = ui->checkBoxAbbiviations->isChecked();
-    mySettings2.useAbbriviations = ui->checkBoxAbbiviations2->isChecked();
+    mySettings.useAbbriviation = ui->checkBoxAbbiviations->isChecked();
+    mySettings2.useAbbriviation = ui->checkBoxAbbiviations2->isChecked();
 
     // Max screen use
     mySettings.screenUse = ui->spinBoxMaxScreen->value();
@@ -234,8 +234,8 @@ void BibleSettingWidget::loadSettings()
     ui->comboBoxCaptionAlign2->setCurrentIndex(mySettings2.captionAlingment);
 
     // Set abbriviations use
-    ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviations);
-    ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviations);
+    ui->checkBoxAbbiviations->setChecked(mySettings.useAbbriviation);
+    ui->checkBoxAbbiviations2->setChecked(mySettings2.useAbbriviation);
 
     // Set max screen use
     ui->spinBoxMaxScreen->setValue(mySettings.screenUse);
@@ -503,9 +503,9 @@ void BibleSettingWidget::on_buttonBrowseBackground_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings.background = p;
+            mySettings.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -521,9 +521,9 @@ void BibleSettingWidget::on_buttonBrowseBackground2_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings2.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings2.background = p;
+            mySettings2.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;
@@ -647,15 +647,15 @@ QString BibleSettingWidget::getFontText(QFont font)
 
 void BibleSettingWidget::on_pushButtonApplyToAll_clicked()
 {
-    emit applyBackToAll(1,mySettings.backgroundName,mySettings.background);
+    emit applyBackToAll(1,mySettings.backgroundName,mySettings.backgroundPix);
 }
 
 void BibleSettingWidget::setBackgroungds(QString name, QPixmap back)
 {
     mySettings.backgroundName = name;
-    mySettings.background = back;
+    mySettings.backgroundPix = back;
     mySettings2.backgroundName = name;
-    mySettings2.background = back;
+    mySettings2.backgroundPix = back;
     ui->lineEditBackPath->setText(name);
     ui->lineEditBackPath2->setText(name);
 }

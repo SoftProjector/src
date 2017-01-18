@@ -40,12 +40,12 @@ class DisplayScreen;
 class DisplayScreen : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit DisplayScreen(QWidget *parent = 0);
     ~DisplayScreen();
 //    Phonon::MediaObject *videoPlayer;
-
+/*
 public slots:
     void setNewWallpaper(QString path, bool isToUse);
     void setNewWallpaper(QPixmap wallPix, bool isToUse);
@@ -64,7 +64,7 @@ public slots:
     void renderText(bool text_present);
     void renderBibleText(Verse verse, BibleSettings &bibleSetings);
     void renderSongText(Stanza stanza, SongSettings &songSettings);
-    void renderAnnounceText(AnnounceSlide announce, AnnounceSettings &announceSettings);
+    void renderAnnounceText(AnnounceSlide announce, TextSettings &announceSettings);
     void renderPicture(QPixmap image, SlideShowSettings ssSets);
     void renderVideo(VideoInfo &vid);
     void renderClear();
@@ -79,7 +79,7 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-    
+
 private slots:
     void positionControlButtons();
     void btnNextClicked();
@@ -122,7 +122,7 @@ private:
 
     SongSettings songSets;
     BibleSettings bibleSets;
-    AnnounceSettings annouceSets;
+    TextSettings annouceSets;
 
     Verse bibleVerse;
     Stanza songStanza;
@@ -135,6 +135,7 @@ private:
     BibleDisplaySettings bdSets;
     SongDisplaySettings sdSets;
     AnnounceDisplaySettings adSets;
+    */
 };
 
 #endif // DISPLAYSCREEN_H

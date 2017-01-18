@@ -44,7 +44,7 @@ void AnnouncementSettingWidget::changeEvent(QEvent *e)
      }
 }
 
-void AnnouncementSettingWidget::setSettings(AnnounceSettings &settings, AnnounceSettings &settings2)
+void AnnouncementSettingWidget::setSettings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings = settings;
     mySettings2 = settings2;
@@ -92,7 +92,7 @@ void AnnouncementSettingWidget::loadSettings()
     on_groupBoxUseDisp2_toggled(mySettings2.useDisp2settings);
 }
 
-void AnnouncementSettingWidget::getSettings(AnnounceSettings &settings, AnnounceSettings &settings2)
+void AnnouncementSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
     // Effects
     mySettings.useShadow = ui->checkBoxUseShadow->isChecked();
@@ -153,9 +153,9 @@ void AnnouncementSettingWidget::on_buttonBackground_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings.background = p;
+            mySettings.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -171,9 +171,9 @@ void AnnouncementSettingWidget::on_buttonBackground2_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings2.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings2.background = p;
+            mySettings2.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;
@@ -235,7 +235,7 @@ void AnnouncementSettingWidget::on_groupBoxUseDisp2_toggled(bool arg1)
 
 void AnnouncementSettingWidget::on_pushButtonDefault_clicked()
 {
-    AnnounceSettings a;
+    TextSettings a;
     mySettings = a;
     mySettings2 = a;
     loadSettings();
@@ -258,15 +258,15 @@ QString AnnouncementSettingWidget::getFontText(QFont font)
 
 void AnnouncementSettingWidget::on_pushButtonApplyToAll_clicked()
 {
-    emit applyBackToAll(3,mySettings.backgroundName,mySettings.background);
+    emit applyBackToAll(3,mySettings.backgroundName,mySettings.backgroundPix);
 }
 
 void AnnouncementSettingWidget::setBackgroungds(QString name, QPixmap back)
 {
     mySettings.backgroundName = name;
-    mySettings.background = back;
+    mySettings.backgroundPix = back;
     mySettings2.backgroundName = name;
-    mySettings2.background = back;
+    mySettings2.backgroundPix = back;
     ui->lineEditBackground->setText(name);
     ui->lineEditBackground2->setText(name);
 }

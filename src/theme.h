@@ -20,10 +20,11 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include <QtCore>
+//#include <QtCore>
 #include <QtSql>
-#include "spfunctions.h"
-
+//#include "spfunctions.h"
+#include "settings.h"
+/*
 class PassiveSettings
 {
 public:
@@ -108,6 +109,7 @@ public:
 
     bool useDisp2settings;
 };
+*/
 
 class ThemeInfo
 {
@@ -122,42 +124,42 @@ class Theme
 {
 public:
     Theme();
-    PassiveSettings passive;
-    PassiveSettings passive2; // Holds secondary display screen settings
+    TextSettingsBase common;
+    TextSettingsBase common2; // Holds secondary display screen settings
+    TextSettings passive;
+    TextSettings passive2; // Holds secondary display screen settings
     BibleSettings bible;
     BibleSettings bible2; // Holds secondary display screen settings
     SongSettings song;
     SongSettings song2; // Holds secondary display screen settings
-    AnnounceSettings announce;
-    AnnounceSettings announce2; // Holds secondary display screen settings
+    TextSettings announce;
+    TextSettings announce2; // Holds secondary display screen settings
 
 public slots:
     void saveThemeNew();
     void saveThemeUpdate();
     void loadTheme();
-    void setThemeId(int id){themeId = id;}
-    int getThemeId(){return themeId;}
+    void setThemeId(int id){m_info.themeId = id;}
+    int getThemeId(){return m_info.themeId;}
     void setThemeInfo(ThemeInfo info);
     ThemeInfo getThemeInfo();
 
 private:
-    int themeId;
-    QString name;
-    QString comments;
+     ThemeInfo m_info;
 
 private slots:
-    void savePassiveNew(int screen, PassiveSettings &settings);
+    void savePassiveNew(int screen, TextSettings &settings);
     void saveBibleNew(int screen, BibleSettings &settings);
     void saveSongNew(int screen, SongSettings &settings);
-    void saveAnnounceNew(int screen, AnnounceSettings &settings);
-    void savePassiveUpdate(int screen, PassiveSettings &settings);
+    void saveAnnounceNew(int screen, TextSettings &settings);
+    void savePassiveUpdate(int screen, TextSettings &settings);
     void saveBibleUpdate(int screen, BibleSettings &settings);
     void saveSongUpdate(int screen, SongSettings &settings);
-    void saveAnnounceUpdate(int screen, AnnounceSettings &settings);
-    void loadPassive(int screen, PassiveSettings &settings);
+    void saveAnnounceUpdate(int screen, TextSettings &settings);
+    void loadPassive(int screen, TextSettings &settings);
     void loadBible(int screen, BibleSettings &settings);
     void loadSong(int screen, SongSettings &settings);
-    void loadAnnounce(int screen, AnnounceSettings &settings);
+    void loadAnnounce(int screen, TextSettings &settings);
 
 };
 
