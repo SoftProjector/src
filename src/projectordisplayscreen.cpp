@@ -23,7 +23,6 @@ ProjectorDisplayScreen::ProjectorDisplayScreen(QWidget *parent) :
 ProjectorDisplayScreen::~ProjectorDisplayScreen()
 {
     delete dispView;
-    delete imProvider;
     delete ui;
 }
 
@@ -188,6 +187,37 @@ void ProjectorDisplayScreen::updateScreen()
             QMetaObject::invokeMethod(root,"transitionBack2to1",Q_ARG(QVariant,tranType));
         QMetaObject::invokeMethod(root,"transitionText2to1",Q_ARG(QVariant,tranType));
     }
+}
+
+
+void ProjectorDisplayScreen::keyReleaseEvent(QKeyEvent *event)
+{
+    // Will get called when a key is released
+    int key = event->key();
+    if(key == Qt::Key_Left)
+        emit prevSlide();
+    else if(key == Qt::Key_Up)
+        emit prevSlide();
+    else if(key == Qt::Key_PageUp)
+        emit prevSlide();
+    else if(key == Qt::Key_Back)
+        emit prevSlide();
+    else if(key == Qt::Key_Right)
+        emit nextSlide();
+    else if(key == Qt::Key_Down)
+        emit nextSlide();
+    else if(key == Qt::Key_PageDown)
+        emit nextSlide();
+    else if(key == Qt::Key_Forward)
+        emit nextSlide();
+    else if(key == Qt::Key_Enter)
+        emit nextSlide();
+    else if(key == Qt::Key_Return)
+        emit nextSlide();
+    else if(key == Qt::Key_Escape)
+        emit exitSlide();
+    else
+        QWidget::keyReleaseEvent(event);
 }
 
 void ProjectorDisplayScreen::renderNotText()

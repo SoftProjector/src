@@ -263,6 +263,7 @@ void SoftProjector::positionDisplayWindow()
 //                QPoint top_left = desktop->screenGeometry(mySettings.general.pds2).topLeft();
 //                pds2->move(top_left);
                 pds2->setGeometry(desktop->screenGeometry(mySettings.general.displayScreen2));
+                pds2->resetImGenSize();
             }
             pds2->showFullScreen();
             pds2->setCursor(Qt::BlankCursor); //Sets a Blank Mouse to the screen
@@ -283,6 +284,7 @@ void SoftProjector::positionDisplayWindow()
         // Single monitor only: Do not show on strat up.
         // Will be shown only when items were sent to the projector.
         pds1->setGeometry(desktop->screenGeometry());
+        pds1->resetImGenSize();
         showDisplayScreen(false);
         isSingleScreen = true;
         hasDisplayScreen2 = false;

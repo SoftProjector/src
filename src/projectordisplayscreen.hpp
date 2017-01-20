@@ -48,6 +48,14 @@ private slots:
     void setVideoSource(QString path);
     void updateScreen();
 
+signals:
+    void exitSlide();
+    void nextSlide();
+    void prevSlide();
+
+protected:
+    void keyReleaseEvent(QKeyEvent *event);
+
 private:
     Ui::ProjectorDisplayScreen *ui;
     QQuickView *dispView;
