@@ -23,6 +23,7 @@
 #include <QtWidgets>
 #include "theme.h"
 #include "spfunctions.h"
+#include "settings.h"
 
 namespace Ui {
 class AnnouncementSettingWidget;
@@ -37,8 +38,8 @@ public:
     ~AnnouncementSettingWidget();
 
 public slots:
-    void setSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
-    void getSettings(AnnounceSettings& settings, AnnounceSettings &settings2);
+    void setSettings(TextSettings& settings, TextSettings &settings2);
+    void getSettings(TextSettings& settings, TextSettings &settings2);
     void setDispScreen2Visible(bool visible);
     void setBackgroungds(QString name, QPixmap back);
 
@@ -62,7 +63,7 @@ private slots:
     void on_pushButtonApplyToAll_clicked();
 
 private:
-    AnnounceSettings mySettings, mySettings2;
+    TextSettings mySettings, mySettings2;
     Ui::AnnouncementSettingWidget *ui;
 protected:
     virtual void changeEvent(QEvent *e);

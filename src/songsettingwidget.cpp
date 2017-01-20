@@ -98,10 +98,10 @@ void SongSettingWidget::getSettings(SongSettings &settings, SongSettings &settin
 
     // Screen use
     mySettings.screenUse = ui->spinBoxScreenUse->value();
-    mySettings.screenPositon = ui->comboBoxScreenUse->currentIndex();
+    mySettings.screenPosition = ui->comboBoxScreenUse->currentIndex();
 
     mySettings2.screenUse = ui->spinBoxScreenUse2->value();
-    mySettings2.screenPositon = ui->comboBoxScreenUse2->currentIndex();
+    mySettings2.screenPosition = ui->comboBoxScreenUse2->currentIndex();
 
     // Use secondary display screen settings
     mySettings2.useDisp2settings = ui->groupBoxDisplay2->isChecked();
@@ -176,10 +176,10 @@ void SongSettingWidget::loadSettings()
 
     // Set Screen Use
     ui->spinBoxScreenUse->setValue(mySettings.screenUse);
-    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenPositon);
+    ui->comboBoxScreenUse->setCurrentIndex(mySettings.screenPosition);
 
     ui->spinBoxScreenUse2->setValue(mySettings2.screenUse);
-    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenPositon);
+    ui->comboBoxScreenUse2->setCurrentIndex(mySettings2.screenPosition);
 
     // Set secondary screen
     ui->groupBoxDisplay2->setChecked(mySettings2.useDisp2settings);
@@ -300,9 +300,9 @@ void SongSettingWidget::on_buttonSongBackground_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings.background = p;
+            mySettings.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -318,9 +318,9 @@ void SongSettingWidget::on_buttonSongBackground2_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings2.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings2.background = p;
+            mySettings2.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;
@@ -403,15 +403,15 @@ QString SongSettingWidget::getFontText(QFont font)
 
 void SongSettingWidget::on_pushButtonApplyToAll_clicked()
 {
-    emit applyBackToAll(2,mySettings.backgroundName,mySettings.background);
+    emit applyBackToAll(2,mySettings.backgroundName,mySettings.backgroundPix);
 }
 
 void SongSettingWidget::setBackgroungds(QString name, QPixmap back)
 {
     mySettings.backgroundName = name;
-    mySettings.background = back;
+    mySettings.backgroundPix = back;
     mySettings2.backgroundName = name;
-    mySettings2.background = back;
+    mySettings2.backgroundPix = back;
     ui->lineEditSongBackground->setText(name);
     ui->lineEditSongBackground2->setText(name);
 }

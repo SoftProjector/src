@@ -27,6 +27,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     ui(new Ui::DisplayScreen)
 {
     ui->setupUi(this);
+    /*
     setPalette(QPalette(QColor(Qt::black),QColor(Qt::black)));
 
     timer = new QTimer(this);
@@ -35,7 +36,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     acounter[0]=255;
 
     // add video player
-    /*
+
     videoPlayer = new Phonon::MediaObject;
     videoWidget = new Phonon::VideoWidget(this);
     videoWidget->setVisible(false);
@@ -44,7 +45,7 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(videoPlayer, SIGNAL(tick(qint64)),this,SLOT(updateTimeText()));
     connect(videoPlayer, SIGNAL(totalTimeChanged(qint64)),this,SLOT(updateTimeText()));
     connect(videoPlayer, SIGNAL(stateChanged(Phonon::State,Phonon::State)),this,SLOT(playerStateChanged(Phonon::State,Phonon::State)));
-    */
+
 
     // add text render lable
     textRenderLabel = new QLabel(this);
@@ -64,20 +65,22 @@ DisplayScreen::DisplayScreen(QWidget *parent) :
     connect(btnNext,SIGNAL(clicked()),this,SLOT(btnNextClicked()));
     connect(btnPrev,SIGNAL(clicked()),this,SLOT(btnPrevClicked()));
     connect(btnExit,SIGNAL(clicked()),this,SLOT(btnExitClicked()));
+    */
 }
 
 DisplayScreen::~DisplayScreen()
 {
-    delete timer;
-    delete timer_out;
+//    delete timer;
+//    delete timer_out;
 //    delete videoPlayer;
 //    delete videoWidget;
-    delete textRenderLabel;
-    delete btnPrev;
-    delete btnNext;
-    delete btnExit;
+//    delete textRenderLabel;
+//    delete btnPrev;
+//    delete btnNext;
+//    delete btnExit;
     delete ui;
 }
+/*
 void DisplayScreen::keyReleaseEvent(QKeyEvent *event)
 {
     // Will get called when a key is released
@@ -471,7 +474,7 @@ void DisplayScreen::updateTimeText()
 
     emit sendTimeText(timeString);
 }
-/*
+
 void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State oldstate)
 {
     Q_UNUSED(oldstate);
@@ -493,7 +496,7 @@ void DisplayScreen::playerStateChanged(Phonon::State newstate, Phonon::State old
         break;
     }
 }
-*/
+
 
 void DisplayScreen::drawBibleText(QPainter *painter, int width, int height, bool isShadow)
 {
@@ -1470,3 +1473,4 @@ void DisplayScreen::fastbluralpha(QImage &img, int radius)
     delete [] vmin;
     delete [] dv;
 }
+*/

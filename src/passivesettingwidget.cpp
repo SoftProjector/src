@@ -44,14 +44,14 @@ void PassiveSettingWidget::changeEvent(QEvent *e)
      }
 }
 
-void PassiveSettingWidget::setSetings(PassiveSettings &settings, PassiveSettings &settings2)
+void PassiveSettingWidget::setSetings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings = settings;
     mySettings2 = settings2;
     loadSettings();
 }
 
-void PassiveSettingWidget::getSettings(PassiveSettings &settings, PassiveSettings &settings2)
+void PassiveSettingWidget::getSettings(TextSettings &settings, TextSettings &settings2)
 {
     mySettings.useBackground = ui->groupBoxBackground->isChecked();
     mySettings.backgroundName = ui->lineEditBackgroundPath->text();
@@ -89,9 +89,9 @@ void PassiveSettingWidget::on_buttonBrowseBackgound_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings.background = p;
+            mySettings.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings.backgroundName = filename;
@@ -112,9 +112,9 @@ void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
     {
         QPixmap p(filename);
         if(p.width()>1280 || p.height()>1280)
-            mySettings2.background = p.scaled(1280,1280,Qt::KeepAspectRatio);
+            mySettings2.backgroundPix = p.scaled(1280,1280,Qt::KeepAspectRatio);
         else
-            mySettings2.background = p;
+            mySettings2.backgroundPix = p;
         QFileInfo fi(filename);
         filename = fi.fileName();
         mySettings2.backgroundName = filename;
@@ -124,7 +124,7 @@ void PassiveSettingWidget::on_buttonBrowseBackgound2_clicked()
 
 void PassiveSettingWidget::on_pushButtonDefault_clicked()
 {
-    PassiveSettings p;
+    TextSettings p;
     mySettings = p;
     mySettings2 = p;
     loadSettings();
