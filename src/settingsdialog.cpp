@@ -34,6 +34,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     pictureSettingWidget = new PictureSettingWidget;
     announcementSettingswidget = new AnnouncementSettingWidget;
 
+    commonTab = new QTabWidget;
+    bibleTab = new QTabWidget;
+    songTab = new QTabWidget;
+    announceTab = new QTabWidget;
+
     ui->scrollAreaGeneralSettings->setWidget(generalSettingswidget);
     ui->scrollAreaCommon->setWidget(commonSettingsWidget);
     ui->scrollAreaPassiveSettings->setWidget(passiveSettingwidget);
@@ -116,7 +121,7 @@ void SettingsDialog::on_listWidget_currentRowChanged(int currentRow)
 
 void SettingsDialog::setUseDispScreen2(bool toUse)
 {
-    commonSettingsWidget->setUseSameDisp2Visible(toUse);
+//    commonSettingsWidget->setUseSameDisp2Visible(toUse);
     passiveSettingwidget->setDispScreen2Visible(toUse);
     bibleSettingswidget->setDispScreen2Visible(toUse);
     songSettingswidget->setDispScreen2Visible(toUse);
@@ -166,7 +171,7 @@ void SettingsDialog::applySettings()
 
 void SettingsDialog::getThemes()
 {
-    commonSettingsWidget->getSettings(theme.common,theme.common2);
+    commonSettingsWidget->getSettings(theme.common);
     passiveSettingwidget->getSettings(theme.passive, theme.passive2);
     bibleSettingswidget->getSettings(theme.bible, theme.bible2);
     songSettingswidget->getSettings(theme.song, theme.song2);
@@ -175,7 +180,7 @@ void SettingsDialog::getThemes()
 
 void SettingsDialog::setThemes()
 {
-    commonSettingsWidget->setSettings(theme.common,theme.common2);
+    commonSettingsWidget->setSettings(theme.common);
     passiveSettingwidget->setSetings(theme.passive, theme.passive2);
     bibleSettingswidget->setSettings(theme.bible, theme.bible2);
     songSettingswidget->setSettings(theme.song, theme.song2);
@@ -216,3 +221,4 @@ void SettingsDialog::changeTheme(int theme_id)
 ////        announcementSettingswidget->setBackgroungds(backName,background);
 //    }
 //}
+
